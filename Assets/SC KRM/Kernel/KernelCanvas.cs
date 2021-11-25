@@ -22,7 +22,7 @@ namespace SCKRM.UI
             if (instance == null)
                 instance = this;
             else if (instance != this)
-                Destroy(this);
+                Destroy(gameObject);
         }
 
         public void KeyDownEnable(string keyCode) => InputManager.KeyDownEnable(keyCode, InputLockDeny.TaskBar);

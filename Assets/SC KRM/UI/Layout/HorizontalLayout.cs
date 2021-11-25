@@ -75,16 +75,16 @@ namespace SCKRM.UI
                     }
                 }
 
-                childRectTransform.anchorMin = new Vector2(0, 1);
-                childRectTransform.anchorMax = new Vector2(0, 1);
                 if (right)
                 {
+                    childRectTransform.anchorMin = new Vector2(1, 1);
+                    childRectTransform.anchorMax = new Vector2(1, 1);
                     childRectTransform.pivot = new Vector2(1, 1);
 #if UNITY_EDITOR
                     if (!Application.isPlaying)
-                        childRectTransform.anchoredPosition = new Vector2(rectTransform.sizeDelta.x + x, 0);
+                        childRectTransform.anchoredPosition = new Vector2(x, 0);
                     else
-                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.sizeDelta.x + x, 0), 0.2f * Kernel.fpsDeltaTime);
+                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x, 0), 0.2f * Kernel.fpsDeltaTime);
 #else
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(x, 0), 0.2f * Kernel.fpsDeltaTime);
 #endif
@@ -92,12 +92,14 @@ namespace SCKRM.UI
                 }
                 else if (center)
                 {
+                    childRectTransform.anchorMin = new Vector2(0.5f, 1);
+                    childRectTransform.anchorMax = new Vector2(0.5f, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 1);
 #if UNITY_EDITOR
                     if (!Application.isPlaying)
-                        childRectTransform.anchoredPosition = new Vector2(rectTransform.sizeDelta.x * 0.5f + x, 0);
+                        childRectTransform.anchoredPosition = new Vector2(x, 0);
                     else
-                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.sizeDelta.x * 0.5f + x, 0), 0.2f * Kernel.fpsDeltaTime);
+                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x, 0), 0.2f * Kernel.fpsDeltaTime);
 #else
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(x, 0), 0.2f * Kernel.fpsDeltaTime);
 #endif
@@ -105,6 +107,8 @@ namespace SCKRM.UI
                 }
                 else
                 {
+                    childRectTransform.anchorMin = new Vector2(0, 1);
+                    childRectTransform.anchorMax = new Vector2(0, 1);
                     childRectTransform.pivot = new Vector2(0, 1);
 #if UNITY_EDITOR
                     if (!Application.isPlaying)

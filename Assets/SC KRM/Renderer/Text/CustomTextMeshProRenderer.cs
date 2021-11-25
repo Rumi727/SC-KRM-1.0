@@ -1,14 +1,13 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("커널/Renderer/Text/TextMeshPro - Text")]
-    [RequireComponent(typeof(Text))]
+    [AddComponentMenu("커널/Renderer/Text/Text Mesh Pro")]
+    [RequireComponent(typeof(TMP_Text))]
     public class CustomTextMeshProRenderer : CustomAllTextRenderer
     {
-        TextMeshPro textMeshPro;
+        TMP_Text textMeshPro;
 
         public override void Rerender()
         {

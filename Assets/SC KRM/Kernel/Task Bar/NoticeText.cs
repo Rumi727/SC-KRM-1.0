@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ namespace SCKRM.UI.TaskBar
 {
     public class NoticeText : MonoBehaviour
     {
-        [SerializeField] Text text;
+        [SerializeField] TMP_Text text;
 
         static string am = "";
         static string pm = "";

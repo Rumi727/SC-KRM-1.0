@@ -26,7 +26,7 @@ namespace SCKRM.Sound
             if (instance == null)
                 instance = this;
             else if (instance != this)
-                Destroy(this);
+                Destroy(gameObject);
         }
 
         /// <summary>

@@ -13,6 +13,9 @@ scopes = {
 	"last_search.7F95D817" = ""
 	"OpenInspectorPreview.7F95D817" = "0"
 	"currentGroup.7F95D817" = "asset"
+	"last_search.83F126EB" = ""
+	"OpenInspectorPreview.83F126EB" = "0"
+	"currentGroup.83F126EB" = "asset"
 }
 providers = {
 	asset = {
@@ -72,3 +75,4 @@ expandedQueries = [
 queryBuilder = false
 ignoredProperties = "id;name;classname;imagecontentshash"
 helperWidgetCurrentArea = "all"
+disabledIndexers = ""

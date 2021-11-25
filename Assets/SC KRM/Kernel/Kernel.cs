@@ -196,7 +196,7 @@ namespace SCKRM
             }
             else if (instance != this)
             {
-                Destroy(this);
+                Destroy(gameObject);
                 return;
             }
 
