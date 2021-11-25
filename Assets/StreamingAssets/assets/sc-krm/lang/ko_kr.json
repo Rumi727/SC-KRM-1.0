@@ -1,0 +1,40 @@
+{
+	"language.name": "한국어",
+	"language.region": "대한민국",
+	
+	"gui.done": "완료",
+	"gui.cancel": "취소",
+	"gui.back": "뒤로",
+	"gui.home": "홈으로",
+	"gui.up": "위로",
+	"gui.down": "아래로",
+	"gui.yes": "예",
+	"gui.no": "아니요",
+    "gui.none": "없음",
+	"gui.all": "모두",
+    "gui.ok": "확인",
+	"gui.am": "오전",
+	"gui.pm": "오후",
+	
+	"options.resourcepack": "리소스 팩...",
+	"resourcePack.title": "리소스 팩 선택",
+	"options.language": "언어...",
+	"options.languageWarning": "(언어 번역은 100% 정확하지 않을 수 있습니다)",
+	"options.controls": "조작...",
+	"controls.title": "조작",
+	
+	"pack.available.title": "사용 가능\n━━━━━━━━━",
+	"pack.selected.title": "선택됨\n━━━━━━",
+	"pack.openFolder": "팩 폴더 열기",
+	
+	"controls.reset": "초기화",
+	"controls.resetAll": "키 설정 초기화",
+	
+	"volume_control.volume_down": "볼륨 줄이기",
+	"volume_control.volume_up": "볼륨 키우기",
+	"kernel.full_screen": "전체 화면",
+	
+	
+	
+	"subtitles.easter_egg_music_play": "이스터에그 음악이 재생됨"
+}

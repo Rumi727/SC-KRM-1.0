@@ -1,0 +1,139 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using SCKRM.Renderer;
+using SCKRM.Resource;
+using System.IO;
+using SCKRM.Json;
+
+namespace SCKRM.Editor
+{
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(CustomAllSpriteRenderer), true)]
+    public class CustomAllSpriteRendererEditor : CustomInspectorEditor
+    {
+        CustomAllSpriteRenderer _editor;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _editor = (CustomAllSpriteRenderer)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            if (!Application.isPlaying)
+            {
+                EditorGUILayout.HelpBox("플레이 모드가 아닐경우, 씬의 용량을 줄이기 위해 이미지의 화질이 떨어질수 있습니다", MessageType.Warning);
+                DrawLine();
+            }
+
+            UseProperty("_nameSpace", "네임스페이스");
+            UseProperty("_type", "타입");
+            UseProperty("_path", "이름");
+            UseProperty("_index", "스프라이트 인덱스");
+
+            string nameSpace = _editor.nameSpace;
+            if (nameSpace == null || nameSpace == "")
+                nameSpace = ResourceManager.defaultNameSpace;
+
+            string typePath = KernelMethod.PathCombine(ResourceManager.texturePath.Replace("%NameSpace%", nameSpace), _editor.type);
+            string filePath = KernelMethod.PathCombine(typePath, _editor.path);
+            string typeAllPath = KernelMethod.PathCombine(Kernel.streamingAssetsPath, typePath);
+            ResourceManager.FileExtensionExists(KernelMethod.PathCombine(Kernel.streamingAssetsPath, filePath), ResourceManager.textureExtension, out string fileAllPath);
+
+            if (Application.isPlaying)
+                GUI.enabled = false;
+
+            if (Directory.Exists(typeAllPath) && _editor.type != null && _editor.type != "")
+            {
+                TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(typeAllPath + ".json", true);
+                if (textureMetaData == null)
+                    textureMetaData = new TextureMetaData();
+
+                DrawLine();
+
+                textureMetaData.filterMode = (FilterMode)EditorGUILayout.EnumPopup("필터 모드", textureMetaData.filterMode);
+                textureMetaData.mipmapUse = EditorGUILayout.Toggle("밉맵 사용", textureMetaData.mipmapUse);
+
+                Texture2D texture = ResourceManager.GetTexture(fileAllPath, true, textureMetaData, TextureFormat.Alpha8);
+                if (texture != null && _editor.path != null && _editor.path != "")
+                {
+                    DrawLine();
+
+                    List<Resource.SpriteMetaData> spriteMetaDatas = JsonManager.JsonRead<List<Resource.SpriteMetaData>>(fileAllPath + ".json", true);
+                    if (spriteMetaDatas == null)
+                        spriteMetaDatas = new List<Resource.SpriteMetaData>();
+
+                    if (_editor.index < spriteMetaDatas.Count)
+                    {
+                        Resource.SpriteMetaData spriteMetaData = spriteMetaDatas[_editor.index];
+
+                        spriteMetaData.RectMinMax(texture.width, texture.height);
+                        spriteMetaData.PixelsPreUnitMinSet();
+
+                        spriteMetaData.pivot = EditorGUILayout.Vector2Field("중심", spriteMetaData.pivot);
+                        EditorGUILayout.BeginHorizontal();
+                        spriteMetaData.rect = EditorGUILayout.Vector4Field("자르기", spriteMetaData.rect);
+                        EditorGUILayout.EndHorizontal();
+                        spriteMetaData.border = EditorGUILayout.Vector4Field("가장자리", spriteMetaData.border);
+
+                        EditorGUILayout.Space();
+
+                        spriteMetaData.pixelsPerUnit = EditorGUILayout.FloatField("1 픽셀 크기", spriteMetaData.pixelsPerUnit);
+
+                        DrawLine();
+
+                        if (GUILayout.Button("스프라이트 지우기"))
+                            spriteMetaDatas.RemoveAt(_editor.index);
+                    }
+                    else if (GUILayout.Button("스프라이트 만들기"))
+                    {
+                        Resource.SpriteMetaData spriteMetaData = new Resource.SpriteMetaData();
+                        spriteMetaData.RectMinMax(texture.width, texture.height);
+                        spriteMetaData.PixelsPreUnitMinSet();
+                        spriteMetaDatas.Add(spriteMetaData);
+                    }
+
+                    GUI.enabled = true;
+
+                    if (GUI.changed || GUILayout.Button("새로고침"))
+                    {
+                        EditorUtility.SetDirty(target);
+
+                        File.WriteAllText(typeAllPath + ".json", JsonManager.ObjectToJson(textureMetaData));
+                        File.WriteAllText(fileAllPath + ".json", JsonManager.ObjectToJson(spriteMetaDatas));
+
+                        AssetDatabase.Refresh();
+
+                        _editor.ResourceReload();
+                        _editor.Rerender();
+                    }
+                }
+                else if (GUI.changed)
+                {
+                    EditorUtility.SetDirty(target);
+
+                    File.WriteAllText(typeAllPath + ".json", JsonManager.ObjectToJson(textureMetaData));
+
+                    AssetDatabase.Refresh();
+
+                    _editor.ResourceReload();
+                    _editor.Rerender();
+                }
+            }
+            else if (GUI.changed)
+            {
+                EditorUtility.SetDirty(target);
+                _editor.ResourceReload();
+                _editor.Rerender();
+            }
+
+            DrawLine();
+
+            EditorGUILayout.LabelField("경로 - " + filePath);
+
+            GUI.enabled = true;
+        }
+    }
+}

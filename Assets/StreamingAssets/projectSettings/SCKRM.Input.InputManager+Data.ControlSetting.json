@@ -1,0 +1,10 @@
+{
+  "controlSettingList": {
+    "volume_control.volume_down": 45,
+    "volume_control.volume_up": 61,
+    "gui.back": 27,
+    "kernel.full_screen": 292,
+    "gui.home": 278,
+    "gui.tab": 9
+  }
+}
