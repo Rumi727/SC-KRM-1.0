@@ -36,7 +36,7 @@ namespace SCKRM.ProjectSetting
             }
         }
 
-        public static void Load(ThreadMetaData threadMetaData)
+        public static void Load()
         {
             if (!Directory.Exists(Kernel.projectSettingPath))
                 Directory.CreateDirectory(Kernel.projectSettingPath);

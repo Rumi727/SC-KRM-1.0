@@ -105,10 +105,6 @@ namespace SCKRM.Sound
                 pitch = pitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f);
                 pitch /= soundMetaData.pitch;
 
-                tempo *= soundMetaData.tempo;
-                tempo = tempo.Clamp(allPitch.Abs() * 0.5f, allPitch.Abs() * 2f);
-                tempo /= soundMetaData.tempo;
-
                 allTempo *= Kernel.gameSpeed;
                 audioSource.pitch = allTempo;
                 audioSource.outputAudioMixerGroup.audioMixer.SetFloat("pitch", 1f / allTempo.Abs() * allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f));
@@ -135,6 +131,8 @@ namespace SCKRM.Sound
             audioSource.panStereo = panStereo;
             audioSource.minDistance = minDistance;
             audioSource.maxDistance = maxDistance;
+
+            transform.localPosition = localPosition;
         }
 
         float tempTime = 0;
@@ -157,8 +155,6 @@ namespace SCKRM.Sound
                 }
                 tempTime = audioSource.time;
             }
-
-            transform.localPosition = localPosition;
 
             if (!audioSource.isPlaying)
                 Remove();

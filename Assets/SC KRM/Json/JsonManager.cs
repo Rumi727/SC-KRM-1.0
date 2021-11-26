@@ -14,7 +14,7 @@ namespace SCKRM.Json
             if (json != "")
                 return JsonConvert.DeserializeObject<T>(json);
             else
-                return default(T);
+                return default;
         }
 
         public static T JsonRead<T>(string path, string nameSpace) => JsonConvert.DeserializeObject<T>(ResourceManager.SearchText(path, nameSpace));

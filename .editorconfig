@@ -2,3 +2,6 @@ root = true
 
 [*]
 charset = utf-8
+
+# IDE0040: 접근성 한정자 추가
+dotnet_style_require_accessibility_modifiers = never

@@ -264,6 +264,8 @@ namespace SCKRM.NBS
                     index++;
                 }
             }
+            else
+                index = 0;
 
             if (tempo < 0)
             {

@@ -74,7 +74,7 @@ namespace SCKRM.SaveLoad
             }
         }
 
-        public static void Load(ThreadMetaData threadMetaData)
+        public static void Load()
         {
             if (!Directory.Exists(Kernel.saveDataPath))
                 Directory.CreateDirectory(Kernel.saveDataPath);

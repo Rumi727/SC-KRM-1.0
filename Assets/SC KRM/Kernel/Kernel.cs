@@ -176,7 +176,7 @@ namespace SCKRM
 
 
 
-        public static int MainVolume { get; set; } = 100;
+        public static int mainVolume { get; set; } = 100;
         public static float gameSpeed { get; set; } = 1;
 
         public static bool isInitialLoadStart { get; private set; } = false;
@@ -260,10 +260,10 @@ namespace SCKRM
                 afkTimer += unscaledDeltaTime;
             }
 
-            if (MainVolume > 200)
-                MainVolume = 200;
-            else if (MainVolume < 0)
-                MainVolume = 0;
+            if (mainVolume > 200)
+                mainVolume = 200;
+            else if (mainVolume < 0)
+                mainVolume = 0;
 
             gameSpeed = gameSpeed.Clamp(0, 100);
             Time.timeScale = gameSpeed;
@@ -794,7 +794,7 @@ namespace SCKRM
         }
         #endregion
 
-        #region string
+        #region String
         public static string PathCombine(params string[] paths)
         {
             if (paths == null || paths.Length < 0)
@@ -1036,6 +1036,95 @@ namespace SCKRM
                 text = keyCode.ToString();
 
             return text.AddSpacesToSentence();
+        }
+
+        public static string ToTime(this int second, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
+        {
+            try
+            {
+                int secondAbs = second.Abs();
+                if (second > TimeSpan.MaxValue.TotalSeconds)
+                    return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:h\:mm\:ss");
+                else if (secondAbs >= 86400 || dayAlwayShow)
+                    return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
+                else if (secondAbs >= 3600 || hourAlwayShow)
+                    return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss");
+                else if (secondAbs >= 60 || minuteAlwayShow)
+                    return TimeSpan.FromSeconds(second).ToString(@"m\:ss");
+                else
+                    return TimeSpan.FromSeconds(second).ToString(@"s");
+            }
+            catch (Exception) { return "--:--"; }
+        }
+
+        public static string ToTime(this float second, bool decimalShow = true, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
+        {
+            try
+            {
+                float secondAbs = second.Abs();
+                if (decimalShow)
+                {
+                    if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                        return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:hh\:mm\:ss\.ff");
+                    else if (secondAbs >= 86400 || dayAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss\.ff");
+                    else if (secondAbs >= 3600 || hourAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss\.ff");
+                    else if (secondAbs >= 60 || minuteAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"m\:ss\.ff");
+                    else
+                        return TimeSpan.FromSeconds(second).ToString(@"s\.ff");
+                }
+                else
+                {
+                    if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                        return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:h\:mm\:ss");
+                    else if (secondAbs >= 86400 || dayAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
+                    else if (secondAbs >= 3600 || hourAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss");
+                    else if (secondAbs >= 60 || minuteAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"m\:ss");
+                    else
+                        return TimeSpan.FromSeconds(second).ToString(@"s");
+                }
+            }
+            catch (Exception) { return "--:--"; }
+        }
+
+        public static string ToTime(this double second, bool decimalShow = true, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
+        {
+            try
+            {
+                double secondAbs = second.Abs();
+                if (decimalShow)
+                {
+                    if (second > TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                        return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:hh\:mm\:ss\.ff");
+                    else if (secondAbs >= 86400 || dayAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss\.ff");
+                    else if (secondAbs >= 3600 || hourAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss\.ff");
+                    else if (secondAbs >= 60 || minuteAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"m\:ss\.ff");
+                    else
+                        return TimeSpan.FromSeconds(second).ToString(@"s\.ff");
+                }
+                else
+                {
+                    if (second > TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                        return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:h\:mm\:ss");
+                    else if (secondAbs >= 86400 || dayAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
+                    else if (secondAbs >= 3600 || hourAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss");
+                    else if (secondAbs >= 60 || minuteAlwayShow)
+                        return TimeSpan.FromSeconds(second).ToString(@"m\:ss");
+                    else
+                        return TimeSpan.FromSeconds(second).ToString(@"s");
+                }
+            }
+            catch (Exception) { return "--:--"; }
         }
         #endregion
     }

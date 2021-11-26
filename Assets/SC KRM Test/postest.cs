@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class postest : MonoBehaviour
+public class Postest : MonoBehaviour
 {
     Vector2 rotation = Vector2.zero;
 

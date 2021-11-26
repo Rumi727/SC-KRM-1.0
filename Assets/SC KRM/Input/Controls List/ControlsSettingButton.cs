@@ -8,9 +8,9 @@ namespace SCKRM.Input.UI
     {
         public ControlsButton controlsButton;
 
-        public void InputSet() => StartCoroutine(inputSet());
+        public void InputSet() => StartCoroutine(InputSetStartCoroutine());
 
-        IEnumerator inputSet()
+        IEnumerator InputSetStartCoroutine()
         {
             InputManager.defaultInputLock = true;
             controlsButton.inputLockObject.SetActive(true);

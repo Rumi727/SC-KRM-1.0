@@ -22,11 +22,11 @@ namespace SCKRM.Language.UI
             if (reloadCoroutine != null)
                 StopCoroutine(reloadCoroutine);
 
-            reloadCoroutine = reload();
+            reloadCoroutine = ReloadCoroutine();
             StartCoroutine(reloadCoroutine);
         }
 
-        IEnumerator reload()
+        IEnumerator ReloadCoroutine()
         {
             LanguageButton[] child = GetComponentsInChildren<LanguageButton>();
             for (int i = 0; i < child.Length; i++)

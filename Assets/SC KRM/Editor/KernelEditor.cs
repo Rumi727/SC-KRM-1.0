@@ -257,13 +257,17 @@ namespace SCKRM.Editor
                     if (soundObject.soundMetaData.stream)
                         minPitch = 0;
 
-                    GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, minPitch, 3);
-
                     if (soundObject.soundData.isBGM)
                     {
+                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
+                        soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, soundObject.tempo.Abs() * 0.5f, soundObject.tempo.Abs() * 2f);
                         GUILayout.Label("템포", GUILayout.ExpandWidth(false));
                         soundObject.tempo = EditorGUILayout.Slider(soundObject.tempo, minPitch, 3);
+                    }
+                    else
+                    {
+                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
+                        soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, minPitch, 3);
                     }
 
                     EditorGUILayout.EndHorizontal();
@@ -307,32 +311,38 @@ namespace SCKRM.Editor
                         }
                         else
                         {
-                            string time;
-                            string endTime;
+                            string time = soundObject.audioSource.time.ToTime();
+                            string endTime = soundObject.audioSource.clip.length.ToTime();
 
-                            if (soundObject.audioSource.clip.length >= 3600)
+                            if (soundObject.soundData.isBGM)
                             {
-                                time = TimeSpan.FromSeconds(soundObject.audioSource.time).ToString(@"h\:mm\:ss\.ff");
-                                endTime = TimeSpan.FromSeconds(soundObject.audioSource.clip.length).ToString(@"h\:mm\:ss\.ff");
-                            }
-                            else if (soundObject.audioSource.clip.length >= 60)
-                            {
-                                time = TimeSpan.FromSeconds(soundObject.audioSource.time).ToString(@"m\:ss");
-                                endTime = TimeSpan.FromSeconds(soundObject.audioSource.clip.length).ToString(@"m\:ss");
+                                if (soundObject.tempo == 0)
+                                    GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                                else if (soundObject.tempo.Abs() != 1)
+                                {
+                                    string pitchTime = (soundObject.audioSource.time * (1 / soundObject.tempo)).ToTime();
+                                    string pitchEndTime = (soundObject.audioSource.clip.length * (1 / soundObject.tempo)).ToTime();
+
+                                    GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                                }
+                                else
+                                    GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
                             }
                             else
                             {
-                                time = TimeSpan.FromSeconds(soundObject.audioSource.time).ToString(@"s\.ff");
-                                endTime = TimeSpan.FromSeconds(soundObject.audioSource.clip.length).ToString(@"s\.ff");
+                                if (soundObject.pitch == 0)
+                                    GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                                else if (soundObject.pitch.Abs() != 1)
+                                {
+                                    string pitchTime = (soundObject.audioSource.time * (1 / soundObject.pitch)).ToTime();
+                                    string pitchEndTime = (soundObject.audioSource.clip.length * (1 / soundObject.pitch)).ToTime();
+
+                                    GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                                }
+                                else
+                                    GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
                             }
 
-                            if (soundObject.audioSource.time > TimeSpan.MaxValue.TotalSeconds)
-                                time = TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"h\:mm\:ss\.ff");
-
-                            if (soundObject.audioSource.clip.length > TimeSpan.MaxValue.TotalSeconds)
-                                endTime = TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"h\:mm\:ss\.ff");
-
-                            GUILayout.Label(time + " / " + endTime, GUILayout.ExpandWidth(false));
                             float audioTime = GUILayout.HorizontalSlider(soundObject.audioSource.time, 0, soundObject.audioSource.clip.length);
                             if ((soundObject.audioSource.time - audioTime).Abs() >= 0.1f && !refesh)
                                 soundObject.audioSource.time = audioTime;
@@ -514,35 +524,24 @@ namespace SCKRM.Editor
                         }
                         else
                         {
-                            string time;
-                            string endTime;
-
                             float timer = nbsPlayer.tick * 0.05f;
                             float length = nbsPlayer.nbsFile.songLength * 0.05f;
 
-                            if (length >= 3600)
+                            string time = timer.ToTime();
+                            string endTime = length.ToTime();
+
+                            if (nbsPlayer.tempo == 0)
+                                GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                            else if (nbsPlayer.tempo.Abs() != 1)
                             {
-                                time = TimeSpan.FromSeconds(timer).ToString(@"h\:mm\:ss\.ff");
-                                endTime = TimeSpan.FromSeconds(length).ToString(@"h\:mm\:ss\.ff");
-                            }
-                            else if (length >= 60)
-                            {
-                                time = TimeSpan.FromSeconds(timer).ToString(@"m\:ss");
-                                endTime = TimeSpan.FromSeconds(length).ToString(@"m\:ss");
+                                string pitchTime = (nbsPlayer.tick * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
+                                string pitchEndTime = (nbsPlayer.nbsFile.songLength * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
+
+                                GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
                             }
                             else
-                            {
-                                time = TimeSpan.FromSeconds(timer).ToString(@"s\.ff");
-                                endTime = TimeSpan.FromSeconds(length).ToString(@"s\.ff");
-                            }
+                                GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
 
-                            if (timer > TimeSpan.MaxValue.TotalSeconds)
-                                time = TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"h\:mm\:ss\.ff");
-
-                            if (length > TimeSpan.MaxValue.TotalSeconds)
-                                endTime = TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"h\:mm\:ss\.ff");
-
-                            GUILayout.Label(time + " / " + endTime, GUILayout.ExpandWidth(false));
                             float audioTime = GUILayout.HorizontalSlider(timer, 0, length);
                             if ((timer - audioTime).Abs() >= 0.1f && !refesh)
                                 nbsPlayer.tick = Mathf.RoundToInt(audioTime * 20);

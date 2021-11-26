@@ -59,7 +59,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method());
@@ -76,7 +76,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(threadMetaData));
@@ -93,7 +93,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(obj, threadMetaData));
@@ -110,7 +110,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, threadMetaData));
@@ -127,7 +127,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, threadMetaData));
@@ -144,7 +144,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, threadMetaData));
@@ -161,7 +161,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, threadMetaData));
@@ -178,7 +178,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, threadMetaData));
@@ -195,7 +195,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, threadMetaData));
@@ -212,7 +212,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, threadMetaData));
@@ -229,7 +229,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, threadMetaData));
@@ -246,7 +246,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, threadMetaData));
@@ -263,7 +263,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, threadMetaData));
@@ -280,7 +280,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, threadMetaData));
@@ -297,7 +297,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, threadMetaData));
@@ -314,7 +314,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, threadMetaData));
@@ -331,7 +331,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
+            ThreadMetaData threadMetaData = new();
             threadMetaData.name = name;
             threadMetaData.loop = loop;
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, threadMetaData));

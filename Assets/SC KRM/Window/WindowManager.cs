@@ -59,12 +59,11 @@ namespace SCKRM.Window
         public static Vector2 GetWindowPos(Vector2 windowDatumPoint, Vector2 screenDatumPoint)
         {
 #if UNITY_STANDALONE_WIN
-            RECT rect;
             IntPtr temp = GetWindowHandle();
             if (temp != IntPtr.Zero)
                 handle = temp;
 
-            GetWindowRect(handle, out rect);
+            GetWindowRect(handle, out RECT rect);
 
             return new Vector2(rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (Screen.currentResolution.width * screenDatumPoint.x), rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (Screen.currentResolution.height * screenDatumPoint.y));
 #else
@@ -75,12 +74,11 @@ namespace SCKRM.Window
         public static Vector2 GetWindowSize()
         {
 #if UNITY_STANDALONE_WIN
-            RECT rect;
             IntPtr temp = GetWindowHandle();
             if (temp != IntPtr.Zero)
                 handle = temp;
 
-            GetWindowRect(handle, out rect);
+            GetWindowRect(handle, out RECT rect);
             return new Vector2(rect.Right - rect.Left, rect.Bottom - rect.Top);
 #else
             return Vector2.zero;
@@ -90,12 +88,11 @@ namespace SCKRM.Window
         public static Vector2 GetClientSize()
         {
 #if UNITY_STANDALONE_WIN
-            RECT rect;
             IntPtr temp = GetWindowHandle();
             if (temp != IntPtr.Zero)
                 handle = temp;
 
-            GetClientRect(handle, out rect);
+            GetClientRect(handle, out RECT rect);
             return new Vector2(rect.Right, rect.Bottom);
 #else
             return Vector2.zero;

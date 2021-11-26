@@ -16,9 +16,9 @@ namespace SCKRM.Language
         }
 
 
-        public static event Action currentLanguageChange;
+        public static event Action CurrentLanguageChange;
 
-        public static void LanguageChangeEventInvoke() => currentLanguageChange();
+        public static void LanguageChangeEventInvoke() => CurrentLanguageChange();
 
         public static string TextLoad(string key, string nameSpace = "", string language = "")
         {
