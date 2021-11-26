@@ -89,6 +89,9 @@ namespace SCKRM.Sound
                 tempNameSpace = nameSpace;
                 tempKey = key;
             }
+
+            if (!soundMetaData.stream && pitch < 0 && audioSource.time == 0)
+                audioSource.time = audioSource.clip.length - 0.001f;
         }
         
         void SetVariable()

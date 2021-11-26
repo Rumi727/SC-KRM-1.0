@@ -221,6 +221,8 @@ namespace SCKRM.Editor
                     if (GUILayout.Button("모든 소리 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSoundAll();
 
+                    GUILayout.Label($"{SoundManager.soundList.Count} / {SoundManager.maxSoundCount}", GUILayout.ExpandWidth(false));
+
                     EditorGUILayout.EndHorizontal();
                 }
             }
@@ -412,12 +414,14 @@ namespace SCKRM.Editor
                     nbsLoop = EditorGUILayout.Toggle(nbsLoop, GUILayout.Width(15));
 
                     GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    nbsPitch = EditorGUILayout.Slider(nbsPitch, 0, 3);
+                    nbsPitch = EditorGUILayout.Slider(nbsPitch, -3, 3);
                     GUILayout.Label("템포", GUILayout.ExpandWidth(false));
                     nbsTempo = EditorGUILayout.Slider(nbsTempo, -3, 3);
 
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
+
+                    GUILayout.Label($"{SoundManager.nbsList.Count} / {SoundManager.maxNBSCount}", GUILayout.ExpandWidth(false));
 
                     GUILayout.Label("3D", GUILayout.ExpandWidth(false));
                     nbsSpatial = EditorGUILayout.Toggle(nbsSpatial, GUILayout.Width(15));
@@ -479,7 +483,7 @@ namespace SCKRM.Editor
                     nbsPlayer.loop = EditorGUILayout.Toggle(nbsPlayer.loop, GUILayout.Width(15));
 
                     GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    nbsPlayer.pitch = EditorGUILayout.Slider(nbsPlayer.pitch, 0, 3);
+                    nbsPlayer.pitch = EditorGUILayout.Slider(nbsPlayer.pitch, -3, 3);
                     GUILayout.Label("템포", GUILayout.ExpandWidth(false));
                     nbsPlayer.tempo = EditorGUILayout.Slider(nbsPlayer.tempo, -3, 3);
 

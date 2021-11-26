@@ -21,6 +21,13 @@ namespace SCKRM.Sound
         public static List<SoundObject> soundList { get; } = new List<SoundObject>();
         public static List<NBSPlayer> nbsList { get; } = new List<NBSPlayer>();
 
+
+
+        public const int maxSoundCount = 256;
+        public const int maxNBSCount = 16;
+
+
+
         void OnEnable()
         {
             if (instance == null)
@@ -51,6 +58,9 @@ namespace SCKRM.Sound
 
         public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0)
         {
+            if (soundList.Count >= maxSoundCount)
+                soundList[0].Remove();
+
             if (key == null)
                 key = "";
             if (nameSpace == null)
@@ -144,6 +154,9 @@ namespace SCKRM.Sound
 
         public static NBSPlayer PlayNBS(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 48, Transform parent = null, float x = 0, float y = 0, float z = 0)
         {
+            if (nbsList.Count >= maxNBSCount)
+                nbsList[0].Remove();
+
             if (key == null)
                 key = "";
             if (nameSpace == null)
