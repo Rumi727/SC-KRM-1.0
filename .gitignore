@@ -13,8 +13,7 @@
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
-[Aa]ssets/StreamingAssets/assets/school-live/sounds/op.ogg
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds/op.ogg.meta
+[Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds/*
 [Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
