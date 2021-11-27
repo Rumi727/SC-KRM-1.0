@@ -864,7 +864,7 @@ namespace SCKRM.Editor
 
                         EditorGUILayout.BeginHorizontal();
 
-                        GUILayout.Label("키 코드 키", GUILayout.ExpandWidth(false));
+                        GUILayout.Label("잠금 키", GUILayout.ExpandWidth(false));
                         keyList.Add(EditorGUILayout.TextField(item.Key));
 
                         GUILayout.Label("잠금", GUILayout.ExpandWidth(false));
