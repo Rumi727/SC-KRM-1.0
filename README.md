@@ -73,7 +73,7 @@ Simsimhan Chobo Kernel Manager
   
 - 윈도우에서는 무려 창 위치와 크기를 마음대로 지지고 볶을 수 있습니다! 리듬게임에 들어간다면 금상첨화죠.
 
-- 무려 NBS를 로드하고 재생 할 수 있습니다! 관련 클래스는 ``NBSManager, NBSPlayer, NBSFile`` 이고, 자동 재생을 원하신다면 ``SoundManager.PlayNBS() SoundManager.StopNBS() SoundManager.StopNBSAll()``를 사용하면 됩니다
+- 무려 NBS를 로드하고 재생 할 수 있습니다! 관련 함수는 ``SoundManager.PlayNBS() SoundManager.StopNBS() SoundManager.StopNBSAll()`` 입니다
 
 - 등등...
 
