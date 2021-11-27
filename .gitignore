@@ -13,12 +13,12 @@
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds/*
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds.meta
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/sounds/*
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/sounds.meta
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/nbs/*
-[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/nbs.meta
+[Aa]ssets/StreamingAssets/assets/school-live/sounds*
+[Aa]ssets/StreamingAssets/assets/school-live/sounds.meta
+[Aa]ssets/StreamingAssets/assets/sc-krm/sounds*
+[Aa]ssets/StreamingAssets/assets/sc-krm/sounds.meta
+[Aa]ssets/StreamingAssets/assets/sc-krm/nbs*
+[Aa]ssets/StreamingAssets/assets/sc-krm/nbs.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
