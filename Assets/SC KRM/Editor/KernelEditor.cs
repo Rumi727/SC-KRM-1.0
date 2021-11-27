@@ -19,6 +19,7 @@ namespace SCKRM.Editor
         [MenuItem("커널/커널 설정")]
         public static void ShowWindow() => GetWindow<KernelEditor>(false, "커널");
 
+        bool inspectorUpdate = true;
         bool deleteSafety = true;
         int tabIndex = 0;
         int settingTabIndex = 0;
@@ -26,6 +27,7 @@ namespace SCKRM.Editor
         Vector2 audioScrollPos = Vector2.zero;
 
         Vector2 controlSettingScrollPos = Vector2.zero;
+        Vector2 controlLockSettingScrollPos = Vector2.zero;
         Vector2 objectPoolingSettingScrollPos = Vector2.zero;
         Vector2 audioSettingScrollPos = Vector2.zero;
 
@@ -41,9 +43,20 @@ namespace SCKRM.Editor
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
 
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+
+                GUILayout.Label("새로고침 딜레이", GUILayout.ExpandWidth(false));
+                inspectorUpdate = EditorGUILayout.Toggle(inspectorUpdate, GUILayout.Width(15));
+
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
                 CustomInspectorEditor.DrawLine(2);
             }
-
+            
             switch (tabIndex)
             {
                 case 0:
@@ -62,11 +75,17 @@ namespace SCKRM.Editor
             }
         }
 
+        
 
+        void OnInspectorUpdate()
+        {
+            if (inspectorUpdate && Application.isPlaying)
+                Repaint();
+        }
 
         void Update()
         {
-            if (Application.isPlaying && (tabIndex == 0 || tabIndex == 1 || tabIndex == 2))
+            if (!inspectorUpdate && Application.isPlaying)
                 Repaint();
         }
 
@@ -149,9 +168,6 @@ namespace SCKRM.Editor
         {
             EditorGUILayout.LabelField("제어판", EditorStyles.boldLabel);
 
-            if (!Application.isPlaying)
-                GUI.enabled = false;
-
             {
                 {
                     EditorGUILayout.BeginHorizontal();
@@ -161,9 +177,14 @@ namespace SCKRM.Editor
                     GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
                     audioKey = EditorGUILayout.TextField(audioKey);
 
+                    if (!Application.isPlaying)
+                        GUI.enabled = false;
+
                     bool audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
                     if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSound(audioKey, audioNameSpace);
+
+                    GUI.enabled = true;
 
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
@@ -214,12 +235,17 @@ namespace SCKRM.Editor
                 {
                     EditorGUILayout.BeginHorizontal();
 
+                    if (!Application.isPlaying)
+                        GUI.enabled = false;
+
                     if (GUILayout.Button("모든 음악 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSoundAll(true);
                     if (GUILayout.Button("모든 효과음 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSoundAll(false);
                     if (GUILayout.Button("모든 소리 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSoundAll();
+
+                    GUI.enabled = true;
 
                     GUILayout.Label($"{SoundManager.soundList.Count} / {SoundManager.maxSoundCount}", GUILayout.ExpandWidth(false));
 
@@ -281,9 +307,9 @@ namespace SCKRM.Editor
                     if (soundObject.spatial)
                     {
                         GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                        soundObject.minDistance = EditorGUILayout.Slider(soundObject.audioSource.minDistance, 0, 64);
+                        soundObject.minDistance = EditorGUILayout.Slider(soundObject.minDistance, 0, 64);
                         GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                        soundObject.maxDistance = EditorGUILayout.Slider(soundObject.audioSource.maxDistance, 0, 64);
+                        soundObject.maxDistance = EditorGUILayout.Slider(soundObject.maxDistance, 0, 64);
 
                         EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
@@ -306,15 +332,15 @@ namespace SCKRM.Editor
                     {
                         EditorGUILayout.BeginHorizontal();
 
-                        if (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0 || soundObject.audioSource.clip == null)
+                        if (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0)
                         {
                             GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
                             GUILayout.HorizontalSlider(0, 0, 1);
                         }
                         else
                         {
-                            string time = soundObject.audioSource.time.ToTime();
-                            string endTime = soundObject.audioSource.clip.length.ToTime();
+                            string time = soundObject.time.ToTime();
+                            string endTime = soundObject.length.ToTime();
 
                             if (soundObject.soundData.isBGM)
                             {
@@ -322,8 +348,8 @@ namespace SCKRM.Editor
                                     GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
                                 else if (soundObject.tempo.Abs() != 1)
                                 {
-                                    string pitchTime = (soundObject.audioSource.time * (1 / soundObject.tempo)).ToTime();
-                                    string pitchEndTime = (soundObject.audioSource.clip.length * (1 / soundObject.tempo)).ToTime();
+                                    string pitchTime = (soundObject.time * (1 / soundObject.tempo)).ToTime();
+                                    string pitchEndTime = (soundObject.length * (1 / soundObject.tempo)).ToTime();
 
                                     GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
                                 }
@@ -336,8 +362,8 @@ namespace SCKRM.Editor
                                     GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
                                 else if (soundObject.pitch.Abs() != 1)
                                 {
-                                    string pitchTime = (soundObject.audioSource.time * (1 / soundObject.pitch)).ToTime();
-                                    string pitchEndTime = (soundObject.audioSource.clip.length * (1 / soundObject.pitch)).ToTime();
+                                    string pitchTime = (soundObject.time * (1 / soundObject.pitch)).ToTime();
+                                    string pitchEndTime = (soundObject.length * (1 / soundObject.pitch)).ToTime();
 
                                     GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
                                 }
@@ -345,9 +371,9 @@ namespace SCKRM.Editor
                                     GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
                             }
 
-                            float audioTime = GUILayout.HorizontalSlider(soundObject.audioSource.time, 0, soundObject.audioSource.clip.length);
-                            if ((soundObject.audioSource.time - audioTime).Abs() >= 0.1f && !refesh)
-                                soundObject.audioSource.time = audioTime;
+                            float audioTime = GUILayout.HorizontalSlider(soundObject.time, 0, soundObject.length);
+                            if ((soundObject.time - audioTime).Abs() >= 0.1f && !refesh)
+                                soundObject.time = audioTime;
                         }
 
                         EditorGUILayout.EndHorizontal();
@@ -363,8 +389,6 @@ namespace SCKRM.Editor
 
                 EditorGUILayout.EndScrollView();
             }
-
-            GUI.enabled = true;
         }
 
         string nbsNameSpace = "";
@@ -387,9 +411,6 @@ namespace SCKRM.Editor
         {
             EditorGUILayout.LabelField("제어판", EditorStyles.boldLabel);
 
-            if (!Application.isPlaying)
-                GUI.enabled = false;
-
             {
                 {
                     EditorGUILayout.BeginHorizontal();
@@ -399,11 +420,16 @@ namespace SCKRM.Editor
                     GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
                     nbsKey = EditorGUILayout.TextField(nbsKey);
 
+                    if (!Application.isPlaying)
+                        GUI.enabled = false;
+
                     bool nbsPlay = GUILayout.Button("NBS 재생", GUILayout.ExpandWidth(false));
                     if (GUILayout.Button("NBS 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopNBS(nbsKey, nbsNameSpace);
                     if (GUILayout.Button("모든 NBS 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopNBSAll();
+
+                    GUI.enabled = true;
 
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
@@ -528,8 +554,8 @@ namespace SCKRM.Editor
                         }
                         else
                         {
-                            float timer = nbsPlayer.tick * 0.05f;
-                            float length = nbsPlayer.nbsFile.songLength * 0.05f;
+                            float timer = nbsPlayer.tick * 0.05f + (0.05f - nbsPlayer.timer);
+                            float length = nbsPlayer.length * 0.05f;
 
                             string time = timer.ToTime();
                             string endTime = length.ToTime();
@@ -538,18 +564,20 @@ namespace SCKRM.Editor
                                 GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
                             else if (nbsPlayer.tempo.Abs() != 1)
                             {
-                                string pitchTime = (nbsPlayer.tick * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
-                                string pitchEndTime = (nbsPlayer.nbsFile.songLength * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
+                                string pitchTime = (((nbsPlayer.tick * 0.05f) + (0.05f - nbsPlayer.timer)) * (1 / nbsPlayer.tempo)).ToTime();
+                                string pitchEndTime = (nbsPlayer.length * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
 
-                                GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                                GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime}) ({nbsPlayer.tick} / {nbsPlayer.length})", GUILayout.ExpandWidth(false));
                             }
                             else
-                                GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
+                                GUILayout.Label($"{time} / {endTime} ({nbsPlayer.tick} / {nbsPlayer.length})", GUILayout.ExpandWidth(false));
 
                             float audioTime = GUILayout.HorizontalSlider(timer, 0, length);
                             if ((timer - audioTime).Abs() >= 0.1f && !refesh)
                                 nbsPlayer.tick = Mathf.RoundToInt(audioTime * 20);
                         }
+
+                        GUILayout.Label($"{nbsPlayer.index} / {nbsPlayer.nbsFile.nbsNotes.Count - 1}", GUILayout.ExpandWidth(false));
 
                         EditorGUILayout.EndHorizontal();
                     }
@@ -639,6 +667,8 @@ namespace SCKRM.Editor
 
             if (InputManager.Data.controlSettingList == null)
                 InputManager.Data.controlSettingList = new Dictionary<string, KeyCode>();
+            if (InputManager.Data.inputLockList == null)
+                InputManager.Data.inputLockList = new Dictionary<string, bool>();
 
 
 
@@ -654,97 +684,204 @@ namespace SCKRM.Editor
                 EditorGUILayout.Space();
             }
 
-            //GUI
+            //Control Setting List
             {
-                EditorGUILayout.BeginHorizontal();
-
+                //GUI
                 {
-                    if (InputManager.Data.controlSettingList.ContainsKey(""))
-                        GUI.enabled = false;
-
-                    if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                        InputManager.Data.controlSettingList.Add("", KeyCode.None);
-
-                    GUI.enabled = true;
-                }
-
-                {
-                    if (InputManager.Data.controlSettingList.Count <= 0 || ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] != "" || InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1] != KeyCode.None) && deleteSafety))
-                        GUI.enabled = false;
-
-                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && InputManager.Data.controlSettingList.Count > 0)
-                        InputManager.Data.controlSettingList.Remove(InputManager.Data.controlSettingList.ToList()[InputManager.Data.controlSettingList.Count - 1].Key);
-
-                    GUI.enabled = true;
-                }
-
-                {
-                    int count = EditorGUILayout.IntField("리스트 길이", InputManager.Data.controlSettingList.Count, GUILayout.Height(21));
-                    //변수 설정
-                    if (count < 0)
-                        count = 0;
-
-                    if (count > InputManager.Data.controlSettingList.Count)
-                    {
-                        for (int i = InputManager.Data.controlSettingList.Count; i < count; i++)
-                        {
-                            if (!InputManager.Data.controlSettingList.ContainsKey(""))
-                                InputManager.Data.controlSettingList.Add("", KeyCode.None);
-                            else
-                                count--;
-                        }
-                    }
-                    else if (count < InputManager.Data.controlSettingList.Count)
-                    {
-                        for (int i = InputManager.Data.controlSettingList.Count - 1; i >= count; i--)
-                        {
-                            if ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] == "" && InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1] == KeyCode.None) || !deleteSafety)
-                                InputManager.Data.controlSettingList.Remove(InputManager.Data.controlSettingList.ToList()[InputManager.Data.controlSettingList.Count - 1].Key);
-                            else
-                                count++;
-                        }
-                    }
-                }
-
-                EditorGUILayout.EndHorizontal();
-            }
-
-            EditorGUILayout.Space();
-
-
-
-            {
-                controlSettingScrollPos = EditorGUILayout.BeginScrollView(controlSettingScrollPos);
-
-                List<KeyValuePair<string, KeyCode>> controlList = InputManager.Data.controlSettingList.ToList();
-
-                //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
-                List<string> keyList = new List<string>();
-                List<KeyCode> valueList = new List<KeyCode>();
-
-                for (int i = 0; i < InputManager.Data.controlSettingList.Count; i++)
-                {
-                    KeyValuePair<string, KeyCode> item = controlList[i];
-
                     EditorGUILayout.BeginHorizontal();
 
-                    GUILayout.Label("키 코드 키", GUILayout.ExpandWidth(false));
-                    keyList.Add(EditorGUILayout.TextField(item.Key));
+                    {
+                        if (InputManager.Data.controlSettingList.ContainsKey(""))
+                            GUI.enabled = false;
 
-                    GUILayout.Label("키 코드", GUILayout.ExpandWidth(false));
-                    valueList.Add((KeyCode)EditorGUILayout.EnumPopup(item.Value));
+                        if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
+                            InputManager.Data.controlSettingList.Add("", KeyCode.None);
+
+                        GUI.enabled = true;
+                    }
+
+                    {
+                        if (InputManager.Data.controlSettingList.Count <= 0 || ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] != "" || InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1] != KeyCode.None) && deleteSafety))
+                            GUI.enabled = false;
+
+                        if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && InputManager.Data.controlSettingList.Count > 0)
+                            InputManager.Data.controlSettingList.Remove(InputManager.Data.controlSettingList.ToList()[InputManager.Data.controlSettingList.Count - 1].Key);
+
+                        GUI.enabled = true;
+                    }
+
+                    {
+                        int count = EditorGUILayout.IntField("리스트 길이", InputManager.Data.controlSettingList.Count, GUILayout.Height(21));
+                        //변수 설정
+                        if (count < 0)
+                            count = 0;
+
+                        if (count > InputManager.Data.controlSettingList.Count)
+                        {
+                            for (int i = InputManager.Data.controlSettingList.Count; i < count; i++)
+                            {
+                                if (!InputManager.Data.controlSettingList.ContainsKey(""))
+                                    InputManager.Data.controlSettingList.Add("", KeyCode.None);
+                                else
+                                    count--;
+                            }
+                        }
+                        else if (count < InputManager.Data.controlSettingList.Count)
+                        {
+                            for (int i = InputManager.Data.controlSettingList.Count - 1; i >= count; i--)
+                            {
+                                if ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] == "" && InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1] == KeyCode.None) || !deleteSafety)
+                                    InputManager.Data.controlSettingList.Remove(InputManager.Data.controlSettingList.ToList()[InputManager.Data.controlSettingList.Count - 1].Key);
+                                else
+                                    count++;
+                            }
+                        }
+                    }
 
                     EditorGUILayout.EndHorizontal();
                 }
 
-                EditorGUILayout.EndScrollView();
+                EditorGUILayout.Space();
 
-                //키 중복 감지
-                bool overlap = keyList.Count != keyList.Distinct().Count();
-                if (!overlap)
+
+                if (Application.isPlaying)
+                    EditorGUILayout.HelpBox("플레이 모드에서 바꾼 (인게임 설정에서 바꾼) 조작은 반영되지 않고, 저장되지 않습니다\n기본값만 저장되고 변경됩니다 (키를 초기화한 상태라면, 변경한 키는 인게임에도 적용됩니다)", MessageType.Warning);
+
                 {
-                    //리스트 2개를 딕셔너리로 변환
-                    InputManager.Data.controlSettingList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
+                    controlSettingScrollPos = EditorGUILayout.BeginScrollView(controlSettingScrollPos, GUILayout.ExpandHeight(false));
+
+
+                    List<KeyValuePair<string, KeyCode>> controlList = InputManager.Data.controlSettingList.ToList();
+
+                    //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
+                    List<string> keyList = new List<string>();
+                    List<KeyCode> valueList = new List<KeyCode>();
+
+                    for (int i = 0; i < InputManager.Data.controlSettingList.Count; i++)
+                    {
+                        KeyValuePair<string, KeyCode> item = controlList[i];
+
+                        EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Label("키 코드 키", GUILayout.ExpandWidth(false));
+                        keyList.Add(EditorGUILayout.TextField(item.Key));
+
+                        GUILayout.Label("키 코드", GUILayout.ExpandWidth(false));
+                        valueList.Add((KeyCode)EditorGUILayout.EnumPopup(item.Value));
+
+                        EditorGUILayout.EndHorizontal();
+                    }
+
+                    EditorGUILayout.EndScrollView();
+
+                    //키 중복 감지
+                    bool overlap = keyList.Count != keyList.Distinct().Count();
+                    if (!overlap)
+                    {
+                        //리스트 2개를 딕셔너리로 변환
+                        InputManager.Data.controlSettingList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
+                    }
+                }
+            }
+
+            CustomInspectorEditor.DrawLine(2);
+
+            //Input Lock Setting List
+            {
+                EditorGUILayout.LabelField("잠금 설정", EditorStyles.boldLabel);
+
+                //GUI
+                {
+                    EditorGUILayout.BeginHorizontal();
+
+                    {
+                        if (InputManager.Data.inputLockList.ContainsKey(""))
+                            GUI.enabled = false;
+
+                        if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
+                            InputManager.Data.inputLockList.Add("", false);
+
+                        GUI.enabled = true;
+                    }
+
+                    {
+                        if (InputManager.Data.inputLockList.Count <= 0 || ((InputManager.Data.inputLockList.Keys.ToList()[InputManager.Data.inputLockList.Count - 1] != "" || InputManager.Data.inputLockList.Values.ToList()[InputManager.Data.inputLockList.Count - 1] != false) && deleteSafety))
+                            GUI.enabled = false;
+
+                        if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && InputManager.Data.inputLockList.Count > 0)
+                            InputManager.Data.inputLockList.Remove(InputManager.Data.inputLockList.ToList()[InputManager.Data.inputLockList.Count - 1].Key);
+
+                        GUI.enabled = true;
+                    }
+
+                    {
+                        int count = EditorGUILayout.IntField("리스트 길이", InputManager.Data.inputLockList.Count, GUILayout.Height(21));
+                        //변수 설정
+                        if (count < 0)
+                            count = 0;
+
+                        if (count > InputManager.Data.inputLockList.Count)
+                        {
+                            for (int i = InputManager.Data.inputLockList.Count; i < count; i++)
+                            {
+                                if (!InputManager.Data.inputLockList.ContainsKey(""))
+                                    InputManager.Data.inputLockList.Add("", false);
+                                else
+                                    count--;
+                            }
+                        }
+                        else if (count < InputManager.Data.inputLockList.Count)
+                        {
+                            for (int i = InputManager.Data.inputLockList.Count - 1; i >= count; i--)
+                            {
+                                if ((InputManager.Data.inputLockList.Keys.ToList()[InputManager.Data.inputLockList.Count - 1] == "" && InputManager.Data.inputLockList.Values.ToList()[InputManager.Data.inputLockList.Count - 1] == false) || !deleteSafety)
+                                    InputManager.Data.inputLockList.Remove(InputManager.Data.inputLockList.ToList()[InputManager.Data.inputLockList.Count - 1].Key);
+                                else
+                                    count++;
+                            }
+                        }
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+                }
+
+                EditorGUILayout.Space();
+
+
+
+                {
+                    controlLockSettingScrollPos = EditorGUILayout.BeginScrollView(controlLockSettingScrollPos, GUILayout.ExpandHeight(false));
+
+                    List<KeyValuePair<string, bool>> inputLockList = InputManager.Data.inputLockList.ToList();
+
+                    //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
+                    List<string> keyList = new List<string>();
+                    List<bool> valueList = new List<bool>();
+
+                    for (int i = 0; i < InputManager.Data.inputLockList.Count; i++)
+                    {
+                        KeyValuePair<string, bool> item = inputLockList[i];
+
+                        EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Label("키 코드 키", GUILayout.ExpandWidth(false));
+                        keyList.Add(EditorGUILayout.TextField(item.Key));
+
+                        GUILayout.Label("잠금", GUILayout.ExpandWidth(false));
+                        valueList.Add(EditorGUILayout.Toggle(item.Value));
+
+                        EditorGUILayout.EndHorizontal();
+                    }
+
+                    EditorGUILayout.EndScrollView();
+
+                    //키 중복 감지
+                    bool overlap = keyList.Count != keyList.Distinct().Count();
+                    if (!overlap)
+                    {
+                        //리스트 2개를 딕셔너리로 변환
+                        InputManager.Data.inputLockList = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
+                    }
                 }
             }
 
@@ -922,7 +1059,11 @@ namespace SCKRM.Editor
 
             EditorGUILayout.BeginHorizontal();
             audioSettingNameSpace = EditorGUILayout.TextField("네임스페이스", audioSettingNameSpace);
-            string path = KernelMethod.PathCombine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", audioSettingNameSpace));
+            string nameSpace = audioSettingNameSpace;
+            if (nameSpace == "")
+                nameSpace = ResourceManager.defaultNameSpace;
+
+            string path = KernelMethod.PathCombine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
 
             if (Application.isPlaying)
                 GUI.enabled = false;
@@ -1077,7 +1218,14 @@ namespace SCKRM.Editor
 
 
                     {
-                        audioSettingScrollPos = EditorGUILayout.BeginScrollView(audioSettingScrollPos);
+                        {
+                            GUI.enabled = true;
+
+                            audioSettingScrollPos = EditorGUILayout.BeginScrollView(audioSettingScrollPos);
+
+                            if (Application.isPlaying)
+                                GUI.enabled = false;
+                        }
 
                         //GUI.DrawTexture(new Rect(0, 0, maxSize.x, maxSize.y), EditorGUIUtility.whiteTexture, ScaleMode.StretchToFill, false, 0, Color.white * 0.25f, 0, 0);
 
@@ -1102,7 +1250,7 @@ namespace SCKRM.Editor
                             string subtitle = EditorGUILayout.TextField(soundData.Value.subtitle);
 
                             GUILayout.Label("BGM", GUILayout.ExpandWidth(false));
-                            bool isBGM = EditorGUILayout.Toggle(soundData.Value.isBGM);
+                            bool isBGM = EditorGUILayout.Toggle(soundData.Value.isBGM, GUILayout.Width(15));
 
                             GUILayout.Label("카테고리", GUILayout.ExpandWidth(false));
                             SoundCategory soundCategory = (SoundCategory)EditorGUILayout.EnumPopup(soundData.Value.category, GUILayout.Width(100));

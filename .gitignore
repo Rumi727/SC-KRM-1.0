@@ -15,6 +15,10 @@
 
 [Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds/*
 [Aa]ssets/[Ss]treaming[Aa]ssets/assets/school-live/sounds.meta
+[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/sounds/*
+[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/sounds.meta
+[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/nbs/*
+[Aa]ssets/[Ss]treaming[Aa]ssets/assets/sc-krm/nbs.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*

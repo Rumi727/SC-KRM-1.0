@@ -8,7 +8,7 @@ namespace SCKRM
     {
         private static string prevPoint = "";
         private static int detectionCount = 0;
-        private const int DetectionThreshold = 100000;
+        private const int DetectionThreshold = 10000;
 
         [System.Diagnostics.Conditional("UNITY_EDITOR")]
         public static void Run(

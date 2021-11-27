@@ -52,8 +52,11 @@ MonoBehaviour:
   _loop: 0
   _tempo: 1
   _pitch: 1
-  _panStereo: 1
   _spatial: 0
+  _panStereo: 1
+  _minDistance: 0
+  _maxDistance: 16
+  _localPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &6257864773840450652
 AudioSource:
   m_ObjectHideFlags: 0

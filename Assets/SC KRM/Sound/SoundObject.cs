@@ -7,15 +7,21 @@ namespace SCKRM.Sound
     public sealed class SoundObject : ObjectPooling
     {
         [SerializeField] AudioSource _audioSource;
-        public AudioSource audioSource { get => _audioSource; }
+        AudioSource audioSource { get => _audioSource; }
 
 
 
         public SoundData soundData { get; private set; }
         public SoundMetaData soundMetaData { get; private set; }
 
+        public float time { get => audioSource.time; set => audioSource.time = value; }
+        public float length { get => (float)(audioSource.clip?.length); }
+
+        public bool isLooped { get; private set; } = false;
+        public bool isPaused { get; set; } = false;
 
 
+        #region variable
         [SerializeField] string _key = "";
         [SerializeField] string _nameSpace = "";
         public string key { get => _key; set => _key = value; }
@@ -39,10 +45,8 @@ namespace SCKRM.Sound
         public float minDistance { get => _minDistance; set => _minDistance = value; }
         public float maxDistance { get => _maxDistance; set => _maxDistance = value; }
         public Vector3 localPosition { get => _localPosition; set => _localPosition = value; }
+        #endregion
 
-
-
-        public bool isLooped { get; private set; } = false;
 
 
         static string tempNameSpace = "";
@@ -56,8 +60,10 @@ namespace SCKRM.Sound
             }
 
             float tempTime = audioSource.time;
+            audioSource.time = 0;
+
             soundData = ResourceManager.SearchSoundData(key, nameSpace);
-            
+
             if (soundData == null)
             {
                 Remove();
@@ -68,7 +74,12 @@ namespace SCKRM.Sound
                 Remove();
                 return;
             }
-            
+            else if (pitch == 0)
+            {
+                Remove();
+                return;
+            }
+
             if (!SoundManager.soundList.Contains(this))
                 SoundManager.soundList.Add(this);
 
@@ -82,16 +93,18 @@ namespace SCKRM.Sound
             audioSource.clip = soundMetaData.audioClip;
             audioSource.Play();
 
-            if (tempNameSpace == nameSpace && tempKey == key)
-                audioSource.time = tempTime;
-            else
-            {
-                tempNameSpace = nameSpace;
-                tempKey = key;
-            }
-
             if (!soundMetaData.stream && pitch < 0 && audioSource.time == 0)
                 audioSource.time = audioSource.clip.length - 0.001f;
+
+            if (tempTime >= length)
+            {
+                if (loop)
+                    audioSource.time = 0;
+                else
+                    Remove();
+            }
+            else
+                audioSource.time = tempTime;
         }
         
         void SetVariable()

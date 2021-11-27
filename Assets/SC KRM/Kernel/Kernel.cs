@@ -249,7 +249,7 @@ namespace SCKRM
                 Application.targetFrameRate = Data.afkFpsLimit;
 
             //AFK
-            if (InputManager.GetAnyKeyDown(InputLockDeny.All))
+            if (isInitialLoadEnd && InputManager.GetAnyKeyDown("all"))
                 afkTimer = 0;
 
             if (afkTimer >= Data.afkTimerLimit)
@@ -282,7 +282,7 @@ namespace SCKRM
 
                 splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
 
-                ThreadManager.Create(ThreadManager.ThreadAutoRemove, "Thread Auto Remove", true);
+                ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "Thread Auto Remove", true);
 
 #if UNITY_EDITOR
                 Scene scene = SceneManager.GetActiveScene();
@@ -463,35 +463,89 @@ namespace SCKRM
                 return value;
         }
 
+        public static int Clamp01(this int value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static float Clamp01(this float value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static double Clamp01(this double value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
         public static int Lerp(this int current, int target, float t, bool unclamped = false)
         {
-            if (!unclamped) t = t.Clamp(0, 1);
+            if (!unclamped) t = t.Clamp01();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, double t, bool unclamped = false)
         {
-            if (!unclamped) t = t.Clamp(0, 1);
+            if (!unclamped) t = t.Clamp01();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static float Lerp(this float current, float target, float t, bool unclamped = false)
         {
-            if (!unclamped) t = t.Clamp(0, 1);
+            if (!unclamped) t = t.Clamp01();
             return ((1 - t) * current) + (target * t);
         }
 
         public static double Lerp(this double current, double target, double t, bool unclamped = false)
         {
-            if (!unclamped) t = t.Clamp(0, 1);
+            if (!unclamped) t = t.Clamp01();
             return ((1 - t) * current) + (target * t);
         }
 
-        public static Vector2 Lerp(this Vector2 current, Vector2 target, float t, bool unclamped = false) => new Vector2(current.x.Lerp(target.x, t, unclamped), current.y.Lerp(target.y, t, unclamped));
-        public static Vector3 Lerp(this Vector3 current, Vector3 target, float t, bool unclamped = false) => new Vector3(current.x.Lerp(target.x, t, unclamped), current.y.Lerp(target.y, t, unclamped), current.z.Lerp(target.z, t, unclamped));
-        public static Vector4 Lerp(this Vector4 current, Vector4 target, float t, bool unclamped = false) => new Vector4(current.x.Lerp(target.x, t, unclamped), current.y.Lerp(target.y, t, unclamped), current.z.Lerp(target.z, t, unclamped), current.w.Lerp(target.w, t, unclamped));
-        public static Rect Lerp(this Rect current, Rect target, float t, bool unclamped = false) => new Rect(current.x.Lerp(target.x, t, unclamped), current.y.Lerp(target.y, t, unclamped), current.width.Lerp(target.width, t, unclamped), current.height.Lerp(target.height, t, unclamped));
-        public static Color Lerp(this Color current, Color target, float t, bool unclamped = false) => new Color(current.r.Lerp(target.r, t, unclamped), current.g.Lerp(target.g, t, unclamped), current.b.Lerp(target.b, t, unclamped), current.a.Lerp(target.a, t, unclamped));
+        public static Vector2 Lerp(this Vector2 current, Vector2 target, float t, bool unclamped = false)
+        {
+            if (!unclamped) t = t.Clamp01();
+            return new Vector2(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t);
+        }
+
+        public static Vector3 Lerp(this Vector3 current, Vector3 target, float t, bool unclamped = false)
+        {
+            if (!unclamped) t = t.Clamp01();
+            return new Vector3(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t);
+        }
+
+        public static Vector4 Lerp(this Vector4 current, Vector4 target, float t, bool unclamped = false)
+        {
+            if (!unclamped) t = t.Clamp01();
+            return new Vector4(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t, current.w + (target.w - current.w) * t);
+        }
+
+        public static Rect Lerp(this Rect current, Rect target, float t, bool unclamped = false)
+        {
+            if (!unclamped) t = t.Clamp01();
+            return new Rect(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.width + (target.width - current.width) * t, current.height + (target.height - current.height) * t);
+        }
+
+        public static Color Lerp(this Color current, Color target, float t, bool unclamped = false)
+        {
+            if (!unclamped) t = t.Clamp01();
+            return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.b + (target.b - current.b) * t);
+        }
 
         public static int MoveTowards(this int current, int target, int maxDelta)
         {
@@ -517,9 +571,51 @@ namespace SCKRM
             return current + (target - current).Sign() * maxDelta;
         }
 
-        [Obsolete("use Vector2.MoveTowards")] public static Vector2 MoveTowards(this Vector2 current, Vector2 target, float maxDelta) => Vector2.MoveTowards(current, target, maxDelta);
-        [Obsolete("use Vector3.MoveTowards")] public static Vector3 MoveTowards(this Vector3 current, Vector3 target, float maxDelta) => Vector3.MoveTowards(current, target, maxDelta);
-        [Obsolete("use Vector4.MoveTowards")] public static Vector4 MoveTowards(this Vector4 current, Vector4 target, float maxDelta) => Vector4.MoveTowards(current, target, maxDelta);
+        public static Vector2 MoveTowards(this Vector2 current, Vector2 target, float maxDistanceDelta)
+        {
+            Vector2 a = target - current;
+            float magnitude = a.magnitude;
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+                return target;
+
+            return current + a / magnitude * maxDistanceDelta;
+        }
+        public static Vector3 MoveTowards(this Vector3 current, Vector3 target, float maxDistanceDelta)
+        {
+            Vector3 a = target - current;
+            float magnitude = a.magnitude;
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+                return target;
+
+            return current + a / magnitude * maxDistanceDelta;
+        }
+        public static Vector4 MoveTowards(this Vector4 current, Vector4 target, float maxDistanceDelta)
+        {
+            Vector4 a = target - current;
+            float magnitude = a.magnitude;
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+                return target;
+
+            return current + a / magnitude * maxDistanceDelta;
+        }
+        public static Rect MoveTowards(this Rect current, Rect target, float maxDistanceDelta)
+        {
+            Rect a = new Rect(target.x - current.x, target.y - current.y, target.width - current.width, target.height - current.height);
+            float magnitude = Mathf.Sqrt((a.x * a.x) + (a.y * a.y) + (a.width * a.width) + (a.height * a.height));
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+                return target;
+
+            return new Rect(current.x + (a.x / magnitude * maxDistanceDelta), current.y + (a.y / magnitude * maxDistanceDelta), current.width + (a.width / magnitude * maxDistanceDelta), current.height + (a.height / magnitude * maxDistanceDelta));
+        }
+        public static Color MoveTowards(this Color current, Color target, float maxDistanceDelta)
+        {
+            Color a = target - current;
+            float magnitude = Mathf.Sqrt((a.r * a.r) + (a.g * a.g) + (a.b * a.b) + (a.a * a.a));
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+                return target;
+            
+            return current + a / magnitude * maxDistanceDelta;
+        }
         #endregion
 
         #region List
@@ -795,6 +891,11 @@ namespace SCKRM
         #endregion
 
         #region String
+        /// <summary>
+        /// (paths = ("asdf", "asdf")) = "asdf/asdf" (Path.Combine is "asdf\asdf")
+        /// </summary>
+        /// <param name="paths">경로</param>
+        /// <returns></returns>
         public static string PathCombine(params string[] paths)
         {
             if (paths == null || paths.Length < 0)
@@ -866,6 +967,12 @@ namespace SCKRM
             return value;
         }
 
+        /// <summary>
+        /// (text = "AddSpacesToSentence") = "Add Spaces To Sentence"
+        /// </summary>
+        /// <param name="text">텍스트</param>
+        /// <param name="preserveAcronyms">약어 보존</param>
+        /// <returns></returns>
         public static string AddSpacesToSentence(this string text, bool preserveAcronyms = true)
         {
             if (string.IsNullOrWhiteSpace(text))
@@ -885,13 +992,18 @@ namespace SCKRM
             return newText.ToString();
         }
 
+        /// <summary>
+        /// (keyCode = KeyCode.RightArrow) = "→"
+        /// </summary>
+        /// <param name="keyCode"></param>
+        /// <returns></returns>
         public static string KeyCodeToString(this KeyCode keyCode)
         {
             string text;
             if (keyCode == KeyCode.Escape)
                 text = "None";
             else if (keyCode == KeyCode.Return)
-                text = "Enter";
+                text = "␣";
             else if (keyCode == KeyCode.Alpha0)
                 text = "0";
             else if (keyCode == KeyCode.Alpha1)
@@ -913,7 +1025,7 @@ namespace SCKRM
             else if (keyCode == KeyCode.Alpha9)
                 text = "9";
             else if (keyCode == KeyCode.AltGr)
-                text = "Alt Graph";
+                text = "AG";
             else if (keyCode == KeyCode.Ampersand)
                 text = "&";
             else if (keyCode == KeyCode.Asterisk)
@@ -965,7 +1077,7 @@ namespace SCKRM
             else if (keyCode == KeyCode.KeypadDivide)
                 text = "/";
             else if (keyCode == KeyCode.KeypadEnter)
-                text = "Enter";
+                text = "↵";
             else if (keyCode == KeyCode.KeypadEquals)
                 text = "=";
             else if (keyCode == KeyCode.KeypadMinus)
@@ -989,19 +1101,19 @@ namespace SCKRM
             else if (keyCode == KeyCode.Minus)
                 text = "-";
             else if (keyCode == KeyCode.Mouse0)
-                text = "Left Click";
+                text = "LM";
             else if (keyCode == KeyCode.Mouse1)
-                text = "Right Click";
+                text = "RM";
             else if (keyCode == KeyCode.Mouse2)
-                text = "Middle Click";
+                text = "MM";
             else if (keyCode == KeyCode.Mouse3)
-                text = "Mouse 3";
+                text = "3M";
             else if (keyCode == KeyCode.Mouse4)
-                text = "Mouse 4";
+                text = "4M";
             else if (keyCode == KeyCode.Mouse5)
-                text = "Mouse 5";
+                text = "5M";
             else if (keyCode == KeyCode.Mouse6)
-                text = "Mouse 6";
+                text = "6M";
             else if (keyCode == KeyCode.Percent)
                 text = "%";
             else if (keyCode == KeyCode.Period)
@@ -1032,12 +1144,48 @@ namespace SCKRM
                 text = "~";
             else if (keyCode == KeyCode.Underscore)
                 text = "_";
+            else if (keyCode == KeyCode.UpArrow)
+                text = "↑";
+            else if (keyCode == KeyCode.DownArrow)
+                text = "↓";
+            else if (keyCode == KeyCode.LeftArrow)
+                text = "←";
+            else if (keyCode == KeyCode.RightArrow)
+                text = "→";
+            else if (keyCode == KeyCode.LeftControl)
+                text = "LC";
+            else if (keyCode == KeyCode.RightControl)
+                text = "RC";
+            else if (keyCode == KeyCode.LeftAlt)
+                text = "LA";
+            else if (keyCode == KeyCode.RightAlt)
+                text = "RA";
+            else if (keyCode == KeyCode.LeftShift)
+                text = "L⇧";
+            else if (keyCode == KeyCode.RightShift)
+                text = "R⇧";
+            else if (keyCode == KeyCode.Backspace)
+                text = "B←";
+            else if (keyCode == KeyCode.Delete)
+                text = "D←";
+            else if (keyCode == KeyCode.PageUp)
+                text = "P↑";
+            else if (keyCode == KeyCode.PageDown)
+                text = "P↓";
             else
                 text = keyCode.ToString();
 
             return text.AddSpacesToSentence();
         }
 
+        /// <summary>
+        /// (second = 70) = "1:10"
+        /// </summary>
+        /// <param name="second">초</param>
+        /// <param name="minuteAlwayShow">분 단위 항상 표시</param>
+        /// <param name="hourAlwayShow">시간, 분 단위 항상 표시</param>
+        /// <param name="dayAlwayShow">하루, 시간, 분 단위 항상 표시</param>
+        /// <returns></returns>
         public static string ToTime(this int second, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
         {
             try
@@ -1057,6 +1205,15 @@ namespace SCKRM
             catch (Exception) { return "--:--"; }
         }
 
+        /// <summary>
+        /// (second = 70.1f) = "1:10.1"
+        /// </summary>
+        /// <param name="second">초</param>
+        /// <param name="decimalShow">소수 표시</param>
+        /// <param name="minuteAlwayShow">분 단위 항상 표시</param>
+        /// <param name="hourAlwayShow">시간, 분 단위 항상 표시</param>
+        /// <param name="dayAlwayShow">하루, 시간, 분 단위 항상 표시</param>
+        /// <returns></returns>
         public static string ToTime(this float second, bool decimalShow = true, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
         {
             try
@@ -1092,6 +1249,15 @@ namespace SCKRM
             catch (Exception) { return "--:--"; }
         }
 
+        /// <summary>
+        /// (second = 70.1) = "1:10.1"
+        /// </summary>
+        /// <param name="second">초</param>
+        /// <param name="decimalShow">소수 표시</param>
+        /// <param name="minuteAlwayShow">분 단위 항상 표시</param>
+        /// <param name="hourAlwayShow">시간, 분 단위 항상 표시</param>
+        /// <param name="dayAlwayShow">하루, 시간, 분 단위 항상 표시</param>
+        /// <returns></returns>
         public static string ToTime(this double second, bool decimalShow = true, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
         {
             try
@@ -1125,6 +1291,86 @@ namespace SCKRM
                 }
             }
             catch (Exception) { return "--:--"; }
+        }
+
+
+
+        /// <summary>
+        /// (value = 5, max = 10, length = 10) = "■■■■■□□□□□"
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="max"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string IntToBar(this int value, int max, int length)
+        {
+            string text = "";
+
+            for (float i = 0.5f; i < length + 0.5f; i++)
+            {
+                if (value / max >= i / length)
+                    text += "■";
+                else
+                {
+                    if (value / max >= (i - 0.5f) / length)
+                        text += "▣";
+                    else
+                        text += "□";
+                }
+            }
+            return text;
+        }
+
+        /// <summary>
+        /// (value = 5.5, max = 10, length = 10) = "■■■■■▣□□□□"
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="max"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string FloatToBar(this float value, float max, int length)
+        {
+            string text = "";
+
+            for (float i = 0.5f; i < length + 0.5f; i++)
+            {
+                if (value / max >= i / length)
+                    text += "■";
+                else
+                {
+                    if (value / max >= (i - 0.5f) / length)
+                        text += "▣";
+                    else
+                        text += "□";
+                }
+            }
+            return text;
+        }
+
+        /// <summary>
+        /// (value = 5.5, max = 10, length = 10) = "■■■■■▣□□□□"
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="max"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string DoubleToBar(this double value, double max, int length)
+        {
+            string text = "";
+
+            for (double i = 0.5; i < length + 0.5; i++)
+            {
+                if (value / max >= i / length)
+                    text += "■";
+                else
+                {
+                    if (value / max >= (i - 0.5) / length)
+                        text += "▣";
+                    else
+                        text += "□";
+                }
+            }
+            return text;
         }
         #endregion
     }

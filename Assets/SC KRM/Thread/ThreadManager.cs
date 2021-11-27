@@ -26,29 +26,31 @@ namespace SCKRM.Threads
 
         public static void ThreadAutoRemove()
         {
+            for (int i = 0; i < runningThreads.Count; i++)
+            {
+                ThreadMetaData runningThread = runningThreads[i];
+                if (runningThread != null && !runningThread.thread.IsAlive)
+                    runningThread.Remove();
+            }
+        }
+
+        public static void ThreadAutoRemove(bool loop)
+        {
             if (!isMainThread)
             {
-                while (true)
+                if (loop)
                 {
-                    for (int i = 0; i < runningThreads.Count; i++)
+                    while (true)
                     {
-                        ThreadMetaData runningThread = runningThreads[i];
-                        if (runningThread != null && !runningThread.thread.IsAlive)
-                            runningThread.Remove();
+                        ThreadAutoRemove();
+                        Thread.Sleep(100);
                     }
-
-                    Thread.Sleep(100);
                 }
+                else
+                    ThreadAutoRemove();
             }
             else
-            {
-                for (int i = 0; i < runningThreads.Count; i++)
-                {
-                    ThreadMetaData runningThread = runningThreads[i];
-                    if (runningThread != null && !runningThread.thread.IsAlive)
-                        runningThread.Remove();
-                }
-            }
+                throw new MainThreadMethodException();
         }
 
         #region Thread Create Method
@@ -367,11 +369,27 @@ namespace SCKRM.Threads
         }
     }
 
+    public class MainThreadMethodException : Exception
+    {
+        /// <summary>
+        /// This function cannot be executed on the main thread
+        /// 이 함수는 메인 스레드에서 실행 할 수 없습니다
+        /// </summary>
+        public MainThreadMethodException() : base("This function cannot be executed on the main thread\n이 함수는 메인스레드에서 실행 할 수 없습니다") { }
+
+        /// <summary>
+        /// {method} function cannot be executed on the main thread
+        /// {method} 함수는 메인 스레드에서 실행 할 수 없습니다
+        /// </summary>
+        public MainThreadMethodException(string method) : base($"{method} function cannot be executed on the main thread\n{method} 함수는 메인스레드에서 실행 할 수 없습니다") { }
+    }
+
     public class NotPlayModeThreadCreateException : Exception
     {
         /// <summary>
+        /// It is forbidden to spawn threads when not in play mode. Please create your own thread
         /// 플레이 모드가 아닐때 스레드를 생성하는건 금지되어있습니다. 직접 스레드를 생성해주세요
         /// </summary>
-        public NotPlayModeThreadCreateException() : base("플레이 모드가 아닐때 스레드를 생성하는건 금지되어있습니다. 직접 스레드를 생성해주세요") { }
+        public NotPlayModeThreadCreateException() : base("It is forbidden to spawn threads when not in play mode. Please create your own thread\n플레이 모드가 아닐때 스레드를 생성하는건 금지되어있습니다. 직접 스레드를 생성해주세요") { }
     }
 }

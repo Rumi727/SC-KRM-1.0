@@ -62,25 +62,29 @@ namespace SCKRM.Resource
         static Dictionary<string, Dictionary<string, SoundData>> allSounds { get; } = new Dictionary<string, Dictionary<string, SoundData>>();
 
 
+
         public static bool isInitialLoadPackTexturesEnd { get; private set; } = false;
         public static bool isInitialLoadSpriteEnd { get; private set; } = false;
         public static bool isInitialLoadAudioEnd { get; private set; } = false;
 
         /// <summary>
-        /// It should only run on the main thread
+        /// 리소스 새로고침 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Resource refresh (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
+        /// <returns></returns>
         public static async UniTask ResourceRefesh()
         {
             Debug.Log("ResourceManager: Waiting for pack textures to set..."); await SetPackTextures();
             Debug.Log("ResourceManager: Waiting for sprite to set..."); await SetSprite();
             Debug.Log("ResourceManager: Waiting for audio to set..."); await SetAudio();
-            isInitialLoadAudioEnd = true;
             Debug.Log("ResourceManager: Resource loading finished!");
         }
 
         /// <summary>
-        /// 리소스팩의 텍스쳐를 전부 하나로 합칩니다
+        /// 리소스팩의 텍스쳐를 전부 하나로 합칩니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Combine all textures from resource packs into one (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
+        /// <returns></returns>
         static async UniTask SetPackTextures()
         {
             packTextures.Clear();
@@ -247,8 +251,10 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 합친 텍스쳐를 전부 스프라이트로 만들어서 리스트에 넣습니다
+        /// 합친 텍스쳐를 전부 스프라이트로 만들어서 리스트에 넣습니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Put all the combined textures into sprites and put them in the list (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
+        /// <returns></returns>
         static async UniTask SetSprite()
         {
             allTextureSprites.Clear();
@@ -304,7 +310,8 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 리소스팩의 sounds.json에서 오디오를 가져옵니다
+        /// 리소스팩의 sounds.json에서 오디오를 가져옵니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Get audio from sounds.json in resource pack (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <returns></returns>
         static async UniTask SetAudio()
@@ -363,19 +370,21 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 합쳐진 텍스쳐의 경로를 찾아서 반환합니다
+        /// Finds the path of the merged texture and returns it
         /// </summary>
         /// <param name="type">
         /// 타입
+        /// Type
         /// </param>
         /// <param name="name">
         /// 이름
+        /// Name
         /// </param>
         /// <param name="nameSpace">
         /// 네임스페이스
+        /// Name Space
         /// </param>
-        /// <returns>
-        /// string
-        /// </returns>
+        /// <returns></returns>
         public static string SearchTexturePath(string type, string name, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -403,16 +412,17 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 합쳐진 텍스쳐를 반환합니다
+        /// Returns the merged texture
         /// </summary>
         /// <param name="type">
         /// 타입
+        /// Type
         /// </param>
         /// <param name="nameSpace">
         /// 네임스페이스
+        /// Name Space
         /// </param>
-        /// <returns>
-        /// Texture2D
-        /// </returns>
+        /// <returns></returns>
         public static Texture2D SearchPackTexture(string type, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -438,19 +448,21 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 합쳐진 텍스쳐의 Rect를 반환합니다
+        /// Returns a Rect of the merged texture.
         /// </summary>
         /// <param name="type">
         /// 타입
+        /// Type
         /// </param>
         /// <param name="name">
         /// 이름
+        /// Name
         /// </param>
         /// <param name="nameSpace">
         /// 네임스페이스
+        /// Name Space
         /// </param>
-        /// <returns>
-        /// Rect
-        /// </returns>
+        /// <returns></returns>
         public static Rect SearchTextureRect(string type, string name, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -483,16 +495,17 @@ namespace SCKRM.Resource
         /// </summary>
         /// <param name="type">
         /// 타입
+        /// Type
         /// </param>
         /// <param name="name">
         /// 이름
+        /// Name
         /// </param>
         /// <param name="nameSpace">
         /// 네임스페이스
+        /// Name Space
         /// </param>
-        /// <returns>
-        /// Sprite
-        /// </returns>
+        /// <returns></returns>
         public static Sprite[] SearchSprites(string type, string name, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -527,11 +540,15 @@ namespace SCKRM.Resource
         /// 리소스팩에서 텍스트를 검색하고 반환합니다 (초기 로딩과 플레이 모드가 아니여도 실행 가능합니다)
         /// It can be executed even if it is not in the initial loading and play mode
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="nameSpace"></param>
-        /// <returns>
-        /// string
-        /// </returns>
+        /// <param name="path">
+        /// 경로
+        /// Path
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// Name Space
+        /// </param>
+        /// <returns></returns>
         public static string SearchText(string path, string nameSpace = "")
         {
             if (path == null)
@@ -558,16 +575,17 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 리소스팩에서 사운드 데이터를 찾고 반환합니다
+        /// Finds and returns sound data from resource packs
         /// </summary>
         /// <param name="key">
         /// 키
+        /// Key
         /// </param>
         /// <param name="nameSpace">
         /// 네임스페이스
+        /// Name Space
         /// </param>
-        /// <returns>
-        /// SoundData
-        /// </returns>
+        /// <returns></returns>
         public static SoundData SearchSoundData(string key, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -595,16 +613,17 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
+        /// Import image files as Texture2D type
         /// </summary>
         /// <param name="path">
         /// 파일의 경로
+        /// Path
         /// </param>
         /// <param name="pathExtensionUse">
         /// 경로에 확장자 사용
+        /// Use extension in path
         /// </param>
-        /// <returns>
-        /// Texture2D
-        /// </returns>
+        /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(path + ".json", true);
@@ -618,30 +637,32 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
+        /// Import image files as Texture2D type
         /// </summary>
         /// <param name="path">
         /// 파일의 경로
+        /// Path
         /// </param>
         /// <param name="pathExtensionUse">
         /// 경로에 확장자 사용
+        /// Use extension in path
         /// </param>
-        /// <returns>
-        /// Texture2D
-        /// </returns>
+        /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureFormat);
 
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
+        /// Import image files as Texture2D type
         /// </summary>
         /// <param name="path">
         /// 파일의 경로
+        /// Path
         /// </param>
         /// <param name="pathExtensionUse">
         /// 경로에 확장자 사용
+        /// Use extension in path
         /// </param>
-        /// <returns>
-        /// Texture2D
-        /// </returns>
+        /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (path == null)
@@ -670,10 +691,11 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 텍스쳐를 스프라이트로 변환합니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 텍스쳐를 스프라이트로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Convert texture to sprite (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="texture"></param>
-        /// <returns>Sprite</returns>
+        /// <returns></returns>
         public static Sprite GetSprite(Texture2D texture, SpriteMetaData spriteMetaData = null)
         {
             if (texture == null)
@@ -691,29 +713,33 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 이미지 파일을 스프라이트로 가져옵니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 이미지 파일을 스프라이트로 가져옵니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다.)
+        /// Import image files as sprites (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
-        /// <param name="resourcePath">
+        /// <param name="resourcePackPath">
         /// 리소스팩 경로
+        /// Resource Pack Path
         /// </param>
         /// <param name="type">
         /// 타입
+        /// Type
         /// </param>
         /// <param name="name">
         /// 이름
+        /// Name
         /// </param>
         /// <param name="nameSpace">
-        /// 네임 스페이스
+        /// 네임스페이스
+        /// Name Space
         /// </param>
         /// <param name="textureFormat">
         /// 텍스쳐 포맷
+        /// Texture Format
         /// </param>
-        /// <returns>
-        /// Sprite
-        /// </returns>
-        public static Sprite[] GetSprites(string resourcePath, string type, string name, string nameSpace = "", TextureFormat textureFormat = TextureFormat.RGBA32)
+        /// <returns></returns>
+        public static Sprite[] GetSprites(string resourcePackPath, string type, string name, string nameSpace = "", TextureFormat textureFormat = TextureFormat.RGBA32)
         {
-            if (resourcePath == null || resourcePath == "")
+            if (resourcePackPath == null || resourcePackPath == "")
                 return null;
             if (type == null || type == "")
                 return null;
@@ -725,7 +751,7 @@ namespace SCKRM.Resource
             if (nameSpace == "")
                 nameSpace = defaultNameSpace;
 
-            string path = KernelMethod.PathCombine(resourcePath, texturePath.Replace("%NameSpace%", nameSpace));
+            string path = KernelMethod.PathCombine(resourcePackPath, texturePath.Replace("%NameSpace%", nameSpace));
             string allPath = KernelMethod.PathCombine(path, type, name);
             
             TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(KernelMethod.PathCombine(path, type) + ".json", true);
@@ -739,17 +765,18 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 이미지 파일을 스프라이트로 가져옵니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 이미지 파일을 스프라이트로 가져옵니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다.)
+        /// Import image files as sprites (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="path">
         /// 이미지 파일의 경로
+        /// Path
         /// </param>
         /// <param name="pathExtensionUse">
         /// 경로에 확장자 사용
+        /// Use extension in path
         /// </param>
-        /// <returns>
-        /// Sprite
-        /// </returns>
+        /// <returns></returns>
         public static Sprite[] GetSprites(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (path == null)
@@ -761,17 +788,17 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 텍스쳐를 스프라이트로 변환합니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 텍스쳐를 스프라이트로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Import image files as sprites (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="texture">
         /// 변환할 텍스쳐
+        /// texture to convert
         /// </param>
         /// <param name="spriteMetaDatas">
-        /// 스프라이트의 메타데이터
+        /// Sprite's metadata
         /// </param>
-        /// <returns>
-        /// Sprite
-        /// </returns>
+        /// <returns></returns>
         public static Sprite[] GetSprites(Texture2D texture, SpriteMetaData[] spriteMetaDatas)
         {
             if (texture == null)
@@ -801,16 +828,17 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 텍스트 파일을 string 타입으로 가져옵니다
+        /// Import text file as string type
         /// </summary>
         /// <param name="path">
         /// 파일의 경로
+        /// Path
         /// </param>
         /// <param name="pathExtensionUse">
         /// 경로에 확장자 사용
+        /// Use extension in path
         /// </param>
-        /// <returns>
-        /// string
-        /// </returns>
+        /// <returns></returns>
         public static string GetText(string path, bool pathExtensionUse = false)
         {
             if (path == null)
@@ -830,16 +858,17 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 오디오 파일을 오디오 클립으로 가져옵니다
+        /// Import audio files as audio clips
         /// </summary>
         /// <param name="path">
         /// 경로
+        /// Path
         /// </param>
         /// <param name="stream">
         /// 스트림
+        /// Stream
         /// </param>
-        /// <returns>
-        /// AudioClip
-        /// </returns>
+        /// <returns></returns>
         public static async UniTask<AudioClip> GetAudio(string path, bool stream = false)
         {
             if (path == null)
@@ -879,20 +908,22 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 파일에 특정 확장자가 있으면 true를 반환합니다
+        /// 파일들에 특정 확장자가 있으면 true를 반환합니다
+        /// Returns true if files have a specific extension
         /// </summary>
         /// <param name="path">
         /// 파일의 경로
+        /// Path
         /// </param>
         /// <param name="extensions">
         /// 확장자 리스트
+        /// extension list
         /// </param>
         /// <param name="outPath">
         /// 검색한 확장자를 포함한 전체 경로
+        /// Full path including searched extension
         /// </param>
-        /// <returns>
-        /// bool
-        /// </returns>
+        /// <returns></returns>
         public static bool FileExtensionExists(string path, string[] extensions, out string outPath)
         {
             if (path == null)
@@ -929,9 +960,7 @@ namespace SCKRM.Resource
         /// 분리되고 남은 텍스트
         /// Remaining Text
         /// </param>
-        /// <returns>
-        /// string
-        /// </returns>
+        /// <returns></returns>
         public static string GetNameSpace(string text, out string value)
         {
             if (text == null)
@@ -955,51 +984,56 @@ namespace SCKRM.Resource
 
 
         /// <summary>
-        /// 텍스쳐의 평균 색상을 구합니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 텍스쳐의 평균 색상을 구합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Gets the average color of a texture (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="texture">
         /// 텍스쳐
+        /// Texture
         /// </param>
-        /// <returns>
-        /// Color
-        /// </returns>
+        /// <returns></returns>
         public static Color AverageColorFromTexture(Texture2D texture) => AverageColorFromTexture(texture, 0, 0, texture.width, texture.height);
 
         /// <summary>
-        /// 텍스쳐의 평균 색상을 구합니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 텍스쳐의 평균 색상을 구합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Gets the average color of a texture (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="texture">
         /// 텍스쳐
+        /// Texture
         /// </param>
         /// <param name="rect">
         /// 텍스쳐 크기
+        /// Texture Size
         /// </param>
-        /// <returns>
-        /// Color
-        /// </returns>
+        /// <returns></returns>
         public static Color AverageColorFromTexture(Texture2D texture, RectInt rect) => AverageColorFromTexture(texture, rect.x, rect.y, rect.width, rect.height);
 
         /// <summary>
-        /// 텍스쳐의 평균 색상을 구합니다 (Since the Unity API is used, we need to run it on the main thread)
+        /// 텍스쳐의 평균 색상을 구합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Gets the average color of a texture (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="texture">
         /// 텍스쳐
+        /// Texture
         /// </param>
         /// <param name="x">
         /// X 좌표
+        /// X Pos
         /// </param>
         /// <param name="y">
         /// Y 좌표
+        /// Y Pos
         /// </param>
         /// <param name="width">
         /// 너비
+        /// Width
         /// </param>
         /// <param name="height">
         /// 높이
+        /// Height
         /// </param>
-        /// <returns>
-        /// Color
-        /// </returns>
+        /// <returns></returns>
         public static Color AverageColorFromTexture(Texture2D texture, int x, int y, int width, int height)
         {
             Color[] textureColors = texture.GetPixels(x, y, width, height);
@@ -1023,6 +1057,27 @@ namespace SCKRM.Resource
             return new Color(r / length, g / length, b / length, a / length);
         }
 
+        /// <summary>
+        /// 색상을 텍스쳐로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Convert color to texture (Since the Unity API is used, we need to run it on the main thread)
+        /// </summary>
+        /// <param name="color">
+        /// 컬러
+        /// Color
+        /// </param>
+        /// <param name="width">
+        /// 너비
+        /// Width
+        /// </param>
+        /// <param name="height">
+        /// 높이
+        /// Height
+        /// </param>
+        /// <param name="filterMode">
+        /// 필터 모드
+        /// Filter Mode
+        /// </param>
+        /// <returns></returns>
         public static Texture2D TextureFromColor(Color color, int width, int height, FilterMode filterMode = FilterMode.Point)
         {
             if (color == null)
@@ -1043,6 +1098,19 @@ namespace SCKRM.Resource
             return texture;
         }
 
+        /// <summary>
+        /// 색상을 텍스쳐로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Convert color to texture (Since the Unity API is used, we need to run it on the main thread)
+        /// </summary>
+        /// <param name="color">
+        /// 색상
+        /// Color
+        /// </param>
+        /// <param name="alpha">
+        /// 알파 텍스쳐
+        /// Alpha texture
+        /// </param>
+        /// <returns></returns>
         public static Texture2D TextureFromColor(Color color, Texture2D alpha)
         {
             if (color == null)
@@ -1059,6 +1127,31 @@ namespace SCKRM.Resource
             return texture;
         }
 
+        /// <summary>
+        /// 색상을 스프라이트로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Convert color to sprite (Since the Unity API is used, we need to run it on the main thread)
+        /// </summary>
+        /// <param name="color">
+        /// 색상
+        /// Color
+        /// </param>
+        /// <param name="width">
+        /// 너비
+        /// Width
+        /// </param>
+        /// <param name="height">
+        /// 높이
+        /// Height
+        /// </param>
+        /// <param name="filterMode">
+        /// 필터 모드
+        /// Filter Mode
+        /// </param>
+        /// <param name="spriteMetaData">
+        /// 스프라이트의 메타 데이터
+        /// Sprite's metadata
+        /// </param>
+        /// <returns></returns>
         public static Sprite SpriteFromColor(Color color, int width = 1, int height = 1, FilterMode filterMode = FilterMode.Point, SpriteMetaData spriteMetaData = null)
         {
             if (color == null)
@@ -1079,6 +1172,23 @@ namespace SCKRM.Resource
             return GetSprite(texture, spriteMetaData);
         }
 
+        /// <summary>
+        /// 색상을 스프라이트로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Convert color to sprite (Since the Unity API is used, we need to run it on the main thread)
+        /// </summary>
+        /// <param name="color">
+        /// 색상
+        /// Color
+        /// </param>
+        /// <param name="alpha">
+        /// 알파 텍스쳐
+        /// Alpha
+        /// </param>
+        /// <param name="spriteMetaData">
+        /// 스프라이트의 메타 데이터
+        /// Sprite's metadata
+        /// </param>
+        /// <returns></returns>
         public static Sprite SpriteFromColor(Color color, Texture2D alpha, SpriteMetaData spriteMetaData = null)
         {
             if (color == null)
@@ -1187,9 +1297,10 @@ namespace SCKRM.Resource
     public class NotPlayModeSearchMethodException : Exception
     {
         /// <summary>
+        /// Search function cannot be used outside of play mode
         /// 플레이 모드가 아니면 Search 함수를 사용할 수 없습니다
         /// </summary>
-        public NotPlayModeSearchMethodException() : base("플레이 모드가 아니면 Search 함수를 사용할 수 없습니다") { }
+        public NotPlayModeSearchMethodException() : base("Search function cannot be used outside of play mode\n플레이 모드가 아니면 Search 함수를 사용할 수 없습니다") { }
     }
 
     public enum SoundCategory

@@ -61,6 +61,9 @@ namespace SCKRM.UI.TaskBar
             bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<TaskBarManager>() != null;
             isTaskBarShow = Kernel.isInitialLoadEnd && (taskBarShow || selectedTaskBar);
 
+            if (Kernel.isInitialLoadEnd)
+                InputManager.SetInputLock("taskbar", isTaskBarShow);
+
             if (selectedTaskBar)
                 oldSelectedObject = eventSystem.currentSelectedGameObject;
 
@@ -74,7 +77,7 @@ namespace SCKRM.UI.TaskBar
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
             }
 
-            if (Kernel.isInitialLoadEnd && !selectedTaskBar && InputManager.GetKeyDown("gui.tab", InputLockDeny.TaskBar))
+            if (Kernel.isInitialLoadEnd && !selectedTaskBar && InputManager.GetKeyDown("gui.tab", "taskbar"))
             {
                 if (oldSelectedObject == null || !oldSelectedObject.activeSelf)
                 {
@@ -87,7 +90,7 @@ namespace SCKRM.UI.TaskBar
                 else
                     eventSystem.SetSelectedGameObject(oldSelectedObject);
             }
-            else if (Kernel.isInitialLoadEnd && selectedTaskBar && InputManager.GetKeyDown("gui.back", InputLockDeny.TaskBar))
+            else if (Kernel.isInitialLoadEnd && selectedTaskBar && InputManager.GetKeyDown("gui.back", "taskbar"))
                 eventSystem.SetSelectedGameObject(null);
 
             if (taskBarShow)

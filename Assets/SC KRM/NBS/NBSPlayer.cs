@@ -11,7 +11,7 @@ namespace SCKRM.NBS
 {
     public class NBSPlayer : ObjectPooling
     {
-        public NBSFile nbsFile { get; } = new NBSFile();
+        public NBSFile nbsFile { get; private set; }
 
         [SerializeField] string _nameSpace = "";
         public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
@@ -19,6 +19,50 @@ namespace SCKRM.NBS
         public string key { get => _key; set => _key = value; }
 
 
+        float _timer = 0;
+        public float timer
+        {
+            get => _timer;
+            set
+            {
+                if (value > 0.05f)
+                    _timer = 0.05f;
+                else
+                    _timer = value;
+            }
+        }
+
+        int _index = 0;
+        public int index
+        {
+            get => _index;
+            set
+            {
+                int value2 = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
+
+                _timer = 0;
+                _index = value2;
+                _tick = nbsFile.nbsNotes[value2].delayTick;
+            }
+        }
+
+        int _tick;
+        public int tick
+        {
+            get => _tick;
+            set
+            {
+                _timer = 0;
+                _tick = value;
+                _index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
+            }
+        }
+
+        public short length { get => (short)(nbsFile?.songLength); }
+
+
+
+        #region variable
         [SerializeField] float _volume = 1;
         [SerializeField] bool _loop = false;
         [SerializeField] float _tempo = 1;
@@ -37,25 +81,11 @@ namespace SCKRM.NBS
         public float minDistance { get => _minDistance; set => _minDistance = value; }
         public float maxDistance { get => _maxDistance; set => _maxDistance = value; }
         public Vector3 localPosition { get => _localPosition; set => _localPosition = value; }
+        #endregion
 
 
 
-        int _tick;
-        public int tick
-        {
-            get => _tick;
-            set
-            {
-                index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
-                _tick = value;
-                timer = 0;
-            }
-        }
-
-
-
-        static string tempNameSpace = "";
-        static string tempKey = "";
+        bool allLayerLock;
         public void Refesh()
         {
             string path = "";
@@ -83,125 +113,46 @@ namespace SCKRM.NBS
             if (!SoundManager.nbsList.Contains(this))
                 SoundManager.nbsList.Add(this);
 
-            using FileStream fileStream = File.OpenRead(path);
-            BinaryReader binaryReader = new BinaryReader(fileStream);
-            binaryReader.ReadInt16();
-            /*NBS Version*/
-            binaryReader.ReadByte();
-            /*Vanilla instrument count*/
-            binaryReader.ReadByte();
-            /*Song Length*/
-            nbsFile.songLength = binaryReader.ReadInt16();
-            /*Layer count*/
-            binaryReader.ReadInt16();
-            for (int i = 0; i < 4; i++)
+            nbsFile = NBSManager.ReadNBSFile(path);
+            allLayerLock = nbsFile.nbsLayers.Any((b) => b.layerLock == 2);
+
+            if (tick > length)
             {
-                int length = 0;
-                for (int j = 0; j < 4; j++)
-                    length += binaryReader.ReadByte();
-
-                for (int j = 0; j < length; j++)
-                    binaryReader.BaseStream.Position++;
-            }
-            /*Song tempo*/
-            nbsFile.tickTempo = binaryReader.ReadInt16();
-            /*Auto-saving*/
-            binaryReader.ReadByte();
-            /*Auto-saving duration*/
-            binaryReader.ReadByte();
-            /*Time signature*/
-            binaryReader.ReadByte();
-            /*Minutes spent*/
-            binaryReader.ReadInt32();
-            /*Left-clicks*/
-            binaryReader.ReadInt32();
-            /*Right-clicks*/
-            binaryReader.ReadInt32();
-            /*Note blocks added*/
-            binaryReader.ReadInt32();
-            /*Note blocks removed*/
-            binaryReader.ReadInt32();
-            {
-                int length = 0;
-                for (int i = 0; i < 4; i++)
-                    length += binaryReader.ReadByte();
-
-                for (int i = 0; i < length; i++)
-                    binaryReader.BaseStream.Position++;
-            }
-            /*Loop on/off*/
-            binaryReader.ReadByte(); //if (binaryReader.ReadByte() == 1) nbsFile.loop = true; else nbsFile.loop = false;
-            /*Max loop count*/
-            binaryReader.ReadByte();
-            /*Loop start tick*/
-            nbsFile.loopStartTick = binaryReader.ReadInt16();
-
-            /*Jumps to the next tick*/
-            short tick;
-            short tick2 = 0;
-
-            nbsFile.nbsNotes.Clear();
-            while ((tick = binaryReader.ReadInt16()) != 0)
-            {
-                tick2 += tick;
-                NBSNote nbsNote = new NBSNote() { delayTick = tick2 };
-
-                /*Jumps to the next layer*/
-                while (binaryReader.ReadInt16() != 0)
+                if (loop)
                 {
-                    NBSNoteMetaData nbsNoteMetaData = new NBSNoteMetaData
-                    {
-                        /*Note block instrument*/
-                        instrument = binaryReader.ReadByte(),
-                        /*Note block key*/
-                        key = binaryReader.ReadByte(),
-                        /*Note block velocity*/
-                        velocity = binaryReader.ReadByte(),
-                        /*Note block panning*/
-                        panning = binaryReader.ReadByte(),
-                        /*Note block pitch*/
-                        pitch = binaryReader.ReadInt16()
-                    };
-
-                    nbsNote.nbsNoteMetaDatas.Add(nbsNoteMetaData);
+                    _tick = 0;
+                    _index = 0;
+                    _timer = 0;
                 }
-
-                nbsFile.nbsNotes.Add(nbsNote);
+                else
+                    Remove();
             }
-
-            if (tempNameSpace != nameSpace || tempKey != key)
-            {
-                _tick = 0;
-                index = 0;
-                timer = 0;
-
-                tempNameSpace = nameSpace;
-                tempKey = key;
-            }
+            else
+                tick = tick;
         }
 
-        float timer = 0;
-        int index = 0;
+
+
         void Update()
         {
             if (tempo < 0)
             {
-                timer += Time.deltaTime * (nbsFile.tickTempo / 2000) * tempo.Abs();
-                while (timer >= 0.05f)
+                _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs();
+                while (timer <= 0)
                 {
                     _tick--;
-                    timer -= 0.05f;
+                    _timer += 0.05f;
 
                     SoundPlay();
                 }
             }
             else
             {
-                timer += Time.deltaTime * (nbsFile.tickTempo / 2000) * tempo;
-                while (timer >= 0.05f)
+                _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo;
+                while (timer <= 0)
                 {
                     _tick++;
-                    timer -= 0.05f;
+                    _timer += 0.05f;
 
                     SoundPlay();
                 }
@@ -220,9 +171,15 @@ namespace SCKRM.NBS
                     for (int i = 0; i < nbsNote.nbsNoteMetaDatas.Count; i++)
                     {
                         NBSNoteMetaData nbsNoteMetaData = nbsNote.nbsNoteMetaDatas[i];
-                        float pitch = Mathf.Pow(2, (nbsNoteMetaData.key - 45f) / 12f) * Mathf.Pow(1.059463f, nbsNoteMetaData.pitch * 0.01f);
-                        float volume = nbsNoteMetaData.velocity * 0.01f * 0.5f;
-                        float panStereo = (nbsNoteMetaData.panning - 100) * 0.01f;
+                        NBSLayer nbsLayer = nbsFile.nbsLayers[nbsNoteMetaData.layerIndex];
+                        if (nbsLayer.layerLock != 0 && !allLayerLock)
+                            continue;
+                        else if (nbsLayer.layerLock != 2 && allLayerLock)
+                            continue;
+
+                        float pitch = Mathf.Pow(2, (nbsNoteMetaData.key - 45f) * 0.0833333333f) * Mathf.Pow(1.059463f, nbsNoteMetaData.pitch * 0.01f);
+                        float volume = nbsNoteMetaData.velocity * 0.01f * (nbsLayer.layerVolume * 0.01f);
+                        float panStereo = (nbsNoteMetaData.panning - 100) * 0.01f * ((nbsLayer.layerStereo - 100) * 0.01f);
 
                         string blockType = "block.note_block.";
                         if (nbsNoteMetaData.instrument == 0)
@@ -261,24 +218,24 @@ namespace SCKRM.NBS
                         SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch, 1, panStereo + this.panStereo, spatial, minDistance, maxDistance, transform);
                     }
 
-                    index++;
+                    _index++;
                 }
             }
             else
-                index = 0;
+                _index = 0;
 
             if (tempo < 0)
             {
                 while (index > 0 && index < nbsFile.nbsNotes.Count && nbsFile.nbsNotes[index].delayTick >= tick)
-                    index--;
+                    _index--;
 
                 if (index == 0)
-                    index--;
+                    _index--;
             }
             else
             {
                 while (index > 0 && index < nbsFile.nbsNotes.Count && nbsFile.nbsNotes[index].delayTick < tick)
-                    index++;
+                    _index++;
             }
 
             if (tick < 0 || index >= nbsFile.nbsNotes.Count)
@@ -287,15 +244,15 @@ namespace SCKRM.NBS
                 {
                     if (tempo < 0)
                     {
-                        timer = 0;
-                        tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
-                        index = nbsFile.nbsNotes.Count - 2;
+                        _timer = 0;
+                        _tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
+                        _index = nbsFile.nbsNotes.Count - 2;
                     }
                     else
                     {
-                        timer = 0;
-                        tick = 0;
-                        index = 0;
+                        _timer = 0;
+                        _tick = 0;
+                        _index = 0;
                     }
                 }
                 else
@@ -309,39 +266,14 @@ namespace SCKRM.NBS
 
             nameSpace = "";
             key = "";
-            tempo = 1;
-            index = 0;
+            _tempo = 1;
+            _index = 0;
             _tick = 0;
 
             SoundManager.nbsList.Remove(this);
             SoundObject[] soundObjects = GetComponentsInChildren<SoundObject>();
             for (int i = 0; i < soundObjects.Length; i++)
                 soundObjects[i].Remove();
-        }
-
-        public class NBSFile
-        {
-            public short songLength { get; set; } = 0;
-            public float tickTempo { get; set; } = 0;
-            //public bool loop { get; set; } = false;
-            public short loopStartTick { get; set; } = 0;
-
-            public List<NBSNote> nbsNotes { get; } = new List<NBSNote>();
-        }
-
-        public class NBSNote
-        {
-            public short delayTick { get; set; } = 0;
-            public List<NBSNoteMetaData> nbsNoteMetaDatas { get; } = new List<NBSNoteMetaData>();
-        }
-
-        public class NBSNoteMetaData
-        {
-            public byte instrument { get; set; } = 0;
-            public byte key { get; set; } = 0;
-            public byte velocity { get; set; } = 0;
-            public byte panning { get; set; } = 0;
-            public short pitch { get; set; } = 0;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SCKRM.Camera
                 camera = GetComponent<UnityEngine.Camera>();
 
             RectTransform taskBar = TaskBarManager.instance.rectTransform;
-            RectTransform canvas = KernelCanvas.instance.rectTransform;
+            RectTransform canvas = TaskBarCanvas.instance.rectTransform;
 
             if (TaskBarManager.cropTheScreen)
             {

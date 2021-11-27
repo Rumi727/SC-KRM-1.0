@@ -6,5 +6,8 @@
     "kernel.full_screen": 292,
     "gui.home": 278,
     "gui.tab": 9
+  },
+  "inputLockList": {
+    "taskbar": false
   }
 }

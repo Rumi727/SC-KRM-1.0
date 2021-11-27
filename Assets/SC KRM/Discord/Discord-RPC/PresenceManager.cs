@@ -113,10 +113,7 @@ namespace DiscordPresence
             //DontDestroyOnLoad(gameObject);
         }
 
-        public virtual void Update()
-        {
-            DiscordRpc.RunCallbacks();
-        }
+        public virtual void Update() => DiscordRpc.RunCallbacks();
 
         public virtual void OnEnable()
         {
@@ -137,11 +134,6 @@ namespace DiscordPresence
         {
             Debug.Log("Discord: shutdown");
             DiscordRpc.Shutdown();
-        }
-
-        public virtual void OnDestroy()
-        {
-
         }
         #endregion
 
