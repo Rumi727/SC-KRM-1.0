@@ -28,7 +28,7 @@ namespace SCKRM.Resource
         public const string languagePath = "assets/%NameSpace%/lang";
         public const string settingsPath = "projectSettings";
 
-        public static string[] textureExtension { get; } = new string[] { "jpg", "png" };
+        public static string[] textureExtension { get; } = new string[] { "png", "jpg", "tga" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
 
 
@@ -670,20 +670,35 @@ namespace SCKRM.Resource
 
             bool exists;
             if (!pathExtensionUse)
-                exists = FileExtensionExists(path, textureExtension, out path);
+                exists = FileExtensionExists(path, out path, textureExtension);
             else
                 exists = File.Exists(path);
-            
+
             if (exists)
             {
-                Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
-                texture.filterMode = filterMode;
-
-                byte[] bytes = File.ReadAllBytes(path);
-                if (texture.LoadImage(bytes))
+                if (Path.GetExtension(path).ToLower() == ".tga")
                 {
+                    Texture2D texture = TGALoader.LoadTGA(path);
                     texture.name = Path.GetFileNameWithoutExtension(path);
+                    texture.filterMode = filterMode;
+                    texture.alphaIsTransparency = true;
+
                     return texture;
+                }
+                else
+                {
+                    Texture2D texture = new Texture2D(0, 0, TextureFormat.RGBA32, mipmapUse);
+
+                    byte[] bytes = File.ReadAllBytes(path);
+                    if (texture.LoadImage(bytes))
+                    {
+                        texture.name = Path.GetFileNameWithoutExtension(path);
+                        texture.filterMode = filterMode;
+                        texture.alphaIsTransparency = true;
+                        texture.Apply();
+
+                        return texture;
+                    }
                 }
             }
 
@@ -759,7 +774,7 @@ namespace SCKRM.Resource
                 textureMetaData = new TextureMetaData();
 
             Texture2D texture = GetTexture(allPath, false, textureMetaData, textureFormat);
-            FileExtensionExists(allPath, textureExtension, out string allPath2);
+            FileExtensionExists(allPath, out string allPath2, textureExtension);
             SpriteMetaData[] spriteMetaDatas = JsonManager.JsonRead<SpriteMetaData[]>(allPath2 + ".json", true);
             return GetSprites(texture, spriteMetaDatas);
         }
@@ -799,7 +814,7 @@ namespace SCKRM.Resource
         /// Sprite's metadata
         /// </param>
         /// <returns></returns>
-        public static Sprite[] GetSprites(Texture2D texture, SpriteMetaData[] spriteMetaDatas)
+        public static Sprite[] GetSprites(Texture2D texture, params SpriteMetaData[] spriteMetaDatas)
         {
             if (texture == null)
                 return null;
@@ -846,7 +861,7 @@ namespace SCKRM.Resource
 
             bool exists;
             if (!pathExtensionUse)
-                exists = FileExtensionExists(path, textExtension, out path);
+                exists = FileExtensionExists(path, out path, textExtension);
             else
                 exists = File.Exists(path);
             
@@ -915,16 +930,16 @@ namespace SCKRM.Resource
         /// 파일의 경로
         /// Path
         /// </param>
-        /// <param name="extensions">
-        /// 확장자 리스트
-        /// extension list
-        /// </param>
         /// <param name="outPath">
         /// 검색한 확장자를 포함한 전체 경로
         /// Full path including searched extension
         /// </param>
+        /// <param name="extensions">
+        /// 확장자 리스트
+        /// extension list
+        /// </param>
         /// <returns></returns>
-        public static bool FileExtensionExists(string path, string[] extensions, out string outPath)
+        public static bool FileExtensionExists(string path, out string outPath, params string[] extensions)
         {
             if (path == null)
                 path = "";

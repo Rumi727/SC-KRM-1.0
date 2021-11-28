@@ -12,12 +12,12 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(CustomAllSpriteRenderer), true)]
     public class CustomAllSpriteRendererEditor : CustomInspectorEditor
     {
-        CustomAllSpriteRenderer _editor;
+        CustomAllSpriteRenderer editor;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            _editor = (CustomAllSpriteRenderer)target;
+            editor = (CustomAllSpriteRenderer)target;
         }
 
         public override void OnInspectorGUI()
@@ -33,19 +33,19 @@ namespace SCKRM.Editor
             UseProperty("_path", "이름");
             UseProperty("_index", "스프라이트 인덱스");
 
-            string nameSpace = _editor.nameSpace;
+            string nameSpace = editor.nameSpace;
             if (nameSpace == null || nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            string typePath = KernelMethod.PathCombine(ResourceManager.texturePath.Replace("%NameSpace%", nameSpace), _editor.type);
-            string filePath = KernelMethod.PathCombine(typePath, _editor.path);
+            string typePath = KernelMethod.PathCombine(ResourceManager.texturePath.Replace("%NameSpace%", nameSpace), editor.type);
+            string filePath = KernelMethod.PathCombine(typePath, editor.path);
             string typeAllPath = KernelMethod.PathCombine(Kernel.streamingAssetsPath, typePath);
-            ResourceManager.FileExtensionExists(KernelMethod.PathCombine(Kernel.streamingAssetsPath, filePath), ResourceManager.textureExtension, out string fileAllPath);
+            ResourceManager.FileExtensionExists(KernelMethod.PathCombine(Kernel.streamingAssetsPath, filePath), out string fileAllPath, ResourceManager.textureExtension);
 
             if (Application.isPlaying)
                 GUI.enabled = false;
 
-            if (Directory.Exists(typeAllPath) && _editor.type != null && _editor.type != "")
+            if (Directory.Exists(typeAllPath) && editor.type != null && editor.type != "")
             {
                 TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(typeAllPath + ".json", true);
                 if (textureMetaData == null)
@@ -57,7 +57,7 @@ namespace SCKRM.Editor
                 textureMetaData.mipmapUse = EditorGUILayout.Toggle("밉맵 사용", textureMetaData.mipmapUse);
 
                 Texture2D texture = ResourceManager.GetTexture(fileAllPath, true, textureMetaData, TextureFormat.Alpha8);
-                if (texture != null && _editor.path != null && _editor.path != "")
+                if (texture != null && editor.path != null && editor.path != "")
                 {
                     DrawLine();
 
@@ -65,9 +65,9 @@ namespace SCKRM.Editor
                     if (spriteMetaDatas == null)
                         spriteMetaDatas = new List<Resource.SpriteMetaData>();
 
-                    if (_editor.index < spriteMetaDatas.Count)
+                    if (editor.index < spriteMetaDatas.Count)
                     {
-                        Resource.SpriteMetaData spriteMetaData = spriteMetaDatas[_editor.index];
+                        Resource.SpriteMetaData spriteMetaData = spriteMetaDatas[editor.index];
 
                         spriteMetaData.RectMinMax(texture.width, texture.height);
                         spriteMetaData.PixelsPreUnitMinSet();
@@ -85,7 +85,7 @@ namespace SCKRM.Editor
                         DrawLine();
 
                         if (GUILayout.Button("스프라이트 지우기"))
-                            spriteMetaDatas.RemoveAt(_editor.index);
+                            spriteMetaDatas.RemoveAt(editor.index);
                     }
                     else if (GUILayout.Button("스프라이트 만들기"))
                     {
@@ -106,11 +106,14 @@ namespace SCKRM.Editor
 
                         AssetDatabase.Refresh();
 
-                        _editor.ResourceReload();
-                        _editor.Rerender();
+                        if (editor.enabled)
+                        {
+                            editor.ResourceReload();
+                            editor.Rerender();
+                        }
                     }
                 }
-                else if (GUI.changed)
+                else if (GUI.changed || GUILayout.Button("새로고침"))
                 {
                     EditorUtility.SetDirty(target);
 
@@ -118,15 +121,22 @@ namespace SCKRM.Editor
 
                     AssetDatabase.Refresh();
 
-                    _editor.ResourceReload();
-                    _editor.Rerender();
+                    if (editor.enabled)
+                    {
+                        editor.ResourceReload();
+                        editor.Rerender();
+                    }
                 }
             }
             else if (GUI.changed)
             {
                 EditorUtility.SetDirty(target);
-                _editor.ResourceReload();
-                _editor.Rerender();
+
+                if (editor.enabled)
+                {
+                    editor.ResourceReload();
+                    editor.Rerender();
+                }
             }
 
             DrawLine();

@@ -49,8 +49,6 @@ namespace SCKRM.Sound
 
 
 
-        static string tempNameSpace = "";
-        static string tempKey = "";
         public void Refesh()
         {
             if (!Kernel.isInitialLoadEnd)

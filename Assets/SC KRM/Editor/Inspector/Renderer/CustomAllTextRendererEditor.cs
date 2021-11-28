@@ -8,12 +8,12 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(CustomAllTextRenderer), true)]
     public class CustomAllTextRendererEditor : CustomInspectorEditor
     {
-        CustomAllTextRenderer _editor;
+        CustomAllTextRenderer editor;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            _editor = (CustomAllTextRenderer)target;
+            editor = (CustomAllTextRenderer)target;
         }
 
         public override void OnInspectorGUI()
@@ -26,8 +26,12 @@ namespace SCKRM.Editor
             if (GUI.changed || GUILayout.Button("새로고침"))
             {
                 EditorUtility.SetDirty(target);
-                _editor.ResourceReload();
-                _editor.Rerender();
+
+                if (editor.enabled)
+                {
+                    editor.ResourceReload();
+                    editor.Rerender();
+                }
             }
 
             GUI.enabled = true;

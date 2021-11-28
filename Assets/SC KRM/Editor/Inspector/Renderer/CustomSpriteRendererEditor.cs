@@ -8,12 +8,12 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(CustomSpriteRenderer), true)]
     public class CustomSpriteRendererEditor : CustomAllSpriteRendererEditor
     {
-        CustomSpriteRenderer _editor;
+        CustomSpriteRenderer editor;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            _editor = (CustomSpriteRenderer)target;
+            editor = (CustomSpriteRenderer)target;
         }
 
         public override void OnInspectorGUI()
@@ -23,7 +23,7 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             UseProperty("_drawMode");
-            if (_editor.drawMode != SpriteDrawMode.Simple)
+            if (editor.drawMode != SpriteDrawMode.Simple)
                 UseProperty("_size");
         }
     }
