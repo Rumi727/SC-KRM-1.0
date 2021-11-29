@@ -367,7 +367,7 @@ namespace SCKRM.Resource
         }
 
 
-
+        #region Search Method
         /// <summary>
         /// 합쳐진 텍스쳐의 경로를 찾아서 반환합니다
         /// Finds the path of the merged texture and returns it
@@ -572,7 +572,6 @@ namespace SCKRM.Resource
             return "";
         }
 
-
         /// <summary>
         /// 리소스팩에서 사운드 데이터를 찾고 반환합니다
         /// Finds and returns sound data from resource packs
@@ -610,7 +609,11 @@ namespace SCKRM.Resource
             }
             return null;
         }
+        #endregion
 
+
+
+        #region Get Resource Method
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
         /// Import image files as Texture2D type
@@ -918,6 +921,9 @@ namespace SCKRM.Resource
                 return null;
             }
         }
+        #endregion
+
+
 
         /// <summary>
         /// 파일들에 특정 확장자가 있으면 true를 반환합니다
