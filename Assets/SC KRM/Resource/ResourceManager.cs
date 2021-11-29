@@ -681,8 +681,7 @@ namespace SCKRM.Resource
                     Texture2D texture = TGALoader.LoadTGA(path);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
-                    texture.alphaIsTransparency = true;
-
+                    
                     return texture;
                 }
                 else
@@ -694,9 +693,7 @@ namespace SCKRM.Resource
                     {
                         texture.name = Path.GetFileNameWithoutExtension(path);
                         texture.filterMode = filterMode;
-                        texture.alphaIsTransparency = true;
-                        texture.Apply();
-
+                        
                         return texture;
                     }
                 }
