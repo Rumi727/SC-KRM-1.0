@@ -7,14 +7,18 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(Image))]
     public class CustomImageRenderer : CustomAllSpriteRenderer
     {
-        public Image image { get; private set; }
-
-        public override void Rerender()
+        [SerializeField, HideInInspector] Image _image;
+        public Image image
         {
-            if (image == null)
-                image = GetComponent<Image>();
+            get
+            {
+                if (_image == null)
+                    _image = GetComponent<Image>();
 
-            image.sprite = (Sprite)queue.Dequeue();
+                return _image;
+            }
         }
+
+        public override void Rerender() => image.sprite = (Sprite)queue.Dequeue();
     }
 }

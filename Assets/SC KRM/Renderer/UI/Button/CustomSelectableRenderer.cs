@@ -6,7 +6,17 @@ namespace SCKRM.Renderer
     [AddComponentMenu("커널/Renderer/UI/Selectable")]
     public class CustomSelectableRenderer : CustomImageRenderer
     {
-        public Selectable selectable { get; private set; }
+        [SerializeField, HideInInspector] Selectable _selectable;
+        public Selectable selectable
+        {
+            get
+            {
+                if (_selectable == null)
+                    _selectable = GetComponent<Selectable>();
+
+                return _selectable;
+            }
+        }
 
         [SerializeField] SpriteStateData _highlightedSprite;
         [SerializeField] SpriteStateData _pressedSprite;
@@ -33,8 +43,6 @@ namespace SCKRM.Renderer
         public override void Rerender()
         {
             base.Rerender();
-            if (selectable == null)
-                selectable = GetComponent<Selectable>();
 
             if (selectable != null)
                 selectable.spriteState = (SpriteState)queue.Dequeue();

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SCKRM.Resource;
 using SCKRM.Threads;
+using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -92,7 +93,7 @@ namespace SCKRM.ProjectSetting
                 }
             }
 
-            File.WriteAllText(KernelMethod.PathCombine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json", jObject.ToString());
+            File.WriteAllText(PathTool.Combine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json", jObject.ToString());
 #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();
 #endif
@@ -110,7 +111,7 @@ namespace SCKRM.ProjectSetting
             else
                 name = type.Name;
 
-            string path = KernelMethod.PathCombine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json";
+            string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json";
             if (!File.Exists(path))
                 return;
 
@@ -158,7 +159,7 @@ namespace SCKRM.ProjectSetting
                 else
                     name = type.Name;
 
-                string path = KernelMethod.PathCombine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json";
+                string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json";
                 JObject jObject = JObject.Parse(ResourceManager.GetText(path, true));
                 return jObject;
             }

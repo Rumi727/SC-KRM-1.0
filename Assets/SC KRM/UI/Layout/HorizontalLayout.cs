@@ -1,3 +1,4 @@
+using SCKRM.Tool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,25 @@ namespace SCKRM.UI
     [RequireComponent(typeof(RectTransform))]
     public class HorizontalLayout : MonoBehaviour
     {
-        public RectTransform rectTransform { get; private set; }
+        [SerializeField, HideInInspector] RectTransform _rectTransform;
+        public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                    _rectTransform = GetComponent<RectTransform>();
+
+                return _rectTransform;
+            }
+        }
+
         public RectTransform[] buttonRectTransforms { get; private set; }
         public HorizontalLayoutSetting[] buttonHorizontalLayoutSettings { get; private set; }
-        int tempChildCount = -1;
+
+        [System.NonSerialized] int tempChildCount = -1;
 
         void Update()
         {
-            if (rectTransform == null)
-                rectTransform = GetComponent<RectTransform>();
-
             if (tempChildCount != transform.childCount)
             {
                 buttonRectTransforms = new RectTransform[transform.childCount];
@@ -31,7 +41,7 @@ namespace SCKRM.UI
 
                 tempChildCount = transform.childCount;
             }
-            
+
             if (buttonRectTransforms == null || buttonRectTransforms.Length <= 0)
                 return;
 

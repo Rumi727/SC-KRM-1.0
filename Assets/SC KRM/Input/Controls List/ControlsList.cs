@@ -1,5 +1,6 @@
 using SCKRM.Language;
 using SCKRM.Object;
+using SCKRM.Tool;
 using UnityEngine;
 
 namespace SCKRM.Input.UI

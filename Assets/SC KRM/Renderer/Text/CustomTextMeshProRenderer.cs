@@ -7,14 +7,18 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(TMP_Text))]
     public class CustomTextMeshProRenderer : CustomAllTextRenderer
     {
-        TMP_Text textMeshPro;
-
-        public override void Rerender()
+        [SerializeField, HideInInspector] TMP_Text _textMeshPro;
+        public TMP_Text textMeshPro
         {
-            if (textMeshPro == null)
-                textMeshPro = GetComponent<TextMeshPro>();
+            get
+            {
+                if (_textMeshPro == null)
+                    _textMeshPro = GetComponent<TextMeshPro>();
 
-            textMeshPro.text = (string)queue.Dequeue();
+                return _textMeshPro;
+            }
         }
+
+        public override void Rerender() => textMeshPro.text = (string)queue.Dequeue();
     }
 }

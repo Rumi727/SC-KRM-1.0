@@ -9,9 +9,20 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.TaskBar
 {
+    [RequireComponent(typeof(TMP_Text))]
     public class NoticeText : MonoBehaviour
     {
-        [SerializeField] TMP_Text text;
+        [SerializeField, HideInInspector] TMP_Text _text;
+        public TMP_Text text
+        {
+            get
+            {
+                if (_text == null)
+                    _text = GetComponent<TMP_Text>();
+
+                return _text;
+            }
+        }
 
         static string am = "";
         static string pm = "";
@@ -24,6 +35,7 @@ namespace SCKRM.UI.TaskBar
         }
 
         DateTimeFormatInfo dateTimeFormatInfo = new DateTimeFormatInfo();
+
         void Update()
         {
             DateTime dateTime = DateTime.Now;

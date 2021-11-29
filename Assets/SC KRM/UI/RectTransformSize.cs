@@ -9,7 +9,19 @@ namespace SCKRM.UI
     [RequireComponent(typeof(RectTransform))]
     public class RectTransformSize : MonoBehaviour
     {
-        public RectTransform rectTransform { get; private set; }
+        [SerializeField, HideInInspector] RectTransform _rectTransform;
+        public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                    _rectTransform = GetComponent<RectTransform>();
+
+                return _rectTransform;
+            }
+        }
+
+
         [SerializeField] RectTransform _targetRectTransform;
         public RectTransform targetRectTransform { get => _targetRectTransform; set => _targetRectTransform = value; }
 
@@ -18,13 +30,12 @@ namespace SCKRM.UI
         [SerializeField] bool _ySize = false;
         public bool ySize { get => _ySize; set => _ySize = value; }
         [SerializeField] Vector2 _offset = Vector2.zero;
+
         public Vector2 offset { get => _offset; set => _offset = value; }
 
         void Update()
         {
-            if (rectTransform == null)
-                rectTransform = GetComponent<RectTransform>();
-            else if (targetRectTransform == null)
+            if (targetRectTransform == null)
                 return;
 
             if (xSize && !ySize)

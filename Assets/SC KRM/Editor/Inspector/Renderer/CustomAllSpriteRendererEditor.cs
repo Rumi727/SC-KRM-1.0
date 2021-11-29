@@ -5,6 +5,7 @@ using SCKRM.Renderer;
 using SCKRM.Resource;
 using System.IO;
 using SCKRM.Json;
+using SCKRM.Tool;
 
 namespace SCKRM.Editor
 {
@@ -37,10 +38,10 @@ namespace SCKRM.Editor
             if (nameSpace == null || nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            string typePath = KernelMethod.PathCombine(ResourceManager.texturePath.Replace("%NameSpace%", nameSpace), editor.type);
-            string filePath = KernelMethod.PathCombine(typePath, editor.path);
-            string typeAllPath = KernelMethod.PathCombine(Kernel.streamingAssetsPath, typePath);
-            ResourceManager.FileExtensionExists(KernelMethod.PathCombine(Kernel.streamingAssetsPath, filePath), out string fileAllPath, ResourceManager.textureExtension);
+            string typePath = PathTool.Combine(ResourceManager.texturePath.Replace("%NameSpace%", nameSpace), editor.type);
+            string filePath = PathTool.Combine(typePath, editor.path);
+            string typeAllPath = PathTool.Combine(Kernel.streamingAssetsPath, typePath);
+            ResourceManager.FileExtensionExists(PathTool.Combine(Kernel.streamingAssetsPath, filePath), out string fileAllPath, ResourceManager.textureExtension);
 
             if (Application.isPlaying)
                 GUI.enabled = false;

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SCKRM.Threads;
+using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,7 +70,7 @@ namespace SCKRM.SaveLoad
                         }
                     }
 
-                    File.WriteAllText(KernelMethod.PathCombine(Kernel.saveDataPath, name) + ".json", jObject.ToString());
+                    File.WriteAllText(PathTool.Combine(Kernel.saveDataPath, name) + ".json", jObject.ToString());
                 }
             }
         }
@@ -96,7 +97,7 @@ namespace SCKRM.SaveLoad
                     else
                         name = type.Name;
 
-                    string path = KernelMethod.PathCombine(Kernel.saveDataPath, name) + ".json";
+                    string path = PathTool.Combine(Kernel.saveDataPath, name) + ".json";
                     if (!File.Exists(path))
                         continue;
 

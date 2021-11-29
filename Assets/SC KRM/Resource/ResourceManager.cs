@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Json;
 using SCKRM.Threads;
+using SCKRM.Tool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace SCKRM.Resource
                 for (int j = 0; j < nameSpaces.Count; j++)
                 {
                     string nameSpace = nameSpaces[j];
-                    string resourcePackTexturePath = KernelMethod.PathCombine(resourcePack, texturePath.Replace("%NameSpace%", nameSpace));
+                    string resourcePackTexturePath = PathTool.Combine(resourcePack, texturePath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(resourcePackTexturePath))
                         continue;
@@ -324,7 +325,7 @@ namespace SCKRM.Resource
                 for (int j = 0; j < nameSpaces.Count; j++)
                 {
                     string nameSpace = nameSpaces[j];
-                    string path = KernelMethod.PathCombine(resourcePack, soundPath.Replace("%NameSpace%", nameSpace));
+                    string path = PathTool.Combine(resourcePack, soundPath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(path))
                         continue;
@@ -343,7 +344,7 @@ namespace SCKRM.Resource
                         {
                             SoundMetaData sound = soundData.Value.sounds[k];
 
-                            string soundPath = KernelMethod.PathCombine(path, sound.path);
+                            string soundPath = PathTool.Combine(path, sound.path);
                             AudioClip audioClip = await GetAudio(soundPath, sound.stream);
 
                             if (audioClip != null)
@@ -564,7 +565,7 @@ namespace SCKRM.Resource
             for (int i = 0; i < resourcePacks.Count; i++)
             {
                 string resourcePack = resourcePacks[i];
-                string text = GetText(KernelMethod.PathCombine(resourcePack, path));
+                string text = GetText(PathTool.Combine(resourcePack, path));
                 if (text != "")
                     return text;
             }
@@ -689,7 +690,7 @@ namespace SCKRM.Resource
                 }
                 else
                 {
-                    Texture2D texture = new Texture2D(0, 0, TextureFormat.RGBA32, mipmapUse);
+                    Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
 
                     byte[] bytes = File.ReadAllBytes(path);
                     if (texture.LoadImage(bytes))
@@ -766,10 +767,10 @@ namespace SCKRM.Resource
             if (nameSpace == "")
                 nameSpace = defaultNameSpace;
 
-            string path = KernelMethod.PathCombine(resourcePackPath, texturePath.Replace("%NameSpace%", nameSpace));
-            string allPath = KernelMethod.PathCombine(path, type, name);
+            string path = PathTool.Combine(resourcePackPath, texturePath.Replace("%NameSpace%", nameSpace));
+            string allPath = PathTool.Combine(path, type, name);
             
-            TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(KernelMethod.PathCombine(path, type) + ".json", true);
+            TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(PathTool.Combine(path, type) + ".json", true);
             if (textureMetaData == null)
                 textureMetaData = new TextureMetaData();
 
@@ -872,8 +873,8 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 오디오 파일을 오디오 클립으로 가져옵니다
-        /// Import audio files as audio clips
+        /// 오디오 파일을 오디오 클립으로 가져옵니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
+        /// Import audio files as audio clips (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <param name="path">
         /// 경로

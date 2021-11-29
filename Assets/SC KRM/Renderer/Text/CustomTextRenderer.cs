@@ -7,14 +7,18 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(Text))]
     public class CustomTextRenderer : CustomAllTextRenderer
     {
-        Text text;
-
-        public override void Rerender()
+        [SerializeField, HideInInspector] Text _text;
+        public Text text
         {
-            if (text == null)
-                text = GetComponent<Text>();
+            get
+            {
+                if (_text == null)
+                    _text = GetComponent<Text>();
 
-            text.text = (string)queue.Dequeue();
+                return _text;
+            }
         }
+
+        public override void Rerender() => text.text = (string)queue.Dequeue();
     }
 }

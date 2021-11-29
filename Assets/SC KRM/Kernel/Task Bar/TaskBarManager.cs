@@ -2,13 +2,14 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Input;
 using SCKRM.SaveLoad;
+using SCKRM.Tool;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.TaskBar
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
     public sealed class TaskBarManager : MonoBehaviour
     {
         [SaveLoad("Task Bar")]
@@ -35,13 +36,34 @@ namespace SCKRM.UI.TaskBar
         }
 
 
-        [SerializeField] RectTransform _rectTransform;
-        public RectTransform rectTransform => _rectTransform;
+        [SerializeField, HideInInspector] RectTransform _rectTransform;
+        public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                    _rectTransform = GetComponent<RectTransform>();
+
+                return _rectTransform;
+            }
+        }
+
+        [SerializeField, HideInInspector] Image _image;
+        public Image image
+        {
+            get
+            {
+                if (_image == null)
+                    _image = GetComponent<Image>();
+
+                return _image;
+            }
+        }
+
         [SerializeField] EventSystem _eventSystem;
         public EventSystem eventSystem => _eventSystem;
 
-        [SerializeField] Image _image;
-        public Image image => _image;
+
         [SerializeField] Sprite bg;
         [SerializeField] Sprite bg2;
 

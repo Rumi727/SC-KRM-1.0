@@ -1,6 +1,7 @@
 using SCKRM.Json;
 using SCKRM.Object;
 using SCKRM.Resource;
+using SCKRM.Tool;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -45,9 +46,9 @@ namespace SCKRM.Language.UI
                 for (int nameSpaceIndex = 0; nameSpaceIndex < ResourceManager.nameSpaces.Count; nameSpaceIndex++)
                 {
                     string nameSpace = ResourceManager.nameSpaces[nameSpaceIndex];
-                    if (Directory.Exists(KernelMethod.PathCombine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace)))
+                    if (Directory.Exists(PathTool.Combine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace)))
                     {
-                        string[] directorys = Directory.GetFiles(KernelMethod.PathCombine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace), "*.json");
+                        string[] directorys = Directory.GetFiles(PathTool.Combine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace), "*.json");
 
                         for (int languageIndex = 0; languageIndex < directorys.Length; languageIndex++)
                         {

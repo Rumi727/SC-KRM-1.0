@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using SCKRM.Camera;
 using SCKRM.UI;
 using UnityEngine.UI;
+using SCKRM.Tool;
 
 namespace SCKRM.Editor
 {

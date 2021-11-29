@@ -1,6 +1,7 @@
 using UnityEngine;
 using SCKRM.Resource;
 using SCKRM.Object;
+using SCKRM.Tool;
 
 namespace SCKRM.Sound
 {

@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using SCKRM.Tool;
 using SCKRM.Resource;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,8 +33,8 @@ namespace SCKRM.Splash
 
         async void Awake()
         {
-            bow = await ResourceManager.GetAudio(KernelMethod.PathCombine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
-            drawmap = await ResourceManager.GetAudio(KernelMethod.PathCombine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
+            bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
+            drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
 
             isAniPlayed = true;
             aniPlay = false;

@@ -6,14 +6,18 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(TextMesh))]
     public class CustomTextMeshRenderer : CustomAllTextRenderer
     {
-        TextMesh text;
-
-        public override void Rerender()
+        [SerializeField, HideInInspector] TextMesh _text;
+        public TextMesh text
         {
-            if (text == null)
-                text = GetComponent<TextMesh>();
+            get
+            {
+                if (_text == null)
+                    _text = GetComponent<TextMesh>();
 
-            text.text = (string)queue.Dequeue();
+                return _text;
+            }
         }
+
+        public override void Rerender() => text.text = (string)queue.Dequeue();
     }
 }

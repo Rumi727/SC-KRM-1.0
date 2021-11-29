@@ -11,11 +11,29 @@ namespace SCKRM.UI
 
 
 
-        [SerializeField] RectTransform _rectTransform;
-        public RectTransform rectTransform { get => _rectTransform; }
+        [SerializeField, HideInInspector] RectTransform _rectTransform;
+        public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                    _rectTransform = GetComponent<RectTransform>();
 
-        [SerializeField] Canvas _canvas;
-        public Canvas canvas { get => _canvas; }
+                return _rectTransform;
+            }
+        }
+
+        [SerializeField, HideInInspector] Canvas _canvas;
+        public Canvas canvas
+        {
+            get
+            {
+                if (_canvas == null)
+                    _canvas = GetComponent<Canvas>();
+
+                return _canvas;
+            }
+        }
 
         void Awake()
         {

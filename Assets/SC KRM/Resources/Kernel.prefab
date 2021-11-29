@@ -350,6 +350,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Task Bar Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3166609338434811960, guid: 750a9aac710799e438946f9a65f80b25, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 97.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4108482872546115221, guid: 750a9aac710799e438946f9a65f80b25, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 926
+      objectReference: {fileID: 0}
     - target: {fileID: 5888635084921970755, guid: 750a9aac710799e438946f9a65f80b25, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -432,6 +440,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5888635084921970755, guid: 750a9aac710799e438946f9a65f80b25, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849282614236060663, guid: 750a9aac710799e438946f9a65f80b25, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

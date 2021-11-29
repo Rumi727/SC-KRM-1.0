@@ -1,6 +1,7 @@
 using SCKRM.Object;
 using SCKRM.Resource;
 using SCKRM.Sound;
+using SCKRM.Tool;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -38,11 +39,11 @@ namespace SCKRM.NBS
             get => _index;
             set
             {
-                int value2 = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
+                value = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
 
                 _timer = 0;
-                _index = value2;
-                _tick = nbsFile.nbsNotes[value2].delayTick;
+                _index = value;
+                _tick = nbsFile.nbsNotes[value].delayTick;
             }
         }
 
@@ -52,6 +53,8 @@ namespace SCKRM.NBS
             get => _tick;
             set
             {
+                value = value.Clamp(0, length);
+
                 _timer = 0;
                 _tick = value;
                 _index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
@@ -94,7 +97,7 @@ namespace SCKRM.NBS
                 string resourcePackPath = ResourceManager.resourcePacks[i];
                 if (ResourceManager.nameSpaces.Contains(nameSpace))
                 {
-                    string temppath = KernelMethod.PathCombine(resourcePackPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace), key + ".nbs");
+                    string temppath = PathTool.Combine(resourcePackPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace), key + ".nbs");
 
                     if (File.Exists(temppath))
                     {

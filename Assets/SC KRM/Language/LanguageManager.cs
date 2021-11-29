@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using SCKRM.Json;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
+using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
 
@@ -47,7 +48,7 @@ namespace SCKRM.Language
             if (language == "")
                 language = SaveData.currentLanguage;
 
-            Dictionary<string, string> jObject = JsonManager.JsonRead<Dictionary<string, string>>(KernelMethod.PathCombine(ResourceManager.languagePath, language), nameSpace);
+            Dictionary<string, string> jObject = JsonManager.JsonRead<Dictionary<string, string>>(PathTool.Combine(ResourceManager.languagePath, language), nameSpace);
             if (jObject != null && jObject.ContainsKey(key))
                 return jObject[key].EnvironmentVariable();
             else

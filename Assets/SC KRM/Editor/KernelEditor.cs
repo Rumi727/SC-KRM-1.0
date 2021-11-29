@@ -5,6 +5,7 @@ using SCKRM.Object;
 using SCKRM.ProjectSetting;
 using SCKRM.Resource;
 using SCKRM.Sound;
+using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1063,7 +1064,7 @@ namespace SCKRM.Editor
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            string path = KernelMethod.PathCombine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
+            string path = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
 
             if (Application.isPlaying)
                 GUI.enabled = false;
