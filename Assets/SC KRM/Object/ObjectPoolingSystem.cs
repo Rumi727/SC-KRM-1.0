@@ -52,10 +52,10 @@ namespace SCKRM.Object
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException("ObjectCreate");
+                throw new NotPlayModeMethodException(nameof(ObjectCreate));
 #endif
             if (instance == null)
-                throw new NullScriptMethodException("ObjectPoolingSystem", "ObjectCreate");
+                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectCreate));
 
             if (objectList.ObjectKey.Contains(ObjectKey))
             {
@@ -107,10 +107,10 @@ namespace SCKRM.Object
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException("ObjectRemove");
+                throw new NotPlayModeMethodException(nameof(ObjectRemove));
 #endif
             if (instance == null)
-                throw new NullScriptMethodException("ObjectPoolingSystem", "ObjectRemove");
+                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
 
             gameObject.SetActive(false);
             gameObject.transform.SetParent(instance.transform);

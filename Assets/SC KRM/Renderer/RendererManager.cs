@@ -14,7 +14,7 @@ namespace SCKRM.Renderer
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException("AllRerender");
+                throw new NotPlayModeMethodException(nameof(AllRerender));
 #endif
 
             if (thread)

@@ -621,6 +621,9 @@ namespace SCKRM
         #region List
         public static void Move<T>(this List<T> list, int oldIndex, int newIndex)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             T temp = list[oldIndex];
             list.RemoveAt(oldIndex);
             list.Insert(newIndex, temp);
@@ -639,13 +642,16 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
-        /// <param name="data">리스트</param>
+        /// <param name="list">리스트</param>
         /// <param name="target">기준</param>
         /// <returns></returns>
-        public static int CloseValue(this List<int> data, int target)
+        public static int CloseValue(this List<int> list, int target)
         {
-            if (data.Count > 0)
-                return data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
 
             return 0;
         }
@@ -653,13 +659,16 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
-        /// <param name="data">리스트</param>
+        /// <param name="list">리스트</param>
         /// <param name="target">기준</param>
         /// <returns></returns>
-        public static float CloseValue(this List<float> data, float target)
+        public static float CloseValue(this List<float> list, float target)
         {
-            if (data.Count > 0)
-                return data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
 
             return 0;
         }
@@ -667,13 +676,16 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
-        /// <param name="data">리스트</param>
+        /// <param name="list">리스트</param>
         /// <param name="target">기준</param>
         /// <returns></returns>
-        public static double CloseValue(this List<double> data, double target)
+        public static double CloseValue(this List<double> list, double target)
         {
-            if (data.Count > 0)
-                return data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
 
             return 0;
         }
@@ -681,13 +693,16 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾고 인덱스를 반환합니다
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="list"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static int CloseValueIndex(this List<double> data, double target)
+        public static int CloseValueIndex(this List<double> list, double target)
         {
-            if (data.Count > 0)
-                return data.IndexOf(data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y));
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y));
 
             return 0;
         }
@@ -695,19 +710,25 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="list"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static int CloseValueIndexBinarySearch(this List<double> data, double target)
+        public static int CloseValueIndexBinarySearch(this List<double> list, double target)
         {
-            if (data.Count > 0)
-                return data.BinarySearch(data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y));
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.BinarySearch(list.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y));
 
             return 0;
         }
 
         public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
         {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
             using (IEnumerator<TSource> sourceIterator = source.GetEnumerator())
             {
                 if (!sourceIterator.MoveNext())
@@ -737,6 +758,9 @@ namespace SCKRM
         #region Array
         public static T[] Add<T>(this T[] array, T item)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             T[] tempArray = new T[array.Length + 1];
             
             for (int i = 0; i < array.Length; i++)
@@ -748,6 +772,9 @@ namespace SCKRM
 
         public static T[] Insert<T>(this T[] array, int index, T item)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             T[] tempArray = new T[array.Length + 1];
             bool insert = false;
             for (int i = 0; i < tempArray.Length; i++)
@@ -771,6 +798,9 @@ namespace SCKRM
 
         public static T[] Remove<T>(this T[] array, T item)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             T[] tempArray = new T[array.Length - 1];
             int remove = 0;
             for (int i = 0; i < tempArray.Length; i++)
@@ -789,6 +819,9 @@ namespace SCKRM
 
         public static T[] RemoveAt<T>(this T[] array, int index)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             T[] tempArray = new T[array.Length - 1];
             
             bool remove = false;
@@ -813,6 +846,9 @@ namespace SCKRM
 
         public static T[] Move<T>(this T[] array, int oldIndex, int newIndex)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             T temp = array[oldIndex];
             array = array.RemoveAt(oldIndex);
             return array.Insert(newIndex, temp);
@@ -820,6 +856,9 @@ namespace SCKRM
 
         public static T[] Change<T>(this T[] array, int oldIndex, int newIndex)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
@@ -832,7 +871,7 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
-        /// <param name="data">
+        /// <param name="array">
         /// 리스트
         /// </param>
         /// <param name="target">
@@ -841,10 +880,13 @@ namespace SCKRM
         /// <returns>
         /// int
         /// </returns>
-        public static int CloseValue(this int[] data, int target)
+        public static int CloseValue(this int[] array, int target)
         {
-            if (data.Length > 0)
-                return data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
 
             return 0;
         }
@@ -852,7 +894,7 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
-        /// <param name="data">
+        /// <param name="array">
         /// 리스트
         /// </param>
         /// <param name="target">
@@ -861,10 +903,13 @@ namespace SCKRM
         /// <returns>
         /// float
         /// </returns>
-        public static float CloseValue(this float[] data, float target)
+        public static float CloseValue(this float[] array, float target)
         {
-            if (data.Length > 0)
-                return data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
 
             return 0;
         }
@@ -872,7 +917,7 @@ namespace SCKRM
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
-        /// <param name="data">
+        /// <param name="array">
         /// 리스트
         /// </param>
         /// <param name="target">
@@ -881,10 +926,13 @@ namespace SCKRM
         /// <returns>
         /// double
         /// </returns>
-        public static double CloseValue(this double[] data, double target)
+        public static double CloseValue(this double[] array, double target)
         {
-            if (data.Length > 0)
-                return data.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => Abs(x - target) < Abs(y - target) ? x : y);
 
             return 0;
         }
@@ -1191,8 +1239,10 @@ namespace SCKRM
             try
             {
                 int secondAbs = second.Abs();
-                if (second > TimeSpan.MaxValue.TotalSeconds)
-                    return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:h\:mm\:ss");
+                if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
+                    return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss");
+                else if (second > TimeSpan.MaxValue.TotalSeconds)
+                    return TimeSpan.MaxValue.ToString(@"d\:h\:mm\:ss");
                 else if (secondAbs >= 86400 || dayAlwayShow)
                     return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
                 else if (secondAbs >= 3600 || hourAlwayShow)
@@ -1221,8 +1271,10 @@ namespace SCKRM
                 float secondAbs = second.Abs();
                 if (decimalShow)
                 {
-                    if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
-                        return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:hh\:mm\:ss\.ff");
+                    if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
+                        return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss\.ff");
+                    else if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                        return TimeSpan.MaxValue.ToString(@"d\:hh\:mm\:ss\.ff");
                     else if (secondAbs >= 86400 || dayAlwayShow)
                         return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss\.ff");
                     else if (secondAbs >= 3600 || hourAlwayShow)
@@ -1234,8 +1286,10 @@ namespace SCKRM
                 }
                 else
                 {
-                    if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
-                        return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:h\:mm\:ss");
+                    if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
+                        return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss");
+                    else if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                        return TimeSpan.MaxValue.ToString(@"d\:h\:mm\:ss");
                     else if (secondAbs >= 86400 || dayAlwayShow)
                         return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
                     else if (secondAbs >= 3600 || hourAlwayShow)
@@ -1265,7 +1319,9 @@ namespace SCKRM
                 double secondAbs = second.Abs();
                 if (decimalShow)
                 {
-                    if (second > TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                    if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
+                        return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss\.ff");
+                    else if (second > TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
                         return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:hh\:mm\:ss\.ff");
                     else if (secondAbs >= 86400 || dayAlwayShow)
                         return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss\.ff");
@@ -1278,7 +1334,9 @@ namespace SCKRM
                 }
                 else
                 {
-                    if (second > TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
+                    if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
+                        return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss");
+                    else if (second > TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
                         return TimeSpan.FromSeconds(TimeSpan.MaxValue.TotalSeconds).ToString(@"d\:h\:mm\:ss");
                     else if (secondAbs >= 86400 || dayAlwayShow)
                         return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
@@ -1302,24 +1360,7 @@ namespace SCKRM
         /// <param name="max"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static string IntToBar(this int value, int max, int length)
-        {
-            string text = "";
-
-            for (float i = 0.5f; i < length + 0.5f; i++)
-            {
-                if (value / max >= i / length)
-                    text += "■";
-                else
-                {
-                    if (value / max >= (i - 0.5f) / length)
-                        text += "▣";
-                    else
-                        text += "□";
-                }
-            }
-            return text;
-        }
+        public static string IntToBar(this int value, int max, int length, string fill = "■", string half = "▣", string empty = "□") => DoubleToBar(value, max, length, fill, half, empty);
 
         /// <summary>
         /// (value = 5.5, max = 10, length = 10) = "■■■■■▣□□□□"
@@ -1328,24 +1369,7 @@ namespace SCKRM
         /// <param name="max"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static string FloatToBar(this float value, float max, int length)
-        {
-            string text = "";
-
-            for (float i = 0.5f; i < length + 0.5f; i++)
-            {
-                if (value / max >= i / length)
-                    text += "■";
-                else
-                {
-                    if (value / max >= (i - 0.5f) / length)
-                        text += "▣";
-                    else
-                        text += "□";
-                }
-            }
-            return text;
-        }
+        public static string FloatToBar(this float value, float max, int length, string fill = "■", string half = "▣", string empty = "□") => DoubleToBar(value, max, length, fill, half, empty);
 
         /// <summary>
         /// (value = 5.5, max = 10, length = 10) = "■■■■■▣□□□□"
@@ -1354,20 +1378,20 @@ namespace SCKRM
         /// <param name="max"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static string DoubleToBar(this double value, double max, int length)
+        public static string DoubleToBar(this double value, double max, int length, string fill = "■", string half = "▣", string empty = "□")
         {
             string text = "";
 
             for (double i = 0.5; i < length + 0.5; i++)
             {
                 if (value / max >= i / length)
-                    text += "■";
+                    text += fill;
                 else
                 {
                     if (value / max >= (i - 0.5) / length)
-                        text += "▣";
+                        text += half;
                     else
-                        text += "□";
+                        text += empty;
                 }
             }
             return text;

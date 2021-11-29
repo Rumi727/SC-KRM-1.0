@@ -46,10 +46,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetKeyDown");
+                throw new NotPlayModeMethodException(nameof(GetKeyDown));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetKeyDown");
+                throw new NotInitialLoadEndMethodException(nameof(GetKeyDown));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -66,10 +66,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetKeyDown");
+                throw new NotPlayModeMethodException(nameof(GetKeyDown));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetKeyDown");
+                throw new NotInitialLoadEndMethodException(nameof(GetKeyDown));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -90,10 +90,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetKey");
+                throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetKey");
+                throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -110,10 +110,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetKey");
+                throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetKey");
+                throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -134,10 +134,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetKeyUp");
+                throw new NotPlayModeMethodException(nameof(GetKeyUp));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetKeyUp");
+                throw new NotInitialLoadEndMethodException(nameof(GetKeyUp));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -154,10 +154,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetKeyUp");
+                throw new NotPlayModeMethodException(nameof(GetKeyUp));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetKeyUp");
+                throw new NotInitialLoadEndMethodException(nameof(GetKeyUp));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -181,10 +181,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetMouseDelta");
+                throw new NotPlayModeMethodException(nameof(GetMouseDelta));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetMouseDelta");
+                throw new NotInitialLoadEndMethodException(nameof(GetMouseDelta));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -200,10 +200,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetMouseScrollDelta");
+                throw new NotPlayModeMethodException(nameof(GetMouseScrollDelta));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetMouseScrollDelta");
+                throw new NotInitialLoadEndMethodException(nameof(GetMouseScrollDelta));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -220,10 +220,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetAnyKeyDown");
+                throw new NotPlayModeMethodException(nameof(GetAnyKeyDown));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetAnyKeyDown");
+                throw new NotInitialLoadEndMethodException(nameof(GetAnyKeyDown));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -235,10 +235,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("GetAnyKey");
+                throw new NotPlayModeMethodException(nameof(GetAnyKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("GetAnyKey");
+                throw new NotInitialLoadEndMethodException(nameof(GetAnyKey));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -250,10 +250,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("InputLockCheck");
+                throw new NotPlayModeMethodException(nameof(InputLockCheck));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("InputLockCheck");
+                throw new NotInitialLoadEndMethodException(nameof(InputLockCheck));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -284,10 +284,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyDownEnable");
+                throw new NotPlayModeMethodException(nameof(KeyDownEnable));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyDownEnable");
+                throw new NotInitialLoadEndMethodException(nameof(KeyDownEnable));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -306,10 +306,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyEnable");
+                throw new NotPlayModeMethodException(nameof(KeyEnable));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyEnable");
+                throw new NotInitialLoadEndMethodException(nameof(KeyEnable));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -328,10 +328,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyToggle");
+                throw new NotPlayModeMethodException(nameof(KeyToggle));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyToggle");
+                throw new NotInitialLoadEndMethodException(nameof(KeyToggle));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -346,10 +346,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyUpEnable");
+                throw new NotPlayModeMethodException(nameof(KeyUpEnable));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyUpEnable");
+                throw new NotInitialLoadEndMethodException(nameof(KeyUpEnable));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -370,10 +370,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeydownEnable");
+                throw new NotPlayModeMethodException(nameof(KeyDownEnable));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeydownEnable");
+                throw new NotInitialLoadEndMethodException(nameof(KeyDownEnable));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -392,10 +392,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyEnable");
+                throw new NotPlayModeMethodException(nameof(KeyEnable));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyEnable");
+                throw new NotInitialLoadEndMethodException(nameof(KeyEnable));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -414,10 +414,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyToggle");
+                throw new NotPlayModeMethodException(nameof(KeyToggle));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyToggle");
+                throw new NotInitialLoadEndMethodException(nameof(KeyToggle));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -432,10 +432,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("KeyUpEnable");
+                throw new NotPlayModeMethodException(nameof(KeyUpEnable));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("KeyUpEnable");
+                throw new NotInitialLoadEndMethodException(nameof(KeyUpEnable));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
@@ -455,10 +455,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("SetInputLock");
+                throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("SetInputLock");
+                throw new NotInitialLoadEndMethodException(nameof(SetInputLock));
 
             if (Data.inputLockList.ContainsKey(key))
                 Data.inputLockList[key] = !Data.inputLockList[key];
@@ -468,10 +468,10 @@ namespace SCKRM.Input
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException("SetInputLock");
+                throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException("SetInputLock");
+                throw new NotInitialLoadEndMethodException(nameof(SetInputLock));
 
             if (Data.inputLockList.ContainsKey(key))
                 Data.inputLockList[key] = value;

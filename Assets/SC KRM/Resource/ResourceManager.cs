@@ -392,7 +392,7 @@ namespace SCKRM.Resource
                 throw new NotPlayModeSearchMethodException();
 #endif
             if (!isInitialLoadPackTexturesEnd)
-                throw new NotInitialLoadEndMethodException("Search");
+                throw new NotInitialLoadEndMethodException(nameof(SearchTexturePath));
 
             if (type == null)
                 type = "";
@@ -430,7 +430,7 @@ namespace SCKRM.Resource
                 throw new NotPlayModeSearchMethodException();
 #endif
             if (!isInitialLoadPackTexturesEnd)
-                throw new NotInitialLoadEndMethodException("Search");
+                throw new NotInitialLoadEndMethodException(nameof(SearchPackTexture));
 
             if (type == null)
                 type = "";
@@ -470,7 +470,7 @@ namespace SCKRM.Resource
                 throw new NotPlayModeSearchMethodException();
 #endif
             if (!isInitialLoadPackTexturesEnd)
-                throw new NotInitialLoadEndMethodException("Search");
+                throw new NotInitialLoadEndMethodException(nameof(SearchTextureRect));
 
             if (type == null)
                 type = "";
@@ -513,7 +513,7 @@ namespace SCKRM.Resource
                 throw new NotPlayModeSearchMethodException();
 #endif
             if (!isInitialLoadSpriteEnd)
-                throw new NotInitialLoadEndMethodException("Search");
+                throw new NotInitialLoadEndMethodException(nameof(SearchSprites));
 
             if (type == null)
                 type = "";
@@ -592,7 +592,7 @@ namespace SCKRM.Resource
                 throw new NotPlayModeSearchMethodException();
 #endif
             if (!isInitialLoadAudioEnd)
-                throw new NotInitialLoadEndMethodException("Search");
+                throw new NotInitialLoadEndMethodException(nameof(SearchSoundData));
 
             if (key == null)
                 key = "";
