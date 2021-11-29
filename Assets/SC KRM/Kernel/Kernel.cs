@@ -1239,7 +1239,7 @@ namespace SCKRM
             try
             {
                 int secondAbs = second.Abs();
-                if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
+                if (second <= TimeSpan.MinValue.TotalSeconds)
                     return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss");
                 else if (second > TimeSpan.MaxValue.TotalSeconds)
                     return TimeSpan.MaxValue.ToString(@"d\:h\:mm\:ss");
@@ -1264,44 +1264,7 @@ namespace SCKRM
         /// <param name="hourAlwayShow">시간, 분 단위 항상 표시</param>
         /// <param name="dayAlwayShow">하루, 시간, 분 단위 항상 표시</param>
         /// <returns></returns>
-        public static string ToTime(this float second, bool decimalShow = true, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false)
-        {
-            try
-            {
-                float secondAbs = second.Abs();
-                if (decimalShow)
-                {
-                    if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
-                        return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss\.ff");
-                    else if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
-                        return TimeSpan.MaxValue.ToString(@"d\:hh\:mm\:ss\.ff");
-                    else if (secondAbs >= 86400 || dayAlwayShow)
-                        return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss\.ff");
-                    else if (secondAbs >= 3600 || hourAlwayShow)
-                        return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss\.ff");
-                    else if (secondAbs >= 60 || minuteAlwayShow)
-                        return TimeSpan.FromSeconds(second).ToString(@"m\:ss\.ff");
-                    else
-                        return TimeSpan.FromSeconds(second).ToString(@"s\.ff");
-                }
-                else
-                {
-                    if (second <= TimeSpan.MinValue.TotalSeconds || secondAbs == float.NegativeInfinity)
-                        return TimeSpan.MinValue.ToString(@"d\:hh\:mm\:ss");
-                    else if (second >= TimeSpan.MaxValue.TotalSeconds || secondAbs == float.PositiveInfinity)
-                        return TimeSpan.MaxValue.ToString(@"d\:h\:mm\:ss");
-                    else if (secondAbs >= 86400 || dayAlwayShow)
-                        return TimeSpan.FromSeconds(second).ToString(@"d\:hh\:mm\:ss");
-                    else if (secondAbs >= 3600 || hourAlwayShow)
-                        return TimeSpan.FromSeconds(second).ToString(@"h\:mm\:ss");
-                    else if (secondAbs >= 60 || minuteAlwayShow)
-                        return TimeSpan.FromSeconds(second).ToString(@"m\:ss");
-                    else
-                        return TimeSpan.FromSeconds(second).ToString(@"s");
-                }
-            }
-            catch (Exception) { return "--:--"; }
-        }
+        public static string ToTime(this float second, bool decimalShow = true, bool minuteAlwayShow = false, bool hourAlwayShow = false, bool dayAlwayShow = false) => ToTime(second, decimalShow, minuteAlwayShow, hourAlwayShow, dayAlwayShow);
 
         /// <summary>
         /// (second = 70.1) = "1:10.1"
@@ -1380,6 +1343,13 @@ namespace SCKRM
         /// <returns></returns>
         public static string DoubleToBar(this double value, double max, int length, string fill = "■", string half = "▣", string empty = "□")
         {
+            if (fill == null)
+                fill = "";
+            if (half == null)
+                half = "";
+            if (empty == null)
+                empty = "";
+
             string text = "";
 
             for (double i = 0.5; i < length + 0.5; i++)
