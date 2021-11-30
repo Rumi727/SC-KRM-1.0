@@ -18,7 +18,8 @@ namespace SCKRM.Input.UI
         public void Exit()
         {
             gameObject.SetActive(false);
-            visibleGameObject.SetActive(true);
+            if (visibleGameObject != null)
+                visibleGameObject?.SetActive(true);
         }
     }
 }

@@ -25,6 +25,8 @@ namespace SCKRM.Language.UI
             LanguageManager.SaveData.currentLanguage = language;
             LanguageManager.LanguageChangeEventInvoke();
             image.color = Color.white;
+
+            Kernel.AllRefresh(true);
         }
 
         public override void Remove()

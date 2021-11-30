@@ -8,7 +8,7 @@ using UnityEngine.Rendering.PostProcessing;
 namespace SCKRM.Camera
 {
     [ExecuteAlways]
-    [AddComponentMenu(""), RequireComponent(typeof(UnityEngine.Camera), typeof(PostProcessLayer))]
+    [AddComponentMenu("커널/Camera/카메라 설정"), RequireComponent(typeof(UnityEngine.Camera), typeof(PostProcessLayer))]
     public sealed class CameraSetting : MonoBehaviour
     {
         public bool CustomAntiAliasing = false;
@@ -50,7 +50,7 @@ namespace SCKRM.Camera
             if (Application.isPlaying)
             {
                 RectTransform taskBar = TaskBarManager.instance.rectTransform;
-                RectTransform canvas = TaskBarCanvas.instance.rectTransform;
+                RectTransform canvas = KernelCanvas.instance.rectTransform;
 
                 if (TaskBarManager.cropTheScreen)
                 {

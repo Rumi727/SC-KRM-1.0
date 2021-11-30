@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SCKRM.Input;
 using SCKRM.SaveLoad;
 using SCKRM.Tool;
+using SCKRM.UI.NoticeBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,10 +21,10 @@ namespace SCKRM.UI.TaskBar
 
         public static TaskBarManager instance { get; private set; }
         public static bool taskBarShow { get; set; } = true;
+        public static bool backButtonShow { get; set; } = true;
         public static bool isTaskBarShow { get; private set; } = true;
 
-        static bool _cropTheScreen = true;
-        public static bool cropTheScreen
+        static bool _cropTheScreen = true; public static bool cropTheScreen
         {
             get => _cropTheScreen;
             set
@@ -36,8 +37,7 @@ namespace SCKRM.UI.TaskBar
         }
 
 
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
+        [SerializeField, HideInInspector] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get
             {
@@ -47,9 +47,7 @@ namespace SCKRM.UI.TaskBar
                 return _rectTransform;
             }
         }
-
-        [SerializeField, HideInInspector] Image _image;
-        public Image image
+        [SerializeField, HideInInspector] Image _image; public Image image
         {
             get
             {
@@ -60,19 +58,21 @@ namespace SCKRM.UI.TaskBar
             }
         }
 
-        [SerializeField] EventSystem _eventSystem;
-        public EventSystem eventSystem => _eventSystem;
+        [SerializeField] EventSystem _eventSystem; public EventSystem eventSystem => _eventSystem;
+        [SerializeField] GameObject _background; public GameObject background => _background;
+        [SerializeField] GameObject _backButton; public GameObject backButton => _backButton;
+        [SerializeField] GameObject _layout; public GameObject layout => _layout;
 
 
         [SerializeField] Sprite bg;
         [SerializeField] Sprite bg2;
 
-        void OnEnable()
+        void Awake()
         {
             if (instance == null)
                 instance = this;
             else
-                Destroy(this);
+                Destroy(gameObject);
         }
 
         static GameObject oldSelectedObject;
@@ -80,86 +80,172 @@ namespace SCKRM.UI.TaskBar
         static bool tempCropTheScreen;
         void Update()
         {
-            bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<TaskBarManager>() != null;
-            isTaskBarShow = Kernel.isInitialLoadEnd && (taskBarShow || selectedTaskBar);
-
             if (Kernel.isInitialLoadEnd)
-                InputManager.SetInputLock("taskbar", isTaskBarShow);
+            {
+                {
+                    bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || NoticeBarManager.isNoticeBarShow;
+                    isTaskBarShow = taskBarShow || selectedTaskBar;
 
-            if (selectedTaskBar)
-                oldSelectedObject = eventSystem.currentSelectedGameObject;
+                    InputManager.SetInputLock("taskbar", selectedTaskBar);
 
-            if (isTaskBarShow)
-                rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsDeltaTime);
+                    if (selectedTaskBar)
+                    {
+                        oldSelectedObject = eventSystem.currentSelectedGameObject;
+
+                        if (!background.activeSelf)
+                            background.SetActive(true);
+                    }
+                    else
+                    {
+                        if (background.activeSelf)
+                            background.SetActive(false);
+                    }
+
+                    if (!selectedTaskBar && InputManager.GetKeyDown("gui.tab", "taskbar"))
+                        Tab();
+                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "taskbar"))
+                        eventSystem.SetSelectedGameObject(null);
+                }
+
+
+
+                {
+                    if (isTaskBarShow)
+                    {
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsDeltaTime);
+
+                        if (!layout.activeSelf)
+                            layout.SetActive(true);
+                    }
+                    else
+                    {
+                        if (!SaveData.topMode)
+                        {
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+
+                            if (rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
+                            {
+                                if (layout.activeSelf)
+                                    layout.SetActive(false);
+                            }
+                        }
+                        else
+                        {
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+
+                            if (rectTransform.anchoredPosition.y >= -rectTransform.sizeDelta.y + 0.01f)
+                            {
+                                if (layout.activeSelf)
+                                    layout.SetActive(false);
+                            }
+                        }
+                    }
+
+                    if (NoticeBarManager.isNoticeBarShow)
+                    {
+                        GameObject gameObject = NoticeBarManager.instance.gameObject;
+
+                        if (!gameObject.activeSelf)
+                            gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        GameObject gameObject = NoticeBarManager.instance.gameObject;
+                        RectTransform rectTransform = NoticeBarManager.instance.rectTransform;
+
+                        if (gameObject.activeSelf && rectTransform.anchoredPosition.x >= rectTransform.sizeDelta.x - 0.01f)
+                            gameObject.SetActive(false);
+                    }
+
+                    if (backButtonShow)
+                    {
+                        if (!backButton.activeSelf)
+                            backButton.SetActive(true);
+                    }
+                    else
+                    {
+                        if (backButton.activeSelf)
+                            backButton.SetActive(false);
+                    }
+                }
+
+
+
+                {
+                    if (taskBarShow)
+                        cropTheScreen = true;
+
+                    if (tempCropTheScreen != cropTheScreen)
+                    {
+                        if (!cropTheScreen)
+                            tempTopMode = !SaveData.topMode;
+                        else
+                            image.sprite = null;
+
+                        tempCropTheScreen = cropTheScreen;
+                    }
+
+                    if (tempTopMode != SaveData.topMode)
+                    {
+                        if (!SaveData.topMode)
+                        {
+                            rectTransform.anchorMin = Vector2.up;
+                            rectTransform.anchorMax = Vector2.up;
+                            rectTransform.pivot = Vector2.up;
+
+                            if (!cropTheScreen)
+                                image.sprite = bg;
+                            else
+                                image.sprite = null;
+
+                            if (!isTaskBarShow)
+                                rectTransform.anchoredPosition = new Vector2(0, rectTransform.sizeDelta.y);
+                        }
+                        else
+                        {
+                            rectTransform.anchorMin = Vector2.zero;
+                            rectTransform.anchorMax = Vector2.zero;
+                            rectTransform.pivot = Vector2.zero;
+
+                            if (!cropTheScreen)
+                                image.sprite = bg2;
+                            else
+                                image.sprite = null;
+
+                            if (!isTaskBarShow)
+                                rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y);
+                        }
+                        tempTopMode = SaveData.topMode;
+                    }
+                }
+            }
+        }
+
+        public void Hide()
+        {
+            if (NoticeBarManager.isNoticeBarShow)
+            {
+                NoticeBarManager.isNoticeBarShow = false;
+                Tab();
+            }
             else
-            {
-                if (!SaveData.topMode)
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
-                else
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
-            }
-
-            if (Kernel.isInitialLoadEnd && !selectedTaskBar && InputManager.GetKeyDown("gui.tab", "taskbar"))
-            {
-                if (oldSelectedObject == null || !oldSelectedObject.activeSelf)
-                {
-                    Transform[] transforms = GetComponentsInChildren<Transform>();
-                    if (transforms.Length > 1)
-                        eventSystem.SetSelectedGameObject(transforms[1].gameObject);
-                    else
-                        eventSystem.SetSelectedGameObject(gameObject);
-                }
-                else
-                    eventSystem.SetSelectedGameObject(oldSelectedObject);
-            }
-            else if (Kernel.isInitialLoadEnd && selectedTaskBar && InputManager.GetKeyDown("gui.back", "taskbar"))
                 eventSystem.SetSelectedGameObject(null);
+        }
 
-            if (taskBarShow)
-                cropTheScreen = true;
+        public void NoticeBarToggle() => NoticeBarManager.isNoticeBarShow = !NoticeBarManager.isNoticeBarShow;
 
-            if (tempCropTheScreen != cropTheScreen)
+        public static void Tab()
+        {
+            if (oldSelectedObject == null || !oldSelectedObject.activeSelf)
             {
-                if (!cropTheScreen)
-                    tempTopMode = !SaveData.topMode;
+                Transform[] transforms = instance.GetComponentsInChildren<Transform>();
+                if (transforms.Length > 1)
+                    instance.eventSystem.SetSelectedGameObject(transforms[1].gameObject);
                 else
-                    image.sprite = null;
-
-                tempCropTheScreen = cropTheScreen;
+                    instance.eventSystem.SetSelectedGameObject(instance.gameObject);
             }
-
-            if (tempTopMode != SaveData.topMode)
-            {
-                if (!SaveData.topMode)
-                {
-                    rectTransform.anchorMin = Vector2.up;
-                    rectTransform.anchorMax = Vector2.up;
-                    rectTransform.pivot = Vector2.up;
-
-                    if (!cropTheScreen)
-                        image.sprite = bg;
-                    else
-                        image.sprite = null;
-
-                    if (!isTaskBarShow)
-                        rectTransform.anchoredPosition = new Vector2(0, rectTransform.sizeDelta.y);
-                }
-                else
-                {
-                    rectTransform.anchorMin = Vector2.zero;
-                    rectTransform.anchorMax = Vector2.zero;
-                    rectTransform.pivot = Vector2.zero;
-
-                    if (!cropTheScreen)
-                        image.sprite = bg2;
-                    else
-                        image.sprite = null;
-
-                    if (!isTaskBarShow)
-                        rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y);
-                }
-                tempTopMode = SaveData.topMode;
-            }
+            else
+                instance.eventSystem.SetSelectedGameObject(oldSelectedObject);
         }
     }
 }

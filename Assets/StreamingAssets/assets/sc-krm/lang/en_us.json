@@ -34,6 +34,13 @@
 	"volume_control.volume_up": "Volume Up",
 	"kernel.full_screen": "Full Screen",
 	
+	"notice.notice": "Notice",
+	"notice.running_task": "Running Task",
+	
+	"notice.running_task.thread_auto_remove.name": "Thread Auto Remove",
+	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
+	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
+	
 	
 	
 	"subtitles.easter_egg_music_play": "Easter egg music is playing"

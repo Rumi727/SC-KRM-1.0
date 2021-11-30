@@ -27,7 +27,7 @@ namespace SCKRM.Object
 
 
 
-        void OnEnable()
+        void Awake()
         {
             if (instance == null)
                 instance = this;
@@ -68,7 +68,7 @@ namespace SCKRM.Object
                     objectPooling = gameObject.AddComponent<ObjectPooling>();
 
                 objectPooling.objectKey = ObjectKey;
-
+                
                 {
                     int i = objectList.ObjectKey.IndexOf(ObjectKey);
                     objectList.ObjectKey.RemoveAt(i);
@@ -77,6 +77,7 @@ namespace SCKRM.Object
 
                 RendererManager.AllRerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
 
+                objectPooling.OnCreate();
                 return gameObject;
             }
             else if (Data.prefabList.ContainsKey(ObjectKey))
@@ -92,6 +93,7 @@ namespace SCKRM.Object
 
                 RendererManager.AllRerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
 
+                objectPooling.OnCreate();
                 return gameObject;
             }
 
@@ -127,13 +129,18 @@ namespace SCKRM.Object
     {
         public string objectKey { get; set; } = "";
 
+        public virtual void OnCreate()
+        {
+
+        }
+
         public virtual void Remove()
         {
             ObjectPoolingSystem.ObjectRemove(objectKey, gameObject);
             gameObject.name = objectKey;
             transform.localPosition = Vector3.zero;
             transform.localEulerAngles = Vector3.zero;
-            transform.localScale = Vector3.zero;
+            transform.localScale = Vector3.one;
             StopAllCoroutines();
         }
     }

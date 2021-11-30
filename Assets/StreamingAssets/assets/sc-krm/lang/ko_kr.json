@@ -34,7 +34,15 @@
 	"volume_control.volume_up": "볼륨 키우기",
 	"kernel.full_screen": "전체 화면",
 	
+	"notice.notice": "알림",
+	"notice.running_task": "실행중인 작업",
+	
+	"notice.running_task.thread_auto_remove.name": "스레드 자동 제거",
+	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
+	"notice.running_task.resource_pack_refresh.name": "리소스팩 새로고침",
+	
 	
 	
 	"subtitles.easter_egg_music_play": "이스터에그 음악이 재생됨"
+	
 }

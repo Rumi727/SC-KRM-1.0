@@ -188,7 +188,7 @@ namespace SCKRM
         [SerializeField] Image _splashScreenBackground;
         public Image splashScreenBackground => _splashScreenBackground;
 
-        void OnEnable()
+        void Awake()
         {
             if (instance == null)
             {
@@ -283,7 +283,7 @@ namespace SCKRM
 
                 splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
 
-                ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "Thread Auto Remove", true);
+                ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
 
 #if UNITY_EDITOR
                 Scene scene = SceneManager.GetActiveScene();
@@ -362,15 +362,23 @@ namespace SCKRM
         public static event Action AllRefreshEnd;
         public static async void AllRefresh(bool onlyText = false)
         {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(AllRefresh));
+#endif
+
             AllRefreshStart?.Invoke();
 
             if (onlyText)
                 RendererManager.AllTextRerender();
             else
             {
-                await ResourceManager.ResourceRefesh();
-                RendererManager.AllRerender();
-                SoundManager.SoundRefresh();
+                if (!ResourceManager.isResourceRefesh)
+                {
+                    await ResourceManager.ResourceRefesh();
+                    RendererManager.AllRerender();
+                    SoundManager.SoundRefresh();
+                }
             }
 
             AllRefreshEnd?.Invoke();

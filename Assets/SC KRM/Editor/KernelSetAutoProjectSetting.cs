@@ -119,7 +119,7 @@ namespace SCKRM.Editor
                         Canvas canvas = canvass[i];
                         CanvasSetting canvasSetting = canvas.GetComponent<CanvasSetting>();
 
-                        if (canvas.GetComponent<TaskBarCanvas>() == null)
+                        if (canvas.GetComponent<KernelCanvas>() == null)
                         {
                             CanvasSetting cameraSetting = canvas.GetComponent<CanvasSetting>();
                             if (canvasSetting == null)

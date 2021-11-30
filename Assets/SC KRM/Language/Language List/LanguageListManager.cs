@@ -19,9 +19,8 @@ namespace SCKRM.Language.UI
         public void Exit()
         {
             gameObject.SetActive(false);
-            visibleGameObject.SetActive(true);
-
-            Kernel.AllRefresh(true);
+            if (visibleGameObject != null)
+                visibleGameObject.SetActive(true);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace SCKRM.Sound
 
 
 
-        void OnEnable()
+        void Awake()
         {
             if (instance == null)
                 instance = this;
@@ -49,7 +49,7 @@ namespace SCKRM.Sound
             }
 
             NBSPlayer[] nbsPlayers = FindObjectsOfType<NBSPlayer>();
-            for (int i = 0; i < soundObjects.Length; i++)
+            for (int i = 0; i < nbsPlayers.Length; i++)
             {
                 NBSPlayer nbsPlayer = nbsPlayers[i];
                 nbsPlayer.Refesh();

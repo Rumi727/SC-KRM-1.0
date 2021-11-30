@@ -1,7 +1,7 @@
 {
   "op": {
     "category": 1,
-    "subtitle": "",
+    "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {

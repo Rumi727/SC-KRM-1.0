@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
+    [AddComponentMenu("커널/UI/Layout/수평 레이아웃 설정")]
     public class HorizontalLayoutSetting : MonoBehaviour
     {
+        [SerializeField] bool _custom = false;
+        public bool custom => _custom;
+
         [SerializeField] Mode _mode = Mode.none;
-        public Mode mode { get => _mode; }
+        public Mode mode => _mode;
 
         public enum Mode
         {

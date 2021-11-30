@@ -6,6 +6,7 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
+    [AddComponentMenu("커널/UI/캔버스 설정")]
     [RequireComponent(typeof(Canvas))]
     public class CanvasSetting : MonoBehaviour
     {

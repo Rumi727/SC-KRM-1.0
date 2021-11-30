@@ -18,7 +18,7 @@ namespace SCKRM.Renderer
 #endif
 
             if (thread)
-                ThreadManager.Create(Rerender, customRenderers, "");
+                ThreadManager.Create(Rerender, customRenderers, "notice.running_task.resource_pack_refresh.name");
             else
             {
                 for (int i = 0; i < customRenderers.Length; i++)

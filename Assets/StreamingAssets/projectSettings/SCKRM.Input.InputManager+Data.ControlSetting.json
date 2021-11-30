@@ -8,6 +8,7 @@
     "gui.tab": 9
   },
   "inputLockList": {
-    "taskbar": false
+    "taskbar": false,
+    "noticebar": false
   }
 }

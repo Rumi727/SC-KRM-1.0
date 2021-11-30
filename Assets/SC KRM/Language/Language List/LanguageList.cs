@@ -39,13 +39,13 @@ namespace SCKRM.Language.UI
             instance = this;
 
             List<string> languageList = new List<string>();
-            for (int packIndex = 0; packIndex < ResourceManager.resourcePacks.Count; packIndex++)
+            for (int packIndex = 0; packIndex < ResourceManager.SaveData.resourcePacks.Count; packIndex++)
             {
-                string resourcePackPath = ResourceManager.resourcePacks[packIndex];
+                string resourcePackPath = ResourceManager.SaveData.resourcePacks[packIndex];
 
-                for (int nameSpaceIndex = 0; nameSpaceIndex < ResourceManager.nameSpaces.Count; nameSpaceIndex++)
+                for (int nameSpaceIndex = 0; nameSpaceIndex < ResourceManager.SaveData.nameSpaces.Count; nameSpaceIndex++)
                 {
-                    string nameSpace = ResourceManager.nameSpaces[nameSpaceIndex];
+                    string nameSpace = ResourceManager.SaveData.nameSpaces[nameSpaceIndex];
                     if (Directory.Exists(PathTool.Combine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace)))
                     {
                         string[] directorys = Directory.GetFiles(PathTool.Combine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace), "*.json");

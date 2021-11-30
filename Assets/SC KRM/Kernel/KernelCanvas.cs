@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
-    public class TaskBarCanvas : MonoBehaviour
+    [AddComponentMenu("")]
+    public class KernelCanvas : MonoBehaviour
     {
-        public static TaskBarCanvas instance { get; private set; }
+        public static KernelCanvas instance { get; private set; }
 
 
 

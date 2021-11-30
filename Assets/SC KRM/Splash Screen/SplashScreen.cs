@@ -8,10 +8,10 @@ using UnityEngine.UI;
 
 namespace SCKRM.Splash
 {
+    [AddComponentMenu("커널/스플래시/스플래시 스크린")]
     public sealed class SplashScreen : MonoBehaviour
     {
-        public static bool isAniPlayed { get; private set; } = true;
-        [SerializeField] Transform Logo;
+        public static bool isAniPlayed { get; set; } = true;
         [SerializeField] Image LogoImage;
         [SerializeField] Transform CS;
         [SerializeField] Image CSImage;

@@ -101,13 +101,20 @@ namespace SCKRM.SaveLoad
                     if (!File.Exists(path))
                         continue;
 
+                    #region 경고 및 기본값 저장과 null 설정
                     PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+                    Dictionary<string, object> defaultList = new Dictionary<string, object>();
                     for (int i = 0; i < propertyInfos.Length; i++)
                     {
                         PropertyInfo propertyInfo = propertyInfos[i];
                         bool ignore = propertyInfo.GetCustomAttributes(typeof(JsonIgnoreAttribute)).Any();
                         if (!propertyInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
                             Debug.LogWarning(type.Name + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                        else
+                        {
+                            defaultList.Add(propertyInfo.Name, propertyInfo.GetValue(propertyInfo.PropertyType));
+                            propertyInfo.SetValue(propertyInfo.PropertyType, null);
+                        }
                     }
 
                     FieldInfo[] fieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.Static);
@@ -118,9 +125,44 @@ namespace SCKRM.SaveLoad
                         bool ignore = fieldInfo.GetCustomAttributes(typeof(JsonIgnoreAttribute)).Any();
                         if (!fieldInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
                             Debug.LogWarning(type.Name + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                        else
+                        {
+                            defaultList.Add(fieldInfo.Name, fieldInfo.GetValue(fieldInfo.FieldType));
+                            fieldInfo.SetValue(fieldInfo.FieldType, null);
+                        }
                     }
+                    #endregion
 
                     JsonConvert.DeserializeObject(File.ReadAllText(path), type);
+
+                    #region json을 로드 했는데도 null이면 기본값으로 되돌리기
+                    for (int i = 0; i < propertyInfos.Length; i++)
+                    {
+                        PropertyInfo propertyInfo = propertyInfos[i];
+                        bool ignore = propertyInfo.GetCustomAttributes(typeof(JsonIgnoreAttribute)).Any();
+                        if (!propertyInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
+                            Debug.LogWarning(type.Name + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                        else
+                        {
+                            if (propertyInfo.GetValue(propertyInfo.PropertyType) == null)
+                                propertyInfo.SetValue(propertyInfo.PropertyType, defaultList[propertyInfo.Name]);
+                        }
+                    }
+
+                    for (int i = 0; i < fieldInfos.Length; i++)
+                    {
+                        FieldInfo fieldInfo = fieldInfos[i];
+
+                        bool ignore = fieldInfo.GetCustomAttributes(typeof(JsonIgnoreAttribute)).Any();
+                        if (!fieldInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
+                            Debug.LogWarning(type.Name + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                        else
+                        {
+                            if (fieldInfo.GetValue(fieldInfo.FieldType) == null)
+                                fieldInfo.SetValue(fieldInfo.FieldType, defaultList[fieldInfo.Name]);
+                        }
+                    }
+                    #endregion
                 }
             }
         }

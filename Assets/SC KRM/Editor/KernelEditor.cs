@@ -26,6 +26,7 @@ namespace SCKRM.Editor
         int settingTabIndex = 0;
 
         Vector2 audioScrollPos = Vector2.zero;
+        Vector2 resourceScrollPos = Vector2.zero;
 
         Vector2 controlSettingScrollPos = Vector2.zero;
         Vector2 controlLockSettingScrollPos = Vector2.zero;
@@ -39,7 +40,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                tabIndex = GUILayout.Toolbar(tabIndex, new string[] { "일반", "오디오", "NBS", "프로젝트 설정" }, GUILayout.ExpandWidth(false));
+                tabIndex = GUILayout.Toolbar(tabIndex, new string[] { "일반", "오디오", "NBS", "리소스", "프로젝트 설정" }, GUILayout.ExpandWidth(false));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -69,7 +70,10 @@ namespace SCKRM.Editor
                 case 2:
                     NBS();
                     break;
-                    
+                case 3:
+                    Resource();
+                    break;
+
                 default:
                     Setting();
                     break;
@@ -595,6 +599,135 @@ namespace SCKRM.Editor
             }
 
             GUI.enabled = true;
+        }
+
+        void Resource()
+        {
+            GUILayout.Label("제어판", EditorStyles.boldLabel);
+
+            {
+                GUILayout.BeginHorizontal();
+
+                if (!Application.isPlaying)
+                    GUI.enabled = false;
+
+                if (GUILayout.Button("텍스트 새로고침", GUILayout.ExpandWidth(false)))
+                    Kernel.AllRefresh(true);
+
+                if (GUILayout.Button("모든 리소스 새로고침", GUILayout.ExpandWidth(false)))
+                    Kernel.AllRefresh();
+
+                GUI.enabled = true;
+
+                GUILayout.EndHorizontal();
+            }
+
+            if (Application.isPlaying)
+            {
+                CustomInspectorEditor.DrawLine(2);
+
+                {
+                    GUILayout.Label("리소스팩 리스트", EditorStyles.boldLabel);
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("안전 삭제 모드 (삭제 할 리스트가 빈 값이 아니면 삭제 금지)", GUILayout.Width(330));
+                    deleteSafety = EditorGUILayout.Toggle(deleteSafety);
+                    EditorGUILayout.EndHorizontal();
+
+                    //CustomInspectorEditor.DrawList(ResourceManager.resourcePacks, "리소스팩 경로", resourceScrollPos, deleteSafety);
+                    DrawList(ResourceManager.SaveData.resourcePacks, "리소스팩 경로", deleteSafety);
+                    void DrawList(List<string> list, string label, bool deleteSafety = true)
+                    {
+                        //GUI
+                        {
+                            EditorGUILayout.BeginHorizontal();
+
+                            {
+                                if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
+                                    list.Insert(0, "");
+                            }
+
+                            {
+                                if (list.Count <= 0 || (list[0] != null && list[0] != "" && deleteSafety))
+                                    GUI.enabled = false;
+
+                                if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
+                                    list.RemoveAt(0);
+
+                                GUI.enabled = true;
+                            }
+
+                            {
+                                int count = EditorGUILayout.IntField("리스트 길이", list.Count, GUILayout.Height(21));
+                                //변수 설정
+                                if (count < 0)
+                                    count = 0;
+
+                                if (count > list.Count)
+                                {
+                                    for (int i = list.Count; i < count; i++)
+                                        list.Insert(0, "");
+                                }
+                                else if (count < list.Count)
+                                {
+                                    for (int i = list.Count - 1; i >= count; i--)
+                                    {
+                                        if (list.Count > 0 && (list[0] == null || list[0] == "" || !deleteSafety))
+                                            list.RemoveAt(0);
+                                        else
+                                            count++;
+                                    }
+                                }
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+                        }
+
+                        EditorGUILayout.Space();
+
+                        {
+                            resourceScrollPos = EditorGUILayout.BeginScrollView(resourceScrollPos, GUILayout.ExpandHeight(false));
+
+                            for (int i = 0; i < list.Count; i++)
+                            {
+                                if (i == list.Count - 1)
+                                    GUI.enabled = false;
+
+                                EditorGUILayout.BeginHorizontal();
+
+                                GUILayout.Label(label, GUILayout.ExpandWidth(false));
+                                list[i] = EditorGUILayout.TextField(list[i]);
+
+                                {
+                                    if (i - 1 < 0)
+                                        GUI.enabled = false;
+
+                                    if (GUILayout.Button("위로", GUILayout.ExpandWidth(false)))
+                                        list.Move(i, i - 1);
+
+                                    if (i != list.Count - 1)
+                                        GUI.enabled = true;
+                                }
+
+                                {
+                                    if (i + 1 >= list.Count - 1)
+                                        GUI.enabled = false;
+
+                                    if (GUILayout.Button("아래로", GUILayout.ExpandWidth(false)))
+                                        list.Move(i, i + 1);
+
+                                    if (i != list.Count - 1)
+                                        GUI.enabled = true;
+                                }
+
+                                EditorGUILayout.EndHorizontal();
+                            }
+
+                            EditorGUILayout.EndScrollView();
+                        }
+                    }
+                }
+            }
         }
 
         void Setting()

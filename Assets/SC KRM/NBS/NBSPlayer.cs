@@ -10,7 +10,8 @@ using UnityEngine;
 
 namespace SCKRM.NBS
 {
-    public class NBSPlayer : ObjectPooling
+    [AddComponentMenu("")]
+    public sealed class NBSPlayer : ObjectPooling
     {
         public NBSFile nbsFile { get; private set; }
 
@@ -92,10 +93,10 @@ namespace SCKRM.NBS
         public void Refesh()
         {
             string path = "";
-            for (int i = 0; i < ResourceManager.resourcePacks.Count; i++)
+            for (int i = 0; i < ResourceManager.SaveData.resourcePacks.Count; i++)
             {
-                string resourcePackPath = ResourceManager.resourcePacks[i];
-                if (ResourceManager.nameSpaces.Contains(nameSpace))
+                string resourcePackPath = ResourceManager.SaveData.resourcePacks[i];
+                if (ResourceManager.SaveData.nameSpaces.Contains(nameSpace))
                 {
                     string temppath = PathTool.Combine(resourcePackPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace), key + ".nbs");
 

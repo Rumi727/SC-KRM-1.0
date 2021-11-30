@@ -1,3 +1,4 @@
+using SCKRM.Tool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,21 +30,35 @@ namespace SCKRM.UI
         public bool xSize { get => _xSize; set => _xSize = value; }
         [SerializeField] bool _ySize = false;
         public bool ySize { get => _ySize; set => _ySize = value; }
-        [SerializeField] Vector2 _offset = Vector2.zero;
 
+        [SerializeField] Vector2 _offset = Vector2.zero;
         public Vector2 offset { get => _offset; set => _offset = value; }
+
+        [SerializeField] bool _lerp = false;
+        public bool lerp { get => _lerp; set => _lerp = value; }
 
         void Update()
         {
             if (targetRectTransform == null)
                 return;
 
-            if (xSize && !ySize)
-                rectTransform.sizeDelta = new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x + offset.x, rectTransform.sizeDelta.y);
-            else if (!xSize && ySize)
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y + offset.y);
-            else if (xSize && ySize)
-                rectTransform.sizeDelta = new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset;
+            if (!lerp || Application.isPlaying)
+            {
+                if (xSize && !ySize)
+                    rectTransform.sizeDelta = new Vector2((targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x) + offset.x, rectTransform.sizeDelta.y);
+                else if (!xSize && ySize)
+                    rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, (targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset.y);
+                else if (xSize && ySize)
+                    rectTransform.sizeDelta = new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset;
+            }
+            else
+            {
+                if (xSize && !ySize)
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2((targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x) + offset.x, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+                else if (!xSize && ySize)
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(rectTransform.sizeDelta.x, (targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset.y), 0.2f * Kernel.fpsDeltaTime);
+                else if (xSize && ySize)
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset, 0.2f * Kernel.fpsDeltaTime);            }
         }
     }
 }

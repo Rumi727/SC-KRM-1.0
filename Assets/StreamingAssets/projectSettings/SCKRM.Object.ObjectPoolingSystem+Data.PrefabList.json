@@ -3,6 +3,7 @@
     "language_list.language_button": "Prefab/Language Button",
     "controls_list.controls_button": "Prefab/Controls Button",
     "sound_manager.sound_object": "Prefab/Sound Object",
-    "sound_manager.nbs_player": "Prefab/NBS Player"
+    "sound_manager.nbs_player": "Prefab/NBS Player",
+    "running_task_list.running_task": "Prefab/Running Task"
   }
 }

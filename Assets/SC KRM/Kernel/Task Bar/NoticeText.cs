@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.TaskBar
 {
+    [AddComponentMenu("")]
     [RequireComponent(typeof(TMP_Text))]
     public class NoticeText : MonoBehaviour
     {
@@ -30,7 +31,7 @@ namespace SCKRM.UI.TaskBar
 
         void Start()
         {
-            Kernel.AllRefreshEnd += LanguageChange;
+            LanguageManager.currentLanguageChange += LanguageChange;
             LanguageChange();
         }
 

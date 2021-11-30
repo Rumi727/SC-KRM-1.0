@@ -17,9 +17,9 @@ namespace SCKRM.Language
         }
 
 
-        public static event Action CurrentLanguageChange;
+        public static event Action currentLanguageChange;
 
-        public static void LanguageChangeEventInvoke() => CurrentLanguageChange();
+        public static void LanguageChangeEventInvoke() => currentLanguageChange?.Invoke();
 
         /// <summary>
         /// 리소스팩에서 언어 파일을 가져온뒤, 키 값으로 텍스트를 찾고 반환합니다

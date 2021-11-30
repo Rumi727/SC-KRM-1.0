@@ -5,6 +5,7 @@ using SCKRM.Tool;
 
 namespace SCKRM.Sound
 {
+    [AddComponentMenu("")]
     public sealed class SoundObject : ObjectPooling
     {
         [SerializeField] AudioSource _audioSource;

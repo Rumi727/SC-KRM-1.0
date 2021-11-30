@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Json;
+using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using SCKRM.Tool;
 using System;
@@ -8,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -15,8 +17,12 @@ namespace SCKRM.Resource
 {
     public static class ResourceManager
     {
-        public static List<string> resourcePacks { get; } = new List<string>() { Kernel.streamingAssetsPath };
-        public static List<string> nameSpaces { get; } = new List<string>() { "sc-krm", "minecraft", "school-live" };
+        [SaveLoad("Resource")]
+        public sealed class SaveData
+        {
+            [JsonProperty] public static List<string> resourcePacks { get; set; } = new List<string>() { Kernel.streamingAssetsPath };
+            [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>() { "sc-krm", "minecraft", "school-live" };
+        }
 
 
 
@@ -67,6 +73,7 @@ namespace SCKRM.Resource
         public static bool isInitialLoadPackTexturesEnd { get; private set; } = false;
         public static bool isInitialLoadSpriteEnd { get; private set; } = false;
         public static bool isInitialLoadAudioEnd { get; private set; } = false;
+        public static bool isResourceRefesh { get; private set; } = false;
 
         /// <summary>
         /// 리소스 새로고침 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
@@ -75,10 +82,41 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static async UniTask ResourceRefesh()
         {
-            Debug.Log("ResourceManager: Waiting for pack textures to set..."); await SetPackTextures();
-            Debug.Log("ResourceManager: Waiting for sprite to set..."); await SetSprite();
-            Debug.Log("ResourceManager: Waiting for audio to set..."); await SetAudio();
-            Debug.Log("ResourceManager: Resource loading finished!");
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(ResourceRefesh));
+#endif
+            if (isResourceRefesh)
+                return;
+
+            isResourceRefesh = true;
+
+            ThreadMetaData threadMetaData = new ThreadMetaData();
+            threadMetaData.name = "notice.running_task.resource_pack_refresh.name";
+            threadMetaData.autoRemoveDisable = true;
+
+            ThreadManager.runningThreads.Add(threadMetaData);
+
+            try
+            {
+                Debug.Log("ResourceManager: Waiting for pack textures to set...");
+                await SetPackTextures();
+                threadMetaData.progress = 1f / 3f;
+                Debug.Log("ResourceManager: Waiting for sprite to set...");
+                await SetSprite();
+                threadMetaData.progress = 2f / 3f;
+                Debug.Log("ResourceManager: Waiting for audio to set...");
+                await SetAudio();
+                threadMetaData.progress = 1;
+                Debug.Log("ResourceManager: Resource loading finished!");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            threadMetaData.Remove();
+            isResourceRefesh = false;
         }
 
         /// <summary>
@@ -88,6 +126,10 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetPackTextures()
         {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(SetPackTextures));
+#endif
             packTextures.Clear();
             packTextureRects.Clear();
             packTexturePaths.Clear();
@@ -96,13 +138,13 @@ namespace SCKRM.Resource
             Dictionary<string, Dictionary<string, List<string>>> nameSpace_type_textureNames = new Dictionary<string, Dictionary<string, List<string>>>();
 
             //모든 리소스팩을 돌아다닙니다
-            for (int i = 0; i < resourcePacks.Count; i++)
+            for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
-                string resourcePack = resourcePacks[i];
+                string resourcePack = SaveData.resourcePacks[i];
                 //연결된 네임스페이스를 돌아다닙니다 (리소스팩에 있는 네임스페이스를 감지하지 않습니다!)
-                for (int j = 0; j < nameSpaces.Count; j++)
+                for (int j = 0; j < SaveData.nameSpaces.Count; j++)
                 {
-                    string nameSpace = nameSpaces[j];
+                    string nameSpace = SaveData.nameSpaces[j];
                     string resourcePackTexturePath = PathTool.Combine(resourcePack, texturePath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(resourcePackTexturePath))
@@ -153,13 +195,13 @@ namespace SCKRM.Resource
                             await UniTask.DelayFrame(1);
                         }
                         
-                        if (packTextureTypePaths.ContainsKey(nameSpace))
-                            packTextureTypePaths[nameSpace].Add(type, typePath);
-                        else
+                        if (!packTextureTypePaths.ContainsKey(nameSpace))
                         {
                             type_textureTypePaths.Add(type, typePath);
                             packTextureTypePaths.Add(nameSpace, type_textureTypePaths);
                         }
+                        else if (!packTextureTypePaths[nameSpace].ContainsKey(type))
+                            packTextureTypePaths[nameSpace].Add(type, typePath);
 
                         if (!packTexturePaths.ContainsKey(nameSpace))
                         {
@@ -258,6 +300,11 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetSprite()
         {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(SetSprite));
+#endif
+
             allTextureSprites.Clear();
 
             foreach (var nameSpace in packTextureRects)
@@ -317,14 +364,19 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetAudio()
         {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(SetAudio));
+#endif
+
             allSounds.Clear();
 
-            for (int i = 0; i < resourcePacks.Count; i++)
+            for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
-                string resourcePack = resourcePacks[i];
-                for (int j = 0; j < nameSpaces.Count; j++)
+                string resourcePack = SaveData.resourcePacks[i];
+                for (int j = 0; j < SaveData.nameSpaces.Count; j++)
                 {
-                    string nameSpace = nameSpaces[j];
+                    string nameSpace = SaveData.nameSpaces[j];
                     string path = PathTool.Combine(resourcePack, soundPath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(path))
@@ -349,17 +401,17 @@ namespace SCKRM.Resource
 
                             if (audioClip != null)
                                 soundMetaDatas.Add(new SoundMetaData(sound.path, sound.stream, sound.pitch, sound.tempo, audioClip));
+
+                            await UniTask.DelayFrame(1);
                         }
 
-                        if (allSounds.ContainsKey(nameSpace))
-                            allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.category, soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
-                        else
+                        if (!allSounds.ContainsKey(nameSpace))
                         {
                             allSounds.Add(nameSpace, new Dictionary<string, SoundData>());
                             allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.category, soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
                         }
-
-                        await UniTask.DelayFrame(1);
+                        else if (!allSounds[nameSpace].ContainsKey(soundData.Key))
+                            allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.category, soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
                     }
                 }
             }
@@ -562,9 +614,9 @@ namespace SCKRM.Resource
 
             path = path.Replace("%NameSpace%", nameSpace);
 
-            for (int i = 0; i < resourcePacks.Count; i++)
+            for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
-                string resourcePack = resourcePacks[i];
+                string resourcePack = SaveData.resourcePacks[i];
                 string text = GetText(PathTool.Combine(resourcePack, path));
                 if (text != "")
                     return text;

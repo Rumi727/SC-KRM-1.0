@@ -16,9 +16,9 @@ namespace SCKRM.Renderer
         protected Queue<object> queue { get; } = new Queue<object>();
 
         /// <summary>
-        /// Please put base.Update() when overriding
+        /// Please put base.FixedUpdate() when overriding
         /// </summary>
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)

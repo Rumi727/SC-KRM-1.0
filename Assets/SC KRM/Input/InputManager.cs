@@ -12,6 +12,7 @@ using UnityEngine.InputSystem;
 
 namespace SCKRM.Input
 {
+    [AddComponentMenu("커널/Input/조작 매니저", 0)]
     public sealed class InputManager : MonoBehaviour
     {
         [ProjectSetting("ControlSetting")]

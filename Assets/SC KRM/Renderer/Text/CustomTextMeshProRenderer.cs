@@ -13,7 +13,7 @@ namespace SCKRM.Renderer
             get
             {
                 if (_textMeshPro == null)
-                    _textMeshPro = GetComponent<TextMeshPro>();
+                    _textMeshPro = GetComponent<TMP_Text>();
 
                 return _textMeshPro;
             }
