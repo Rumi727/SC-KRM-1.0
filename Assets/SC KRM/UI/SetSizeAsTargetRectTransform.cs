@@ -8,7 +8,7 @@ namespace SCKRM.UI
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/선택한 Rect Transform의 크기 따라가기")]
     [RequireComponent(typeof(RectTransform))]
-    public class RectTransformSize : MonoBehaviour
+    public class SetSizeAsTargetRectTransform : MonoBehaviour
     {
         [SerializeField, HideInInspector] RectTransform _rectTransform;
         public RectTransform rectTransform

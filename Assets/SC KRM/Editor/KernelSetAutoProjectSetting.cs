@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System.Linq;
 using System;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
@@ -8,6 +7,7 @@ using SCKRM.Camera;
 using SCKRM.UI;
 using UnityEngine.UI;
 using SCKRM.Tool;
+using UnityEditorInternal;
 
 namespace SCKRM.Editor
 {
@@ -121,11 +121,10 @@ namespace SCKRM.Editor
 
                         if (canvas.GetComponent<KernelCanvas>() == null)
                         {
-                            CanvasSetting cameraSetting = canvas.GetComponent<CanvasSetting>();
                             if (canvasSetting == null)
                                 canvas.gameObject.AddComponent<CanvasSetting>();
-                            else if (!cameraSetting.enabled)
-                                UnityEngine.Object.DestroyImmediate(cameraSetting);
+                            else if (!canvasSetting.enabled)
+                                UnityEngine.Object.DestroyImmediate(canvasSetting);
                         }
 
                         if (canvasSetting != null && !canvasSetting.customRenderMode)
@@ -138,6 +137,33 @@ namespace SCKRM.Editor
                                     UnityEngine.Object.DestroyImmediate(canvasScaler);
                             }
                         }
+                    }
+
+                    Transform[] transforms = UnityEngine.Object.FindObjectsOfType<Transform>(true);
+                    for (int i = 0; i < transforms.Length; i++)
+                    {
+                        Transform transform = transforms[i];
+                        RectTransform rectTransform = transform.gameObject.GetComponent<RectTransform>();
+                        RectTransformInfo rectTransformSetting = transform.GetComponent<RectTransformInfo>();
+
+                        if (rectTransform != null)
+                        {
+                            if (rectTransformSetting == null)
+                            {
+                                RectTransformInfo rectTransformSetting2 = rectTransform.gameObject.AddComponent<RectTransformInfo>();
+
+                                if (PrefabUtility.GetPrefabAssetType(rectTransform.gameObject) == PrefabAssetType.NotAPrefab)
+                                {
+                                    int length = rectTransform.GetComponents<Component>().Length;
+                                    for (int j = 0; j < length - 2; j++)
+                                        ComponentUtility.MoveComponentUp(rectTransformSetting2);
+                                }
+                            }
+                            else if (!rectTransformSetting.enabled)
+                                UnityEngine.Object.DestroyImmediate(rectTransformSetting);
+                        }
+                        else if (rectTransformSetting != null)
+                            UnityEngine.Object.DestroyImmediate(rectTransformSetting);
                     }
 
                     hierarchyChangedEnable = true;

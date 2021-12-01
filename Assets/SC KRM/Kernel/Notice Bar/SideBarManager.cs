@@ -8,10 +8,10 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.NoticeBar
 {
-    [AddComponentMenu(""), RequireComponent(typeof(RectTransform), typeof(RectTransformSize))]
-    public class NoticeBarManager : MonoBehaviour
+    [AddComponentMenu(""), RequireComponent(typeof(RectTransform), typeof(SetSizeAsTargetRectTransform))]
+    public class SideBarManager : MonoBehaviour
     {
-        public static NoticeBarManager instance { get; private set; }
+        public static SideBarManager instance { get; private set; }
 
         [SerializeField, HideInInspector] RectTransform _rectTransform;
         public RectTransform rectTransform
@@ -25,13 +25,13 @@ namespace SCKRM.UI.NoticeBar
             }
         }
 
-        [SerializeField, HideInInspector] RectTransformSize _rectTransformSize;
-        public RectTransformSize rectTransformSize
+        [SerializeField, HideInInspector] SetSizeAsTargetRectTransform _rectTransformSize;
+        public SetSizeAsTargetRectTransform rectTransformSize
         {
             get
             {
                 if (_rectTransformSize == null)
-                    _rectTransformSize = GetComponent<RectTransformSize>();
+                    _rectTransformSize = GetComponent<SetSizeAsTargetRectTransform>();
 
                 return _rectTransformSize;
             }
@@ -52,8 +52,8 @@ namespace SCKRM.UI.NoticeBar
 
 
         #region variable
-        [SerializeField] RectTransformSize _contentRectTransformSize;
-        public RectTransformSize contentRectTransformSize { get => _contentRectTransformSize; }
+        [SerializeField] SetSizeAsTargetRectTransform _contentRectTransformSize;
+        public SetSizeAsTargetRectTransform contentRectTransformSize { get => _contentRectTransformSize; }
 
         [SerializeField] RectTransform _viewPort;
         public RectTransform viewPort { get => _viewPort; }

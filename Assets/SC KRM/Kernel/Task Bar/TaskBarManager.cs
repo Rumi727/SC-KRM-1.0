@@ -83,7 +83,7 @@ namespace SCKRM.UI.TaskBar
             if (Kernel.isInitialLoadEnd)
             {
                 {
-                    bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || NoticeBarManager.isNoticeBarShow;
+                    bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || SideBarManager.isNoticeBarShow;
                     isTaskBarShow = taskBarShow || selectedTaskBar;
 
                     InputManager.SetInputLock("taskbar", selectedTaskBar);
@@ -141,17 +141,17 @@ namespace SCKRM.UI.TaskBar
                         }
                     }
 
-                    if (NoticeBarManager.isNoticeBarShow)
+                    if (SideBarManager.isNoticeBarShow)
                     {
-                        GameObject gameObject = NoticeBarManager.instance.gameObject;
+                        GameObject gameObject = SideBarManager.instance.gameObject;
 
                         if (!gameObject.activeSelf)
                             gameObject.SetActive(true);
                     }
                     else
                     {
-                        GameObject gameObject = NoticeBarManager.instance.gameObject;
-                        RectTransform rectTransform = NoticeBarManager.instance.rectTransform;
+                        GameObject gameObject = SideBarManager.instance.gameObject;
+                        RectTransform rectTransform = SideBarManager.instance.rectTransform;
 
                         if (gameObject.activeSelf && rectTransform.anchoredPosition.x >= rectTransform.sizeDelta.x - 0.01f)
                             gameObject.SetActive(false);
@@ -223,16 +223,16 @@ namespace SCKRM.UI.TaskBar
 
         public void Hide()
         {
-            if (NoticeBarManager.isNoticeBarShow)
+            if (SideBarManager.isNoticeBarShow)
             {
-                NoticeBarManager.isNoticeBarShow = false;
+                SideBarManager.isNoticeBarShow = false;
                 Tab();
             }
             else
                 eventSystem.SetSelectedGameObject(null);
         }
 
-        public void NoticeBarToggle() => NoticeBarManager.isNoticeBarShow = !NoticeBarManager.isNoticeBarShow;
+        public void NoticeBarToggle() => SideBarManager.isNoticeBarShow = !SideBarManager.isNoticeBarShow;
 
         public static void Tab()
         {

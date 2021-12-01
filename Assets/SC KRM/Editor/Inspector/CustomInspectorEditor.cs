@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System;
 using SCKRM.Tool;
 
 namespace SCKRM.Editor
