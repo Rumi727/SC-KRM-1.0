@@ -277,80 +277,104 @@ namespace SCKRM
         {
             if (!isInitialLoadStart)
             {
-                isInitialLoadStart = true;
-
-                InitialLoadStart?.Invoke();
-
-                splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
-
-                ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
-
+                try
+                {
+                    if (!ThreadManager.isMainThread)
+                        throw new NotMainThreadMethodException(nameof(InitialLoad));
 #if UNITY_EDITOR
-                Scene scene = SceneManager.GetActiveScene();
-                int index = scene.buildIndex;
-                if (index != 0)
-                    SceneManager.LoadScene(0);
-#else
-                Scene scene = SceneManager.GetActiveScene();
-                int index = scene.buildIndex;
+                    if (!Application.isPlaying)
+                        throw new NotPlayModeMethodException(nameof(InitialLoad));
 #endif
 
-                {
-                    _ = dataPath;
-                    _ = persistentDataPath;
-                    _ = saveDataPath;
+                    isInitialLoadStart = true;
 
-                    _ = companyName;
-                    _ = productName;
+                    InitialLoadStart?.Invoke();
 
-                    _ = version;
-                    _ = unityVersion;
-                }
+                    splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
 
-                Debug.Log("Kernel: Waiting for settings to load...");
-                {
-                    ThreadMetaData threadMetaData = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
-                    await UniTask.WaitUntil(() => threadMetaData.thread == null);
-                    threadMetaData = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
-                    await UniTask.WaitUntil(() => threadMetaData.thread == null);
-                }
+                    ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
 
-                {
-                    Debug.Log("Kernel: Waiting for resource to load...");
-                    await ResourceManager.ResourceRefesh();
-                }
+#if UNITY_EDITOR
+                    Scene scene = SceneManager.GetActiveScene();
+                    int index = scene.buildIndex;
+                    if (index != 0)
+                        SceneManager.LoadScene(0);
+#else
+                    Scene scene = SceneManager.GetActiveScene();
+                    int index = scene.buildIndex;
+#endif
 
-                {
-                    if (index == 0)
                     {
-                        Debug.Log("Kernel: Waiting for scene animation...");
-                        await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed);
+                        _ = dataPath;
+                        _ = persistentDataPath;
+                        _ = saveDataPath;
+
+                        _ = companyName;
+                        _ = productName;
+
+                        _ = version;
+                        _ = unityVersion;
+                    }
+
+                    Debug.Log("Kernel: Waiting for settings to load...");
+                    {
+                        ThreadMetaData threadMetaData = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
+                        await UniTask.WaitUntil(() => threadMetaData.thread == null);
+                        threadMetaData = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
+                        await UniTask.WaitUntil(() => threadMetaData.thread == null);
+                    }
+
+                    {
+                        Debug.Log("Kernel: Waiting for resource to load...");
+                        await ResourceManager.ResourceRefresh();
+                    }
+
+                    {
+                        if (index == 0)
+                        {
+                            Debug.Log("Kernel: Waiting for scene animation...");
+                            await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed);
+                        }
+                    }
+
+                    SceneManager.sceneLoaded += LoadedSceneEvent;
+
+                    {
+                        isInitialLoadEnd = true;
+                        InitialLoadEnd?.Invoke();
+
+                        Debug.Log("Kernel: Initial loading finished!");
+                    }
+
+#if UNITY_EDITOR
+                    if (index != 0)
+                        SceneManager.LoadScene(index);
+                    else
+                        SceneManager.LoadScene(index + 1);
+#else
+                    SceneManager.LoadScene(index + 1);
+#endif
+                    InitialLoadEndSceneMove?.Invoke();
+
+                    while (splashScreenBackground.color.a > 0)
+                    {
+                        splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, splashScreenBackground.color.a - 0.05f * fpsDeltaTime);
+                        await UniTask.DelayFrame(1);
                     }
                 }
-
-                SceneManager.sceneLoaded += LoadedSceneEvent;
-
+                catch (Exception e)
                 {
-                    isInitialLoadEnd = true;
-                    InitialLoadEnd?.Invoke();
-
-                    Debug.Log("Kernel: Initial loading finished!");
-                }
-
+                    Debug.LogError(e);
+                    Debug.LogError("Kernel: Initial loading failed");
 #if UNITY_EDITOR
-                if (index != 0)
-                    SceneManager.LoadScene(index);
-                else
-                    SceneManager.LoadScene(index + 1);
-#else
-                SceneManager.LoadScene(index + 1);
-#endif
-                InitialLoadEndSceneMove?.Invoke();
+                    GameObject[] gameObjects = FindObjectsOfType<GameObject>(true);
+                    for (int i = 0; i < gameObjects.Length; i++)
+                        DestroyImmediate(gameObjects[i]);
 
-                while (splashScreenBackground.color.a > 0)
-                {
-                    splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, splashScreenBackground.color.a - 0.05f * fpsDeltaTime);
-                    await UniTask.DelayFrame(1);
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit(1);
+#endif
                 }
             }
         }
@@ -362,6 +386,8 @@ namespace SCKRM
         public static event Action AllRefreshEnd;
         public static async void AllRefresh(bool onlyText = false)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(AllRefresh));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(AllRefresh));
@@ -375,7 +401,7 @@ namespace SCKRM
             {
                 if (!ResourceManager.isResourceRefesh)
                 {
-                    await ResourceManager.ResourceRefesh();
+                    await ResourceManager.ResourceRefresh();
                     RendererManager.AllRerender();
                     SoundManager.SoundRefresh();
                 }
@@ -387,7 +413,9 @@ namespace SCKRM
         void OnApplicationQuit()
         {
             ThreadManager.AllThreadRemove();
-            SaveLoadManager.Save();
+
+            if (isInitialLoadEnd)
+                SaveLoadManager.Save();
         }
     }
 

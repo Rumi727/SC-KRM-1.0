@@ -80,11 +80,13 @@ namespace SCKRM.Resource
         /// Resource refresh (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <returns></returns>
-        public static async UniTask ResourceRefesh()
+        public static async UniTask ResourceRefresh()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(ResourceRefresh));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(ResourceRefesh));
+                throw new NotPlayModeMethodException(nameof(ResourceRefresh));
 #endif
             if (isResourceRefesh)
                 return;
@@ -99,6 +101,7 @@ namespace SCKRM.Resource
 
             try
             {
+                Debug.Log("ResourceManager: Resource refresh start!");
                 Debug.Log("ResourceManager: Waiting for pack textures to set...");
                 await SetPackTextures();
                 threadMetaData.progress = 1f / 3f;
@@ -108,11 +111,12 @@ namespace SCKRM.Resource
                 Debug.Log("ResourceManager: Waiting for audio to set...");
                 await SetAudio();
                 threadMetaData.progress = 1;
-                Debug.Log("ResourceManager: Resource loading finished!");
+                Debug.Log("ResourceManager: Resource refresh finished!");
             }
             catch (Exception e)
             {
                 Debug.LogError(e);
+                Debug.LogError("Kernel: Initial loading failed");
             }
 
             threadMetaData.Remove();
@@ -126,6 +130,8 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetPackTextures()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SetPackTextures));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetPackTextures));
@@ -300,6 +306,8 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetSprite()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SetSprite));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetSprite));
@@ -364,6 +372,8 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetAudio()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SetAudio));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetAudio));
@@ -766,6 +776,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Sprite GetSprite(Texture2D texture, SpriteMetaData spriteMetaData = null)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetSprite));
+
             if (texture == null)
                 return null;
 
@@ -807,6 +820,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Sprite[] GetSprites(string resourcePackPath, string type, string name, string nameSpace = "", TextureFormat textureFormat = TextureFormat.RGBA32)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetSprites));
+
             if (resourcePackPath == null || resourcePackPath == "")
                 return null;
             if (type == null || type == "")
@@ -847,6 +863,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Sprite[] GetSprites(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetSprites));
+
             if (path == null)
                 path = "";
 
@@ -869,6 +888,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Sprite[] GetSprites(Texture2D texture, params SpriteMetaData[] spriteMetaDatas)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetSprites));
+
             if (texture == null)
                 return null;
             if (spriteMetaDatas == null)
@@ -939,6 +961,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static async UniTask<AudioClip> GetAudio(string path, bool stream = false)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetAudio));
+
             if (path == null)
                 path = "";
 
@@ -1107,6 +1132,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Color AverageColorFromTexture(Texture2D texture, int x, int y, int width, int height)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(AverageColorFromTexture));
+
             Color[] textureColors = texture.GetPixels(x, y, width, height);
 
             int length = textureColors.Length;
@@ -1151,6 +1179,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Texture2D TextureFromColor(Color color, int width, int height, FilterMode filterMode = FilterMode.Point)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(TextureFromColor));
+
             if (color == null)
                 color = Color.white;
             if (width < 1)
@@ -1184,6 +1215,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Texture2D TextureFromColor(Color color, Texture2D alpha)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(TextureFromColor));
+
             if (color == null)
                 color = Color.white;
 
@@ -1225,6 +1259,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Sprite SpriteFromColor(Color color, int width = 1, int height = 1, FilterMode filterMode = FilterMode.Point, SpriteMetaData spriteMetaData = null)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SpriteFromColor));
+
             if (color == null)
                 color = Color.white;
             if (width < 1)
@@ -1262,6 +1299,9 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static Sprite SpriteFromColor(Color color, Texture2D alpha, SpriteMetaData spriteMetaData = null)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SpriteFromColor));
+
             if (color == null)
                 color = Color.white;
 

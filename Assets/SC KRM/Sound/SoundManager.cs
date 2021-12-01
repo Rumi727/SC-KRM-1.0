@@ -41,6 +41,13 @@ namespace SCKRM.Sound
         /// </summary>
         public static void SoundRefresh()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SoundRefresh));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(SoundRefresh));
+#endif
+
             SoundObject[] soundObjects = FindObjectsOfType<SoundObject>();
             for (int i = 0; i < soundObjects.Length; i++)
             {
@@ -58,6 +65,13 @@ namespace SCKRM.Sound
 
         public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(PlaySound));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(PlaySound));
+#endif
+
             if (soundList.Count >= maxSoundCount)
                 soundList[0].Remove();
 
@@ -100,6 +114,13 @@ namespace SCKRM.Sound
 
         public static void StopSound(string key, string nameSpace = "", bool all = true)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(StopSound));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(StopSound));
+#endif
+
             if (key == null)
                 key = "";
             if (nameSpace == null)
@@ -124,6 +145,13 @@ namespace SCKRM.Sound
 
         public static void StopSoundAll()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(StopSoundAll));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(StopSoundAll));
+#endif
+
             for (int i = 0; i < soundList.Count; i++)
             {
                 SoundObject soundObject = soundList[i];
@@ -134,6 +162,13 @@ namespace SCKRM.Sound
 
         public static void StopSoundAll(bool bgm)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(StopSoundAll));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(StopSoundAll));
+#endif
+
             for (int i = 0; i < soundList.Count; i++)
             {
                 SoundObject soundObject = soundList[i];
@@ -154,6 +189,13 @@ namespace SCKRM.Sound
 
         public static NBSPlayer PlayNBS(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 48, Transform parent = null, float x = 0, float y = 0, float z = 0)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(PlayNBS));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(PlayNBS));
+#endif
+
             if (nbsList.Count >= maxNBSCount)
                 nbsList[0].Remove();
 
@@ -195,6 +237,13 @@ namespace SCKRM.Sound
 
         public static void StopNBS(string key, string nameSpace = "", bool all = true)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(StopNBS));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(StopNBS));
+#endif
+
             if (key == null)
                 key = "";
             if (nameSpace == null)
@@ -219,6 +268,13 @@ namespace SCKRM.Sound
 
         public static void StopNBSAll()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(StopNBSAll));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(StopNBSAll));
+#endif
+
             for (int i = 0; i < nbsList.Count; i++)
             {
                 NBSPlayer nbsPlayer = nbsList[i];

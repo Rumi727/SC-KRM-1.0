@@ -54,7 +54,7 @@ namespace SCKRM.Camera
 
                 if (TaskBarManager.cropTheScreen)
                 {
-                    if (!TaskBarManager.SaveData.topMode)
+                    if (!TaskBarManager.SaveData.bottomMode)
                         camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.sizeDelta.y - taskBar.anchoredPosition.y) / canvas.sizeDelta.y));
                     else
                     {

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
+using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +51,8 @@ namespace SCKRM.Object
         /// <returns></returns>
         public static GameObject ObjectCreate(string ObjectKey, Transform Parent)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(ObjectCreate));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectCreate));
@@ -75,7 +78,7 @@ namespace SCKRM.Object
                     objectList.Object.RemoveAt(i);
                 }
 
-                RendererManager.AllRerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
+                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
 
                 objectPooling.OnCreate();
                 return gameObject;
@@ -91,7 +94,7 @@ namespace SCKRM.Object
 
                 objectPooling.objectKey = ObjectKey;
 
-                RendererManager.AllRerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
+                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
 
                 objectPooling.OnCreate();
                 return gameObject;
@@ -107,6 +110,8 @@ namespace SCKRM.Object
         /// <param name="gameObject">지울 오브젝트</param>
         public static void ObjectRemove(string ObjectKey, GameObject gameObject)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(ObjectRemove));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectRemove));

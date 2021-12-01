@@ -42,7 +42,14 @@ namespace SCKRM.UI.NoticeBar
 
         public int index { get; set; }
 
-        public override void OnCreate() => LanguageManager.currentLanguageChange += InfoLoad;
+        public override void OnCreate()
+        {
+            LanguageManager.currentLanguageChange += InfoLoad;
+            ThreadManager.threadChange += ThreadChange;
+        }
+
+        bool infoLoad = false;
+        void ThreadChange() => infoLoad = true;
 
         public void InfoLoad()
         {
@@ -54,7 +61,8 @@ namespace SCKRM.UI.NoticeBar
             }
         }
 
-        [System.NonSerialized] bool loop = false;
+        [System.NonSerialized] bool noResponse = false;
+
         [System.NonSerialized] float loopValue = 0;
         [System.NonSerialized] float tempProgress = 0;
         [System.NonSerialized] float tempTimer = 0;
@@ -64,6 +72,12 @@ namespace SCKRM.UI.NoticeBar
         {
             if (index >= 0 && index < ThreadManager.runningThreads.Count)
             {
+                if (infoLoad)
+                {
+                    InfoLoad();
+                    infoLoad = false;
+                }
+
                 ThreadMetaData threadMetaData = ThreadManager.runningThreads[index];
                 if (!threadMetaData.loop)
                 {
@@ -75,12 +89,12 @@ namespace SCKRM.UI.NoticeBar
                         if (slider.enabled)
                             slider.enabled = false;
 
-                        if (!loop)
+                        if (!noResponse)
                         {
                             tempMinX = fillShow.anchorMin.x - (loopValue - 0.25f).Clamp01();
                             tempMaxX = fillShow.anchorMax.x - loopValue.Clamp01();
 
-                            loop = true;
+                            noResponse = true;
                         }
 
                         loopValue += 0.0125f * Kernel.fpsDeltaTime;
@@ -99,7 +113,7 @@ namespace SCKRM.UI.NoticeBar
                         if (!slider.enabled)
                             slider.enabled = true;
 
-                        loop = false;
+                        noResponse = false;
 
                         slider.value = threadMetaData.progress;
                         fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsDeltaTime);
@@ -123,7 +137,7 @@ namespace SCKRM.UI.NoticeBar
                         slider.enabled = true;
 
                     loopValue = 0;
-                    loop = false;
+                    noResponse = false;
                 }
             }
         }
@@ -135,7 +149,7 @@ namespace SCKRM.UI.NoticeBar
             rectTransform.sizeDelta = new Vector2(430, 19);
             index = 0;
             loopValue = 0;
-            loop = false;
+            noResponse = false;
             tempProgress = 0;
             tempTimer = 0;
             tempMinX = 0;
@@ -150,6 +164,7 @@ namespace SCKRM.UI.NoticeBar
             slider.enabled = true;
 
             LanguageManager.currentLanguageChange -= InfoLoad;
+            ThreadManager.threadChange -= InfoLoad;
         }
     }
 }

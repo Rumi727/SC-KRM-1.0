@@ -18,6 +18,15 @@ namespace SCKRM.Threads
 
 
 
+        /// <summary>
+        /// 이 이벤트는 다른 스레드에서 호출되므로 Unity API를 사용하지 마십시오.
+        /// This event is called from another thread, so don't use the Unity API
+        /// </summary>
+        public static event Action threadChange;
+        public static void ThreadChangeEventInvoke() => threadChange?.Invoke();
+
+
+
         public static void AllThreadRemove()
         {
             for (int i = 0; i < runningThreads.Count; i++)
@@ -68,6 +77,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method());
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -86,6 +96,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -104,6 +115,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(obj, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -122,6 +134,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -140,6 +153,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -158,6 +172,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -176,6 +191,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -194,6 +210,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -212,6 +229,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -230,6 +248,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -248,6 +267,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -266,6 +286,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -284,6 +305,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -302,6 +324,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -320,6 +343,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -338,6 +362,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -356,6 +381,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
             return threadMetaData;
@@ -377,6 +403,7 @@ namespace SCKRM.Threads
 
         public void Remove()
         {
+            ThreadManager.ThreadChangeEventInvoke();
             ThreadManager.runningThreads.Remove(this);
 
             if (thread != null)
@@ -386,6 +413,21 @@ namespace SCKRM.Threads
                 _thread.Abort();
             }
         }
+    }
+
+    public class NotMainThreadMethodException : Exception
+    {
+        /// <summary>
+        /// This function must run on the main thread
+        /// 이 함수는 메인 스레드에서 실행 해야 합니다
+        /// </summary>
+        public NotMainThreadMethodException() : base("This function must run on the main thread\n이 함수는 메인 스레드에서 실행 해야 합니다") { }
+
+        /// <summary>
+        /// {method} function must be executed on the main thread
+        /// {method} 함수는 메인 스레드에서 실행되어야 합니다
+        /// </summary>
+        public NotMainThreadMethodException(string method) : base($"{method} function must be executed on the main thread\n{method} 함수는 메인 스레드에서 실행되어야 합니다") { }
     }
 
     public class MainThreadMethodException : Exception

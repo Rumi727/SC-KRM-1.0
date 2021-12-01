@@ -16,7 +16,7 @@ namespace SCKRM.UI.TaskBar
         [SaveLoad("Task Bar")]
         public sealed class SaveData
         {
-            [JsonProperty] public static bool topMode { get; set; } = true;
+            [JsonProperty] public static bool bottomMode { get; set; } = false;
         }
 
         public static TaskBarManager instance { get; private set; }
@@ -119,7 +119,7 @@ namespace SCKRM.UI.TaskBar
                     }
                     else
                     {
-                        if (!SaveData.topMode)
+                        if (!SaveData.bottomMode)
                         {
                             rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
 
@@ -133,7 +133,7 @@ namespace SCKRM.UI.TaskBar
                         {
                             rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
 
-                            if (rectTransform.anchoredPosition.y >= -rectTransform.sizeDelta.y + 0.01f)
+                            if (rectTransform.anchoredPosition.y <= -rectTransform.sizeDelta.y + 0.01f)
                             {
                                 if (layout.activeSelf)
                                     layout.SetActive(false);
@@ -178,16 +178,16 @@ namespace SCKRM.UI.TaskBar
                     if (tempCropTheScreen != cropTheScreen)
                     {
                         if (!cropTheScreen)
-                            tempTopMode = !SaveData.topMode;
+                            tempTopMode = !SaveData.bottomMode;
                         else
                             image.sprite = null;
 
                         tempCropTheScreen = cropTheScreen;
                     }
 
-                    if (tempTopMode != SaveData.topMode)
+                    if (tempTopMode != SaveData.bottomMode)
                     {
-                        if (!SaveData.topMode)
+                        if (!SaveData.bottomMode)
                         {
                             rectTransform.anchorMin = Vector2.up;
                             rectTransform.anchorMax = Vector2.up;
@@ -215,7 +215,7 @@ namespace SCKRM.UI.TaskBar
                             if (!isTaskBarShow)
                                 rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y);
                         }
-                        tempTopMode = SaveData.topMode;
+                        tempTopMode = SaveData.bottomMode;
                     }
                 }
             }
@@ -236,11 +236,14 @@ namespace SCKRM.UI.TaskBar
 
         public static void Tab()
         {
+            if (!instance.layout.activeSelf)
+                instance.layout.SetActive(true);
+
             if (oldSelectedObject == null || !oldSelectedObject.activeSelf)
             {
-                Transform[] transforms = instance.GetComponentsInChildren<Transform>();
-                if (transforms.Length > 1)
-                    instance.eventSystem.SetSelectedGameObject(transforms[1].gameObject);
+                Selectable[] selectables = instance.GetComponentsInChildren<Selectable>();
+                if (selectables.Length > 0)
+                    instance.eventSystem.SetSelectedGameObject(selectables[0].gameObject);
                 else
                     instance.eventSystem.SetSelectedGameObject(instance.gameObject);
             }

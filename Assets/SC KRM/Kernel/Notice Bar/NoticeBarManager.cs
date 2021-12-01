@@ -99,13 +99,16 @@ namespace SCKRM.UI.NoticeBar
 
 
                 TaskBarManager taskBarManager = TaskBarManager.instance;
-                rectTransformSize.offset = new Vector2(0, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y));
-
-
-                if (TaskBarManager.SaveData.topMode)
-                    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, (taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y) * 0.5f);
+                if (TaskBarManager.SaveData.bottomMode)
+                {
+                    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, (taskBarManager.rectTransform.sizeDelta.y + taskBarManager.rectTransform.anchoredPosition.y) * 0.5f);
+                    rectTransformSize.offset = new Vector2(0, -(taskBarManager.rectTransform.sizeDelta.y + taskBarManager.rectTransform.anchoredPosition.y));
+                }
                 else
+                {
                     rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y) * 0.5f);
+                    rectTransformSize.offset = new Vector2(0, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y));
+                }
 
 
 

@@ -40,6 +40,7 @@
 	"notice.running_task.thread_auto_remove.name": "스레드 자동 제거",
 	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
 	"notice.running_task.resource_pack_refresh.name": "리소스팩 새로고침",
+	"notice.running_task.rerender.name": "렌더러 새로고침",
 	
 	
 	

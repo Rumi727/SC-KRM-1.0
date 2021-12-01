@@ -40,6 +40,7 @@
 	"notice.running_task.thread_auto_remove.name": "Thread Auto Remove",
 	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
 	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
+	"notice.running_task.rerender.name": "Refresh renderer",
 	
 	
 	
