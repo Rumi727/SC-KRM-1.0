@@ -44,10 +44,11 @@ namespace SCKRM.Renderer
         {
             base.Rerender();
 
-            if (selectable != null)
-                selectable.spriteState = (SpriteState)queue.Dequeue();
-            else
-                queue.Dequeue();
+            while (queue.TryDequeue(out var spriteState))
+            {
+                if (selectable != null)
+                    selectable.spriteState = (SpriteState)spriteState;
+            }
         }
 
         [System.Serializable]

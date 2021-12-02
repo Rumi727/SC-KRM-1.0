@@ -6,10 +6,20 @@ using SCKRM.Tool;
 namespace SCKRM.Sound
 {
     [AddComponentMenu("")]
+    [RequireComponent(typeof(AudioSource))]
     public sealed class SoundObject : ObjectPooling
     {
-        [SerializeField] AudioSource _audioSource;
-        AudioSource audioSource { get => _audioSource; }
+        [SerializeField, HideInInspector] AudioSource _audioSource;
+        public AudioSource audioSource
+        {
+            get
+            {
+                if (_audioSource == null)
+                    _audioSource = GetComponent<AudioSource>();
+
+                return _audioSource;
+            }
+        }
 
 
 
@@ -20,8 +30,21 @@ namespace SCKRM.Sound
         public float length { get => (float)(audioSource.clip?.length); }
 
         public bool isLooped { get; private set; } = false;
-        public bool isPaused { get; set; } = false;
 
+        bool _isPaused = false;
+        public bool isPaused
+        {
+            get => _isPaused;
+            set
+            {
+                if (value)
+                    audioSource.Pause();
+                else
+                    audioSource.UnPause();
+
+                _isPaused = value;
+            }
+        }
 
         #region variable
         [SerializeField] string _key = "";
@@ -48,8 +71,6 @@ namespace SCKRM.Sound
         public float maxDistance { get => _maxDistance; set => _maxDistance = value; }
         public Vector3 localPosition { get => _localPosition; set => _localPosition = value; }
         #endregion
-
-
 
         public void Refesh()
         {
@@ -92,21 +113,25 @@ namespace SCKRM.Sound
 
             audioSource.clip = soundMetaData.audioClip;
             audioSource.Play();
-
-            if (!soundMetaData.stream && pitch < 0 && audioSource.time == 0)
-                audioSource.time = audioSource.clip.length - 0.001f;
-
-            if (tempTime >= length)
+            
+            if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)
+                audioSource.time = length - 0.001f;
+            else if (tempTime >= length)
             {
                 if (loop)
-                    audioSource.time = 0;
+                {
+                    if (audioSource.pitch > 0)
+                        audioSource.time = 0;
+                    else
+                        audioSource.time = length - 0.001f;
+                }
                 else
                     Remove();
             }
             else
                 audioSource.time = tempTime;
         }
-        
+
         void SetVariable()
         {
             if (soundData.isBGM)
@@ -172,7 +197,7 @@ namespace SCKRM.Sound
                 tempTime = audioSource.time;
             }
 
-            if (!audioSource.isPlaying)
+            if (!isPaused && !audioSource.isPlaying)
                 Remove();
         }
 

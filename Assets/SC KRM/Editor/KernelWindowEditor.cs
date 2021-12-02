@@ -15,24 +15,25 @@ using UnityEngine;
 
 namespace SCKRM.Editor
 {
-    public class KernelEditor : EditorWindow
+    public class KernelWindowEditor : EditorWindow
     {
+        public static KernelWindowEditor instance { get; private set; }
+
         [MenuItem("커널/커널 설정")]
-        public static void ShowWindow() => GetWindow<KernelEditor>(false, "커널");
+        public static void ShowWindow() => GetWindow<KernelWindowEditor>(false, "커널");
+
+        void OnEnable()
+        {
+            if (instance == null)
+                instance = this;
+            else
+                Close();
+        }
 
         bool inspectorUpdate = true;
         bool deleteSafety = true;
         int tabIndex = 0;
         int settingTabIndex = 0;
-
-        Vector2 audioScrollPos = Vector2.zero;
-        Vector2 resourceScrollPos = Vector2.zero;
-
-        Vector2 controlSettingScrollPos = Vector2.zero;
-        Vector2 controlLockSettingScrollPos = Vector2.zero;
-        Vector2 objectPoolingSettingScrollPos = Vector2.zero;
-        Vector2 audioSettingScrollPos = Vector2.zero;
-
         void OnGUI()
         {
             {
@@ -94,7 +95,7 @@ namespace SCKRM.Editor
                 Repaint();
         }
 
-        void Default()
+        public void Default()
         {
             if (Application.isPlaying)
             {
@@ -167,70 +168,78 @@ namespace SCKRM.Editor
 
         float audioMinDistance = 0;
         float audioMaxDistance = 16;
+        Vector2 audioLocalPosition = Vector2.zero;
 
-        Vector3 audioLocalPosition = Vector3.zero;
-        void Audio()
+        Vector2 audioScrollPos = Vector2.zero;
+        public void Audio(int scrollYSize = 0)
         {
             EditorGUILayout.LabelField("제어판", EditorStyles.boldLabel);
 
             {
                 {
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                    audioNameSpace = EditorGUILayout.TextField(audioNameSpace);
-                    GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                    audioKey = EditorGUILayout.TextField(audioKey);
-
-                    if (!Application.isPlaying)
-                        GUI.enabled = false;
-
-                    bool audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
-                    if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
-                        SoundManager.StopSound(audioKey, audioNameSpace);
-
-                    GUI.enabled = true;
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
-                    audioVolume = EditorGUILayout.Slider(audioVolume, 0, 1);
-                    GUILayout.Label("반복", GUILayout.ExpandWidth(false));
-                    audioLoop = EditorGUILayout.Toggle(audioLoop, GUILayout.Width(15));
-
-                    GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    audioPitch = EditorGUILayout.Slider(audioPitch, -3, 3);
-                    GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                    audioTempo = EditorGUILayout.Slider(audioTempo, -3, 3);
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("3D", GUILayout.ExpandWidth(false));
-                    audioSpatial = EditorGUILayout.Toggle(audioSpatial, GUILayout.Width(15));
-
-                    if (audioSpatial)
+                    bool audioPlay;
                     {
-                        GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                        audioMinDistance = EditorGUILayout.Slider(audioMinDistance, 0, 64);
-                        GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                        audioMaxDistance = EditorGUILayout.Slider(audioMaxDistance, 0, 64);
-
-                        EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
 
-                        GUILayout.Label("위치", GUILayout.ExpandWidth(false));
-                        audioLocalPosition = EditorGUILayout.Vector3Field("", audioLocalPosition);
+                        GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
+                        audioNameSpace = EditorGUILayout.TextField(audioNameSpace);
+                        GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                        audioKey = EditorGUILayout.TextField(audioKey);
+
+                        if (!Application.isPlaying)
+                            GUI.enabled = false;
+
+                        audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
+                        if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
+                            SoundManager.StopSound(audioKey, audioNameSpace);
+
+                        GUI.enabled = true;
 
                         EditorGUILayout.EndHorizontal();
                     }
-                    else
                     {
-                        GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
-                        audioPanStereo = EditorGUILayout.Slider(audioPanStereo, -1, 1);
+                        EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
+                        audioVolume = EditorGUILayout.Slider(audioVolume, 0, 1);
+                        GUILayout.Label("반복", GUILayout.ExpandWidth(false));
+                        audioLoop = EditorGUILayout.Toggle(audioLoop, GUILayout.Width(15));
+
+                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
+                        audioPitch = EditorGUILayout.Slider(audioPitch, -3, 3);
+                        GUILayout.Label("템포", GUILayout.ExpandWidth(false));
+                        audioTempo = EditorGUILayout.Slider(audioTempo, -3, 3);
 
                         EditorGUILayout.EndHorizontal();
+                    }
+                    {
+                        EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Label("3D", GUILayout.ExpandWidth(false));
+                        audioSpatial = EditorGUILayout.Toggle(audioSpatial, GUILayout.Width(15));
+
+                        if (audioSpatial)
+                        {
+                            GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
+                            audioMinDistance = EditorGUILayout.Slider(audioMinDistance, 0, 64);
+                            GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
+                            audioMaxDistance = EditorGUILayout.Slider(audioMaxDistance, 0, 64);
+
+                            EditorGUILayout.EndHorizontal();
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("위치", GUILayout.ExpandWidth(false));
+                            audioLocalPosition = EditorGUILayout.Vector3Field("", audioLocalPosition);
+
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        else
+                        {
+                            GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
+                            audioPanStereo = EditorGUILayout.Slider(audioPanStereo, -1, 1);
+
+                            EditorGUILayout.EndHorizontal();
+                        }
                     }
 
                     if (audioPlay)
@@ -258,137 +267,19 @@ namespace SCKRM.Editor
                 }
             }
 
-            if (Application.isPlaying)
+            if (Application.isPlaying && Kernel.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
                 EditorGUILayout.LabelField("재생 목록", EditorStyles.boldLabel);
-                audioScrollPos = EditorGUILayout.BeginScrollView(audioScrollPos);
+                if (scrollYSize > 0)
+                    audioScrollPos = EditorGUILayout.BeginScrollView(audioScrollPos, GUILayout.Height(scrollYSize));
+                else
+                    audioScrollPos = EditorGUILayout.BeginScrollView(audioScrollPos);
 
                 for (int i = SoundManager.soundList.Count - 1; i >= 0; i--)
                 {
-                    SoundObject soundObject = SoundManager.soundList[i];
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                    soundObject.nameSpace = EditorGUILayout.TextField(soundObject.nameSpace);
-                    GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                    soundObject.key = EditorGUILayout.TextField(soundObject.key);
-
-                    bool refesh = GUILayout.Button("새로고침", GUILayout.ExpandWidth(false));
-                    bool stop = GUILayout.Button("정지", GUILayout.ExpandWidth(false));
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
-                    soundObject.volume = EditorGUILayout.Slider(soundObject.volume, 0, 1);
-                    GUILayout.Label("반복", GUILayout.ExpandWidth(false));
-                    soundObject.loop = EditorGUILayout.Toggle(soundObject.loop, GUILayout.Width(15));
-
-                    int minPitch = -3;
-                    if (soundObject.soundMetaData.stream)
-                        minPitch = 0;
-
-                    if (soundObject.soundData.isBGM)
-                    {
-                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                        soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, soundObject.tempo.Abs() * 0.5f, soundObject.tempo.Abs() * 2f);
-                        GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                        soundObject.tempo = EditorGUILayout.Slider(soundObject.tempo, minPitch, 3);
-                    }
-                    else
-                    {
-                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                        soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, minPitch, 3);
-                    }
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("3D", GUILayout.ExpandWidth(false));
-                    soundObject.spatial = EditorGUILayout.Toggle(soundObject.spatial, GUILayout.Width(15));
-
-                    if (soundObject.spatial)
-                    {
-                        GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                        soundObject.minDistance = EditorGUILayout.Slider(soundObject.minDistance, 0, 64);
-                        GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                        soundObject.maxDistance = EditorGUILayout.Slider(soundObject.maxDistance, 0, 64);
-
-                        EditorGUILayout.EndHorizontal();
-                        EditorGUILayout.BeginHorizontal();
-
-                        GUILayout.Label("위치", GUILayout.ExpandWidth(false));
-                        soundObject.localPosition = EditorGUILayout.Vector3Field("", soundObject.localPosition);
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    else
-                    {
-                        GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
-                        soundObject.panStereo = EditorGUILayout.Slider(soundObject.panStereo, -1, 1);
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-
-                    CustomInspectorEditor.DrawLine(1);
-
-                    {
-                        EditorGUILayout.BeginHorizontal();
-
-                        if (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0)
-                        {
-                            GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
-                            GUILayout.HorizontalSlider(0, 0, 1);
-                        }
-                        else
-                        {
-                            string time = soundObject.time.ToTime();
-                            string endTime = soundObject.length.ToTime();
-
-                            if (soundObject.soundData.isBGM)
-                            {
-                                if (soundObject.tempo == 0)
-                                    GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                                else if (soundObject.tempo.Abs() != 1)
-                                {
-                                    string pitchTime = (soundObject.time * (1 / soundObject.tempo)).ToTime();
-                                    string pitchEndTime = (soundObject.length * (1 / soundObject.tempo)).ToTime();
-
-                                    GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                                }
-                                else
-                                    GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
-                            }
-                            else
-                            {
-                                if (soundObject.pitch == 0)
-                                    GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                                else if (soundObject.pitch.Abs() != 1)
-                                {
-                                    string pitchTime = (soundObject.time * (1 / soundObject.pitch)).ToTime();
-                                    string pitchEndTime = (soundObject.length * (1 / soundObject.pitch)).ToTime();
-
-                                    GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                                }
-                                else
-                                    GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
-                            }
-
-                            float audioTime = GUILayout.HorizontalSlider(soundObject.time, 0, soundObject.length);
-                            if ((soundObject.time - audioTime).Abs() >= 0.1f && !refesh)
-                                soundObject.time = audioTime;
-                        }
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-
-                    if (refesh)
-                        soundObject.Refesh();
-                    if (stop)
-                        soundObject.Remove();
-
+                    SoundObjectEditor.GUI(SoundManager.soundList[i]);
                     CustomInspectorEditor.DrawLine(2);
                 }
 
@@ -410,74 +301,80 @@ namespace SCKRM.Editor
 
         float nbsMinDistance = 0;
         float nbsMaxDistance = 48;
-
         Vector3 nbsLocalPosition = Vector3.zero;
-        void NBS()
+
+        Vector2 nbsScrollPos = Vector2.zero;
+        public void NBS(int scrollYSize = 0)
         {
             EditorGUILayout.LabelField("제어판", EditorStyles.boldLabel);
 
             {
                 {
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                    nbsNameSpace = EditorGUILayout.TextField(nbsNameSpace);
-                    GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
-                    nbsKey = EditorGUILayout.TextField(nbsKey);
-
-                    if (!Application.isPlaying)
-                        GUI.enabled = false;
-
-                    bool nbsPlay = GUILayout.Button("NBS 재생", GUILayout.ExpandWidth(false));
-                    if (GUILayout.Button("NBS 정지", GUILayout.ExpandWidth(false)))
-                        SoundManager.StopNBS(nbsKey, nbsNameSpace);
-                    if (GUILayout.Button("모든 NBS 정지", GUILayout.ExpandWidth(false)))
-                        SoundManager.StopNBSAll();
-
-                    GUI.enabled = true;
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
-                    nbsVolume = EditorGUILayout.Slider(nbsVolume, 0, 1);
-                    GUILayout.Label("반복", GUILayout.ExpandWidth(false));
-                    nbsLoop = EditorGUILayout.Toggle(nbsLoop, GUILayout.Width(15));
-
-                    GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    nbsPitch = EditorGUILayout.Slider(nbsPitch, -3, 3);
-                    GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                    nbsTempo = EditorGUILayout.Slider(nbsTempo, -3, 3);
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label($"{SoundManager.nbsList.Count} / {SoundManager.maxNBSCount}", GUILayout.ExpandWidth(false));
-
-                    GUILayout.Label("3D", GUILayout.ExpandWidth(false));
-                    nbsSpatial = EditorGUILayout.Toggle(nbsSpatial, GUILayout.Width(15));
-
-                    if (nbsSpatial)
+                    bool nbsPlay;
                     {
-                        GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                        nbsMinDistance = EditorGUILayout.Slider(nbsMinDistance, 0, 64);
-                        GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                        nbsMaxDistance = EditorGUILayout.Slider(nbsMaxDistance, 0, 64);
+                        EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
+                        nbsNameSpace = EditorGUILayout.TextField(nbsNameSpace);
+                        GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
+                        nbsKey = EditorGUILayout.TextField(nbsKey);
+
+                        if (!Application.isPlaying)
+                            GUI.enabled = false;
+
+                        nbsPlay = GUILayout.Button("NBS 재생", GUILayout.ExpandWidth(false));
+                        if (GUILayout.Button("NBS 정지", GUILayout.ExpandWidth(false)))
+                            SoundManager.StopNBS(nbsKey, nbsNameSpace);
+                        if (GUILayout.Button("모든 NBS 정지", GUILayout.ExpandWidth(false)))
+                            SoundManager.StopNBSAll();
+
+                        GUI.enabled = true;
+
+                        EditorGUILayout.EndHorizontal();
+                    }
+                    {
+                        EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
+                        nbsVolume = EditorGUILayout.Slider(nbsVolume, 0, 1);
+                        GUILayout.Label("반복", GUILayout.ExpandWidth(false));
+                        nbsLoop = EditorGUILayout.Toggle(nbsLoop, GUILayout.Width(15));
+
+                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
+                        nbsPitch = EditorGUILayout.Slider(nbsPitch, -3, 3);
+                        GUILayout.Label("템포", GUILayout.ExpandWidth(false));
+                        nbsTempo = EditorGUILayout.Slider(nbsTempo, -3, 3);
 
                         EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
 
-                        GUILayout.Label("위치", GUILayout.ExpandWidth(false));
-                        nbsLocalPosition = EditorGUILayout.Vector3Field("", nbsLocalPosition);
+                        GUILayout.Label($"{SoundManager.nbsList.Count} / {SoundManager.maxNBSCount}", GUILayout.ExpandWidth(false));
 
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    else
-                    {
-                        GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
-                        nbsPanStereo = EditorGUILayout.Slider(nbsPanStereo, -1, 1);
+                        GUILayout.Label("3D", GUILayout.ExpandWidth(false));
+                        nbsSpatial = EditorGUILayout.Toggle(nbsSpatial, GUILayout.Width(15));
 
-                        EditorGUILayout.EndHorizontal();
+                        if (nbsSpatial)
+                        {
+                            GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
+                            nbsMinDistance = EditorGUILayout.Slider(nbsMinDistance, 0, 64);
+                            GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
+                            nbsMaxDistance = EditorGUILayout.Slider(nbsMaxDistance, 0, 64);
+
+                            EditorGUILayout.EndHorizontal();
+                            EditorGUILayout.BeginHorizontal();
+
+                            GUILayout.Label("위치", GUILayout.ExpandWidth(false));
+                            nbsLocalPosition = EditorGUILayout.Vector3Field("", nbsLocalPosition);
+
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        else
+                        {
+                            GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
+                            nbsPanStereo = EditorGUILayout.Slider(nbsPanStereo, -1, 1);
+
+                            EditorGUILayout.EndHorizontal();
+                        }
                     }
 
                     if (nbsPlay)
@@ -485,113 +382,20 @@ namespace SCKRM.Editor
                 }
             }
 
-            if (Application.isPlaying)
+            if (Application.isPlaying && Kernel.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
                 EditorGUILayout.LabelField("재생 목록", EditorStyles.boldLabel);
-                audioScrollPos = EditorGUILayout.BeginScrollView(audioScrollPos);
+                
+                if (scrollYSize > 0)
+                    nbsScrollPos = EditorGUILayout.BeginScrollView(nbsScrollPos, GUILayout.Height(scrollYSize));
+                else
+                    nbsScrollPos = EditorGUILayout.BeginScrollView(nbsScrollPos);
 
                 for (int i = SoundManager.nbsList.Count - 1; i >= 0; i--)
                 {
-                    NBSPlayer nbsPlayer = SoundManager.nbsList[i];
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                    nbsPlayer.nameSpace = EditorGUILayout.TextField(nbsPlayer.nameSpace);
-                    GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
-                    nbsPlayer.key = EditorGUILayout.TextField(nbsPlayer.key);
-
-                    bool refesh = GUILayout.Button("새로고침", GUILayout.ExpandWidth(false));
-                    bool stop = GUILayout.Button("정지", GUILayout.ExpandWidth(false));
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
-                    nbsPlayer.volume = EditorGUILayout.Slider(nbsPlayer.volume, 0, 1);
-                    GUILayout.Label("반복", GUILayout.ExpandWidth(false));
-                    nbsPlayer.loop = EditorGUILayout.Toggle(nbsPlayer.loop, GUILayout.Width(15));
-
-                    GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    nbsPlayer.pitch = EditorGUILayout.Slider(nbsPlayer.pitch, -3, 3);
-                    GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                    nbsPlayer.tempo = EditorGUILayout.Slider(nbsPlayer.tempo, -3, 3);
-
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
-
-                    GUILayout.Label("3D", GUILayout.ExpandWidth(false));
-                    nbsPlayer.spatial = EditorGUILayout.Toggle(nbsPlayer.spatial, GUILayout.Width(15));
-
-                    if (nbsPlayer.spatial)
-                    {
-                        GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                        nbsPlayer.minDistance = EditorGUILayout.Slider(nbsPlayer.minDistance, 0, 64);
-                        GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                        nbsPlayer.maxDistance = EditorGUILayout.Slider(nbsPlayer.maxDistance, 0, 64);
-
-                        EditorGUILayout.EndHorizontal();
-                        EditorGUILayout.BeginHorizontal();
-
-                        GUILayout.Label("위치", GUILayout.ExpandWidth(false));
-                        nbsPlayer.localPosition = EditorGUILayout.Vector3Field("", nbsPlayer.localPosition);
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    else
-                    {
-                        GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
-                        nbsPlayer.panStereo = EditorGUILayout.Slider(nbsPlayer.panStereo, -1, 1);
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-
-                    CustomInspectorEditor.DrawLine(1);
-
-                    {
-                        EditorGUILayout.BeginHorizontal();
-
-                        if (nbsPlayer.nbsFile == null)
-                        {
-                            GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
-                            GUILayout.HorizontalSlider(0, 0, 1);
-                        }
-                        else
-                        {
-                            float timer = nbsPlayer.tick * 0.05f + (0.05f - nbsPlayer.timer);
-                            float length = nbsPlayer.length * 0.05f;
-
-                            string time = timer.ToTime();
-                            string endTime = length.ToTime();
-
-                            if (nbsPlayer.tempo == 0)
-                                GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                            else if (nbsPlayer.tempo.Abs() != 1)
-                            {
-                                string pitchTime = (((nbsPlayer.tick * 0.05f) + (0.05f - nbsPlayer.timer)) * (1 / nbsPlayer.tempo)).ToTime();
-                                string pitchEndTime = (nbsPlayer.length * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
-
-                                GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime}) ({nbsPlayer.tick} / {nbsPlayer.length})", GUILayout.ExpandWidth(false));
-                            }
-                            else
-                                GUILayout.Label($"{time} / {endTime} ({nbsPlayer.tick} / {nbsPlayer.length})", GUILayout.ExpandWidth(false));
-
-                            float audioTime = GUILayout.HorizontalSlider(timer, 0, length);
-                            if ((timer - audioTime).Abs() >= 0.1f && !refesh)
-                                nbsPlayer.tick = Mathf.RoundToInt(audioTime * 20);
-                        }
-
-                        GUILayout.Label($"{nbsPlayer.index} / {nbsPlayer.nbsFile.nbsNotes.Count - 1}", GUILayout.ExpandWidth(false));
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-
-                    if (refesh)
-                        nbsPlayer.Refesh();
-                    if (stop)
-                        nbsPlayer.Remove();
-
+                    NBSPlayerEditor.GUI(SoundManager.nbsList[i]);
                     CustomInspectorEditor.DrawLine(2);
                 }
 
@@ -601,7 +405,8 @@ namespace SCKRM.Editor
             GUI.enabled = true;
         }
 
-        void Resource()
+        Vector2 resourceScrollPos = Vector2.zero;
+        public void Resource(int scrollYSize = 0)
         {
             GUILayout.Label("제어판", EditorStyles.boldLabel);
 
@@ -622,7 +427,7 @@ namespace SCKRM.Editor
                 GUILayout.EndHorizontal();
             }
 
-            if (Application.isPlaying)
+            if (Application.isPlaying && Kernel.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -686,7 +491,10 @@ namespace SCKRM.Editor
                         EditorGUILayout.Space();
 
                         {
-                            resourceScrollPos = EditorGUILayout.BeginScrollView(resourceScrollPos, GUILayout.ExpandHeight(false));
+                            if (scrollYSize > 0)
+                                resourceScrollPos = EditorGUILayout.BeginScrollView(resourceScrollPos, GUILayout.Height(scrollYSize));
+                            else
+                                resourceScrollPos = EditorGUILayout.BeginScrollView(resourceScrollPos);
 
                             for (int i = 0; i < list.Count; i++)
                             {
@@ -761,7 +569,7 @@ namespace SCKRM.Editor
             }
         }
 
-        void KernelSetting()
+        public void KernelSetting()
         {
             if (!Application.isPlaying)
                 ProjectSettingManager.Load(typeof(Kernel.Data));
@@ -794,7 +602,9 @@ namespace SCKRM.Editor
                 ProjectSettingManager.Save(typeof(Kernel.Data));
         }
 
-        void ControlSetting()
+        Vector2 controlSettingScrollPos = Vector2.zero;
+        Vector2 controlLockSettingScrollPos = Vector2.zero;
+        public void ControlSetting(int scrollYSize = 0)
         {
             if (!Application.isPlaying)
                 ProjectSettingManager.Load(typeof(InputManager.Data));
@@ -882,7 +692,10 @@ namespace SCKRM.Editor
                     EditorGUILayout.HelpBox("플레이 모드에서 바꾼 (인게임 설정에서 바꾼) 조작은 반영되지 않고, 저장되지 않습니다\n기본값만 저장되고 변경됩니다 (키를 초기화한 상태라면, 변경한 키는 인게임에도 적용됩니다)", MessageType.Warning);
 
                 {
-                    controlSettingScrollPos = EditorGUILayout.BeginScrollView(controlSettingScrollPos, GUILayout.ExpandHeight(false));
+                    if (scrollYSize > 0)
+                        controlSettingScrollPos = EditorGUILayout.BeginScrollView(controlSettingScrollPos, GUILayout.Height(scrollYSize));
+                    else
+                        controlSettingScrollPos = EditorGUILayout.BeginScrollView(controlSettingScrollPos, GUILayout.ExpandHeight(false));
 
 
                     List<KeyValuePair<string, KeyCode>> controlList = InputManager.Data.controlSettingList.ToList();
@@ -984,7 +797,10 @@ namespace SCKRM.Editor
 
 
                 {
-                    controlLockSettingScrollPos = EditorGUILayout.BeginScrollView(controlLockSettingScrollPos, GUILayout.ExpandHeight(false));
+                    if (scrollYSize > 0)
+                        controlLockSettingScrollPos = EditorGUILayout.BeginScrollView(controlLockSettingScrollPos, GUILayout.Height(scrollYSize));
+                    else
+                        controlLockSettingScrollPos = EditorGUILayout.BeginScrollView(controlLockSettingScrollPos, GUILayout.ExpandHeight(false));
 
                     List<KeyValuePair<string, bool>> inputLockList = InputManager.Data.inputLockList.ToList();
 
@@ -1024,7 +840,8 @@ namespace SCKRM.Editor
                 ProjectSettingManager.Save(typeof(InputManager.Data));
         }
 
-        void ObjectPoolingSetting()
+        Vector2 objectPoolingSettingScrollPos = Vector2.zero;
+        public void ObjectPoolingSetting(int scrollYSize = 0)
         {
             if (!Application.isPlaying)
                 ProjectSettingManager.Load(typeof(ObjectPoolingSystem.Data));
@@ -1105,7 +922,10 @@ namespace SCKRM.Editor
 
 
             {
-                objectPoolingSettingScrollPos = EditorGUILayout.BeginScrollView(objectPoolingSettingScrollPos);
+                if (scrollYSize > 0)
+                    objectPoolingSettingScrollPos = EditorGUILayout.BeginScrollView(objectPoolingSettingScrollPos, GUILayout.Height(scrollYSize));
+                else
+                    objectPoolingSettingScrollPos = EditorGUILayout.BeginScrollView(objectPoolingSettingScrollPos);
 
                 //PrefabObject의 <string, string>를 <string, GameObject>로 바꿔서 인스펙터에 보여주고 인스펙터에서 변경한걸 <string, string>로 다시 바꿔서 PrefabObject에 저장
                 /*
@@ -1177,7 +997,8 @@ namespace SCKRM.Editor
         }
 
         string audioSettingNameSpace = "";
-        void AudioSetting()
+        Vector2 audioSettingScrollPos = Vector2.zero;
+        public void AudioSetting(int scrollYSize = 0)
         {
             //GUI
             {
@@ -1355,7 +1176,10 @@ namespace SCKRM.Editor
                         {
                             GUI.enabled = true;
 
-                            audioSettingScrollPos = EditorGUILayout.BeginScrollView(audioSettingScrollPos);
+                            if (scrollYSize > 0)
+                                audioSettingScrollPos = EditorGUILayout.BeginScrollView(audioSettingScrollPos, GUILayout.Height(scrollYSize));
+                            else
+                                audioSettingScrollPos = EditorGUILayout.BeginScrollView(audioSettingScrollPos);
 
                             if (Application.isPlaying)
                                 GUI.enabled = false;

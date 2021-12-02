@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace SCKRM.Renderer
 {
@@ -13,7 +14,7 @@ namespace SCKRM.Renderer
         public string path { get => _path; set => _path = value; }
 
 
-        protected Queue<object> queue { get; } = new Queue<object>();
+        protected ConcurrentQueue<object> queue { get; } = new ConcurrentQueue<object>();
 
         /// <summary>
         /// Please put base.FixedUpdate() when overriding

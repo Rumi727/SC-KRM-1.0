@@ -19,6 +19,10 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Rerender() => textMeshPro.text = (string)queue.Dequeue();
+        public override void Rerender()
+        {
+            while (queue.TryDequeue(out object text))
+                textMeshPro.text = (string)text;
+        }
     }
 }

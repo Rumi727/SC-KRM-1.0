@@ -18,6 +18,10 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Rerender() => text.text = (string)queue.Dequeue();
+        public override void Rerender()
+        {
+            while (queue.TryDequeue(out object text))
+                this.text.text = (string)text;
+        }
     }
 }

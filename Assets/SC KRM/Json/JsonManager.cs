@@ -50,6 +50,8 @@ namespace SCKRM.Json
 
         public static implicit operator JVector2(Vector2 value) => new JVector2(value);
         public static implicit operator Vector2(JVector2 value) => new Vector2() { x = value.x, y = value.y };
+
+        public override string ToString() => $"(x: {x}, y: {y})";
     }
 
     public struct JVector3
@@ -89,6 +91,8 @@ namespace SCKRM.Json
 
         public static implicit operator JVector3(Vector3 value) => new JVector3(value);
         public static implicit operator Vector3(JVector3 value) => new Vector3() { x = value.x, y = value.y, z = value.z };
+
+        public override string ToString() => $"({x}, {y}, {z})";
     }
     public struct JVector4
     {
@@ -141,6 +145,8 @@ namespace SCKRM.Json
 
         public static implicit operator JVector4(Vector4 value) => new JVector4(value);
         public static implicit operator Vector4(JVector4 value) => new Vector4() { x = value.x, y = value.y, z = value.z, w = value.w };
+
+        public override string ToString() => $"({x}, {y}, {z}, {w})";
     }
 
     public struct JRect
@@ -200,5 +206,7 @@ namespace SCKRM.Json
 
         public static implicit operator JRect(Rect value) => new JRect(value);
         public static implicit operator Rect(JRect value) => new Rect() { x = value.x, y = value.y, width = value.width, height = value.height };
+
+        public override string ToString() => $"(x:{x}, y:{y}, width:{width}, height:{height})";
     }
 }

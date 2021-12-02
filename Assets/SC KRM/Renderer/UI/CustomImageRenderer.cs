@@ -19,6 +19,10 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Rerender() => image.sprite = (Sprite)queue.Dequeue();
+        public override void Rerender()
+        {
+            while (queue.TryDequeue(out object sprite))
+                image.sprite = (Sprite)sprite;
+        }
     }
 }

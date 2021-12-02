@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace SCKRM.NBS
 {
@@ -119,6 +121,29 @@ namespace SCKRM.NBS
             this.nbsNotes = nbsNotes;
             this.nbsLayers = nbsLayers;
         }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (nbsNotes == null)
+                stringBuilder.Append("null");
+            else
+            {
+                for (int i = 0; i < nbsNotes.Count; i++)
+                    stringBuilder.Append(nbsNotes[i]);
+            }
+
+            StringBuilder stringBuilder2 = new StringBuilder();
+            if (nbsLayers == null)
+                stringBuilder.Append("null");
+            else
+            {
+                for (int i = 0; i < nbsLayers.Count; i++)
+                    stringBuilder.Append(nbsLayers[i]);
+            }
+
+            return $"(songLength:{songLength}, tickTempo:{tickTempo}, loopStartTick:{loopStartTick}, nbsNotes:{stringBuilder}, nbsLayers:{stringBuilder2})";
+        }
     }
 
     public class NBSNote
@@ -130,6 +155,20 @@ namespace SCKRM.NBS
         {
             this.delayTick = delayTick;
             this.nbsNoteMetaDatas = nbsNoteMetaDatas;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (nbsNoteMetaDatas == null)
+                stringBuilder.Append("null");
+            else
+            {
+                for (int i = 0; i < nbsNoteMetaDatas.Count; i++)
+                    stringBuilder.Append(nbsNoteMetaDatas[i]);
+            }
+
+            return $"(delayTick:{delayTick}, nbsNoteMetaDatas:{stringBuilder})";
         }
     }
 
@@ -153,6 +192,8 @@ namespace SCKRM.NBS
             this.panning = panning;
             this.pitch = pitch;
         }
+
+        public override string ToString() => $"(layerIndex:{layerIndex}, instrument:{instrument}, key:{key}, velocity:{velocity}, panning:{panning}, pitch:{pitch})";
     }
 
     public class NBSLayer
@@ -169,5 +210,7 @@ namespace SCKRM.NBS
             this.layerVolume = layerVolume;
             this.layerStereo = layerStereo;
         }
+
+        public override string ToString() => $"(layername:{layerName}, layerLock:{layerLock}, layerVolume:{layerStereo}, layerStereo:{layerStereo})";
     }
 }

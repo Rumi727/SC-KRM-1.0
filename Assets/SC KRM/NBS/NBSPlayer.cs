@@ -63,6 +63,7 @@ namespace SCKRM.NBS
         }
 
         public short length { get => (short)(nbsFile?.songLength); }
+        public bool isPaused { get; set; } = false;
 
 
 
@@ -120,13 +121,28 @@ namespace SCKRM.NBS
             nbsFile = NBSManager.ReadNBSFile(path);
             allLayerLock = nbsFile.nbsLayers.Any((b) => b.layerLock == 2);
 
-            if (tick > length)
+            if (tempo < 0 && tick == 0)
+            {
+                _timer = 0;
+                _tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
+                _index = nbsFile.nbsNotes.Count - 2;
+            }
+            else if (tick > length)
             {
                 if (loop)
                 {
-                    _tick = 0;
-                    _index = 0;
-                    _timer = 0;
+                    if (tempo > 0)
+                    {
+                        _tick = 0;
+                        _index = 0;
+                        _timer = 0;
+                    }
+                    else
+                    {
+                        _timer = 0;
+                        _tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
+                        _index = nbsFile.nbsNotes.Count - 2;
+                    }
                 }
                 else
                     Remove();
@@ -139,26 +155,29 @@ namespace SCKRM.NBS
 
         void Update()
         {
-            if (tempo < 0)
+            if (!isPaused)
             {
-                _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs();
-                while (timer <= 0)
+                if (tempo < 0)
                 {
-                    _tick--;
-                    _timer += 0.05f;
+                    _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs();
+                    while (timer <= 0)
+                    {
+                        _tick--;
+                        _timer += 0.05f;
 
-                    SoundPlay();
+                        SoundPlay();
+                    }
                 }
-            }
-            else
-            {
-                _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo;
-                while (timer <= 0)
+                else
                 {
-                    _tick++;
-                    _timer += 0.05f;
+                    _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo;
+                    while (timer <= 0)
+                    {
+                        _tick++;
+                        _timer += 0.05f;
 
-                    SoundPlay();
+                        SoundPlay();
+                    }
                 }
             }
 

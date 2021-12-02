@@ -26,7 +26,8 @@ namespace SCKRM.Renderer
 
         public override void Rerender()
         {
-            spriteRenderer.sprite = (Sprite)queue.Dequeue();
+            while (queue.TryDequeue(out object sprite))
+                spriteRenderer.sprite = (Sprite)sprite;
             spriteRenderer.drawMode = drawMode;
             spriteRenderer.size = size;
         }

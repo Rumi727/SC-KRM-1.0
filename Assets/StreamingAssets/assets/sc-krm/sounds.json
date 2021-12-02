@@ -6,7 +6,7 @@
     "sounds": [
       {
         "path": "joker",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -19,7 +19,7 @@
     "sounds": [
       {
         "path": "big",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -32,7 +32,7 @@
     "sounds": [
       {
         "path": "big2",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -45,7 +45,7 @@
     "sounds": [
       {
         "path": "big3",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -58,7 +58,7 @@
     "sounds": [
       {
         "path": "big4",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
