@@ -1,6 +1,7 @@
 using SCKRM.Tool;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace SCKRM.UI
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/자식들의 Rect Transform 크기 따라가기")]
     [RequireComponent(typeof(RectTransform))]
-    public class SetSizeAsChildRectTransform : MonoBehaviour
+    public sealed class SetSizeAsChildRectTransform : MonoBehaviour
     {
         [SerializeField, HideInInspector] RectTransform _rectTransform;
         public RectTransform rectTransform
@@ -28,10 +29,21 @@ namespace SCKRM.UI
 
         [SerializeField] Vector2 _offset = Vector2.zero;
         public Vector2 offset { get => _offset; set => _offset = value; }
-        [SerializeField] float _spacing = 0;
+
+        [SerializeField, Min(0)] float _min = 0;
+        public float min { get => _min; set => _min = value; }
+        [SerializeField, Min(0)] float _max = 0;
+        public float max { get => _max; set => _max = value; }
+
+        [SerializeField, Min(0)] float _spacing = 0;
         public float spacing { get => _spacing; set => _spacing = value; }
         [SerializeField] bool _lerp = false;
         public bool lerp { get => _lerp; set => _lerp = value; }
+
+
+
+        [SerializeField] RectTransform[] _ignore = new RectTransform[0];
+        public RectTransform[] ignore { get => _ignore; set => _ignore = value; }
 
 
         public RectTransform[] childRectTransforms { get; private set; }
@@ -62,6 +74,11 @@ namespace SCKRM.UI
                     spacingCancel();
                     continue;
                 }
+                else if (ignore.Contains(childRectTransform))
+                {
+                    spacingCancel();
+                    continue;
+                }
                 else if (!childRectTransform.gameObject.activeSelf)
                 {
                     spacingCancel();
@@ -88,6 +105,19 @@ namespace SCKRM.UI
                 }
             }
 
+            Vector2 xSize = new Vector2(x + offset.x, rectTransform.sizeDelta.y);
+            Vector2 ySize = new Vector2(rectTransform.sizeDelta.x, y + offset.y);
+            if (max <= 0)
+            {
+                xSize.x = xSize.x.Clamp(min);
+                ySize.y = ySize.y.Clamp(min);
+            }
+            else
+            {
+                xSize.x = xSize.x.Clamp(min, max);
+                ySize.y = ySize.y.Clamp(min, max);
+            }
+
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
 #else
@@ -95,16 +125,16 @@ namespace SCKRM.UI
 #endif
             {
                 if (mode == Mode.XSize)
-                    rectTransform.sizeDelta = new Vector2(x + offset.x, rectTransform.sizeDelta.y);
+                    rectTransform.sizeDelta = xSize;
                 else if (mode == Mode.YSize)
-                    rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, y + offset.y);
+                    rectTransform.sizeDelta = ySize;
             }
             else
             {
                 if (mode == Mode.XSize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(x + offset.x, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(xSize, 0.2f * Kernel.fpsDeltaTime);
                 else if (mode == Mode.YSize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(rectTransform.sizeDelta.x, y + offset.y), 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(ySize, 0.2f * Kernel.fpsDeltaTime);
             }
         }
 

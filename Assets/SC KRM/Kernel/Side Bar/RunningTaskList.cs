@@ -4,10 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SCKRM.UI.NoticeBar
+namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
-    public class RunningTaskList : MonoBehaviour
+    public sealed class RunningTaskList : MonoBehaviour
     {
         [System.NonSerialized] int tempCount = 0;
         void Update()

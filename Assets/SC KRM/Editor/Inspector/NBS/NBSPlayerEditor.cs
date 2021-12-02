@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NBSPlayer), true)]
-    public class NBSPlayerEditor : CustomInspectorEditor
+    public sealed class NBSPlayerEditor : CustomInspectorEditor
     {
         NBSPlayer editor;
 
@@ -21,6 +21,9 @@ namespace SCKRM.Editor
 
         public static void GUI(NBSPlayer nbsPlayer)
         {
+            if (!Application.isPlaying || !Kernel.isInitialLoadEnd)
+                return;
+
             bool refesh;
             bool pauseToggle;
             bool stop;

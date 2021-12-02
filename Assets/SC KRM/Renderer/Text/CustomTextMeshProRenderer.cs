@@ -5,7 +5,7 @@ namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/Text/Text Mesh Pro")]
     [RequireComponent(typeof(TMP_Text))]
-    public class CustomTextMeshProRenderer : CustomAllTextRenderer
+    public sealed class CustomTextMeshProRenderer : CustomAllTextRenderer
     {
         [SerializeField, HideInInspector] TMP_Text _textMeshPro;
         public TMP_Text textMeshPro

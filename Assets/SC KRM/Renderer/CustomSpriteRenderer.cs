@@ -4,7 +4,7 @@ namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/Sprite Renderer")]
     [RequireComponent(typeof(SpriteRenderer))]
-    public class CustomSpriteRenderer : CustomAllSpriteRenderer
+    public sealed class CustomSpriteRenderer : CustomAllSpriteRenderer
     {
         SpriteRenderer _spriteRenderer;
         public SpriteRenderer spriteRenderer

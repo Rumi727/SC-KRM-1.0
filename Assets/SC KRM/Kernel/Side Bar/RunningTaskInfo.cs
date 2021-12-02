@@ -8,11 +8,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM.UI.NoticeBar
+namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(RectTransform))]
-    public class RunningTaskInfo : ObjectPooling
+    public sealed class RunningTaskInfo : ObjectPooling
     {
         [SerializeField, HideInInspector] RectTransform _rectTransform;
         public RectTransform rectTransform
@@ -29,16 +29,16 @@ namespace SCKRM.UI.NoticeBar
 
 
         [SerializeField] TMP_Text _nameText;
-        public TMP_Text nameText { get => _nameText; }
+        public TMP_Text nameText => _nameText;
 
         [SerializeField] TMP_Text _infoText;
-        public TMP_Text infoText { get => _infoText; }
+        public TMP_Text infoText => _infoText;
 
         [SerializeField] Slider _slider;
-        public Slider slider { get => _slider; }
+        public Slider slider => _slider;
 
         [SerializeField] RectTransform _fillShow;
-        public RectTransform fillShow { get => _fillShow; }
+        public RectTransform fillShow => _fillShow;
 
         public int index { get; set; }
 

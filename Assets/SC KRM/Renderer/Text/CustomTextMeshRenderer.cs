@@ -4,7 +4,7 @@ namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/Text/Text Mesh")]
     [RequireComponent(typeof(TextMesh))]
-    public class CustomTextMeshRenderer : CustomAllTextRenderer
+    public sealed class CustomTextMeshRenderer : CustomAllTextRenderer
     {
         [SerializeField, HideInInspector] TextMesh _text;
         public TextMesh text

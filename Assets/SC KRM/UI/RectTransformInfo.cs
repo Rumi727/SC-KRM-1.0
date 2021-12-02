@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [AddComponentMenu("커널/UI/Rect Transform 정보")]
-    public class RectTransformInfo : MonoBehaviour
+    public sealed class RectTransformInfo : MonoBehaviour
     {
         [SerializeField, HideInInspector] RectTransform _rectTransform;
         public RectTransform rectTransform
@@ -39,6 +39,9 @@ namespace SCKRM.UI
         {
             get
             {
+                if (rectTransform == null)
+                    return Rect.zero;
+
                 if (parentRectTransformSetting == null)
                 {
                     Vector2 position = (Vector2)rectTransform.position - (rectTransform.sizeDelta * rectTransform.pivot);
@@ -53,6 +56,9 @@ namespace SCKRM.UI
             }
             set
             {
+                if (rectTransform == null)
+                    return;
+
                 Rect parentRect = parentRectTransformSetting.rect;
                 localRect = new Rect(value.x - parentRect.x, value.y - parentRect.y, value.width, value.height);
             }
@@ -61,6 +67,9 @@ namespace SCKRM.UI
         {
             get
             {
+                if (rectTransform == null)
+                    return Rect.zero;
+
                 if (parentRectTransformSetting == null)
                 {
                     Vector2 position = Vector2.zero;
@@ -79,6 +88,9 @@ namespace SCKRM.UI
             }
             set
             {
+                if (rectTransform == null)
+                    return;
+
                 Rect parentLocalRect = parentRectTransformSetting.localRect;
                 float minX = value.x - (parentLocalRect.width * rectTransform.anchorMin.x);
                 float minY = value.y - (parentLocalRect.height * rectTransform.anchorMin.y);
@@ -97,11 +109,17 @@ namespace SCKRM.UI
         {
             get
             {
+                if (rectTransform == null)
+                    return Vector2.zero;
+
                 Rect localRect = this.localRect;
                 return new Vector2(localRect.width, localRect.height);
             }
             set
             {
+                if (rectTransform == null)
+                    return;
+
                 Rect localRect = this.localRect;
                 this.localRect = new Rect(localRect.x, localRect.y, value.x, value.y);
             }

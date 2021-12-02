@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [AddComponentMenu("")]
-    public class KernelCanvas : MonoBehaviour
+    public sealed class KernelCanvas : MonoBehaviour
     {
         public static KernelCanvas instance { get; private set; }
 

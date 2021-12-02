@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 38139166735123240}
   - component: {fileID: 38139166735123255}
-  - component: {fileID: 1544699916823716858}
+  - component: {fileID: 7431135223376450563}
   m_Layer: 0
   m_Name: Kernel
   m_TagString: Untagged
@@ -78,6 +78,7 @@ Transform:
   - {fileID: 4300134619478246936}
   - {fileID: 2581861394076069408}
   - {fileID: 376584899778000820}
+  - {fileID: 925954422228538203}
   - {fileID: 7454866410676242092}
   - {fileID: 3260765865344146849}
   m_Father: {fileID: 0}
@@ -96,14 +97,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _splashScreenBackground: {fileID: 6267927436714765281}
---- !u!114 &1544699916823716858
+--- !u!114 &7431135223376450563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38139166735123254}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c47fa2717d0d7ce46ad2c361192cafc3, type: 3}
   m_Name: 
@@ -224,9 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 777495100700663854}
+  tempParentGameobject: {fileID: 1859552556628179040}
+  _parentRectTransformSetting: {fileID: 6751582402625307280}
 --- !u!222 &4431679506300670564
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -289,7 +290,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.2509804}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.1254902}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.2509804}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.7490196}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -625,7 +626,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 930, y: 55}
+  m_SizeDelta: {x: 929, y: 55}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6751582402625307280
 MonoBehaviour:
@@ -678,6 +679,8 @@ MonoBehaviour:
   _xSize: 1
   _ySize: 1
   _offset: {x: 0, y: 0}
+  _min: {x: 0, y: 0}
+  _max: {x: 0, y: 0}
   _lerp: 0
 --- !u!1 &2016575071763466335
 GameObject:
@@ -899,7 +902,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 55}
-  m_SizeDelta: {x: 930, y: 55}
+  m_SizeDelta: {x: 929, y: 55}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5520329375971024534
 MonoBehaviour:
@@ -991,6 +994,8 @@ MonoBehaviour:
   _xSize: 1
   _ySize: 0
   _offset: {x: 0, y: 0}
+  _min: {x: 0, y: 0}
+  _max: {x: 0, y: 0}
   _lerp: 0
 --- !u!1 &2342798495969641565
 GameObject:
@@ -1196,9 +1201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 5576310999095303526}
+  tempParentGameobject: {fileID: 3871648516956403154}
+  _parentRectTransformSetting: {fileID: 3839058026210576536}
 --- !u!114 &1272568818807985254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,8 +1250,11 @@ MonoBehaviour:
   _rectTransform: {fileID: 5576310999095303526}
   _mode: 2
   _offset: {x: 0, y: 0}
+  _min: 0
+  _max: 0
   _spacing: 6
   _lerp: 0
+  _ignore: []
 --- !u!1 &3700159981905657066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,18 +1362,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 5645247711950394330}
+    m_SelectOnRight: {fileID: 8333612413172660544}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.2509804}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.1254902}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.2509804}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.7490196}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1479,9 +1487,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 1818760885789760683}
+  tempParentGameobject: {fileID: 2434789865511630181}
+  _parentRectTransformSetting: {fileID: 7434210660580445186}
 --- !u!222 &3088269085463217526
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1526,6 +1534,8 @@ MonoBehaviour:
   _xSize: 1
   _ySize: 0
   _offset: {x: 0, y: 0}
+  _min: {x: 0, y: 0}
+  _max: {x: 0, y: 0}
   _lerp: 0
 --- !u!114 &3868677867364877845
 MonoBehaviour:
@@ -1542,8 +1552,11 @@ MonoBehaviour:
   _rectTransform: {fileID: 1818760885789760683}
   _mode: 2
   _offset: {x: 0, y: 34}
+  _min: 0
+  _max: 0
   _spacing: 6
   _lerp: 0
+  _ignore: []
 --- !u!1 &4268752405493752716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,7 +2013,54 @@ MonoBehaviour:
   _xSize: 0
   _ySize: 1
   _offset: {x: 0, y: 0}
+  _min: {x: 0, y: 0}
+  _max: {x: 0, y: 0}
   _lerp: 0
+--- !u!1 &5114006853039030976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 925954422228538203}
+  - component: {fileID: 9187389753109834628}
+  m_Layer: 0
+  m_Name: Notice Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &925954422228538203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5114006853039030976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 38139166735123240}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9187389753109834628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5114006853039030976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b73961dfe8860814b889b3e6e34e4643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _noticeList: {fileID: 2520804082349610609}
 --- !u!1 &5965776829383859533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,9 +2113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 1704965012893515499}
+  tempParentGameobject: {fileID: 3871648516956403154}
+  _parentRectTransformSetting: {fileID: 3839058026210576536}
 --- !u!222 &6851143703883133989
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2161,9 +2221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 5984847113046664266}
+  tempParentGameobject: {fileID: 3871648516956403154}
+  _parentRectTransformSetting: {fileID: 3839058026210576536}
 --- !u!222 &3290166329890333913
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2342,9 +2402,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 287314582203565273}
+  tempParentGameobject: {fileID: 8899418973490133235}
+  _parentRectTransformSetting: {fileID: 577460105446975411}
 --- !u!222 &6002785420084744323
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2463,9 +2523,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 2520804082349610609}
+  tempParentGameobject: {fileID: 3871648516956403154}
+  _parentRectTransformSetting: {fileID: 3839058026210576536}
 --- !u!114 &9173798503717255303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2500,8 +2560,11 @@ MonoBehaviour:
   _rectTransform: {fileID: 2520804082349610609}
   _mode: 2
   _offset: {x: 0, y: 0}
+  _min: 0
+  _max: 0
   _spacing: 6
   _lerp: 0
+  _ignore: []
 --- !u!1 &7718322339183070399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,18 +2764,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 8333612413172660544}
+    m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     m_PressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    m_SelectedColor: {r: 0.86, g: 0.86, b: 0.86, a: 1}
+    m_SelectedColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     m_DisabledColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2788,9 +2851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 7714810409222545342}
+  tempParentGameobject: {fileID: 8899418973490133235}
+  _parentRectTransformSetting: {fileID: 577460105446975411}
 --- !u!222 &8869108224681951481
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2949,7 +3012,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.2509804}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.1254902}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.2509804}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.7490196}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2998,6 +3061,8 @@ MonoBehaviour:
   _xSize: 1
   _ySize: 0
   _offset: {x: 12, y: 0}
+  _min: {x: 0, y: 0}
+  _max: {x: 0, y: 0}
   _lerp: 0
 --- !u!114 &3454736665347479781
 MonoBehaviour:
@@ -3117,7 +3182,7 @@ RectTransform:
   - {fileID: 5043029143944463223}
   - {fileID: 1199465852522579512}
   m_Father: {fileID: 38139166735123240}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3257,9 +3322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 3707165414197699056}
+  tempParentGameobject: {fileID: 1425178687874800396}
+  _parentRectTransformSetting: {fileID: 5891145814483678695}
 --- !u!222 &6546546987158364130
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3314,7 +3379,7 @@ MonoBehaviour:
   _path: back
   _type: gui/taskbar
   _index: 0
-  _image: {fileID: 0}
+  _image: {fileID: 3846392093200592995}
 --- !u!1001 &3895167103863444517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3324,7 +3389,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
       propertyPath: m_LocalPosition.x

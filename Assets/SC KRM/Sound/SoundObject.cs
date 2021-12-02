@@ -27,7 +27,7 @@ namespace SCKRM.Sound
         public SoundMetaData soundMetaData { get; private set; }
 
         public float time { get => audioSource.time; set => audioSource.time = value; }
-        public float length { get => (float)(audioSource.clip?.length); }
+        public float length => (float)(audioSource.clip?.length);
 
         public bool isLooped { get; private set; } = false;
 

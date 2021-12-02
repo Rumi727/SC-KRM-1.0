@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/UI/Selectable")]
-    public class CustomSelectableRenderer : CustomImageRenderer
+    public sealed class CustomSelectableRenderer : CustomImageRenderer
     {
         [SerializeField, HideInInspector] Selectable _selectable;
         public Selectable selectable

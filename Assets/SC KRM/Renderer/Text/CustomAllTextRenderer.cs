@@ -9,7 +9,11 @@ namespace SCKRM.Renderer
         public override void ResourceReload()
         {
             base.ResourceReload();
-            queue.Enqueue(LanguageManager.TextLoad(path, nameSpace));
+            string text = LanguageManager.TextLoad(path, nameSpace);
+            if (text != "")
+                queue.Enqueue(text);
+            else
+                queue.Enqueue(path);
         }
     }
 }

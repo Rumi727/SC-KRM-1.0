@@ -8,11 +8,9 @@ using UnityEngine.Rendering.PostProcessing;
 namespace SCKRM.Camera
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/Camera/카메라 설정"), RequireComponent(typeof(UnityEngine.Camera), typeof(PostProcessLayer))]
+    [AddComponentMenu("커널/Camera/카메라 설정"), RequireComponent(typeof(UnityEngine.Camera))]
     public sealed class CameraSetting : MonoBehaviour
     {
-        public bool CustomAntiAliasing = false;
-
         [System.NonSerialized] UnityEngine.Camera _camera;
         public new UnityEngine.Camera camera
         {
@@ -25,27 +23,8 @@ namespace SCKRM.Camera
             }
         }
 
-        [System.NonSerialized] PostProcessLayer _postProcessLayer;
-        public PostProcessLayer postProcessLayer
-        {
-            get
-            {
-                if (_postProcessLayer == null)
-                    _postProcessLayer = GetComponent<PostProcessLayer>();
-
-                return _postProcessLayer;
-            }
-        }
-
         void Update()
         {
-            if (!CustomAntiAliasing)
-            {
-                postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.FastApproximateAntialiasing;
-                postProcessLayer.fastApproximateAntialiasing.fastMode = true;
-                postProcessLayer.fastApproximateAntialiasing.keepAlpha = true;
-            }
-
 #if UNITY_EDITOR
             if (Application.isPlaying)
             {

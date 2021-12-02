@@ -368,12 +368,13 @@ namespace SCKRM
                     Debug.LogError("Kernel: Initial loading failed");
 #if UNITY_EDITOR
                     GameObject[] gameObjects = FindObjectsOfType<GameObject>(true);
-                    for (int i = 0; i < gameObjects.Length; i++)
+                    int length = gameObjects.Length;
+                    for (int i = 0; i < length; i++)
                         DestroyImmediate(gameObjects[i]);
 
                     UnityEditor.EditorApplication.isPlaying = false;
 #else
-                Application.Quit(1);
+                    Application.Quit(1);
 #endif
                 }
             }

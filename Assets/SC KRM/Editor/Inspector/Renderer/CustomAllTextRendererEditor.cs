@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(CustomAllTextRenderer), true)]
-    public class CustomAllTextRendererEditor : CustomInspectorEditor
+    public sealed class CustomAllTextRendererEditor : CustomInspectorEditor
     {
         CustomAllTextRenderer editor;
 

@@ -62,7 +62,7 @@ namespace SCKRM.NBS
             }
         }
 
-        public short length { get => (short)(nbsFile?.songLength); }
+        public short length => (short)(nbsFile?.songLength);
         public bool isPaused { get; set; } = false;
 
 

@@ -5,7 +5,7 @@ namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/Text/Text")]
     [RequireComponent(typeof(Text))]
-    public class CustomTextRenderer : CustomAllTextRenderer
+    public sealed class CustomTextRenderer : CustomAllTextRenderer
     {
         [SerializeField, HideInInspector] Text _text;
         public Text text

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using SCKRM.Input;
 using SCKRM.SaveLoad;
 using SCKRM.Tool;
-using SCKRM.UI.NoticeBar;
+using SCKRM.UI.SideBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -75,6 +75,7 @@ namespace SCKRM.UI.TaskBar
                 Destroy(gameObject);
         }
 
+        static bool tabAllow = false;
         static GameObject oldSelectedObject;
         static bool tempTopMode;
         static bool tempCropTheScreen;
@@ -85,6 +86,7 @@ namespace SCKRM.UI.TaskBar
                 {
                     bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || SideBarManager.isNoticeBarShow;
                     isTaskBarShow = taskBarShow || selectedTaskBar;
+                    tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy;
 
                     InputManager.SetInputLock("taskbar", selectedTaskBar);
 
@@ -100,10 +102,10 @@ namespace SCKRM.UI.TaskBar
                         if (background.activeSelf)
                             background.SetActive(false);
                     }
-
-                    if (!selectedTaskBar && InputManager.GetKeyDown("gui.tab", "taskbar"))
+                    
+                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all"))
                         Tab();
-                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "taskbar"))
+                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all"))
                         eventSystem.SetSelectedGameObject(null);
                 }
 
@@ -238,8 +240,8 @@ namespace SCKRM.UI.TaskBar
         {
             if (!instance.layout.activeSelf)
                 instance.layout.SetActive(true);
-
-            if (oldSelectedObject == null || !oldSelectedObject.activeSelf)
+            
+            if (tabAllow)
             {
                 Selectable[] selectables = instance.GetComponentsInChildren<Selectable>();
                 if (selectables.Length > 0)

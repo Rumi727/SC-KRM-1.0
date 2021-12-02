@@ -14,7 +14,7 @@ namespace SCKRM.Sound
     public sealed class SoundManager : MonoBehaviour
     {
         [SerializeField] AudioMixerGroup _audioMixerGroup;
-        public AudioMixerGroup audioMixerGroup { get => _audioMixerGroup; }
+        public AudioMixerGroup audioMixerGroup => _audioMixerGroup;
 
         public static SoundManager instance { get; private set; }
 

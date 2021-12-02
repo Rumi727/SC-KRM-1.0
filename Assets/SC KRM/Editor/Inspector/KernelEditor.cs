@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Kernel), true)]
-    public class KernelEditor : CustomInspectorEditor
+    public sealed class KernelEditor : CustomInspectorEditor
     {
         Kernel editor;
 

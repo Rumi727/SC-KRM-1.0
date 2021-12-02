@@ -1,3 +1,4 @@
+using SCKRM.UI.SideBar;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -19,10 +20,8 @@ namespace SCKRM
             {
                 loggers.Add(log);
 
-                if (log.logType == LogType.Error)
-                {
-
-                }
+                if (log.logType == LogType.Error || log.logType == LogType.Exception)
+                    NoticeManager.Notice(log.condition, log.stackTrace, NoticeManager.Type.error);
             }
         }
 

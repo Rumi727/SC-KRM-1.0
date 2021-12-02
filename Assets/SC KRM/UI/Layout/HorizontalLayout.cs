@@ -8,7 +8,7 @@ namespace SCKRM.UI
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
     [AddComponentMenu("커널/UI/Layout/수평 레이아웃")]
-    public class HorizontalLayout : MonoBehaviour
+    public sealed class HorizontalLayout : MonoBehaviour
     {
         [SerializeField, HideInInspector] RectTransform _rectTransform;
         public RectTransform rectTransform
@@ -25,7 +25,7 @@ namespace SCKRM.UI
 
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
-        [SerializeField] float _spacing;
+        [SerializeField, Min(0)] float _spacing;
         public float spacing { get => _spacing; set => _spacing = value; }
 
 

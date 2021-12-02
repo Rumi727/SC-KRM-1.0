@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM.UI.NoticeBar
+namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform), typeof(SetSizeAsTargetRectTransform))]
     public class SideBarManager : MonoBehaviour
@@ -53,22 +53,22 @@ namespace SCKRM.UI.NoticeBar
 
         #region variable
         [SerializeField] SetSizeAsTargetRectTransform _contentRectTransformSize;
-        public SetSizeAsTargetRectTransform contentRectTransformSize { get => _contentRectTransformSize; }
+        public SetSizeAsTargetRectTransform contentRectTransformSize => _contentRectTransformSize;
 
         [SerializeField] RectTransform _viewPort;
-        public RectTransform viewPort { get => _viewPort; }
+        public RectTransform viewPort => _viewPort;
 
         [SerializeField] RectTransform _content;
-        public RectTransform content { get => _content; }
+        public RectTransform content => _content;
 
         [SerializeField] RectTransform _scrollBarRectTransform;
-        public RectTransform scrollBarRectTransform { get => _scrollBarRectTransform; }
+        public RectTransform scrollBarRectTransform => _scrollBarRectTransform;
 
         [SerializeField] Scrollbar _scrollBar;
-        public Scrollbar scrollBar { get => _scrollBar; }
+        public Scrollbar scrollBar => _scrollBar;
 
         [SerializeField] RectTransform _scrollBarHandleShow;
-        public RectTransform scrollBarHandleShow { get => _scrollBarHandleShow; }
+        public RectTransform scrollBarHandleShow => _scrollBarHandleShow;
         #endregion
 
         void Awake()

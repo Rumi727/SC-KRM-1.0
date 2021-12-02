@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(CanvasSetting), true)]
-    public class CanvasSettingEditor : CustomInspectorEditor
+    public sealed class CanvasSettingEditor : CustomInspectorEditor
     {
         CanvasSetting editor;
 

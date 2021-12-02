@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(RectTransformInfo), true)]
-    public class RectTransformInfoEditor : CustomInspectorEditor
+    public sealed class RectTransformInfoEditor : CustomInspectorEditor
     {
         RectTransformInfo editor;
 
@@ -17,10 +17,13 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.LabelField($"Rect - {new UnityEngine.Rect()}");
-            EditorGUILayout.LabelField($"Rect - {editor.rect.x} {editor.rect.y} {editor.rect.width} {editor.rect.height}");
-            EditorGUILayout.LabelField($"Local Rect - {editor.localRect.x} {editor.localRect.y} {editor.localRect.width} {editor.localRect.height}");
-            EditorGUILayout.LabelField($"Size - {editor.localSize.x} {editor.localSize.y}");
+            if (editor.rectTransform != null)
+            {
+                EditorGUILayout.LabelField($"Rect - {new UnityEngine.Rect()}");
+                EditorGUILayout.LabelField($"Rect - {editor.rect.x} {editor.rect.y} {editor.rect.width} {editor.rect.height}");
+                EditorGUILayout.LabelField($"Local Rect - {editor.localRect.x} {editor.localRect.y} {editor.localRect.width} {editor.localRect.height}");
+                EditorGUILayout.LabelField($"Size - {editor.localSize.x} {editor.localSize.y}");
+            }
         }
     }
 }

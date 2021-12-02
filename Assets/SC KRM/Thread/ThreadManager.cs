@@ -14,7 +14,7 @@ namespace SCKRM.Threads
         /// <summary>
         /// mainThreadId == Thread.CurrentThread.ManagedThreadId
         /// </summary>
-        public static bool isMainThread { get => mainThreadId == Thread.CurrentThread.ManagedThreadId; }
+        public static bool isMainThread => mainThreadId == Thread.CurrentThread.ManagedThreadId;
 
 
 

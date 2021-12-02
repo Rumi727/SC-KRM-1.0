@@ -116,7 +116,24 @@ namespace SCKRM.Resource
             catch (Exception e)
             {
                 Debug.LogError(e);
-                Debug.LogError("Kernel: Initial loading failed");
+                Debug.LogError("ResourceManager: Resource refresh failed");
+
+                if (!Kernel.isInitialLoadEnd)
+                {
+                    Debug.LogError("Kernel: Initial loading failed");
+#if UNITY_EDITOR
+                    GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
+                    int length = gameObjects.Length;
+                    for (int i = 0; i < length; i++)
+                        UnityEngine.Object.DestroyImmediate(gameObjects[i]);
+
+                    UnityEditor.EditorApplication.isPlaying = false;
+                    while (true)
+                        await UniTask.DelayFrame(1);
+#else
+                    Application.Quit(1);
+#endif
+                }
             }
 
             threadMetaData.Remove();
@@ -175,8 +192,15 @@ namespace SCKRM.Resource
                             textureMetaData = new TextureMetaData();
 
                         //타입 폴더 안의 모든 이미지를 돌아다닙니다 (타입 폴더 안의 폴더 안의... 이미지는 타입으로 취급하기 때문에 감지하지 않습니다)
-                        string[] paths = Directory.GetFiles(typePath, "*.png");
-                        for (int l = 0; l < paths.Length; l++)
+                        List<string> paths = new List<string>();
+
+                        for (int l = 0; l < textureExtension.Length; l++)
+                            paths.AddRange(Directory.GetFiles(typePath, "*." + textureExtension[l]));
+
+                        if (paths.Count <= 0)
+                            continue;
+
+                        for (int l = 0; l < paths.Count; l++)
                         {
                             string path = paths[l].Replace("\\", "/");
                             Texture2D texture = GetTexture(path, true, textureMetaData);
@@ -270,9 +294,12 @@ namespace SCKRM.Resource
                         width += texture.width;
                         height += texture.height;
                     }
-
+                    
                     /*allTextureRects*/
                     TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(packTextureTypePaths[nameSpace.Key][type.Key] + ".json", true);
+                    if (textureMetaData == null)
+                        textureMetaData = new TextureMetaData();
+
                     Texture2D background = new Texture2D(width, height);
                     Dictionary<string, Rect> fileName_rect = new Dictionary<string, Rect>();
                     

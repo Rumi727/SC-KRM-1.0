@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SoundObject), true)]
-    public class SoundObjectEditor : CustomInspectorEditor
+    public sealed class SoundObjectEditor : CustomInspectorEditor
     {
         SoundObject editor;
 
@@ -21,6 +21,9 @@ namespace SCKRM.Editor
 
         public static void GUI(SoundObject soundObject)
         {
+            if (!Application.isPlaying || !Kernel.isInitialLoadEnd)
+                return;
+
             bool refesh;
             bool pauseToggle;
             bool stop;

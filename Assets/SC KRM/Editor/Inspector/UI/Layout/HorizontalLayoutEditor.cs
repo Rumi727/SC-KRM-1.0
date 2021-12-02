@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(HorizontalLayout), true)]
-    public class HorizontalLayoutEditor : CustomInspectorEditor
+    public sealed class HorizontalLayoutEditor : CustomInspectorEditor
     {
         public override void OnInspectorGUI()
         {

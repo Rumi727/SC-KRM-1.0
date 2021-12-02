@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SetSizeAsTargetRectTransform), true)]
-    public class SetSizeAsTargetRectTransformEditor : CustomInspectorEditor
+    public sealed class SetSizeAsTargetRectTransformEditor : CustomInspectorEditor
     {
         public override void OnInspectorGUI()
         {
@@ -19,6 +19,8 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             UseProperty("_offset");
+            UseProperty("_min");
+            UseProperty("_max");
 
             EditorGUILayout.Space();
 

@@ -11,7 +11,7 @@ namespace SCKRM.UI.TaskBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(TMP_Text))]
-    public class TimeText : MonoBehaviour
+    public sealed class TimeText : MonoBehaviour
     {
         [SerializeField, HideInInspector] TMP_Text _text;
         public TMP_Text text
