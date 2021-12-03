@@ -174,9 +174,6 @@ namespace SCKRM.Resource
                         continue;
 
                     string[] types = Directory.GetDirectories(resourcePackTexturePath, "*", SearchOption.AllDirectories);
-                    Dictionary<string, Texture2D[]> type_textures = new Dictionary<string, Texture2D[]>();
-                    Dictionary<string, List<string>> type_textureNames = new Dictionary<string, List<string>>();
-                    Dictionary<string, Dictionary<string, string>> type_fileName_texturePaths = new Dictionary<string, Dictionary<string, string>>();
 
                     //리소스팩 폴더 안에 있는 텍스쳐 타입 폴더를 돌아다닙니다 (타입 폴더 안의 폴더도 타입으로 간주합니다 즉 파일 경로가 "assets/sc-krm/textures/asdf/asdf2/asdf3.png" 이라면 타입은 "asdf/asdf2"가 됩니다)
                     for (int k = 0; k < types.Length; k++)
@@ -186,7 +183,6 @@ namespace SCKRM.Resource
                         List<Texture2D> textures = new List<Texture2D>();
                         List<string> textureNames = new List<string>();
                         Dictionary<string, string> fileName_texturePaths = new Dictionary<string, string>();
-                        Dictionary<string, string> type_textureTypePaths = new Dictionary<string, string>();
                         TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(typePath + ".json", true);
                         if (textureMetaData == null)
                             textureMetaData = new TextureMetaData();
@@ -204,7 +200,7 @@ namespace SCKRM.Resource
                         {
                             string path = paths[l].Replace("\\", "/");
                             Texture2D texture = GetTexture(path, true, textureMetaData);
-
+                            
                             if (!nameSpace_type_textureNames.ContainsKey(nameSpace) || !nameSpace_type_textureNames[nameSpace].ContainsKey(type))
                             {
                                 fileName_texturePaths.Add(texture.name, path);
@@ -227,48 +223,39 @@ namespace SCKRM.Resource
                         
                         if (!packTextureTypePaths.ContainsKey(nameSpace))
                         {
-                            type_textureTypePaths.Add(type, typePath);
-                            packTextureTypePaths.Add(nameSpace, type_textureTypePaths);
+                            packTextureTypePaths.Add(nameSpace, new Dictionary<string, string>());
+                            packTextureTypePaths[nameSpace].Add(type, typePath);
                         }
                         else if (!packTextureTypePaths[nameSpace].ContainsKey(type))
                             packTextureTypePaths[nameSpace].Add(type, typePath);
 
                         if (!packTexturePaths.ContainsKey(nameSpace))
                         {
-                            type_fileName_texturePaths.Add(type, fileName_texturePaths);
-                            packTexturePaths.Add(nameSpace, type_fileName_texturePaths);
+                            packTexturePaths.Add(nameSpace, new Dictionary<string, Dictionary<string, string>>());
+                            packTexturePaths[nameSpace].Add(type, fileName_texturePaths);
                         }
                         else if (!packTexturePaths[nameSpace].ContainsKey(type))
-                        {
-                            type_fileName_texturePaths.Add(type, fileName_texturePaths);
-                            packTexturePaths[nameSpace] = type_fileName_texturePaths;
-                        }
+                            packTexturePaths[nameSpace].Add(type, fileName_texturePaths);
                         else
                             packTexturePaths[nameSpace][type] = packTexturePaths[nameSpace][type].Concat(fileName_texturePaths).ToDictionary(a => a.Key, b => b.Value);
 
                         if (!nameSpace_type_textureNames.ContainsKey(nameSpace))
                         {
-                            type_textureNames.Add(type, textureNames);
-                            nameSpace_type_textureNames.Add(nameSpace, type_textureNames);
+                            nameSpace_type_textureNames.Add(nameSpace, new Dictionary<string, List<string>>());
+                            nameSpace_type_textureNames[nameSpace].Add(type, textureNames);
                         }
                         else if (!nameSpace_type_textureNames[nameSpace].ContainsKey(type))
-                        {
-                            type_textureNames.Add(type, textureNames);
-                            nameSpace_type_textureNames[nameSpace] = type_textureNames;
-                        }
+                            nameSpace_type_textureNames[nameSpace].Add(type, textureNames);
                         else
                             nameSpace_type_textureNames[nameSpace][type] = nameSpace_type_textureNames[nameSpace][type].Concat(textureNames).ToList();
 
                         if (!nameSpace_type_textures.ContainsKey(nameSpace))
                         {
-                            type_textures.Add(type, textures.ToArray());
-                            nameSpace_type_textures.Add(nameSpace, type_textures);
+                            nameSpace_type_textures.Add(nameSpace, new Dictionary<string, Texture2D[]>());
+                            nameSpace_type_textures[nameSpace].Add(type, textures.ToArray());
                         }
                         else if (!nameSpace_type_textures[nameSpace].ContainsKey(type))
-                        {
-                            type_textures.Add(type, textures.ToArray());
-                            nameSpace_type_textures[nameSpace] = type_textures;
-                        }
+                            nameSpace_type_textures[nameSpace].Add(type, textures.ToArray());
                         else
                             nameSpace_type_textures[nameSpace][type] = nameSpace_type_textures[nameSpace][type].Concat(textures).ToArray();
                     }
