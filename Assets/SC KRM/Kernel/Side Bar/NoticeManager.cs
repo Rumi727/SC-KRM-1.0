@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Threads;
 using System.Collections;
@@ -22,6 +23,15 @@ namespace SCKRM.UI.SideBar
                 Destroy(this);
         }
 
+        void Update()
+        {
+            if (Kernel.isInitialLoadEnd)
+            {
+                if (SideBarManager.isNoticeBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "taskbar", "noticebar"))
+                    ObjectPoolingSystem.ObjectRemove("notice_manager.notice", noticeList.transform.GetChild(0).gameObject);
+            }
+        }
+
         public static async void Notice(string name, string info, Type type = Type.none)
         {
             if (!ThreadManager.isMainThread)
@@ -30,8 +40,6 @@ namespace SCKRM.UI.SideBar
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(Notice));
 #endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(Notice));
 
             await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
             Notice notice = ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeList).GetComponent<Notice>();

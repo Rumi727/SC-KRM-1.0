@@ -5,7 +5,8 @@
     "gui.back": 27,
     "kernel.full_screen": 292,
     "gui.home": 278,
-    "gui.tab": 9
+    "gui.tab": 9,
+    "notice_manager.notice_remove": 127
   },
   "inputLockList": {
     "taskbar": false,

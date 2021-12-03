@@ -28,14 +28,19 @@ namespace SCKRM
         [ProjectSetting("Setting")]
         public sealed class Data
         {
-            [JsonProperty] public static float standardFPS { get; set; }
+            [JsonProperty] public static float standardFPS { get; set; } = 60;
 
 
 
-            [JsonProperty] public static int notFocusFpsLimit { get; set; }
-            [JsonProperty] public static int afkFpsLimit { get; set; }
+            [JsonProperty] public static int notFocusFpsLimit { get; set; } = 30;
+            [JsonProperty] public static int afkFpsLimit { get; set; } = 30;
 
-            [JsonProperty] public static float afkTimerLimit { get; set; }
+            [JsonProperty] public static float afkTimerLimit { get; set; } = 60;
+
+
+
+            [JsonProperty] public static string splashScreenPath { get; set; } = "Assets/SC KRM/Splash Screen";
+            [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
         }
 
         [SaveLoad("Kernel")]

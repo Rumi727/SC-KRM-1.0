@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8791534422561231438
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -22.61}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 410, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6218630457546078406
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Down
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13812f2706b41c148a6a604c3b5137dd, type: 2}
   m_sharedMaterial: {fileID: 164816338200385243, guid: 13812f2706b41c148a6a604c3b5137dd, type: 2}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: 
-  _path: gui.down
+  _path: 
   _textMeshPro: {fileID: 2763273285959432173}
 --- !u!114 &7536563815847562951
 MonoBehaviour:
@@ -305,7 +305,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 430, y: 43.22}
+  m_SizeDelta: {x: 430, y: 6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &8186722587523434855
 MonoBehaviour:
@@ -730,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4735766468382784235
 RectTransform:
   m_ObjectHideFlags: 0
@@ -779,7 +779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Up
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13812f2706b41c148a6a604c3b5137dd, type: 2}
   m_sharedMaterial: {fileID: 164816338200385243, guid: 13812f2706b41c148a6a604c3b5137dd, type: 2}
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: 
-  _path: gui.up
+  _path: 
   _textMeshPro: {fileID: 1825936432925828226}
 --- !u!114 &8204157248664446375
 MonoBehaviour:
