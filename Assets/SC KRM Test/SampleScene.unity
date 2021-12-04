@@ -263,9 +263,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kernel
       objectReference: {fileID: 0}
+    - target: {fileID: 1159241348731315733, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1818760885789760683, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_SizeDelta.y
       value: 88.020004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486852318553585960, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4992965790031008720, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -273,6 +281,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4992965790031008720, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5984847113046664266, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6271892794893452762, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
