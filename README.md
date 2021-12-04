@@ -2,13 +2,13 @@
 Simsimhan Chobo Kernel Manager
 
 ## 사용된 패키지
-- Unity UI
-- Input System
-- TextMeshPro
+- **Unity UI**
+- **Input System**
+- **TextMeshPro**
 - UniTask (https://github.com/Cysharp/UniTask)
 - Better Streaming Assets (https://github.com/gwiazdorrr/BetterStreamingAssets)
 
-꼭 위의 패키지를 설치해주셔야 합니다 (유니티 레지스트리에 있습니다)
+볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (유니티 레지스트리에 있습니다)
 
 안그러면, 컴파일 에러가 나고 관련 참조가 끊어질수 있습니다
 
