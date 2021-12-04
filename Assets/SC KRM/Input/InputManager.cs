@@ -281,7 +281,7 @@ namespace SCKRM.Input
         static Dictionary<KeyCode, string[]> keyToggle2 { get; } = new Dictionary<KeyCode, string[]>();
         static Dictionary<KeyCode, string[]> keyUpToggle2 { get; } = new Dictionary<KeyCode, string[]>();
 
-        public static async void KeyDownEnable(string keyCode, params string[] inputLockDeny)
+        public static async UniTaskVoid KeyDownEnable(string keyCode, params string[] inputLockDeny)
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
@@ -303,7 +303,7 @@ namespace SCKRM.Input
             }
         }
 
-        public static async void KeyEnable(string keyCode, params string[] inputLockDeny)
+        public static async UniTaskVoid KeyEnable(string keyCode, params string[] inputLockDeny)
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
@@ -343,7 +343,7 @@ namespace SCKRM.Input
                 keyToggle.Add(keyCode, inputLockDeny);
         }
 
-        public static async void KeyUpEnable(string keyCode, params string[] inputLockDeny)
+        public static async UniTaskVoid KeyUpEnable(string keyCode, params string[] inputLockDeny)
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
@@ -367,7 +367,7 @@ namespace SCKRM.Input
 
 
 
-        public static async void KeyDownEnable(KeyCode keyCode, params string[] inputLockDeny)
+        public static async UniTaskVoid KeyDownEnable(KeyCode keyCode, params string[] inputLockDeny)
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
@@ -389,7 +389,7 @@ namespace SCKRM.Input
             }
         }
 
-        public static async void KeyEnable(KeyCode keyCode, params string[] inputLockDeny)
+        public static async UniTaskVoid KeyEnable(KeyCode keyCode, params string[] inputLockDeny)
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
@@ -429,7 +429,7 @@ namespace SCKRM.Input
                 keyToggle2.Add(keyCode, inputLockDeny);
         }
 
-        public static async void KeyUpEnable(KeyCode keyCode, params string[] inputLockDeny)
+        public static async UniTaskVoid KeyUpEnable(KeyCode keyCode, params string[] inputLockDeny)
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)

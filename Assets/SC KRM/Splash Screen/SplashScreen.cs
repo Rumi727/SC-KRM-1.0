@@ -31,7 +31,7 @@ namespace SCKRM.Splash
         AudioClip bow;
         AudioClip drawmap;
 
-        async void Awake()
+        async UniTaskVoid Awake()
         {
             bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
             drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));

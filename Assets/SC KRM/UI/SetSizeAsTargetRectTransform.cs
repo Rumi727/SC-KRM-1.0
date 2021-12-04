@@ -73,7 +73,8 @@ namespace SCKRM.UI
                 else if (!xSize && ySize)
                     rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(rectTransform.sizeDelta.x, size.y), 0.2f * Kernel.fpsDeltaTime);
                 else if (xSize && ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(size, 0.2f * Kernel.fpsDeltaTime);            }
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(size, 0.2f * Kernel.fpsDeltaTime);
+            }
         }
     }
 }

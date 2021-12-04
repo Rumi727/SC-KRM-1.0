@@ -53,7 +53,7 @@ namespace SCKRM.UI.SideBar
 
             nameText.path = "";
             infoText.path = "";
-            setSizeAsChildRectTransform.min = 0;
+            setSizeAsChildRectTransform.min = 40;
             verticalLayout.padding.left = 10;
         }
     }

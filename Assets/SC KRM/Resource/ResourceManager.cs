@@ -122,14 +122,19 @@ namespace SCKRM.Resource
                 {
                     Debug.LogError("Kernel: Initial loading failed");
 #if UNITY_EDITOR
-                    GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
-                    int length = gameObjects.Length;
-                    for (int i = 0; i < length; i++)
-                        UnityEngine.Object.DestroyImmediate(gameObjects[i]);
+                    if (Application.isPlaying)
+                    {
+                        GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
+                        int length = gameObjects.Length;
+                        for (int i = 0; i < length; i++)
+                            UnityEngine.Object.DestroyImmediate(gameObjects[i]);
 
-                    UnityEditor.EditorApplication.isPlaying = false;
-                    while (true)
-                        await UniTask.DelayFrame(1);
+                        UnityEditor.EditorApplication.isPlaying = false;
+                        while (true)
+                            await UniTask.DelayFrame(1);
+                    }
+                    else
+                        Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
 #else
                     Application.Quit(1);
 #endif
@@ -292,7 +297,12 @@ namespace SCKRM.Resource
                     
                     Rect[] rects = background.PackTextures(textures2, 0);
                     background.filterMode = textureMetaData.filterMode;
-                    
+
+                    if (textureMetaData.compressionType == TextureMetaData.CompressionType.normal)
+                        background.Compress(false);
+                    else if (textureMetaData.compressionType == TextureMetaData.CompressionType.highQuality)
+                        background.Compress(true);
+
                     for (int i = 0; i < rects.Length; i++)
                         fileName_rect.Add(textureNames[i], rects[i]);
                     type_fileName.Add(type.Key, fileName_rect);
@@ -710,9 +720,9 @@ namespace SCKRM.Resource
             if (textureMetaData == null)
             {
                 textureMetaData = new TextureMetaData();
-                return GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureFormat);
+                return GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
             }
-            return GetTexture(path, pathExtensionUse, FilterMode.Point, true, textureFormat);
+            return GetTexture(path, pathExtensionUse, FilterMode.Point, true, TextureMetaData.CompressionType.none, textureFormat);
         }
 
         /// <summary>
@@ -728,7 +738,7 @@ namespace SCKRM.Resource
         /// Use extension in path
         /// </param>
         /// <returns></returns>
-        public static Texture2D GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureFormat);
+        public static Texture2D GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
 
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
@@ -743,7 +753,7 @@ namespace SCKRM.Resource
         /// Use extension in path
         /// </param>
         /// <returns></returns>
-        public static Texture2D GetTexture(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureFormat textureFormat = TextureFormat.RGBA32)
+        public static Texture2D GetTexture(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureMetaData.CompressionType compressionType, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (path == null)
                 path = "";
@@ -761,6 +771,11 @@ namespace SCKRM.Resource
                     Texture2D texture = TGALoader.LoadTGA(path);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
+
+                    if (compressionType == TextureMetaData.CompressionType.normal)
+                        texture.Compress(false);
+                    else if (compressionType == TextureMetaData.CompressionType.highQuality)
+                        texture.Compress(true);
                     
                     return texture;
                 }
@@ -773,7 +788,12 @@ namespace SCKRM.Resource
                     {
                         texture.name = Path.GetFileNameWithoutExtension(path);
                         texture.filterMode = filterMode;
-                        
+
+                        if (compressionType == TextureMetaData.CompressionType.normal)
+                            texture.Compress(false);
+                        else if (compressionType == TextureMetaData.CompressionType.highQuality)
+                            texture.Compress(true);
+
                         return texture;
                     }
                 }
@@ -1333,8 +1353,16 @@ namespace SCKRM.Resource
 
     public class TextureMetaData
     {
-        [JsonProperty("Mipmap Use")] public bool mipmapUse = true;
         [JsonProperty("Filter Mode")] public FilterMode filterMode = FilterMode.Point;
+        [JsonProperty("Mipmap Use")] public bool mipmapUse = true;
+        [JsonProperty("Compression")] public CompressionType compressionType = CompressionType.none;
+
+        public enum CompressionType
+        {
+            none,
+            normal,
+            highQuality
+        }
     }
 
     public class SpriteMetaData
@@ -1396,6 +1424,13 @@ namespace SCKRM.Resource
         public string subtitle { get; } = "";
         public bool isBGM { get; } = false;
         public SoundMetaData[] sounds { get; } = new SoundMetaData[0];
+
+        public enum SoundCategory
+        {
+            master,
+            music,
+            record
+        }
     }
 
     public class SoundMetaData
@@ -1426,12 +1461,5 @@ namespace SCKRM.Resource
         /// 플레이 모드가 아니면 Search 함수를 사용할 수 없습니다
         /// </summary>
         public NotPlayModeSearchMethodException() : base("Search function cannot be used outside of play mode\n플레이 모드가 아니면 Search 함수를 사용할 수 없습니다") { }
-    }
-
-    public enum SoundCategory
-    {
-        master,
-        music,
-        record
     }
 }

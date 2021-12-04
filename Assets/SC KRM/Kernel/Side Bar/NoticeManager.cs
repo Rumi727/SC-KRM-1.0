@@ -32,7 +32,7 @@ namespace SCKRM.UI.SideBar
             }
         }
 
-        public static async void Notice(string name, string info, Type type = Type.none)
+        public static async UniTaskVoid Notice(string name, string info, Type type = Type.none)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Notice));
@@ -72,6 +72,7 @@ namespace SCKRM.UI.SideBar
         public enum Type
         {
             none,
+            warning,
             error
         }
     }

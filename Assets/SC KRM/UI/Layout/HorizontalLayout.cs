@@ -136,7 +136,7 @@ namespace SCKRM.UI
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
 #else
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(x, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
+                    childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
 #endif
                     x -= childRectTransform.sizeDelta.x + spacing;
                 }
@@ -151,7 +151,7 @@ namespace SCKRM.UI
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
 #else
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(x, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
+                    childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
 #endif
                     x += childRectTransform.sizeDelta.x + spacing;
                 }
@@ -166,7 +166,7 @@ namespace SCKRM.UI
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
 #else
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
+                    childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
 #endif
                     x += childRectTransform.sizeDelta.x + spacing;
                 }

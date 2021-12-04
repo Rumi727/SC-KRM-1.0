@@ -46,11 +46,11 @@ namespace SCKRM.Camera
             }
 #else
             RectTransform taskBar = TaskBarManager.instance.rectTransform;
-            RectTransform canvas = TaskBarCanvas.instance.rectTransform;
+            RectTransform canvas = KernelCanvas.instance.rectTransform;
 
             if (TaskBarManager.cropTheScreen)
             {
-                if (!TaskBarManager.SaveData.topMode)
+                if (!TaskBarManager.SaveData.bottomMode)
                     camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.sizeDelta.y - taskBar.anchoredPosition.y) / canvas.sizeDelta.y));
                 else
                 {

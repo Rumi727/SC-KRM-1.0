@@ -3,6 +3,6 @@
   "notFocusFpsLimit": 30,
   "afkFpsLimit": 30,
   "afkTimerLimit": 99999.0,
-  "splashScreenPath": "0.0",
-  "splashScreenName": "0.0"
+  "splashScreenPath": "Assets/SC KRM/Splash Screen",
+  "splashScreenName": "Splash Screen"
 }

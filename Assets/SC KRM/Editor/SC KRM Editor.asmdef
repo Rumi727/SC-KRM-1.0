@@ -2,7 +2,8 @@
     "name": "SC KRM Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:9c1f978837ad80d49ae31d1cd963a280"
+        "GUID:9c1f978837ad80d49ae31d1cd963a280",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [
         "Editor"

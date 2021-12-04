@@ -80,7 +80,7 @@ namespace SCKRM.Object
                     objectList.Object.RemoveAt(i);
                 }
 
-                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
+                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
 
                 objectPooling.OnCreate();
                 return gameObject;
@@ -96,7 +96,7 @@ namespace SCKRM.Object
 
                 objectPooling.objectKey = ObjectKey;
 
-                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false);
+                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
 
                 objectPooling.OnCreate();
                 return gameObject;

@@ -21,9 +21,9 @@ namespace SCKRM
                 loggers.Add(log);
 
                 if (log.logType == LogType.Error || log.logType == LogType.Exception)
-                    NoticeManager.Notice(log.condition, log.stackTrace, NoticeManager.Type.error);
-                else
-                    NoticeManager.Notice(log.condition, log.stackTrace);
+                    NoticeManager.Notice(log.condition, log.stackTrace, NoticeManager.Type.error).Forget();
+                else if (log.logType == LogType.Warning)
+                    NoticeManager.Notice(log.condition, log.stackTrace).Forget();
             }
         }
 

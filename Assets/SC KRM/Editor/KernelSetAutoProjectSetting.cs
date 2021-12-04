@@ -23,8 +23,11 @@ namespace SCKRM.Editor
             EditorApplication.hierarchyChanged += HierarchyChanged;
         }
 
-        static void SceneListChanged()
+        public static void SceneListChanged()
         {
+            if (Application.isPlaying)
+                return;
+
             try
             {
                 if (sceneListChangedEnable)
@@ -32,20 +35,18 @@ namespace SCKRM.Editor
                     sceneListChangedEnable = false;
 
                     string activeScenePath = SceneManager.GetActiveScene().path;
-                    EditorSceneManager.OpenScene("Assets/SC KRM/Splash Screen/Splash Screen.unity");
+                    EditorSceneManager.OpenScene($"{PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName)}.unity");
 
-                    Scene splashScene = SceneManager.GetSceneByName("Splash Screen");
-                    if (splashScene == null)
-                        throw new NullSceneException("Splash Screen");
+                    string splashScenePath = SceneManager.GetActiveScene().path;
 
                     bool exists = false;
                     for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
                     {
                         EditorBuildSettingsScene scene = EditorBuildSettings.scenes[i];
-                        if (splashScene.path == scene.path)
+                        if (splashScenePath == scene.path)
                         {
                             if (i != 0)
-                                EditorBuildSettings.scenes = EditorBuildSettings.scenes.Change(0, i);
+                                EditorBuildSettings.scenes = EditorBuildSettings.scenes.Move(i, 0);
 
                             exists = true;
                             break;
@@ -53,7 +54,7 @@ namespace SCKRM.Editor
                     }
 
                     if (!exists)
-                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.Insert(0, new EditorBuildSettingsScene() { path = splashScene.path, enabled = true });
+                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.Insert(0, new EditorBuildSettingsScene() { path = splashScenePath, enabled = true });
 
                     sceneListChangedEnable = true;
 
@@ -63,10 +64,11 @@ namespace SCKRM.Editor
                     EditorSceneManager.OpenScene(activeScenePath);
                 }
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
                 sceneListChangedEnable = true;
-                Debug.LogError("Assets/SC KRM/Splash Screen/Splash Screen.unity가 없는것같습니다 씬을 추가해주세요");
+                Debug.LogError(e);
+                Debug.LogWarning($"{Kernel.Data.splashScreenName} 씬이 없는것같습니다 씬을 추가해주세요");
             }
             catch (Exception e)
             {
@@ -75,7 +77,7 @@ namespace SCKRM.Editor
             }
         }
 
-        static void HierarchyChanged()
+        public static void HierarchyChanged()
         {
             if (Application.isPlaying)
                 return;

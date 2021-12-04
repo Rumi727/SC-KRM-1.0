@@ -56,6 +56,7 @@ namespace SCKRM.Editor
 
                 textureMetaData.filterMode = (FilterMode)EditorGUILayout.EnumPopup("필터 모드", textureMetaData.filterMode);
                 textureMetaData.mipmapUse = EditorGUILayout.Toggle("밉맵 사용", textureMetaData.mipmapUse);
+                textureMetaData.compressionType = (TextureMetaData.CompressionType)EditorGUILayout.EnumPopup("압축 타입", textureMetaData.compressionType);
 
                 Texture2D texture = ResourceManager.GetTexture(fileAllPath, true, textureMetaData, TextureFormat.Alpha8);
                 if (texture != null && editor.path != null && editor.path != "")

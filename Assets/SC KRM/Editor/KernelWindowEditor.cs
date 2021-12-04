@@ -417,10 +417,10 @@ namespace SCKRM.Editor
                     GUI.enabled = false;
 
                 if (GUILayout.Button("텍스트 새로고침", GUILayout.ExpandWidth(false)))
-                    Kernel.AllRefresh(true);
+                    Kernel.AllRefresh(true).Forget();
 
                 if (GUILayout.Button("모든 리소스 새로고침", GUILayout.ExpandWidth(false)))
-                    Kernel.AllRefresh();
+                    Kernel.AllRefresh().Forget();
 
                 GUI.enabled = true;
 
@@ -595,11 +595,22 @@ namespace SCKRM.Editor
                 Kernel.Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(-1);
                 Kernel.Data.afkFpsLimit = Kernel.Data.afkFpsLimit.Clamp(-1);
                 Kernel.Data.afkTimerLimit = Kernel.Data.afkTimerLimit.Clamp(0);
+
+                EditorGUILayout.Space();
+
+                Kernel.Data.splashScreenPath = EditorGUILayout.TextField("스플래시 씬 경로", Kernel.Data.splashScreenPath);
+                Kernel.Data.splashScreenName = EditorGUILayout.TextField("스플래시 씬 이름", Kernel.Data.splashScreenName);
+
+                string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
+                EditorGUILayout.LabelField($"경로: {path}.unity");
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
             if (GUI.changed && !Application.isPlaying)
+            {
                 ProjectSettingManager.Save(typeof(Kernel.Data));
+                KernelSetAutoProjectSetting.SceneListChanged();
+            }
         }
 
         Vector2 controlSettingScrollPos = Vector2.zero;
@@ -1115,7 +1126,7 @@ namespace SCKRM.Editor
                                 GUI.enabled = false;
 
                             if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                                soundDatas.Add("", new SoundData(SoundCategory.master, "", false, new SoundMetaData[0]));
+                                soundDatas.Add("", new SoundData(SoundData.SoundCategory.master, "", false, new SoundMetaData[0]));
 
                             if (!Application.isPlaying)
                                 GUI.enabled = true;
@@ -1149,7 +1160,7 @@ namespace SCKRM.Editor
                                 for (int i = soundDatas.Count; i < count; i++)
                                 {
                                     if (!soundDatas.ContainsKey(""))
-                                        soundDatas.Add("", new SoundData(SoundCategory.master, "", false, new SoundMetaData[0]));
+                                        soundDatas.Add("", new SoundData(SoundData.SoundCategory.master, "", false, new SoundMetaData[0]));
                                     else
                                         count--;
                                 }
@@ -1211,7 +1222,7 @@ namespace SCKRM.Editor
                             bool isBGM = EditorGUILayout.Toggle(soundData.Value.isBGM, GUILayout.Width(15));
 
                             GUILayout.Label("카테고리", GUILayout.ExpandWidth(false));
-                            SoundCategory soundCategory = (SoundCategory)EditorGUILayout.EnumPopup(soundData.Value.category, GUILayout.Width(100));
+                            SoundData.SoundCategory soundCategory = (SoundData.SoundCategory)EditorGUILayout.EnumPopup(soundData.Value.category, GUILayout.Width(100));
 
                             EditorGUILayout.EndHorizontal();
 

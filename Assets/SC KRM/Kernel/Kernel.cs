@@ -206,7 +206,7 @@ namespace SCKRM
                 return;
             }
 
-            InitialLoad();
+            InitialLoad().Forget();
         }
 
 #if !UNITY_EDITOR
@@ -278,7 +278,7 @@ namespace SCKRM
         public static event Action InitialLoadStart;
         public static event Action InitialLoadEnd;
         public static event Action InitialLoadEndSceneMove;
-        async void InitialLoad()
+        async UniTaskVoid InitialLoad()
         {
             if (!isInitialLoadStart)
             {
@@ -292,7 +292,6 @@ namespace SCKRM
 #endif
 
                     isInitialLoadStart = true;
-
                     InitialLoadStart?.Invoke();
 
                     splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
@@ -345,8 +344,8 @@ namespace SCKRM
                     SceneManager.sceneLoaded += LoadedSceneEvent;
 
                     {
-                        isInitialLoadEnd = true;
                         InitialLoadEnd?.Invoke();
+                        isInitialLoadEnd = true;
 
                         Debug.Log("Kernel: Initial loading finished!");
                     }
@@ -370,17 +369,26 @@ namespace SCKRM
                 catch (Exception e)
                 {
                     Debug.LogError(e);
-                    Debug.LogError("Kernel: Initial loading failed");
-#if UNITY_EDITOR
-                    GameObject[] gameObjects = FindObjectsOfType<GameObject>(true);
-                    int length = gameObjects.Length;
-                    for (int i = 0; i < length; i++)
-                        DestroyImmediate(gameObjects[i]);
 
-                    UnityEditor.EditorApplication.isPlaying = false;
+                    if (!isInitialLoadEnd)
+                    {
+                        Debug.LogError("Kernel: Initial loading failed");
+#if UNITY_EDITOR
+                        if (Application.isPlaying)
+                        {
+                            GameObject[] gameObjects = FindObjectsOfType<GameObject>(true);
+                            int length = gameObjects.Length;
+                            for (int i = 0; i < length; i++)
+                                DestroyImmediate(gameObjects[i]);
+
+                            UnityEditor.EditorApplication.isPlaying = false;
+                        }
+                        else
+                            Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
 #else
-                    Application.Quit(1);
+                        Application.Quit(1);
 #endif
+                    }
                 }
             }
         }
@@ -390,7 +398,7 @@ namespace SCKRM
 
         public static event Action AllRefreshStart;
         public static event Action AllRefreshEnd;
-        public static async void AllRefresh(bool onlyText = false)
+        public static async UniTaskVoid AllRefresh(bool onlyText = false)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(AllRefresh));
