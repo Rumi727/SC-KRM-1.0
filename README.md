@@ -25,7 +25,7 @@ Simsimhan Chobo Kernel Manager
   - 만약 오류가 발생한다면, 기존에 있는 UniTask를 지워주시거나 SC KRM/UniTask 폴더를 지워주세요
 
 - Better Streaming Assets가 내장 되어있습니다
-  - 만약 오류가 발생한다면, 기존에 있는 UniTask를 지워주시거나 SC KRM/BetterStreamingAssets 폴더를 지워주세요
+  - 만약 오류가 발생한다면, 기존에 있는 Better Streaming Assets를 지워주시거나 SC KRM/BetterStreamingAssets 폴더를 지워주세요
 
 - 기본적으로 스크립트는 SCKRM 네임스페이스를 가지고 있습니다
 
