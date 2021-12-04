@@ -6,17 +6,17 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    [RequireComponent(typeof(RectTransform))]
+    [RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
     [AddComponentMenu("커널/UI/Layout/수평 레이아웃")]
     public sealed class HorizontalLayout : MonoBehaviour
     {
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
+        [SerializeField, HideInInspector] RectTransformInfo _rectTransform;
+        public RectTransformInfo rectTransform
         {
             get
             {
                 if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
+                    _rectTransform = GetComponent<RectTransformInfo>();
 
                 return _rectTransform;
             }
@@ -27,6 +27,8 @@ namespace SCKRM.UI
         public RectOffset padding { get => _padding; set => _padding = value; }
         [SerializeField, Min(0)] float _spacing;
         public float spacing { get => _spacing; set => _spacing = value; }
+        [SerializeField] bool _lerp = true;
+        public bool lerp { get => _lerp; set => _lerp = value; }
 
 
         public RectTransform[] childRectTransforms { get; private set; }
@@ -131,13 +133,14 @@ namespace SCKRM.UI
                     childRectTransform.anchorMax = new Vector2(1, 0.5f);
                     childRectTransform.pivot = new Vector2(1, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying)
+                    if (!Application.isPlaying || !lerp)
+#else
+                    if (!lerp)
+#endif
                         childRectTransform.anchoredPosition = new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f);
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
-#else
-                    childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
-#endif
+
                     x -= childRectTransform.sizeDelta.x + spacing;
                 }
                 else if (center)
@@ -146,13 +149,14 @@ namespace SCKRM.UI
                     childRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying)
+                    if (!Application.isPlaying || !lerp)
+#else
+                    if (!lerp)
+#endif
                         childRectTransform.anchoredPosition = new Vector2(x, -(padding.top - padding.bottom) * 0.5f);
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
-#else
-                    childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
-#endif
+
                     x += childRectTransform.sizeDelta.x + spacing;
                 }
                 else
@@ -161,17 +165,18 @@ namespace SCKRM.UI
                     childRectTransform.anchorMax = new Vector2(0, 0.5f);
                     childRectTransform.pivot = new Vector2(0, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying)
+                    if (!Application.isPlaying || !lerp)
+#else
+                    if (!lerp)
+#endif
                         childRectTransform.anchoredPosition = new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f);
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
-#else
-                    childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f), 0.2f * Kernel.fpsDeltaTime);
-#endif
+
                     x += childRectTransform.sizeDelta.x + spacing;
                 }
 
-                childRectTransform.sizeDelta = new Vector3(childRectTransform.sizeDelta.x, rectTransform.sizeDelta.y - padding.top - padding.bottom);
+                childRectTransform.sizeDelta = new Vector3(childRectTransform.sizeDelta.x, rectTransform.localSize.y - padding.top - padding.bottom);
             }
         }
     }

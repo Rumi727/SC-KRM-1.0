@@ -147,9 +147,16 @@ namespace SCKRM.Object
         {
             ObjectPoolingSystem.ObjectRemove(objectKey, gameObject);
             gameObject.name = objectKey;
-            transform.localPosition = Vector3.zero;
+
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            if (rectTransform != null)
+                rectTransform.anchoredPosition = Vector2.zero;
+            else
+                transform.localPosition = Vector3.zero;
+
             transform.localEulerAngles = Vector3.zero;
             transform.localScale = Vector3.one;
+
             StopAllCoroutines();
         }
     }

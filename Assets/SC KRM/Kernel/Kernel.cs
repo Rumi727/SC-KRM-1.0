@@ -343,6 +343,8 @@ namespace SCKRM
 
                     SceneManager.sceneLoaded += LoadedSceneEvent;
 
+                    GC.Collect();
+
                     {
                         InitialLoadEnd?.Invoke();
                         isInitialLoadEnd = true;
@@ -421,6 +423,7 @@ namespace SCKRM
                 }
             }
 
+            GC.Collect();
             AllRefreshEnd?.Invoke();
         }
 

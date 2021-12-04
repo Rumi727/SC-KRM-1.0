@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using SCKRM.Tool;
+using System;
 
 namespace SCKRM.Editor
 {
@@ -74,7 +75,7 @@ namespace SCKRM.Editor
             EditorGUI.DrawRect(r, color);
         }
 
-        protected static void DrawList(List<int> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<int> list, string label, bool deleteSafety = true)
         {
             //GUI
             {
@@ -153,7 +154,7 @@ namespace SCKRM.Editor
                 EditorGUILayout.EndHorizontal();
             }
         }
-        protected static void DrawList(List<float> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<float> list, string label, bool deleteSafety = true)
         {
             //GUI
             {
@@ -232,7 +233,7 @@ namespace SCKRM.Editor
                 EditorGUILayout.EndHorizontal();
             }
         }
-        protected static void DrawList(List<double> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<double> list, string label, bool deleteSafety = true)
         {
             //GUI
             {
@@ -312,7 +313,7 @@ namespace SCKRM.Editor
             }
         }
 
-        protected static void DrawList(List<string> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<string> list, string label, bool deleteSafety = true)
         {
             //GUI
             {
@@ -367,6 +368,86 @@ namespace SCKRM.Editor
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 list[i] = EditorGUILayout.TextField(list[i]);
+
+                {
+                    if (i - 1 < 0)
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("위로", GUILayout.ExpandWidth(false)))
+                        list.Move(i, i - 1);
+
+                    GUI.enabled = true;
+                }
+
+                {
+                    if (i + 1 >= list.Count)
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("아래로", GUILayout.ExpandWidth(false)))
+                        list.Move(i, i + 1);
+
+                    GUI.enabled = true;
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        public static void DrawList<T>(List<T> list, string label, Action<int> action, bool deleteSafety = true)
+        {
+            //GUI
+            {
+                EditorGUILayout.BeginHorizontal();
+
+                {
+                    if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
+                        list.Add(default(T));
+                }
+
+                {
+                    if (list.Count <= 0 || (list[list.Count - 1] != null && !list[list.Count - 1].Equals(default(T)) && deleteSafety))
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
+                        list.RemoveAt(list.Count - 1);
+
+                    GUI.enabled = true;
+                }
+
+                {
+                    int count = EditorGUILayout.IntField("리스트 길이", list.Count, GUILayout.Height(21));
+                    //변수 설정
+                    if (count < 0)
+                        count = 0;
+
+                    if (count > list.Count)
+                    {
+                        for (int i = list.Count; i < count; i++)
+                            list.Add(default(T));
+                    }
+                    else if (count < list.Count)
+                    {
+                        for (int i = list.Count - 1; i >= count; i--)
+                        {
+                            if (list.Count > 0 && (list[list.Count - 1] == null || list[list.Count - 1].Equals(default(T)) || !deleteSafety))
+                                list.RemoveAt(list.Count - 1);
+                            else
+                                count++;
+                        }
+                    }
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.Space();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label(label, GUILayout.ExpandWidth(false));
+                action.Invoke(i);
 
                 {
                     if (i - 1 < 0)

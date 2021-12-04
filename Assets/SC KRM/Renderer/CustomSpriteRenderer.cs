@@ -28,6 +28,7 @@ namespace SCKRM.Renderer
         {
             while (queue.TryDequeue(out object sprite))
                 spriteRenderer.sprite = (Sprite)sprite;
+
             spriteRenderer.drawMode = drawMode;
             spriteRenderer.size = size;
         }

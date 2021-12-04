@@ -338,9 +338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -407,6 +407,7 @@ MonoBehaviour:
     m_Top: 3
     m_Bottom: 3
   _spacing: 4
+  _lerp: 0
 --- !u!114 &465263910929733980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +426,7 @@ MonoBehaviour:
   _min: 0
   _max: 0
   _spacing: 3
-  _lerp: 1
+  _lerp: 0
   _ignore: []
 --- !u!1 &4750328653329970861
 GameObject:

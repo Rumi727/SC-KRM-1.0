@@ -28,7 +28,7 @@ namespace SCKRM.UI.SideBar
             if (Kernel.isInitialLoadEnd)
             {
                 if (SideBarManager.isNoticeBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "taskbar", "noticebar"))
-                    ObjectPoolingSystem.ObjectRemove("notice_manager.notice", noticeList.transform.GetChild(0).gameObject);
+                    noticeList.transform.GetChild(0).GetComponent<Notice>().Remove();
             }
         }
 
@@ -59,8 +59,8 @@ namespace SCKRM.UI.SideBar
                 notice.icon.gameObject.SetActive(true);
 
                 notice.icon.nameSpace = "sc-krm";
-                notice.icon.type = "gui/sidebar/notice/icon";
-                notice.icon.path = type.ToString();
+                notice.icon.type = "gui";
+                notice.icon.path = "notice_icon_" + type;
                 notice.icon.ResourceReload();
                 notice.icon.Rerender();
 

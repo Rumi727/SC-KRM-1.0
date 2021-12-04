@@ -21,9 +21,15 @@ namespace SCKRM
                 loggers.Add(log);
 
                 if (log.logType == LogType.Error || log.logType == LogType.Exception)
+                {
                     NoticeManager.Notice(log.condition, log.stackTrace, NoticeManager.Type.error).Forget();
+                    SideBarManager.isNoticeBarShow = true;
+                }
                 else if (log.logType == LogType.Warning)
-                    NoticeManager.Notice(log.condition, log.stackTrace).Forget();
+                {
+                    NoticeManager.Notice(log.condition, log.stackTrace, NoticeManager.Type.warning).Forget();
+                    SideBarManager.isNoticeBarShow = true;
+                }
             }
         }
 

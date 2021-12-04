@@ -14,6 +14,10 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             UseProperty("_spacing");
+
+            EditorGUILayout.Space();
+
+            UseProperty("_lerp", "애니메이션 사용");
         }
     }
 }

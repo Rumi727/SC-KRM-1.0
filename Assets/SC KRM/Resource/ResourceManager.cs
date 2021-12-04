@@ -205,6 +205,9 @@ namespace SCKRM.Resource
                         {
                             string path = paths[l].Replace("\\", "/");
                             Texture2D texture = GetTexture(path, true, textureMetaData);
+
+                            if (textureNames.Contains(texture.name))
+                                continue;
                             
                             if (!nameSpace_type_textureNames.ContainsKey(nameSpace) || !nameSpace_type_textureNames[nameSpace].ContainsKey(type))
                             {
@@ -283,8 +286,14 @@ namespace SCKRM.Resource
                         Texture2D texture = textures[i];
                         textures2[i] = texture;
                         textureNames[i] = texture.name;
-                        width += texture.width;
-                        height += texture.height;
+                        width += texture.width + 10;
+                        height += texture.height + 10;
+
+                        if (i == textures.Length - 1)
+                        {
+                            width -= 10;
+                            height -= 10;
+                        }
                     }
                     
                     /*allTextureRects*/
@@ -295,7 +304,7 @@ namespace SCKRM.Resource
                     Texture2D background = new Texture2D(width, height);
                     Dictionary<string, Rect> fileName_rect = new Dictionary<string, Rect>();
                     
-                    Rect[] rects = background.PackTextures(textures2, 0);
+                    Rect[] rects = background.PackTextures(textures2, 10);
                     background.filterMode = textureMetaData.filterMode;
 
                     if (textureMetaData.compressionType == TextureMetaData.CompressionType.normal)
@@ -402,6 +411,15 @@ namespace SCKRM.Resource
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetAudio));
 #endif
+
+            foreach (var item in allSounds)
+            {
+                foreach (var item2 in item.Value)
+                {
+                    for (int i = 0; i < item2.Value.sounds.Length; i++)
+                        UnityEngine.Object.Destroy(item2.Value.sounds[i].audioClip);
+                }
+            }
 
             allSounds.Clear();
 
@@ -763,7 +781,7 @@ namespace SCKRM.Resource
                 exists = FileExtensionExists(path, out path, textureExtension);
             else
                 exists = File.Exists(path);
-
+            
             if (exists)
             {
                 if (Path.GetExtension(path).ToLower() == ".tga")
