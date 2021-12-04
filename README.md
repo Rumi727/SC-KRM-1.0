@@ -1,10 +1,11 @@
 # SC KRM
 Simsimhan Chobo Kernel Manager
 
-## 사용된 패키지
+## 사용된 패키지과 Dll
 - **Unity UI**
 - **Input System**
 - **TextMeshPro**
+- Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json)
 - UniTask (https://github.com/Cysharp/UniTask)
 - Better Streaming Assets (https://github.com/gwiazdorrr/BetterStreamingAssets)
 
