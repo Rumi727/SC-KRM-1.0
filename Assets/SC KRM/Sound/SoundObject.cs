@@ -112,6 +112,7 @@ namespace SCKRM.Sound
             SetVariable();
 
             audioSource.clip = soundMetaData.audioClip;
+            audioSource.Stop();
             audioSource.Play();
             
             if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)

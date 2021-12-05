@@ -19,6 +19,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using IngameDebugConsole;
 
 namespace SCKRM
 {
@@ -273,6 +274,20 @@ namespace SCKRM
 
             gameSpeed = gameSpeed.Clamp(0, 100);
             Time.timeScale = gameSpeed;
+
+            if (isInitialLoadEnd)
+            {
+                if (!DebugLogManager.Instance.IsLogWindowVisible && InputManager.GetKeyDown("log.toggle", "all"))
+                {
+                    InputManager.SetInputLock("log", true);
+                    DebugLogManager.Instance.ShowLogWindow();
+                }
+                else if (DebugLogManager.Instance.IsLogWindowVisible && (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all")))
+                {
+                    InputManager.SetInputLock("log", false);
+                    DebugLogManager.Instance.HideLogWindow();
+                }
+            }
         }
 
         public static event Action InitialLoadStart;
@@ -297,6 +312,17 @@ namespace SCKRM
                     splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
 
                     ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
+
+                    DebugLogConsole.RemoveCommand("prefs.clear");
+                    DebugLogConsole.RemoveCommand("prefs.delete");
+                    DebugLogConsole.RemoveCommand("prefs.float");
+                    DebugLogConsole.RemoveCommand("prefs.int");
+                    DebugLogConsole.RemoveCommand("prefs.string");
+                    DebugLogConsole.RemoveCommand("scene.load");
+                    DebugLogConsole.RemoveCommand("scene.loadasync");
+                    DebugLogConsole.RemoveCommand("scene.restart");
+                    DebugLogConsole.RemoveCommand("scene.unload");
+                    DebugLogConsole.RemoveCommand("time.scale");
 
 #if UNITY_EDITOR
                     Scene scene = SceneManager.GetActiveScene();
@@ -418,11 +444,14 @@ namespace SCKRM
                 if (!ResourceManager.isResourceRefesh)
                 {
                     await ResourceManager.ResourceRefresh();
-                    RendererManager.AllRerender();
                     SoundManager.SoundRefresh();
+
+                    ResourceManager.AudioGarbageRemoval();
+
+                    RendererManager.AllRerender();
                 }
             }
-
+            
             GC.Collect();
             AllRefreshEnd?.Invoke();
         }

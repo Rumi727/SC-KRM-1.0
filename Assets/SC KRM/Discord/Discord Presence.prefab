@@ -49,7 +49,7 @@ MonoBehaviour:
     state: 
     startTimestamp: 0
     endTimestamp: 0
-    largeImageKey: icon
+    largeImageKey: logo
     largeImageText: 
     smallImageKey: 
     smallImageText: 

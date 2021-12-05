@@ -10,15 +10,15 @@ namespace SCKRM.UI
     [AddComponentMenu("커널/UI/Layout/수직 레이아웃")]
     public sealed class VerticalLayout : MonoBehaviour
     {
-        [SerializeField, HideInInspector] RectTransformInfo _rectTransform;
-        public RectTransformInfo rectTransform
+        [SerializeField, HideInInspector] RectTransformInfo _rectTransformInfo;
+        public RectTransformInfo rectTransformInfo
         {
             get
             {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransformInfo>();
+                if (_rectTransformInfo == null)
+                    _rectTransformInfo = GetComponent<RectTransformInfo>();
 
-                return _rectTransform;
+                return _rectTransformInfo;
             }
         }
 
@@ -176,7 +176,7 @@ namespace SCKRM.UI
                     y -= childRectTransform.sizeDelta.y + spacing;
                 }
 
-                childRectTransform.sizeDelta = new Vector3(rectTransform.localSize.x - padding.left - padding.right, childRectTransform.sizeDelta.y);
+                childRectTransform.sizeDelta = new Vector3(rectTransformInfo.localSize.x - padding.left - padding.right, childRectTransform.sizeDelta.y);
             }
         }
     }

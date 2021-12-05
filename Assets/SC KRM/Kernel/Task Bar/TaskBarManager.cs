@@ -86,7 +86,7 @@ namespace SCKRM.UI.TaskBar
                 {
                     bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || SideBarManager.isNoticeBarShow;
                     isTaskBarShow = taskBarShow || selectedTaskBar;
-                    tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy;
+                    tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<KernelCanvas>() == null;
 
                     InputManager.SetInputLock("taskbar", selectedTaskBar);
 
@@ -103,10 +103,13 @@ namespace SCKRM.UI.TaskBar
                             background.SetActive(false);
                     }
                     
-                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all"))
+                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all", "log"))
                         Tab();
-                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all"))
+                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all", "log"))
                         eventSystem.SetSelectedGameObject(null);
+
+                    if (InputManager.GetKeyDown("sidebar_manager.show", "all", "log"))
+                        SideBarManager.isNoticeBarShow = true;
                 }
 
 

@@ -1,15 +1,37 @@
 {
   "controlSettingList": {
-    "volume_control.volume_down": 45,
-    "volume_control.volume_up": 61,
-    "gui.back": 27,
-    "kernel.full_screen": 292,
-    "gui.home": 278,
-    "gui.tab": 9,
-    "notice_manager.notice_remove": 127
+    "volume_control.volume_down": [
+      45
+    ],
+    "volume_control.volume_up": [
+      61
+    ],
+    "gui.back": [
+      27
+    ],
+    "kernel.full_screen": [
+      292
+    ],
+    "gui.home": [
+      278
+    ],
+    "gui.tab": [
+      9
+    ],
+    "notice_manager.notice_remove": [
+      127
+    ],
+    "sidebar_manager.show": [
+      306,
+      110
+    ],
+    "log.toggle": [
+      47
+    ]
   },
   "inputLockList": {
     "taskbar": false,
-    "noticebar": false
+    "noticebar": false,
+    "log": false
   }
 }

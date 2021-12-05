@@ -1,5 +1,6 @@
 using SCKRM.Tool;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SCKRM.Input.UI
@@ -21,31 +22,57 @@ namespace SCKRM.Input.UI
 
             yield return new WaitUntil(() => UnityEngine.Input.anyKeyDown);
 
-            controlsButton.valueText.color = Color.white;
-
-            for (int i = 0; i < InputManager.unityKeyCodeList.Length; i++)
+            bool inputUp = false;
+            List<KeyCode> keyCodes = new List<KeyCode>();
+            while (inputUp)
             {
-                KeyCode keyCode = InputManager.unityKeyCodeList[i];
-                if (UnityEngine.Input.GetKeyDown(keyCode))
+                for (int i = 0; i < InputManager.unityKeyCodeList.Length; i++)
                 {
-                    if (keyCode == KeyCode.Escape)
+                    KeyCode keyCode = InputManager.unityKeyCodeList[i];
+                    if (UnityEngine.Input.GetKeyDown(keyCode))
                     {
-                        if (InputManager.SaveData.controlSettingList.ContainsKey(controlsButton.key))
-                            InputManager.SaveData.controlSettingList[controlsButton.key] = KeyCode.None;
+                        if (keyCode == KeyCode.Escape)
+                        {
+                            keyCodes = new List<KeyCode>() { KeyCode.Escape };
+
+                            if (InputManager.SaveData.controlSettingList.ContainsKey(controlsButton.key))
+                                InputManager.SaveData.controlSettingList[controlsButton.key] = new List<KeyCode>() { KeyCode.Escape };
+                            else
+                                InputManager.SaveData.controlSettingList.Add(controlsButton.key, new List<KeyCode>() { KeyCode.Escape });
+                        }
                         else
-                            InputManager.SaveData.controlSettingList.Add(controlsButton.key, KeyCode.None);
+                        {
+                            keyCodes.Add(keyCode);
+
+                            if (InputManager.SaveData.controlSettingList.ContainsKey(controlsButton.key))
+                                InputManager.SaveData.controlSettingList[controlsButton.key] = keyCodes;
+                            else
+                                InputManager.SaveData.controlSettingList.Add(controlsButton.key, keyCodes);
+                        }
+                    }
+
+                    string text = "";
+                    for (int j = 0; j < keyCodes.Count; j++)
+                    {
+                        if (j != keyCodes.Count - 1)
+                            text += keyCode.KeyCodeToString() + " + ";
+                        else
+                            text = keyCode.KeyCodeToString();
+                    }
+
+                    if (UnityEngine.Input.GetKeyUp(keyCode))
+                    {
+                        controlsButton.valueText.text = text;
+                        inputUp = true;
                     }
                     else
-                    {
-                        if (InputManager.SaveData.controlSettingList.ContainsKey(controlsButton.key))
-                            InputManager.SaveData.controlSettingList[controlsButton.key] = keyCode;
-                        else
-                            InputManager.SaveData.controlSettingList.Add(controlsButton.key, keyCode);
-                    }
-
-                    controlsButton.valueText.text = keyCode.KeyCodeToString();
+                        controlsButton.valueText.text = "> " + text + " <";
                 }
+
+                yield return null;
             }
+
+            controlsButton.valueText.color = Color.white;
 
             InputManager.defaultInputLock = false;
             controlsButton.inputLockObject.SetActive(false);

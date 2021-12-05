@@ -44,6 +44,10 @@
 	
 	
 	
-	"subtitles.easter_egg_music_play": "이스터에그 음악이 재생됨"
+	"log.search": "검색...",
+	"log.command": "(커멘드 리스트를 보려면 'help'를 입력하세요)",
 	
+	
+	
+	"subtitles.easter_egg_music_play": "이스터에그 음악이 재생됨"
 }

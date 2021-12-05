@@ -1,6 +1,7 @@
 using SCKRM.Language;
 using SCKRM.Object;
 using SCKRM.Tool;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SCKRM.Input.UI
@@ -21,13 +22,13 @@ namespace SCKRM.Input.UI
 
             foreach (var item in InputManager.Data.controlSettingList)
             {
-                KeyCode keyCode = item.Value;
+                List<KeyCode> keyCodes = item.Value;
 
-                if (keyCode == KeyCode.Escape)
+                if (keyCodes.Contains(KeyCode.Escape))
                     continue;
 
                 if (InputManager.SaveData.controlSettingList.ContainsKey(item.Key))
-                    keyCode = InputManager.SaveData.controlSettingList[item.Key];
+                    keyCodes = InputManager.SaveData.controlSettingList[item.Key];
 
                 ControlsButton controlsButton = ObjectPoolingSystem.ObjectCreate("controls_list.controls_button", transform).GetComponent<ControlsButton>();
                 controlsButton.key = item.Key;
@@ -39,7 +40,18 @@ namespace SCKRM.Input.UI
                 else
                     controlsButton.keyText.text = controlsButton.key;
 
-                controlsButton.valueText.text = keyCode.KeyCodeToString();
+
+                string text = "";
+                for (int i = 0; i < keyCodes.Count; i++)
+                {
+                    KeyCode keyCode = keyCodes[i];
+
+                    if (i != keyCodes.Count - 1)
+                        text += keyCode.KeyCodeToString() + " + ";
+                    else
+                        text = keyCode.KeyCodeToString();
+                }
+                controlsButton.valueText.text = text;
             }
         }
     }

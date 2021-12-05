@@ -75,11 +75,12 @@ namespace SCKRM.Editor
             EditorGUI.DrawRect(r, color);
         }
 
-        public static void DrawList(List<int> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<int> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
         {
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * tab);
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
@@ -127,6 +128,7 @@ namespace SCKRM.Editor
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * (tab + tab2));
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 list[i] = EditorGUILayout.IntField(list[i]);
@@ -154,11 +156,12 @@ namespace SCKRM.Editor
                 EditorGUILayout.EndHorizontal();
             }
         }
-        public static void DrawList(List<float> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<float> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
         {
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * tab);
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
@@ -206,6 +209,7 @@ namespace SCKRM.Editor
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * (tab + tab2));
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 list[i] = EditorGUILayout.FloatField(list[i]);
@@ -233,11 +237,12 @@ namespace SCKRM.Editor
                 EditorGUILayout.EndHorizontal();
             }
         }
-        public static void DrawList(List<double> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<double> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
         {
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * tab);
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
@@ -285,6 +290,7 @@ namespace SCKRM.Editor
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * (tab + tab2));
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 list[i] = EditorGUILayout.DoubleField(list[i]);
@@ -313,11 +319,12 @@ namespace SCKRM.Editor
             }
         }
 
-        public static void DrawList(List<string> list, string label, bool deleteSafety = true)
+        public static void DrawList(List<string> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
         {
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * tab);
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
@@ -365,6 +372,7 @@ namespace SCKRM.Editor
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * (tab + tab2));
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 list[i] = EditorGUILayout.TextField(list[i]);
@@ -393,11 +401,12 @@ namespace SCKRM.Editor
             }
         }
 
-        public static void DrawList<T>(List<T> list, string label, Action<int> action, bool deleteSafety = true)
+        public static void DrawList<T>(List<T> list, string label, Action<int> action, int tab = 0, int tab2 = 0, bool deleteSafety = true)
         {
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * tab);
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
@@ -445,6 +454,7 @@ namespace SCKRM.Editor
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(30 * (tab + tab2));
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 action.Invoke(i);

@@ -621,7 +621,7 @@ namespace SCKRM.Editor
                 ProjectSettingManager.Load(typeof(InputManager.Data));
 
             if (InputManager.Data.controlSettingList == null)
-                InputManager.Data.controlSettingList = new Dictionary<string, KeyCode>();
+                InputManager.Data.controlSettingList = new Dictionary<string, List<KeyCode>>();
             if (InputManager.Data.inputLockList == null)
                 InputManager.Data.inputLockList = new Dictionary<string, bool>();
 
@@ -650,13 +650,13 @@ namespace SCKRM.Editor
                             GUI.enabled = false;
 
                         if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                            InputManager.Data.controlSettingList.Add("", KeyCode.None);
+                            InputManager.Data.controlSettingList.Add("", new List<KeyCode>());
 
                         GUI.enabled = true;
                     }
 
                     {
-                        if (InputManager.Data.controlSettingList.Count <= 0 || ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] != "" || InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1] != KeyCode.None) && deleteSafety))
+                        if (InputManager.Data.controlSettingList.Count <= 0 || ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] != "" || InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1].Count != 0) && deleteSafety))
                             GUI.enabled = false;
 
                         if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && InputManager.Data.controlSettingList.Count > 0)
@@ -676,7 +676,7 @@ namespace SCKRM.Editor
                             for (int i = InputManager.Data.controlSettingList.Count; i < count; i++)
                             {
                                 if (!InputManager.Data.controlSettingList.ContainsKey(""))
-                                    InputManager.Data.controlSettingList.Add("", KeyCode.None);
+                                    InputManager.Data.controlSettingList.Add("", new List<KeyCode>());
                                 else
                                     count--;
                             }
@@ -685,7 +685,7 @@ namespace SCKRM.Editor
                         {
                             for (int i = InputManager.Data.controlSettingList.Count - 1; i >= count; i--)
                             {
-                                if ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] == "" && InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1] == KeyCode.None) || !deleteSafety)
+                                if ((InputManager.Data.controlSettingList.Keys.ToList()[InputManager.Data.controlSettingList.Count - 1] == "" && InputManager.Data.controlSettingList.Values.ToList()[InputManager.Data.controlSettingList.Count - 1].Count == 0) || !deleteSafety)
                                     InputManager.Data.controlSettingList.Remove(InputManager.Data.controlSettingList.ToList()[InputManager.Data.controlSettingList.Count - 1].Key);
                                 else
                                     count++;
@@ -708,26 +708,41 @@ namespace SCKRM.Editor
                     else
                         controlSettingScrollPos = EditorGUILayout.BeginScrollView(controlSettingScrollPos, GUILayout.ExpandHeight(false));
 
+                    CustomInspectorEditor.DrawLine();
 
-                    List<KeyValuePair<string, KeyCode>> controlList = InputManager.Data.controlSettingList.ToList();
+                    List<KeyValuePair<string, List<KeyCode>>> controlList = InputManager.Data.controlSettingList.ToList();
 
                     //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
                     List<string> keyList = new List<string>();
-                    List<KeyCode> valueList = new List<KeyCode>();
+                    List<List<KeyCode>> valueList = new List<List<KeyCode>>();
 
                     for (int i = 0; i < InputManager.Data.controlSettingList.Count; i++)
                     {
-                        KeyValuePair<string, KeyCode> item = controlList[i];
+                        KeyValuePair<string, List<KeyCode>> item = controlList[i];
 
                         EditorGUILayout.BeginHorizontal();
+
+                        GUILayout.Space(30);
 
                         GUILayout.Label("키 코드 키", GUILayout.ExpandWidth(false));
                         keyList.Add(EditorGUILayout.TextField(item.Key));
 
-                        GUILayout.Label("키 코드", GUILayout.ExpandWidth(false));
-                        valueList.Add((KeyCode)EditorGUILayout.EnumPopup(item.Value));
-
                         EditorGUILayout.EndHorizontal();
+
+                        //리스트
+                        {
+                            List<KeyCode> keyCodes = item.Value;
+
+                            {
+                                CustomInspectorEditor.DrawList(keyCodes, "키 코드", enumPopup, 1, 1, deleteSafety);
+                                void enumPopup(int index) => keyCodes[index] = (KeyCode)EditorGUILayout.EnumPopup(keyCodes[index]);
+                            }
+
+                            valueList.Add(keyCodes);
+                        }
+
+                        if (i != InputManager.Data.controlSettingList.Count - 1)
+                            CustomInspectorEditor.DrawLine();
                     }
 
                     EditorGUILayout.EndScrollView();

@@ -63,6 +63,7 @@ namespace SCKRM.Resource
 
 
 
+        static List<AudioClip> garbages = new List<AudioClip>();
         /// <summary>
         /// Sprite = allTextureSprites[nameSpace][type][fileName];
         /// </summary>
@@ -411,7 +412,16 @@ namespace SCKRM.Resource
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetAudio));
 #endif
-            Dictionary<string, Dictionary<string, SoundData>> destroyList = new Dictionary<string, Dictionary<string, SoundData>>(allSounds);
+
+            foreach (var item in allSounds)
+            {
+                foreach (var item2 in item.Value)
+                {
+                    for (int i = 0; i < item2.Value.sounds.Length; i++)
+                        garbages.Add(item2.Value.sounds[i].audioClip);
+                }
+            }
+
             allSounds.Clear();
 
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
@@ -459,16 +469,13 @@ namespace SCKRM.Resource
                 }
             }
 
-            foreach (var item in destroyList)
-            {
-                foreach (var item2 in item.Value)
-                {
-                    for (int i = 0; i < item2.Value.sounds.Length; i++)
-                        UnityEngine.Object.Destroy(item2.Value.sounds[i].audioClip);
-                }
-            }
-
             isInitialLoadAudioEnd = true;
+        }
+
+        public static void AudioGarbageRemoval()
+        {
+            for (int i = 0; i < garbages.Count; i++)
+                UnityEngine.Object.Destroy(garbages[i]);
         }
 
 

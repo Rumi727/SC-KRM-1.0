@@ -18,14 +18,14 @@ namespace SCKRM.Input
         [ProjectSetting("ControlSetting")]
         public sealed class Data
         {
-            [JsonProperty] public static Dictionary<string, KeyCode> controlSettingList { get; set; } = new Dictionary<string, KeyCode>();
+            [JsonProperty] public static Dictionary<string, List<KeyCode>> controlSettingList { get; set; } = new Dictionary<string, List<KeyCode>>();
             [JsonProperty] public static Dictionary<string, bool> inputLockList { get; set; } = new Dictionary<string, bool>();
         }
 
         [SaveLoad("Input")]
         public sealed class SaveData
         {
-            [JsonProperty] public static Dictionary<string, KeyCode> controlSettingList { get; set; } = new Dictionary<string, KeyCode>();
+            [JsonProperty] public static Dictionary<string, List<KeyCode>> controlSettingList { get; set; } = new Dictionary<string, List<KeyCode>>();
             [JsonProperty] public static bool mouseUpsideDown { get; set; } = false;
         }
 
@@ -79,10 +79,27 @@ namespace SCKRM.Input
                 return true;
             else if (!InputLockCheck(inputLockDeny))
             {
-                if (SaveData.controlSettingList.ContainsKey(keyCode))
-                    return UnityEngine.Input.GetKeyDown(SaveData.controlSettingList[keyCode]);
-                else if (Data.controlSettingList.ContainsKey(keyCode))
-                    return UnityEngine.Input.GetKeyDown(Data.controlSettingList[keyCode]);
+                List<KeyCode> list;
+
+                if (!SaveData.controlSettingList.TryGetValue(keyCode, out list) && !Data.controlSettingList.TryGetValue(keyCode, out list))
+                    return false;
+
+                bool input = true;
+                if (list.Count <= 0)
+                    return false;
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (i != list.Count - 1)
+                    {
+                        if (!UnityEngine.Input.GetKey(list[i]))
+                            input = false;
+                    }
+                    else if (!UnityEngine.Input.GetKeyDown(list[i]))
+                        input = false;
+                }
+
+                return input;
             }
             return false;
         }
@@ -123,10 +140,22 @@ namespace SCKRM.Input
                 return true;
             else if (!InputLockCheck(inputLockDeny))
             {
-                if (SaveData.controlSettingList.ContainsKey(keyCode))
-                    return UnityEngine.Input.GetKey(SaveData.controlSettingList[keyCode]);
-                else if (Data.controlSettingList.ContainsKey(keyCode))
-                    return UnityEngine.Input.GetKey(Data.controlSettingList[keyCode]);
+                List<KeyCode> list;
+
+                if (!SaveData.controlSettingList.TryGetValue(keyCode, out list) && !Data.controlSettingList.TryGetValue(keyCode, out list))
+                    return false;
+
+                bool input = true;
+                if (list.Count <= 0)
+                    return false;
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (!UnityEngine.Input.GetKey(list[i]))
+                        input = false;
+                }
+
+                return input;
             }
             return false;
         }
@@ -167,10 +196,24 @@ namespace SCKRM.Input
                 return true;
             else if (!InputLockCheck(inputLockDeny))
             {
-                if (SaveData.controlSettingList.ContainsKey(keyCode))
-                    return UnityEngine.Input.GetKeyUp(SaveData.controlSettingList[keyCode]);
-                else if (Data.controlSettingList.ContainsKey(keyCode))
-                    return UnityEngine.Input.GetKeyUp(Data.controlSettingList[keyCode]);
+                List<KeyCode> list;
+
+                if (!SaveData.controlSettingList.TryGetValue(keyCode, out list) && !Data.controlSettingList.TryGetValue(keyCode, out list))
+                    return false;
+
+                bool input = true;
+                if (list.Count <= 0)
+                    return false;
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (i != list.Count - 1 && !UnityEngine.Input.GetKey(list[i]))
+                        input = false;
+                    else if (!UnityEngine.Input.GetKeyUp(list[i]))
+                        input = false;
+                }
+
+                return input;
             }
             return false;
         }
@@ -260,7 +303,15 @@ namespace SCKRM.Input
                 inputLockDeny = new string[0];
 
             if (inputLockDeny.Contains("all"))
+            {
+                foreach (var item in Data.inputLockList)
+                {
+                    if (item.Value && inputLockDeny.Contains(item.Key))
+                        return true;
+                }
+
                 return false;
+            }
 
             foreach (var item in Data.inputLockList)
             {

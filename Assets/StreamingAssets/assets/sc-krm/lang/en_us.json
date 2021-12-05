@@ -44,5 +44,10 @@
 	
 	
 	
+	"log.search": "Search...",
+	"log.command": "(type 'help' for list of commands)",
+	
+	
+	
 	"subtitles.easter_egg_music_play": "Easter egg music is playing"
 }
