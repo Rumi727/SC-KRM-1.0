@@ -411,16 +411,7 @@ namespace SCKRM.Resource
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetAudio));
 #endif
-
-            foreach (var item in allSounds)
-            {
-                foreach (var item2 in item.Value)
-                {
-                    for (int i = 0; i < item2.Value.sounds.Length; i++)
-                        UnityEngine.Object.Destroy(item2.Value.sounds[i].audioClip);
-                }
-            }
-
+            Dictionary<string, Dictionary<string, SoundData>> destroyList = new Dictionary<string, Dictionary<string, SoundData>>(allSounds);
             allSounds.Clear();
 
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
@@ -465,6 +456,15 @@ namespace SCKRM.Resource
                         else if (!allSounds[nameSpace].ContainsKey(soundData.Key))
                             allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.category, soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
                     }
+                }
+            }
+
+            foreach (var item in destroyList)
+            {
+                foreach (var item2 in item.Value)
+                {
+                    for (int i = 0; i < item2.Value.sounds.Length; i++)
+                        UnityEngine.Object.Destroy(item2.Value.sounds[i].audioClip);
                 }
             }
 
