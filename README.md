@@ -7,6 +7,7 @@ Simsimhan Chobo Kernel Manager
 - **TextMeshPro**
 - Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json)
 - UniTask (https://github.com/Cysharp/UniTask)
+- In-game Debug Console (https://github.com/yasirkula/UnityIngameDebugConsole)
 
 볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (유니티 레지스트리에 있습니다)
 
@@ -55,8 +56,10 @@ Simsimhan Chobo Kernel Manager
   사용 할 수 있기는 하지만, 웬만하면 추천하지 않습니다
 
 - 조작키를 쉽게 변경 할 수 있고, GUI가 마련되어있습니다
+  
+  - 관련 함수는 ``InputManager``에 있습니다
 
-- 터치, 컨트롤러 같은 키보드를 사용하지 않고서 GetKeyDown 같은 스크립트를 실행할려면 ``InputManager.KeyDownEnable InputManager.KeyToggle`` 류의 함수를 사용하면 됩니다
+  - 터치, 컨트롤러 같은 키보드를 사용하지 않고서 GetKeyDown 같은 스크립트를 실행할려면 ``InputManager.KeyDownEnable InputManager.KeyToggle`` 류의 함수를 사용하면 됩니다
 
 - 조작을 잠글 수 있고, 그걸 무시 할 수도 있습니다
 
@@ -132,3 +135,6 @@ Simsimhan Chobo Kernel Manager
   - clientDatum은 켜져있으면 크기를 설정할때 윈도우의 보더를 포함하지 않고 크기를 설정하지만 (`Screen.SetResolution`랑 동일) 꺼져있으면 윈도우의 보더를 포함해서 크기를 설정합니다.
 
 - 대부분의 프로젝트 설정은 상단의 `커널/커널 설정`에서 변경 할 수 있고, 디버깅도 가능합니다
+
+- InputManager의 함수들에서 inputLockDeny가 있을탠데, 거기서 만약 'all'이 있다면 반대로 작동하게 됩니다 즉 asdf랑 asdfadsf가 있다면 다른 모든 락들은 무시하고 asdf와 asdfasdf의 락만 감지하게 됩니다
+  - all이 우선시됩니다, 즉 프로젝트 설정에서 all이 있어도 무시됩니다
