@@ -277,12 +277,12 @@ namespace SCKRM
 
             if (isInitialLoadEnd)
             {
-                if (!DebugLogManager.Instance.IsLogWindowVisible && InputManager.GetKeyDown("log.toggle", "all"))
+                if (!DebugLogManager.Instance.IsLogWindowVisible && InputManager.GetKeyDown("log.toggle", "all", "taskbar"))
                 {
                     InputManager.SetInputLock("log", true);
                     DebugLogManager.Instance.ShowLogWindow();
                 }
-                else if (DebugLogManager.Instance.IsLogWindowVisible && (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all")))
+                else if (DebugLogManager.Instance.IsLogWindowVisible && (InputManager.GetKeyDown("gui.back", "all", "taskbar") || InputManager.GetKeyDown("gui.home", "all", "taskbar")))
                 {
                     InputManager.SetInputLock("log", false);
                     DebugLogManager.Instance.HideLogWindow();

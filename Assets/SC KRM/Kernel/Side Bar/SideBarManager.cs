@@ -81,7 +81,7 @@ namespace SCKRM.UI.SideBar
                 {
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.anchoredPosition.y), 0.2f * Kernel.fpsDeltaTime);
 
-                    if (InputManager.GetKeyDown("gui.back", "taskbar", "noticebar") || InputManager.GetKeyDown("gui.home", "taskbar", "noticebar"))
+                    if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all"))
                     {
                         isNoticeBarShow = false;
                         TaskBarManager.Tab();

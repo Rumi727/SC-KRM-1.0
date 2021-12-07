@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 using System.Text.RegularExpressions;
@@ -65,7 +66,7 @@ namespace IngameDebugConsole
 		public CanvasGroup CanvasGroup { get { return canvasGroupComponent; } }
 
 		[SerializeField]
-		private Text logText;
+		private TMP_Text logText;
 		[SerializeField]
 		private Image logTypeImage;
 
@@ -73,7 +74,7 @@ namespace IngameDebugConsole
 		[SerializeField]
 		private GameObject logCountParent;
 		[SerializeField]
-		private Text logCountText;
+		private TMP_Text logCountText;
 
 		[SerializeField]
 		private RectTransform copyLogButton;
@@ -122,7 +123,7 @@ namespace IngameDebugConsole
 			Vector2 size = transformComponent.sizeDelta;
 			if( isExpanded )
 			{
-				logText.horizontalOverflow = HorizontalWrapMode.Wrap;
+				logText.enableWordWrapping = true;
 				size.y = listView.SelectedItemHeight;
 
 				if( !copyLogButton.gameObject.activeSelf )
@@ -135,7 +136,7 @@ namespace IngameDebugConsole
 			}
 			else
 			{
-				logText.horizontalOverflow = HorizontalWrapMode.Overflow;
+				logText.enableWordWrapping = false;
 				size.y = listView.ItemHeight;
 
 				if( copyLogButton.gameObject.activeSelf )
@@ -261,15 +262,15 @@ namespace IngameDebugConsole
 		public float CalculateExpandedHeight( DebugLogEntry logEntry, DebugLogEntryTimestamp? logEntryTimestamp )
 		{
 			string text = logText.text;
-			HorizontalWrapMode wrapMode = logText.horizontalOverflow;
+			bool wrapMode = logText.enableWordWrapping;
 
 			SetText( logEntry, logEntryTimestamp, true );
-			logText.horizontalOverflow = HorizontalWrapMode.Wrap;
+			logText.enableWordWrapping = true;
 
 			float result = logText.preferredHeight + copyLogButtonHeight;
 
 			logText.text = text;
-			logText.horizontalOverflow = wrapMode;
+			logText.enableWordWrapping = wrapMode;
 
 			return Mathf.Max( listView.ItemHeight, result );
 		}

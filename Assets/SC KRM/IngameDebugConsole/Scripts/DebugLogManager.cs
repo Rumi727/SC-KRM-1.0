@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
@@ -168,7 +169,7 @@ namespace IngameDebugConsole
 		private DebugLogItem logItemPrefab;
 
 		[SerializeField]
-		private Text commandSuggestionPrefab;
+		private TMP_Text commandSuggestionPrefab;
 
 		// Visuals for different log types
 		[SerializeField]
@@ -214,7 +215,7 @@ namespace IngameDebugConsole
 		private RectTransform commandSuggestionsContainer;
 
 		[SerializeField]
-		private InputField commandInputField;
+		private TMP_InputField commandInputField;
 
 		[SerializeField]
 		private Button hideButton;
@@ -233,11 +234,11 @@ namespace IngameDebugConsole
 		private Image filterErrorButton;
 
 		[SerializeField]
-		private Text infoEntryCountText;
+		private TMP_Text infoEntryCountText;
 		[SerializeField]
-		private Text warningEntryCountText;
+		private TMP_Text warningEntryCountText;
 		[SerializeField]
-		private Text errorEntryCountText;
+		private TMP_Text errorEntryCountText;
 
 		[SerializeField]
 		private RectTransform searchbar;
@@ -327,7 +328,7 @@ namespace IngameDebugConsole
 		private int pendingLogToAutoExpand;
 
 		// Command suggestions that match the currently entered command
-		private List<Text> commandSuggestionInstances;
+		private List<TMP_Text> commandSuggestionInstances;
 		private int visibleCommandSuggestionInstances = 0;
 		private List<ConsoleMethodInfo> matchingCommandSuggestions;
 		private List<int> commandCaretIndexIncrements;
@@ -389,7 +390,7 @@ namespace IngameDebugConsole
 
 			pooledLogEntries = new List<DebugLogEntry>( 16 );
 			pooledLogItems = new List<DebugLogItem>( 16 );
-			commandSuggestionInstances = new List<Text>( 8 );
+			commandSuggestionInstances = new List<TMP_Text>( 8 );
 			matchingCommandSuggestions = new List<ConsoleMethodInfo>( 8 );
 			commandCaretIndexIncrements = new List<int>( 8 );
 			queuedLogEntries = new DynamicCircularBuffer<QueuedDebugLogEntry>( 16 );
@@ -450,7 +451,7 @@ namespace IngameDebugConsole
 			}
 
 			if( enableSearchbar )
-				searchbar.GetComponent<InputField>().onValueChanged.AddListener( SearchTermChanged );
+				searchbar.GetComponent<TMP_InputField>().onValueChanged.AddListener( SearchTermChanged );
 			else
 			{
 				searchbar = null;
@@ -844,6 +845,7 @@ namespace IngameDebugConsole
 					{
 						commandInputFieldAutoCompletedNow = true;
 						commandInputField.text = autoCompletedCommand;
+						commandInputField.MoveTextEnd(false);
 					}
 				}
 
@@ -1213,7 +1215,7 @@ namespace IngameDebugConsole
 					if( i >= visibleCommandSuggestionInstances )
 					{
 						if( i >= suggestionInstancesCount )
-							commandSuggestionInstances.Add( (Text) Instantiate( commandSuggestionPrefab, commandSuggestionsContainer, false ) );
+							commandSuggestionInstances.Add( (TMP_Text) Instantiate( commandSuggestionPrefab, commandSuggestionsContainer, false ) );
 						else
 							commandSuggestionInstances[i].gameObject.SetActive( true );
 

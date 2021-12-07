@@ -103,12 +103,12 @@ namespace SCKRM.UI.TaskBar
                             background.SetActive(false);
                     }
                     
-                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all", "log"))
+                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all"))
                         Tab();
-                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all", "log"))
+                    else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all"))
                         eventSystem.SetSelectedGameObject(null);
 
-                    if (InputManager.GetKeyDown("sidebar_manager.show", "all", "log"))
+                    if (InputManager.GetKeyDown("sidebar_manager.show", "all"))
                         SideBarManager.isNoticeBarShow = true;
                 }
 
