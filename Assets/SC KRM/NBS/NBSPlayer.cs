@@ -132,11 +132,7 @@ namespace SCKRM.NBS
                 if (loop)
                 {
                     if (tempo > 0)
-                    {
-                        _tick = 0;
-                        _index = 0;
-                        _timer = 0;
-                    }
+                        tick = nbsFile.loopStartTick;
                     else
                     {
                         _timer = 0;
