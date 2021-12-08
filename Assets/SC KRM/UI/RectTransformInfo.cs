@@ -52,7 +52,7 @@ namespace SCKRM.UI
 
                 Rect parentRect = parentRectTransformSetting.rect;
                 Rect localRect = this.localRect;
-                return new(localRect.x + parentRect.x, localRect.y + parentRect.y, localRect.width, localRect.height);
+                return new Rect(localRect.x + parentRect.x, localRect.y + parentRect.y, localRect.width, localRect.height);
             }
             set
             {
