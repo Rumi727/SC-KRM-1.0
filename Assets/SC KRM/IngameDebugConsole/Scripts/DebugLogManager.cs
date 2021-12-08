@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using SCKRM.Input;
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
@@ -466,6 +467,7 @@ namespace IngameDebugConsole
 			commandInputField.onValidateInput += OnValidateCommand;
 			commandInputField.onValueChanged.AddListener( OnEditCommand );
 			commandInputField.onEndEdit.AddListener( OnEndEditCommand );
+			commandInputField.onEndEdit.AddListener(OnEndEdit);
 			hideButton.onClick.AddListener( HideLogWindow );
 			clearButton.onClick.AddListener( ClearLogs );
 			collapseButton.GetComponent<Button>().onClick.AddListener( CollapseButtonPressed );
@@ -830,9 +832,13 @@ namespace IngameDebugConsole
 				OnLogWindowHidden();
 		}
 
+		void OnEndEdit(string ignore) => InputManager.SetInputLock("log.command", false);
+
 		// Command field input is changed, check if command is submitted
 		private char OnValidateCommand( string text, int charIndex, char addedChar )
 		{
+			InputManager.SetInputLock("log.command", true);
+
 			if( addedChar == '\t' ) // Autocomplete attempt
 			{
 				if( !string.IsNullOrEmpty( text ) )

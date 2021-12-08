@@ -44,6 +44,7 @@
 	
 	
 	
+	"log": "Console",
 	"log.search": "Search...",
 	"log.command": "(type 'help' for list of commands)",
 	

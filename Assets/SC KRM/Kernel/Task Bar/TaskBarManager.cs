@@ -103,7 +103,7 @@ namespace SCKRM.UI.TaskBar
                             background.SetActive(false);
                     }
                     
-                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all"))
+                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all", "log.command"))
                         Tab();
                     else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all"))
                         eventSystem.SetSelectedGameObject(null);

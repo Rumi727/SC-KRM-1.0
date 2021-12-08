@@ -1,7 +1,8 @@
 {
     "name": "IngameDebugConsole.Editor",
+    "rootNamespace": "",
     "references": [
-        "IngameDebugConsole.Runtime"
+        "SC KRM"
     ],
     "includePlatforms": [
         "Editor"

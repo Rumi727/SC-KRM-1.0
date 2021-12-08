@@ -32,6 +32,7 @@
   "inputLockList": {
     "taskbar": false,
     "noticebar": false,
-    "log": false
+    "log": false,
+    "log.command": false
   }
 }
