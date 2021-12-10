@@ -67,7 +67,7 @@ Simsimhan Chobo Kernel Manager
 
 - 언어 기능이 있습니다 (언어를 바꿀수 있는 GUI 포함)
 
-- Kernel 스크립트에 확장 함수들과 최적화를 위한 여러 변수들이 있습니다.
+- Kernel 스크립트에 확장 함수들과(KernelTool로 옴겨짐) 최적화를 위한 여러 변수들이 있습니다.
 
   예를들어 Time.deltaTime 같은경우 값을 얻을때마다 함수가 호출되서 여러번 사용하면 상당한 개적화가 되지만
 
