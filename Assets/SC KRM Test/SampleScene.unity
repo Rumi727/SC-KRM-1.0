@@ -853,6 +853,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de58531b6cbedc4ba328615bf0c88f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
+  _customSetting: 0
 --- !u!1 &991093130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4710507611228374390, guid: 38f4e9c3d40376546a5e72b5348f2c96, type: 3}
