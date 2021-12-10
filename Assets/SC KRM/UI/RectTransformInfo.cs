@@ -44,6 +44,10 @@ namespace SCKRM.UI
         [System.NonSerialized] Vector2 tempAnchorMin;
         [System.NonSerialized] Vector2 tempAnchorMax;
 
+        /// <summary>
+        /// 경고: 이 속성은 중복 값에 최적화되어 있지 않으므로 꽤 느릴 것입니다
+        /// Warning: this property is not optimized for duplicate values, so it will be pretty slow
+        /// </summary>
         public Rect rect
         {
             get
