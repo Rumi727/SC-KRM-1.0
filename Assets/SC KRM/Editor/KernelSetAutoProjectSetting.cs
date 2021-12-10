@@ -129,7 +129,7 @@ namespace SCKRM.Editor
                                 UnityEngine.Object.DestroyImmediate(canvasSetting);
                         }
 
-                        if (canvasSetting != null && !canvasSetting.customRenderMode)
+                        if (canvasSetting != null && !canvasSetting.customSetting)
                         {
                             CanvasScaler[] canvasScalers = canvas.GetComponents<CanvasScaler>();
                             for (int j = 0; j < canvasScalers.Length; j++)

@@ -2,6 +2,7 @@ using SCKRM.UI.TaskBar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SCKRM.UI
 {
@@ -10,8 +11,9 @@ namespace SCKRM.UI
     [RequireComponent(typeof(Canvas))]
     public sealed class CanvasSetting : MonoBehaviour
     {
-        [SerializeField] bool _customRenderMode;
-        public bool customRenderMode { get => _customRenderMode; set => _customRenderMode = value; }
+        [FormerlySerializedAs("_customRenderMode")]
+        [SerializeField] bool _customSetting;
+        public bool customSetting { get => _customSetting; set => _customSetting = value; }
         [SerializeField] bool _worldRenderMode;
         public bool worldRenderMode { get => _worldRenderMode; set => _worldRenderMode = value; }
 
@@ -20,7 +22,7 @@ namespace SCKRM.UI
 
         void Update()
         {
-            if (!customRenderMode && !worldRenderMode)
+            if (!customSetting && !worldRenderMode)
             {
                 if (canvas == null)
                     canvas = GetComponent<Canvas>();
@@ -35,7 +37,7 @@ namespace SCKRM.UI
                 else
                     canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             }
-            else if (!customRenderMode)
+            else if (!customSetting)
                 WorldRenderCamera();
         }
 

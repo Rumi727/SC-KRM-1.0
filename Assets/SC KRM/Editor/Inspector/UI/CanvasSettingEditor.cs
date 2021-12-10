@@ -17,9 +17,9 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            UseProperty("_customRenderMode", "커스텀 렌더 모드");
+            UseProperty("_customSetting", "커스텀 설정");
 
-            if (!editor.customRenderMode)
+            if (!editor.customSetting)
                 UseProperty("_worldRenderMode", "월드 렌더 모드");
         }
     }
