@@ -101,7 +101,19 @@ namespace SCKRM.Sound
 #endif
 
             if (soundList.Count >= maxSoundCount)
-                soundList[0].Remove();
+            {
+                bool remove = false;
+                for (int i = 0; i < soundList.Count; i++)
+                {
+                    SoundObject soundObject2 = soundList[i];
+                    if (!soundObject2.soundData.isBGM)
+                    {
+                        soundList[i].Remove();
+                        remove = true;
+                        break;
+                    }
+                }
+            }
 
             if (key == null)
                 key = "";
