@@ -22,12 +22,8 @@ namespace SCKRM.Renderer
 #endif
             if (thread)
             {
-                Debug.Log("RendererManager: Rerender start! ");
-
                 ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, customRenderers, "notice.running_task.rerender.name");
                 await UniTask.WaitUntil(() => threadMetaData.thread == null);
-
-                Debug.Log("RendererManager: Rerender finished!");
             }
             else
             {
@@ -42,6 +38,9 @@ namespace SCKRM.Renderer
 
         static void Rerender(CustomAllRenderer[] customRenderers, ThreadMetaData threadMetaData)
         {
+            if (customRenderers.Length == 0)
+                threadMetaData.progress = 1;
+
             for (int i = 0; i < customRenderers.Length; i++)
             {
                 CustomAllRenderer customRenderer = customRenderers[i];

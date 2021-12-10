@@ -1,3 +1,5 @@
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,10 +11,13 @@ namespace SCKRM.Threads
     {
         public static List<ThreadMetaData> runningThreads { get; } = new List<ThreadMetaData>();
 
+        /// <summary>
+        /// { get; } = Thread.CurrentThread.ManagedThreadId
+        /// </summary>
         public static int mainThreadId { get; } = Thread.CurrentThread.ManagedThreadId;
 
         /// <summary>
-        /// mainThreadId == Thread.CurrentThread.ManagedThreadId
+        /// { get { mainThreadId == Thread.CurrentThread.ManagedThreadId; } }
         /// </summary>
         public static bool isMainThread => mainThreadId == Thread.CurrentThread.ManagedThreadId;
 
@@ -33,33 +38,19 @@ namespace SCKRM.Threads
                 runningThreads[i]?.Remove();
         }
 
-        public static void ThreadAutoRemove()
+        public static async void ThreadAutoRemove()
         {
-            for (int i = 0; i < runningThreads.Count; i++)
+            while (true)
             {
-                ThreadMetaData runningThread = runningThreads[i];
-                if (runningThread != null && !runningThread.autoRemoveDisable && (runningThread.thread == null || !runningThread.thread.IsAlive))
-                    runningThread.Remove();
-            }
-        }
-
-        public static void ThreadAutoRemove(bool loop)
-        {
-            if (!isMainThread)
-            {
-                if (loop)
+                for (int i = 0; i < runningThreads.Count; i++)
                 {
-                    while (true)
-                    {
-                        ThreadAutoRemove();
-                        Thread.Sleep(100);
-                    }
+                    ThreadMetaData runningThread = runningThreads[i];
+                    if (runningThread != null && !runningThread.autoRemoveDisable && (runningThread.thread == null || !runningThread.thread.IsAlive))
+                        runningThread.Remove();
                 }
-                else
-                    ThreadAutoRemove();
+
+                await UniTask.Delay(100);
             }
-            else
-                throw new MainThreadMethodException();
         }
 
         #region Thread Create Method
@@ -69,6 +60,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -88,6 +81,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -107,6 +102,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -126,6 +123,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -145,6 +144,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -164,6 +165,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -183,6 +186,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -202,6 +207,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -221,6 +228,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -240,6 +249,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -259,6 +270,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -278,6 +291,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -297,6 +312,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -316,6 +333,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -335,6 +354,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -354,6 +375,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -373,6 +396,8 @@ namespace SCKRM.Threads
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -401,8 +426,13 @@ namespace SCKRM.Threads
         public bool loop { get; set; } = false;
         public bool autoRemoveDisable { get; set; } = false;
 
+        [Obsolete("웬만하면 사용하지 마세요, 알아서 삭제됩니다 (자동 삭제는 스레드에 안전함, 단 사용자가 스레드 리스트를 건들지 않으면서 다른 스레드가 이 클래스를 건들지 않아야함)\nIf possible, don't use it, it will be deleted automatically (Auto-delete is thread-safe, provided that the user does not touch the list of threads and no other threads touch this class)")]
         public void Remove()
         {
+            loop = false;
+            progress = 1;
+            autoRemoveDisable = false;
+
             ThreadManager.ThreadChangeEventInvoke();
             ThreadManager.runningThreads.Remove(this);
 
@@ -454,3 +484,4 @@ namespace SCKRM.Threads
         public NotPlayModeThreadCreateException() : base("It is forbidden to spawn threads when not in play mode. Please create your own thread\n플레이 모드가 아닐때 스레드를 생성하는건 금지되어있습니다. 직접 스레드를 생성해주세요") { }
     }
 }
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.

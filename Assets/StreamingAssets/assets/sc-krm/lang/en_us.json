@@ -15,6 +15,11 @@
 	"gui.ok": "Ok",
 	"gui.am": "AM",
 	"gui.pm": "PM",
+	"gui.warning": "Warning",
+	"gui.error": "Error",
+	
+	"kernel.allrefresh.warning": "There is a bug where refreshing the resource pack while sound effects or music is playing will force the program to quit!\nAre you sure you want to continue?",
+	"kernel.allrefresh.error": "Unable to refresh resource pack while sound effect or music is playing",
 	
 	"options.resourcepack": "Resource Packs...",
 	"resourcePack.title": "Select Resource Packs",
@@ -41,6 +46,7 @@
 	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
 	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
 	"notice.running_task.rerender.name": "Refresh renderer",
+	"notice.running_task.audio_refresh.name": "Audio Refresh",
 	
 	
 	

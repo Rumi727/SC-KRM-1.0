@@ -142,7 +142,7 @@ namespace SCKRM.Resource
                 }
             }
 
-            threadMetaData.Remove();
+            threadMetaData.autoRemoveDisable = false;
             isResourceRefesh = false;
         }
 
@@ -227,7 +227,7 @@ namespace SCKRM.Resource
                                 }
                             }
 
-                            await UniTask.DelayFrame(1);
+                            await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
                         }
                         
                         if (!packTextureTypePaths.ContainsKey(nameSpace))
@@ -391,7 +391,7 @@ namespace SCKRM.Resource
                         else
                             allTextureSprites[nameSpace.Key][type.Key].Add(fileName.Key, sprites);
 
-                        await UniTask.DelayFrame(1);
+                        await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
                     }
                 }
             }
@@ -455,7 +455,7 @@ namespace SCKRM.Resource
                             if (audioClip != null)
                                 soundMetaDatas.Add(new SoundMetaData(sound.path, sound.stream, sound.pitch, sound.tempo, audioClip));
 
-                            await UniTask.DelayFrame(1);
+                            await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
                         }
 
                         if (!allSounds.ContainsKey(nameSpace))

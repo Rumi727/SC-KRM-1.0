@@ -145,5 +145,115 @@ namespace SCKRM.Window
                 SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(lerpX), Mathf.RoundToInt(lerpY), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
 #endif
         }
+
+
+        public static DialogResult MessageBox(string text, string caption, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OK, MessageBoxIcon messageBoxIcon = MessageBoxIcon.None)
+        {
+#if UNITY_STANDALONE_WIN
+            System.Windows.Forms.MessageBoxButtons messageBoxButtons2;
+            switch (messageBoxButtons)
+            {
+                case MessageBoxButtons.OKCancel:
+                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.OKCancel;
+                    break;
+                case MessageBoxButtons.AbortRetryIgnore:
+                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.AbortRetryIgnore;
+                    break;
+                case MessageBoxButtons.YesNoCancel:
+                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.YesNoCancel;
+                    break;
+                case MessageBoxButtons.YesNo:
+                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.YesNo;
+                    break;
+                case MessageBoxButtons.RetryCancel:
+                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.RetryCancel;
+                    break;
+                default:
+                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.OK;
+                    break;
+            }
+
+            System.Windows.Forms.MessageBoxIcon messageBoxIcon2;
+            switch (messageBoxIcon)
+            {
+                case MessageBoxIcon.Hand:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Hand;
+                    break;
+                case MessageBoxIcon.Question:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Question;
+                    break;
+                case MessageBoxIcon.Exclamation:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Exclamation;
+                    break;
+                case MessageBoxIcon.Asterisk:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Asterisk;
+                    break;
+                case MessageBoxIcon.Stop:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Stop;
+                    break;
+                case MessageBoxIcon.Error:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Error;
+                    break;
+                case MessageBoxIcon.Warning:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Warning;
+                    break;
+                case MessageBoxIcon.Information:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Information;
+                    break;
+                default:
+                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.None;
+                    break;
+            }
+
+            System.Windows.Forms.DialogResult dialogResult = System.Windows.Forms.MessageBox.Show(text, caption, messageBoxButtons2, messageBoxIcon2);
+
+            return dialogResult switch
+            {
+                System.Windows.Forms.DialogResult.OK => DialogResult.OK,
+                System.Windows.Forms.DialogResult.Cancel => DialogResult.Cancel,
+                System.Windows.Forms.DialogResult.Abort => DialogResult.Abort,
+                System.Windows.Forms.DialogResult.Retry => DialogResult.Retry,
+                System.Windows.Forms.DialogResult.Ignore => DialogResult.Ignore,
+                System.Windows.Forms.DialogResult.Yes => DialogResult.Yes,
+                System.Windows.Forms.DialogResult.No => DialogResult.No,
+                _ => DialogResult.None
+            };
+#endif
+        }
+
+        public enum DialogResult
+        {
+            None,
+            OK,
+            Cancel,
+            Abort,
+            Retry,
+            Ignore,
+            Yes,
+            No
+        }
+
+        public enum MessageBoxButtons
+        {
+            OK,
+            OKCancel,
+            AbortRetryIgnore,
+            YesNoCancel,
+            YesNo,
+            RetryCancel
+        }
+
+        public enum MessageBoxIcon
+        {
+            None,
+            Hand,
+            Question,
+            Exclamation,
+            Asterisk,
+            Stop,
+            Error,
+            Warning,
+            Information
+        }
     }
 }

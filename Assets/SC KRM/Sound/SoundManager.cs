@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using IngameDebugConsole;
 using SCKRM.NBS;
 using SCKRM.Object;
@@ -38,7 +39,7 @@ namespace SCKRM.Sound
         /// <summary>
         /// It should only run on the main thread
         /// </summary>
-        public static void SoundRefresh()
+        public static async UniTask SoundRefresh()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SoundRefresh));
@@ -47,19 +48,47 @@ namespace SCKRM.Sound
                 throw new NotPlayModeMethodException(nameof(SoundRefresh));
 #endif
 
+
+
+            ThreadMetaData threadMetaData = new ThreadMetaData();
+            threadMetaData.name = "notice.running_task.audio_refresh.name";
+            threadMetaData.autoRemoveDisable = true;
+
+            ThreadManager.runningThreads.Add(threadMetaData);
+
             SoundObject[] soundObjects = FindObjectsOfType<SoundObject>();
-            for (int i = 0; i < soundObjects.Length; i++)
+            NBSPlayer[] nbsPlayers = FindObjectsOfType<NBSPlayer>();
+
+            int i;
+            int length = soundObjects.Length + nbsPlayers.Length;
+            if (length == 0)
+            {
+                threadMetaData.progress = 1;
+                threadMetaData.autoRemoveDisable = false;
+                return;
+            }
+
+            for (i = 0; i < soundObjects.Length; i++)
             {
                 SoundObject soundObject = soundObjects[i];
                 soundObject.Refesh();
+
+                threadMetaData.progress = (float)i / (length - 1);
+
+                await UniTask.DelayFrame(1);
             }
 
-            NBSPlayer[] nbsPlayers = FindObjectsOfType<NBSPlayer>();
-            for (int i = 0; i < nbsPlayers.Length; i++)
+            for (int ii = 0; ii < nbsPlayers.Length; ii++)
             {
-                NBSPlayer nbsPlayer = nbsPlayers[i];
+                threadMetaData.progress = (float)(i + ii) / (length - 1);
+
+                NBSPlayer nbsPlayer = nbsPlayers[ii];
                 nbsPlayer.Refesh();
+
+                await UniTask.DelayFrame(1);
             }
+
+            threadMetaData.autoRemoveDisable = false;
         }
 
         public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0)

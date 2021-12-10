@@ -128,7 +128,7 @@ namespace SCKRM.UI
                     screenX = screenY / height * width;
                 }
 
-                transform.localScale = new Vector2(screenX / spriteX, screenY / spriteY);
+                transform.localScale = new Vector3(screenX / spriteX, screenY / spriteY, screenX / spriteX);
             }
         }
     }

@@ -27,7 +27,7 @@ namespace SCKRM.Sound
         public SoundMetaData soundMetaData { get; private set; }
 
         public float time { get => audioSource.time; set => audioSource.time = value; }
-        public float length => (float)(audioSource.clip?.length);
+        public float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
 
         public bool isLooped { get; private set; } = false;
 
@@ -74,63 +74,58 @@ namespace SCKRM.Sound
 
         public void Refesh()
         {
-            if (!Kernel.isInitialLoadEnd)
             {
-                Remove();
-                return;
-            }
+                if (!Kernel.isInitialLoadEnd)
+                {
+                    Remove();
+                    return;
+                }
 
-            float tempTime = audioSource.time;
-            audioSource.time = 0;
+                soundData = ResourceManager.SearchSoundData(key, nameSpace);
 
-            soundData = ResourceManager.SearchSoundData(key, nameSpace);
-
-            if (soundData == null)
-            {
-                Remove();
-                return;
-            }
-            else if (soundData.sounds == null || soundData.sounds.Length <= 0)
-            {
-                Remove();
-                return;
-            }
-            else if (pitch == 0)
-            {
-                Remove();
-                return;
+                if (soundData == null)
+                {
+                    Remove();
+                    return;
+                }
+                else if (soundData.sounds == null || soundData.sounds.Length <= 0)
+                {
+                    Remove();
+                    return;
+                }
+                else if (pitch == 0)
+                {
+                    Remove();
+                    return;
+                }
             }
 
             if (!SoundManager.soundList.Contains(this))
                 SoundManager.soundList.Add(this);
 
-            soundMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
-
-            if (soundData.isBGM)
-                audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
-
-            SetVariable();
-
-            audioSource.clip = soundMetaData.audioClip;
-            audioSource.Stop();
-            audioSource.Play();
-            
-            if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)
-                audioSource.time = length - 0.001f;
-            else if (tempTime >= length)
             {
-                if (loop)
-                {
-                    if (audioSource.pitch > 0)
-                        audioSource.time = 0;
-                    else
-                        audioSource.time = length - 0.001f;
-                }
+                audioSource.Stop();
+
+                soundMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                audioSource.clip = soundMetaData.audioClip;
+
+                if (soundData.isBGM)
+                    audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
                 else
-                    Remove();
+                    audioSource.outputAudioMixerGroup = null;
             }
-            else
-                audioSource.time = tempTime;
+
+            {
+                SetVariable();
+
+                if (isPaused)
+                    isPaused = false;
+
+                audioSource.Play();
+
+                if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)
+                    audioSource.time = length - 0.001f;
+            }
         }
 
         void SetVariable()

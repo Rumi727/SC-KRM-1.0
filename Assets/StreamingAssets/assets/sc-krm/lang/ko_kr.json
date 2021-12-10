@@ -15,6 +15,11 @@
     "gui.ok": "확인",
 	"gui.am": "오전",
 	"gui.pm": "오후",
+	"gui.warning": "경고",
+	"gui.error": "오류",
+	
+	"kernel.allrefresh.warning": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고치면 프로그램이 강제 종료되는 버그가 있습니다!\n정말로 계속하시겠습니까?",
+	"kernel.allrefresh.error": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고칠 수 없습니다",
 	
 	"options.resourcepack": "리소스 팩...",
 	"resourcePack.title": "리소스 팩 선택",
@@ -41,6 +46,7 @@
 	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
 	"notice.running_task.resource_pack_refresh.name": "리소스팩 새로고침",
 	"notice.running_task.rerender.name": "렌더러 새로고침",
+	"notice.running_task.audio_refresh.name": "오디오 새로고침",
 	
 	
 	

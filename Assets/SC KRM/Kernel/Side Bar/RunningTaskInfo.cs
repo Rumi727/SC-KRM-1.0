@@ -40,7 +40,7 @@ namespace SCKRM.UI.SideBar
         [SerializeField] RectTransform _fillShow;
         public RectTransform fillShow => _fillShow;
 
-        public int index { get; set; }
+        public ThreadMetaData threadMetaData { get; set; }
 
         public override void OnCreate()
         {
@@ -53,12 +53,8 @@ namespace SCKRM.UI.SideBar
 
         public void InfoLoad()
         {
-            if (index >= 0 && index < ThreadManager.runningThreads.Count)
-            {
-                ThreadMetaData threadMetaData = ThreadManager.runningThreads[index];
-                nameText.text = LanguageManager.TextLoad(threadMetaData.name);
-                infoText.text = LanguageManager.TextLoad(threadMetaData.info);
-            }
+            nameText.text = LanguageManager.TextLoad(threadMetaData.name);
+            infoText.text = LanguageManager.TextLoad(threadMetaData.info);
         }
 
         [System.NonSerialized] bool noResponse = false;
@@ -70,75 +66,77 @@ namespace SCKRM.UI.SideBar
         [System.NonSerialized] float tempMaxX = 0;
         void Update()
         {
-            if (index >= 0 && index < ThreadManager.runningThreads.Count)
+            if (threadMetaData.thread == null && !threadMetaData.autoRemoveDisable)
             {
-                if (infoLoad)
+                Remove();
+                return;
+            }
+
+            if (infoLoad)
+            {
+                InfoLoad();
+                infoLoad = false;
+            }
+
+            if (!threadMetaData.loop)
+            {
+                if (!slider.gameObject.activeSelf)
+                    slider.gameObject.SetActive(true);
+
+                if (tempTimer >= 1)
                 {
-                    InfoLoad();
-                    infoLoad = false;
-                }
+                    if (slider.enabled)
+                        slider.enabled = false;
 
-                ThreadMetaData threadMetaData = ThreadManager.runningThreads[index];
-                if (!threadMetaData.loop)
-                {
-                    if (!slider.gameObject.activeSelf)
-                        slider.gameObject.SetActive(true);
-
-                    if (tempTimer >= 1)
+                    if (!noResponse)
                     {
-                        if (slider.enabled)
-                            slider.enabled = false;
+                        tempMinX = fillShow.anchorMin.x - (loopValue - 0.25f).Clamp01();
+                        tempMaxX = fillShow.anchorMax.x - loopValue.Clamp01();
 
-                        if (!noResponse)
-                        {
-                            tempMinX = fillShow.anchorMin.x - (loopValue - 0.25f).Clamp01();
-                            tempMaxX = fillShow.anchorMax.x - loopValue.Clamp01();
-
-                            noResponse = true;
-                        }
-
-                        loopValue += 0.0125f * Kernel.fpsDeltaTime;
-
-                        tempMinX = tempMinX.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
-                        tempMaxX = tempMaxX.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
-
-                        fillShow.anchorMin = new Vector2((loopValue - 0.25f).Clamp01() + tempMinX, fillShow.anchorMin.y);
-                        fillShow.anchorMax = new Vector2(loopValue.Clamp01() + tempMaxX, fillShow.anchorMax.y);
-
-                        if (fillShow.anchorMin.x >= 1)
-                            loopValue = 0;
-                    }
-                    else
-                    {
-                        if (!slider.enabled)
-                            slider.enabled = true;
-
-                        noResponse = false;
-
-                        slider.value = threadMetaData.progress;
-                        fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsDeltaTime);
-                        fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsDeltaTime);
-
-                        tempTimer += Kernel.deltaTime;
+                        noResponse = true;
                     }
 
-                    if (tempProgress != threadMetaData.progress)
-                    {
-                        tempTimer = 0;
-                        tempProgress = threadMetaData.progress;
-                    }
+                    loopValue += 0.0125f * Kernel.fpsDeltaTime;
+
+                    tempMinX = tempMinX.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
+                    tempMaxX = tempMaxX.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
+
+                    fillShow.anchorMin = new Vector2((loopValue - 0.25f).Clamp01() + tempMinX, fillShow.anchorMin.y);
+                    fillShow.anchorMax = new Vector2(loopValue.Clamp01() + tempMaxX, fillShow.anchorMax.y);
+
+                    if (fillShow.anchorMin.x >= 1)
+                        loopValue = 0;
                 }
                 else
                 {
-                    if (slider.gameObject.activeSelf)
-                        slider.gameObject.SetActive(false);
-
                     if (!slider.enabled)
                         slider.enabled = true;
 
-                    loopValue = 0;
                     noResponse = false;
+
+                    slider.value = threadMetaData.progress;
+                    fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsDeltaTime);
+                    fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsDeltaTime);
+
+                    tempTimer += Kernel.deltaTime;
                 }
+
+                if (tempProgress != threadMetaData.progress)
+                {
+                    tempTimer = 0;
+                    tempProgress = threadMetaData.progress;
+                }
+            }
+            else
+            {
+                if (slider.gameObject.activeSelf)
+                    slider.gameObject.SetActive(false);
+
+                if (!slider.enabled)
+                    slider.enabled = true;
+
+                loopValue = 0;
+                noResponse = false;
             }
         }
 
@@ -147,7 +145,7 @@ namespace SCKRM.UI.SideBar
             base.Remove();
 
             rectTransform.sizeDelta = new Vector2(430, 19);
-            index = 0;
+            threadMetaData = null;
             loopValue = 0;
             noResponse = false;
             tempProgress = 0;

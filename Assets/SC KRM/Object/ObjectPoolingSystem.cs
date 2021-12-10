@@ -23,7 +23,7 @@ namespace SCKRM.Object
         class ObjectList
         {
             public List<string> ObjectKey = new List<string>();
-            public List<GameObject> Object = new List<GameObject>();
+            public List<ObjectPooling> Object = new List<ObjectPooling>();
         }
 
 
@@ -41,7 +41,7 @@ namespace SCKRM.Object
         /// </summary>
         /// <param name="ObjectKey">생성할 오브젝트 키</param>
         /// <returns></returns>
-        public static GameObject ObjectCreate(string ObjectKey) => ObjectCreate(ObjectKey, null);
+        public static ObjectPooling ObjectCreate(string ObjectKey) => ObjectCreate(ObjectKey, null);
 
         /// <summary>
         /// 오브젝트를 생성합니다
@@ -49,7 +49,7 @@ namespace SCKRM.Object
         /// <param name="ObjectKey">생성할 오브젝트 키</param>
         /// <param name="Parent">생성할 오브젝트가 자식으로갈 오브젝트</param>
         /// <returns></returns>
-        public static GameObject ObjectCreate(string ObjectKey, Transform Parent)
+        public static ObjectPooling ObjectCreate(string ObjectKey, Transform Parent)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectCreate));
@@ -64,14 +64,9 @@ namespace SCKRM.Object
 
             if (objectList.ObjectKey.Contains(ObjectKey))
             {
-                GameObject gameObject = objectList.Object[objectList.ObjectKey.IndexOf(ObjectKey)];
-                gameObject.transform.SetParent(Parent, false);
-                gameObject.SetActive(true);
-
-                ObjectPooling objectPooling = gameObject.GetComponent<ObjectPooling>();
-                if (objectPooling == null)
-                    objectPooling = gameObject.AddComponent<ObjectPooling>();
-
+                ObjectPooling objectPooling = objectList.Object[objectList.ObjectKey.IndexOf(ObjectKey)];
+                objectPooling.transform.SetParent(Parent, false);
+                objectPooling.gameObject.SetActive(true);
                 objectPooling.objectKey = ObjectKey;
                 
                 {
@@ -80,10 +75,11 @@ namespace SCKRM.Object
                     objectList.Object.RemoveAt(i);
                 }
 
-                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
+                RendererManager.Rerender(objectPooling.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
 
+                objectPooling.actived = true;
                 objectPooling.OnCreate();
-                return gameObject;
+                return objectPooling;
             }
             else if (Data.prefabList.ContainsKey(ObjectKey))
             {
@@ -98,8 +94,9 @@ namespace SCKRM.Object
 
                 RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
 
+                objectPooling.actived = true;
                 objectPooling.OnCreate();
-                return gameObject;
+                return objectPooling;
             }
 
             return null;
@@ -108,9 +105,9 @@ namespace SCKRM.Object
         /// <summary>
         /// 오브젝트를 삭제합니다
         /// </summary>
-        /// <param name="ObjectKey">지울 오브젝트 키</param>
-        /// <param name="gameObject">지울 오브젝트</param>
-        public static void ObjectRemove(string ObjectKey, GameObject gameObject)
+        /// <param name="objectKey">지울 오브젝트 키</param>
+        /// <param name="objectPooling">지울 오브젝트</param>
+        public static void ObjectRemove(string objectKey, ObjectPooling objectPooling)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectRemove));
@@ -123,11 +120,13 @@ namespace SCKRM.Object
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
 
-            gameObject.SetActive(false);
-            gameObject.transform.SetParent(instance.transform);
+            objectPooling.gameObject.SetActive(false);
+            objectPooling.transform.SetParent(instance.transform);
 
-            objectList.ObjectKey.Add(ObjectKey);
-            objectList.Object.Add(gameObject);
+            objectPooling.actived = false;
+
+            objectList.ObjectKey.Add(objectKey);
+            objectList.Object.Add(objectPooling);
         }
     }
 
@@ -137,15 +136,19 @@ namespace SCKRM.Object
     public class ObjectPooling : MonoBehaviour
     {
         public string objectKey { get; set; } = "";
+        public bool actived { get; set; } = false;
 
         public virtual void OnCreate()
         {
-
+            
         }
 
         public virtual void Remove()
         {
-            ObjectPoolingSystem.ObjectRemove(objectKey, gameObject);
+            if (!actived)
+                return;
+
+            ObjectPoolingSystem.ObjectRemove(objectKey, this);
             gameObject.name = objectKey;
 
             RectTransform rectTransform = GetComponent<RectTransform>();

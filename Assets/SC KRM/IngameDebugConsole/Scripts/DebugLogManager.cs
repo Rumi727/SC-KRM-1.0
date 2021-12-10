@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using SCKRM.Input;
+using SCKRM;
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
@@ -809,6 +810,8 @@ namespace IngameDebugConsole
 #endif
 
 			isLogWindowVisible = true;
+			if (Kernel.isInitialLoadEnd)
+				InputManager.SetInputLock("log", true);
 
 			if( OnLogWindowShown != null )
 				OnLogWindowShown();
@@ -827,6 +830,8 @@ namespace IngameDebugConsole
 			popupManager.Show();
 
 			isLogWindowVisible = false;
+			if (Kernel.isInitialLoadEnd)
+				InputManager.SetInputLock("log", false);
 
 			if( OnLogWindowHidden != null )
 				OnLogWindowHidden();

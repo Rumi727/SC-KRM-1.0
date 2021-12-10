@@ -20,6 +20,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using IngameDebugConsole;
+using SCKRM.Window;
+using System.Threading.Tasks;
 
 namespace SCKRM
 {
@@ -215,7 +217,7 @@ namespace SCKRM
         {
             while (true)
             {
-                if (isInitialLoadEnd && InputManager.GetKeyDown("kernel.full_screen"))
+                if (isInitialLoadEnd && InputManager.GetKeyDown("kernel.full_screen", "all"))
                 {
                     if (Screen.fullScreen)
                         Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);
@@ -278,15 +280,9 @@ namespace SCKRM
             if (isInitialLoadEnd)
             {
                 if (!DebugLogManager.Instance.IsLogWindowVisible && InputManager.GetKeyDown("log.toggle", "all", "taskbar"))
-                {
-                    InputManager.SetInputLock("log", true);
                     DebugLogManager.Instance.ShowLogWindow();
-                }
                 else if (DebugLogManager.Instance.IsLogWindowVisible && (InputManager.GetKeyDown("gui.back", "all", "taskbar") || InputManager.GetKeyDown("gui.home", "all", "taskbar")))
-                {
-                    InputManager.SetInputLock("log", false);
                     DebugLogManager.Instance.HideLogWindow();
-                }
             }
         }
 
@@ -311,7 +307,8 @@ namespace SCKRM
 
                     splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
 
-                    ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
+                    //ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
+                    ThreadManager.ThreadAutoRemove();
 
                     DebugLogConsole.RemoveCommand("prefs.clear");
                     DebugLogConsole.RemoveCommand("prefs.delete");
@@ -349,9 +346,9 @@ namespace SCKRM
                     Debug.Log("Kernel: Waiting for settings to load...");
                     {
                         ThreadMetaData threadMetaData = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
-                        await UniTask.WaitUntil(() => threadMetaData.thread == null);
+                        await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
                         threadMetaData = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
-                        await UniTask.WaitUntil(() => threadMetaData.thread == null);
+                        await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
                     }
 
                     {
@@ -363,7 +360,7 @@ namespace SCKRM
                         if (index == 0)
                         {
                             Debug.Log("Kernel: Waiting for scene animation...");
-                            await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed);
+                            await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, PlayerLoopTiming.Initialization);
                         }
                     }
 
@@ -391,7 +388,7 @@ namespace SCKRM
                     while (splashScreenBackground.color.a > 0)
                     {
                         splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, splashScreenBackground.color.a - 0.05f * fpsDeltaTime);
-                        await UniTask.DelayFrame(1);
+                        await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
                     }
                 }
                 catch (Exception e)
@@ -434,21 +431,34 @@ namespace SCKRM
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(AllRefresh));
 #endif
-
             AllRefreshStart?.Invoke();
 
             if (onlyText)
                 RendererManager.AllTextRerender();
             else
             {
+/*#if !UNITY_EDITOR
+                if (SoundManager.soundList.Count > 0)
+                {
+#if UNITY_STANDALONE_WIN
+                    string text = LanguageManager.TextLoad("kernel.allrefresh.warning");
+                    string caption = LanguageManager.TextLoad("gui.warning");
+                    WindowManager.DialogResult dialogResult = WindowManager.MessageBox(text, caption, WindowManager.MessageBoxButtons.OKCancel, WindowManager.MessageBoxIcon.Warning);
+                    if (dialogResult != WindowManager.DialogResult.OK)
+                        return;
+#else
+                Debug.LogError(LanguageManager.TextLoad("kernel.allrefresh.error"));
+                return;
+#endif
+                }
+#endif*/
                 if (!ResourceManager.isResourceRefesh)
                 {
                     await ResourceManager.ResourceRefresh();
-                    SoundManager.SoundRefresh();
-
-                    ResourceManager.AudioGarbageRemoval();
-
                     RendererManager.AllRerender();
+
+                    await SoundManager.SoundRefresh();
+                    ResourceManager.AudioGarbageRemoval();
                 }
             }
             

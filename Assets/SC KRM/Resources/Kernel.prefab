@@ -1257,7 +1257,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   _spacing: 6
-  _lerp: 0
+  _lerp: 1
 --- !u!114 &3845133973677580453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2526,7 +2526,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   _spacing: 6
-  _lerp: 0
+  _lerp: 1
 --- !u!114 &2767632783812548489
 MonoBehaviour:
   m_ObjectHideFlags: 0

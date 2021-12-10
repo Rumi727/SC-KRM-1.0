@@ -117,7 +117,7 @@ namespace SCKRM.NBS
 
             if (!SoundManager.nbsList.Contains(this))
                 SoundManager.nbsList.Add(this);
-
+            
             nbsFile = NBSManager.ReadNBSFile(path);
             allLayerLock = nbsFile.nbsLayers.Any((b) => b.layerLock == 2);
 
