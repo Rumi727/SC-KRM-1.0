@@ -42,24 +42,42 @@ namespace SCKRM.UI
             float localSizeX = rectTransformInfo.localSize.x;
 
             {
+                {
+                    bool update = true;
 #if UNITY_EDITOR
-                if (tempChildCount != transform.childCount || !Application.isPlaying)
-                {
-                    SetChild();
-                    tempChildCount = transform.childCount;
-                }
-#else
-                if (tempChildCount != transform.childCount)
-                {
-                    SetChild();
-                    tempChildCount = transform.childCount;
-                }
-#endif
-                for (int i = 0; i < childRectTransforms.Length; i++)
-                {
-                    RectTransform rectTransform = childRectTransforms[i];
-                    if (i != rectTransform.GetSiblingIndex())
+                    if (tempChildCount != transform.childCount || !Application.isPlaying)
+                    {
                         SetChild();
+                        tempChildCount = transform.childCount;
+                    }
+                    else
+                        update = false;
+#else
+                    if (tempChildCount != transform.childCount)
+                    {
+                        SetChild();
+                        tempChildCount = transform.childCount;
+                    }
+                    else
+                        update = false;
+#endif
+                    bool update2 = false;
+                    for (int i = 0; i < childRectTransforms.Length; i++)
+                    {
+                        RectTransform rectTransform = childRectTransforms[i];
+                        if (i != rectTransform.GetSiblingIndex())
+                        {
+                            SetChild();
+                            update = true;
+                            update2 = true;
+                        }
+                    }
+
+                    if (!update2)
+                        update = false;
+
+                    if (!update && !lerp)
+                        return;
                 }
 
                 void SetChild()

@@ -706,7 +706,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   _spacing: 0
-  _lerp: 0
+  _lerp: 1
 --- !u!1 &2016575071763466335
 GameObject:
   m_ObjectHideFlags: 0
@@ -3402,7 +3402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _customRenderMode: 1
+  _customSetting: 1
   _worldRenderMode: 0
 --- !u!1 &8917497772650518271
 GameObject:
