@@ -53,7 +53,7 @@ Simsimhan Chobo Kernel Manager
   - 만약 스레드를 지원하는 내장 스크립트나 (RendererManager.AllRerender() 같은) 내부에서 스레드가 사용되는 스크립트들에서 리소스 동시 접근이 발생한경우 알려주세요
 
 ## 기능
-- Minecraft에 있는 리소스팩 기능이 포함되어있습니다 ~~(리소스팩을 바꿀수 있는 GUI 포함됨)~~ (미완성, 직접 리소스팩 경로를 넣어줘야 작동)
+- Minecraft에 있는 리소스팩 기능이 포함되어있습니다 ~~(리소스팩을 바꿀수 있는 GUI 포함됨)~~ (GUI 미완성, 직접 리소스팩 경로를 넣어줘야 작동)
   즉 유니티에 있는 기본 리소스 관리 시스템이 사용되지 않습니다
   사용 할 수 있기는 하지만, 웬만하면 추천하지 않습니다
 
@@ -65,7 +65,9 @@ Simsimhan Chobo Kernel Manager
 
 - 조작을 잠글 수 있고, 그걸 무시 할 수도 있습니다
 
-- 언어 기능이 있습니다 (언어를 바꿀수 있는 GUI 포함)
+- 언어 기능이 있습니다 ~~(언어를 바꿀수 있는 GUI 포함)~~ (GUI 미완성)
+
+  - 위치: `assets/%NameSpace%/lang`
 
 - Kernel 스크립트에 확장 함수들과(KernelTool로 옴겨짐) 최적화를 위한 여러 변수들이 있습니다.
 
@@ -85,11 +87,9 @@ Simsimhan Chobo Kernel Manager
 
   정확하겐 커스텀 렌더러 스크립트는 기존에 있던 렌더러의 스프라이트 같은거를 바꿔주는거입니다.
 
-  단, 스트리밍 에셋에 파일이 있어야 하며
+  단, 스트리밍 에셋에 파일이 있어야 합니다
 
-  이미지 같은 UI 컴포넌트들은 `assets/%NameSpace%/textures/gui`에 위치해있어야합니다.
-
-  스프라이트 렌더러 같은것들은 `assets/%NameSpace%/textures`에 위치해있어야합니다.
+  - 위치: `assets/%NameSpace%/textures`
   
 - 세이브 로드 기능이 있습니다, 어트리뷰트로 자동화가 되어있습니다 ``[SaveLoad(파일 이름)] [SaveLoad]``
 
@@ -106,6 +106,8 @@ Simsimhan Chobo Kernel Manager
 - 윈도우에서는 무려 창 위치와 크기를 마음대로 지지고 볶을 수 있습니다! 리듬게임에 들어간다면 금상첨화죠.
 
 - 무려 NBS를 로드하고 재생 할 수 있습니다! 관련 함수는 ``SoundManager.PlayNBS() SoundManager.StopNBS() SoundManager.StopNBSAll()`` 입니다
+
+  - 위치: `assets/%NameSpace%/nbs`
 
 - 등등...
 
