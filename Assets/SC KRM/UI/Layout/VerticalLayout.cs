@@ -39,6 +39,8 @@ namespace SCKRM.UI
         [System.NonSerialized] int tempChildCount = -1;
         void Update()
         {
+            float localSizeX = rectTransformInfo.localSize.x;
+
             {
 #if UNITY_EDITOR
                 if (tempChildCount != transform.childCount || !Application.isPlaying)
@@ -176,7 +178,7 @@ namespace SCKRM.UI
                     y -= childRectTransform.sizeDelta.y + spacing;
                 }
 
-                childRectTransform.sizeDelta = new Vector3(rectTransformInfo.localSize.x - padding.left - padding.right, childRectTransform.sizeDelta.y);
+                childRectTransform.sizeDelta = new Vector3(localSizeX - padding.left - padding.right, childRectTransform.sizeDelta.y);
             }
         }
     }
