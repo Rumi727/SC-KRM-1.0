@@ -97,8 +97,8 @@ namespace SCKRM.UI
 
 
                 RectTransformInfo parentRectTransformSetting = this.parentRectTransformSetting;
-                if (parentRectTransformSetting == tempParentRectTransformSetting && tempOffsetMin == offsetMin && tempOffsetMax == offsetMax && tempAnchorMin == anchorMin && tempAnchorMax == anchorMax)
-                    return _localRect;
+                /*if (parentRectTransformSetting == tempParentRectTransformSetting && tempOffsetMin == offsetMin && tempOffsetMax == offsetMax && tempAnchorMin == anchorMin && tempAnchorMax == anchorMax)
+                    return _localRect;*/
 
                 tempParentRectTransformSetting = parentRectTransformSetting;
                 tempOffsetMin = offsetMin;
@@ -106,7 +106,7 @@ namespace SCKRM.UI
                 tempAnchorMin = anchorMin;
                 tempAnchorMax = anchorMax;
 
-
+                
 
                 if (parentRectTransformSetting == null)
                 {
@@ -121,7 +121,7 @@ namespace SCKRM.UI
                 float y = offsetMin.y + (parentLocalRect.height * anchorMin.y);
                 float width = offsetMax.x + (parentLocalRect.width * anchorMax.x) - x;
                 float height = offsetMax.y + (parentLocalRect.height * anchorMax.y) - y;
-
+                
                 _localRect = new Rect(x, y, width, height);
                 return _localRect;
             }

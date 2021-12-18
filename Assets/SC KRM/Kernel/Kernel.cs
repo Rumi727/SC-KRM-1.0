@@ -347,6 +347,8 @@ namespace SCKRM
                     {
                         ThreadMetaData threadMetaData = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
                         await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
+                        threadMetaData = ThreadManager.Create(SaveLoadManager.VariableInfoLoad, "Save Data Load");
+                        await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
                         threadMetaData = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
                         await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
                     }

@@ -153,7 +153,6 @@ namespace SCKRM.Editor
                             if (rectTransformSetting == null)
                             {
                                 RectTransformInfo rectTransformSetting2 = rectTransform.gameObject.AddComponent<RectTransformInfo>();
-
                                 if (PrefabUtility.GetPrefabAssetType(rectTransform.gameObject) == PrefabAssetType.NotAPrefab)
                                 {
                                     int length = rectTransform.GetComponents<Component>().Length;

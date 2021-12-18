@@ -32,6 +32,10 @@ namespace SCKRM.Threads
 
 
 
+        /// <summary>
+        /// If possible, don't use it in another thread
+        /// 웬만하면 다른 스레드에서 사용하지 마세요
+        /// </summary>
         public static void AllThreadRemove()
         {
             for (int i = 0; i < runningThreads.Count; i++)
@@ -40,6 +44,9 @@ namespace SCKRM.Threads
 
         public static async void ThreadAutoRemove()
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException();
+
             while (true)
             {
                 for (int i = 0; i < runningThreads.Count; i++)
