@@ -13,7 +13,7 @@ namespace SCKRM.UI.TaskBar
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
     public sealed class TaskBarManager : MonoBehaviour
     {
-        [SaveLoad("Task Bar")]
+        [SaveLoad("task_bar")]
         public sealed class SaveData
         {
             [JsonProperty] public static bool bottomMode { get; set; } = false;

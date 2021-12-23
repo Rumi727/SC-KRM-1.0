@@ -17,7 +17,7 @@ namespace SCKRM.Resource
 {
     public static class ResourceManager
     {
-        [SaveLoad("Resource")]
+        [SaveLoad("resource")]
         public sealed class SaveData
         {
             [JsonProperty] public static List<string> resourcePacks { get; set; } = new List<string>() { Kernel.streamingAssetsPath };

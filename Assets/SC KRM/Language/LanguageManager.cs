@@ -10,7 +10,7 @@ namespace SCKRM.Language
 {
     public static class LanguageManager
     {
-        [SaveLoad("Language")]
+        [SaveLoad("language")]
         public sealed class SaveData
         {
             [JsonProperty] public static string currentLanguage { get; set; } = "en_us";

@@ -19,7 +19,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using IngameDebugConsole;
 using SCKRM.Window;
 using System.Threading.Tasks;
 
@@ -46,7 +45,7 @@ namespace SCKRM
             [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
         }
 
-        [SaveLoad("Kernel")]
+        [SaveLoad("default")]
         public sealed class SaveData
         {
             [JsonProperty] public static int fpsLimit { get; set; } = 300;
@@ -276,14 +275,6 @@ namespace SCKRM
 
             gameSpeed = gameSpeed.Clamp(0, 100);
             Time.timeScale = gameSpeed;
-
-            if (isInitialLoadEnd)
-            {
-                if (!DebugLogManager.Instance.IsLogWindowVisible && InputManager.GetKeyDown("log.toggle", "all", "taskbar"))
-                    DebugLogManager.Instance.ShowLogWindow();
-                else if (DebugLogManager.Instance.IsLogWindowVisible && (InputManager.GetKeyDown("gui.back", "all", "taskbar") || InputManager.GetKeyDown("gui.home", "all", "taskbar")))
-                    DebugLogManager.Instance.HideLogWindow();
-            }
         }
 
         public static event Action InitialLoadStart;
@@ -309,17 +300,6 @@ namespace SCKRM
 
                     //ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
                     ThreadManager.ThreadAutoRemove();
-
-                    DebugLogConsole.RemoveCommand("prefs.clear");
-                    DebugLogConsole.RemoveCommand("prefs.delete");
-                    DebugLogConsole.RemoveCommand("prefs.float");
-                    DebugLogConsole.RemoveCommand("prefs.int");
-                    DebugLogConsole.RemoveCommand("prefs.string");
-                    DebugLogConsole.RemoveCommand("scene.load");
-                    DebugLogConsole.RemoveCommand("scene.loadasync");
-                    DebugLogConsole.RemoveCommand("scene.restart");
-                    DebugLogConsole.RemoveCommand("scene.unload");
-                    DebugLogConsole.RemoveCommand("time.scale");
 
 #if UNITY_EDITOR
                     Scene scene = SceneManager.GetActiveScene();

@@ -116,12 +116,5 @@ namespace SCKRM.UI.SideBar
                 }
             }
         }
-
-        public void LogShow()
-        {
-            IngameDebugConsole.DebugLogManager.Instance.ShowLogWindow();
-            InputManager.SetInputLock("log", true);
-            isNoticeBarShow = false;
-        }
     }
 }
