@@ -15,9 +15,7 @@ namespace SCKRM.ProjectSetting
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class ProjectSettingAttribute : Attribute
     {
-        public string name { get; private set; }
 
-        public ProjectSettingAttribute(string name = "") => this.name = name;
     }
 
     public static class ProjectSettingManager
@@ -60,12 +58,6 @@ namespace SCKRM.ProjectSetting
                 return;
 
             JObject jObject = new JObject();
-            string name;
-            if (projectSettingAttribute.name != "")
-                name = projectSettingAttribute.name;
-            else
-                name = type.Name;
-
             PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
             for (int i = 0; i < propertyInfos.Length; i++)
             {
@@ -92,7 +84,7 @@ namespace SCKRM.ProjectSetting
                 }
             }
 
-            File.WriteAllText(PathTool.Combine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json", jObject.ToString());
+            File.WriteAllText(PathTool.Combine(Kernel.projectSettingPath, type.FullName) + ".json", jObject.ToString());
 #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();
 #endif
@@ -104,13 +96,7 @@ namespace SCKRM.ProjectSetting
             if (projectSettingAttribute == null)
                 return;
 
-            string name;
-            if (projectSettingAttribute.name != "")
-                name = projectSettingAttribute.name;
-            else
-                name = type.Name;
-
-            string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json";
+            string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + ".json";
             if (!File.Exists(path))
                 return;
 
@@ -186,22 +172,9 @@ namespace SCKRM.ProjectSetting
         /// <returns></returns>
         public static JObject Read(Type type)
         {
-            IEnumerable<Attribute> attributes = type.GetCustomAttributes(typeof(ProjectSettingAttribute));
-            foreach (var attribute in attributes)
-            {
-                ProjectSettingAttribute ProjectSettingAttribute = attribute as ProjectSettingAttribute;
-                string name;
-                if (ProjectSettingAttribute.name != "")
-                    name = ProjectSettingAttribute.name;
-                else
-                    name = type.Name;
-
-                string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + "." + name + ".json";
-                JObject jObject = JObject.Parse(ResourceManager.GetText(path, true));
-                return jObject;
-            }
-
-            return null;
+            string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + ".json";
+            JObject jObject = JObject.Parse(ResourceManager.GetText(path, true));
+            return jObject;
         }
     }
 }

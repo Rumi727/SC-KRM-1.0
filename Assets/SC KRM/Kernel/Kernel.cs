@@ -27,7 +27,7 @@ namespace SCKRM
     [AddComponentMenu("커널/커널")]
     public sealed class Kernel : MonoBehaviour
     {
-        [ProjectSetting("Setting")]
+        [ProjectSetting]
         public sealed class Data
         {
             [JsonProperty] public static float standardFPS { get; set; } = 60;
