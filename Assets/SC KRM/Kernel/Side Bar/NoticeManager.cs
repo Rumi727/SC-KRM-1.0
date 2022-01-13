@@ -32,7 +32,7 @@ namespace SCKRM.UI.SideBar
             }
         }
 
-        public static async UniTaskVoid Notice(string name, string info, Type type = Type.none)
+        public static void Notice(string name, string info, Type type = Type.none)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Notice));
@@ -40,8 +40,9 @@ namespace SCKRM.UI.SideBar
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(Notice));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(Notice));
 
-            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
             Notice notice = ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeList).GetComponent<Notice>();
             notice.transform.SetAsFirstSibling();
             notice.nameText.nameSpace = "sc-krm";
@@ -67,6 +68,8 @@ namespace SCKRM.UI.SideBar
                 notice.setSizeAsChildRectTransform.min = 70;
                 notice.verticalLayout.padding.left = 70;
             }
+
+            SideBarManager.isNoticeBarShow = true;
         }
 
         public enum Type

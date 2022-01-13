@@ -139,7 +139,7 @@ namespace SCKRM.SaveLoad
                 if (!File.Exists(path))
                     continue;
 
-                #region 경고 및 기본값 저장과 null 설정
+                #region null 설정
                 for (int j = 0; j < variableType.propertyInfos.Length; j++)
                 {
                     VariableType.Info<PropertyInfo> propertyInfo = variableType.propertyInfos[j];

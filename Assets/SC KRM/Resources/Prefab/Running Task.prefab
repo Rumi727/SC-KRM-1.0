@@ -400,14 +400,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45453fe11c3135f44852cc83f6128203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 836050093905084075}
+  _rectTransformInfo: {fileID: 8186722587523434855}
   _padding:
     m_Left: 10
     m_Right: 10
     m_Top: 3
     m_Bottom: 3
   _spacing: 4
-  _lerp: 0
+  _lerp: 1
 --- !u!114 &465263910929733980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   _min: 0
   _max: 0
   _spacing: 3
-  _lerp: 0
+  _lerp: 1
   _ignore: []
 --- !u!1 &4750328653329970861
 GameObject:

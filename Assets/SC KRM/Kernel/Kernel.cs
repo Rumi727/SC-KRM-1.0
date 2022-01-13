@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using SCKRM.Window;
 using System.Threading.Tasks;
+using SCKRM.UI.SideBar;
 
 namespace SCKRM
 {
@@ -355,6 +356,10 @@ namespace SCKRM
                         isInitialLoadEnd = true;
 
                         Debug.Log("Kernel: Initial loading finished!");
+
+                        DateTime dateTime = DateTime.Now;
+                        if (dateTime.Month == 8 && dateTime.Day == 7)
+                            NoticeManager.Notice("kurumi_chan.birthday.title", "kurumi_chan.birthday.description");
                     }
 
 #if UNITY_EDITOR
