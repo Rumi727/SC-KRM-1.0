@@ -5,6 +5,7 @@ Simsimhan Chobo Kernel Manager
 - **Unity UI**
 - **Input System**
 - **TextMeshPro**
+- **Post Processing**
 - Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json)
 - UniTask (https://github.com/Cysharp/UniTask)
 - ~~In-game Debug Console (https://github.com/yasirkula/UnityIngameDebugConsole)~~
