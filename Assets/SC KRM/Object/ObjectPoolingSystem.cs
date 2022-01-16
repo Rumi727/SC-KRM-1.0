@@ -130,9 +130,6 @@ namespace SCKRM.Object
         }
     }
 
-    /// <summary>
-    /// Please put base.Remove() when overriding
-    /// </summary>
     public class ObjectPooling : MonoBehaviour
     {
         public string objectKey { get; set; } = "";
@@ -143,6 +140,9 @@ namespace SCKRM.Object
             
         }
 
+        /// <summary>
+        /// Please put base.Remove() when overriding
+        /// </summary>
         public virtual void Remove()
         {
             if (!actived)
