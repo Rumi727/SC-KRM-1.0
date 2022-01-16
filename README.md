@@ -17,6 +17,8 @@ Simsimhan Chobo Kernel Manager
 ## 주의
 - 이 프로젝트는 처음 프로젝트를 만들때 사용해야 나중에 안 귀찮아집니다
 
+- **사용 중인 입력 처리를 '모두'로 바꿔주세요**
+
 - Newtonsoft.Json이 내장 되어있습니다
 
   - 만약 중복되었다는 오류가 발생한다면 기존에 있는 dll을 지워주시거나 SC KRM/Json/Newtonsoft.Json.dll를 지워주세요
