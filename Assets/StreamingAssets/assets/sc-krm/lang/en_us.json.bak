@@ -18,13 +18,13 @@
 	"gui.warning": "Warning",
 	"gui.error": "Error",
 	
-	"kernel.allrefresh.warning": "There is a bug where refreshing the resource pack while sound effects or music is playing will force the program to quit!\nAre you sure you want to continue?",
-	"kernel.allrefresh.error": "Unable to refresh resource pack while sound effect or music is playing",
+	"kernel.allrefresh.warning": "There is a bug where refreshing the resource pack while sound effects or music is playing causes the program to crash!\nAre you sure you want to continue?",
+	"kernel.allrefresh.error": "Unable to refresh resource pack while sound effect or music is playing!",
 	
 	"options.resourcepack": "Resource Packs...",
 	"resourcePack.title": "Select Resource Packs",
 	"options.language": "Language...",
-	"options.languageWarning": "Language translations may not be 100% accurate",
+	"options.languageWarning": "(Language translations may not be 100% accurate)",
 	"options.controls": "Controls...",
 	"controls.title": "Controls",
 	
@@ -46,18 +46,22 @@
 	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
 	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
 	"notice.running_task.rerender.name": "Refresh renderer",
-	"notice.running_task.audio_refresh.name": "Audio Refresh",
+	"notice.running_task.audio_refresh.name": "Refresh audio",
 	
 	
 	
-	"kurumi_chan.birthday.title": "kurumi-chan happy birthday",
-	"kurumi_chan.birthday.description": "Today is 'Kurumi Ebisuzawa''s birthday",
+	"kurumi_chan.birthday.title": "Kurumi-chan happy birthday",
+	"kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
 	
 	
 	
 	"log": "Console",
 	"log.search": "Search...",
 	"log.command": "(type 'help' for list of commands)",
+	
+	
+	
+	"setting": "Setting",
 	
 	
 	

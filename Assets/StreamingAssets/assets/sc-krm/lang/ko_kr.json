@@ -18,8 +18,8 @@
 	"gui.warning": "경고",
 	"gui.error": "오류",
 	
-	"kernel.allrefresh.warning": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고치면 프로그램이 강제 종료되는 버그가 있습니다!\n정말로 계속하시겠습니까?",
-	"kernel.allrefresh.error": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고칠 수 없습니다",
+	"kernel.allrefresh.warning": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고치면 프로그램이 튕기는 버그가 있습니다!\n정말로 계속하시겠습니까?",
+	"kernel.allrefresh.error": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고칠 수 없습니다!",
 	
 	"options.resourcepack": "리소스 팩...",
 	"resourcePack.title": "리소스 팩 선택",
@@ -57,11 +57,7 @@
 	
 	"log": "콘솔",
 	"log.search": "검색...",
-	"log.command": "(커멘드 리스트를 보려면 'help'를 입력하세요)",
-	
-	
-	
-	"setting": "일반",
+	"log.command": "(커맨드 리스트를 보려면 'help'를 입력하세요)",
 	
 	
 	
