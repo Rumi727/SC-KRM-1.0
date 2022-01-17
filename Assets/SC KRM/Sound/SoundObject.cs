@@ -2,6 +2,7 @@ using UnityEngine;
 using SCKRM.Resource;
 using SCKRM.Object;
 using SCKRM.Tool;
+using Cysharp.Threading.Tasks;
 
 namespace SCKRM.Sound
 {
@@ -49,8 +50,10 @@ namespace SCKRM.Sound
         #region variable
         [SerializeField] string _key = "";
         [SerializeField] string _nameSpace = "";
+        [SerializeField] AudioClip _audioClip = null;
         public string key { get => _key; set => _key = value; }
         public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
+        public AudioClip audioClip { get => _audioClip; set => _audioClip = value; }
 
         [SerializeField] float _volume = 1;
         [SerializeField] bool _loop = false;
@@ -81,22 +84,25 @@ namespace SCKRM.Sound
                     return;
                 }
 
-                soundData = ResourceManager.SearchSoundData(key, nameSpace);
+                if (audioClip == null)
+                {
+                    soundData = ResourceManager.SearchSoundData(key, nameSpace);
 
-                if (soundData == null)
-                {
-                    Remove();
-                    return;
-                }
-                else if (soundData.sounds == null || soundData.sounds.Length <= 0)
-                {
-                    Remove();
-                    return;
-                }
-                else if (pitch == 0)
-                {
-                    Remove();
-                    return;
+                    if (soundData == null)
+                    {
+                        Remove();
+                        return;
+                    }
+                    else if (soundData.sounds == null || soundData.sounds.Length <= 0)
+                    {
+                        Remove();
+                        return;
+                    }
+                    else if (pitch == 0)
+                    {
+                        Remove();
+                        return;
+                    }
                 }
             }
 
@@ -106,13 +112,21 @@ namespace SCKRM.Sound
             {
                 audioSource.Stop();
 
-                soundMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
-                audioSource.clip = soundMetaData.audioClip;
+                if (audioClip == null)
+                {
+                    soundMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                    audioSource.clip = soundMetaData.audioClip;
 
-                if (soundData.isBGM)
-                    audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
+                    if (soundData.isBGM)
+                        audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
+                    else
+                        audioSource.outputAudioMixerGroup = null;
+                }
                 else
+                {
+                    audioSource.clip = audioClip;
                     audioSource.outputAudioMixerGroup = null;
+                }
             }
 
             {
@@ -130,28 +144,36 @@ namespace SCKRM.Sound
 
         void SetVariable()
         {
-            if (soundData.isBGM)
+            if (audioClip == null)
             {
-                if (soundMetaData.stream)
-                    tempo = tempo.Clamp(0);
+                if (soundData.isBGM)
+                {
+                    if (soundMetaData.stream)
+                        tempo = tempo.Clamp(0);
 
-                float allPitch = pitch * soundMetaData.pitch;
-                float allTempo = tempo * soundMetaData.tempo;
+                    float allPitch = pitch * soundMetaData.pitch;
+                    float allTempo = tempo * soundMetaData.tempo;
 
-                pitch *= soundMetaData.pitch;
-                pitch = pitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f);
-                pitch /= soundMetaData.pitch;
+                    pitch *= soundMetaData.pitch;
+                    pitch = pitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f);
+                    pitch /= soundMetaData.pitch;
 
-                allTempo *= Kernel.gameSpeed;
-                audioSource.pitch = allTempo;
-                audioSource.outputAudioMixerGroup.audioMixer.SetFloat("pitch", 1f / allTempo.Abs() * allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f));
+                    allTempo *= Kernel.gameSpeed;
+                    audioSource.pitch = allTempo;
+                    audioSource.outputAudioMixerGroup.audioMixer.SetFloat("pitch", 1f / allTempo.Abs() * allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f));
+                }
+                else
+                {
+                    if (soundMetaData.stream)
+                        pitch = pitch.Clamp(0);
+
+                    audioSource.pitch = pitch * soundMetaData.pitch * Kernel.gameSpeed;
+                }
             }
             else
             {
-                if (soundMetaData.stream)
-                    pitch = pitch.Clamp(0);
-
-                audioSource.pitch = pitch * soundMetaData.pitch * Kernel.gameSpeed;
+                pitch = pitch.Clamp(0);
+                audioSource.pitch = pitch * Kernel.gameSpeed;
             }
 
             if (audioSource.pitch == 0)
@@ -203,6 +225,8 @@ namespace SCKRM.Sound
 
             key = "";
             nameSpace = "";
+            audioClip = null;
+
             volume = 1;
             tempo = 1;
             pitch = 1;

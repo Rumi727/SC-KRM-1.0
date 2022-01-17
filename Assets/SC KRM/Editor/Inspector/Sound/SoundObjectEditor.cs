@@ -34,6 +34,8 @@ namespace SCKRM.Editor
                 soundObject.nameSpace = EditorGUILayout.TextField(soundObject.nameSpace);
                 GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
                 soundObject.key = EditorGUILayout.TextField(soundObject.key);
+                GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                soundObject.audioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.audioClip, typeof(AudioClip), true);
 
                 refesh = GUILayout.Button("새로고침", GUILayout.ExpandWidth(false));
                 string text; if (!soundObject.isPaused) text = "일시정지"; else text = "재생";
@@ -51,10 +53,10 @@ namespace SCKRM.Editor
                 soundObject.loop = EditorGUILayout.Toggle(soundObject.loop, GUILayout.Width(15));
 
                 int minPitch = -3;
-                if (soundObject.soundMetaData.stream)
+                if (soundObject.audioClip == null && soundObject.soundMetaData.stream)
                     minPitch = 0;
 
-                if (soundObject.soundData.isBGM)
+                if (soundObject.audioClip == null && soundObject.soundData.isBGM)
                 {
                     GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                     soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, soundObject.tempo.Abs() * 0.5f, soundObject.tempo.Abs() * 2f);
@@ -104,7 +106,7 @@ namespace SCKRM.Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                if (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0)
+                if (soundObject.audioClip == null && (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0))
                 {
                     GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
                     GUILayout.HorizontalSlider(0, 0, 1);
@@ -114,7 +116,7 @@ namespace SCKRM.Editor
                     string time = soundObject.time.ToTime();
                     string endTime = soundObject.length.ToTime();
 
-                    if (soundObject.soundData.isBGM)
+                    if (soundObject.audioClip == null && soundObject.soundData.isBGM)
                     {
                         if (soundObject.tempo == 0)
                             GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));

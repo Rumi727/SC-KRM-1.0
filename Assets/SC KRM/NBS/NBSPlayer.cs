@@ -234,7 +234,10 @@ namespace SCKRM.NBS
                         else if (nbsNoteMetaData.instrument == 15)
                             blockType += "pling";
 
-                        SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch, 1, panStereo + this.panStereo, spatial, minDistance, maxDistance, transform);
+                        if (spatial)
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
+                        else
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch, 1, panStereo + this.panStereo);
                     }
 
                     _index++;

@@ -90,7 +90,19 @@ namespace SCKRM.Sound
             threadMetaData.autoRemoveDisable = false;
         }
 
-        public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0)
+        public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+
+        public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+
+        public static SoundObject PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+
+        public static SoundObject PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+
+        public static SoundObject PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+
+        public static SoundObject PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+
+        static SoundObject playSound(string key, string nameSpace, AudioClip[] audioClips, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(PlaySound));
@@ -125,6 +137,8 @@ namespace SCKRM.Sound
             SoundObject soundObject = ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent).GetComponent<SoundObject>();
             soundObject.key = key;
             soundObject.nameSpace = nameSpace;
+            if (audioClips != null)
+                soundObject.audioClip = audioClips[Random.Range(0, audioClips.Length)];
 
             soundObject.volume = volume;
             soundObject.loop = loop;
@@ -145,7 +159,6 @@ namespace SCKRM.Sound
                 soundObject.name = nameSpace + ":" + key;
 
             soundObject.Refesh();
-
             return soundObject;
         }
 
@@ -180,6 +193,10 @@ namespace SCKRM.Sound
             }
         }
 
+        /// <summary>
+        /// 모든 오디오를 중지
+        /// Stop all audio
+        /// </summary>
         public static void StopSoundAll()
         {
             if (!ThreadManager.isMainThread)
@@ -197,6 +214,10 @@ namespace SCKRM.Sound
             }
         }
 
+        /// <summary>
+        /// 모든 효과음 또는 BGM 중지
+        /// Stop all sounds or bgm
+        /// </summary>
         public static void StopSoundAll(bool bgm)
         {
             if (!ThreadManager.isMainThread)
@@ -224,6 +245,10 @@ namespace SCKRM.Sound
 
 
 
+        /// <summary>
+        /// NBS 재생
+        /// NBS Play
+        /// </summary>
         public static NBSPlayer PlayNBS(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 48, Transform parent = null, float x = 0, float y = 0, float z = 0)
         {
             if (!ThreadManager.isMainThread)

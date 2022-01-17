@@ -156,6 +156,7 @@ namespace SCKRM.Editor
 
         string audioNameSpace = "";
         string audioKey = "";
+        AudioClip audioClip;
 
         float audioVolume = 1;
         bool audioLoop = false;
@@ -168,7 +169,7 @@ namespace SCKRM.Editor
 
         float audioMinDistance = 0;
         float audioMaxDistance = 16;
-        Vector2 audioLocalPosition = Vector2.zero;
+        Vector3 audioLocalPosition = Vector3.zero;
 
         Vector2 audioScrollPos = Vector2.zero;
         public void Audio(int scrollYSize = 0)
@@ -177,7 +178,6 @@ namespace SCKRM.Editor
 
             {
                 {
-                    bool audioPlay;
                     {
                         EditorGUILayout.BeginHorizontal();
 
@@ -185,13 +185,11 @@ namespace SCKRM.Editor
                         audioNameSpace = EditorGUILayout.TextField(audioNameSpace);
                         GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
                         audioKey = EditorGUILayout.TextField(audioKey);
+                        GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                        audioClip = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), true);
 
                         if (!Application.isPlaying)
                             GUI.enabled = false;
-
-                        audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
-                        if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
-                            SoundManager.StopSound(audioKey, audioNameSpace);
 
                         GUI.enabled = true;
 
@@ -241,13 +239,12 @@ namespace SCKRM.Editor
                             EditorGUILayout.EndHorizontal();
                         }
                     }
-
-                    if (audioPlay)
-                        SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo, audioSpatial, audioMinDistance, audioMaxDistance);
                 }
 
                 {
                     EditorGUILayout.BeginHorizontal();
+
+                    GUILayout.Label($"{SoundManager.soundList.Count} / {SoundManager.maxSoundCount}", GUILayout.ExpandWidth(false));
 
                     if (!Application.isPlaying)
                         GUI.enabled = false;
@@ -259,9 +256,31 @@ namespace SCKRM.Editor
                     if (GUILayout.Button("모든 소리 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSoundAll();
 
-                    GUI.enabled = true;
+                    EditorGUILayout.Space();
 
-                    GUILayout.Label($"{SoundManager.soundList.Count} / {SoundManager.maxSoundCount}", GUILayout.ExpandWidth(false));
+                    bool audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
+                    if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
+                        SoundManager.StopSound(audioKey, audioNameSpace);
+
+                    if (audioPlay)
+                    {
+                        if (audioSpatial)
+                        {
+                            if (audioClip == null)
+                                SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo, audioMinDistance, audioMaxDistance, null, audioLocalPosition.x, audioLocalPosition.y, audioLocalPosition.z);
+                            else
+                                SoundManager.PlaySound(audioClip, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo, audioMinDistance, audioMaxDistance, null, audioLocalPosition.x, audioLocalPosition.y, audioLocalPosition.z);
+                        }
+                        else
+                        {
+                            if (audioClip == null)
+                                SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo);
+                            else
+                                SoundManager.PlaySound(audioClip, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo);
+                        }
+                    }
+
+                    GUI.enabled = true;
 
                     EditorGUILayout.EndHorizontal();
                 }
