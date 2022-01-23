@@ -37,6 +37,7 @@ namespace SCKRM.Resource
 
         public static string[] textureExtension { get; } = new string[] { "png", "jpg", "tga" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
+        public static string[] audioExtension { get; } = new string[] { "ogg", "mp3", "mp2", "wav", "aif", "xm", "mod", "it", "vag", "xma", "s3m" };
 
 
 
@@ -1025,7 +1026,7 @@ namespace SCKRM.Resource
 
             if (path == null)
                 path = "";
-
+            
             AudioClip audioClip = await getSound(".ogg", AudioType.OGGVORBIS);
             if (audioClip == null) audioClip = await getSound(".mp3", AudioType.MPEG);
             if (audioClip == null) audioClip = await getSound(".mp2", AudioType.MPEG);

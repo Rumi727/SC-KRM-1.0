@@ -42,7 +42,7 @@ namespace SCKRM.Editor
 
         }
 
-        protected void UseProperty(string propertyName)
+        public void UseProperty(string propertyName)
         {
             SerializedProperty tps = serializedObject.FindProperty(propertyName);
             EditorGUI.BeginChangeCheck();
@@ -51,7 +51,7 @@ namespace SCKRM.Editor
                 serializedObject.ApplyModifiedProperties();
         }
 
-        protected void UseProperty(string propertyName, string label)
+        public void UseProperty(string propertyName, string label)
         {
             GUIContent GUIContent = new GUIContent();
             GUIContent.text = label;

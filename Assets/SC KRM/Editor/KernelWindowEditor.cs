@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SCKRM.Editor
 {
@@ -617,11 +618,25 @@ namespace SCKRM.Editor
 
                 EditorGUILayout.Space();
 
-                Kernel.Data.splashScreenPath = EditorGUILayout.TextField("스플래시 씬 경로", Kernel.Data.splashScreenPath);
-                Kernel.Data.splashScreenName = EditorGUILayout.TextField("스플래시 씬 이름", Kernel.Data.splashScreenName);
+                {
+                    SceneAsset scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName) + ".unity");
 
-                string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
-                EditorGUILayout.LabelField($"경로: {path}.unity");
+                    scene = (SceneAsset)EditorGUILayout.ObjectField("스플래시 씬", scene, typeof(SceneAsset), false);
+
+                    string sceneAllPath = AssetDatabase.GetAssetPath(scene);
+                    if (sceneAllPath != "")
+                    {
+                        string scenePath = sceneAllPath.Substring(0, sceneAllPath.LastIndexOf("/"));
+                        string sceneName = sceneAllPath.Remove(0, sceneAllPath.LastIndexOf("/") + 1);
+                        sceneName = sceneName.Substring(0, sceneName.Length - 6);
+
+                        Kernel.Data.splashScreenPath = scenePath;
+                        Kernel.Data.splashScreenName = sceneName;
+                    }
+
+                    string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
+                    EditorGUILayout.LabelField($"경로: {path}.unity");
+                }
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
@@ -1296,7 +1311,7 @@ namespace SCKRM.Editor
                                     for (int j = 0; j < soundMetaDatas.Count; j++)
                                     {
                                         SoundMetaData soundMetaData = soundMetaDatas[j];
-                                        string path2 = soundMetaData.path;
+                                        string soundPath = soundMetaData.path;
                                         bool stream = soundMetaData.stream;
                                         float pitch = soundMetaData.pitch;
                                         float tempo = soundMetaData.tempo;
@@ -1307,7 +1322,30 @@ namespace SCKRM.Editor
                                         GUILayout.Space(60);
 
                                         GUILayout.Label("경로", GUILayout.ExpandWidth(false));
-                                        path2 = EditorGUILayout.TextField(path2);
+                                        soundPath = EditorGUILayout.TextField(soundPath);
+
+                                        //개같네 진짜 안해
+                                        /*{
+                                            string assetAllPath = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
+                                            string assetAllPathAndName = PathTool.Combine(assetAllPath, soundPath);
+
+                                            string assetPath = PathTool.Combine("Assets/StreamingAssets", ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
+                                            string assetPathAndName = PathTool.Combine(assetPath, soundPath);
+
+                                            ResourceManager.FileExtensionExists(assetAllPathAndName, out string outPath, ResourceManager.audioExtension);
+
+                                            DefaultAsset audioClip = AssetDatabase.LoadAssetAtPath<DefaultAsset>(assetPathAndName + Path.GetExtension(outPath));
+                                            audioClip = (DefaultAsset)EditorGUILayout.ObjectField(audioClip, typeof(DefaultAsset), false);
+
+                                            assetPathAndName = AssetDatabase.GetAssetPath(audioClip);
+                                            if (soundData.Key == "jevil")
+                                                Debug.Log(assetPathAndName);
+                                            string assetName = assetPathAndName.Replace(assetPath + "/", "");
+                                            assetAllPathAndName = assetAllPathAndName.Substring(0, assetAllPathAndName.Length - Path.GetExtension(assetAllPathAndName).Length);
+
+                                            if (ResourceManager.FileExtensionExists(assetAllPathAndName, out _, ResourceManager.audioExtension))
+                                                soundPath = Path.GetFileNameWithoutExtension(assetName);
+                                        }*/
 
                                         if (soundData.Value.isBGM)
                                         {
@@ -1334,7 +1372,7 @@ namespace SCKRM.Editor
 
                                         EditorGUILayout.EndHorizontal();
 
-                                        soundMetaDatas[j] = new SoundMetaData(path2, stream, pitch, tempo, null);
+                                        soundMetaDatas[j] = new SoundMetaData(soundPath, stream, pitch, tempo, null);
                                     }
                                     valueList.Add(new SoundData(soundCategory, subtitle, isBGM, soundMetaDatas.ToArray()));
 

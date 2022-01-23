@@ -28,13 +28,13 @@ namespace SCKRM.Editor
             if (Application.isPlaying)
                 return;
 
+            string activeScenePath = SceneManager.GetActiveScene().path;
             try
             {
                 if (sceneListChangedEnable)
                 {
                     sceneListChangedEnable = false;
 
-                    string activeScenePath = SceneManager.GetActiveScene().path;
                     EditorSceneManager.OpenScene($"{PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName)}.unity");
 
                     string splashScenePath = SceneManager.GetActiveScene().path;
@@ -73,6 +73,7 @@ namespace SCKRM.Editor
             catch (Exception e)
             {
                 sceneListChangedEnable = true;
+                EditorSceneManager.OpenScene(activeScenePath);
                 Debug.LogError(e.Message);
             }
         }
