@@ -17,13 +17,12 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            if (editor.audioMixerGroup == null)
-            {
-                EditorGUILayout.HelpBox("오디오 믹서 그룹을 넣어주세요", MessageType.Warning);
-                UseProperty("_audioMixerGroup");
-            }
-
             KernelWindowEditor.instance.Audio(300);
+
+            DrawLine();
+
+            EditorGUILayout.HelpBox("오디오 믹서 그룹을 넣어주세요", MessageType.None);
+            UseProperty("_audioMixerGroup");
         }
     }
 }

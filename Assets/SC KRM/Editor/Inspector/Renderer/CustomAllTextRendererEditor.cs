@@ -18,7 +18,7 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            UseProperty("_nameSpace", "네임스페이스");
+            editor.nameSpace = DrawNameSpace("네임스페이스", editor.nameSpace);
             UseProperty("_path", "이름");
 
             EditorGUILayout.Space();

@@ -1073,11 +1073,10 @@ namespace SCKRM.Editor
             }
 
             EditorGUILayout.BeginHorizontal();
-            audioSettingNameSpace = EditorGUILayout.TextField("네임스페이스", audioSettingNameSpace);
-            string nameSpace = audioSettingNameSpace;
-            if (nameSpace == "")
-                nameSpace = ResourceManager.defaultNameSpace;
 
+            audioSettingNameSpace = CustomInspectorEditor.DrawNameSpace("네임스페이스", audioSettingNameSpace);
+
+            string nameSpace = audioSettingNameSpace;
             string path = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
 
             if (Application.isPlaying)

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using SCKRM.Tool;
 using System;
+using SCKRM.Resource;
 
 namespace SCKRM.Editor
 {
@@ -481,6 +482,24 @@ namespace SCKRM.Editor
 
                 EditorGUILayout.EndHorizontal();
             }
+        }
+
+        public static string DrawNameSpace(string nameSpace)
+        {
+            int index = EditorGUILayout.Popup(ResourceManager.SaveData.nameSpaces.IndexOf(nameSpace), ResourceManager.SaveData.nameSpaces.ToArray());
+            if (index >= 0)
+                return ResourceManager.SaveData.nameSpaces[index];
+            else
+                return ResourceManager.defaultNameSpace;
+        }
+
+        public static string DrawNameSpace(string label, string nameSpace)
+        {
+            int index = EditorGUILayout.Popup(label, ResourceManager.SaveData.nameSpaces.IndexOf(nameSpace), ResourceManager.SaveData.nameSpaces.ToArray());
+            if (index >= 0)
+                return ResourceManager.SaveData.nameSpaces[index];
+            else
+                return ResourceManager.defaultNameSpace;
         }
     }
 }

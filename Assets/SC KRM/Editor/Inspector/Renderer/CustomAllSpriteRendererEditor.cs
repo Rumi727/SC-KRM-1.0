@@ -29,7 +29,7 @@ namespace SCKRM.Editor
                 DrawLine();
             }
 
-            UseProperty("_nameSpace", "네임스페이스");
+            editor.nameSpace = DrawNameSpace("네임스페이스", editor.nameSpace);
             UseProperty("_type", "타입");
             UseProperty("_path", "이름");
             UseProperty("_index", "스프라이트 인덱스");
