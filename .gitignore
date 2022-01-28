@@ -71,6 +71,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+
+#Custom Ignore
+.vsconfig
 [Aa]ssets/StreamingAssets/assets/school-live/sounds*
 [Aa]ssets/StreamingAssets/assets/school-live/sounds.meta
 [Aa]ssets/StreamingAssets/assets/sc-krm/sounds*
