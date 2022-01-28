@@ -2,6 +2,8 @@
 	"language.name": "한국어",
 	"language.region": "대한민국",
 	
+	
+	
 	"gui.done": "완료",
 	"gui.cancel": "취소",
 	"gui.back": "뒤로",
@@ -18,15 +20,22 @@
 	"gui.warning": "경고",
 	"gui.error": "오류",
 	
+	"gui.inputfield.enternumber": "숫자 입력...",
+	"gui.inputfield.entertext": "텍스트 입력...",
+	
+	
+	
 	"kernel.allrefresh.warning": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고치면 프로그램이 튕기는 버그가 있습니다!\n정말로 계속하시겠습니까?",
 	"kernel.allrefresh.error": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고칠 수 없습니다!",
 	
-	"options.resourcepack": "리소스 팩...",
-	"resourcePack.title": "리소스 팩 선택",
-	"options.language": "언어...",
-	"options.languageWarning": "(언어 번역은 100% 정확하지 않을 수 있습니다)",
-	"options.controls": "조작...",
-	"controls.title": "조작",
+	
+	
+	"options.general.title": "일반",
+	"options.general.vSync": "수직 동기화",
+	"options.general.fpslimit": "FPS 제한",
+	"options.general.guisize": "GUI 크기",
+	
+	
 	
 	"pack.available.title": "사용 가능\n━━━━━━━━━",
 	"pack.selected.title": "선택됨\n━━━━━━",

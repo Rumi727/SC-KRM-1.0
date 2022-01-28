@@ -27,7 +27,7 @@ namespace SCKRM.UI.SideBar
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (SideBarManager.isNoticeBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "taskbar", "noticebar"))
+                if (SideBarManager.isSideBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "taskbar", "noticebar"))
                     noticeList.transform.GetChild(0).GetComponent<Notice>().Remove();
             }
         }
@@ -69,7 +69,7 @@ namespace SCKRM.UI.SideBar
                 notice.verticalLayout.padding.left = 70;
             }
 
-            SideBarManager.isNoticeBarShow = true;
+            SideBarManager.isSideBarShow = true;
         }
 
         public enum Type

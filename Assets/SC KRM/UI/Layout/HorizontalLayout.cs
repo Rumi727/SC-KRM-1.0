@@ -76,7 +76,11 @@ namespace SCKRM.UI
                     if (!update2)
                         update = false;
 
+#if UNITY_EDITOR
+                    if (!update && !lerp && Application.isPlaying)
+#else
                     if (!update && !lerp)
+#endif
                         return;
                 }
 

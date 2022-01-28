@@ -76,7 +76,11 @@ namespace SCKRM.UI
                     if (!update2)
                         update = false;
 
+#if UNITY_EDITOR
+                    if (!update && !lerp && Application.isPlaying)
+#else
                     if (!update && !lerp)
+#endif
                         return;
                 }
 
@@ -184,6 +188,7 @@ namespace SCKRM.UI
                     childRectTransform.anchorMin = new Vector2(0.5f, 1);
                     childRectTransform.anchorMax = new Vector2(0.5f, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 1);
+                    
 #if UNITY_EDITOR
                     if (!Application.isPlaying || !lerp)
 #else

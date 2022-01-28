@@ -25,14 +25,16 @@
       306,
       110
     ],
-    "setting_bar_manager.show": [
-      0
+    "setting_manager.show": [
+      306,
+      106
     ]
   },
   "inputLockList": {
     "taskbar": false,
-    "noticebar": false,
+    "sidebar": false,
     "log": false,
-    "log.command": false
+    "log.command": false,
+    "settingbar": false
   }
 }

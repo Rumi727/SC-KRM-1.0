@@ -2,6 +2,8 @@
 	"language.name": "English",
 	"language.region": "US",
 	
+	
+	
 	"gui.done": "Done",
 	"gui.cancel": "Cancel",
 	"gui.back": "Back",
@@ -18,15 +20,22 @@
 	"gui.warning": "Warning",
 	"gui.error": "Error",
 	
+	"gui.inputfield.enternumber": "Enter number...",
+	"gui.inputfield.entertext": "Enter text...",
+	
+	
+	
 	"kernel.allrefresh.warning": "There is a bug where refreshing the resource pack while sound effects or music is playing causes the program to crash!\nAre you sure you want to continue?",
 	"kernel.allrefresh.error": "Unable to refresh resource pack while sound effect or music is playing!",
 	
-	"options.resourcepack": "Resource Packs...",
-	"resourcePack.title": "Select Resource Packs",
-	"options.language": "Language...",
-	"options.languageWarning": "(Language translations may not be 100% accurate)",
-	"options.controls": "Controls...",
-	"controls.title": "Controls",
+	
+	
+	"options.general.title": "General",
+	"options.general.vSync": "VSync",
+	"options.general.fpslimit": "FPS Limit",
+	"options.general.guisize": "GUI Size",
+	
+	
 	
 	"pack.available.title": "Available\n━━━━━━━━━",
 	"pack.selected.title": "Selected\n━━━━━━",

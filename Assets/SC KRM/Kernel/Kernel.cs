@@ -49,6 +49,7 @@ namespace SCKRM
         [SaveLoad("default")]
         public sealed class SaveData
         {
+            [JsonProperty] public static bool vSync { get; set; } = true;
             [JsonProperty] public static int fpsLimit { get; set; } = 300;
             [JsonProperty] public static float guiSize { get; set; } = 1;
         }
@@ -244,18 +245,29 @@ namespace SCKRM
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
 
+            float defaultGuiSize = (float)Screen.width / 1920;
+
             SaveData.fpsLimit = SaveData.fpsLimit.Clamp(1);
+            SaveData.guiSize = SaveData.guiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
+
             Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(1);
             Data.afkFpsLimit = Data.afkFpsLimit.Clamp(1);
             Data.afkTimerLimit = Data.afkTimerLimit.Clamp(0);
 
             //FPS Limit
-            if (!isAFK && (Application.isFocused || Application.isEditor))
-                Application.targetFrameRate = SaveData.fpsLimit;
-            else if (!isAFK && !Application.isFocused)
-                Application.targetFrameRate = Data.notFocusFpsLimit;
+            if (!SaveData.vSync)
+            {
+                if (!isAFK && (Application.isFocused || Application.isEditor))
+                    Application.targetFrameRate = SaveData.fpsLimit;
+                else if (!isAFK && !Application.isFocused)
+                    Application.targetFrameRate = Data.notFocusFpsLimit;
+                else
+                    Application.targetFrameRate = Data.afkFpsLimit;
+
+                QualitySettings.vSyncCount = 0;
+            }
             else
-                Application.targetFrameRate = Data.afkFpsLimit;
+                QualitySettings.vSyncCount = 1;
 
             //AFK
             if (isInitialLoadEnd && InputManager.GetAnyKeyDown("all"))

@@ -11,17 +11,34 @@ namespace SCKRM.UI
     [RequireComponent(typeof(Canvas))]
     public sealed class CanvasSetting : MonoBehaviour
     {
-        [FormerlySerializedAs("_customRenderMode")]
-        [SerializeField] bool _customSetting;
-        public bool customSetting { get => _customSetting; set => _customSetting = value; }
-        [SerializeField] bool _worldRenderMode;
-        public bool worldRenderMode { get => _worldRenderMode; set => _worldRenderMode = value; }
+        [SerializeField] bool _customSetting; public bool customSetting { get => _customSetting; set => _customSetting = value; }
+        [SerializeField] bool _customGuiSize; public bool customGuiSize { get => _customGuiSize; set => _customGuiSize = value; }
+        [SerializeField] bool _worldRenderMode; public bool worldRenderMode { get => _worldRenderMode; set => _worldRenderMode = value; }
 
         public Canvas canvas { get; private set; }
         public RectTransform rectTransform { get; private set; }
 
         void Update()
         {
+            if (!customGuiSize)
+            {
+#if UNITY_EDITOR
+                if (canvas == null)
+                    canvas = GetComponent<Canvas>();
+
+                if (Application.isPlaying)
+                    canvas.scaleFactor = Kernel.SaveData.guiSize;
+                else
+                    canvas.scaleFactor = 1;
+            }
+#else
+                if (canvas == null)
+                    canvas = GetComponent<Canvas>();
+                
+                canvas.scaleFactor = Kernel.SaveData.guiSize;
+            }
+#endif
+
             if (!customSetting && !worldRenderMode)
             {
                 if (canvas == null)
@@ -30,7 +47,6 @@ namespace SCKRM.UI
                     rectTransform = GetComponent<RectTransform>();
 
                 canvas.worldCamera = UnityEngine.Camera.main;
-                canvas.scaleFactor = Kernel.SaveData.guiSize;
 
                 if (canvas.worldCamera != null)
                     canvas.renderMode = RenderMode.ScreenSpaceCamera;

@@ -20,7 +20,7 @@ namespace SCKRM.UI.TaskBar
         }
 
         public static TaskBarManager instance { get; private set; }
-        public static bool taskBarShow { get; set; } = true;
+        public static bool allowTaskBarShow { get; set; } = true;
         public static bool backButtonShow { get; set; } = true;
         public static bool isTaskBarShow { get; private set; } = true;
 
@@ -29,7 +29,7 @@ namespace SCKRM.UI.TaskBar
             get => _cropTheScreen;
             set
             {
-                if (taskBarShow)
+                if (allowTaskBarShow)
                     return;
 
                 _cropTheScreen = value;
@@ -59,7 +59,7 @@ namespace SCKRM.UI.TaskBar
         }
 
         [SerializeField] EventSystem _eventSystem; public EventSystem eventSystem => _eventSystem;
-        [SerializeField] GameObject _background; public GameObject background => _background;
+        [SerializeField] Image _background; public Image background => _background;
         [SerializeField] GameObject _backButton; public GameObject backButton => _backButton;
         [SerializeField] GameObject _layout; public GameObject layout => _layout;
 
@@ -84,8 +84,8 @@ namespace SCKRM.UI.TaskBar
             if (Kernel.isInitialLoadEnd)
             {
                 {
-                    bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || SideBarManager.isNoticeBarShow;
-                    isTaskBarShow = taskBarShow || selectedTaskBar;
+                    bool selectedTaskBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || SideBarManager.isSideBarShow || SettingBarManager.isSettingBarShow;
+                    isTaskBarShow = allowTaskBarShow || selectedTaskBar;
                     tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<KernelCanvas>() == null;
 
                     InputManager.SetInputLock("taskbar", selectedTaskBar);
@@ -94,13 +94,23 @@ namespace SCKRM.UI.TaskBar
                     {
                         oldSelectedObject = eventSystem.currentSelectedGameObject;
 
-                        if (!background.activeSelf)
-                            background.SetActive(true);
+                        if (!background.gameObject.activeSelf)
+                            background.gameObject.SetActive(true);
+
+                        background.color = background.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsDeltaTime);
                     }
                     else
                     {
-                        if (background.activeSelf)
-                            background.SetActive(false);
+                        if (background.gameObject.activeSelf)
+                        {
+                            if (background.color.a <= 0.01f)
+                            {
+                                background.color = new Color(0, 0, 0, 0);
+                                background.gameObject.SetActive(false);
+                            }
+                            else
+                                background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsDeltaTime);
+                        }
                     }
                     
                     if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all", "log.command"))
@@ -109,7 +119,10 @@ namespace SCKRM.UI.TaskBar
                         eventSystem.SetSelectedGameObject(null);
 
                     if (InputManager.GetKeyDown("sidebar_manager.show", "all"))
-                        SideBarManager.isNoticeBarShow = true;
+                        SideBarToggle();
+
+                    if (InputManager.GetKeyDown("setting_manager.show", "all"))
+                        SettingBarToggle();
                 }
 
 
@@ -146,7 +159,7 @@ namespace SCKRM.UI.TaskBar
                         }
                     }
 
-                    if (SideBarManager.isNoticeBarShow)
+                    if (SideBarManager.isSideBarShow)
                     {
                         GameObject gameObject = SideBarManager.instance.gameObject;
 
@@ -159,6 +172,22 @@ namespace SCKRM.UI.TaskBar
                         RectTransform rectTransform = SideBarManager.instance.rectTransform;
 
                         if (gameObject.activeSelf && rectTransform.anchoredPosition.x >= rectTransform.sizeDelta.x - 0.01f)
+                            gameObject.SetActive(false);
+                    }
+
+                    if (SettingBarManager.isSettingBarShow)
+                    {
+                        GameObject gameObject = SettingBarManager.instance.gameObject;
+
+                        if (!gameObject.activeSelf)
+                            gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        GameObject gameObject = SettingBarManager.instance.gameObject;
+                        RectTransform rectTransform = SettingBarManager.instance.rectTransform;
+
+                        if (gameObject.activeSelf && rectTransform.anchoredPosition.x <= (-rectTransform.sizeDelta.x) + 0.01f)
                             gameObject.SetActive(false);
                     }
 
@@ -177,7 +206,7 @@ namespace SCKRM.UI.TaskBar
 
 
                 {
-                    if (taskBarShow)
+                    if (allowTaskBarShow)
                         cropTheScreen = true;
 
                     if (tempCropTheScreen != cropTheScreen)
@@ -228,16 +257,31 @@ namespace SCKRM.UI.TaskBar
 
         public void Hide()
         {
-            if (SideBarManager.isNoticeBarShow)
+            if (SettingBarManager.isSettingBarShow)
             {
-                SideBarManager.isNoticeBarShow = false;
+                SettingBarManager.isSettingBarShow = false;
+                Tab();
+            }
+            else if (SideBarManager.isSideBarShow)
+            {
+                SideBarManager.isSideBarShow = false;
                 Tab();
             }
             else
                 eventSystem.SetSelectedGameObject(null);
         }
 
-        public void NoticeBarToggle() => SideBarManager.isNoticeBarShow = !SideBarManager.isNoticeBarShow;
+        public void SideBarToggle()
+        {
+            SideBarManager.isSideBarShow = !SideBarManager.isSideBarShow;
+            SettingBarManager.isSettingBarShow = false;
+        }
+
+        public void SettingBarToggle()
+        {
+            SettingBarManager.isSettingBarShow = !SettingBarManager.isSettingBarShow;
+            SideBarManager.isSideBarShow = false;
+        }
 
         public static void Tab()
         {

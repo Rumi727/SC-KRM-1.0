@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &381719330
+--- !u!1001 &108360195
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -178,21 +178,61 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kernel
       objectReference: {fileID: 0}
+    - target: {fileID: 998664769708502554, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 1818760885789760683, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 28
+      value: 88
       objectReference: {fileID: 0}
-    - target: {fileID: 2163216687194136324, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+    - target: {fileID: 6176144749820169527, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2163216687194136324, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+    - target: {fileID: 6176144749820169527, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6271892794893452762, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 12
+      value: 94.815
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999554774159483889, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056425633274486534, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056425633274486534, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056425633274486534, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7092400158823409976, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7092400158823409976, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127809456190427659, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127809456190427659, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673979069137479782, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 114
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
@@ -246,9 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 904725997}
+  tempParentGameobject: {fileID: 1737623620}
+  _parentRectTransformSetting: {fileID: 1737623622}
 --- !u!1 &937926570
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,9 +471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 1251785090}
+  tempParentGameobject: {fileID: 1737623620}
+  _parentRectTransformSetting: {fileID: 1737623622}
 --- !u!1 &1539956741
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +621,7 @@ GameObject:
   - component: {fileID: 1686849169}
   - component: {fileID: 1686849173}
   - component: {fileID: 1686849168}
-  - component: {fileID: 1686849172}
+  - component: {fileID: 1686849174}
   - component: {fileID: 1686849166}
   - component: {fileID: 1686849170}
   - component: {fileID: 1686849171}
@@ -679,9 +719,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _customRenderMode: 1
+  _customSetting: 1
+  _customGuiSize: 1
   _worldRenderMode: 0
---- !u!114 &1686849172
+--- !u!114 &1686849173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686849165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 1686849169}
+  tempParentGameobject: {fileID: 0}
+  _parentRectTransformSetting: {fileID: 0}
+--- !u!114 &1686849174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -704,21 +760,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &1686849173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686849165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
 --- !u!1 &1737623620
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +811,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 1737623621}
+  tempParentGameobject: {fileID: 1686849165}
+  _parentRectTransformSetting: {fileID: 1686849173}

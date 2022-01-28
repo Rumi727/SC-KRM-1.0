@@ -178,7 +178,7 @@ namespace SCKRM.Tool
         {
             if (!unclamped)
                 t = t.Clamp01();
-            return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.b + (target.b - current.b) * t);
+            return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
         }
 
         public static int MoveTowards(this int current, int target, int maxDelta)

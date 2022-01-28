@@ -38,14 +38,14 @@ namespace SCKRM.UI.SideBar
         }
 
 
-        static bool _isNoticeBarShow;
-        public static bool isNoticeBarShow
+        static bool _isSideBarShow;
+        public static bool isSideBarShow
         {
-            get => _isNoticeBarShow;
+            get => _isSideBarShow;
             set
             {
-                InputManager.SetInputLock("noticebar", value);
-                _isNoticeBarShow = value;
+                InputManager.SetInputLock("sidebar", value);
+                _isSideBarShow = value;
             }
         }
 
@@ -77,13 +77,13 @@ namespace SCKRM.UI.SideBar
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (isNoticeBarShow)
+                if (isSideBarShow)
                 {
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.anchoredPosition.y), 0.2f * Kernel.fpsDeltaTime);
 
                     if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all"))
                     {
-                        isNoticeBarShow = false;
+                        isSideBarShow = false;
                         TaskBarManager.Tab();
                     }
                 }

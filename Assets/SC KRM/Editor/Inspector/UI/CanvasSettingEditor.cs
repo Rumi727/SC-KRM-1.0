@@ -21,6 +21,10 @@ namespace SCKRM.Editor
 
             if (!editor.customSetting)
                 UseProperty("_worldRenderMode", "월드 렌더 모드");
+
+            DrawLine();
+
+            UseProperty("_customGuiSize", "GUI 크기 커스텀");
         }
     }
 }

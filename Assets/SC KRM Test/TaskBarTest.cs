@@ -6,5 +6,5 @@ using UnityEngine;
 
 public class TaskBarTest : MonoBehaviour
 {
-    void Awake() => TaskBarManager.taskBarShow = false;
+    void Awake() => TaskBarManager.allowTaskBarShow = false;
 }
