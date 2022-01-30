@@ -52,6 +52,8 @@ namespace SCKRM
             [JsonProperty] public static bool vSync { get; set; } = true;
             [JsonProperty] public static int fpsLimit { get; set; } = 300;
             [JsonProperty] public static float guiSize { get; set; } = 1;
+            [JsonProperty] public static float fixedGuiSize { get; set; } = 1;
+            [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = false;
         }
 
         public static Kernel instance;
@@ -188,6 +190,7 @@ namespace SCKRM
 
         public static int mainVolume { get; set; } = 100;
         public static float gameSpeed { get; set; } = 1;
+        public static float guiSize { get; private set; } = 1;
 
         public static bool isInitialLoadStart { get; private set; } = false;
         public static bool isInitialLoadEnd { get; private set; } = false;
@@ -245,27 +248,32 @@ namespace SCKRM
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
 
+            //현제 해상도의 가로랑 1920을 나눠서 모든 해상도에도 가로 픽셀 크기는 똑같이 유지되게 함
             float defaultGuiSize = (float)Screen.width / 1920;
 
-            SaveData.fpsLimit = SaveData.fpsLimit.Clamp(1);
-            SaveData.guiSize = SaveData.guiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
-
+            SaveData.fpsLimit = SaveData.fpsLimit.Clamp(30);
+            SaveData.fixedGuiSize = SaveData.fixedGuiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
+            SaveData.guiSize = SaveData.guiSize.Clamp(0.5f, 4);
             Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(1);
             Data.afkFpsLimit = Data.afkFpsLimit.Clamp(1);
             Data.afkTimerLimit = Data.afkTimerLimit.Clamp(0);
 
-            //FPS Limit
-            if (!SaveData.vSync)
-            {
-                if (!isAFK && (Application.isFocused || Application.isEditor))
-                    Application.targetFrameRate = SaveData.fpsLimit;
-                else if (!isAFK && !Application.isFocused)
-                    Application.targetFrameRate = Data.notFocusFpsLimit;
-                else
-                    Application.targetFrameRate = Data.afkFpsLimit;
+            //GUI 크기 설정
+            if (!SaveData.fixedGuiSizeEnable)
+                guiSize = SaveData.guiSize * defaultGuiSize;
+            else
+                guiSize = SaveData.fixedGuiSize;
 
+            //FPS Limit
+            if (!isAFK && (Application.isFocused || Application.isEditor))
+                Application.targetFrameRate = SaveData.fpsLimit;
+            else if (!isAFK && !Application.isFocused)
+                Application.targetFrameRate = Data.notFocusFpsLimit;
+            else
+                Application.targetFrameRate = Data.afkFpsLimit;
+
+            if (!SaveData.vSync)
                 QualitySettings.vSyncCount = 0;
-            }
             else
                 QualitySettings.vSyncCount = 1;
 

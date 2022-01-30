@@ -34,6 +34,7 @@
 	"options.general.vSync": "수직 동기화",
 	"options.general.fpslimit": "FPS 제한",
 	"options.general.guisize": "GUI 크기",
+	"options.general.fixedguisizeenable": "고정적인 GUI 크기 사용",
 	
 	
 	

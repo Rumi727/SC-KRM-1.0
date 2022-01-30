@@ -34,6 +34,7 @@
 	"options.general.vSync": "VSync",
 	"options.general.fpslimit": "FPS Limit",
 	"options.general.guisize": "GUI Size",
+	"options.general.fixedguisizeenable": "Use a fixed GUI size",
 	
 	
 	

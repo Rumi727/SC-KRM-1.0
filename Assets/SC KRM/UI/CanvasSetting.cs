@@ -27,7 +27,7 @@ namespace SCKRM.UI
                     canvas = GetComponent<Canvas>();
 
                 if (Application.isPlaying)
-                    canvas.scaleFactor = Kernel.SaveData.guiSize;
+                    canvas.scaleFactor = Kernel.guiSize;
                 else
                     canvas.scaleFactor = 1;
             }
@@ -35,7 +35,7 @@ namespace SCKRM.UI
                 if (canvas == null)
                     canvas = GetComponent<Canvas>();
                 
-                canvas.scaleFactor = Kernel.SaveData.guiSize;
+                canvas.scaleFactor = Kernel.guiSize;
             }
 #endif
 
@@ -67,7 +67,7 @@ namespace SCKRM.UI
                     rectTransform = GetComponent<RectTransform>();
 
                 canvas.worldCamera = UnityEngine.Camera.main;
-                canvas.scaleFactor = Kernel.SaveData.guiSize;
+                canvas.scaleFactor = Kernel.guiSize;
 
                 if (canvas.worldCamera == null)
                 {
@@ -98,18 +98,18 @@ namespace SCKRM.UI
                 transform.localEulerAngles = Vector3.zero;
 #endif
 
-                float width = Screen.width * (1 / Kernel.SaveData.guiSize);
+                float width = Screen.width * (1 / Kernel.guiSize);
                 float height;
 #if UNITY_EDITOR
                 if (Application.isPlaying && TaskBarManager.cropTheScreen)
-                    height = Screen.height * (1 / Kernel.SaveData.guiSize) + (TaskBarManager.instance.rectTransform.anchoredPosition.y - TaskBarManager.instance.rectTransform.sizeDelta.y);
+                    height = Screen.height * (1 / Kernel.guiSize) + (TaskBarManager.instance.rectTransform.anchoredPosition.y - TaskBarManager.instance.rectTransform.sizeDelta.y);
                 else
-                    height = Screen.height * (1 / Kernel.SaveData.guiSize);
+                    height = Screen.height * (1 / Kernel.guiSize);
 #else
                 if (TaskBarManager.cropTheScreen)
-                    height = Screen.height * (1 / Kernel.SaveData.guiSize) + TaskBarManager.instance.rectTransform.sizeDelta.y;
+                    height = Screen.height * (1 / Kernel.guiSize) + TaskBarManager.instance.rectTransform.sizeDelta.y;
                 else
-                    height = Screen.height * (1 / Kernel.SaveData.guiSize);
+                    height = Screen.height * (1 / Kernel.guiSize);
 #endif
 
                 rectTransform.sizeDelta = new Vector2(width, height);
