@@ -135,8 +135,8 @@ namespace SCKRM.Window
             }
             else
             {
-                lerpX = Mathf.Lerp(lerpX, rect.x, time * 60 * Time.deltaTime);
-                lerpY = Mathf.Lerp(lerpY, rect.y, time * 60 * Time.deltaTime);
+                lerpX = Mathf.Lerp(lerpX, rect.x, time * 60 * Kernel.deltaTime);
+                lerpY = Mathf.Lerp(lerpY, rect.y, time * 60 * Kernel.deltaTime);
             }
 
             if (!Lerp)

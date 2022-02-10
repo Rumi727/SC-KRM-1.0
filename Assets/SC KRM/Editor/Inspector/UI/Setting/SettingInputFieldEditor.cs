@@ -1,4 +1,4 @@
-using SCKRM.UI.Setting.InputField;
+using SCKRM.UI.Setting;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SettingInputField), true)]
-    public sealed class SettingInputFieldEditor : CustomInspectorEditor
+    public class SettingInputFieldEditor : SettingEditor
     {
         SettingInputField editor;
 
@@ -18,8 +18,7 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            UseProperty("_saveLoadAttributeName", "세이브 로드 어트리뷰트의 키");
-            UseProperty("_variableName", "변수 이름");
+            base.OnInspectorGUI();
 
             DrawLine();
 
@@ -39,11 +38,6 @@ namespace SCKRM.Editor
 
             UseProperty("_inputField");
             UseProperty("_placeholder");
-
-            if (editor.propertyInfo != null)
-                EditorGUILayout.LabelField(editor.type + " " + editor.propertyInfo.Name + " = " + editor.propertyInfo.GetValue(editor.type));
-            else if (editor.fieldInfo != null)
-                EditorGUILayout.LabelField(editor.type + " " + editor.fieldInfo.Name + " = " + editor.fieldInfo.GetValue(editor.type));
         }
     }
 }

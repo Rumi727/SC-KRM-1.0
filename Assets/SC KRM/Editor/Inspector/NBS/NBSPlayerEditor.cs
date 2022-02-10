@@ -56,6 +56,7 @@ namespace SCKRM.Editor
 
                 GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                 nbsPlayer.pitch = EditorGUILayout.Slider(nbsPlayer.pitch, -3, 3);
+
                 GUILayout.Label("템포", GUILayout.ExpandWidth(false));
                 nbsPlayer.tempo = EditorGUILayout.Slider(nbsPlayer.tempo, -3, 3);
 
@@ -103,7 +104,7 @@ namespace SCKRM.Editor
                 }
                 else
                 {
-                    float timer = nbsPlayer.tick * 0.05f + (0.05f - nbsPlayer.timer);
+                    float timer = nbsPlayer.time;
                     float length = nbsPlayer.length * 0.05f;
 
                     string time = timer.ToTime();
@@ -113,8 +114,8 @@ namespace SCKRM.Editor
                         GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
                     else if (nbsPlayer.tempo.Abs() != 1)
                     {
-                        string pitchTime = (((nbsPlayer.tick * 0.05f) + (0.05f - nbsPlayer.timer)) * (1 / nbsPlayer.tempo)).ToTime();
-                        string pitchEndTime = (nbsPlayer.length * 0.05f * (1 / nbsPlayer.tempo)).ToTime();
+                        string pitchTime = nbsPlayer.realTime.ToTime();
+                        string pitchEndTime = nbsPlayer.realLength.ToTime();
 
                         GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime}) ({nbsPlayer.tick} / {nbsPlayer.length})", GUILayout.ExpandWidth(false));
                     }
@@ -122,8 +123,8 @@ namespace SCKRM.Editor
                         GUILayout.Label($"{time} / {endTime} ({nbsPlayer.tick} / {nbsPlayer.length})", GUILayout.ExpandWidth(false));
 
                     float audioTime = GUILayout.HorizontalSlider(timer, 0, length);
-                    if ((timer - audioTime).Abs() >= 0.1f && !refesh)
-                        nbsPlayer.tick = Mathf.RoundToInt(audioTime * 20);
+                    if (timer != audioTime && !refesh)
+                        nbsPlayer.time = audioTime;
                 }
 
                 GUILayout.Label($"{nbsPlayer.index} / {nbsPlayer.nbsFile.nbsNotes.Count - 1}", GUILayout.ExpandWidth(false));

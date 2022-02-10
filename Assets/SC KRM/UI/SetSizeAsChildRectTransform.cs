@@ -5,25 +5,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM.UI
+namespace SCKRM.UI.Layout
 {
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/자식들의 Rect Transform 크기 따라가기")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class SetSizeAsChildRectTransform : MonoBehaviour
+    public sealed class SetSizeAsChildRectTransform : Layout
     {
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
-
         [SerializeField] Mode _mode = Mode.None;
         public Mode mode { get => _mode; set => _mode = value; }
 
@@ -35,40 +23,27 @@ namespace SCKRM.UI
         [SerializeField, Min(0)] float _max = 0;
         public float max { get => _max; set => _max = value; }
 
-        [SerializeField, Min(0)] float _spacing = 0;
-        public float spacing { get => _spacing; set => _spacing = value; }
-        [SerializeField] bool _lerp = false;
-        public bool lerp { get => _lerp; set => _lerp = value; }
 
 
-
-        [SerializeField] RectTransform[] _ignore = new RectTransform[0];
-        public RectTransform[] ignore { get => _ignore; set => _ignore = value; }
-
-
-        public RectTransform[] childRectTransforms { get; private set; }
-
-
-        [System.NonSerialized] int tempChildCount = -1;
-        void Update()
+        protected override void Update()
         {
-            if (tempChildCount != transform.childCount || !Application.isPlaying)
-            {
-                childRectTransforms = new RectTransform[transform.childCount];
-                for (int i = 0; i < childRectTransforms.Length; i++)
-                {
-                    Transform childTransform = transform.GetChild(i);
-                    childRectTransforms[i] = childTransform.GetComponent<RectTransform>();
-                }
+            base.Update();
 
-                tempChildCount = transform.childCount;
-            }
+            if (childRectTransforms == null || childRectTransforms.Count <= 0)
+                return;
 
             float x = 0;
             float y = 0;
-            for (int i = 0; i < childRectTransforms.Length; i++)
+            for (int i = 0; i < childRectTransforms.Count; i++)
             {
                 RectTransform childRectTransform = childRectTransforms[i];
+                if (childRectTransform == null)
+                    continue;
+                else if (!childRectTransform.gameObject.activeSelf)
+                    continue;
+                else if (childRectTransform.sizeDelta.x == 0 || childRectTransform.sizeDelta.y == 0)
+                    continue;
+
                 if (childRectTransform == null)
                 {
                     spacingCancel();
@@ -97,7 +72,7 @@ namespace SCKRM.UI
 
                 void spacingCancel()
                 {
-                    if (i == childRectTransforms.Length - 1)
+                    if (i == childRectTransforms.Count - 1)
                     {
                         x -= spacing;
                         y -= spacing;

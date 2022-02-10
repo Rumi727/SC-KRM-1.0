@@ -49,4 +49,34 @@ public class GameObjectAddMenu
         Undo.RegisterCreatedObjectUndo(gameObject, "Create " + gameObject.name);
         Selection.activeObject = gameObject;
     }
+
+    [MenuItem("GameObject/Setting UI/Space")]
+    public static void SettingSpace(MenuCommand menuCommand)
+    {
+        GameObject gameObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/SC KRM/Editor/Game Object Add Menu/Space.prefab", typeof(GameObject));
+        if (menuCommand.context != null)
+            gameObject = Object.Instantiate(gameObject, ((GameObject)menuCommand.context).transform);
+        else
+            gameObject = Object.Instantiate(gameObject, null);
+
+        gameObject.name = "Space";
+
+        Undo.RegisterCreatedObjectUndo(gameObject, "Create " + gameObject.name);
+        Selection.activeObject = gameObject;
+    }
+
+    [MenuItem("GameObject/Setting UI/Line")]
+    public static void SettingLine(MenuCommand menuCommand)
+    {
+        GameObject gameObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/SC KRM/Editor/Game Object Add Menu/Line.prefab", typeof(GameObject));
+        if (menuCommand.context != null)
+            gameObject = Object.Instantiate(gameObject, ((GameObject)menuCommand.context).transform);
+        else
+            gameObject = Object.Instantiate(gameObject, null);
+
+        gameObject.name = "Line";
+
+        Undo.RegisterCreatedObjectUndo(gameObject, "Create " + gameObject.name);
+        Selection.activeObject = gameObject;
+    }
 }

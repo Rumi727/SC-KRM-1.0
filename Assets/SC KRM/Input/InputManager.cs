@@ -303,15 +303,7 @@ namespace SCKRM.Input
                 inputLockDeny = new string[0];
 
             if (inputLockDeny.Contains("all"))
-            {
-                foreach (var item in Data.inputLockList)
-                {
-                    if (item.Value && inputLockDeny.Contains(item.Key))
-                        return true;
-                }
-
                 return false;
-            }
 
             foreach (var item in Data.inputLockList)
             {

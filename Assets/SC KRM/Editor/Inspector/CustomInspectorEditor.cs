@@ -76,7 +76,9 @@ namespace SCKRM.Editor
             EditorGUI.DrawRect(r, color);
         }
 
-        public static void DrawList(List<int> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
+        public static void DrawList(List<int> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
+        public static Vector2 DrawList(List<int> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
+        public static Vector2 drawList(List<int> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -89,7 +91,7 @@ namespace SCKRM.Editor
                 }
 
                 {
-                    if (list.Count <= 0 || (list[list.Count - 1] != 0) && deleteSafety)
+                    if (list.Count <= 0 || (list[list.Count - 1] != 0 && deleteSafety))
                         GUI.enabled = false;
 
                     if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
@@ -125,6 +127,9 @@ namespace SCKRM.Editor
             }
 
             EditorGUILayout.Space();
+
+            if (scrollView)
+                scrollViewPos = EditorGUILayout.BeginScrollView(scrollViewPos);
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -154,10 +159,28 @@ namespace SCKRM.Editor
                     GUI.enabled = true;
                 }
 
+                {
+                    if (list[i] != 0)
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                        list.RemoveAt(i);
+
+                    GUI.enabled = true;
+                }
+
                 EditorGUILayout.EndHorizontal();
             }
+
+            if (scrollView)
+                EditorGUILayout.EndScrollView();
+
+            return scrollViewPos;
         }
-        public static void DrawList(List<float> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
+
+        public static void DrawList(List<float> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
+        public static Vector2 DrawList(List<float> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
+        public static Vector2 drawList(List<float> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -170,7 +193,7 @@ namespace SCKRM.Editor
                 }
 
                 {
-                    if (list.Count <= 0 || (list[list.Count - 1] != 0) && deleteSafety)
+                    if (list.Count <= 0 || (list[list.Count - 1] != 0 && deleteSafety))
                         GUI.enabled = false;
 
                     if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
@@ -206,6 +229,9 @@ namespace SCKRM.Editor
             }
 
             EditorGUILayout.Space();
+
+            if (scrollView)
+                scrollViewPos = EditorGUILayout.BeginScrollView(scrollViewPos);
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -235,10 +261,28 @@ namespace SCKRM.Editor
                     GUI.enabled = true;
                 }
 
+                {
+                    if (list[i] != 0)
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                        list.RemoveAt(i);
+
+                    GUI.enabled = true;
+                }
+
                 EditorGUILayout.EndHorizontal();
             }
+
+            if (scrollView)
+                EditorGUILayout.EndScrollView();
+
+            return scrollViewPos;
         }
-        public static void DrawList(List<double> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
+
+        public static void DrawList(List<double> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
+        public static Vector2 DrawList(List<double> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
+        public static Vector2 drawList(List<double> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -251,7 +295,7 @@ namespace SCKRM.Editor
                 }
 
                 {
-                    if (list.Count <= 0 || (list[list.Count - 1] != 0) && deleteSafety)
+                    if (list.Count <= 0 || (list[list.Count - 1] != 0 && deleteSafety))
                         GUI.enabled = false;
 
                     if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
@@ -288,6 +332,9 @@ namespace SCKRM.Editor
 
             EditorGUILayout.Space();
 
+            if (scrollView)
+                scrollViewPos = EditorGUILayout.BeginScrollView(scrollViewPos);
+
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
@@ -316,11 +363,28 @@ namespace SCKRM.Editor
                     GUI.enabled = true;
                 }
 
+                {
+                    if (list[i] != 0)
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                        list.RemoveAt(i);
+
+                    GUI.enabled = true;
+                }
+
                 EditorGUILayout.EndHorizontal();
             }
+
+            if (scrollView)
+                EditorGUILayout.EndScrollView();
+
+            return scrollViewPos;
         }
 
-        public static void DrawList(List<string> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true)
+        public static void DrawList(List<string> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
+        public static Vector2 DrawList(List<string> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
+        public static Vector2 drawList(List<string> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -357,7 +421,7 @@ namespace SCKRM.Editor
                     {
                         for (int i = list.Count - 1; i >= count; i--)
                         {
-                            if (list.Count > 0 && (list[list.Count - 1] == null || list[list.Count - 1] == "" || !deleteSafety))
+                            if (list.Count > 0 && (list[list.Count - 1] == "" || !deleteSafety))
                                 list.RemoveAt(list.Count - 1);
                             else
                                 count++;
@@ -369,6 +433,9 @@ namespace SCKRM.Editor
             }
 
             EditorGUILayout.Space();
+
+            if (scrollView)
+                scrollViewPos = EditorGUILayout.BeginScrollView(scrollViewPos);
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -398,11 +465,28 @@ namespace SCKRM.Editor
                     GUI.enabled = true;
                 }
 
+                {
+                    if (list[i] != null && list[i] != "")
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                        list.RemoveAt(i);
+
+                    GUI.enabled = true;
+                }
+
                 EditorGUILayout.EndHorizontal();
             }
+
+            if (scrollView)
+                EditorGUILayout.EndScrollView();
+
+            return scrollViewPos;
         }
 
-        public static void DrawList<T>(List<T> list, string label, Action<int> action, int tab = 0, int tab2 = 0, bool deleteSafety = true)
+        public static void DrawList<T>(List<T> list, string label, Action<int> action, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, action, false, Vector2.zero, tab, tab2, deleteSafety);
+        public static Vector2 DrawList<T>(List<T> list, string label, Action<int> action, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, action, true, scrollViewPos, tab, tab2, deleteSafety);
+        public static Vector2 drawList<T>(List<T> list, string label, Action<int> action, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -452,6 +536,9 @@ namespace SCKRM.Editor
 
             EditorGUILayout.Space();
 
+            if (scrollView)
+                scrollViewPos = EditorGUILayout.BeginScrollView(scrollViewPos);
+
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
@@ -480,8 +567,23 @@ namespace SCKRM.Editor
                     GUI.enabled = true;
                 }
 
+                {
+                    if (list[i] != null && !list[i].Equals(default(T)))
+                        GUI.enabled = false;
+
+                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                        list.RemoveAt(i);
+
+                    GUI.enabled = true;
+                }
+
                 EditorGUILayout.EndHorizontal();
             }
+
+            if (scrollView)
+                EditorGUILayout.EndScrollView();
+
+            return scrollViewPos;
         }
 
         public static string DrawNameSpace(string nameSpace)

@@ -21,18 +21,7 @@ namespace SCKRM.NBS
         public string key { get => _key; set => _key = value; }
 
 
-        float _timer = 0;
-        public float timer
-        {
-            get => _timer;
-            set
-            {
-                if (value > 0.05f)
-                    _timer = 0.05f;
-                else
-                    _timer = value;
-            }
-        }
+        float tickTimer = 0;
 
         int _index = 0;
         public int index
@@ -42,7 +31,7 @@ namespace SCKRM.NBS
             {
                 value = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
 
-                _timer = 0;
+                tickTimer = 0;
                 _index = value;
                 _tick = nbsFile.nbsNotes[value].delayTick;
             }
@@ -56,13 +45,27 @@ namespace SCKRM.NBS
             {
                 value = value.Clamp(0, length);
 
-                _timer = 0;
+                tickTimer = 0;
                 _tick = value;
                 _index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
             }
         }
 
+        public float time
+        {
+            get => (_tick * 0.05f) + tickTimer;
+            set
+            {
+                tick = (int)(value * 20);
+                tickTimer = ((value * 20) - (int)(value * 20)) * 0.05f;
+            }
+        }
+        public float realTime { get => time / tempo; set => time = value * tempo; }
+
         public short length => (short)(nbsFile?.songLength);
+        public float realLength { get => length / tempo; }
+
+        public bool isLooped { get; private set; } = false;
         public bool isPaused { get; set; } = false;
 
 
@@ -123,7 +126,7 @@ namespace SCKRM.NBS
 
             if (tempo < 0 && tick == 0)
             {
-                _timer = 0;
+                tickTimer = 0;
                 _tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
                 _index = nbsFile.nbsNotes.Count - 2;
             }
@@ -135,7 +138,7 @@ namespace SCKRM.NBS
                         tick = nbsFile.loopStartTick;
                     else
                     {
-                        _timer = 0;
+                        tickTimer = 0;
                         _tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
                         _index = nbsFile.nbsNotes.Count - 2;
                     }
@@ -155,22 +158,22 @@ namespace SCKRM.NBS
             {
                 if (tempo < 0)
                 {
-                    _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs();
-                    while (timer <= 0)
+                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs();
+                    while (tickTimer <= 0)
                     {
                         _tick--;
-                        _timer += 0.05f;
+                        tickTimer += 0.05f;
 
                         SoundPlay();
                     }
                 }
                 else
                 {
-                    _timer -= Time.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo;
-                    while (timer <= 0)
+                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo;
+                    while (tickTimer >= 0.05f)
                     {
                         _tick++;
-                        _timer += 0.05f;
+                        tickTimer -= 0.05f;
 
                         SoundPlay();
                     }
@@ -260,22 +263,25 @@ namespace SCKRM.NBS
                     _index++;
             }
 
+            isLooped = false;
             if (tick < 0 || index >= nbsFile.nbsNotes.Count)
             {
                 if (loop)
                 {
                     if (tempo < 0)
                     {
-                        _timer = 0;
+                        tickTimer = 0;
                         _tick = nbsFile.nbsNotes[nbsFile.nbsNotes.Count - 1].delayTick;
                         _index = nbsFile.nbsNotes.Count - 2;
                     }
                     else
                     {
-                        _timer = 0;
+                        tickTimer = 0;
                         _tick = 0;
                         _index = 0;
                     }
+
+                    isLooped = true;
                 }
                 else
                     Remove();

@@ -16,6 +16,7 @@ namespace SCKRM.Splash
         [SerializeField] Transform CS;
         [SerializeField] Image CSImage;
         [SerializeField] Text text;
+        [SerializeField] string showText = "";
 
         float xV;
         float yV;
@@ -33,11 +34,11 @@ namespace SCKRM.Splash
 
         async UniTaskVoid Awake()
         {
-            bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
-            drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
-
             isAniPlayed = true;
             aniPlay = false;
+
+            bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
+            drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
 
             if (Random.Range(0, 2) == 1)
                 xFlip = true;
@@ -117,7 +118,7 @@ namespace SCKRM.Splash
                 if (CS.localPosition.x >= -25 && CS.localPosition.x <= 25 && CS.localPosition.y >= -25 && CS.localPosition.y <= 25)
                 {
                     text.rectTransform.anchoredPosition = new Vector3(0, -13);
-                    text.text = "TEAM Project";
+                    text.text = showText;
 
                     AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
 
@@ -126,7 +127,7 @@ namespace SCKRM.Splash
                 else if (xFlip && (CS.localPosition.x <= -500 || CS.localPosition.y <= -300))
                 {
                     text.rectTransform.anchoredPosition = new Vector3(0, -13);
-                    text.text = "TEAM Project";
+                    text.text = showText;
 
                     AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
 
@@ -135,7 +136,7 @@ namespace SCKRM.Splash
                 else if (!xFlip && (CS.localPosition.x >= 500 || CS.localPosition.y <= -300))
                 {
                     text.rectTransform.anchoredPosition = new Vector3(0, -13);
-                    text.text = "TEAM Project";
+                    text.text = showText;
 
                     AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
 

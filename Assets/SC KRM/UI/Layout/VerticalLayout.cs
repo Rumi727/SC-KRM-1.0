@@ -3,107 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SCKRM.UI
+namespace SCKRM.UI.Layout
 {
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
     [AddComponentMenu("커널/UI/Layout/수직 레이아웃")]
-    public sealed class VerticalLayout : MonoBehaviour
+    public sealed class VerticalLayout : LayoutSetting<VerticalLayoutSetting>
     {
-        [SerializeField, HideInInspector] RectTransformInfo _rectTransformInfo;
-        public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-
-                return _rectTransformInfo;
-            }
-        }
-
-
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
-        [SerializeField, Min(0)] float _spacing;
-        public float spacing { get => _spacing; set => _spacing = value; }
-        [SerializeField] bool _lerp = true;
-        public bool lerp { get => _lerp; set => _lerp = value; }
 
-
-        public RectTransform[] childRectTransforms { get; private set; }
-        public VerticalLayoutSetting[] childVerticalLayoutSettings { get; private set; }
-
-
-
-        [System.NonSerialized] int tempChildCount = -1;
-        void Update()
+        protected override void Update()
         {
+            base.Update();
+
             float localSizeX = rectTransformInfo.localSize.x;
-
-            {
-                {
-                    bool update = true;
-#if UNITY_EDITOR
-                    if (tempChildCount != transform.childCount || !Application.isPlaying)
-                    {
-                        SetChild();
-                        tempChildCount = transform.childCount;
-                    }
-                    else
-                        update = false;
-#else
-                    if (tempChildCount != transform.childCount)
-                    {
-                        SetChild();
-                        tempChildCount = transform.childCount;
-                    }
-                    else
-                        update = false;
-#endif
-                    bool update2 = false;
-                    for (int i = 0; i < childRectTransforms.Length; i++)
-                    {
-                        RectTransform rectTransform = childRectTransforms[i];
-                        if (i != rectTransform.GetSiblingIndex())
-                        {
-                            SetChild();
-                            update = true;
-                            update2 = true;
-                        }
-                    }
-
-                    if (!update2)
-                        update = false;
-
-#if UNITY_EDITOR
-                    if (!update && !lerp && Application.isPlaying)
-#else
-                    if (!update && !lerp)
-#endif
-                        return;
-                }
-
-                void SetChild()
-                {
-                    childRectTransforms = new RectTransform[transform.childCount];
-                    childVerticalLayoutSettings = new VerticalLayoutSetting[childRectTransforms.Length];
-                    for (int i = 0; i < childRectTransforms.Length; i++)
-                    {
-                        Transform childTransform = transform.GetChild(i);
-                        childRectTransforms[i] = childTransform.GetComponent<RectTransform>();
-                        childVerticalLayoutSettings[i] = childTransform.GetComponent<VerticalLayoutSetting>();
-                    }
-                }
-            }
-
-            if (childRectTransforms == null || childRectTransforms.Length <= 0)
+            if (childRectTransforms == null || childRectTransforms.Count <= 0)
                 return;
 
             bool center = false;
             bool down = false;
             float y = 0;
-            for (int i = 0; i < childRectTransforms.Length; i++)
+            for (int i = 0; i < childRectTransforms.Count; i++)
             {
                 RectTransform childRectTransform = childRectTransforms[i];
                 if (childRectTransform == null)
@@ -113,7 +34,7 @@ namespace SCKRM.UI
                 else if (childRectTransform.sizeDelta.x == 0 || childRectTransform.sizeDelta.y == 0)
                     continue;
 
-                VerticalLayoutSetting taskBarLayoutSetting = childVerticalLayoutSettings[i];
+                VerticalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
                 if (taskBarLayoutSetting != null)
                 {
                     if (taskBarLayoutSetting.custom)
@@ -129,8 +50,8 @@ namespace SCKRM.UI
                         center = true;
 
                         y = 0;
-                        y += (childRectTransform.sizeDelta.y - (_padding.top - _padding.bottom) - spacing) * 0.5f;
-                        for (int j = i; j < childRectTransforms.Length; j++)
+                        y += (childRectTransform.sizeDelta.y - (padding.top - padding.bottom) - spacing) * 0.5f;
+                        for (int j = i; j < childRectTransforms.Count; j++)
                         {
                             RectTransform rectTransform2 = childRectTransforms[j];
                             if (!rectTransform2.gameObject.activeSelf)
@@ -142,7 +63,7 @@ namespace SCKRM.UI
                             else if (rectTransform2.sizeDelta.x == 0 || rectTransform2.sizeDelta.y == 0)
                                 continue;
 
-                            VerticalLayoutSetting taskBarLayoutSetting2 = childVerticalLayoutSettings[j];
+                            VerticalLayoutSetting taskBarLayoutSetting2 = childSettingComponents[j];
                             if (taskBarLayoutSetting2 != null && taskBarLayoutSetting2.mode == VerticalLayoutSetting.Mode.down)
                                 break;
 

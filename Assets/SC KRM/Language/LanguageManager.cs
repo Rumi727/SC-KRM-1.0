@@ -50,7 +50,7 @@ namespace SCKRM.Language
 
             Dictionary<string, string> jObject = JsonManager.JsonRead<Dictionary<string, string>>(PathTool.Combine(ResourceManager.languagePath, language), nameSpace);
             if (jObject != null && jObject.ContainsKey(key))
-                return jObject[key].EnvironmentVariable();
+                return jObject[key].ConstEnvironmentVariable();
             else
                 return "";
         }

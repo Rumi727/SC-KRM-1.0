@@ -206,8 +206,12 @@ namespace SCKRM.Editor
 
                         GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                         audioPitch = EditorGUILayout.Slider(audioPitch, -3, 3);
-                        GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                        audioTempo = EditorGUILayout.Slider(audioTempo, -3, 3);
+
+                        if (SoundManager.Data.useTempo)
+                        {
+                            GUILayout.Label("템포", GUILayout.ExpandWidth(false));
+                            audioTempo = EditorGUILayout.Slider(audioTempo, -3, 3);
+                        }
 
                         EditorGUILayout.EndHorizontal();
                     }
@@ -461,6 +465,7 @@ namespace SCKRM.Editor
 
                     //CustomInspectorEditor.DrawList(ResourceManager.resourcePacks, "리소스팩 경로", resourceScrollPos, deleteSafety);
                     DrawList(ResourceManager.SaveData.resourcePacks, "리소스팩 경로", deleteSafety);
+
                     void DrawList(List<string> list, string label, bool deleteSafety = true)
                     {
                         //GUI
@@ -546,6 +551,16 @@ namespace SCKRM.Editor
 
                                     if (i != list.Count - 1)
                                         GUI.enabled = true;
+                                }
+
+                                {
+                                    if (i < list.Count - 1 && list[i] != null && list[i] != "")
+                                        GUI.enabled = false;
+
+                                    if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                                        list.RemoveAt(i);
+
+                                    GUI.enabled = true;
                                 }
 
                                 EditorGUILayout.EndHorizontal();
@@ -1060,9 +1075,25 @@ namespace SCKRM.Editor
         Vector2 audioSettingScrollPos = Vector2.zero;
         public void AudioSetting(int scrollYSize = 0)
         {
+            if (!Application.isPlaying)
+                ProjectSettingManager.Load(typeof(SoundManager.Data));
+
             //GUI
             {
                 EditorGUILayout.LabelField("오디오 설정", EditorStyles.boldLabel);
+
+                EditorGUILayout.Space();
+
+                {
+                    if (Application.isPlaying)
+                        GUI.enabled = false;
+
+                    SoundManager.Data.useTempo = EditorGUILayout.Toggle("템포 기능 사용", SoundManager.Data.useTempo);
+                }
+
+                GUI.enabled = true;
+
+                CustomInspectorEditor.DrawLine();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("안전 삭제 모드 (삭제 할 리스트가 빈 값이 아니면 삭제 금지)", GUILayout.Width(330));
@@ -1346,7 +1377,7 @@ namespace SCKRM.Editor
                                                 soundPath = Path.GetFileNameWithoutExtension(assetName);
                                         }*/
 
-                                        if (soundData.Value.isBGM)
+                                        if (soundData.Value.isBGM && SoundManager.Data.useTempo)
                                         {
                                             GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                                             pitch = EditorGUILayout.FloatField(pitch, GUILayout.Width(30)).Clamp(soundMetaData.tempo.Abs() * 0.5f, soundMetaData.tempo.Abs() * 2f);
@@ -1396,6 +1427,9 @@ namespace SCKRM.Editor
                         File.WriteAllText(jsonPath, JsonManager.ObjectToJson(soundDatas));
                 }
             }
+
+            if (GUI.changed && !Application.isPlaying)
+                ProjectSettingManager.Save(typeof(SoundManager.Data));
         }
     }
 }

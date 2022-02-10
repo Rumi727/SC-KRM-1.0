@@ -12,6 +12,7 @@ namespace SCKRM.Renderer
 
         public static void AllTextRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread).Forget();
 
+        static bool rerenderEnd = true;
         public static async UniTaskVoid Rerender(CustomAllRenderer[] customRenderers, bool thread = true)
         {
             if (!ThreadManager.isMainThread)
@@ -22,8 +23,14 @@ namespace SCKRM.Renderer
 #endif
             if (thread)
             {
+                await UniTask.WaitUntil(() => rerenderEnd);
+
+                rerenderEnd = false;
+
                 ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, customRenderers, "notice.running_task.rerender.name");
                 await UniTask.WaitUntil(() => threadMetaData.thread == null);
+
+                rerenderEnd = true;
             }
             else
             {
@@ -48,7 +55,6 @@ namespace SCKRM.Renderer
                 customRenderer.ResourceReload();
 
                 threadMetaData.progress = (float)i / (customRenderers.Length - 1);
-                Thread.Sleep(1);
             }
         }
     }

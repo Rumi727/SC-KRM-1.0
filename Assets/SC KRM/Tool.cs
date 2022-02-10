@@ -10,7 +10,31 @@ namespace SCKRM.Tool
 {
     public static class MathfTool
     {
+        public static sbyte Abs(this sbyte value)
+        {
+            if (value < 0)
+                return (sbyte)-value;
+            else
+                return value;
+        }
+
+        public static short Abs(this short value)
+        {
+            if (value < 0)
+                return (sbyte)-value;
+            else
+                return value;
+        }
+
         public static int Abs(this int value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
+
+        public static long Abs(this long value)
         {
             if (value < 0)
                 return -value;
@@ -34,7 +58,39 @@ namespace SCKRM.Tool
                 return value;
         }
 
+        public static decimal Abs(this decimal value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
+
+        public static int Sign(this sbyte value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static short Sign(this short value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
         public static int Sign(this int value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static long Sign(this long value)
         {
             if (value < 0)
                 return -1;
@@ -58,7 +114,85 @@ namespace SCKRM.Tool
                 return 1;
         }
 
+        public static int Sign(this decimal value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static byte Clamp(this byte value, byte min, byte max = byte.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static sbyte Clamp(this sbyte value, sbyte min, sbyte max = sbyte.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static short Clamp(this short value, short min, short max = short.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static ushort Clamp(this ushort value, ushort min, ushort max = ushort.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
         public static int Clamp(this int value, int min, int max = int.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static uint Clamp(this uint value, uint min, uint max = uint.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static long Clamp(this long value, long min, long max = long.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static ulong Clamp(this ulong value, ulong min, ulong max = ulong.MaxValue)
         {
             if (value < min)
                 return min;
@@ -88,11 +222,83 @@ namespace SCKRM.Tool
                 return value;
         }
 
+        public static decimal Clamp(this decimal value, decimal min, decimal max = decimal.MaxValue)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static byte Clamp01(this byte value)
+        {
+            if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static sbyte Clamp01(this sbyte value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static short Clamp01(this short value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static ushort Clamp01(this ushort value)
+        {
+            if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
         public static int Clamp01(this int value)
         {
             if (value < 0)
                 return 0;
             else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static uint Clamp01(this uint value)
+        {
+            if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static long Clamp01(this long value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static ulong Clamp01(this ulong value)
+        {
+            if (value > 1)
                 return 1;
             else
                 return value;
@@ -118,6 +324,135 @@ namespace SCKRM.Tool
                 return value;
         }
 
+        public static decimal Clamp01(this decimal value)
+        {
+            if (value < 0)
+                return 0;
+            else if (value > 1)
+                return 1;
+            else
+                return value;
+        }
+
+        public static byte Lerp(this byte current, byte target, byte t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static byte Lerp(this byte current, byte target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static byte Lerp(this byte current, byte target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static byte Lerp(this byte current, byte target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static sbyte Lerp(this sbyte current, sbyte target, sbyte t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static sbyte Lerp(this sbyte current, sbyte target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static sbyte Lerp(this sbyte current, sbyte target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static sbyte Lerp(this sbyte current, sbyte target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static short Lerp(this short current, short target, short t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static short Lerp(this short current, short target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static short Lerp(this short current, short target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static short Lerp(this short current, short target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static ushort Lerp(this ushort current, ushort target, ushort t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static ushort Lerp(this ushort current, ushort target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static ushort Lerp(this ushort current, ushort target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static ushort Lerp(this ushort current, ushort target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static int Lerp(this int current, int target, int t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (int)(((1 - t) * current) + (target * t));
+        }
+
         public static int Lerp(this int current, int target, float t, bool unclamped = false)
         {
             if (!unclamped)
@@ -132,6 +467,97 @@ namespace SCKRM.Tool
             return (int)(((1 - t) * current) + (target * t));
         }
 
+        public static int Lerp(this int current, int target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (int)(((1 - t) * current) + (target * t));
+        }
+
+        public static uint Lerp(this uint current, uint target, uint t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static uint Lerp(this uint current, uint target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static uint Lerp(this uint current, uint target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static uint Lerp(this uint current, uint target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static long Lerp(this long current, long target, long t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static long Lerp(this long current, long target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static long Lerp(this long current, long target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static long Lerp(this long current, long target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static ulong Lerp(this ulong current, ulong target, ulong t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static ulong Lerp(this ulong current, ulong target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static ulong Lerp(this ulong current, ulong target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static ulong Lerp(this ulong current, ulong target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return (ulong)(((1 - t) * current) + (target * t));
+        }
+
         public static float Lerp(this float current, float target, float t, bool unclamped = false)
         {
             if (!unclamped)
@@ -140,6 +566,13 @@ namespace SCKRM.Tool
         }
 
         public static double Lerp(this double current, double target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return ((1 - t) * current) + (target * t);
+        }
+
+        public static decimal Lerp(this decimal current, decimal target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
                 t = t.Clamp01();
@@ -181,12 +614,68 @@ namespace SCKRM.Tool
             return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
         }
 
+        public static byte MoveTowards(this byte current, byte target, byte maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return (byte)(current + maxDelta);
+        }
+
+        public static sbyte MoveTowards(this sbyte current, sbyte target, sbyte maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return (sbyte)(current + (target - current).Sign() * maxDelta);
+        }
+
+        public static short MoveTowards(this short current, short target, short maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return (short)(current + (target - current).Sign() * maxDelta);
+        }
+
+        public static ushort MoveTowards(this ushort current, ushort target, ushort maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return (ushort)(current + maxDelta);
+        }
+
         public static int MoveTowards(this int current, int target, int maxDelta)
         {
             if ((target - current).Abs() <= maxDelta)
                 return target;
 
             return current + (target - current).Sign() * maxDelta;
+        }
+
+        public static uint MoveTowards(this uint current, uint target, uint maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return current + maxDelta;
+        }
+
+        public static long MoveTowards(this long current, long target, long maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+
+        public static ulong MoveTowards(this ulong current, ulong target, ulong maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return current + maxDelta;
         }
 
         public static float MoveTowards(this float current, float target, float maxDelta)
@@ -198,6 +687,14 @@ namespace SCKRM.Tool
         }
 
         public static double MoveTowards(this double current, double target, double maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+
+        public static decimal MoveTowards(this decimal current, decimal target, decimal maxDelta)
         {
             if ((target - current).Abs() <= maxDelta)
                 return target;
@@ -280,6 +777,74 @@ namespace SCKRM.Tool
         /// <param name="list">리스트</param>
         /// <param name="target">기준</param>
         /// <returns></returns>
+        public static byte CloseValue(this List<byte> list, byte target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static sbyte CloseValue(this List<sbyte> list, sbyte target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static short CloseValue(this List<short> list, short target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static ushort CloseValue(this List<ushort> list, ushort target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
         public static int CloseValue(this List<int> list, int target)
         {
             if (list == null)
@@ -287,6 +852,57 @@ namespace SCKRM.Tool
 
             if (list.Count > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static uint CloseValue(this List<uint> list, uint target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static long CloseValue(this List<long> list, long target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static ulong CloseValue(this List<ulong> list, ulong target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
         }
@@ -326,6 +942,176 @@ namespace SCKRM.Tool
         }
 
         /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static decimal CloseValue(this List<decimal> list, decimal target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<byte> list, byte target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<sbyte> list, sbyte target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<short> list, short target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<ushort> list, ushort target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<int> list, int target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<uint> list, uint target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<long> list, long target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<ulong> list, ulong target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<float> list, float target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
         /// 가장 가까운 수를 찾고 인덱스를 반환합니다
         /// </summary>
         /// <param name="list"></param>
@@ -337,7 +1123,177 @@ namespace SCKRM.Tool
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y));
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<decimal> list, decimal target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<byte> list, byte target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<sbyte> list, sbyte target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<short> list, short target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<ushort> list, ushort target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<int> list, int target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<uint> list, uint target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<long> list, long target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<ulong> list, ulong target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<float> list, float target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
 
             return 0;
         }
@@ -354,7 +1310,24 @@ namespace SCKRM.Tool
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.BinarySearch(list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y));
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<decimal> list, decimal target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
 
             return 0;
         }
@@ -514,6 +1487,98 @@ namespace SCKRM.Tool
         /// 기준
         /// </param>
         /// <returns>
+        /// byte
+        /// </returns>
+        public static byte CloseValue(this byte[] array, byte target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// sbyte
+        /// </returns>
+        public static sbyte CloseValue(this sbyte[] array, sbyte target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// short
+        /// </returns>
+        public static short CloseValue(this short[] array, short target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// ushort
+        /// </returns>
+        public static ushort CloseValue(this ushort[] array, ushort target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
         /// int
         /// </returns>
         public static int CloseValue(this int[] array, int target)
@@ -523,6 +1588,75 @@ namespace SCKRM.Tool
 
             if (array.Length > 0)
                 return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// uint
+        /// </returns>
+        public static uint CloseValue(this uint[] array, uint target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// long
+        /// </returns>
+        public static long CloseValue(this long[] array, long target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// ulong
+        /// </returns>
+        public static ulong CloseValue(this ulong[] array, ulong target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
         }
@@ -572,11 +1706,34 @@ namespace SCKRM.Tool
 
             return 0;
         }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// double
+        /// </returns>
+        public static decimal CloseValue(this decimal[] array, decimal target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
     }
 
     public static class StringTool
     {
-        public static string EnvironmentVariable(this string value)
+        public static string ConstEnvironmentVariable(this string value)
         {
             if (value == null)
                 return null;
@@ -598,7 +1755,7 @@ namespace SCKRM.Tool
         /// (text = "AddSpacesToSentence") = "Add Spaces To Sentence"
         /// </summary>
         /// <param name="text">텍스트</param>
-        /// <param name="preserveAcronyms">약어 보존</param>
+        /// <param name="preserveAcronyms">약어(준말) 보존 (true = (UnscaledFPSDeltaTime = Unscaled FPS Delta Time), false = (UnscaledFPSDeltaTime = Unscaled FPSDelta Time))</param>
         /// <returns></returns>
         public static string AddSpacesToSentence(this string text, bool preserveAcronyms = true)
         {

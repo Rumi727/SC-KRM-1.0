@@ -455,8 +455,6 @@ namespace SCKRM.Resource
 
                             if (audioClip != null)
                                 soundMetaDatas.Add(new SoundMetaData(sound.path, sound.stream, sound.pitch, sound.tempo, audioClip));
-
-                            await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
                         }
 
                         if (!allSounds.ContainsKey(nameSpace))

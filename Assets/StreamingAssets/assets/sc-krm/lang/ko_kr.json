@@ -29,12 +29,18 @@
 	"kernel.allrefresh.error": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고칠 수 없습니다!",
 	
 	
+	"options.sound.title": "Sound",
+	"options.sound.mainVolume": "메인",
+	"options.sound.bgmVolume": "음악",
+	"options.sound.soundVolume": "효과음",
 	
-	"options.general.title": "일반",
-	"options.general.vSync": "수직 동기화",
-	"options.general.fpslimit": "FPS 제한",
-	"options.general.guisize": "GUI 크기",
-	"options.general.fixedguisizeenable": "고정적인 GUI 크기 사용",
+	"options.sound.noteBlockVolume": "노트 블록",
+	
+	"options.video.title": "Video",
+	"options.video.vSync": "수직 동기화",
+	"options.video.fpsLimit": "FPS 제한",
+	"options.video.guiSize": "GUI 크기",
+	"options.video.fixedGuiSizeEnable": "고정적인 GUI 크기 사용",
 	
 	
 	
@@ -62,6 +68,9 @@
 	
 	"kurumi_chan.birthday.title": "쿠루미쨩 생일 축하해",
 	"kurumi_chan.birthday.description": "오늘은 '에비스자와 쿠루미'의 생일입니다",
+	
+	"onell0.birthday.title": "스매프 %value%주년",
+	"onell0.birthday.description": "스매프 %value%주년을 진심으로 축하합니다!",
 	
 	
 	

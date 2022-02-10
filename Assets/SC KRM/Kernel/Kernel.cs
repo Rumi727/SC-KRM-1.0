@@ -22,6 +22,7 @@ using UnityEngine.UI;
 using SCKRM.Window;
 using System.Threading.Tasks;
 using SCKRM.UI.SideBar;
+using SCKRM.UI.TaskBar;
 
 namespace SCKRM
 {
@@ -49,11 +50,15 @@ namespace SCKRM
         [SaveLoad("default")]
         public sealed class SaveData
         {
+            [JsonProperty] public static int mainVolume { get; set; } = 100;
+            [JsonProperty] public static int bgmVolume { get; set; } = 100;
+            [JsonProperty] public static int soundVolume { get; set; } = 100;
+
             [JsonProperty] public static bool vSync { get; set; } = true;
             [JsonProperty] public static int fpsLimit { get; set; } = 300;
             [JsonProperty] public static float guiSize { get; set; } = 1;
             [JsonProperty] public static float fixedGuiSize { get; set; } = 1;
-            [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = false;
+            [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = true;
         }
 
         public static Kernel instance;
@@ -188,7 +193,6 @@ namespace SCKRM
 
 
 
-        public static int mainVolume { get; set; } = 100;
         public static float gameSpeed { get; set; } = 1;
         public static float guiSize { get; private set; } = 1;
 
@@ -240,6 +244,9 @@ namespace SCKRM
         }
 #endif
 
+        static int tempYear;
+        static int tempMonth;
+        static int tempDay;
         void Update()
         {
             fps = 1f / deltaTime;
@@ -248,8 +255,45 @@ namespace SCKRM
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
 
+            //AFK
+            if (isInitialLoadEnd && InputManager.GetAnyKeyDown("all"))
+                afkTimer = 0;
+
+            if (afkTimer >= Data.afkTimerLimit)
+                isAFK = true;
+            else
+            {
+                isAFK = false;
+                afkTimer += unscaledDeltaTime;
+            }
+
+            gameSpeed = gameSpeed.Clamp(0, 100);
+            Time.timeScale = gameSpeed;
+
+            //기념일
+            DateTime dateTime = DateTime.Now;
+            if (isInitialLoadEnd && (tempYear != dateTime.Year || tempMonth != dateTime.Month || tempDay != dateTime.Day))
+            {
+                if (dateTime.Month == 8 && dateTime.Day == 7)
+                    NoticeManager.Notice("kurumi_chan.birthday.title", "kurumi_chan.birthday.description");
+                else if (dateTime.Month == 2 && dateTime.Day == 9)
+                    NoticeManager.Notice("onell0.birthday.title", "onell0.birthday.description", "%value%", (dateTime.Year - 2010).ToString());
+
+                tempYear = dateTime.Year;
+                tempMonth = dateTime.Month;
+                tempDay = dateTime.Day;
+            }
+        }
+
+        //변수 업데이트
+        void LateUpdate()
+        {
             //현제 해상도의 가로랑 1920을 나눠서 모든 해상도에도 가로 픽셀 크기는 똑같이 유지되게 함
             float defaultGuiSize = (float)Screen.width / 1920;
+
+            SaveData.mainVolume = SaveData.mainVolume.Clamp(0, 200);
+            SaveData.bgmVolume = SaveData.bgmVolume.Clamp(0, 200);
+            SaveData.soundVolume = SaveData.soundVolume.Clamp(0, 200);
 
             SaveData.fpsLimit = SaveData.fpsLimit.Clamp(30);
             SaveData.fixedGuiSize = SaveData.fixedGuiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
@@ -277,25 +321,7 @@ namespace SCKRM
             else
                 QualitySettings.vSyncCount = 1;
 
-            //AFK
-            if (isInitialLoadEnd && InputManager.GetAnyKeyDown("all"))
-                afkTimer = 0;
-
-            if (afkTimer >= Data.afkTimerLimit)
-                isAFK = true;
-            else
-            {
-                isAFK = false;
-                afkTimer += unscaledDeltaTime;
-            }
-
-            if (mainVolume > 200)
-                mainVolume = 200;
-            else if (mainVolume < 0)
-                mainVolume = 0;
-
-            gameSpeed = gameSpeed.Clamp(0, 100);
-            Time.timeScale = gameSpeed;
+            AudioListener.volume = SaveData.mainVolume * 0.005f;
         }
 
         public static event Action InitialLoadStart;
@@ -317,6 +343,7 @@ namespace SCKRM
                     isInitialLoadStart = true;
                     InitialLoadStart?.Invoke();
 
+                    splashScreenBackground.gameObject.SetActive(true);
                     splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
 
                     //ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
@@ -324,8 +351,8 @@ namespace SCKRM
 
 #if UNITY_EDITOR
                     Scene scene = SceneManager.GetActiveScene();
-                    int index = scene.buildIndex;
-                    if (index != 0)
+                    int startedSceneIndex = scene.buildIndex;
+                    if (startedSceneIndex != 0)
                         SceneManager.LoadScene(0);
 #else
                     Scene scene = SceneManager.GetActiveScene();
@@ -346,47 +373,47 @@ namespace SCKRM
 
                     Debug.Log("Kernel: Waiting for settings to load...");
                     {
-                        ThreadMetaData threadMetaData = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
-                        await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
-                        threadMetaData = ThreadManager.Create(SaveLoadManager.VariableInfoLoad, "Save Data Load");
-                        await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
-                        threadMetaData = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
-                        await UniTask.WaitUntil(() => threadMetaData.thread == null, PlayerLoopTiming.Initialization);
+                        ThreadMetaData projectSettingLoad = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
+                        await UniTask.WaitUntil(() => projectSettingLoad.thread == null, PlayerLoopTiming.Initialization);
+                        projectSettingLoad = ThreadManager.Create(SaveLoadManager.VariableInfoLoad, "Save Data Load");
+                        await UniTask.WaitUntil(() => projectSettingLoad.thread == null, PlayerLoopTiming.Initialization);
+                        projectSettingLoad = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
+                        await UniTask.WaitUntil(() => projectSettingLoad.thread == null, PlayerLoopTiming.Initialization);
                     }
 
                     {
                         Debug.Log("Kernel: Waiting for resource to load...");
                         await ResourceManager.ResourceRefresh();
                     }
+                    
+                    {
+                        InitialLoadEnd?.Invoke();
+                        isInitialLoadEnd = true;
+
+                        RendererManager.AllRerender();
+
+                        Debug.Log("Kernel: Initial loading finished!");
+                    }
 
                     {
-                        if (index == 0)
+                        if (startedSceneIndex == 0)
                         {
                             Debug.Log("Kernel: Waiting for scene animation...");
                             await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, PlayerLoopTiming.Initialization);
                         }
                     }
 
+                    TaskBarManager.allowTaskBarShow = true;
+
                     SceneManager.sceneLoaded += LoadedSceneEvent;
 
                     GC.Collect();
 
-                    {
-                        InitialLoadEnd?.Invoke();
-                        isInitialLoadEnd = true;
-
-                        Debug.Log("Kernel: Initial loading finished!");
-
-                        DateTime dateTime = DateTime.Now;
-                        if (dateTime.Month == 8 && dateTime.Day == 7)
-                            NoticeManager.Notice("kurumi_chan.birthday.title", "kurumi_chan.birthday.description");
-                    }
-
 #if UNITY_EDITOR
-                    if (index != 0)
-                        SceneManager.LoadScene(index);
+                    if (startedSceneIndex != 0)
+                        SceneManager.LoadScene(startedSceneIndex);
                     else
-                        SceneManager.LoadScene(index + 1);
+                        SceneManager.LoadScene(startedSceneIndex + 1);
 #else
                     SceneManager.LoadScene(index + 1);
 #endif
@@ -397,6 +424,8 @@ namespace SCKRM
                         splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, splashScreenBackground.color.a - 0.05f * fpsDeltaTime);
                         await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
                     }
+
+                    splashScreenBackground.gameObject.SetActive(false);
                 }
                 catch (Exception e)
                 {
@@ -464,7 +493,7 @@ namespace SCKRM
                     await ResourceManager.ResourceRefresh();
                     RendererManager.AllRerender();
 
-                    await SoundManager.SoundRefresh();
+                    SoundManager.SoundRefresh();
                     ResourceManager.AudioGarbageRemoval();
                 }
             }

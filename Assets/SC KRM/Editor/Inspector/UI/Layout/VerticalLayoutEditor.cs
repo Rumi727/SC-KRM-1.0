@@ -1,4 +1,5 @@
 using SCKRM.UI;
+using SCKRM.UI.Layout;
 using UnityEditor;
 
 namespace SCKRM.Editor
@@ -18,6 +19,10 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             UseProperty("_lerp", "애니메이션 사용");
+
+            EditorGUILayout.Space();
+
+            UseProperty("_ignore", "무시");
         }
     }
 }

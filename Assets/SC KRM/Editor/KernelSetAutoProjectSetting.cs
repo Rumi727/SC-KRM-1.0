@@ -19,6 +19,7 @@ namespace SCKRM.Editor
 
         static KernelSetAutoProjectSetting()
         {
+            AudioListener.volume = 0.5f;
             EditorBuildSettings.sceneListChanged += SceneListChanged;
             EditorApplication.hierarchyChanged += HierarchyChanged;
         }

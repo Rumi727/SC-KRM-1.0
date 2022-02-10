@@ -1,4 +1,4 @@
-using SCKRM.UI.Setting.InputField;
+using SCKRM.UI.Setting;
 using UnityEditor;
 using UnityEngine;
 

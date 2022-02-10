@@ -32,7 +32,14 @@ namespace SCKRM.UI.SideBar
             }
         }
 
-        public static void Notice(string name, string info, Type type = Type.none)
+        public static void Notice(string name, string info) => notice(name, info, null, null, Type.none);
+        public static void Notice(string name, string info, Type type) => notice(name, info, null, null, type);
+        public static void Notice(string name, string info, string replaceOld, string replaceNew) => notice(name, info, new string[] { replaceOld }, new string[] { replaceNew }, Type.none);
+        public static void Notice(string name, string info, string replaceOld, string replaceNew, Type type) => notice(name, info, new string[] { replaceOld }, new string[] { replaceNew }, type);
+        public static void Notice(string name, string info, string[] replaceOld, string[] replaceNew) => notice(name, info, replaceOld, replaceNew, Type.none);
+        public static void Notice(string name, string info, string[] replaceOld, string[] replaceNew, Type type) => notice(name, info, replaceOld, replaceNew, type);
+
+        static void notice(string name, string info, string[] replaceOld, string[] replaceNew, Type type)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Notice));
@@ -49,6 +56,10 @@ namespace SCKRM.UI.SideBar
             notice.infoText.nameSpace = "sc-krm";
             notice.nameText.path = name;
             notice.infoText.path = info;
+            notice.nameText.replaceOld = replaceOld;
+            notice.infoText.replaceOld = replaceOld;
+            notice.nameText.replaceNew = replaceNew;
+            notice.infoText.replaceNew = replaceNew;
 
             notice.nameText.ResourceReload();
             notice.infoText.ResourceReload();

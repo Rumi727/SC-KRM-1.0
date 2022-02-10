@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using SCKRM.NBS;
 using SCKRM.Object;
+using SCKRM.ProjectSetting;
 using SCKRM.Resource;
 using SCKRM.Threads;
 using System.Collections.Generic;
@@ -12,6 +14,12 @@ namespace SCKRM.Sound
     [AddComponentMenu("커널/Audio/오디오 매니저", 0)]
     public sealed class SoundManager : MonoBehaviour
     {
+        [ProjectSetting]
+        public sealed class Data
+        {
+            [JsonProperty] public static bool useTempo { get; set; }
+        }
+
         [SerializeField] AudioMixerGroup _audioMixerGroup;
         public AudioMixerGroup audioMixerGroup => _audioMixerGroup;
 
@@ -38,7 +46,7 @@ namespace SCKRM.Sound
         /// <summary>
         /// It should only run on the main thread
         /// </summary>
-        public static async UniTask SoundRefresh()
+        public static void SoundRefresh()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SoundRefresh));
@@ -46,48 +54,25 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SoundRefresh));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SoundRefresh));
 
 
-
-            ThreadMetaData threadMetaData = new ThreadMetaData();
-            threadMetaData.name = "notice.running_task.audio_refresh.name";
-            threadMetaData.autoRemoveDisable = true;
-
-            ThreadManager.runningThreads.Add(threadMetaData);
 
             SoundObject[] soundObjects = FindObjectsOfType<SoundObject>();
             NBSPlayer[] nbsPlayers = FindObjectsOfType<NBSPlayer>();
 
-            int i;
-            int length = soundObjects.Length + nbsPlayers.Length;
-            if (length == 0)
-            {
-                threadMetaData.progress = 1;
-                threadMetaData.autoRemoveDisable = false;
-                return;
-            }
-
-            for (i = 0; i < soundObjects.Length; i++)
+            for (int i = 0; i < soundObjects.Length; i++)
             {
                 SoundObject soundObject = soundObjects[i];
                 soundObject.Refesh();
-
-                threadMetaData.progress = (float)i / (length - 1);
-
-                await UniTask.DelayFrame(1);
             }
 
             for (int ii = 0; ii < nbsPlayers.Length; ii++)
             {
-                threadMetaData.progress = (float)(i + ii) / (length - 1);
-
                 NBSPlayer nbsPlayer = nbsPlayers[ii];
                 nbsPlayer.Refesh();
-
-                await UniTask.DelayFrame(1);
             }
-
-            threadMetaData.autoRemoveDisable = false;
         }
 
         public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
@@ -110,6 +95,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(PlaySound));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(PlaySound));
 
             if (soundList.Count >= maxSoundCount)
             {
@@ -138,7 +125,7 @@ namespace SCKRM.Sound
             soundObject.key = key;
             soundObject.nameSpace = nameSpace;
             if (audioClips != null)
-                soundObject.audioClip = audioClips[Random.Range(0, audioClips.Length)];
+                soundObject.selectedAudioClip = audioClips[Random.Range(0, audioClips.Length)];
 
             soundObject.volume = volume;
             soundObject.loop = loop;
@@ -170,6 +157,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSound));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(StopSound));
 
             if (key == null)
                 key = "";
@@ -205,6 +194,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSoundAll));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
             for (int i = 0; i < soundList.Count; i++)
             {
@@ -226,6 +217,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSoundAll));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
             for (int i = 0; i < soundList.Count; i++)
             {
@@ -257,6 +250,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(PlayNBS));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(PlayNBS));
 
             if (nbsList.Count >= maxNBSCount)
                 nbsList[0].Remove();
@@ -305,6 +300,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopNBS));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(StopNBS));
 
             if (key == null)
                 key = "";
@@ -336,6 +333,8 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopNBSAll));
 #endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(StopNBSAll));
 
             for (int i = 0; i < nbsList.Count; i++)
             {

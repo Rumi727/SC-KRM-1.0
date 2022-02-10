@@ -35,12 +35,7 @@ namespace SCKRM.Editor
                 GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
                 soundObject.key = EditorGUILayout.TextField(soundObject.key);
                 GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                soundObject.audioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.audioClip, typeof(AudioClip), true);
-
-                refesh = GUILayout.Button("새로고침", GUILayout.ExpandWidth(false));
-                string text; if (!soundObject.isPaused) text = "일시정지"; else text = "재생";
-                pauseToggle = GUILayout.Button(text, GUILayout.ExpandWidth(false));
-                stop = GUILayout.Button("정지", GUILayout.ExpandWidth(false));
+                soundObject.selectedAudioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.selectedAudioClip, typeof(AudioClip), true);
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -53,13 +48,14 @@ namespace SCKRM.Editor
                 soundObject.loop = EditorGUILayout.Toggle(soundObject.loop, GUILayout.Width(15));
 
                 int minPitch = -3;
-                if (soundObject.audioClip == null && soundObject.soundMetaData.stream)
+                if (soundObject.loadedAudioClip == null && soundObject.soundMetaData.stream)
                     minPitch = 0;
 
-                if (soundObject.audioClip == null && soundObject.soundData.isBGM)
+                if (soundObject.loadedAudioClip == null && soundObject.soundData.isBGM && SoundManager.Data.useTempo)
                 {
                     GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                     soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, soundObject.tempo.Abs() * 0.5f, soundObject.tempo.Abs() * 2f);
+
                     GUILayout.Label("템포", GUILayout.ExpandWidth(false));
                     soundObject.tempo = EditorGUILayout.Slider(soundObject.tempo, minPitch, 3);
                 }
@@ -89,16 +85,23 @@ namespace SCKRM.Editor
 
                     GUILayout.Label("위치", GUILayout.ExpandWidth(false));
                     soundObject.localPosition = EditorGUILayout.Vector3Field("", soundObject.localPosition);
-
-                    EditorGUILayout.EndHorizontal();
                 }
                 else
                 {
                     GUILayout.Label("스테레오", GUILayout.ExpandWidth(false));
                     soundObject.panStereo = EditorGUILayout.Slider(soundObject.panStereo, -1, 1);
-
-                    EditorGUILayout.EndHorizontal();
                 }
+
+                refesh = GUILayout.Button("새로고침", GUILayout.ExpandWidth(false));
+                string text;
+                if (!soundObject.isPaused)
+                    text = "일시정지";
+                else
+                    text = "재생";
+                pauseToggle = GUILayout.Button(text, GUILayout.ExpandWidth(false));
+                stop = GUILayout.Button("정지", GUILayout.ExpandWidth(false));
+
+                EditorGUILayout.EndHorizontal();
             }
 
             DrawLine(1);
@@ -106,7 +109,7 @@ namespace SCKRM.Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                if (soundObject.audioClip == null && (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0))
+                if (soundObject.loadedAudioClip == null && (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0))
                 {
                     GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
                     GUILayout.HorizontalSlider(0, 0, 1);
@@ -116,37 +119,20 @@ namespace SCKRM.Editor
                     string time = soundObject.time.ToTime();
                     string endTime = soundObject.length.ToTime();
 
-                    if (soundObject.audioClip == null && soundObject.soundData.isBGM)
+                    if (soundObject.speed == 0)
+                        GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
+                    else if (soundObject.speed.Abs() != 1)
                     {
-                        if (soundObject.tempo == 0)
-                            GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                        else if (soundObject.tempo.Abs() != 1)
-                        {
-                            string pitchTime = (soundObject.time * (1 / soundObject.tempo)).ToTime();
-                            string pitchEndTime = (soundObject.length * (1 / soundObject.tempo)).ToTime();
+                        string pitchTime = soundObject.realTime.ToTime();
+                        string pitchEndTime = soundObject.realLength.ToTime();
 
-                            GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                        }
-                        else
-                            GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
+                        GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
                     }
                     else
-                    {
-                        if (soundObject.pitch == 0)
-                            GUILayout.Label($"--:-- / --:-- ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                        else if (soundObject.pitch.Abs() != 1)
-                        {
-                            string pitchTime = (soundObject.time * (1 / soundObject.pitch)).ToTime();
-                            string pitchEndTime = (soundObject.length * (1 / soundObject.pitch)).ToTime();
-
-                            GUILayout.Label($"{pitchTime} / {pitchEndTime} ({time} / {endTime})", GUILayout.ExpandWidth(false));
-                        }
-                        else
-                            GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
-                    }
+                        GUILayout.Label($"{time} / {endTime}", GUILayout.ExpandWidth(false));
 
                     float audioTime = GUILayout.HorizontalSlider(soundObject.time, 0, soundObject.length);
-                    if ((soundObject.time - audioTime).Abs() >= 0.1f && !refesh)
+                    if (soundObject.time != audioTime && !refesh)
                         soundObject.time = audioTime;
                 }
 

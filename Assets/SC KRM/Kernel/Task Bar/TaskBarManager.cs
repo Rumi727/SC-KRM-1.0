@@ -20,7 +20,7 @@ namespace SCKRM.UI.TaskBar
         }
 
         public static TaskBarManager instance { get; private set; }
-        public static bool allowTaskBarShow { get; set; } = true;
+        public static bool allowTaskBarShow { get; set; } = false;
         public static bool backButtonShow { get; set; } = true;
         public static bool isTaskBarShow { get; private set; } = true;
 
@@ -113,7 +113,7 @@ namespace SCKRM.UI.TaskBar
                         }
                     }
                     
-                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all", "log.command"))
+                    if ((!selectedTaskBar || (selectedTaskBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all"))
                         Tab();
                     else if (selectedTaskBar && InputManager.GetKeyDown("gui.back", "all"))
                         eventSystem.SetSelectedGameObject(null);

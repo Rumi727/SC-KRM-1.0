@@ -30,11 +30,18 @@
 	
 	
 	
-	"options.general.title": "General",
-	"options.general.vSync": "VSync",
-	"options.general.fpslimit": "FPS Limit",
-	"options.general.guisize": "GUI Size",
-	"options.general.fixedguisizeenable": "Use a fixed GUI size",
+	"options.sound.title": "Sound",
+	"options.sound.mainVolume": "Main",
+	"options.sound.bgmVolume": "BGM",
+	"options.sound.soundVolume": "Sound Effect",
+	
+	"options.sound.noteBlockVolume": "Note Block",
+	
+	"options.video.title": "Video",
+	"options.video.vSync": "VSync",
+	"options.video.fpsLimit": "FPS Limit",
+	"options.video.guiSize": "GUI Size",
+	"options.video.fixedGuiSizeEnable": "Use a fixed GUI size",
 	
 	
 	
@@ -62,6 +69,9 @@
 	
 	"kurumi_chan.birthday.title": "Kurumi-chan happy birthday",
 	"kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
+	
+	"onell0.birthday.title": "%value%st anniversary of SMP",
+	"onell0.birthday.description": "A hearty congratulations on the %value%st anniversary of SMP!",
 	
 	
 	

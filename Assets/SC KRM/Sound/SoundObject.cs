@@ -28,7 +28,22 @@ namespace SCKRM.Sound
         public SoundMetaData soundMetaData { get; private set; }
 
         public float time { get => audioSource.time; set => audioSource.time = value; }
+        public float realTime { get => time / speed; set => audioSource.time = value * speed; }
+
         public float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
+        public float realLength => length / speed;
+
+        public float speed
+        {
+            get => (soundData != null && soundData.isBGM && SoundManager.Data.useTempo) ? tempo : pitch;
+            set
+            {
+                if (soundData != null && soundData.isBGM && SoundManager.Data.useTempo)
+                    tempo = value;
+                else
+                    pitch = value;
+            }
+        }
 
         public bool isLooped { get; private set; } = false;
 
@@ -38,6 +53,7 @@ namespace SCKRM.Sound
             get => _isPaused;
             set
             {
+                Vector2 vector2 = new Json.JVector3();
                 if (value)
                     audioSource.Pause();
                 else
@@ -53,7 +69,8 @@ namespace SCKRM.Sound
         [SerializeField] AudioClip _audioClip = null;
         public string key { get => _key; set => _key = value; }
         public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
-        public AudioClip audioClip { get => _audioClip; set => _audioClip = value; }
+        public AudioClip selectedAudioClip { get => _audioClip; set => _audioClip = value; }
+        public AudioClip loadedAudioClip { get; private set; }
 
         [SerializeField] float _volume = 1;
         [SerializeField] bool _loop = false;
@@ -77,6 +94,8 @@ namespace SCKRM.Sound
 
         public void Refesh()
         {
+            float time = audioSource.time;
+
             {
                 if (!Kernel.isInitialLoadEnd)
                 {
@@ -84,7 +103,7 @@ namespace SCKRM.Sound
                     return;
                 }
 
-                if (audioClip == null)
+                if (selectedAudioClip == null)
                 {
                     soundData = ResourceManager.SearchSoundData(key, nameSpace);
 
@@ -104,28 +123,33 @@ namespace SCKRM.Sound
                         return;
                     }
                 }
+                else
+                    soundData = null;
             }
 
             if (!SoundManager.soundList.Contains(this))
                 SoundManager.soundList.Add(this);
 
             {
-                audioSource.Stop();
-
-                if (audioClip == null)
+                if (selectedAudioClip == null)
                 {
+                    loadedAudioClip = null;
+
                     soundMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
                     audioSource.clip = soundMetaData.audioClip;
 
-                    if (soundData.isBGM)
+                    if (soundData.isBGM && SoundManager.Data.useTempo)
                         audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
                     else
                         audioSource.outputAudioMixerGroup = null;
                 }
                 else
                 {
-                    audioSource.clip = audioClip;
+                    loadedAudioClip = selectedAudioClip;
+                    audioSource.clip = selectedAudioClip;
                     audioSource.outputAudioMixerGroup = null;
+
+                    soundMetaData = null;
                 }
             }
 
@@ -139,14 +163,16 @@ namespace SCKRM.Sound
 
                 if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)
                     audioSource.time = length - 0.001f;
+                else
+                    audioSource.time = time;
             }
         }
 
         void SetVariable()
         {
-            if (audioClip == null)
+            if (loadedAudioClip == null)
             {
-                if (soundData.isBGM)
+                if (soundData.isBGM && SoundManager.Data.useTempo)
                 {
                     if (soundMetaData.stream)
                         tempo = tempo.Clamp(0);
@@ -154,9 +180,7 @@ namespace SCKRM.Sound
                     float allPitch = pitch * soundMetaData.pitch;
                     float allTempo = tempo * soundMetaData.tempo;
 
-                    pitch *= soundMetaData.pitch;
-                    pitch = pitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f);
-                    pitch /= soundMetaData.pitch;
+                    pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / soundMetaData.pitch;
 
                     allTempo *= Kernel.gameSpeed;
                     audioSource.pitch = allTempo;
@@ -176,10 +200,7 @@ namespace SCKRM.Sound
                 audioSource.pitch = pitch * Kernel.gameSpeed;
             }
 
-            if (audioSource.pitch == 0)
-                audioSource.volume = 0;
-            else
-                audioSource.volume = volume;
+            SetVolume();
 
             if (spatial)
                 audioSource.spatialBlend = 1;
@@ -219,13 +240,32 @@ namespace SCKRM.Sound
                 Remove();
         }
 
+        void SetVolume()
+        {
+            if (audioSource.pitch == 0)
+                audioSource.volume = 0;
+            else
+            {
+                if (loadedAudioClip == null)
+                {
+                    if (soundData.isBGM)
+                        audioSource.volume = volume * (Kernel.SaveData.bgmVolume * 0.01f);
+                    else
+                        audioSource.volume = volume * (Kernel.SaveData.soundVolume * 0.01f);
+                }
+                else
+                    audioSource.volume = volume * (Kernel.SaveData.soundVolume * 0.01f);
+            }
+        }
+
         public override void Remove()
         {
             base.Remove();
 
             key = "";
             nameSpace = "";
-            audioClip = null;
+            loadedAudioClip = null;
+            selectedAudioClip = null;
 
             volume = 1;
             tempo = 1;
