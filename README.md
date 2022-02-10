@@ -147,5 +147,5 @@ Simsimhan Chobo Kernel Manager
 
 - 대부분의 프로젝트 설정은 상단의 `커널/커널 설정`에서 변경 할 수 있고, 디버깅도 가능합니다
 
-- InputManager의 함수들에서 inputLockDeny가 있을탠데, 거기서 만약 'all'이 있다면 반대로 작동하게 됩니다 즉 asdf랑 asdfadsf가 있다면 다른 모든 락들은 무시하고 asdf와 asdfasdf의 락만 감지하게 됩니다
+- InputManager의 함수들에서 inputLockDeny가 있을탠데, 거기서 만약 'all'이 있다면 모든 락을 전부 무시합니다, 그 배열에 뭐가 들어있든 말이죠
   - all이 우선시됩니다, 즉 프로젝트 설정에서 all이 있어도 무시됩니다
