@@ -22,7 +22,7 @@ using UnityEngine.UI;
 using SCKRM.Window;
 using System.Threading.Tasks;
 using SCKRM.UI.SideBar;
-using SCKRM.UI.TaskBar;
+using SCKRM.UI.StatusBar;
 
 namespace SCKRM
 {
@@ -403,7 +403,7 @@ namespace SCKRM
                         }
                     }
 
-                    TaskBarManager.allowTaskBarShow = true;
+                    StatusBarManager.allowStatusBarShow = true;
 
                     SceneManager.sceneLoaded += LoadedSceneEvent;
 

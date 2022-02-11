@@ -1,6 +1,6 @@
 using SCKRM.Input;
 using SCKRM.Tool;
-using SCKRM.UI.TaskBar;
+using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,7 +84,7 @@ namespace SCKRM.UI.SideBar
                     if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all"))
                     {
                         isSideBarShow = false;
-                        TaskBarManager.Tab();
+                        StatusBarManager.Tab();
                     }
                 }
                 else
@@ -92,11 +92,17 @@ namespace SCKRM.UI.SideBar
 
 
 
-                TaskBarManager taskBarManager = TaskBarManager.instance;
-                if (TaskBarManager.SaveData.bottomMode)
+                StatusBarManager taskBarManager = StatusBarManager.instance;
+                if (StatusBarManager.SaveData.bottomMode)
+                {
                     rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y);
+                    rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, 0);
+                }
                 else
+                {
+                    rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, 0);
                     rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y));
+                }
 
 
 

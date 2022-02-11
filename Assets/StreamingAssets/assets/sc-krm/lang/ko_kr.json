@@ -29,11 +29,11 @@
 	"kernel.allrefresh.error": "효과음 또는 음악이 재생되고 있는 상태에서 리소스 팩을 새로 고칠 수 없습니다!",
 	
 	
+	
 	"options.sound.title": "Sound",
 	"options.sound.mainVolume": "메인",
 	"options.sound.bgmVolume": "음악",
 	"options.sound.soundVolume": "효과음",
-	
 	"options.sound.noteBlockVolume": "노트 블록",
 	
 	"options.video.title": "Video",
@@ -41,6 +41,13 @@
 	"options.video.fpsLimit": "FPS 제한",
 	"options.video.guiSize": "GUI 크기",
 	"options.video.fixedGuiSizeEnable": "고정적인 GUI 크기 사용",
+	
+	"options.statusbar.title": "상태 표시줄",
+	"options.statusbar.bottomMode": "하단에 표시",
+	
+	"options.statusbar.time.title": "시간",
+	"options.statusbar.time.twentyFourHourSystem": "24시간제",
+	"options.statusbar.time.toggleSeconds": "초 단위까지 표시",
 	
 	
 	

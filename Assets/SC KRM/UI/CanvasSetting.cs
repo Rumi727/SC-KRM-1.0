@@ -1,4 +1,4 @@
-using SCKRM.UI.TaskBar;
+using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -101,8 +101,8 @@ namespace SCKRM.UI
                 float width = Screen.width * (1 / Kernel.guiSize);
                 float height;
 #if UNITY_EDITOR
-                if (Application.isPlaying && TaskBarManager.cropTheScreen)
-                    height = Screen.height * (1 / Kernel.guiSize) + (TaskBarManager.instance.rectTransform.anchoredPosition.y - TaskBarManager.instance.rectTransform.sizeDelta.y);
+                if (Application.isPlaying && StatusBarManager.cropTheScreen)
+                    height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.sizeDelta.y);
                 else
                     height = Screen.height * (1 / Kernel.guiSize);
 #else

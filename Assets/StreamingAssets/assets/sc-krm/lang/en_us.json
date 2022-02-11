@@ -34,7 +34,6 @@
 	"options.sound.mainVolume": "Main",
 	"options.sound.bgmVolume": "BGM",
 	"options.sound.soundVolume": "Sound Effect",
-	
 	"options.sound.noteBlockVolume": "Note Block",
 	
 	"options.video.title": "Video",
@@ -42,6 +41,13 @@
 	"options.video.fpsLimit": "FPS Limit",
 	"options.video.guiSize": "GUI Size",
 	"options.video.fixedGuiSizeEnable": "Use a fixed GUI size",
+	
+	"options.statusbar.title": "Status Bar",
+	"options.statusbar.bottomMode": "Show at the bottom",
+	
+	"options.statusbar.time.title": "Time",
+	"options.statusbar.time.twentyFourHourSystem": "24-hour system",
+	"options.statusbar.time.toggleSeconds": "Toggle Seconds",
 	
 	
 	

@@ -5,6 +5,21 @@ using UnityEngine;
 
 public class GameObjectAddMenu
 {
+    [MenuItem("GameObject/Setting UI/Title")]
+    public static void SettingTitle(MenuCommand menuCommand)
+    {
+        GameObject gameObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/SC KRM/Editor/Game Object Add Menu/Title.prefab", typeof(GameObject));
+        if (menuCommand.context != null)
+            gameObject = Object.Instantiate(gameObject, ((GameObject)menuCommand.context).transform);
+        else
+            gameObject = Object.Instantiate(gameObject, null);
+
+        gameObject.name = "Title";
+
+        Undo.RegisterCreatedObjectUndo(gameObject, "Create " + gameObject.name);
+        Selection.activeObject = gameObject;
+    }
+
     [MenuItem("GameObject/Setting UI/Input Field")]
     public static void SettingInputField(MenuCommand menuCommand)
     {

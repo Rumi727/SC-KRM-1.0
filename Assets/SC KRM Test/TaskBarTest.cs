@@ -1,10 +1,10 @@
 using SCKRM.Input;
-using SCKRM.UI.TaskBar;
+using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TaskBarTest : MonoBehaviour
 {
-    void Awake() => TaskBarManager.allowTaskBarShow = false;
+    void Awake() => StatusBarManager.allowStatusBarShow = false;
 }
