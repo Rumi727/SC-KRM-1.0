@@ -1,9 +1,6 @@
 using SCKRM.Object;
 using SCKRM.Renderer;
 using SCKRM.UI.Layout;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace SCKRM.UI.SideBar
@@ -11,6 +8,17 @@ namespace SCKRM.UI.SideBar
     [RequireComponent(typeof(VerticalLayout), typeof(SetSizeAsChildRectTransform))]
     public class Notice : ObjectPooling
     {
+        [SerializeField, HideInInspector] RectTransformInfo _rectTransformInfo;
+        public RectTransformInfo rectTransformInfo
+        {
+            get
+            {
+                if (_rectTransformInfo == null)
+                    _rectTransformInfo = GetComponent<RectTransformInfo>();
+
+                return _rectTransformInfo;
+            }
+        }
         [SerializeField, HideInInspector] VerticalLayout _verticalLayout;
         public VerticalLayout verticalLayout
         {

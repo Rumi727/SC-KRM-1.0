@@ -15,19 +15,24 @@ namespace SCKRM.UI.SideBar
         [SerializeField] Transform _noticeList;
         public Transform noticeList => _noticeList;
 
-        void Awake()
+        async void Awake()
         {
             if (instance == null)
                 instance = this;
             else
+            {
                 Destroy(this);
+                return;
+            }
+
+            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
         }
 
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (SideBarManager.isSideBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "taskbar", "noticebar"))
+                if (SideBarManager.isSideBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "statusbar", "sidebar"))
                     noticeList.transform.GetChild(0).GetComponent<Notice>().Remove();
             }
         }
@@ -81,6 +86,7 @@ namespace SCKRM.UI.SideBar
             }
 
             SideBarManager.isSideBarShow = true;
+            SettingBarManager.isSettingBarShow = false;
         }
 
         public enum Type

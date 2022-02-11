@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Input;
+using SCKRM.Log;
 using SCKRM.SaveLoad;
+using SCKRM.UI.SideBar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -255,73 +257,80 @@ namespace SCKRM.UI.Setting
 
         public virtual void SaveStringValue(string value)
         {
-            if (propertyInfo != null)
+            try
             {
-                if (variableType == VariableType.Char)
+                if (propertyInfo != null)
                 {
-                    if (value.Length > 0)
-                        propertyInfo.SetValue(type, value[0]);
-                    else
-                        propertyInfo.SetValue(type, char.MinValue);
+                    if (variableType == VariableType.Char)
+                    {
+                        if (value.Length > 0)
+                            propertyInfo.SetValue(type, value[0]);
+                        else
+                            propertyInfo.SetValue(type, char.MinValue);
+                    }
+                    else if (variableType == VariableType.String)
+                        propertyInfo.SetValue(type, value);
+                    else if (variableType == VariableType.Byte)
+                        propertyInfo.SetValue(type, byte.Parse(value));
+                    else if (variableType == VariableType.Sbyte)
+                        propertyInfo.SetValue(type, sbyte.Parse(value));
+                    else if (variableType == VariableType.Short)
+                        propertyInfo.SetValue(type, short.Parse(value));
+                    else if (variableType == VariableType.Int)
+                        propertyInfo.SetValue(type, int.Parse(value));
+                    else if (variableType == VariableType.Long)
+                        propertyInfo.SetValue(type, long.Parse(value));
+                    else if (variableType == VariableType.Ushort)
+                        propertyInfo.SetValue(type, ushort.Parse(value));
+                    else if (variableType == VariableType.Uint)
+                        propertyInfo.SetValue(type, uint.Parse(value));
+                    else if (variableType == VariableType.Ulong)
+                        propertyInfo.SetValue(type, ulong.Parse(value));
+                    else if (variableType == VariableType.Float)
+                        propertyInfo.SetValue(type, float.Parse(value));
+                    else if (variableType == VariableType.Double)
+                        propertyInfo.SetValue(type, double.Parse(value));
+                    else if (variableType == VariableType.Decimal)
+                        propertyInfo.SetValue(type, decimal.Parse(value));
                 }
-                else if (variableType == VariableType.String)
-                    propertyInfo.SetValue(type, value);
-                else if (variableType == VariableType.Byte)
-                    propertyInfo.SetValue(type, byte.Parse(value));
-                else if (variableType == VariableType.Sbyte)
-                    propertyInfo.SetValue(type, sbyte.Parse(value));
-                else if (variableType == VariableType.Short)
-                    propertyInfo.SetValue(type, short.Parse(value));
-                else if (variableType == VariableType.Int)
-                    propertyInfo.SetValue(type, int.Parse(value));
-                else if (variableType == VariableType.Long)
-                    propertyInfo.SetValue(type, long.Parse(value));
-                else if (variableType == VariableType.Ushort)
-                    propertyInfo.SetValue(type, ushort.Parse(value));
-                else if (variableType == VariableType.Uint)
-                    propertyInfo.SetValue(type, uint.Parse(value));
-                else if (variableType == VariableType.Ulong)
-                    propertyInfo.SetValue(type, ulong.Parse(value));
-                else if (variableType == VariableType.Float)
-                    propertyInfo.SetValue(type, float.Parse(value));
-                else if (variableType == VariableType.Double)
-                    propertyInfo.SetValue(type, double.Parse(value));
-                else if (variableType == VariableType.Decimal)
-                    propertyInfo.SetValue(type, decimal.Parse(value));
+                else if (fieldInfo != null)
+                {
+                    if (variableType == VariableType.Char)
+                    {
+                        if (value.Length > 0)
+                            fieldInfo.SetValue(type, value[0]);
+                        else
+                            fieldInfo.SetValue(type, char.MinValue);
+                    }
+                    else if (variableType == VariableType.String)
+                        fieldInfo.SetValue(type, value);
+                    else if (variableType == VariableType.Byte)
+                        fieldInfo.SetValue(type, byte.Parse(value));
+                    else if (variableType == VariableType.Sbyte)
+                        fieldInfo.SetValue(type, sbyte.Parse(value));
+                    else if (variableType == VariableType.Short)
+                        fieldInfo.SetValue(type, short.Parse(value));
+                    else if (variableType == VariableType.Int)
+                        fieldInfo.SetValue(type, int.Parse(value));
+                    else if (variableType == VariableType.Long)
+                        fieldInfo.SetValue(type, long.Parse(value));
+                    else if (variableType == VariableType.Ushort)
+                        fieldInfo.SetValue(type, ushort.Parse(value));
+                    else if (variableType == VariableType.Uint)
+                        fieldInfo.SetValue(type, uint.Parse(value));
+                    else if (variableType == VariableType.Ulong)
+                        fieldInfo.SetValue(type, ulong.Parse(value));
+                    else if (variableType == VariableType.Float)
+                        fieldInfo.SetValue(type, float.Parse(value));
+                    else if (variableType == VariableType.Double)
+                        fieldInfo.SetValue(type, double.Parse(value));
+                    else if (variableType == VariableType.Decimal)
+                        fieldInfo.SetValue(type, decimal.Parse(value));
+                }
             }
-            else if (fieldInfo != null)
+            catch (Exception e)
             {
-                if (variableType == VariableType.Char)
-                {
-                    if (value.Length > 0)
-                        fieldInfo.SetValue(type, value[0]);
-                    else
-                        fieldInfo.SetValue(type, char.MinValue);
-                }
-                else if (variableType == VariableType.String)
-                    fieldInfo.SetValue(type, value);
-                else if (variableType == VariableType.Byte)
-                    fieldInfo.SetValue(type, byte.Parse(value));
-                else if (variableType == VariableType.Sbyte)
-                    fieldInfo.SetValue(type, sbyte.Parse(value));
-                else if (variableType == VariableType.Short)
-                    fieldInfo.SetValue(type, short.Parse(value));
-                else if (variableType == VariableType.Int)
-                    fieldInfo.SetValue(type, int.Parse(value));
-                else if (variableType == VariableType.Long)
-                    fieldInfo.SetValue(type, long.Parse(value));
-                else if (variableType == VariableType.Ushort)
-                    fieldInfo.SetValue(type, ushort.Parse(value));
-                else if (variableType == VariableType.Uint)
-                    fieldInfo.SetValue(type, uint.Parse(value));
-                else if (variableType == VariableType.Ulong)
-                    fieldInfo.SetValue(type, ulong.Parse(value));
-                else if (variableType == VariableType.Float)
-                    fieldInfo.SetValue(type, float.Parse(value));
-                else if (variableType == VariableType.Double)
-                    fieldInfo.SetValue(type, double.Parse(value));
-                else if (variableType == VariableType.Decimal)
-                    fieldInfo.SetValue(type, decimal.Parse(value));
+                Debug.LogException(e);
             }
         }
     }

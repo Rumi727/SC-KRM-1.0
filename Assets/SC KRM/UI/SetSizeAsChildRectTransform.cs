@@ -29,7 +29,7 @@ namespace SCKRM.UI.Layout
         {
             base.Update();
 
-            if (childRectTransforms == null || childRectTransforms.Count <= 0)
+            if (childRectTransforms == null)
                 return;
 
             float x = 0;

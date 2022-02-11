@@ -274,10 +274,14 @@ namespace SCKRM
             DateTime dateTime = DateTime.Now;
             if (isInitialLoadEnd && (tempYear != dateTime.Year || tempMonth != dateTime.Month || tempDay != dateTime.Day))
             {
+                DateTime dateTimeLunar = dateTime.ToLunarDate();
+
                 if (dateTime.Month == 8 && dateTime.Day == 7)
-                    NoticeManager.Notice("kurumi_chan.birthday.title", "kurumi_chan.birthday.description");
+                    NoticeManager.Notice("notice.kurumi_chan.birthday.title", "notice.kurumi_chan.birthday.description");
                 else if (dateTime.Month == 2 && dateTime.Day == 9)
-                    NoticeManager.Notice("onell0.birthday.title", "onell0.birthday.description", "%value%", (dateTime.Year - 2010).ToString());
+                    NoticeManager.Notice("notice.onell0.birthday.title", "notice.onell0.birthday.description", "%value%", (dateTime.Year - 2010).ToString());
+                else if (dateTimeLunar.Month == 1 && dateTimeLunar.Day == 1)
+                    NoticeManager.Notice("notice.korean_new_year.title", "notice.korean_new_year.description");
 
                 tempYear = dateTime.Year;
                 tempMonth = dateTime.Month;
@@ -419,17 +423,22 @@ namespace SCKRM
 #endif
                     InitialLoadEndSceneMove?.Invoke();
 
-                    while (splashScreenBackground.color.a > 0)
+                    if (splashScreenBackground != null)
                     {
-                        splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, splashScreenBackground.color.a - 0.05f * fpsDeltaTime);
-                        await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
-                    }
+                        while (splashScreenBackground.color.a > 0)
+                        {
+                            Color color = splashScreenBackground.color;
+                            splashScreenBackground.color = new Color(color.r, color.g, color.b, color.a.MoveTowards(0, 0.05f * fpsDeltaTime));
 
-                    splashScreenBackground.gameObject.SetActive(false);
+                            await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
+                        }
+
+                        splashScreenBackground.gameObject.SetActive(false);
+                    }
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
+                    Debug.LogException(e);
 
                     if (!isInitialLoadEnd)
                     {

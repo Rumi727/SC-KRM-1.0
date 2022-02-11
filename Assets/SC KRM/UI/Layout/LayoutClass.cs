@@ -82,8 +82,6 @@ namespace SCKRM.UI.Layout
 #endif
                         return;
                 }
-
-                
             }
         }
 

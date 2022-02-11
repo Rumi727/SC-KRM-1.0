@@ -389,6 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca6f8ee03a694f4cb7d941a55dc64b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransformInfo: {fileID: 0}
   _verticalLayout: {fileID: 0}
   _setSizeAsChildRectTransform: {fileID: 0}
   _icon: {fileID: 4622889944937629372}
@@ -407,13 +408,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransformInfo: {fileID: 8186722587523434855}
+  _spacing: 4
+  _lerp: 1
+  _ignore: []
   _padding:
     m_Left: 10
     m_Right: 10
     m_Top: 3
     m_Bottom: 3
-  _spacing: 4
-  _lerp: 1
 --- !u!114 &465263910929733980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,16 +428,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d646b6ab0b1b1bf4cacea338ffa57b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 836050093905084075}
-  _mode: 2
-  _offset: {x: 0, y: 9}
-  _min: 40
-  _max: 0
+  _rectTransformInfo: {fileID: 8186722587523434855}
   _spacing: 3
   _lerp: 1
   _ignore:
   - {fileID: 5827614115973637196}
   - {fileID: 4081399174886592969}
+  _mode: 2
+  _offset: {x: 0, y: 9}
+  _min: 40
+  _max: 0
 --- !u!1 &6450253872552144259
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
+  _nameSpace: sc-krm
   _path: notice_remove_background
   _type: gui
   _index: 0
@@ -693,7 +695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
+  _nameSpace: sc-krm
   _path: 
   _type: 
   _index: 0

@@ -18,7 +18,7 @@ namespace SCKRM.UI.Layout
             base.Update();
 
             float localSizeX = rectTransformInfo.localSize.x;
-            if (childRectTransforms == null || childRectTransforms.Count <= 0)
+            if (childRectTransforms == null)
                 return;
 
             bool center = false;

@@ -5,6 +5,7 @@ using SCKRM.SaveLoad;
 using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SCKRM.Language
 {
@@ -48,11 +49,19 @@ namespace SCKRM.Language
             if (language == "")
                 language = SaveData.currentLanguage;
 
-            Dictionary<string, string> jObject = JsonManager.JsonRead<Dictionary<string, string>>(PathTool.Combine(ResourceManager.languagePath, language), nameSpace);
-            if (jObject != null && jObject.ContainsKey(key))
-                return jObject[key].ConstEnvironmentVariable();
-            else
-                return "";
+            try
+            {
+                string value = JsonManager.JsonReadDictionary<string, string>(key, PathTool.Combine(ResourceManager.languagePath, language), nameSpace).ConstEnvironmentVariable();
+                if (value == default)
+                    return key;
+
+                return value;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                return key;
+            }
         }
     }
 }

@@ -37,19 +37,52 @@ namespace SCKRM.Object
         }
 
         /// <summary>
-        /// 오브젝트를 생성합니다
+        /// 오브젝트를 삭제합니다
         /// </summary>
-        /// <param name="ObjectKey">생성할 오브젝트 키</param>
-        /// <returns></returns>
-        public static ObjectPooling ObjectCreate(string ObjectKey) => ObjectCreate(ObjectKey, null);
+        /// <param name="objectKey">지울 오브젝트 키</param>
+        /// <param name="objectPooling">지울 오브젝트</param>
+        public static void ObjectAdd(string objectKey)
+        {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(ObjectRemove));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(ObjectRemove));
+#endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
+            if (instance == null)
+                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
+
+            GameObject gameObject = Instantiate(Resources.Load<GameObject>(Data.prefabList[objectKey]), instance.transform);
+            gameObject.SetActive(false);
+            gameObject.name = objectKey;
+
+            ObjectPooling objectPooling = gameObject.GetComponent<ObjectPooling>();
+            if (objectPooling == null)
+                objectPooling = gameObject.AddComponent<ObjectPooling>();
+
+            objectPooling.objectKey = objectKey;
+            objectPooling.actived = false;
+
+            objectList.ObjectKey.Add(objectKey);
+            objectList.Object.Add(objectPooling);
+        }
 
         /// <summary>
         /// 오브젝트를 생성합니다
         /// </summary>
-        /// <param name="ObjectKey">생성할 오브젝트 키</param>
-        /// <param name="Parent">생성할 오브젝트가 자식으로갈 오브젝트</param>
+        /// <param name="objectKey">생성할 오브젝트 키</param>
         /// <returns></returns>
-        public static ObjectPooling ObjectCreate(string ObjectKey, Transform Parent)
+        public static ObjectPooling ObjectCreate(string objectKey) => ObjectCreate(objectKey, null);
+
+        /// <summary>
+        /// 오브젝트를 생성합니다
+        /// </summary>
+        /// <param name="objectKey">생성할 오브젝트 키</param>
+        /// <param name="parent">생성할 오브젝트가 자식으로갈 오브젝트</param>
+        /// <returns></returns>
+        public static ObjectPooling ObjectCreate(string objectKey, Transform parent)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectCreate));
@@ -62,15 +95,15 @@ namespace SCKRM.Object
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectCreate));
 
-            if (objectList.ObjectKey.Contains(ObjectKey))
+            if (objectList.ObjectKey.Contains(objectKey))
             {
-                ObjectPooling objectPooling = objectList.Object[objectList.ObjectKey.IndexOf(ObjectKey)];
-                objectPooling.transform.SetParent(Parent, false);
+                ObjectPooling objectPooling = objectList.Object[objectList.ObjectKey.IndexOf(objectKey)];
+                objectPooling.transform.SetParent(parent, false);
                 objectPooling.gameObject.SetActive(true);
-                objectPooling.objectKey = ObjectKey;
+                objectPooling.objectKey = objectKey;
                 
                 {
-                    int i = objectList.ObjectKey.IndexOf(ObjectKey);
+                    int i = objectList.ObjectKey.IndexOf(objectKey);
                     objectList.ObjectKey.RemoveAt(i);
                     objectList.Object.RemoveAt(i);
                 }
@@ -81,16 +114,16 @@ namespace SCKRM.Object
                 objectPooling.OnCreate();
                 return objectPooling;
             }
-            else if (Data.prefabList.ContainsKey(ObjectKey))
+            else if (Data.prefabList.ContainsKey(objectKey))
             {
-                GameObject gameObject = Instantiate(Resources.Load<GameObject>(Data.prefabList[ObjectKey]), Parent);
-                gameObject.name = ObjectKey;
+                GameObject gameObject = Instantiate(Resources.Load<GameObject>(Data.prefabList[objectKey]), parent);
+                gameObject.name = objectKey;
 
                 ObjectPooling objectPooling = gameObject.GetComponent<ObjectPooling>();
                 if (objectPooling == null)
                     objectPooling = gameObject.AddComponent<ObjectPooling>();
 
-                objectPooling.objectKey = ObjectKey;
+                objectPooling.objectKey = objectKey;
 
                 RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
 

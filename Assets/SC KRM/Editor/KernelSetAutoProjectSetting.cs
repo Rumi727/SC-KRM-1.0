@@ -68,14 +68,14 @@ namespace SCKRM.Editor
             catch (ArgumentException e)
             {
                 sceneListChangedEnable = true;
-                Debug.LogError(e);
+                Debug.LogException(e);
                 Debug.LogWarning($"{Kernel.Data.splashScreenName} 씬이 없는것같습니다 씬을 추가해주세요");
             }
             catch (Exception e)
             {
                 sceneListChangedEnable = true;
                 EditorSceneManager.OpenScene(activeScenePath);
-                Debug.LogError(e.Message);
+                Debug.LogException(e);
             }
         }
 
@@ -175,7 +175,7 @@ namespace SCKRM.Editor
             catch (Exception e)
             {
                 hierarchyChangedEnable = true;
-                Debug.LogError(e.Message);
+                Debug.LogException(e);
             }
         }
     }

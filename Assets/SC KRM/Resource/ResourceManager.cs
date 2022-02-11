@@ -117,13 +117,13 @@ namespace SCKRM.Resource
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                Debug.LogException(e);
                 Debug.LogError("ResourceManager: Resource refresh failed");
 
                 if (!Kernel.isInitialLoadEnd)
+#if UNITY_EDITOR
                 {
                     Debug.LogError("Kernel: Initial loading failed");
-#if UNITY_EDITOR
                     if (Application.isPlaying)
                     {
                         GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
@@ -137,10 +137,10 @@ namespace SCKRM.Resource
                     }
                     else
                         Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
+                }
 #else
                     Application.Quit(1);
 #endif
-                }
             }
 
             threadMetaData.autoRemoveDisable = false;

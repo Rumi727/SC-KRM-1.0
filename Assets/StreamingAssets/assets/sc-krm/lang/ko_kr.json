@@ -14,6 +14,8 @@
 	"gui.no": "아니요",
     "gui.none": "없음",
 	"gui.all": "모두",
+	"gui.select": "선택",
+	"gui.selectall": "모두 선택",
     "gui.ok": "확인",
 	"gui.am": "오전",
 	"gui.pm": "오후",
@@ -30,13 +32,13 @@
 	
 	
 	
-	"options.sound.title": "Sound",
+	"options.sound.title": "소리",
 	"options.sound.mainVolume": "메인",
 	"options.sound.bgmVolume": "음악",
 	"options.sound.soundVolume": "효과음",
 	"options.sound.noteBlockVolume": "노트 블록",
 	
-	"options.video.title": "Video",
+	"options.video.title": "비디오",
 	"options.video.vSync": "수직 동기화",
 	"options.video.fpsLimit": "FPS 제한",
 	"options.video.guiSize": "GUI 크기",
@@ -73,11 +75,14 @@
 	
 	
 	
-	"kurumi_chan.birthday.title": "쿠루미쨩 생일 축하해",
-	"kurumi_chan.birthday.description": "오늘은 '에비스자와 쿠루미'의 생일입니다",
+	"notice.kurumi_chan.birthday.title": "쿠루미쨩 생일 축하해",
+	"notice.kurumi_chan.birthday.description": "오늘은 '에비스자와 쿠루미'의 생일입니다",
 	
-	"onell0.birthday.title": "스매프 %value%주년",
-	"onell0.birthday.description": "스매프 %value%주년을 진심으로 축하합니다!",
+	"notice.onell0.birthday.title": "스매프 %value%주년",
+	"notice.onell0.birthday.description": "스매프 %value%주년을 진심으로 축하합니다!",
+	
+	"notice.korean_new_year.title": "새해 복 많이 받으세요",
+	"notice.korean_new_year.description": "오늘은 한국의 설날입니다\n<s>용돈 받으러 갑시다</s>",
 	
 	
 	

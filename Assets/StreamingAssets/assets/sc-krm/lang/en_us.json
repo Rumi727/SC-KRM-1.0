@@ -14,6 +14,8 @@
 	"gui.no": "No",
 	"gui.none": "None",
 	"gui.all": "All",
+	"gui.select": "Select",
+	"gui.selectAll": "Select All",
 	"gui.ok": "Ok",
 	"gui.am": "AM",
 	"gui.pm": "PM",
@@ -73,11 +75,14 @@
 	
 	
 	
-	"kurumi_chan.birthday.title": "Kurumi-chan happy birthday",
-	"kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
+	"notice.kurumi_chan.birthday.title": "Kurumi-chan happy birthday",
+	"notice.kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
 	
-	"onell0.birthday.title": "%value%st anniversary of SMP",
-	"onell0.birthday.description": "A hearty congratulations on the %value%st anniversary of SMP!",
+	"notice.onell0.birthday.title": "%value%st anniversary of SMP",
+	"notice.onell0.birthday.description": "A hearty congratulations on the %value%st anniversary of SMP!",
+	
+	"notice.korean_new_year.title": "Happy Korean New Year",
+	"notice.korean_new_year.description": "Today is Korean New Year's Day",
 	
 	
 	

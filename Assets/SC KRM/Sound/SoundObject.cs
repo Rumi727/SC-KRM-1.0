@@ -53,7 +53,6 @@ namespace SCKRM.Sound
             get => _isPaused;
             set
             {
-                Vector2 vector2 = new Json.JVector3();
                 if (value)
                     audioSource.Pause();
                 else
