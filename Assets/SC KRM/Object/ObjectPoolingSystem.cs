@@ -54,13 +54,9 @@ namespace SCKRM.Object
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
 
-            GameObject gameObject = Instantiate(Resources.Load<GameObject>(Data.prefabList[objectKey]), instance.transform);
-            gameObject.SetActive(false);
-            gameObject.name = objectKey;
-
-            ObjectPooling objectPooling = gameObject.GetComponent<ObjectPooling>();
-            if (objectPooling == null)
-                objectPooling = gameObject.AddComponent<ObjectPooling>();
+            ObjectPooling objectPooling = Instantiate(Resources.Load<ObjectPooling>(Data.prefabList[objectKey]), instance.transform);
+            objectPooling.gameObject.SetActive(false);
+            objectPooling.name = objectKey;
 
             objectPooling.objectKey = objectKey;
             objectPooling.actived = false;
@@ -108,7 +104,7 @@ namespace SCKRM.Object
                     objectList.Object.RemoveAt(i);
                 }
 
-                RendererManager.Rerender(objectPooling.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
+                RendererManager.Rerender(objectPooling.renderers, false).Forget();
 
                 objectPooling.actived = true;
                 objectPooling.OnCreate();
@@ -116,16 +112,11 @@ namespace SCKRM.Object
             }
             else if (Data.prefabList.ContainsKey(objectKey))
             {
-                GameObject gameObject = Instantiate(Resources.Load<GameObject>(Data.prefabList[objectKey]), parent);
-                gameObject.name = objectKey;
-
-                ObjectPooling objectPooling = gameObject.GetComponent<ObjectPooling>();
-                if (objectPooling == null)
-                    objectPooling = gameObject.AddComponent<ObjectPooling>();
-
+                ObjectPooling objectPooling = Instantiate(Resources.Load<ObjectPooling>(Data.prefabList[objectKey]), parent);
+                objectPooling.name = objectKey;
                 objectPooling.objectKey = objectKey;
 
-                RendererManager.Rerender(gameObject.GetComponentsInChildren<CustomAllRenderer>(), false).Forget();
+                RendererManager.Rerender(objectPooling.renderers, false).Forget();
 
                 objectPooling.actived = true;
                 objectPooling.OnCreate();
@@ -167,6 +158,18 @@ namespace SCKRM.Object
     {
         public string objectKey { get; set; } = "";
         public bool actived { get; set; } = false;
+
+        [System.NonSerialized] CustomAllRenderer[] _renderers;
+        public CustomAllRenderer[] renderers
+        {
+            get
+            {
+                if (_renderers == null)
+                    _renderers = GetComponentsInChildren<CustomAllRenderer>();
+
+                return _renderers;
+            }
+        }
 
         public virtual void OnCreate()
         {

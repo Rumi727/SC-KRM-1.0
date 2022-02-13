@@ -58,7 +58,7 @@ namespace SCKRM.Language.UI
                             if (languageList.Contains(language))
                                 continue;
 
-                            LanguageButton button = ObjectPoolingSystem.ObjectCreate("language_list.language_button", transform).GetComponent<LanguageButton>();
+                            LanguageButton button = (LanguageButton)ObjectPoolingSystem.ObjectCreate("language_list.language_button", transform);
                             button.gameObject.name = language;
                             button.language = language;
 

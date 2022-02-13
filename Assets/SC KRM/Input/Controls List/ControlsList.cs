@@ -30,7 +30,7 @@ namespace SCKRM.Input.UI
                 if (InputManager.SaveData.controlSettingList.ContainsKey(item.Key))
                     keyCodes = InputManager.SaveData.controlSettingList[item.Key];
 
-                ControlsButton controlsButton = ObjectPoolingSystem.ObjectCreate("controls_list.controls_button", transform).GetComponent<ControlsButton>();
+                ControlsButton controlsButton = (ControlsButton)ObjectPoolingSystem.ObjectCreate("controls_list.controls_button", transform);
                 controlsButton.key = item.Key;
                 controlsButton.inputLockObject = inputLockObject;
 

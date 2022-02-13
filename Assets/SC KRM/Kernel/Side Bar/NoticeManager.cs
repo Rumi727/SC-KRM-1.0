@@ -55,7 +55,7 @@ namespace SCKRM.UI.SideBar
             if (!Kernel.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
-            Notice notice = ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeList).GetComponent<Notice>();
+            Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeList);
             notice.transform.SetAsFirstSibling();
             notice.nameText.nameSpace = "sc-krm";
             notice.infoText.nameSpace = "sc-krm";

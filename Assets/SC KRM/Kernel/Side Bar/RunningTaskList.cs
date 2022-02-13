@@ -22,7 +22,7 @@ namespace SCKRM.UI.SideBar
                 {
                     if (i >= runningTaskInfos.Length)
                     {
-                        RunningTaskInfo runningTaskInfo = ObjectPoolingSystem.ObjectCreate("running_task_list.running_task", transform).GetComponent<RunningTaskInfo>();
+                        RunningTaskInfo runningTaskInfo = (RunningTaskInfo)ObjectPoolingSystem.ObjectCreate("running_task_list.running_task", transform);
                         runningTaskInfo.transform.SetSiblingIndex(0);
                         runningTaskInfo.threadMetaData = ThreadManager.runningThreads[i];
                         runningTaskInfo.InfoLoad();

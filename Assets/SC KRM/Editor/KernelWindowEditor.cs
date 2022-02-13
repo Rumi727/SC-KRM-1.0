@@ -1025,7 +1025,7 @@ namespace SCKRM.Editor
 
                     GUILayout.Label("프리팹", GUILayout.ExpandWidth(false));
                     //문자열(경로)을 프리팹으로 변환
-                    GameObject gameObject = (GameObject)EditorGUILayout.ObjectField("", UnityEngine.Resources.Load<GameObject>(item.Value), typeof(GameObject), true);
+                    GameObject gameObject = ((ObjectPooling)EditorGUILayout.ObjectField("", Resources.Load<ObjectPooling>(item.Value), typeof(GameObject), true)).gameObject;
 
                     /*
                      * 변경한 프리팹이 리소스 폴더에 있지 않은경우
