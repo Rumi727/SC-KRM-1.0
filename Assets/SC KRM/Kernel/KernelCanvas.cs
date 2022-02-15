@@ -44,13 +44,13 @@ namespace SCKRM.UI
                 Destroy(gameObject);
         }
 
-        public void KeyDownEnable(string keyCode) => InputManager.KeyDownEnable(keyCode, "statusbar").Forget();
-        public void KeyEnable(string keyCode) => InputManager.KeyEnable(keyCode, "statusbar").Forget();
-        public void KeyToggle(string keyCode) => InputManager.KeyToggle(keyCode, "statusbar");
-        public void KeyUpEnable(string keyCode) => InputManager.KeyUpEnable(keyCode, "statusbar").Forget();
-        public void KeyDownEnable2(KeyCode keyCode) => InputManager.KeyDownEnable(keyCode, "statusbar").Forget();
-        public void KeyEnable2(KeyCode keyCode) => InputManager.KeyEnable(keyCode, "statusbar").Forget();
-        public void KeyToggle2(KeyCode keyCode) => InputManager.KeyToggle(keyCode, "statusbar");
-        public void KeyUpEnable2(KeyCode keyCode) => InputManager.KeyUpEnable(keyCode, "statusbar").Forget();
+        [SerializeField] void KeyDownEnable(string keyCode) => InputManager.KeyDownEnable(keyCode, "statusbar").Forget();
+        [SerializeField] void KeyEnable(string keyCode) => InputManager.KeyEnable(keyCode, "statusbar").Forget();
+        [SerializeField] void KeyToggle(string keyCode) => InputManager.KeyToggle(keyCode, "statusbar");
+        [SerializeField] void KeyUpEnable(string keyCode) => InputManager.KeyUpEnable(keyCode, "statusbar").Forget();
+        [SerializeField] void KeyDownEnable2(KeyCode keyCode) => InputManager.KeyDownEnable(keyCode, "statusbar").Forget();
+        [SerializeField] void KeyEnable2(KeyCode keyCode) => InputManager.KeyEnable(keyCode, "statusbar").Forget();
+        [SerializeField] void KeyToggle2(KeyCode keyCode) => InputManager.KeyToggle(keyCode, "statusbar");
+        [SerializeField] void KeyUpEnable2(KeyCode keyCode) => InputManager.KeyUpEnable(keyCode, "statusbar").Forget();
     }
 }

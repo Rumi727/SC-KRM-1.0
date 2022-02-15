@@ -37,16 +37,19 @@ namespace SCKRM.Input
 
 
 
-        public void OnDelta(InputAction.CallbackContext context) => mouseDelta = context.ReadValue<Vector2>();
-        public void OnPosition(InputAction.CallbackContext context) => mousePosition = context.ReadValue<Vector2>();
-        public void OnScroll(InputAction.CallbackContext context) => mouseScrollDelta = context.ReadValue<Vector2>();
+        [SerializeField] void OnDelta(InputAction.CallbackContext context) => mouseDelta = context.ReadValue<Vector2>();
+        [SerializeField] void OnPosition(InputAction.CallbackContext context) => mousePosition = context.ReadValue<Vector2>();
+        [SerializeField] void OnScroll(InputAction.CallbackContext context) => mouseScrollDelta = context.ReadValue<Vector2>();
 
 
         #region Input Check
         public static bool GetKeyDown(KeyCode keyCode, params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKeyDown));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKeyDown));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -65,8 +68,11 @@ namespace SCKRM.Input
 
         public static bool GetKeyDown(string keyCode, params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKeyDown));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKeyDown));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -106,8 +112,11 @@ namespace SCKRM.Input
 
         public static bool GetKey(KeyCode keyCode, params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKey));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -126,8 +135,11 @@ namespace SCKRM.Input
 
         public static bool GetKey(string keyCode, params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKey));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -162,8 +174,11 @@ namespace SCKRM.Input
 
         public static bool GetKeyUp(KeyCode keyCode, params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKeyUp));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKeyUp));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -182,8 +197,11 @@ namespace SCKRM.Input
 
         public static bool GetKeyUp(string keyCode, params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKeyUp));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKeyUp));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -223,8 +241,11 @@ namespace SCKRM.Input
         static Vector2 mouseDelta = Vector2.zero;
         public static Vector2 GetMouseDelta(params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetMouseDelta));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseDelta));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -239,11 +260,35 @@ namespace SCKRM.Input
                 return Vector2.zero;
         }
 
+        public static bool GetMouseButton(int button, params string[] inputLockDeny)
+        {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetMouseButton));
+
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(GetMouseButton));
+#endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(GetMouseButton));
+
+            if (inputLockDeny == null)
+                inputLockDeny = new string[0];
+
+            if (!InputLockCheck(inputLockDeny))
+                return UnityEngine.Input.GetMouseButton(button);
+            else
+                return false;
+        }
+
         static Vector2 mouseScrollDelta = Vector2.zero;
         public static Vector2 GetMouseScrollDelta(params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetMouseScrollDelta));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseScrollDelta));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -262,8 +307,11 @@ namespace SCKRM.Input
 
         public static bool GetAnyKeyDown(params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetAnyKeyDown));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetAnyKeyDown));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -277,8 +325,11 @@ namespace SCKRM.Input
 
         public static bool GetAnyKey(params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetAnyKey));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetAnyKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -292,8 +343,11 @@ namespace SCKRM.Input
 
         public static bool InputLockCheck(params string[] inputLockDeny)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(InputLockCheck));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(InputLockCheck));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -497,8 +551,11 @@ namespace SCKRM.Input
 
         public static void SetInputLock(string key)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SetInputLock));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
             if (!Kernel.isInitialLoadEnd)
@@ -510,8 +567,11 @@ namespace SCKRM.Input
 
         public static void SetInputLock(string key, bool value)
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SetInputLock));
+
 #if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
             if (!Kernel.isInitialLoadEnd)

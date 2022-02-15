@@ -1,10 +1,9 @@
 {
   "prefabList": {
-    "language_list.language_button": "Prefab/Language Button",
+    "notice_manager.notice": "Prefab/Side Bar/Notice",
     "controls_list.controls_button": "Prefab/Controls Button",
-    "sound_manager.sound_object": "Prefab/Sound Object",
-    "sound_manager.nbs_player": "Prefab/NBS Player",
-    "running_task_list.running_task": "Prefab/Running Task",
-    "notice_manager.notice": "Prefab/Notice"
+    "sound_manager.sound_object": "Prefab/Sound/Sound Object",
+    "sound_manager.nbs_player": "Prefab/Sound/NBS Player",
+    "running_task_list.running_task": "Prefab/Side Bar/Running Task"
   }
 }

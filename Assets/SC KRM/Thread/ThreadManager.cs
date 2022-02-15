@@ -22,12 +22,12 @@ namespace SCKRM.Threads
         public static bool isMainThread => mainThreadId == Thread.CurrentThread.ManagedThreadId;
 
 
-
-        /// <summary>
-        /// 이 이벤트는 다른 스레드에서 호출되므로 Unity API를 사용하지 마십시오.
-        /// This event is called from another thread, so don't use the Unity API
-        /// </summary>
+        public static event Action threadAdd;
         public static event Action threadChange;
+        public static event Action threadRemove;
+
+        public static void ThreadAddEventInvoke() => threadAdd?.Invoke();
+        public static void ThreadRemoveEventInvoke() => threadRemove?.Invoke();
         public static void ThreadChangeEventInvoke() => threadChange?.Invoke();
 
 
@@ -42,7 +42,7 @@ namespace SCKRM.Threads
                 runningThreads[i]?.Remove();
         }
 
-        public static async void ThreadAutoRemove()
+        public static async UniTaskVoid ThreadAutoRemove()
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException();
@@ -63,12 +63,12 @@ namespace SCKRM.Threads
         #region Thread Create Method
         public static ThreadMetaData Create(Action method, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -77,6 +77,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method());
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -84,12 +85,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create(Action<ThreadMetaData> method, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -98,6 +99,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -105,12 +107,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T>(Action<T, ThreadMetaData> method, T obj, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -119,6 +121,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(obj, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -126,12 +129,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2>(Action<T1, T2, ThreadMetaData> method, T1 arg1, T2 arg2, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -140,6 +143,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -147,12 +151,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3>(Action<T1, T2, T3, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
             threadMetaData.name = name;
@@ -161,6 +165,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -168,12 +173,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4>(Action<T1, T2, T3, T4, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -182,6 +187,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -189,12 +195,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -203,6 +209,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -210,12 +217,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -224,6 +231,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -231,12 +239,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -245,6 +253,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -252,12 +261,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -266,6 +275,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -273,12 +283,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -287,6 +297,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -294,12 +305,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -308,6 +319,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -315,12 +327,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -329,6 +341,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -336,12 +349,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -350,6 +363,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -357,12 +371,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -371,6 +385,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -378,12 +393,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -392,6 +407,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -399,12 +415,12 @@ namespace SCKRM.Threads
         }
         public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string name = "", string info = "", bool loop = false)
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(Create));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeThreadCreateException();
 #endif
-            if (!isMainThread)
-                throw new NotMainThreadMethodException(nameof(Create));
 
             ThreadMetaData threadMetaData = new ThreadMetaData();;
             threadMetaData.name = name;
@@ -413,6 +429,7 @@ namespace SCKRM.Threads
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, threadMetaData));
             threadMetaData.thread.Start();
 
+            ThreadAddEventInvoke();
             ThreadChangeEventInvoke();
             runningThreads.Add(threadMetaData);
 
@@ -433,14 +450,17 @@ namespace SCKRM.Threads
         public bool loop { get; set; } = false;
         public bool autoRemoveDisable { get; set; } = false;
 
-        [Obsolete("웬만하면 사용하지 마세요, 알아서 삭제됩니다 (자동 삭제는 스레드에 안전함, 단 사용자가 스레드 리스트를 건들지 않으면서 다른 스레드가 이 클래스를 건들지 않아야함)\nIf possible, don't use it, it will be deleted automatically (Auto-delete is thread-safe, provided that the user does not touch the list of threads and no other threads touch this class)")]
         public void Remove()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(Remove));
+
             loop = false;
             progress = 1;
             autoRemoveDisable = false;
 
             ThreadManager.ThreadChangeEventInvoke();
+            ThreadManager.ThreadRemoveEventInvoke();
             ThreadManager.runningThreads.Remove(this);
 
             if (thread != null)

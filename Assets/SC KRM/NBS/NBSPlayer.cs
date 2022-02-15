@@ -100,7 +100,7 @@ namespace SCKRM.NBS
             for (int i = 0; i < ResourceManager.SaveData.resourcePacks.Count; i++)
             {
                 string resourcePackPath = ResourceManager.SaveData.resourcePacks[i];
-                if (ResourceManager.SaveData.nameSpaces.Contains(nameSpace))
+                if (ResourceManager.nameSpaces.Contains(nameSpace))
                 {
                     string temppath = PathTool.Combine(resourcePackPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace), key + ".nbs");
 
@@ -147,7 +147,7 @@ namespace SCKRM.NBS
                     Remove();
             }
             else
-                tick = tick;
+                time = time;
         }
 
 
@@ -238,9 +238,9 @@ namespace SCKRM.NBS
                             blockType += "pling";
 
                         if (spatial)
-                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
                         else
-                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch, 1, panStereo + this.panStereo);
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo);
                     }
 
                     _index++;

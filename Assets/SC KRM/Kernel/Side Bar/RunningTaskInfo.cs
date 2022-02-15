@@ -1,5 +1,6 @@
 using SCKRM.Language;
 using SCKRM.Object;
+using SCKRM.Resource;
 using SCKRM.Threads;
 using SCKRM.Tool;
 using System.Collections;
@@ -14,20 +15,6 @@ namespace SCKRM.UI.SideBar
     [RequireComponent(typeof(RectTransform))]
     public sealed class RunningTaskInfo : ObjectPooling
     {
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
-
-
-
         [SerializeField] TMP_Text _nameText;
         public TMP_Text nameText => _nameText;
 
@@ -45,16 +32,13 @@ namespace SCKRM.UI.SideBar
         public override void OnCreate()
         {
             LanguageManager.currentLanguageChange += InfoLoad;
-            ThreadManager.threadChange += ThreadChange;
+            ThreadManager.threadChange += InfoLoad;
         }
-
-        bool infoLoad = false;
-        void ThreadChange() => infoLoad = true;
 
         public void InfoLoad()
         {
-            nameText.text = LanguageManager.TextLoad(threadMetaData.name);
-            infoText.text = LanguageManager.TextLoad(threadMetaData.info);
+            nameText.text = ResourceManager.SearchLanguage(threadMetaData.name);
+            infoText.text = ResourceManager.SearchLanguage(threadMetaData.info);
         }
 
         [System.NonSerialized] bool noResponse = false;
@@ -70,12 +54,6 @@ namespace SCKRM.UI.SideBar
             {
                 Remove();
                 return;
-            }
-
-            if (infoLoad)
-            {
-                InfoLoad();
-                infoLoad = false;
             }
 
             if (!threadMetaData.loop)
@@ -96,10 +74,10 @@ namespace SCKRM.UI.SideBar
                         noResponse = true;
                     }
 
-                    loopValue += 0.0125f * Kernel.fpsDeltaTime;
+                    loopValue += 0.0125f * Kernel.fpsUnscaledDeltaTime;
 
-                    tempMinX = tempMinX.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
-                    tempMaxX = tempMaxX.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
+                    tempMinX = tempMinX.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    tempMaxX = tempMaxX.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                     fillShow.anchorMin = new Vector2((loopValue - 0.25f).Clamp01() + tempMinX, fillShow.anchorMin.y);
                     fillShow.anchorMax = new Vector2(loopValue.Clamp01() + tempMaxX, fillShow.anchorMax.y);
@@ -115,10 +93,10 @@ namespace SCKRM.UI.SideBar
                     noResponse = false;
 
                     slider.value = threadMetaData.progress;
-                    fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsDeltaTime);
-                    fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsDeltaTime);
+                    fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
-                    tempTimer += Kernel.deltaTime;
+                    tempTimer += Kernel.unscaledDeltaTime;
                 }
 
                 if (tempProgress != threadMetaData.progress)

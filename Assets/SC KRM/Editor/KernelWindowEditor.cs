@@ -579,7 +579,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "조작 키 설정", "오브젝트 풀링 설정", "오디오 설정" }, GUILayout.Width(500));
+                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "조작 키 설정", "오브젝트 풀링 설정", "오디오 설정", "리소스 설정" }, GUILayout.Width(570));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -600,6 +600,9 @@ namespace SCKRM.Editor
                     break;
                 case 3:
                     AudioSetting();
+                    break;
+                case 4:
+                    ResourceSetting();
                     break;
             }
         }
@@ -1025,7 +1028,10 @@ namespace SCKRM.Editor
 
                     GUILayout.Label("프리팹", GUILayout.ExpandWidth(false));
                     //문자열(경로)을 프리팹으로 변환
-                    GameObject gameObject = ((ObjectPooling)EditorGUILayout.ObjectField("", Resources.Load<ObjectPooling>(item.Value), typeof(GameObject), true)).gameObject;
+                    GameObject gameObject = null;
+                    ObjectPooling objectPooling = ((ObjectPooling)EditorGUILayout.ObjectField("", Resources.Load<ObjectPooling>(item.Value), typeof(ObjectPooling), true));
+                    if (objectPooling != null)
+                        gameObject = objectPooling.gameObject;
 
                     /*
                      * 변경한 프리팹이 리소스 폴더에 있지 않은경우
@@ -1081,8 +1087,6 @@ namespace SCKRM.Editor
             //GUI
             {
                 EditorGUILayout.LabelField("오디오 설정", EditorStyles.boldLabel);
-
-                EditorGUILayout.Space();
 
                 {
                     if (Application.isPlaying)
@@ -1430,6 +1434,30 @@ namespace SCKRM.Editor
 
             if (GUI.changed && !Application.isPlaying)
                 ProjectSettingManager.Save(typeof(SoundManager.Data));
+        }
+
+        Vector2 resourceSettingScrollPos = Vector2.zero;
+        public void ResourceSetting()
+        {
+            if (!Application.isPlaying)
+                ProjectSettingManager.Load(typeof(ResourceManager.Data));
+
+            //GUI
+            {
+                EditorGUILayout.LabelField("기본 네임스페이스 리스트", EditorStyles.boldLabel);
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("안전 삭제 모드 (삭제 할 리스트가 빈 값이 아니면 삭제 금지)", GUILayout.Width(330));
+                deleteSafety = EditorGUILayout.Toggle(deleteSafety);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+            }
+
+            CustomInspectorEditor.DrawList(ResourceManager.Data.nameSpaces, "네임스페이스", 0, 0, deleteSafety);
+
+            if (GUI.changed && !Application.isPlaying)
+                ProjectSettingManager.Save(typeof(ResourceManager.Data));
         }
     }
 }

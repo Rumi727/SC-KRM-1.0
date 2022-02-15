@@ -45,11 +45,7 @@ namespace SCKRM.Log
             else if (type == LogType.Error || type == LogType.Assert)
                 log = new Log(name, info, stackTrace, NoticeManager.Type.error);
             else if (type == LogType.Warning)
-            {
-                Debug.Log(name);
-                Debug.Log(info);
                 log = new Log(name, info, stackTrace, NoticeManager.Type.warning);
-            }
             /*else
                 log = new Log(name, info, stackTrace, NoticeManager.Type.none);*/
 

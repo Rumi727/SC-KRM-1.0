@@ -1,4 +1,5 @@
 using SCKRM.Language;
+using SCKRM.Resource;
 using UnityEngine;
 
 namespace SCKRM.Renderer
@@ -13,7 +14,7 @@ namespace SCKRM.Renderer
         {
             base.ResourceReload();
 
-            string text = LanguageManager.TextLoad(path, nameSpace);
+            string text = ResourceManager.SearchLanguage(path, nameSpace);
             if (replaceOld != null && replaceNew != null && replaceOld.Length == replaceNew.Length)
             {
                 for (int i = 0; i < replaceOld.Length; i++)

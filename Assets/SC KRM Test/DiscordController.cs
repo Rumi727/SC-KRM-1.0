@@ -24,6 +24,6 @@ public class DiscordController : MonoBehaviour
             PresenceManager.UpdatePresence("Simsimhan Chobo Kernel Manager", "Rich Presence Test", startTime, PresenceManager.instance.presence.endTimestamp, PresenceManager.instance.presence.largeImageKey, version);
             timer = 0;
         }
-        timer += Kernel.deltaTime;
+        timer += Kernel.unscaledDeltaTime;
     }
 }

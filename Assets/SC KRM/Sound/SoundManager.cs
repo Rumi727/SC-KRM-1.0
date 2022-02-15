@@ -75,16 +75,208 @@ namespace SCKRM.Sound
             }
         }
 
+        /// <summary>
+        /// 소리를 재생합니다
+        /// </summary>
+        /// <param name="key">
+        /// 오디오 키
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <returns></returns>
         public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
+        /// <summary>
+        /// 소리를 재생합니다
+        /// </summary>
+        /// <param name="key">
+        /// 오디오 키
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <param name="minDistance">
+        /// 최소 거리
+        /// </param>
+        /// <param name="maxDistance">
+        /// 최대 거리
+        /// </param>
+        /// <param name="parent">
+        /// 부모
+        /// </param>
+        /// <param name="x">
+        /// X 좌표
+        /// </param>
+        /// <param name="y">
+        /// Y 좌표
+        /// </param>
+        /// <param name="z">
+        /// Z 좌표
+        /// </param>
+        /// <returns></returns>
         public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
+        /// <summary>
+        /// 오디오 클립을 재생시킵니다
+        /// </summary>
+        /// <param name="audioClip">
+        /// 오디오 클립
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <returns></returns>
         public static SoundObject PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
+        /// <summary>
+        /// 오디오 클립을 재생시킵니다
+        /// </summary>
+        /// <param name="audioClips">
+        /// 오디오 클립
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <returns></returns>
         public static SoundObject PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
+        /// <summary>
+        /// 오디오 클립을 재생시킵니다
+        /// </summary>
+        /// <param name="audioClip">
+        /// 오디오 클립
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <param name="minDistance">
+        /// 최소 거리
+        /// </param>
+        /// <param name="maxDistance">
+        /// 최대 거리
+        /// </param>
+        /// <param name="parent">
+        /// 부모
+        /// </param>
+        /// <param name="x">
+        /// X 좌표
+        /// </param>
+        /// <param name="y">
+        /// Y 좌표
+        /// </param>
+        /// <param name="z">
+        /// Z 좌표
+        /// </param>
+        /// <returns></returns>
         public static SoundObject PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
+        /// <summary>
+        /// 오디오 클립을 재생시킵니다
+        /// </summary>
+        /// <param name="audioClips">
+        /// 오디오 클립
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <param name="minDistance">
+        /// 최소 거리
+        /// </param>
+        /// <param name="maxDistance">
+        /// 최대 거리
+        /// </param>
+        /// <param name="parent">
+        /// 부모
+        /// </param>
+        /// <param name="x">
+        /// X 좌표
+        /// </param>
+        /// <param name="y">
+        /// Y 좌표
+        /// </param>
+        /// <param name="z">
+        /// Z 좌표
+        /// </param>
+        /// <returns></returns>
         public static SoundObject PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         static SoundObject playSound(string key, string nameSpace, AudioClip[] audioClips, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
@@ -149,6 +341,21 @@ namespace SCKRM.Sound
             return soundObject;
         }
 
+        /// <summary>
+        /// 소리를 중지합니다
+        /// </summary>
+        /// <param name="key">
+        /// 중지할 오디오 키
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// </param>
+        /// <param name="all">
+        /// 전부 삭제
+        /// </param>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
         public static void StopSound(string key, string nameSpace = "", bool all = true)
         {
             if (!ThreadManager.isMainThread)
@@ -292,6 +499,9 @@ namespace SCKRM.Sound
             return nbsPlayer;
         }
 
+        /// <summary>
+        /// NBS 중지
+        /// </summary>
         public static void StopNBS(string key, string nameSpace = "", bool all = true)
         {
             if (!ThreadManager.isMainThread)
@@ -325,6 +535,12 @@ namespace SCKRM.Sound
             }
         }
 
+        /// <summary>
+        /// 모든 NBS 중지
+        /// </summary>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
         public static void StopNBSAll()
         {
             if (!ThreadManager.isMainThread)

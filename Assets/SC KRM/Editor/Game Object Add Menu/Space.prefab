@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8732525914463189099}
-  - component: {fileID: 6512161969762874345}
   - component: {fileID: 1298395378943070797}
+  - component: {fileID: 6512161969762874345}
   m_Layer: 0
   m_Name: Space
   m_TagString: Untagged
@@ -38,14 +38,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: -125}
   m_SizeDelta: {x: 430, y: 12}
   m_Pivot: {x: 0.5, y: 1}
---- !u!222 &6512161969762874345
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111679706206285908}
-  m_CullTransparentMesh: 1
 --- !u!114 &1298395378943070797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,3 +53,11 @@ MonoBehaviour:
   _rectTransform: {fileID: 8732525914463189099}
   tempParentGameobject: {fileID: 0}
   _parentRectTransformSetting: {fileID: 0}
+--- !u!222 &6512161969762874345
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111679706206285908}
+  m_CullTransparentMesh: 1

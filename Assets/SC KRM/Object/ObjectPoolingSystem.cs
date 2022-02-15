@@ -44,13 +44,13 @@ namespace SCKRM.Object
         public static void ObjectAdd(string objectKey)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(ObjectRemove));
+                throw new NotMainThreadMethodException(nameof(ObjectAdd));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(ObjectRemove));
+                throw new NotPlayModeMethodException(nameof(ObjectAdd));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
+                throw new NotInitialLoadEndMethodException(nameof(ObjectAdd));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
 
@@ -159,13 +159,25 @@ namespace SCKRM.Object
         public string objectKey { get; set; } = "";
         public bool actived { get; set; } = false;
 
-        [System.NonSerialized] CustomAllRenderer[] _renderers;
+        [NonSerialized] RectTransform _rectTransform;
+        public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                    _rectTransform= GetComponent<RectTransform>();
+
+                return _rectTransform;
+            }
+        }
+
+        [NonSerialized] CustomAllRenderer[] _renderers;
         public CustomAllRenderer[] renderers
         {
             get
             {
                 if (_renderers == null)
-                    _renderers = GetComponentsInChildren<CustomAllRenderer>();
+                    _renderers = GetComponentsInChildren<CustomAllRenderer>(true);
 
                 return _renderers;
             }
@@ -187,7 +199,6 @@ namespace SCKRM.Object
             ObjectPoolingSystem.ObjectRemove(objectKey, this);
             gameObject.name = objectKey;
 
-            RectTransform rectTransform = GetComponent<RectTransform>();
             if (rectTransform != null)
                 rectTransform.anchoredPosition = Vector2.zero;
             else

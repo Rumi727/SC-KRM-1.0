@@ -8,6 +8,13 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(VerticalLayout), true)]
     public sealed class VerticalLayoutEditor : CustomInspectorEditor
     {
+        VerticalLayout editor;
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            editor = (VerticalLayout)target;
+        }
+
         public override void OnInspectorGUI()
         {
             UseProperty("_padding");
@@ -19,6 +26,8 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             UseProperty("_lerp", "애니메이션 사용");
+            if (editor.lerp)
+                UseProperty("_lerpValue", "애니메이션 속도");
 
             EditorGUILayout.Space();
 

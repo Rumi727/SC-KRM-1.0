@@ -107,9 +107,9 @@ namespace SCKRM.UI.Layout
             else
             {
                 if (mode == Mode.XSize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(xSize, 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(xSize, lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (mode == Mode.YSize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(ySize, 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(ySize, lerpValue * Kernel.fpsUnscaledDeltaTime);
             }
         }
 

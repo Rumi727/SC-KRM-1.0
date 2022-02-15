@@ -32,6 +32,9 @@
 	
 	
 	
+	"options.language.title": "Language",
+	"options.language": "Language",
+	
 	"options.sound.title": "Sound",
 	"options.sound.mainVolume": "Main",
 	"options.sound.bgmVolume": "BGM",
@@ -67,11 +70,18 @@
 	"notice.notice": "Notice",
 	"notice.running_task": "Running Task",
 	
+	
+	
 	"notice.running_task.thread_auto_remove.name": "Thread Auto Remove",
 	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
+	
 	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
+	
 	"notice.running_task.rerender.name": "Refresh renderer",
+	
 	"notice.running_task.audio_refresh.name": "Refresh audio",
+	
+	"notice.running_task.language_refresh.name": "Refresh language",
 	
 	
 	

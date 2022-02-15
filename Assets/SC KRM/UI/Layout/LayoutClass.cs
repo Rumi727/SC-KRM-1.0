@@ -27,6 +27,8 @@ namespace SCKRM.UI.Layout
         public float spacing { get => _spacing; set => _spacing = value; }
         [SerializeField] bool _lerp = true;
         public bool lerp { get => _lerp; set => _lerp = value; }
+        [SerializeField, Range(0, 1)] float _lerpValue = 0.2f;
+        public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
 
 
         [SerializeField] RectTransform[] _ignore = new RectTransform[0];
@@ -59,10 +61,9 @@ namespace SCKRM.UI.Layout
                         update = false;
 #endif
                     bool update2 = false;
-                    for (int i = 0; i < childRectTransforms.Count; i++)
+                    for (int i = 0; i < transform.childCount; i++)
                     {
-                        RectTransform rectTransform = childRectTransforms[i];
-                        if (i != rectTransform.GetSiblingIndex())
+                        if (transform.GetChild(i) != childRectTransforms[i])
                         {
                             SetChild();
                             update = true;

@@ -102,15 +102,12 @@ namespace SCKRM.UI
                 float height;
 #if UNITY_EDITOR
                 if (Application.isPlaying && StatusBarManager.cropTheScreen)
+#else
+                if (StatusBarManager.cropTheScreen)
+#endif
                     height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.sizeDelta.y);
                 else
                     height = Screen.height * (1 / Kernel.guiSize);
-#else
-                if (TaskBarManager.cropTheScreen)
-                    height = Screen.height * (1 / Kernel.guiSize) + TaskBarManager.instance.rectTransform.sizeDelta.y;
-                else
-                    height = Screen.height * (1 / Kernel.guiSize);
-#endif
 
                 rectTransform.sizeDelta = new Vector2(width, height);
                 rectTransform.pivot = new Vector2(0.5f, 0.5f);

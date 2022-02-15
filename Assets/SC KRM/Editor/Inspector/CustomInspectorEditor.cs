@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SCKRM.Tool;
 using System;
 using SCKRM.Resource;
+using SCKRM.ProjectSetting;
 
 namespace SCKRM.Editor
 {
@@ -78,7 +79,7 @@ namespace SCKRM.Editor
 
         public static void DrawList(List<int> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<int> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        public static Vector2 drawList(List<int> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
+        static Vector2 drawList(List<int> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -180,7 +181,7 @@ namespace SCKRM.Editor
 
         public static void DrawList(List<float> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<float> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        public static Vector2 drawList(List<float> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
+        static Vector2 drawList(List<float> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -282,7 +283,7 @@ namespace SCKRM.Editor
 
         public static void DrawList(List<double> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<double> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        public static Vector2 drawList(List<double> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
+        static Vector2 drawList(List<double> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -384,7 +385,7 @@ namespace SCKRM.Editor
 
         public static void DrawList(List<string> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<string> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        public static Vector2 drawList(List<string> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
+        static Vector2 drawList(List<string> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -486,7 +487,7 @@ namespace SCKRM.Editor
 
         public static void DrawList<T>(List<T> list, string label, Action<int> action, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, action, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList<T>(List<T> list, string label, Action<int> action, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, action, true, scrollViewPos, tab, tab2, deleteSafety);
-        public static Vector2 drawList<T>(List<T> list, string label, Action<int> action, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
+        static Vector2 drawList<T>(List<T> list, string label, Action<int> action, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
             //GUI
             {
@@ -588,18 +589,22 @@ namespace SCKRM.Editor
 
         public static string DrawNameSpace(string nameSpace)
         {
-            int index = EditorGUILayout.Popup(ResourceManager.SaveData.nameSpaces.IndexOf(nameSpace), ResourceManager.SaveData.nameSpaces.ToArray());
+            ProjectSettingManager.Load(typeof(ResourceManager.Data));
+
+            int index = EditorGUILayout.Popup(ResourceManager.nameSpaces.IndexOf(nameSpace), ResourceManager.nameSpaces.ToArray());
             if (index >= 0)
-                return ResourceManager.SaveData.nameSpaces[index];
+                return ResourceManager.nameSpaces[index];
             else
                 return ResourceManager.defaultNameSpace;
         }
 
         public static string DrawNameSpace(string label, string nameSpace)
         {
-            int index = EditorGUILayout.Popup(label, ResourceManager.SaveData.nameSpaces.IndexOf(nameSpace), ResourceManager.SaveData.nameSpaces.ToArray());
+            ProjectSettingManager.Load(typeof(ResourceManager.Data));
+
+            int index = EditorGUILayout.Popup(label, ResourceManager.nameSpaces.IndexOf(nameSpace), ResourceManager.nameSpaces.ToArray());
             if (index >= 0)
-                return ResourceManager.SaveData.nameSpaces[index];
+                return ResourceManager.nameSpaces[index];
             else
                 return ResourceManager.defaultNameSpace;
         }

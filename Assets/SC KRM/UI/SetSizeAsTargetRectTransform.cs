@@ -41,6 +41,8 @@ namespace SCKRM.UI
 
         [SerializeField] bool _lerp = false;
         public bool lerp { get => _lerp; set => _lerp = value; }
+        [SerializeField] float _lerpValue = 0.2f;
+        public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
 
         void Update()
         {
@@ -57,7 +59,11 @@ namespace SCKRM.UI
             else
                 size.y = size.y.Clamp(min.y, max.y);
 
-            if (!lerp || Application.isPlaying)
+#if UNITY_EDITOR
+            if (!lerp || !Application.isPlaying)
+#else
+            if (!lerp)
+#endif
             {
                 if (xSize && !ySize)
                     rectTransform.sizeDelta = new Vector2(size.x, rectTransform.sizeDelta.y);
@@ -69,11 +75,11 @@ namespace SCKRM.UI
             else
             {
                 if (xSize && !ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(size.x, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(size.x, rectTransform.sizeDelta.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (!xSize && ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(rectTransform.sizeDelta.x, size.y), 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(rectTransform.sizeDelta.x, size.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (xSize && ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(size, 0.2f * Kernel.fpsDeltaTime);
+                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(size, lerpValue * Kernel.fpsUnscaledDeltaTime);
             }
         }
     }

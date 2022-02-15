@@ -117,6 +117,74 @@ namespace SCKRM.UI.Setting
             return null;
         }
 
+        public virtual int GetValueInt()
+        {
+            if (propertyInfo != null)
+            {
+                if (variableType == VariableType.Char)
+                    return int.Parse(((char)propertyInfo.GetValue(type)).ToString());
+                else if (variableType == VariableType.String)
+                    return int.Parse((string)propertyInfo.GetValue(type));
+                else if (variableType == VariableType.Bool)
+                    return (bool)propertyInfo.GetValue(type) ? 1 : 0;
+                else if (variableType == VariableType.Byte)
+                    return (byte)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Sbyte)
+                    return (sbyte)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Short)
+                    return (short)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Int)
+                    return (int)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Long)
+                    return (int)(long)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Ushort)
+                    return (ushort)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Uint)
+                    return (int)(uint)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Ulong)
+                    return (int)(ulong)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Float)
+                    return (int)(float)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Double)
+                    return (int)(double)propertyInfo.GetValue(type);
+                else if (variableType == VariableType.Decimal)
+                    return (int)(decimal)propertyInfo.GetValue(type);
+            }
+            else if (fieldInfo != null)
+            {
+                if (variableType == VariableType.Char)
+                    return int.Parse(((char)fieldInfo.GetValue(type)).ToString());
+                if (variableType == VariableType.String)
+                    return int.Parse((string)fieldInfo.GetValue(type));
+                else if (variableType == VariableType.Bool)
+                    return (bool)fieldInfo.GetValue(type) ? 1 : 0;
+                else if (variableType == VariableType.Byte)
+                    return (byte)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Sbyte)
+                    return (sbyte)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Short)
+                    return (short)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Int)
+                    return (int)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Long)
+                    return (int)(long)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Ushort)
+                    return (ushort)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Uint)
+                    return (int)(uint)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Ulong)
+                    return (int)(ulong)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Float)
+                    return (int)(float)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Double)
+                    return (int)(double)fieldInfo.GetValue(type);
+                else if (variableType == VariableType.Decimal)
+                    return (int)(decimal)fieldInfo.GetValue(type);
+            }
+
+            return 0;
+        }
+
         public virtual float GetValueFloat()
         {
             if (propertyInfo != null)

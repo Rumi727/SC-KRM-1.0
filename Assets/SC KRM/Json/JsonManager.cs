@@ -19,32 +19,6 @@ namespace SCKRM.Json
                 return default;
         }
 
-        public static T JsonRead<T>(string path, string nameSpace) => JsonConvert.DeserializeObject<T>(ResourceManager.SearchText(path, nameSpace));
-
-        public static TValue JsonReadDictionary<TKey, TValue>(TKey key, string path, string nameSpace)
-        {
-            if (path == null)
-                path = "";
-            if (nameSpace == null)
-                nameSpace = "";
-
-            if (nameSpace == "")
-                nameSpace = ResourceManager.defaultNameSpace;
-
-            path = path.Replace("%NameSpace%", nameSpace);
-
-            for (int i = 0; i < ResourceManager.SaveData.resourcePacks.Count; i++)
-            {
-                string resourcePack = ResourceManager.SaveData.resourcePacks[i];
-                Dictionary<TKey, TValue> dictionary = JsonRead<Dictionary<TKey, TValue>>(PathTool.Combine(resourcePack, path));
-                
-                if (dictionary.ContainsKey(key))
-                    return dictionary[key];
-            }
-
-            return default(TValue);
-        }
-
         public static T JsonToObject<T>(string json) => JsonConvert.DeserializeObject<T>(json);
         public static string ObjectToJson(object value) => JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings() { });
         public static string ObjectToJson(params object[] value) => JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings() { });
@@ -75,9 +49,9 @@ namespace SCKRM.Json
 
         public static implicit operator JVector2(JRect value) => new JVector2(value.x, value.y);
 
-        public static implicit operator JVector2(Vector2 value) => new JVector3(value);
-        public static implicit operator JVector2(Vector3 value) => new JVector3(value);
-        public static implicit operator JVector2(Vector4 value) => new JVector3(value);
+        public static implicit operator JVector2(Vector2 value) => new JVector2(value);
+        public static implicit operator JVector2(Vector3 value) => new JVector2(value);
+        public static implicit operator JVector2(Vector4 value) => new JVector2(value);
         public static implicit operator Vector2(JVector2 value) => new Vector3(value.x, value.y);
         public static implicit operator Vector3(JVector2 value) => new Vector3(value.x, value.y);
         public static implicit operator Vector4(JVector2 value) => new Vector4(value.x, value.y);
@@ -179,10 +153,10 @@ namespace SCKRM.Json
         public static implicit operator JVector4(JRect value) => new JVector4(value.x, value.y, value.width, value.height);
         public static implicit operator JVector4(Rect value) => new JVector4(value.x, value.y, value.width, value.height);
 
-        public static implicit operator JVector4(Vector2 value) => new JVector3(value);
-        public static implicit operator JVector4(Vector3 value) => new JVector3(value);
-        public static implicit operator JVector4(Vector4 value) => new JVector3(value);
-        public static implicit operator Vector2(JVector4 value) => new Vector3(value.x, value.y);
+        public static implicit operator JVector4(Vector2 value) => new JVector4(value);
+        public static implicit operator JVector4(Vector3 value) => new JVector4(value);
+        public static implicit operator JVector4(Vector4 value) => new JVector4(value);
+        public static implicit operator Vector2(JVector4 value) => new Vector2(value.x, value.y);
         public static implicit operator Vector3(JVector4 value) => new Vector3(value.x, value.y, value.z);
         public static implicit operator Vector4(JVector4 value) => new Vector4(value.x, value.y, value.z, value.w);
 

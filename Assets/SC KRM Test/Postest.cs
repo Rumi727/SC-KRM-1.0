@@ -12,9 +12,9 @@ public class Postest : MonoBehaviour
     {
         float speed;
         if (InputManager.GetKey(KeyCode.LeftControl))
-            speed = 0.25f * Kernel.fpsDeltaTime;
+            speed = 0.25f * Kernel.fpsUnscaledDeltaTime;
         else
-            speed = 0.125f * Kernel.fpsDeltaTime;
+            speed = 0.125f * Kernel.fpsUnscaledDeltaTime;
 
         {
             Vector3 rotation = transform.localEulerAngles;

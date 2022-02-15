@@ -7,6 +7,13 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SetSizeAsTargetRectTransform), true)]
     public sealed class SetSizeAsTargetRectTransformEditor : CustomInspectorEditor
     {
+        SetSizeAsTargetRectTransform editor;
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            editor = (SetSizeAsTargetRectTransform)target;
+        }
+
         public override void OnInspectorGUI()
         {
             UseProperty("_targetRectTransform", "대상");
@@ -25,6 +32,8 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             UseProperty("_lerp", "애니메이션 사용");
+            if (editor.lerp)
+                UseProperty("_lerpValue", "애니메이션 속도");
         }
     }
 }

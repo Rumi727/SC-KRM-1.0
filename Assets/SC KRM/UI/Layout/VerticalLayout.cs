@@ -84,7 +84,7 @@ namespace SCKRM.UI.Layout
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom);
                     else
-                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom), 0.2f * Kernel.fpsDeltaTime);
+                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom), lerpValue * Kernel.fpsUnscaledDeltaTime);
 
                     y += childRectTransform.sizeDelta.y + spacing;
                 }
@@ -100,7 +100,7 @@ namespace SCKRM.UI.Layout
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y);
                     else
-                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y), 0.2f * Kernel.fpsDeltaTime);
+                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y), lerpValue * Kernel.fpsUnscaledDeltaTime);
 
                     y += childRectTransform.sizeDelta.y + spacing;
                 }
@@ -117,7 +117,7 @@ namespace SCKRM.UI.Layout
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y - padding.top);
                     else
-                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y - padding.top), 0.2f * Kernel.fpsDeltaTime);
+                        childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y - padding.top), lerpValue * Kernel.fpsUnscaledDeltaTime);
 
                     y -= childRectTransform.sizeDelta.y + spacing;
                 }

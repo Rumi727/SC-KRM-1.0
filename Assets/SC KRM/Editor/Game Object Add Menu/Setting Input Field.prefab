@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 6861332770663965595}
   - component: {fileID: 8145220453371415631}
   - component: {fileID: 656233929529435922}
-  - component: {fileID: 9209445236844171277}
+  - component: {fileID: 2916338846000179462}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &9209445236844171277
+--- !u!114 &2916338846000179462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -613,27 +613,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5434104390641082046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: c3bb752308319c54a8b2c1ed5f6eeb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 5
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3783897986454623060}
-          m_TargetAssemblyTypeName: SCKRM.UI.Setting.InputField.SettingInputField,
-            SC KRM
-          m_MethodName: OnDrag
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  _onDrag:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3783897986454623060}
+        m_TargetAssemblyTypeName: SCKRM.UI.Setting.SettingDrag, SC KRM
+        m_MethodName: OnDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7691767713636167457
 GameObject:
   m_ObjectHideFlags: 0

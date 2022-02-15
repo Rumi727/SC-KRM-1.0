@@ -80,29 +80,29 @@ namespace SCKRM.Splash
                 LogoImage.color = new Color(1, 1, 1, alpha);
                 CSImage.color = new Color(1, 1, 1, alpha);
                 text.color = new Color(1, 1, 1, alpha);
-                alpha += 0.05f * Kernel.fpsDeltaTime;
+                alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
 
                 return;
             }
 
             if (aniEnd)
             {
-                text.rectTransform.anchoredPosition = text.rectTransform.anchoredPosition.Lerp(Vector3.zero, 0.1f * Kernel.fpsDeltaTime);
-                CSImage.transform.rotation = Quaternion.Lerp(CSImage.transform.rotation, Quaternion.Euler(Vector3.zero), 0.1f * Kernel.fpsDeltaTime);
-                CS.localPosition = CS.localPosition.Lerp(new Vector3(24, -24), 0.1f * Kernel.fpsDeltaTime);
+                text.rectTransform.anchoredPosition = text.rectTransform.anchoredPosition.Lerp(Vector3.zero, 0.1f * Kernel.fpsUnscaledDeltaTime);
+                CSImage.transform.rotation = Quaternion.Lerp(CSImage.transform.rotation, Quaternion.Euler(Vector3.zero), 0.1f * Kernel.fpsUnscaledDeltaTime);
+                CS.localPosition = CS.localPosition.Lerp(new Vector3(24, -24), 0.1f * Kernel.fpsUnscaledDeltaTime);
 
                 if (timer >= 2)
                 {
                     LogoImage.color = new Color(1, 1, 1, alpha);
                     CSImage.color = new Color(1, 1, 1, alpha);
                     text.color = new Color(1, 1, 1, alpha);
-                    alpha -= 0.05f * Kernel.fpsDeltaTime;
+                    alpha -= 0.05f * Kernel.fpsUnscaledDeltaTime;
 
                     if (alpha < 0)
                         isAniPlayed = false;
                 }
                 else
-                    timer += Kernel.deltaTime;
+                    timer += Kernel.unscaledDeltaTime;
             }
             else
             {
@@ -111,9 +111,9 @@ namespace SCKRM.Splash
                 text.color = Color.white;
                 alpha = 1;
 
-                CS.localPosition = new Vector2(CS.localPosition.x + xV * Kernel.fpsDeltaTime, CS.localPosition.y + yV * Kernel.fpsDeltaTime);
-                CSImage.transform.localEulerAngles = new Vector3(CSImage.transform.localEulerAngles.x, CSImage.transform.localEulerAngles.y, CSImage.transform.localEulerAngles.z + rV * Kernel.fpsDeltaTime);
-                yV -= 0.5f * Kernel.fpsDeltaTime;
+                CS.localPosition = new Vector2(CS.localPosition.x + xV * Kernel.fpsUnscaledDeltaTime, CS.localPosition.y + yV * Kernel.fpsUnscaledDeltaTime);
+                CSImage.transform.localEulerAngles = new Vector3(CSImage.transform.localEulerAngles.x, CSImage.transform.localEulerAngles.y, CSImage.transform.localEulerAngles.z + rV * Kernel.fpsUnscaledDeltaTime);
+                yV -= 0.5f * Kernel.fpsUnscaledDeltaTime;
 
                 if (CS.localPosition.x >= -25 && CS.localPosition.x <= 25 && CS.localPosition.y >= -25 && CS.localPosition.y <= 25)
                 {

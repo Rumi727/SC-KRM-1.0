@@ -1,5 +1,6 @@
 using SCKRM.Language;
 using SCKRM.Object;
+using SCKRM.Resource;
 using SCKRM.Tool;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace SCKRM.Input.UI
                 controlsButton.key = item.Key;
                 controlsButton.inputLockObject = inputLockObject;
 
-                string keyLanguage = LanguageManager.TextLoad(controlsButton.key);
+                string keyLanguage = ResourceManager.SearchLanguage(controlsButton.key);
                 if (keyLanguage != "null")
                     controlsButton.keyText.text = keyLanguage;
                 else

@@ -81,6 +81,7 @@ namespace SCKRM.UI.StatusBar
         static GameObject oldSelectedObject;
         static bool tempTopMode;
         static bool tempCropTheScreen;
+        static bool tempSelectedStatusBar;
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
@@ -90,7 +91,10 @@ namespace SCKRM.UI.StatusBar
                     isStatusBarShow = allowStatusBarShow || selectedStatusBar;
                     tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<KernelCanvas>() == null;
 
-                    InputManager.SetInputLock("statusbar", selectedStatusBar);
+                    if (tempSelectedStatusBar != selectedStatusBar)
+                        InputManager.SetInputLock("statusbar", selectedStatusBar);
+
+                    tempSelectedStatusBar = selectedStatusBar;
 
                     if (selectedStatusBar)
                     {
@@ -99,7 +103,7 @@ namespace SCKRM.UI.StatusBar
                         if (!background.gameObject.activeSelf)
                             background.gameObject.SetActive(true);
 
-                        background.color = background.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsDeltaTime);
+                        background.color = background.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     }
                     else
                     {
@@ -111,7 +115,7 @@ namespace SCKRM.UI.StatusBar
                                 background.gameObject.SetActive(false);
                             }
                             else
-                                background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsDeltaTime);
+                                background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsUnscaledDeltaTime);
                         }
                     }
                     
@@ -132,7 +136,7 @@ namespace SCKRM.UI.StatusBar
                 {
                     if (isStatusBarShow)
                     {
-                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsDeltaTime);
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                         if (!layout.activeSelf)
                             layout.SetActive(true);
@@ -141,7 +145,7 @@ namespace SCKRM.UI.StatusBar
                     {
                         if (!SaveData.bottomMode)
                         {
-                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                             if (rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
                             {
@@ -151,7 +155,7 @@ namespace SCKRM.UI.StatusBar
                         }
                         else
                         {
-                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsDeltaTime);
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                             if (rectTransform.anchoredPosition.y <= -rectTransform.sizeDelta.y + 0.01f)
                             {

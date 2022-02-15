@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Threads;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace SCKRM.UI.SideBar
 
         [SerializeField] Transform _noticeList;
         public Transform noticeList => _noticeList;
+
+        public static event Action noticeAdd;
 
         async void Awake()
         {
@@ -85,8 +88,7 @@ namespace SCKRM.UI.SideBar
                 notice.verticalLayout.padding.left = 70;
             }
 
-            SideBarManager.isSideBarShow = true;
-            SettingBarManager.isSettingBarShow = false;
+            noticeAdd?.Invoke();
         }
 
         public enum Type

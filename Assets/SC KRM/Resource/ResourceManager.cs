@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Json;
+using SCKRM.Language;
+using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using SCKRM.Tool;
@@ -17,11 +19,17 @@ namespace SCKRM.Resource
 {
     public static class ResourceManager
     {
+        [ProjectSetting]
+        public sealed class Data
+        {
+            [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>() { "sc-krm", "minecraft", "school-live" };
+        }
+
         [SaveLoad("resource")]
         public sealed class SaveData
         {
             [JsonProperty] public static List<string> resourcePacks { get; set; } = new List<string>() { Kernel.streamingAssetsPath };
-            [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>() { "sc-krm", "minecraft", "school-live" };
+            [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>();
         }
 
 
@@ -34,6 +42,8 @@ namespace SCKRM.Resource
         public const string nbsPath = "assets/%NameSpace%/nbs";
         public const string languagePath = "assets/%NameSpace%/lang";
         public const string settingsPath = "projectSettings";
+
+        public static List<string> nameSpaces { get => Data.nameSpaces; }
 
         public static string[] textureExtension { get; } = new string[] { "png", "jpg", "tga" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
@@ -66,15 +76,23 @@ namespace SCKRM.Resource
 
         static List<AudioClip> garbages = new List<AudioClip>();
         /// <summary>
-        /// Sprite = allTextureSprites[nameSpace][type][fileName];
+        /// SoundData = allTextureSounds[nameSpace][key];
         /// </summary>
         static Dictionary<string, Dictionary<string, SoundData>> allSounds { get; } = new Dictionary<string, Dictionary<string, SoundData>>();
+
+
+
+        /// <summary>
+        /// string = allLanguages[nameSpace][language][key];
+        /// </summary>
+        static Dictionary<string, Dictionary<string, Dictionary<string, string>>> allLanguages { get; } = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
 
 
 
         public static bool isInitialLoadPackTexturesEnd { get; private set; } = false;
         public static bool isInitialLoadSpriteEnd { get; private set; } = false;
         public static bool isInitialLoadAudioEnd { get; private set; } = false;
+        public static bool isInitialLoadLanguageEnd { get; private set; } = false;
         public static bool isResourceRefesh { get; private set; } = false;
 
         /// <summary>
@@ -93,6 +111,8 @@ namespace SCKRM.Resource
             if (isResourceRefesh)
                 return;
 
+            Data.nameSpaces = Data.nameSpaces.Union(SaveData.nameSpaces).ToList();
+
             isResourceRefesh = true;
 
             ThreadMetaData threadMetaData = new ThreadMetaData();
@@ -106,12 +126,21 @@ namespace SCKRM.Resource
                 Debug.Log("ResourceManager: Resource refresh start!");
                 Debug.Log("ResourceManager: Waiting for pack textures to set...");
                 await SetPackTextures();
-                threadMetaData.progress = 1f / 3f;
+
+                threadMetaData.progress = 1f / 4f;
                 Debug.Log("ResourceManager: Waiting for sprite to set...");
                 await SetSprite();
-                threadMetaData.progress = 2f / 3f;
+
+                threadMetaData.progress = 2f / 4f;
+                Debug.Log("ResourceManager: Waiting for language to set...");
+                ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_task.language_refresh.name");
+                await UniTask.WaitUntil(() => threadMetaData2.thread == null);
+                isInitialLoadLanguageEnd = true;
+
+                threadMetaData.progress = 3f / 4f;
                 Debug.Log("ResourceManager: Waiting for audio to set...");
                 await SetAudio();
+
                 threadMetaData.progress = 1;
                 Debug.Log("ResourceManager: Resource refresh finished!");
             }
@@ -172,9 +201,9 @@ namespace SCKRM.Resource
             {
                 string resourcePack = SaveData.resourcePacks[i];
                 //연결된 네임스페이스를 돌아다닙니다 (리소스팩에 있는 네임스페이스를 감지하지 않습니다!)
-                for (int j = 0; j < SaveData.nameSpaces.Count; j++)
+                for (int j = 0; j < Data.nameSpaces.Count; j++)
                 {
-                    string nameSpace = SaveData.nameSpaces[j];
+                    string nameSpace = Data.nameSpaces[j];
                     string resourcePackTexturePath = PathTool.Combine(resourcePack, texturePath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(resourcePackTexturePath))
@@ -194,7 +223,6 @@ namespace SCKRM.Resource
                         if (textureMetaData == null)
                             textureMetaData = new TextureMetaData();
 
-                        //타입 폴더 안의 모든 이미지를 돌아다닙니다 (타입 폴더 안의 폴더 안의... 이미지는 타입으로 취급하기 때문에 감지하지 않습니다)
                         List<string> paths = new List<string>();
 
                         for (int l = 0; l < textureExtension.Length; l++)
@@ -203,6 +231,7 @@ namespace SCKRM.Resource
                         if (paths.Count <= 0)
                             continue;
 
+                        //타입 폴더 안의 모든 이미지를 돌아다닙니다 (타입 폴더 안의 폴더 안의... 이미지는 타입으로 취급하기 때문에 감지하지 않습니다)
                         for (int l = 0; l < paths.Count; l++)
                         {
                             string path = paths[l].Replace("\\", "/");
@@ -341,6 +370,8 @@ namespace SCKRM.Resource
         /// <returns></returns>
         static async UniTask SetSprite()
         {
+            if (!isInitialLoadPackTexturesEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SetSprite));
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetSprite));
 #if UNITY_EDITOR
@@ -428,9 +459,9 @@ namespace SCKRM.Resource
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
                 string resourcePack = SaveData.resourcePacks[i];
-                for (int j = 0; j < SaveData.nameSpaces.Count; j++)
+                for (int j = 0; j < nameSpaces.Count; j++)
                 {
-                    string nameSpace = SaveData.nameSpaces[j];
+                    string nameSpace = nameSpaces[j];
                     string path = PathTool.Combine(resourcePack, soundPath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(path))
@@ -470,6 +501,58 @@ namespace SCKRM.Resource
 
             isInitialLoadAudioEnd = true;
         }
+
+        /// <summary>
+        /// 리소스팩의 sounds.json에서 오디오를 가져옵니다
+        /// Get audio from sounds.json in resource pack
+        /// </summary>
+        /// <returns></returns>
+        static void SetLanguage(ThreadMetaData threadMetaData)
+        {
+#if UNITY_EDITOR
+            if (ThreadManager.isMainThread && !Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(SetLanguage));
+#endif
+            int l = 0;
+            LanguageManager.Language[] languages = LanguageManager.GetLanguages();
+            for (int i = 0; i < SaveData.resourcePacks.Count; i++)
+            {
+                string resourcePack = SaveData.resourcePacks[i];
+                for (int j = 0; j < nameSpaces.Count; j++)
+                {
+                    string nameSpace = nameSpaces[j];
+                    for (int k = 0; k < languages.Length; k++)
+                    {
+                        threadMetaData.progress = l / (float)(SaveData.resourcePacks.Count * nameSpaces.Count * languages.Length);
+                        l++;
+
+                        LanguageManager.Language language = languages[k];
+
+                        Dictionary<string, string> dictionary = JsonManager.JsonRead<Dictionary<string, string>>(PathTool.Combine(resourcePack, languagePath.Replace("%NameSpace%", nameSpace), language.language) + ".json", true);
+                        if (dictionary == null)
+                            continue;
+
+                        foreach (var languageDictionary in dictionary)
+                        {
+                            if (!allLanguages.ContainsKey(nameSpace))
+                            {
+                                allLanguages.Add(nameSpace, new Dictionary<string, Dictionary<string, string>>());
+                                allLanguages[nameSpace].Add(language.language, new Dictionary<string, string>());
+                                allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
+                            }
+                            else if (!allLanguages[nameSpace].ContainsKey(language.language))
+                            {
+                                allLanguages[nameSpace].Add(language.language, new Dictionary<string, string>());
+                                allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
+                            }
+                            else if (!allLanguages[nameSpace][language.language].ContainsKey(languageDictionary.Key))
+                                allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
+                        }
+                    }
+                }
+            }
+        }
+
 
         public static void AudioGarbageRemoval()
         {
@@ -648,10 +731,10 @@ namespace SCKRM.Resource
         }
 
         /// <summary>
-        /// 리소스팩에서 텍스트를 검색하고 반환합니다 (초기 로딩과 플레이 모드가 아니여도 실행 가능합니다)
+        /// 리소스팩에서 언어를 검색하고 반환합니다
         /// It can be executed even if it is not in the initial loading and play mode
         /// </summary>
-        /// <param name="path">
+        /// <param name="key">
         /// 경로
         /// Path
         /// </param>
@@ -660,24 +743,34 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
-        public static string SearchText(string path, string nameSpace = "")
+        public static string SearchLanguage(string key, string nameSpace = "", string language = "")
         {
-            if (path == null)
-                path = "";
+#if UNITY_EDITOR
+            if (ThreadManager.isMainThread && !Application.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+#endif
+            if (!isInitialLoadSpriteEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SearchLanguage));
+
+            if (key == null)
+                key = "";
             if (nameSpace == null)
                 nameSpace = "";
+            if (language == null)
+                language = "";
 
             if (nameSpace == "")
                 nameSpace = defaultNameSpace;
+            if (language == "")
+                language = LanguageManager.SaveData.currentLanguage;
 
-            path = path.Replace("%NameSpace%", nameSpace);
-
-            for (int i = 0; i < SaveData.resourcePacks.Count; i++)
+            if (allLanguages.ContainsKey(nameSpace))
             {
-                string resourcePack = SaveData.resourcePacks[i];
-                string text = GetText(PathTool.Combine(resourcePack, path));
-                if (text != "")
-                    return text;
+                if (allLanguages[nameSpace].ContainsKey(language))
+                {
+                    if (allLanguages[nameSpace][language].ContainsKey(key))
+                        return allLanguages[nameSpace][language][key];
+                }
             }
 
             return "";

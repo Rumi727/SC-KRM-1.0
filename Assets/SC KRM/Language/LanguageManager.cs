@@ -5,12 +5,28 @@ using SCKRM.SaveLoad;
 using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace SCKRM.Language
 {
     public static class LanguageManager
     {
+        public class Language
+        {
+            public Language(string language, string languageName, string languageRegion)
+            {
+                this.language = language;
+                this.languageName = languageName;
+                this.languageRegion = languageRegion;
+            }
+
+            public string language { get; } = "";
+
+            public string languageName { get; } = "";
+            public string languageRegion { get; } = "";
+        }
+
         [SaveLoad("language")]
         public sealed class SaveData
         {
@@ -37,7 +53,7 @@ namespace SCKRM.Language
         /// 언어
         /// </param>
         /// <returns></returns>
-        public static string TextLoad(string key, string nameSpace = "", string language = "")
+        /*public static string TextLoad(string key, string nameSpace = "", string language = "")
         {
             if (key == null)
                 key = "";
@@ -62,6 +78,48 @@ namespace SCKRM.Language
                 Debug.LogException(e);
                 return key;
             }
+        }*/
+
+        public static Language[] GetLanguages()
+        {
+            List<Language> languages = new List<Language>();
+            List<string> languageList = new List<string>();
+            for (int packIndex = 0; packIndex < ResourceManager.SaveData.resourcePacks.Count; packIndex++)
+            {
+                string resourcePackPath = ResourceManager.SaveData.resourcePacks[packIndex];
+
+                for (int nameSpaceIndex = 0; nameSpaceIndex < ResourceManager.nameSpaces.Count; nameSpaceIndex++)
+                {
+                    string nameSpace = ResourceManager.nameSpaces[nameSpaceIndex];
+                    if (Directory.Exists(PathTool.Combine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace)))
+                    {
+                        string[] directorys = Directory.GetFiles(PathTool.Combine(resourcePackPath, ResourceManager.languagePath).Replace("%NameSpace%", nameSpace), "*.json");
+
+                        for (int languageIndex = 0; languageIndex < directorys.Length; languageIndex++)
+                        {
+                            string path = directorys[languageIndex].Replace("\\", "/");
+                            string language = path.Substring(path.LastIndexOf("/") + 1, path.LastIndexOf(".") - path.LastIndexOf("/") - 1);
+
+                            if (languageList.Contains(language))
+                                continue;
+
+                            string languageName = "";
+                            string languageRegion = "";
+
+                            Dictionary<string, string> languageFile = JsonManager.JsonRead<Dictionary<string, string>>(path, true);
+
+                            if (languageFile.ContainsKey("language.name"))
+                                languageName = languageFile["language.name"];
+                            if (languageFile.ContainsKey("language.region"))
+                                languageRegion = languageFile["language.region"];
+
+                            languages.Add(new Language(language, languageName, languageRegion));
+                        }
+                    }
+                }
+            }
+
+            return languages.ToArray();
         }
     }
 }

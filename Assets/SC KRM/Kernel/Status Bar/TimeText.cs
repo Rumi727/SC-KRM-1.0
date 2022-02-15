@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using SCKRM.Language;
+using SCKRM.Resource;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,8 +37,10 @@ namespace SCKRM.UI.StatusBar
         static bool tempTwentyFourHourSystem = false;
         static bool tempToggleSeconds = false;
 
-        void Start()
+        async void Start()
         {
+            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
+
             LanguageManager.currentLanguageChange += LanguageChange;
             LanguageChange();
         }
@@ -59,6 +63,7 @@ namespace SCKRM.UI.StatusBar
 
                 text.text = DateTime.Now.ToString(time, dateTimeFormatInfo);
 
+                tempSecond = dateTime.Second;
                 tempMinute = dateTime.Minute;
                 tempTwentyFourHourSystem = StatusBarManager.SaveData.twentyFourHourSystem;
                 tempToggleSeconds = StatusBarManager.SaveData.toggleSeconds;
@@ -67,8 +72,8 @@ namespace SCKRM.UI.StatusBar
 
         void LanguageChange()
         {
-            am = LanguageManager.TextLoad("gui.am");
-            pm = LanguageManager.TextLoad("gui.pm");
+            am = ResourceManager.SearchLanguage("gui.am");
+            pm = ResourceManager.SearchLanguage("gui.pm");
             tempMinute = -1;
         }
     }

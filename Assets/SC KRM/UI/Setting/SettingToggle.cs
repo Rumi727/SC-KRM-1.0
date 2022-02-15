@@ -1,11 +1,3 @@
-using Cysharp.Threading.Tasks;
-using SCKRM.Input;
-using SCKRM.Renderer;
-using SCKRM.SaveLoad;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +10,7 @@ namespace SCKRM.UI.Setting
 
         public virtual void OnValueChanged()
         {
-            if (type != typeof(bool))
+            if (variableType != VariableType.Bool)
                 return;
 
             SaveValue(toggle.isOn);
@@ -26,7 +18,7 @@ namespace SCKRM.UI.Setting
 
         public virtual void Update()
         {
-            if (!Kernel.isInitialLoadEnd || type != typeof(bool))
+            if (!Kernel.isInitialLoadEnd || variableType != VariableType.Bool)
                 return;
 
             toggle.isOn = (bool)GetValue();
