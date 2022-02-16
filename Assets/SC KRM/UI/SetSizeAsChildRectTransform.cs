@@ -10,7 +10,7 @@ namespace SCKRM.UI.Layout
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/자식들의 Rect Transform 크기 따라가기")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class SetSizeAsChildRectTransform : Layout
+    public sealed class SetSizeAsChildRectTransform : LayoutChild
     {
         [SerializeField] Mode _mode = Mode.None;
         public Mode mode { get => _mode; set => _mode = value; }
@@ -25,15 +25,14 @@ namespace SCKRM.UI.Layout
 
 
 
-        protected override void Update()
+        protected override void LayoutRefresh()
         {
-            base.Update();
-
             if (childRectTransforms == null)
                 return;
 
             float x = 0;
             float y = 0;
+            
             for (int i = 0; i < childRectTransforms.Count; i++)
             {
                 RectTransform childRectTransform = childRectTransforms[i];

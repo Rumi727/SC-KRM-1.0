@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI.StatusBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
-    public sealed class StatusBarManager : MonoBehaviour
+    public sealed class StatusBarManager : UI, IPointerEnterHandler, IPointerExitHandler
     {
         [SaveLoad("statusbar")]
         public sealed class SaveData
@@ -24,6 +24,8 @@ namespace SCKRM.UI.StatusBar
         public static StatusBarManager instance { get; private set; }
         public static bool allowStatusBarShow { get; set; } = false;
         public static bool backButtonShow { get; set; } = true;
+
+        public static bool selectedStatusBar { get; private set; } = false;
         public static bool isStatusBarShow { get; private set; } = true;
 
         static bool _cropTheScreen = true; public static bool cropTheScreen
@@ -38,17 +40,6 @@ namespace SCKRM.UI.StatusBar
             }
         }
 
-
-        [SerializeField, HideInInspector] RectTransform _rectTransform; public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
         [SerializeField, HideInInspector] Image _image; public Image image
         {
             get
@@ -82,14 +73,28 @@ namespace SCKRM.UI.StatusBar
         static bool tempTopMode;
         static bool tempCropTheScreen;
         static bool tempSelectedStatusBar;
+        static bool pointer = false;
+        static float timer = 0;
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {
                 {
-                    bool selectedStatusBar = eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null || SideBarManager.isSideBarShow || SettingBarManager.isSettingBarShow;
-                    isStatusBarShow = allowStatusBarShow || selectedStatusBar;
+                    bool mouseYisScreenY;
+                    if (SaveData.bottomMode)
+                        mouseYisScreenY = InputManager.mousePosition.y <= 1;
+                    else
+                        mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
+
+                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || SettingBarManager.isSettingBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null;
+                    bool statusBarShow = selectedStatusBar || timer > 0;
+                    isStatusBarShow = allowStatusBarShow || statusBarShow;
                     tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<KernelCanvas>() == null;
+
+                    if (selectedStatusBar)
+                        timer = 1;
+                    else
+                        timer -= Kernel.unscaledDeltaTime;
 
                     if (tempSelectedStatusBar != selectedStatusBar)
                         InputManager.SetInputLock("statusbar", selectedStatusBar);
@@ -119,7 +124,7 @@ namespace SCKRM.UI.StatusBar
                         }
                     }
                     
-                    if ((!selectedStatusBar || (selectedStatusBar && tabAllow)) && InputManager.GetKeyDown("gui.tab", "all"))
+                    if ((!selectedStatusBar || (statusBarShow && tabAllow)) && (InputManager.GetKeyDown("gui.tab", "all") || InputManager.GetKeyDown("gui.tab2", "all")))
                         Tab();
                     else if (selectedStatusBar && InputManager.GetKeyDown("gui.back", "all"))
                         eventSystem.SetSelectedGameObject(null);
@@ -305,5 +310,8 @@ namespace SCKRM.UI.StatusBar
             else
                 instance.eventSystem.SetSelectedGameObject(oldSelectedObject);
         }
+
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => pointer = false;
     }
 }

@@ -14,7 +14,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    public class Dropdown : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class Dropdown : UI, IPointerEnterHandler, IPointerExitHandler
     {
         bool _isShow = false;
         public bool isShow
@@ -100,7 +100,7 @@ namespace SCKRM.UI
                 }
 
                 if (!isShow)
-                    listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, -5), listSetSizeAsTargetRectTransform.lerpValue * Kernel.fpsUnscaledDeltaTime);
+                    listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, listRectTransform.anchoredPosition.y), listSetSizeAsTargetRectTransform.lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all") || (!pointer && !mouseDrag && UnityEngine.Input.GetMouseButtonUp(0)))
                 {
                     mouseDrag = false;
@@ -110,6 +110,9 @@ namespace SCKRM.UI
                     mouseDrag = false;
             }
         }
+
+        void OnEnable() => Hide();
+        void OnDisable() => Hide();
 
         public void Toggle()
         {

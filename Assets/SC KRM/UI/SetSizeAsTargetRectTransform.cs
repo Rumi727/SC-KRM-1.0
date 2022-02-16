@@ -1,4 +1,5 @@
 using SCKRM.Tool;
+using SCKRM.UI.Layout;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,21 +9,8 @@ namespace SCKRM.UI
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/선택한 Rect Transform의 크기 따라가기")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class SetSizeAsTargetRectTransform : MonoBehaviour
+    public sealed class SetSizeAsTargetRectTransform : UIAni
     {
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
-
-
         [SerializeField] RectTransform _targetRectTransform;
         public RectTransform targetRectTransform { get => _targetRectTransform; set => _targetRectTransform = value; }
 
@@ -39,12 +27,7 @@ namespace SCKRM.UI
         [SerializeField, Min(0)] Vector2 _max = Vector2.zero;
         public Vector2 max { get => _max; set => _max = value; }
 
-        [SerializeField] bool _lerp = false;
-        public bool lerp { get => _lerp; set => _lerp = value; }
-        [SerializeField] float _lerpValue = 0.2f;
-        public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
-
-        void Update()
+        protected override void LayoutRefresh()
         {
             if (targetRectTransform == null)
                 return;

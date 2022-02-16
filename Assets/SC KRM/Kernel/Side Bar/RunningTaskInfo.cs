@@ -13,7 +13,7 @@ namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class RunningTaskInfo : ObjectPooling
+    public sealed class RunningTaskInfo : ObjectPoolingUI
     {
         [SerializeField] TMP_Text _nameText;
         public TMP_Text nameText => _nameText;

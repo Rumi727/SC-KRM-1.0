@@ -1,4 +1,5 @@
 using SCKRM.UI.StatusBar;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,24 +9,35 @@ namespace SCKRM.UI
 {
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/캔버스 설정")]
-    [RequireComponent(typeof(Canvas))]
-    public sealed class CanvasSetting : MonoBehaviour
+    public sealed class CanvasSetting : UI
     {
         [SerializeField] bool _customSetting; public bool customSetting { get => _customSetting; set => _customSetting = value; }
         [SerializeField] bool _customGuiSize; public bool customGuiSize { get => _customGuiSize; set => _customGuiSize = value; }
         [SerializeField] bool _worldRenderMode; public bool worldRenderMode { get => _worldRenderMode; set => _worldRenderMode = value; }
 
-        public Canvas canvas { get; private set; }
-        public RectTransform rectTransform { get; private set; }
+        [NonSerialized] Canvas _canvas; public Canvas canvas
+        {
+            get
+            {
+                if (_canvas == null)
+                {
+                    _canvas = GetComponent<Canvas>();
+                    if (_canvas == null)
+                        DestroyImmediate(this);
+                }
+
+                return _canvas;
+            }
+        }
 
         void Update()
         {
+            if (canvas == null)
+                return;
+
             if (!customGuiSize)
             {
 #if UNITY_EDITOR
-                if (canvas == null)
-                    canvas = GetComponent<Canvas>();
-
                 if (Application.isPlaying)
                     canvas.scaleFactor = Kernel.guiSize;
                 else
@@ -41,11 +53,6 @@ namespace SCKRM.UI
 
             if (!customSetting && !worldRenderMode)
             {
-                if (canvas == null)
-                    canvas = GetComponent<Canvas>();
-                if (rectTransform == null)
-                    rectTransform = GetComponent<RectTransform>();
-
                 canvas.worldCamera = UnityEngine.Camera.main;
 
                 if (canvas.worldCamera != null)
@@ -61,13 +68,7 @@ namespace SCKRM.UI
         {
             if (worldRenderMode)
             {
-                if (canvas == null)
-                    canvas = GetComponent<Canvas>();
-                if (rectTransform == null)
-                    rectTransform = GetComponent<RectTransform>();
-
                 canvas.worldCamera = UnityEngine.Camera.main;
-                canvas.scaleFactor = Kernel.guiSize;
 
                 if (canvas.worldCamera == null)
                 {

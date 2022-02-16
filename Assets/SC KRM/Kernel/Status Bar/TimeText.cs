@@ -13,7 +13,7 @@ namespace SCKRM.UI.StatusBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(TMP_Text))]
-    public sealed class TimeText : MonoBehaviour
+    public sealed class TimeText : UI
     {
         [SerializeField, HideInInspector] TMP_Text _text;
         public TMP_Text text

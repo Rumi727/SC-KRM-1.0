@@ -764,6 +764,10 @@ namespace SCKRM.Editor
 
                     List<KeyValuePair<string, List<KeyCode>>> controlList = InputManager.Data.controlSettingList.ToList();
 
+                    int up = -1;
+                    int down = -1;
+                    int delete = -1;
+
                     //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
                     List<string> keyList = new List<string>();
                     List<List<KeyCode>> valueList = new List<List<KeyCode>>();
@@ -778,6 +782,38 @@ namespace SCKRM.Editor
 
                         GUILayout.Label("키 코드 키", GUILayout.ExpandWidth(false));
                         keyList.Add(EditorGUILayout.TextField(item.Key));
+
+                        {
+                            if (i - 1 < 0)
+                                GUI.enabled = false;
+
+                            if (GUILayout.Button("위로", GUILayout.ExpandWidth(false)))
+                                up = i;
+
+                            GUI.enabled = true;
+                        }
+                        
+                        {
+                            if (i + 1 >= InputManager.Data.controlSettingList.Count)
+                                GUI.enabled = false;
+
+                            if (GUILayout.Button("아래로", GUILayout.ExpandWidth(false)))
+                                down = i;
+
+                            GUI.enabled = true;
+                        }
+
+                        {
+                            if (keyList[i] != "" && InputManager.Data.controlSettingList[keyList[i]].Count != 0 && deleteSafety)
+                                GUI.enabled = false;
+
+                            if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
+                                delete = i;
+
+                            GUI.enabled = true;
+                        }
+
+
 
                         EditorGUILayout.EndHorizontal();
 
@@ -798,6 +834,22 @@ namespace SCKRM.Editor
                     }
 
                     EditorGUILayout.EndScrollView();
+
+                    if (up >= 0)
+                    {
+                        keyList.Move(up, up - 1);
+                        valueList.Move(up, up - 1);
+                    }
+                    else if (down >= 0)
+                    {
+                        keyList.Move(down, down + 1);
+                        valueList.Move(down, down + 1);
+                    }
+                    else if (delete >= 0)
+                    {
+                        keyList.RemoveAt(delete);
+                        valueList.RemoveAt(delete);
+                    }
 
                     //키 중복 감지
                     bool overlap = keyList.Count != keyList.Distinct().Count();

@@ -5,15 +5,19 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [AddComponentMenu("커널/UI/Rect Transform 정보")]
-    public sealed class RectTransformInfo : MonoBehaviour
+    public sealed class RectTransformInfo : UI
     {
         [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
+        new RectTransform rectTransform
         {
             get
             {
                 if (_rectTransform == null)
+                {
                     _rectTransform = GetComponent<RectTransform>();
+                    if (_rectTransform == null)
+                        DestroyImmediate(this);
+                }
 
                 return _rectTransform;
             }
@@ -179,7 +183,7 @@ namespace SCKRM.UI
         {
             _optimizedLocalRect = localRect;
             _optimizedLocalSize = localSize;
-            _optimizedRect = optimizedRect;
+            _optimizedRect = rect;
         }
 
 

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.Setting
 {
-    public class Setting : MonoBehaviour
+    public class Setting : UI
     {
         [SerializeField] string _saveLoadAttributeName = ""; public string saveLoadAttributeName { get => _saveLoadAttributeName; set => _saveLoadAttributeName = value; }
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }

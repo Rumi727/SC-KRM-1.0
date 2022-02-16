@@ -19,6 +19,30 @@ namespace SCKRM.Json
                 return default;
         }
 
+        public static TValue JsonReadDictionary<TKey, TValue>(TKey key, string path, string nameSpace)
+        {
+            if (path == null)
+                path = "";
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = ResourceManager.defaultNameSpace;
+
+            path = path.Replace("%NameSpace%", nameSpace);
+
+            for (int i = 0; i < ResourceManager.SaveData.resourcePacks.Count; i++)
+            {
+                string resourcePack = ResourceManager.SaveData.resourcePacks[i];
+                Dictionary<TKey, TValue> dictionary = JsonRead<Dictionary<TKey, TValue>>(PathTool.Combine(resourcePack, path));
+
+                if (dictionary.ContainsKey(key))
+                    return dictionary[key];
+            }
+
+            return default(TValue);
+        }
+
         public static T JsonToObject<T>(string json) => JsonConvert.DeserializeObject<T>(json);
         public static string ObjectToJson(object value) => JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings() { });
         public static string ObjectToJson(params object[] value) => JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings() { });

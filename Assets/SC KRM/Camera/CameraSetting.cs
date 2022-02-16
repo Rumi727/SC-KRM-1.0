@@ -1,5 +1,6 @@
 using SCKRM.UI;
 using SCKRM.UI.StatusBar;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,19 @@ using UnityEngine.Rendering.PostProcessing;
 namespace SCKRM.Camera
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/Camera/카메라 설정"), RequireComponent(typeof(UnityEngine.Camera))]
+    [AddComponentMenu("커널/Camera/카메라 설정")]
     public sealed class CameraSetting : MonoBehaviour
     {
-        [SerializeField, HideInInspector] UnityEngine.Camera _camera;
-        public new UnityEngine.Camera camera
+        [NonSerialized] UnityEngine.Camera _camera; new public UnityEngine.Camera camera
         {
             get
             {
                 if (_camera == null)
+                {
                     _camera = GetComponent<UnityEngine.Camera>();
+                    if (_camera == null)
+                        DestroyImmediate(this);
+                }
 
                 return _camera;
             }
@@ -28,6 +32,9 @@ namespace SCKRM.Camera
 
         void Update()
         {
+            if (camera == null)
+                return;
+
             if (customSetting)
                 return;
 

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.SideBar
 {
-    public sealed class NoticeManager : MonoBehaviour
+    public sealed class NoticeManager : UI
     {
         public static NoticeManager instance { get; private set; }
 

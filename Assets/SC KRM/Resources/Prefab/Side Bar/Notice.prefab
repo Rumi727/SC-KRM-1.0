@@ -62,7 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
+  _nameSpace: sc-krm
   _path: notice_remove
   _type: gui
   _index: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 836050093905084075}
+  _rectTransformInfo: {fileID: 0}
   tempParentGameobject: {fileID: 0}
   _parentRectTransformSetting: {fileID: 0}
 --- !u!222 &3487246782793876375
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -392,6 +392,7 @@ MonoBehaviour:
   _rectTransformInfo: {fileID: 0}
   _verticalLayout: {fileID: 0}
   _setSizeAsChildRectTransform: {fileID: 0}
+  _removeButtonCanvasGroup: {fileID: 4096963356903654689}
   _icon: {fileID: 4622889944937629372}
   _nameText: {fileID: 3667870727633899496}
   _infoText: {fileID: 559531018334064700}
@@ -450,6 +451,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4081399174886592969}
   - component: {fileID: 2542445680320681983}
+  - component: {fileID: 4096963356903654689}
   - component: {fileID: 3194750876053764836}
   - component: {fileID: 3316083853249999073}
   - component: {fileID: 51333476423354035}
@@ -490,6 +492,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6450253872552144259}
   m_CullTransparentMesh: 1
+--- !u!225 &4096963356903654689
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6450253872552144259}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &3194750876053764836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,7 +517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -511,7 +525,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -541,10 +555,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    m_PressedColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
-    m_SelectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_NormalColor: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0, a: 1}
     m_DisabledColor: {r: 0.125, g: 0.125, b: 0.125, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -560,7 +574,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2735866167427548146}
+  m_TargetGraphic: {fileID: 3194750876053764836}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -605,6 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7803fc6320f3541b3325dd2c9ffe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransformInfo: {fileID: 0}
   _custom: 1
   _mode: 0
 --- !u!1 &7725648537201038931
@@ -714,6 +729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7803fc6320f3541b3325dd2c9ffe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransformInfo: {fileID: 0}
   _custom: 1
   _mode: 0
 --- !u!1 &8785688744418880819
@@ -778,7 +794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

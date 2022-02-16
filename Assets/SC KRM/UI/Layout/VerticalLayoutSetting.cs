@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [AddComponentMenu("커널/UI/Layout/수직 레이아웃 설정")]
-    public sealed class VerticalLayoutSetting : MonoBehaviour
+    public sealed class VerticalLayoutSetting : UI
     {
         [SerializeField] bool _custom = false;
         public bool custom => _custom;

@@ -1,24 +1,16 @@
 using SCKRM.Object;
 using SCKRM.Renderer;
+using SCKRM.Tool;
 using SCKRM.UI.Layout;
+using SCKRM.UI.StatusBar;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SCKRM.UI.SideBar
 {
     [RequireComponent(typeof(VerticalLayout), typeof(SetSizeAsChildRectTransform))]
-    public class Notice : ObjectPooling
+    public class Notice : ObjectPoolingUI, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField, HideInInspector] RectTransformInfo _rectTransformInfo;
-        public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-
-                return _rectTransformInfo;
-            }
-        }
         [SerializeField, HideInInspector] VerticalLayout _verticalLayout;
         public VerticalLayout verticalLayout
         {
@@ -44,6 +36,11 @@ namespace SCKRM.UI.SideBar
 
 
 
+        [SerializeField] CanvasGroup _removeButtonCanvasGroup;
+        public CanvasGroup removeButtonCanvasGroup => _removeButtonCanvasGroup;
+
+
+
         [SerializeField] CustomAllSpriteRenderer _icon;
         public CustomAllSpriteRenderer icon => _icon;
 
@@ -52,6 +49,15 @@ namespace SCKRM.UI.SideBar
 
         [SerializeField] CustomAllTextRenderer _infoText;
         public CustomAllTextRenderer infoText => _infoText;
+
+        bool pointer = false;
+        void Update()
+        {
+            if (pointer || removeButtonCanvasGroup.gameObject == StatusBarManager.instance.eventSystem.currentSelectedGameObject)
+                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.fpsDeltaTime);
+            else
+                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsDeltaTime);
+        }
 
         public override void Remove()
         {
@@ -64,6 +70,11 @@ namespace SCKRM.UI.SideBar
             infoText.path = "";
             setSizeAsChildRectTransform.min = 40;
             verticalLayout.padding.left = 10;
+            removeButtonCanvasGroup.alpha = 0;
         }
+
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;
+
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => pointer = false;
     }
 }

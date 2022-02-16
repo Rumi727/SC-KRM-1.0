@@ -8,15 +8,13 @@ namespace SCKRM.UI.Layout
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
     [AddComponentMenu("커널/UI/Layout/수평 레이아웃")]
-    public sealed class HorizontalLayout : LayoutSetting<HorizontalLayoutSetting>
+    public sealed class HorizontalLayout : LayoutChildSetting<HorizontalLayoutSetting>
     {
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void Update()
+        protected override void LayoutRefresh()
         {
-            base.Update();
-
             if (childRectTransforms == null)
                 return;
 

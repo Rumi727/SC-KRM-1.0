@@ -5,6 +5,7 @@ using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SCKRM.Object
 {
@@ -154,22 +155,10 @@ namespace SCKRM.Object
         }
     }
 
-    public class ObjectPooling : MonoBehaviour
+    public class ObjectPooling : UIBehaviour
     {
         public string objectKey { get; set; } = "";
         public bool actived { get; set; } = false;
-
-        [NonSerialized] RectTransform _rectTransform;
-        public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform= GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
 
         [NonSerialized] CustomAllRenderer[] _renderers;
         public CustomAllRenderer[] renderers
@@ -199,10 +188,7 @@ namespace SCKRM.Object
             ObjectPoolingSystem.ObjectRemove(objectKey, this);
             gameObject.name = objectKey;
 
-            if (rectTransform != null)
-                rectTransform.anchoredPosition = Vector2.zero;
-            else
-                transform.localPosition = Vector3.zero;
+            transform.localPosition = Vector3.zero;
 
             transform.localEulerAngles = Vector3.zero;
             transform.localScale = Vector3.one;

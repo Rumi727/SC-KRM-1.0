@@ -6,23 +6,9 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [AddComponentMenu("")]
-    public sealed class KernelCanvas : MonoBehaviour
+    public sealed class KernelCanvas : UI
     {
         public static KernelCanvas instance { get; private set; }
-
-
-
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
 
         [SerializeField, HideInInspector] Canvas _canvas;
         public Canvas canvas

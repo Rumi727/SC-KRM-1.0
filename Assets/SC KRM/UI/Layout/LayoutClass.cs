@@ -2,33 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SCKRM.UI.Layout
 {
-    public class Layout : MonoBehaviour
+    public abstract class LayoutChild : UIAni
     {
-        public RectTransform rectTransform => rectTransformInfo.rectTransform;
-
-        [SerializeField, HideInInspector] RectTransformInfo _rectTransformInfo;
-        public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-
-                return _rectTransformInfo;
-            }
-        }
-
-
-
         [SerializeField, Min(0)] float _spacing;
         public float spacing { get => _spacing; set => _spacing = value; }
-        [SerializeField] bool _lerp = true;
-        public bool lerp { get => _lerp; set => _lerp = value; }
-        [SerializeField, Range(0, 1)] float _lerpValue = 0.2f;
-        public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
 
 
         [SerializeField] RectTransform[] _ignore = new RectTransform[0];
@@ -36,9 +17,11 @@ namespace SCKRM.UI.Layout
 
 
         public List<RectTransform> childRectTransforms { get; } = new List<RectTransform>();
-        [System.NonSerialized] int tempChildCount = -1;
-        protected virtual void Update()
+
+        int tempChildCount = -1;
+        protected override void Update()
         {
+            base.Update();
 
             {
                 {
@@ -99,7 +82,7 @@ namespace SCKRM.UI.Layout
         }
     }
 
-    public class LayoutSetting<ChildSettingComponent> : Layout
+    public abstract class LayoutChildSetting<ChildSettingComponent> : LayoutChild
     {
         public List<ChildSettingComponent> childSettingComponents { get; } = new List<ChildSettingComponent>();
 

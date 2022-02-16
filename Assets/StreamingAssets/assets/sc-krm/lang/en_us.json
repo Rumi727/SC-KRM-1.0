@@ -33,7 +33,7 @@
 	
 	
 	"options.language.title": "Language",
-	"options.language": "Language",
+	"options.language.language": "Language",
 	
 	"options.sound.title": "Sound",
 	"options.sound.mainVolume": "Main",
@@ -53,6 +53,9 @@
 	"options.statusbar.time.title": "Time",
 	"options.statusbar.time.twentyFourHourSystem": "24-hour system",
 	"options.statusbar.time.toggleSeconds": "Toggle Seconds",
+	
+	"options.controls.title": "Controls",
+	"options.controls.controls": "Control Settings",
 	
 	
 	

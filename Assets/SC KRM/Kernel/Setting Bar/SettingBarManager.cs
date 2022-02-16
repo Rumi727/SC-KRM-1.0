@@ -9,34 +9,9 @@ using UnityEngine.UI;
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
-    public class SettingBarManager : MonoBehaviour
+    public class SettingBarManager : UI
     {
         public static SettingBarManager instance { get; private set; }
-
-        [SerializeField, HideInInspector] RectTransform _rectTransform;
-        public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                    _rectTransform = GetComponent<RectTransform>();
-
-                return _rectTransform;
-            }
-        }
-
-        [SerializeField, HideInInspector] RectTransformInfo _rectTransformInfo;
-        public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-
-                return _rectTransformInfo;
-            }
-        }
-
 
         static bool _isNoticeBarShow;
         public static bool isSettingBarShow
@@ -95,7 +70,7 @@ namespace SCKRM.UI.SideBar
                 StatusBarManager taskBarManager = StatusBarManager.instance;
                 if (StatusBarManager.SaveData.bottomMode)
                 {
-                    rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y);
+                    rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, taskBarManager.rectTransform.sizeDelta.y + taskBarManager.rectTransform.anchoredPosition.y);
                     rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, 0);
                 }
                 else

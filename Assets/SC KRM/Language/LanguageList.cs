@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SCKRM.Language.UI
 {
-    public class LanguageList : MonoBehaviour
+    public class LanguageList : SCKRM.UI.UI
     {
         [SerializeField] Dropdown dropdown;
 

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
-    public sealed class RunningTaskList : MonoBehaviour
+    public sealed class RunningTaskList : UI
     {
         [System.NonSerialized] List<ThreadMetaData> tempList = new List<ThreadMetaData>();
         void Update()

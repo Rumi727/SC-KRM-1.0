@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
-    public class DropdownItem : MonoBehaviour
+    public class DropdownItem : UI
     {
         [SerializeField] CustomAllRenderer[] _renderers;
         public CustomAllRenderer[] renderers { get => _renderers; }
