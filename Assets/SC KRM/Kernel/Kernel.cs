@@ -225,7 +225,7 @@ namespace SCKRM
         {
             while (true)
             {
-                if (isInitialLoadEnd && InputManager.GetKeyDown("kernel.full_screen", "all"))
+                if (isInitialLoadEnd && InputManager.GetKey("kernel.full_screen", InputType.Down, "all"))
                 {
                     if (Screen.fullScreen)
                         Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);

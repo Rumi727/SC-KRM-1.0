@@ -79,8 +79,8 @@ namespace SCKRM.UI.Layout
                 }
             }
 
-            Vector2 xSize = new Vector2(x + offset.x, rectTransform.sizeDelta.y);
-            Vector2 ySize = new Vector2(rectTransform.sizeDelta.x, y + offset.y);
+            xSize = new Vector2(x + offset.x, rectTransform.sizeDelta.y);
+            ySize = new Vector2(rectTransform.sizeDelta.x, y + offset.y);
             if (max <= 0)
             {
                 xSize.x = xSize.x.Clamp(min);
@@ -91,7 +91,12 @@ namespace SCKRM.UI.Layout
                 xSize.x = xSize.x.Clamp(min, max);
                 ySize.y = ySize.y.Clamp(min, max);
             }
+        }
 
+        Vector2 xSize;
+        Vector2 ySize;
+        protected override void SizeUpdate()
+        {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
 #else

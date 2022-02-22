@@ -13,7 +13,7 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void LayoutRefresh()
+        protected override void SizeUpdate()
         {
             float localSizeX = rectTransformInfo.localSize.x;
             if (childRectTransforms == null)

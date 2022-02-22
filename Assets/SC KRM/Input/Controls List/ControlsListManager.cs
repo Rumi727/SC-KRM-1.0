@@ -1,4 +1,5 @@
 using SCKRM.Editor;
+using SCKRM.UI;
 using UnityEngine;
 
 namespace SCKRM.Input.UI
@@ -9,10 +10,16 @@ namespace SCKRM.Input.UI
         [SerializeField, SetName("Exit 키를 눌렀을때 보여질 오브젝트")]
         GameObject visibleGameObject;
 
-        void Update()
+        void OnEnable()
         {
-            if (InputManager.GetKeyDown("gui.back"))
-                Exit();
+            KernelCanvas.backEventList.Add(Exit);
+            KernelCanvas.homeEvent += Exit;
+        }
+
+        void OnDisable()
+        {
+            KernelCanvas.backEventList.Remove(Exit);
+            KernelCanvas.homeEvent -= Exit;
         }
 
         public void Exit()

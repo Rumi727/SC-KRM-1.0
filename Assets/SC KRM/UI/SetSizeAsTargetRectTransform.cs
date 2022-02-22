@@ -32,7 +32,7 @@ namespace SCKRM.UI
             if (targetRectTransform == null)
                 return;
 
-            Vector2 size = new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset;
+            size = new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset;
             if (max.x <= 0)
                 size.x = size.x.Clamp(min.x);
             else
@@ -41,7 +41,11 @@ namespace SCKRM.UI
                 size.y = size.y.Clamp(min.y);
             else
                 size.y = size.y.Clamp(min.y, max.y);
+        }
 
+        Vector2 size;
+        protected override void SizeUpdate()
+        {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
 #else

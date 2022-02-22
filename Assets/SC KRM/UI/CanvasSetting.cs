@@ -36,19 +36,15 @@ namespace SCKRM.UI
                 return;
 
             if (!customGuiSize)
-            {
 #if UNITY_EDITOR
+            {
                 if (Application.isPlaying)
                     canvas.scaleFactor = Kernel.guiSize;
                 else
                     canvas.scaleFactor = 1;
             }
 #else
-                if (canvas == null)
-                    canvas = GetComponent<Canvas>();
-                
                 canvas.scaleFactor = Kernel.guiSize;
-            }
 #endif
 
             if (!customSetting && !worldRenderMode)

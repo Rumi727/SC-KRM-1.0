@@ -76,9 +76,54 @@ namespace SCKRM.UI
         [SerializeField, Range(0, 1)] float _lerpValue = 0.2f;
         public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
 
-        protected virtual void Update() => LayoutRefresh();
+        /*//protected override void OnEnable() => update();
 
-        protected abstract void LayoutRefresh();
+        //protected override void OnValidate() => update();
+
+        //protected override void OnTransformParentChanged() => update();
+
+        protected override void OnRectTransformDimensionsChange() => update();
+
+        void update()
+        {
+#if UNITY_EDITOR
+            if (!lerp || !Application.isPlaying)
+#else
+            if (!lerp)
+#endif
+            {
+                LayoutRefresh();
+                SizeUpdate();
+            }
+            else
+            {
+                Debug.Log("asdf");
+                LayoutRefresh();
+            }
+        }
+
+        protected virtual void Update()
+        {
+#if UNITY_EDITOR
+            if (lerp && Application.isPlaying)
+#else
+            if (lerp)
+#endif
+                SizeUpdate();
+        }*/
+
+        protected virtual void Update()
+        {
+            LayoutRefresh();
+            SizeUpdate();
+        }
+
+        protected virtual void LayoutRefresh()
+        {
+
+        }
+
+        protected abstract void SizeUpdate();
     }
 
     public class ObjectPoolingUI : ObjectPooling

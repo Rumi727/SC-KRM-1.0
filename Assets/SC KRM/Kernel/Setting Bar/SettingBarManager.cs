@@ -19,6 +19,20 @@ namespace SCKRM.UI.SideBar
             get => _isNoticeBarShow;
             set
             {
+                if (value != _isNoticeBarShow)
+                {
+                    if (value)
+                    {
+                        KernelCanvas.kernelBackEventList.Add(Hide);
+                        KernelCanvas.homeEvent += Hide;
+                    }
+                    else
+                    {
+                        KernelCanvas.kernelBackEventList.Remove(Hide);
+                        KernelCanvas.homeEvent -= Hide;
+                    }
+                }
+
                 InputManager.SetInputLock("settingbar", value);
                 _isNoticeBarShow = value;
             }
@@ -48,20 +62,18 @@ namespace SCKRM.UI.SideBar
                 Destroy(gameObject);
         }
 
+        public static void Hide()
+        {
+            isSettingBarShow = false;
+            StatusBarManager.Tab();
+        }
+
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {
                 if (isSettingBarShow)
-                {
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.anchoredPosition.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
-
-                    if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all"))
-                    {
-                        isSettingBarShow = false;
-                        StatusBarManager.Tab();
-                    }
-                }
                 else
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(-rectTransform.sizeDelta.x, rectTransform.anchoredPosition.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
 

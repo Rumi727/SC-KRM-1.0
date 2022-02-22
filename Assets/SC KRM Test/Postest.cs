@@ -11,7 +11,7 @@ public class Postest : MonoBehaviour
     void Update()
     {
         float speed;
-        if (InputManager.GetKey(KeyCode.LeftControl))
+        if (InputManager.GetKey(KeyCode.LeftControl, InputType.Alway))
             speed = 0.25f * Kernel.fpsUnscaledDeltaTime;
         else
             speed = 0.125f * Kernel.fpsUnscaledDeltaTime;
@@ -20,23 +20,23 @@ public class Postest : MonoBehaviour
             Vector3 rotation = transform.localEulerAngles;
             transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
 
-            if (InputManager.GetKey(KeyCode.A))
+            if (InputManager.GetKey(KeyCode.A, InputType.Alway))
                 transform.position -= transform.right * speed;
-            if (InputManager.GetKey(KeyCode.D))
+            if (InputManager.GetKey(KeyCode.D, InputType.Alway))
                 transform.position += transform.right * speed;
-            if (InputManager.GetKey(KeyCode.S))
+            if (InputManager.GetKey(KeyCode.S, InputType.Alway))
                 transform.position -= transform.forward * speed;
-            if (InputManager.GetKey(KeyCode.W))
+            if (InputManager.GetKey(KeyCode.W, InputType.Alway))
                 transform.position += transform.forward * speed;
-            if (InputManager.GetKey(KeyCode.LeftShift))
+            if (InputManager.GetKey(KeyCode.LeftShift, InputType.Alway))
                 transform.position -= transform.up * speed;
-            if (InputManager.GetKey(KeyCode.Space))
+            if (InputManager.GetKey(KeyCode.Space, InputType.Alway))
                 transform.position += transform.up * speed;
 
             transform.localEulerAngles = rotation;
         }
 
-        if (InputManager.GetKey(KeyCode.Mouse0))
+        if (InputManager.GetKey(KeyCode.Mouse0, InputType.Alway))
         {
             Vector2 rotation = InputManager.GetMouseDelta() * 0.5f;
             this.rotation += new Vector2(-rotation.y, rotation.x);

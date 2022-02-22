@@ -1,4 +1,5 @@
 using SCKRM.Input;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,15 @@ namespace SCKRM.UI
             }
         }
 
+
+
+        public static List<Action> backEventList { get; } = new List<Action>();
+        public static List<Action> kernelBackEventList { get; } = new List<Action>();
+
+        public static event Action homeEvent;
+
+
+
         void Awake()
         {
             if (instance == null)
@@ -30,13 +40,20 @@ namespace SCKRM.UI
                 Destroy(gameObject);
         }
 
-        [SerializeField] void KeyDownEnable(string keyCode) => InputManager.KeyDownEnable(keyCode, "statusbar").Forget();
-        [SerializeField] void KeyEnable(string keyCode) => InputManager.KeyEnable(keyCode, "statusbar").Forget();
-        [SerializeField] void KeyToggle(string keyCode) => InputManager.KeyToggle(keyCode, "statusbar");
-        [SerializeField] void KeyUpEnable(string keyCode) => InputManager.KeyUpEnable(keyCode, "statusbar").Forget();
-        [SerializeField] void KeyDownEnable2(KeyCode keyCode) => InputManager.KeyDownEnable(keyCode, "statusbar").Forget();
-        [SerializeField] void KeyEnable2(KeyCode keyCode) => InputManager.KeyEnable(keyCode, "statusbar").Forget();
-        [SerializeField] void KeyToggle2(KeyCode keyCode) => InputManager.KeyToggle(keyCode, "statusbar");
-        [SerializeField] void KeyUpEnable2(KeyCode keyCode) => InputManager.KeyUpEnable(keyCode, "statusbar").Forget();
+        void Update()
+        {
+            if (Kernel.isInitialLoadEnd)
+            {
+                if (InputManager.GetKey("gui.back", InputType.Down, "all"))
+                {
+                    if (kernelBackEventList.Count > 0)
+                        kernelBackEventList[kernelBackEventList.Count - 1]?.Invoke();
+                    else if (backEventList.Count > 0)
+                        backEventList[backEventList.Count - 1]?.Invoke();
+                }
+                else if (InputManager.GetKey("gui.home", InputType.Down, "all"))
+                    homeEvent?.Invoke();
+            }
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace SCKRM.UI.SideBar
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (SideBarManager.isSideBarShow && noticeList.transform.childCount > 0 && InputManager.GetKeyDown("notice_manager.notice_remove", "statusbar", "sidebar"))
+                if (SideBarManager.isSideBarShow && noticeList.transform.childCount > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
                     noticeList.transform.GetChild(0).GetComponent<Notice>().Remove();
             }
         }

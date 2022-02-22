@@ -21,9 +21,31 @@ namespace SCKRM.UI.SideBar
             get => _isSideBarShow;
             set
             {
+                if (value != _isSideBarShow)
+                {
+                    if (value)
+                    {
+                        KernelCanvas.kernelBackEventList.Add(Hide);
+                        KernelCanvas.homeEvent += Hide;
+                    }
+                    else
+                    {
+                        KernelCanvas.kernelBackEventList.Remove(Hide);
+                        KernelCanvas.homeEvent -= Hide;
+                    }
+                }
+
                 InputManager.SetInputLock("sidebar", value);
                 _isSideBarShow = value;
             }
+        }
+
+
+
+        public static void Hide()
+        {
+            isSideBarShow = false;
+            StatusBarManager.Tab();
         }
 
 
@@ -61,15 +83,7 @@ namespace SCKRM.UI.SideBar
             if (Kernel.isInitialLoadEnd)
             {
                 if (isSideBarShow)
-                {
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.anchoredPosition.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
-
-                    if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all"))
-                    {
-                        isSideBarShow = false;
-                        StatusBarManager.Tab();
-                    }
-                }
                 else
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.sizeDelta.x, rectTransform.anchoredPosition.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
 

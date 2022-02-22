@@ -37,61 +37,54 @@ namespace SCKRM.Input
 
 
 
-        [SerializeField] void OnDelta(InputAction.CallbackContext context) => mouseDelta = context.ReadValue<Vector2>();
-        [SerializeField] void OnPosition(InputAction.CallbackContext context) => mousePosition = context.ReadValue<Vector2>();
-        [SerializeField] void OnScroll(InputAction.CallbackContext context) => mouseScrollDelta = context.ReadValue<Vector2>();
+        static Dictionary<string, List<KeyCode>> _controlSettingList;
+        public static Dictionary<string, List<KeyCode>> controlSettingList
+        {
+            get
+            {
+                if (_controlSettingList == null)
+                    _controlSettingList = InputListMerge();
+
+                return _controlSettingList;
+            }
+        }
+        static Dictionary<string, List<KeyCode>> InputListMerge()
+        {
+            Dictionary<string, List<KeyCode>> mergeList = new Dictionary<string, List<KeyCode>>();
+            foreach (var item in Data.controlSettingList)
+            {
+                if (SaveData.controlSettingList.TryGetValue(item.Key, out List<KeyCode> value))
+                    mergeList.Add(item.Key, value);
+                else
+                    mergeList.Add(item.Key, item.Value);
+            }
+
+            return mergeList;
+        }
+
+
+
+        public static Vector2 mousePosition { get; private set; }
+
 
 
         #region Input Check
-        public static bool GetKeyDown(KeyCode keyCode, params string[] inputLockDeny)
+        static bool TryInputCheck(string key, Func<KeyCode, bool> func)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(GetKeyDown));
-
+                throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(GetKeyDown));
+                throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(GetKeyDown));
+                throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyDownToggle2.ContainsKey(keyCode) && !InputLockCheck(inputLockDeny.Concat(keyDownToggle2[keyCode]).ToArray()))
-                return true;
-            else if (!InputLockCheck(inputLockDeny))
-                return UnityEngine.Input.GetKeyDown(keyCode);
-
-            return false;
-        }
-
-        public static bool GetKeyDown(string keyCode, params string[] inputLockDeny)
-        {
-            if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(GetKeyDown));
-
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(GetKeyDown));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(GetKeyDown));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyDownToggle.ContainsKey(keyCode) && !InputLockCheck(inputLockDeny.Concat(keyDownToggle[keyCode]).ToArray()))
-                return true;
-            else if (!InputLockCheck(inputLockDeny))
+            if (controlSettingList.TryGetValue(key, out List<KeyCode> list))
             {
-                List<KeyCode> list;
-
-                if (!SaveData.controlSettingList.TryGetValue(keyCode, out list) && !Data.controlSettingList.TryGetValue(keyCode, out list))
+                if (list == null)
                     return false;
-
-                bool input = true;
-                if (list.Count <= 0)
+                else if (list.Count <= 0)
                     return false;
 
                 for (int i = 0; i < list.Count; i++)
@@ -99,22 +92,21 @@ namespace SCKRM.Input
                     if (i != list.Count - 1)
                     {
                         if (!UnityEngine.Input.GetKey(list[i]))
-                            input = false;
+                            return false;
                     }
-                    else if (!UnityEngine.Input.GetKeyDown(list[i]))
-                        input = false;
+                    else if (!func.Invoke(list[i]))
+                        return false;
                 }
 
-                return input;
+                return true;
             }
+
             return false;
         }
-
-        public static bool GetKey(KeyCode keyCode, params string[] inputLockDeny)
+        static bool InputCheck(string key, Func<KeyCode, bool> func)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetKey));
-
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
@@ -122,122 +114,109 @@ namespace SCKRM.Input
             if (!Kernel.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
+            List<KeyCode> list = controlSettingList[key];
+            if (list == null)
+                return false;
+            else if (list.Count <= 0)
+                return false;
 
-            if (keyToggle2.ContainsKey(keyCode) && !InputLockCheck(inputLockDeny.Concat(keyToggle2[keyCode]).ToArray()))
-                return true;
-            else if (!InputLockCheck(inputLockDeny))
-                return UnityEngine.Input.GetKey(keyCode);
-
-            return false;
-        }
-
-        public static bool GetKey(string keyCode, params string[] inputLockDeny)
-        {
-            if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(GetKey));
-
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(GetKey));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(GetKey));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyToggle.ContainsKey(keyCode) && !InputLockCheck(inputLockDeny.Concat(keyToggle[keyCode]).ToArray()))
-                return true;
-            else if (!InputLockCheck(inputLockDeny))
+            for (int i = 0; i < list.Count; i++)
             {
-                List<KeyCode> list;
-
-                if (!SaveData.controlSettingList.TryGetValue(keyCode, out list) && !Data.controlSettingList.TryGetValue(keyCode, out list))
-                    return false;
-
-                bool input = true;
-                if (list.Count <= 0)
-                    return false;
-
-                for (int i = 0; i < list.Count; i++)
+                if (i != list.Count - 1)
                 {
                     if (!UnityEngine.Input.GetKey(list[i]))
-                        input = false;
+                        return false;
                 }
-
-                return input;
+                else if (!func.Invoke(list[i]))
+                    return false;
             }
-            return false;
+
+            return true;
         }
 
-        public static bool GetKeyUp(KeyCode keyCode, params string[] inputLockDeny)
+
+        public static bool GetKey(KeyCode keyCode, InputType inputType = InputType.Down, params string[] inputLockDeny)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(GetKeyUp));
-
+                throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(GetKeyUp));
+                throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(GetKeyUp));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-            
-            if (keyUpToggle2.ContainsKey(keyCode) && !InputLockCheck(inputLockDeny.Concat(keyUpToggle2[keyCode]).ToArray()))
-                return true;
-            else if (!InputLockCheck(inputLockDeny))
-                return UnityEngine.Input.GetKeyUp(keyCode);
-
-            return false;
-        }
-
-        public static bool GetKeyUp(string keyCode, params string[] inputLockDeny)
-        {
-            if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(GetKeyUp));
-
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(GetKeyUp));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(GetKeyUp));
+                throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
 
-            if (keyUpToggle.ContainsKey(keyCode) && !InputLockCheck(inputLockDeny.Concat(keyUpToggle[keyCode]).ToArray()))
-                return true;
-            else if (!InputLockCheck(inputLockDeny))
+            if (!InputLockCheck(inputLockDeny))
             {
-                List<KeyCode> list;
-
-                if (!SaveData.controlSettingList.TryGetValue(keyCode, out list) && !Data.controlSettingList.TryGetValue(keyCode, out list))
-                    return false;
-
-                bool input = true;
-                if (list.Count <= 0)
-                    return false;
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (i != list.Count - 1 && !UnityEngine.Input.GetKey(list[i]))
-                        input = false;
-                    else if (!UnityEngine.Input.GetKeyUp(list[i]))
-                        input = false;
-                }
-
-                return input;
+                if (inputType == InputType.Down && UnityEngine.Input.GetKeyDown(keyCode))
+                    return true;
+                else if (inputType == InputType.Alway && UnityEngine.Input.GetKey(keyCode))
+                    return true;
+                else if (inputType == InputType.Up && UnityEngine.Input.GetKeyUp(keyCode))
+                    return true;
             }
+
             return false;
         }
 
-        public static Vector2 mousePosition { get; private set; }
+        public static bool TryGetKey(string key, InputType inputType = InputType.Down, params string[] inputLockDeny)
+        {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKey));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(GetKey));
+#endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
+            if (inputLockDeny == null)
+                inputLockDeny = new string[0];
+
+            if (!InputLockCheck(inputLockDeny))
+            {
+                if (inputType == InputType.Down && TryInputCheck(key, UnityEngine.Input.GetKeyDown))
+                    return true;
+                else if (inputType == InputType.Alway && TryInputCheck(key, UnityEngine.Input.GetKey))
+                    return true;
+                else if (inputType == InputType.Up && TryInputCheck(key, UnityEngine.Input.GetKeyUp))
+                    return true;
+            }
+
+            return false;
+        }
+        public static bool GetKey(string key, InputType inputType = InputType.Down, params string[] inputLockDeny)
+        {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetKey));
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                throw new NotPlayModeMethodException(nameof(GetKey));
+#endif
+            if (!Kernel.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(GetKey));
+
+            if (inputLockDeny == null)
+                inputLockDeny = new string[0];
+
+            if (!InputLockCheck(inputLockDeny))
+            {
+                if (inputType == InputType.Down && InputCheck(key, UnityEngine.Input.GetKeyDown))
+                    return true;
+                else if (inputType == InputType.Alway && InputCheck(key, UnityEngine.Input.GetKey))
+                    return true;
+                else if (inputType == InputType.Up && InputCheck(key, UnityEngine.Input.GetKeyUp))
+                    return true;
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region MouseInputCheck
         static Vector2 mouseDelta = Vector2.zero;
         public static Vector2 GetMouseDelta(params string[] inputLockDeny)
         {
@@ -369,191 +348,11 @@ namespace SCKRM.Input
         }
         #endregion
 
-
-        #region Key Toggle
-        static Dictionary<string, string[]> keyDownToggle { get; } = new Dictionary<string, string[]>();
-        static Dictionary<string, string[]> keyToggle { get; } = new Dictionary<string, string[]>();
-        static Dictionary<string, string[]> keyUpToggle { get; } = new Dictionary<string, string[]>();
-        static Dictionary<KeyCode, string[]> keyDownToggle2 { get; } = new Dictionary<KeyCode, string[]>();
-        static Dictionary<KeyCode, string[]> keyToggle2 { get; } = new Dictionary<KeyCode, string[]>();
-        static Dictionary<KeyCode, string[]> keyUpToggle2 { get; } = new Dictionary<KeyCode, string[]>();
-
-        public static async UniTaskVoid KeyDownEnable(string keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyDownEnable));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyDownEnable));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyDownToggle.ContainsKey(keyCode))
-                keyDownToggle.Remove(keyCode);
-            else
-            {
-                keyDownToggle.Add(keyCode, inputLockDeny);
-                await UniTask.WaitForEndOfFrame();
-                keyDownToggle.Remove(keyCode);
-            }
-        }
-
-        public static async UniTaskVoid KeyEnable(string keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyEnable));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyEnable));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyToggle.ContainsKey(keyCode))
-                keyToggle.Remove(keyCode);
-            else
-            {
-                keyToggle.Add(keyCode, inputLockDeny);
-                await UniTask.WaitForEndOfFrame();
-                keyToggle.Remove(keyCode);
-            }
-        }
-
-        public static void KeyToggle(string keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyToggle));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyToggle));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyToggle.ContainsKey(keyCode))
-                keyToggle.Remove(keyCode);
-            else
-                keyToggle.Add(keyCode, inputLockDeny);
-        }
-
-        public static async UniTaskVoid KeyUpEnable(string keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyUpEnable));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyUpEnable));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyUpToggle.ContainsKey(keyCode))
-                keyUpToggle.Remove(keyCode);
-            else
-            {
-                keyUpToggle.Add(keyCode, inputLockDeny);
-                await UniTask.WaitForEndOfFrame();
-                keyUpToggle.Remove(keyCode);
-            }
-        }
-
-
-
-        public static async UniTaskVoid KeyDownEnable(KeyCode keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyDownEnable));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyDownEnable));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyDownToggle2.ContainsKey(keyCode))
-                keyDownToggle2.Remove(keyCode);
-            else
-            {
-                keyDownToggle2.Add(keyCode, inputLockDeny);
-                await UniTask.WaitForEndOfFrame();
-                keyDownToggle2.Remove(keyCode);
-            }
-        }
-
-        public static async UniTaskVoid KeyEnable(KeyCode keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyEnable));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyEnable));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyToggle2.ContainsKey(keyCode))
-                keyToggle2.Remove(keyCode);
-            else
-            {
-                keyToggle2.Add(keyCode, inputLockDeny);
-                await UniTask.WaitForEndOfFrame();
-                keyToggle2.Remove(keyCode);
-            }
-        }
-
-        public static void KeyToggle(KeyCode keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyToggle));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyToggle));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyToggle2.ContainsKey(keyCode))
-                keyToggle2.Remove(keyCode);
-            else
-                keyToggle2.Add(keyCode, inputLockDeny);
-        }
-
-        public static async UniTaskVoid KeyUpEnable(KeyCode keyCode, params string[] inputLockDeny)
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(KeyUpEnable));
-#endif
-            if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(KeyUpEnable));
-
-            if (inputLockDeny == null)
-                inputLockDeny = new string[0];
-
-            if (keyUpToggle2.ContainsKey(keyCode))
-                keyUpToggle2.Remove(keyCode);
-            else
-            {
-                keyUpToggle2.Add(keyCode, inputLockDeny);
-                await UniTask.WaitForEndOfFrame();
-                keyUpToggle2.Remove(keyCode);
-            }
-        }
-        #endregion
-
+        #region InputLock
         public static void SetInputLock(string key)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetInputLock));
-
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
@@ -569,7 +368,6 @@ namespace SCKRM.Input
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetInputLock));
-
 #if UNITY_EDITOR
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
@@ -580,5 +378,19 @@ namespace SCKRM.Input
             if (Data.inputLockList.ContainsKey(key))
                 Data.inputLockList[key] = value;
         }
+        #endregion
+
+
+
+        [SerializeField] void OnDelta(InputAction.CallbackContext context) => mouseDelta = context.ReadValue<Vector2>();
+        [SerializeField] void OnPosition(InputAction.CallbackContext context) => mousePosition = context.ReadValue<Vector2>();
+        [SerializeField] void OnScroll(InputAction.CallbackContext context) => mouseScrollDelta = context.ReadValue<Vector2>();
+    }
+
+    public enum InputType
+    {
+        Down,
+        Alway,
+        Up,
     }
 }

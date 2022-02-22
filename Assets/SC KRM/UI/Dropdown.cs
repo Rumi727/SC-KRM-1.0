@@ -101,11 +101,8 @@ namespace SCKRM.UI
 
                 if (!isShow)
                     listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, listRectTransform.anchoredPosition.y), listSetSizeAsTargetRectTransform.lerpValue * Kernel.fpsUnscaledDeltaTime);
-                else if (InputManager.GetKeyDown("gui.back", "all") || InputManager.GetKeyDown("gui.home", "all") || (!pointer && !mouseDrag && UnityEngine.Input.GetMouseButtonUp(0)))
-                {
-                    mouseDrag = false;
+                else if (!pointer && !mouseDrag && UnityEngine.Input.GetMouseButtonUp(0))
                     Hide();
-                }
                 else if (UnityEngine.Input.GetMouseButtonUp(0))
                     mouseDrag = false;
             }
@@ -121,7 +118,10 @@ namespace SCKRM.UI
                 Hide();
                 return;
             }
-            
+
+            KernelCanvas.kernelBackEventList.Add(Hide);
+            KernelCanvas.homeEvent += Hide;
+
             _isShow = true;
             listSetSizeAsTargetRectTransform.enabled = true;
 
@@ -167,6 +167,11 @@ namespace SCKRM.UI
         {
             if (!isShow)
                 return;
+
+            KernelCanvas.kernelBackEventList.Remove(Hide);
+            KernelCanvas.homeEvent -= Hide;
+
+            mouseDrag = false;
 
             _isShow = false;
             listSetSizeAsTargetRectTransform.enabled = false;

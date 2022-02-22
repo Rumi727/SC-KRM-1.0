@@ -124,15 +124,15 @@ namespace SCKRM.UI.StatusBar
                         }
                     }
                     
-                    if ((!selectedStatusBar || (statusBarShow && tabAllow)) && (InputManager.GetKeyDown("gui.tab", "all") || InputManager.GetKeyDown("gui.tab2", "all")))
+                    if ((!selectedStatusBar || (statusBarShow && tabAllow)) && (InputManager.GetKey("gui.tab", InputType.Down, "all")))
                         Tab();
-                    else if (selectedStatusBar && InputManager.GetKeyDown("gui.back", "all"))
+                    else if (selectedStatusBar && InputManager.GetKey("gui.back", InputType.Down, "all"))
                         eventSystem.SetSelectedGameObject(null);
 
-                    if (InputManager.GetKeyDown("sidebar_manager.show", "all"))
+                    if (InputManager.GetKey("sidebar_manager.show", InputType.Down, "all"))
                         SideBarToggle();
 
-                    if (InputManager.GetKeyDown("setting_manager.show", "all"))
+                    if (InputManager.GetKey("setting_manager.show", InputType.Down, "all"))
                         SettingBarToggle();
                 }
 
