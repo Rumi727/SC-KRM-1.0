@@ -37,8 +37,11 @@ namespace SCKRM.Log
 
             if (type == LogType.Exception)
             {
-                name = condition.Substring(0, condition.IndexOf(':'));
-                info = condition.Substring(condition.IndexOf(':') + 2);
+                if (condition.Contains(":"))
+                {
+                    name = condition.Substring(0, condition.IndexOf(':'));
+                    info = condition.Substring(condition.IndexOf(':') + 2);
+                }
 
                 log = new Log(name, info, stackTrace, NoticeManager.Type.error);
             }

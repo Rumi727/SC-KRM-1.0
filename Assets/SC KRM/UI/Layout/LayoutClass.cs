@@ -18,7 +18,6 @@ namespace SCKRM.UI.Layout
 
         public List<RectTransform> childRectTransforms { get; } = new List<RectTransform>();
 
-        int tempChildCount = -1;
         protected override void Update()
         {
             base.Update();
@@ -27,19 +26,13 @@ namespace SCKRM.UI.Layout
                 {
                     bool update = true;
 #if UNITY_EDITOR
-                    if (tempChildCount != transform.childCount || !Application.isPlaying)
-                    {
+                    if (transform.childCount != childRectTransforms.Count || !Application.isPlaying)
                         SetChild();
-                        tempChildCount = transform.childCount;
-                    }
                     else
                         update = false;
 #else
-                    if (tempChildCount != transform.childCount)
-                    {
+                    if (transform.childCount != childRectTransforms.Count)
                         SetChild();
-                        tempChildCount = transform.childCount;
-                    }
                     else
                         update = false;
 #endif
