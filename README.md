@@ -6,12 +6,12 @@ Simsimhan Chobo Kernel Manager
 - **Input System**
 - **TextMeshPro**
 - **Post Processing**
-- Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json)
+- **Newtonsoft.Json-for-Unity** (https://github.com/jilleJr/Newtonsoft.Json-for-Unity)
 - UniTask (https://github.com/Cysharp/UniTask)
 - HSV-Color-Picker-Unity (https://github.com/judah4/HSV-Color-Picker-Unity)
 - ~~In-game Debug Console (https://github.com/yasirkula/UnityIngameDebugConsole)~~
 
-볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (유니티 레지스트리에 있습니다)
+볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (링크가 없는것은 유니티 레지스트리에 있습니다)
 
 안그러면, 컴파일 에러가 나고 관련 참조가 끊어질수 있습니다
 
