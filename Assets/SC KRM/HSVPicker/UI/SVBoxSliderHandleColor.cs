@@ -15,7 +15,12 @@ namespace HSVPicker
         public ColorPicker colorPicker;
         public Type type;
 
-        protected override void OnEnable() => colorPicker?.onValueChanged.AddListener(OnValueChanged);
+        protected override void OnEnable()
+        {
+            colorPicker?.onValueChanged.AddListener(OnValueChanged);
+            OnValueChanged(colorPicker.CurrentColor);
+        }
+
         protected override void OnDisable() => colorPicker?.onValueChanged.RemoveListener(OnValueChanged);
 
         Color color = Color.white;
@@ -32,7 +37,9 @@ namespace HSVPicker
             }
         }
 
-        protected override void SizeUpdate(bool onEnable)
+
+
+        protected override void SizeUpdate(bool onEnable = false)
         {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying || onEnable)

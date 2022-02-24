@@ -44,7 +44,7 @@ namespace SCKRM.UI
         }
 
         Vector2 size;
-        protected override void SizeUpdate(bool onEnable)
+        protected override void SizeUpdate(bool onEnable = false)
         {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying || onEnable)

@@ -40,8 +40,6 @@ namespace SCKRM.UI.Layout
                     continue;
                 else if (!childRectTransform.gameObject.activeSelf)
                     continue;
-                else if (childRectTransform.sizeDelta.x == 0 || childRectTransform.sizeDelta.y == 0)
-                    continue;
 
                 if (childRectTransform == null)
                 {
@@ -54,11 +52,6 @@ namespace SCKRM.UI.Layout
                     continue;
                 }
                 else if (!childRectTransform.gameObject.activeSelf)
-                {
-                    spacingCancel();
-                    continue;
-                }
-                else if (childRectTransform.sizeDelta.x == 0 || childRectTransform.sizeDelta.y == 0)
                 {
                     spacingCancel();
                     continue;
@@ -95,7 +88,7 @@ namespace SCKRM.UI.Layout
 
         Vector2 xSize;
         Vector2 ySize;
-        protected override void SizeUpdate(bool onEnable)
+        protected override void SizeUpdate(bool onEnable = false)
         {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying || onEnable)

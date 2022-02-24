@@ -117,7 +117,7 @@ namespace SCKRM.UI
         protected virtual void Update()
         {
             LayoutRefresh();
-            SizeUpdate();
+            SizeUpdate(false);
         }
 
         protected virtual void LayoutRefresh()

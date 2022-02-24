@@ -45,7 +45,7 @@ namespace SCKRM.Resource
 
         public static List<string> nameSpaces { get => Data.nameSpaces; }
 
-        public static string[] textureExtension { get; } = new string[] { "png", "jpg", "tga" };
+        public static string[] textureExtension { get; } = new string[] { "tga", "dds", "png", "jpg" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
         public static string[] audioExtension { get; } = new string[] { "ogg", "mp3", "mp2", "wav", "aif", "xm", "mod", "it", "vag", "xma", "s3m" };
 
@@ -833,6 +833,9 @@ namespace SCKRM.Resource
         /// 경로에 확장자 사용
         /// Use extension in path
         /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// </param>
         /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
@@ -857,6 +860,9 @@ namespace SCKRM.Resource
         /// 경로에 확장자 사용
         /// Use extension in path
         /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// </param>
         /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
 
@@ -872,7 +878,11 @@ namespace SCKRM.Resource
         /// 경로에 확장자 사용
         /// Use extension in path
         /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// </param>
         /// <returns></returns>
+        /// 
         public static Texture2D GetTexture(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureMetaData.CompressionType compressionType, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (path == null)
@@ -888,15 +898,30 @@ namespace SCKRM.Resource
             {
                 if (Path.GetExtension(path).ToLower() == ".tga")
                 {
-                    Texture2D texture = TGALoader.LoadTGA(path);
+                    Texture2D texture = ImageLoader.LoadTGA(path, mipmapUse);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
+                    texture.alphaIsTransparency = true;
 
                     if (compressionType == TextureMetaData.CompressionType.normal)
                         texture.Compress(false);
                     else if (compressionType == TextureMetaData.CompressionType.highQuality)
                         texture.Compress(true);
                     
+                    return texture;
+                }
+                else if (Path.GetExtension(path).ToLower() == ".dds")
+                {
+                    Texture2D texture = ImageLoader.LoadDDS(path);
+                    texture.name = Path.GetFileNameWithoutExtension(path);
+                    texture.filterMode = filterMode;
+                    texture.alphaIsTransparency = true;
+
+                    if (compressionType == TextureMetaData.CompressionType.normal)
+                        texture.Compress(false);
+                    else if (compressionType == TextureMetaData.CompressionType.highQuality)
+                        texture.Compress(true);
+
                     return texture;
                 }
                 else

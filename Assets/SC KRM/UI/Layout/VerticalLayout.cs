@@ -13,7 +13,7 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void SizeUpdate(bool onEnable)
+        protected override void SizeUpdate(bool onEnable = false)
         {
             if (childRectTransforms == null)
                 return;
@@ -49,8 +49,6 @@ namespace SCKRM.UI.Layout
                         for (int j = i; j < childRectTransforms.Count; j++)
                         {
                             RectTransform rectTransform2 = childRectTransforms[j];
-                            if (!rectTransform2.gameObject.activeSelf)
-                                continue;
                             if (rectTransform2 == null)
                                 continue;
                             else if (!rectTransform2.gameObject.activeSelf)

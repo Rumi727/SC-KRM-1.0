@@ -2751,6 +2751,8 @@ GameObject:
   - component: {fileID: 2808110809403667989}
   - component: {fileID: 2036881799254045102}
   - component: {fileID: 2808110809404011473}
+  - component: {fileID: 5864663169008740880}
+  - component: {fileID: 8089363803018132657}
   - component: {fileID: 2808110809422000611}
   m_Layer: 5
   m_Name: Picker 2.0
@@ -2805,6 +2807,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2808110809415440703}
   m_CullTransparentMesh: 0
+--- !u!114 &5864663169008740880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808110809415440703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 2
+--- !u!114 &8089363803018132657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808110809415440703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameSpace: sc-krm
+  _path: rounded_rectangle
+  _type: gui
+  _index: 0
+  _image: {fileID: 5864663169008740880}
 --- !u!114 &2808110809422000611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7765,7 +7814,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1818760885789760683}
   - component: {fileID: 3839058026210576536}
-  - component: {fileID: 3088269085463217526}
   - component: {fileID: 4367900321333997866}
   - component: {fileID: 3868677867364877845}
   m_Layer: 0
@@ -7797,8 +7845,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000034332275}
-  m_SizeDelta: {x: 0, y: 94}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 106}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &3839058026210576536
 MonoBehaviour:
@@ -7815,14 +7863,6 @@ MonoBehaviour:
   _rectTransform: {fileID: 1818760885789760683}
   tempParentGameobject: {fileID: 499279207141248909}
   _parentRectTransformSetting: {fileID: 4615143456577156842}
---- !u!222 &3088269085463217526
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3871648516956403154}
-  m_CullTransparentMesh: 1
 --- !u!114 &4367900321333997866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7971,7 +8011,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6176144749820169527}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5349424
+  m_Size: 0.55223346
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10956,7 +10996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _saveLoadAttributeName: default
   _variableName: vSync
-  _disableGameObject: {fileID: 0}
+  _disableGameObject: {fileID: 6109795397529626723}
   _reversal: 1
 --- !u!114 &4469033210193520325
 MonoBehaviour:
@@ -13849,7 +13889,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -24, y: -24}
+  m_SizeDelta: {x: -22, y: -22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3243481673363059485
 MonoBehaviour:
@@ -16927,6 +16967,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 304766158498055115, guid: de8f7150def470d428ea15394d816456, type: 3}
   m_PrefabInstance: {fileID: 3267436697142884770}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6109795397529626723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8760098130924868033, guid: de8f7150def470d428ea15394d816456, type: 3}
+  m_PrefabInstance: {fileID: 3267436697142884770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3573886723493442302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17709,6 +17754,10 @@ PrefabInstance:
       propertyPath: _parentRectTransformSetting
       value: 
       objectReference: {fileID: 4990134292019355782}
+    - target: {fileID: 1983648433373221627, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3417893582090282169, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Name
       value: Fixed GUI Size Enable

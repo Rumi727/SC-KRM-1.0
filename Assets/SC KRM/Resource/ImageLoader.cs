@@ -7,21 +7,12 @@ using UnityEngine;
 
 namespace SCKRM.Resource
 {
-    public static class TGALoader
+    public static class ImageLoader
     {
-
-        public static Texture2D LoadTGA(string path)
-        {
-            using (var imageFile = File.OpenRead(path))
-            {
-                return LoadTGA(imageFile);
-            }
-        }
-
-        public static Texture2D LoadTGA(Stream TGAStream)
+        public static Texture2D LoadTGA(string path, bool mipmapUse = false)
         {
 
-            using (BinaryReader r = new BinaryReader(TGAStream))
+            using (BinaryReader r = new BinaryReader(File.OpenRead(path)))
             {
                 // Skip some header info we don't care about.
                 // Even if we did care, we have to move the stream seek point to the beginning,
@@ -35,7 +26,7 @@ namespace SCKRM.Resource
                 // Skip a byte of header information we don't care about.
                 r.BaseStream.Seek(1, SeekOrigin.Current);
 
-                Texture2D tex = new Texture2D(width, height);
+                Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, mipmapUse);
                 Color32[] pulledColors = new Color32[width * height];
 
                 if (bitDepth == 32)
@@ -65,11 +56,12 @@ namespace SCKRM.Resource
                 {
                     for (int i = 0; i < width * height; i++)
                     {
-                        byte red = r.ReadByte();
-                        byte green = red;
-                        byte blue = red;
+                        byte red;
+                        byte green;
+                        byte blue;
+                        red = green = blue = r.ReadByte();
 
-                        pulledColors[i] = new Color32(blue, green, red, 255);
+                        pulledColors[i] = new Color32(blue, green, red, 1);
                     }
                 }
                 else
@@ -82,6 +74,24 @@ namespace SCKRM.Resource
                 return tex;
 
             }
+        }
+
+        public static Texture2D LoadDDS(string path)
+        {
+            BinaryReader reader = new BinaryReader(File.OpenRead(path));
+            long length = new FileInfo(path).Length;
+            byte[] header = reader.ReadBytes(128);
+            int height = header[13] * 256 + header[12];
+            int width = header[17] * 256 + header[16];
+            bool mipmaps = header[28] > 0;
+            TextureFormat textureFormat = header[87] == 49 ? TextureFormat.DXT1 : TextureFormat.DXT5;
+            byte[] source = reader.ReadBytes(Convert.ToInt32(length) - 128);
+            reader.Close();
+            Texture2D texture = new Texture2D(width, height, textureFormat, mipmaps);
+            texture.LoadRawTextureData(source);
+            texture.name = Path.GetFileName(path);
+            texture.Apply(false);
+            return texture;
         }
     }
 }

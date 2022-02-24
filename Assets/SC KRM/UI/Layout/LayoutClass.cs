@@ -21,7 +21,6 @@ namespace SCKRM.UI.Layout
         protected override void Update()
         {
             base.Update();
-
             {
                 {
                     bool update = true;
