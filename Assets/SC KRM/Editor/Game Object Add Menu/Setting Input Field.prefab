@@ -851,7 +851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 7260335578112448451}

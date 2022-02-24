@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 1983648433373221627}
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button2
+  _path: border_rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 6225788824045898819}

@@ -13,9 +13,8 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void SizeUpdate()
+        protected override void SizeUpdate(bool onEnable)
         {
-            float localSizeX = rectTransformInfo.localSize.x;
             if (childRectTransforms == null)
                 return;
 
@@ -28,8 +27,6 @@ namespace SCKRM.UI.Layout
                 if (childRectTransform == null)
                     continue;
                 else if (!childRectTransform.gameObject.activeSelf)
-                    continue;
-                else if (childRectTransform.sizeDelta.x == 0 || childRectTransform.sizeDelta.y == 0)
                     continue;
 
                 VerticalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
@@ -58,8 +55,6 @@ namespace SCKRM.UI.Layout
                                 continue;
                             else if (!rectTransform2.gameObject.activeSelf)
                                 continue;
-                            else if (rectTransform2.sizeDelta.x == 0 || rectTransform2.sizeDelta.y == 0)
-                                continue;
 
                             VerticalLayoutSetting taskBarLayoutSetting2 = childSettingComponents[j];
                             if (taskBarLayoutSetting2 != null && taskBarLayoutSetting2.mode == VerticalLayoutSetting.Mode.down)
@@ -72,13 +67,13 @@ namespace SCKRM.UI.Layout
 
                 if (down)
                 {
-                    childRectTransform.anchorMin = new Vector2(0.5f, 0);
-                    childRectTransform.anchorMax = new Vector2(0.5f, 0);
+                    childRectTransform.anchorMin = new Vector2(0, 0);
+                    childRectTransform.anchorMax = new Vector2(1, 0);
                     childRectTransform.pivot = new Vector2(0.5f, 0);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || onEnable)
 #else
-                    if (!lerp)
+                    if (!lerp || onEnable)
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom);
                     else
@@ -88,13 +83,13 @@ namespace SCKRM.UI.Layout
                 }
                 else if (center)
                 {
-                    childRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-                    childRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                    childRectTransform.anchorMin = new Vector2(0, 0.5f);
+                    childRectTransform.anchorMax = new Vector2(1, 0.5f);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || onEnable)
 #else
-                    if (!lerp)
+                    if (!lerp || onEnable)
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y);
                     else
@@ -104,14 +99,14 @@ namespace SCKRM.UI.Layout
                 }
                 else
                 {
-                    childRectTransform.anchorMin = new Vector2(0.5f, 1);
-                    childRectTransform.anchorMax = new Vector2(0.5f, 1);
+                    childRectTransform.anchorMin = new Vector2(0, 1);
+                    childRectTransform.anchorMax = new Vector2(1, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 1);
                     
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || onEnable)
 #else
-                    if (!lerp)
+                    if (!lerp || onEnable)
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y - padding.top);
                     else
@@ -120,7 +115,8 @@ namespace SCKRM.UI.Layout
                     y -= childRectTransform.sizeDelta.y + spacing;
                 }
 
-                childRectTransform.sizeDelta = new Vector3(localSizeX - padding.left - padding.right, childRectTransform.sizeDelta.y);
+                childRectTransform.offsetMin = new Vector2(padding.left, childRectTransform.offsetMin.y);
+                childRectTransform.offsetMax = new Vector2(-padding.right, childRectTransform.offsetMax.y);
             }
         }
     }

@@ -95,12 +95,12 @@ namespace SCKRM.UI.Layout
 
         Vector2 xSize;
         Vector2 ySize;
-        protected override void SizeUpdate()
+        protected override void SizeUpdate(bool onEnable)
         {
 #if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
+            if (!lerp || !Application.isPlaying || onEnable)
 #else
-            if (!lerp)
+            if (!lerp || onEnable)
 #endif
             {
                 if (mode == Mode.XSize)

@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class SettingNameDrag : MonoBehaviour, IDragHandler
+namespace SCKRM.UI.Setting
 {
-    [SerializeField] UnityEvent _onDrag = new UnityEvent();
-    public UnityEvent onDrag { get => _onDrag; }
+    [AddComponentMenu("커널/UI/텍스트 드래그")]
+    public class SettingNameDrag : MonoBehaviour, IDragHandler
+    {
+        [SerializeField] UnityEvent _onDrag = new UnityEvent();
+        public UnityEvent onDrag { get => _onDrag; }
 
-    public void OnDrag(PointerEventData eventData) => onDrag.Invoke();
+        public void OnDrag(PointerEventData eventData) => onDrag.Invoke();
+    }
 }

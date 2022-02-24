@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 namespace HSVPicker
 {
-    [ExecuteAlways]
     public class SVBoxSliderHandleColor : UIAni
     {
         public Graphic graphic;
@@ -19,7 +18,7 @@ namespace HSVPicker
         protected override void OnEnable() => colorPicker?.onValueChanged.AddListener(OnValueChanged);
         protected override void OnDisable() => colorPicker?.onValueChanged.RemoveListener(OnValueChanged);
 
-        Color color;
+        Color color = Color.white;
         public void OnValueChanged(Color color)
         {
             if (graphic != null)
@@ -33,12 +32,12 @@ namespace HSVPicker
             }
         }
 
-        protected override void SizeUpdate()
+        protected override void SizeUpdate(bool onEnable)
         {
 #if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
+            if (!lerp || !Application.isPlaying || onEnable)
 #else
-            if (!lerp)
+            if (!lerp || onEnable)
 #endif
                 graphic.color = color;
             else

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.Setting
 {
-    [AddComponentMenu("커널/UI/인풋 필드 (설정)")]
+    [AddComponentMenu("커널/UI/인풋 필드 (세이브 파일 연동)")]
     public class SettingInputField : SettingDrag
     {
         [SerializeField] string _textPlaceHolderNameSpace = ""; public string textPlaceHolderNameSpace { get => _textPlaceHolderNameSpace; set => _textPlaceHolderNameSpace = value; }

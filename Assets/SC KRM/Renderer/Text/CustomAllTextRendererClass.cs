@@ -14,6 +14,8 @@ namespace SCKRM.Renderer
         public string[] replaceOld { get; set; }
         public string[] replaceNew { get; set; }
 
+
+
         public override void ResourceReload()
         {
             base.ResourceReload();

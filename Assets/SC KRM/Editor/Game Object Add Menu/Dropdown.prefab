@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 5576217943486096570}
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 2792400269882274592}
@@ -602,10 +602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45453fe11c3135f44852cc83f6128203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransformInfo: {fileID: 3771797273968640164}
-  _spacing: 1
   _lerp: 0
   _lerpValue: 0.2
+  _spacing: 1
   _ignore: []
   _padding:
     m_Left: 4
@@ -624,10 +623,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d646b6ab0b1b1bf4cacea338ffa57b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransformInfo: {fileID: 3771797273968640164}
-  _spacing: 1
   _lerp: 0
   _lerpValue: 0.2
+  _spacing: 1
   _ignore: []
   _mode: 2
   _offset: {x: 0, y: 8}
@@ -773,7 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 3974184429263772120}
@@ -789,15 +787,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 7483910627107449271}
+  _lerp: 1
+  _lerpValue: 0.4
   _targetRectTransform: {fileID: 9136122546172431983}
   _xSize: 0
   _ySize: 1
   _offset: {x: 0, y: 0}
   _min: {x: 0, y: 0}
   _max: {x: 0, y: 196}
-  _lerp: 1
-  _lerpValue: 0.4
 --- !u!1 &5403342609076353350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +1036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 2061819884190181774}
@@ -1236,7 +1233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 8519761445641381069}
@@ -1520,7 +1517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 8233439561937546649}

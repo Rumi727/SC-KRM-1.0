@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.Setting
 {
+    [AddComponentMenu("커널/UI/드롭다운 (세이브 파일 연동)")]
     public class SettingDropdown : Setting
     {
         [SerializeField] Dropdown _dropdown; public Dropdown dropdown { get => _dropdown; set => _dropdown = value; }

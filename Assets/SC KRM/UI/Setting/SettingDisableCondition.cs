@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.Setting
 {
-    [AddComponentMenu("커널/UI/비활성화 조건 (설정)")]
+    [AddComponentMenu("커널/UI/비활성화 조건 (세이브 파일 연동)")]
     public class SettingDisableCondition : Setting
     {
         [SerializeField] GameObject _disableGameObject; public GameObject disableGameObject { get => _disableGameObject; set => _disableGameObject = value; }

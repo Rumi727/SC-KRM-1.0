@@ -13,12 +13,11 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void SizeUpdate()
+        protected override void SizeUpdate(bool onEnable)
         {
             if (childRectTransforms == null)
                 return;
 
-            float localSizeY = rectTransformInfo.localSize.y;
             bool center = false;
             bool right = false;
             float x = 0;
@@ -28,8 +27,6 @@ namespace SCKRM.UI.Layout
                 if (childRectTransform == null)
                     continue;
                 else if (!childRectTransform.gameObject.activeSelf)
-                    continue;
-                else if (childRectTransform.sizeDelta.x == 0 || childRectTransform.sizeDelta.y == 0)
                     continue;
 
                 HorizontalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
@@ -72,13 +69,13 @@ namespace SCKRM.UI.Layout
 
                 if (right)
                 {
-                    childRectTransform.anchorMin = new Vector2(1, 0.5f);
-                    childRectTransform.anchorMax = new Vector2(1, 0.5f);
+                    childRectTransform.anchorMin = new Vector2(1, 0);
+                    childRectTransform.anchorMax = new Vector2(1, 1);
                     childRectTransform.pivot = new Vector2(1, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || onEnable)
 #else
-                    if (!lerp)
+                    if (!lerp || onEnable)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -88,13 +85,13 @@ namespace SCKRM.UI.Layout
                 }
                 else if (center)
                 {
-                    childRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-                    childRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                    childRectTransform.anchorMin = new Vector2(0.5f, 0);
+                    childRectTransform.anchorMax = new Vector2(0.5f, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || onEnable)
 #else
-                    if (!lerp)
+                    if (!lerp || onEnable)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -104,13 +101,13 @@ namespace SCKRM.UI.Layout
                 }
                 else
                 {
-                    childRectTransform.anchorMin = new Vector2(0, 0.5f);
-                    childRectTransform.anchorMax = new Vector2(0, 0.5f);
+                    childRectTransform.anchorMin = new Vector2(0, 0);
+                    childRectTransform.anchorMax = new Vector2(0, 1);
                     childRectTransform.pivot = new Vector2(0, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || onEnable)
 #else
-                    if (!lerp)
+                    if (!lerp || onEnable)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -119,7 +116,8 @@ namespace SCKRM.UI.Layout
                     x += childRectTransform.sizeDelta.x + spacing;
                 }
 
-                childRectTransform.sizeDelta = new Vector3(childRectTransform.sizeDelta.x, localSizeY - padding.top - padding.bottom);
+                childRectTransform.offsetMin = new Vector2(childRectTransform.offsetMin.x, padding.bottom);
+                childRectTransform.offsetMax = new Vector2(childRectTransform.offsetMax.x, -padding.top);
             }
         }
     }

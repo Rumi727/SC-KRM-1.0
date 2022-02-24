@@ -168,7 +168,10 @@ namespace SCKRM.Resource
                         Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
                 }
 #else
-                    Application.Quit(1);
+                Application.Quit(1);
+
+                while (true)
+                    await UniTask.DelayFrame(1);
 #endif
             }
 
