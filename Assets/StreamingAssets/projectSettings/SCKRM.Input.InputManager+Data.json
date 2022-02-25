@@ -22,6 +22,10 @@
     "notice_manager.notice_remove": [
       127
     ],
+    "notice_manager.notice_clear_all": [
+      306,
+      127
+    ],
     "setting_manager.show": [
       306,
       106

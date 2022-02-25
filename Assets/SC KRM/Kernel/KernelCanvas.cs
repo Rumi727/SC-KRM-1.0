@@ -7,10 +7,8 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [AddComponentMenu("")]
-    public sealed class KernelCanvas : UI
+    public sealed class KernelCanvas : ManagerUI<KernelCanvas>
     {
-        public static KernelCanvas instance { get; private set; }
-
         [SerializeField, HideInInspector] Canvas _canvas;
         public Canvas canvas
         {
@@ -32,13 +30,7 @@ namespace SCKRM.UI
 
 
 
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
-                Destroy(gameObject);
-        }
+        void Awake() => SingletonCheck(this);
 
         void Update()
         {

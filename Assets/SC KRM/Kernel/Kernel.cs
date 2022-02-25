@@ -23,11 +23,12 @@ using SCKRM.Window;
 using System.Threading.Tasks;
 using SCKRM.UI.SideBar;
 using SCKRM.UI.StatusBar;
+using SCKRM.Json;
 
 namespace SCKRM
 {
     [AddComponentMenu("커널/커널")]
-    public sealed class Kernel : MonoBehaviour
+    public sealed class Kernel : Manager<Kernel>
     {
         [ProjectSetting]
         public sealed class Data
@@ -50,6 +51,8 @@ namespace SCKRM
         [SaveLoad("default")]
         public sealed class SaveData
         {
+            [JsonProperty] public static JColor systemColor { get; set; } = JColor.one;
+
             [JsonProperty] public static int mainVolume { get; set; } = 100;
             [JsonProperty] public static int bgmVolume { get; set; } = 100;
             [JsonProperty] public static int soundVolume { get; set; } = 100;
@@ -60,8 +63,6 @@ namespace SCKRM
             [JsonProperty] public static float fixedGuiSize { get; set; } = 1;
             [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = true;
         }
-
-        public static Kernel instance;
 
         public static float fps { get; private set; } = 60;
 
@@ -206,18 +207,11 @@ namespace SCKRM
 
         void Awake()
         {
-            if (instance == null)
+            if (SingletonCheck(this))
             {
-                instance = this;
                 DontDestroyOnLoad(instance);
+                InitialLoad().Forget();
             }
-            else if (instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            InitialLoad().Forget();
         }
 
 #if !UNITY_EDITOR
@@ -389,7 +383,7 @@ namespace SCKRM
 
                     //다른 스레드에서 이 값을 설정하기 전에
                     //미리 설정합니다
-                    //(참고: 이 변수는 프로퍼티고 변수가 비어있다면 Application를 호출합니다
+                    //(참고: 이 변수는 프로퍼티고 변수가 비어있다면 Application를 호출합니다)
                     {
                         _ = dataPath;
                         _ = persistentDataPath;
@@ -464,6 +458,9 @@ namespace SCKRM
                     //씬을 이동했으면 이벤트를 호출합니다
                     InitialLoadEndSceneMove?.Invoke();
 
+                    //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
+                    await UniTask.DelayFrame(3);
+
                     if (splashScreenBackground != null)
                     {
                         while (splashScreenBackground.color.a > 0)
@@ -500,12 +497,14 @@ namespace SCKRM
                         }
                         else
                         {
-                            //예외가 났는데 플레이 모드가 종료되면
+                            //예외가 났는데 플레이 모드가 종료된 상태면
                             //십중팔구로 초기로딩이 끝나지 않은상태에서
                             //플레이 모드를 종료한거기 때문에 경고만 띄워줍니다
                             Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
                         }
 #else
+
+                        WindowManager.MessageBox(e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5), "Kernel: Initial loading failed", WindowManager.MessageBoxButtons.OK, WindowManager.MessageBoxIcon.Error);
                         Application.Quit(1);
 #endif
                     }

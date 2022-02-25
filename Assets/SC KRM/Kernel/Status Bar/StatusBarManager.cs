@@ -6,12 +6,13 @@ using SCKRM.Tool;
 using SCKRM.UI.SideBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.StatusBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
-    public sealed class StatusBarManager : UI, IPointerEnterHandler, IPointerExitHandler
+    public sealed class StatusBarManager : ManagerUI<StatusBarManager>, IPointerEnterHandler, IPointerExitHandler
     {
         [SaveLoad("statusbar")]
         public sealed class SaveData
@@ -21,7 +22,6 @@ namespace SCKRM.UI.StatusBar
             [JsonProperty] public static bool toggleSeconds { get; set; } = false;
         }
 
-        public static StatusBarManager instance { get; private set; }
         public static bool allowStatusBarShow { get; set; } = false;
         public static bool backButtonShow { get; set; } = true;
 
@@ -59,14 +59,24 @@ namespace SCKRM.UI.StatusBar
 
         [SerializeField] Sprite bg;
         [SerializeField] Sprite bg2;
-
-        void Awake()
+        void OnEnable()
         {
-            if (instance == null)
-                instance = this;
-            else
-                Destroy(gameObject);
+            if (SingletonCheck(this))
+            {
+                SceneManager.activeSceneChanged -= AniStart;
+                SceneManager.activeSceneChanged += AniStart;
+
+                //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
+                static async void AniStart(Scene previousActiveScene, Scene newActiveScene)
+                {
+                    aniStop = false;
+                    await UniTask.DelayFrame(3);
+                    aniStop = true;
+                }
+            }
         }
+
+
 
         static bool tabAllow = false;
         static GameObject oldSelectedObject;
@@ -75,9 +85,10 @@ namespace SCKRM.UI.StatusBar
         static bool tempSelectedStatusBar;
         static bool pointer = false;
         static float timer = 0;
+        static bool aniStop = true;
         void Update()
         {
-            if (Kernel.isInitialLoadEnd)
+            if (Kernel.isInitialLoadEnd && aniStop)
             {
                 {
                     bool mouseYisScreenY;
@@ -202,16 +213,10 @@ namespace SCKRM.UI.StatusBar
                             gameObject.SetActive(false);
                     }
 
-                    if (backButtonShow)
-                    {
-                        if (!backButton.activeSelf)
-                            backButton.SetActive(true);
-                    }
-                    else
-                    {
-                        if (backButton.activeSelf)
-                            backButton.SetActive(false);
-                    }
+                    if (backButtonShow && !backButton.activeSelf)
+                        backButton.SetActive(true);
+                    else if (!backButtonShow && backButton.activeSelf)
+                        backButton.SetActive(false);
                 }
 
 

@@ -14,6 +14,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
+    [AddComponentMenu("커널/UI/드롭다운")]
     public class Dropdown : UI, IPointerEnterHandler, IPointerExitHandler
     {
         bool _isShow = false;
@@ -100,11 +101,31 @@ namespace SCKRM.UI
                 }
 
                 if (!isShow)
+                {
                     listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, listRectTransform.anchoredPosition.y), listSetSizeAsTargetRectTransform.lerpValue * Kernel.fpsUnscaledDeltaTime);
+
+                    if (listRectTransform.gameObject.activeSelf && listRectTransform.sizeDelta.y < listRectTransform.anchoredPosition.y + 0.01f)
+                    {
+                        for (int i = 1; i < content.childCount; i++)
+                        {
+                            GameObject gameObject = content.GetChild(i).gameObject;
+                            if (content.gameObject != gameObject)
+                            {
+                                gameObject.SetActive(false);
+                                Destroy(gameObject);
+                            }
+                        }
+
+                        listRectTransform.gameObject.SetActive(false);
+                    }
+                }
                 else if (!pointer && !mouseDrag && UnityEngine.Input.GetMouseButtonUp(0))
                     Hide();
                 else if (UnityEngine.Input.GetMouseButtonUp(0))
                     mouseDrag = false;
+
+                if (isShow && !listRectTransform.gameObject.activeSelf)
+                    listRectTransform.gameObject.SetActive(true);
             }
         }
 

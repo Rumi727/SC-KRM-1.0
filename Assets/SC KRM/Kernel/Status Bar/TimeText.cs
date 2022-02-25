@@ -37,7 +37,7 @@ namespace SCKRM.UI.StatusBar
         static bool tempTwentyFourHourSystem = false;
         static bool tempToggleSeconds = false;
 
-        async void Start()
+        async UniTaskVoid OnEnable()
         {
             await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
 

@@ -9,10 +9,8 @@ using UnityEngine.UI;
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
-    public class SettingBarManager : UI
+    public class SettingBarManager : ManagerUI<SettingBarManager>
     {
-        public static SettingBarManager instance { get; private set; }
-
         static bool _isNoticeBarShow;
         public static bool isSettingBarShow
         {
@@ -54,13 +52,7 @@ namespace SCKRM.UI.SideBar
         public Scrollbar scrollBar => _scrollBar;
         #endregion
 
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-            else
-                Destroy(gameObject);
-        }
+        void Awake() => SingletonCheck(this);
 
         public static void Hide()
         {

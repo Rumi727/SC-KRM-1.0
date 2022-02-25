@@ -5,11 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SCKRM.UI;
 
 namespace SCKRM.Splash
 {
     [AddComponentMenu("커널/스플래시/스플래시 스크린")]
-    public sealed class SplashScreen : MonoBehaviour
+    public sealed class SplashScreen : ManagerUI<SplashScreen>
     {
         public static bool isAniPlayed { get; set; } = true;
         [SerializeField] Image LogoImage;
@@ -34,39 +35,42 @@ namespace SCKRM.Splash
 
         async UniTaskVoid Awake()
         {
-            isAniPlayed = true;
-            aniPlay = false;
-
-            bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
-            drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
-
-            if (Random.Range(0, 2) == 1)
-                xFlip = true;
-            else
-                xFlip = false;
-
-            if (xFlip)
+            if (SingletonCheck(this))
             {
-                CS.localPosition = new Vector2(670, Random.Range(-32f, 245f));
-                xV = Random.Range(-8f, -20f);
-                rV = Random.Range(10f, 20f);
+                isAniPlayed = true;
+                aniPlay = false;
+
+                bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
+                drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
+
+                if (Random.Range(0, 2) == 1)
+                    xFlip = true;
+                else
+                    xFlip = false;
+
+                if (xFlip)
+                {
+                    CS.localPosition = new Vector2(670, Random.Range(-32f, 245f));
+                    xV = Random.Range(-8f, -20f);
+                    rV = Random.Range(10f, 20f);
+                }
+                else
+                {
+                    CS.localPosition = new Vector2(-670, Random.Range(-32f, 245f));
+                    xV = Random.Range(8f, 20f);
+                    rV = Random.Range(-10f, -20f);
+                }
+
+                yV = Random.Range(8f, 15f);
+
+                timer = 0;
+                aniEnd = false;
+
+                aniPlay = true;
+                await UniTask.WaitUntil(() => alpha >= 1);
+
+                AudioSource.PlayClipAtPoint(bow, Vector3.zero);
             }
-            else
-            {
-                CS.localPosition = new Vector2(-670, Random.Range(-32f, 245f));
-                xV = Random.Range(8f, 20f);
-                rV = Random.Range(-10f, -20f);
-            }
-
-            yV = Random.Range(8f, 15f);
-
-            timer = 0;
-            aniEnd = false;
-
-            aniPlay = true;
-            await UniTask.WaitUntil(() => alpha >= 1);
-
-            AudioSource.PlayClipAtPoint(bow, Vector3.zero);
         }
 
         float alpha = 0;

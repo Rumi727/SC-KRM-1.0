@@ -37,6 +37,38 @@ namespace SCKRM.UI
         }
     }
 
+    public class ManagerUI<T> : Manager<T> where T : MonoBehaviour
+    {
+        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                {
+                    _rectTransform = GetComponent<RectTransform>();
+                    if (_rectTransform == null)
+                        _rectTransform = gameObject.AddComponent<RectTransform>();
+                }
+
+                return _rectTransform;
+            }
+        }
+        [NonSerialized] RectTransformInfo _rectTransformInfo; public RectTransformInfo rectTransformInfo
+        {
+            get
+            {
+                if (_rectTransformInfo == null)
+                {
+                    _rectTransformInfo = GetComponent<RectTransformInfo>();
+                    if (_rectTransformInfo == null)
+                        _rectTransformInfo = gameObject.AddComponent<RectTransformInfo>();
+                }
+
+                return _rectTransformInfo;
+            }
+        }
+    }
+
     public class UILayout : UIBehaviour
     {
         [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform

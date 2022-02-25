@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace SCKRM.Language.UI
 {
+    [AddComponentMenu("언어 리스트")]
     public class LanguageList : SCKRM.UI.UI
     {
         [SerializeField] Dropdown dropdown;
@@ -22,13 +23,13 @@ namespace SCKRM.Language.UI
         {
             await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
 
-            Refresh();
-            Kernel.AllRefreshEnd += Refresh;
+            ListRefresh();
+            Kernel.AllRefreshEnd += ListRefresh;
         }
 
-        void OnDestroy() => Kernel.AllRefreshEnd -= Refresh;
+        void OnDestroy() => Kernel.AllRefreshEnd -= ListRefresh;
 
-        public void Refresh()
+        public void ListRefresh()
         {
             LanguageManager.Language[] languages = LanguageManager.GetLanguages();
             List<string> options = new List<string>();

@@ -804,7 +804,7 @@ namespace SCKRM.Editor
                         }
 
                         {
-                            if (keyList[i] != "" && InputManager.Data.controlSettingList[keyList[i]].Count != 0 && deleteSafety)
+                            if (keyList[i] != "" || (InputManager.Data.controlSettingList.ContainsKey(keyList[i]) && InputManager.Data.controlSettingList[keyList[i]].Count != 0) && deleteSafety)
                                 GUI.enabled = false;
 
                             if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))

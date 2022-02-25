@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
+    [AddComponentMenu("커널/UI/드롭다운 아이템")]
     public class DropdownItem : UI
     {
         [SerializeField] CustomAllRenderer[] _renderers;

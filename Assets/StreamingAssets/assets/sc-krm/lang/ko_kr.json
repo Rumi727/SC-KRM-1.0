@@ -32,6 +32,12 @@
 	
 	
 	
+	"options.theme.title": "테마",
+	"options.theme.systemColor": "시스템 색상",
+	
+	"options.language.title": "언어",
+	"options.language.language": "언어",
+	
 	"options.sound.title": "소리",
 	"options.sound.mainVolume": "메인",
 	"options.sound.bgmVolume": "음악",
@@ -43,9 +49,6 @@
 	"options.video.fpsLimit": "FPS 제한",
 	"options.video.guiSize": "GUI 크기",
 	"options.video.fixedGuiSizeEnable": "고정적인 GUI 크기 사용",
-	
-	"options.language.title": "언어",
-	"options.language.language": "언어",
 	
 	"options.statusbar.title": "상태 표시줄",
 	"options.statusbar.bottomMode": "하단에 표시",
@@ -71,6 +74,7 @@
 	"kernel.full_screen": "전체 화면",
 	
 	"notice.notice": "알림",
+	"notice.notice.clear_all": "모두 지우기",
 	"notice.running_task": "실행중인 작업",
 	
 	

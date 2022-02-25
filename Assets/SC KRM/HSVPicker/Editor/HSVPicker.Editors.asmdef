@@ -1,7 +1,8 @@
 {
     "name": "HSVPicker.Editors",
+    "rootNamespace": "",
     "references": [
-        "HSVPicker"
+        "SC KRM"
     ],
     "includePlatforms": [
         "Editor"

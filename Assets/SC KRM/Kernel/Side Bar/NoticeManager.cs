@@ -9,34 +9,30 @@ using UnityEngine;
 
 namespace SCKRM.UI.SideBar
 {
-    public sealed class NoticeManager : UI
+    [AddComponentMenu("")]
+    public sealed class NoticeManager : ManagerUI<NoticeManager>
     {
-        public static NoticeManager instance { get; private set; }
+        [SerializeField] Transform _noticeListTransform; public Transform noticeListTransform => _noticeListTransform;
 
-        [SerializeField] Transform _noticeList;
-        public Transform noticeList => _noticeList;
 
+        public static List<Notice> noticeList { get; } = new List<Notice>();
         public static event Action noticeAdd;
 
         async void Awake()
         {
-            if (instance == null)
-                instance = this;
-            else
-            {
-                Destroy(this);
-                return;
-            }
-
-            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
+            if (SingletonCheck(this))
+                await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
         }
 
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (SideBarManager.isSideBarShow && noticeList.transform.childCount > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
-                    noticeList.transform.GetChild(0).GetComponent<Notice>().Remove();
+                if (SideBarManager.isSideBarShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
+                {
+                    noticeList[noticeList.Count - 1].Remove();
+                    noticeList.RemoveAt(noticeList.Count - 1);
+                }
             }
         }
 
@@ -58,7 +54,7 @@ namespace SCKRM.UI.SideBar
             if (!Kernel.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
-            Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeList);
+            Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform);
             notice.transform.SetAsFirstSibling();
             notice.nameText.nameSpace = "sc-krm";
             notice.infoText.nameSpace = "sc-krm";
@@ -73,6 +69,8 @@ namespace SCKRM.UI.SideBar
             notice.infoText.ResourceReload();
             notice.nameText.Rerender();
             notice.infoText.Rerender();
+
+            noticeList.Add(notice);
 
             if (type != Type.none)
             {

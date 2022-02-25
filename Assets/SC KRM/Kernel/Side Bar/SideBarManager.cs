@@ -11,10 +11,8 @@ using UnityEngine.UI;
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
-    public class SideBarManager : UI
+    public class SideBarManager : ManagerUI<SideBarManager>
     {
-        public static SideBarManager instance { get; private set; }
-
         static bool _isSideBarShow;
         public static bool isSideBarShow
         {
@@ -66,16 +64,17 @@ namespace SCKRM.UI.SideBar
 
         void Awake()
         {
-            if (instance == null)
-                instance = this;
-            else
-                Destroy(gameObject);
-
-            NoticeManager.noticeAdd += () =>
+            if (SingletonCheck(this))
             {
-                isSideBarShow = true;
-                SettingBarManager.isSettingBarShow = false;
-            };
+                NoticeManager.noticeAdd -= Show;
+                NoticeManager.noticeAdd += Show;
+            }
+        }
+
+        void Show()
+        {
+            isSideBarShow = true;
+            SettingBarManager.isSettingBarShow = false;
         }
 
         void Update()

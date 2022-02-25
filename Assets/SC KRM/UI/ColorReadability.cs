@@ -10,9 +10,12 @@ using SCKRM.Tool;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
+    [AddComponentMenu("커널/UI/색상 가독성 향상")]
     public class ColorReadability : UIAni
     {
         [SerializeField] CanvasRenderer _targetCanvasRenderer; public CanvasRenderer targetCanvasRenderer => _targetCanvasRenderer;
+        [SerializeField] Graphic _targetGraphic; public Graphic targetGraphic => _targetGraphic;
+
         [NonSerialized] Graphic _graphic; public Graphic graphic
         {
             get
@@ -28,11 +31,11 @@ namespace SCKRM.UI
             }
         }
 
-        Color color;
+        Color color = Color.white;
         protected override void LayoutRefresh()
         {
-            if (targetCanvasRenderer != null && graphic != null && targetCanvasRenderer != graphic)
-                color = GetReadbilityColor(targetCanvasRenderer.GetColor());
+            if (targetCanvasRenderer != null && targetGraphic != null && graphic != null && targetCanvasRenderer != graphic)
+                color = GetReadbilityColor(targetGraphic.color * targetCanvasRenderer.GetColor());
         }
 
         protected override void SizeUpdate(bool onEnable = false)

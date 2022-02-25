@@ -6,6 +6,7 @@ using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using SCKRM.Tool;
+using SCKRM.Window;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -100,6 +101,8 @@ namespace SCKRM.Resource
         /// Resource refresh (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static async UniTask ResourceRefresh()
         {
             if (!ThreadManager.isMainThread)
@@ -150,8 +153,8 @@ namespace SCKRM.Resource
                 Debug.LogError("ResourceManager: Resource refresh failed");
 
                 if (!Kernel.isInitialLoadEnd)
-#if UNITY_EDITOR
                 {
+#if UNITY_EDITOR
                     Debug.LogError("Kernel: Initial loading failed");
                     if (Application.isPlaying)
                     {
@@ -166,13 +169,16 @@ namespace SCKRM.Resource
                     }
                     else
                         Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
-                }
 #else
-                Application.Quit(1);
+                    WindowManager.MessageBox(e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5), "ResourceManager: Resource refresh failed", WindowManager.MessageBoxButtons.OK, WindowManager.MessageBoxIcon.Error);
+                    Debug.LogError("Kernel: Initial loading failed");
 
-                while (true)
-                    await UniTask.DelayFrame(1);
+                    Application.Quit(1);
+
+                    while (true)
+                        await UniTask.DelayFrame(1);
 #endif
+                }
             }
 
             threadMetaData.autoRemoveDisable = false;
@@ -184,6 +190,8 @@ namespace SCKRM.Resource
         /// Combine all textures from resource packs into one (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         static async UniTask SetPackTextures()
         {
             if (!ThreadManager.isMainThread)
@@ -371,6 +379,9 @@ namespace SCKRM.Resource
         /// Put all the combined textures into sprites and put them in the list (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         static async UniTask SetSprite()
         {
             if (!isInitialLoadPackTexturesEnd)
@@ -439,6 +450,8 @@ namespace SCKRM.Resource
         /// Get audio from sounds.json in resource pack (Since the Unity API is used, we need to run it on the main thread)
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         static async UniTask SetAudio()
         {
             if (!ThreadManager.isMainThread)
@@ -505,11 +518,7 @@ namespace SCKRM.Resource
             isInitialLoadAudioEnd = true;
         }
 
-        /// <summary>
-        /// 리소스팩의 sounds.json에서 오디오를 가져옵니다
-        /// Get audio from sounds.json in resource pack
-        /// </summary>
-        /// <returns></returns>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         static void SetLanguage(ThreadMetaData threadMetaData)
         {
 #if UNITY_EDITOR
@@ -582,6 +591,8 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static string SearchTexturePath(string type, string name, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -620,6 +631,8 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static Texture2D SearchPackTexture(string type, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -660,6 +673,8 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static Rect SearchTextureRect(string type, string name, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -703,6 +718,8 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static Sprite[] SearchSprites(string type, string name, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -746,6 +763,8 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static string SearchLanguage(string key, string nameSpace = "", string language = "")
         {
 #if UNITY_EDITOR
@@ -792,6 +811,8 @@ namespace SCKRM.Resource
         /// Name Space
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
         public static SoundData SearchSoundData(string key, string nameSpace = "")
         {
 #if UNITY_EDITOR
@@ -901,7 +922,6 @@ namespace SCKRM.Resource
                     Texture2D texture = ImageLoader.LoadTGA(path, mipmapUse);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
-                    texture.alphaIsTransparency = true;
 
                     if (compressionType == TextureMetaData.CompressionType.normal)
                         texture.Compress(false);
@@ -915,7 +935,6 @@ namespace SCKRM.Resource
                     Texture2D texture = ImageLoader.LoadDDS(path);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
-                    texture.alphaIsTransparency = true;
 
                     if (compressionType == TextureMetaData.CompressionType.normal)
                         texture.Compress(false);
@@ -953,6 +972,7 @@ namespace SCKRM.Resource
         /// </summary>
         /// <param name="texture"></param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Sprite GetSprite(Texture2D texture, SpriteMetaData spriteMetaData = null)
         {
             if (!ThreadManager.isMainThread)
@@ -997,6 +1017,7 @@ namespace SCKRM.Resource
         /// Texture Format
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Sprite[] GetSprites(string resourcePackPath, string type, string name, string nameSpace = "", TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (!ThreadManager.isMainThread)
@@ -1040,6 +1061,7 @@ namespace SCKRM.Resource
         /// Use extension in path
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Sprite[] GetSprites(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (!ThreadManager.isMainThread)
@@ -1065,6 +1087,7 @@ namespace SCKRM.Resource
         /// Sprite's metadata
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Sprite[] GetSprites(Texture2D texture, params SpriteMetaData[] spriteMetaDatas)
         {
             if (!ThreadManager.isMainThread)
@@ -1138,6 +1161,7 @@ namespace SCKRM.Resource
         /// Stream
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static async UniTask<AudioClip> GetAudio(string path, bool stream = false)
         {
             if (!ThreadManager.isMainThread)
@@ -1267,6 +1291,7 @@ namespace SCKRM.Resource
         /// Texture
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Color AverageColorFromTexture(Texture2D texture) => AverageColorFromTexture(texture, 0, 0, texture.width, texture.height);
 
         /// <summary>
@@ -1282,6 +1307,7 @@ namespace SCKRM.Resource
         /// Texture Size
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Color AverageColorFromTexture(Texture2D texture, RectInt rect) => AverageColorFromTexture(texture, rect.x, rect.y, rect.width, rect.height);
 
         /// <summary>
@@ -1309,6 +1335,7 @@ namespace SCKRM.Resource
         /// Height
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Color AverageColorFromTexture(Texture2D texture, int x, int y, int width, int height)
         {
             if (!ThreadManager.isMainThread)
@@ -1356,6 +1383,7 @@ namespace SCKRM.Resource
         /// Filter Mode
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Texture2D TextureFromColor(Color color, int width, int height, FilterMode filterMode = FilterMode.Point)
         {
             if (!ThreadManager.isMainThread)
@@ -1392,6 +1420,7 @@ namespace SCKRM.Resource
         /// Alpha texture
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Texture2D TextureFromColor(Color color, Texture2D alpha)
         {
             if (!ThreadManager.isMainThread)
@@ -1436,6 +1465,7 @@ namespace SCKRM.Resource
         /// Sprite's metadata
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Sprite SpriteFromColor(Color color, int width = 1, int height = 1, FilterMode filterMode = FilterMode.Point, SpriteMetaData spriteMetaData = null)
         {
             if (!ThreadManager.isMainThread)
@@ -1476,6 +1506,7 @@ namespace SCKRM.Resource
         /// Sprite's metadata
         /// </param>
         /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static Sprite SpriteFromColor(Color color, Texture2D alpha, SpriteMetaData spriteMetaData = null)
         {
             if (!ThreadManager.isMainThread)

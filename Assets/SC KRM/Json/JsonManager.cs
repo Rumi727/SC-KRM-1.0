@@ -269,6 +269,22 @@ namespace SCKRM.Json
             a = value.a;
         }
 
+        public JColor(Color32 value)
+        {
+            r = value.r / 255;
+            g = value.g / 255;
+            b = value.b / 255;
+            a = value.a / 255;
+        }
+
+        public JColor(JColor32 value)
+        {
+            r = value.r / 255;
+            g = value.g / 255;
+            b = value.b / 255;
+            a = value.a / 255;
+        }
+
         public JColor(float value)
         {
             r = g = b = value;
@@ -303,8 +319,92 @@ namespace SCKRM.Json
         public static implicit operator Vector4(JColor value) => new Vector4(value.r, value.g, value.b, value.a);
         public static implicit operator Rect(JColor value) => new Rect(value.r, value.g, value.b, value.a);
 
+        public static implicit operator JColor(Color32 value) => new JColor(value);
+        public static implicit operator Color32(JColor value) => new Color() { r = value.r * 255, g = value.g * 255, b = value.b * 255, a = value.a * 255 };
+
         public static implicit operator JColor(Color value) => new JColor(value);
         public static implicit operator Color(JColor value) => new Color() { r = value.r, g = value.g, b = value.b, a = value.a };
+
+        public override string ToString() => $"(r:{r}, g:{g}, b:{b}, a:{a})";
+    }
+
+    public struct JColor32
+    {
+        public byte r;
+        public byte g;
+        public byte b;
+        public byte a;
+
+        public static JColor32 zero { get; } = new JColor32();
+        public static JColor32 one { get; } = new JColor32(1);
+
+        public JColor32(Color value)
+        {
+            r = (byte)(value.r * 255);
+            g = (byte)(value.g * 255);
+            b = (byte)(value.b * 255);
+            a = (byte)(value.a * 255);
+        }
+
+        public JColor32(JColor value)
+        {
+            r = (byte)(value.r * 255);
+            g = (byte)(value.g * 255);
+            b = (byte)(value.b * 255);
+            a = (byte)(value.a * 255);
+        }
+
+        public JColor32(Color32 value)
+        {
+            r = value.r;
+            g = value.g;
+            b = value.b;
+            a = value.a;
+        }
+
+        public JColor32(byte value)
+        {
+            r = g = b = value;
+            a = 1;
+        }
+
+        public JColor32(byte r, byte g, byte b)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            a = 1;
+        }
+
+        public JColor32(byte r, byte g, byte b, byte a)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = a;
+        }
+
+        public static implicit operator JColor32(Vector3 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z);
+        public static implicit operator JColor32(Vector4 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z, (byte)value.w);
+        public static implicit operator JColor32(Rect value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.width, (byte)value.height);
+
+        public static implicit operator JColor32(JVector3 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z);
+        public static implicit operator JColor32(JVector4 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z, (byte)value.w);
+        public static implicit operator JColor32(JRect value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.width, (byte)value.height);
+
+        public static implicit operator Vector3(JColor32 value) => new Vector3(value.r, value.g, value.b);
+        public static implicit operator Vector4(JColor32 value) => new Vector4(value.r, value.g, value.b, value.a);
+        public static implicit operator Rect(JColor32 value) => new Rect(value.r, value.g, value.b, value.a);
+
+        public static implicit operator JColor32(Color32 value) => new JColor32(value);
+        public static implicit operator Color32(JColor32 value) => new Color32() { r = value.r, g = value.g, b = value.b, a = value.a };
+
+        public static implicit operator JColor32(Color value) => new JColor32(value);
+        public static implicit operator Color(JColor32 value) => new Color() { r = value.r / 255, g = value.g / 255, b = value.b / 255, a = value.a / 255 };
+
+
+        public static implicit operator JColor32(JColor value) => new JColor32(value);
+        public static implicit operator JColor(JColor32 value) => new JColor(value);
 
         public override string ToString() => $"(r:{r}, g:{g}, b:{b}, a:{a})";
     }

@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.UI.SideBar
 {
+    [AddComponentMenu("")]
     [RequireComponent(typeof(VerticalLayout), typeof(SetSizeAsChildRectTransform))]
     public class Notice : ObjectPoolingUI, IPointerEnterHandler, IPointerExitHandler
     {

@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Input;
+using SCKRM.Json;
 using SCKRM.Log;
 using SCKRM.SaveLoad;
 using SCKRM.UI.SideBar;
@@ -38,7 +39,9 @@ namespace SCKRM.UI.Setting
             Ulong,
             Float,
             Double,
-            Decimal
+            Decimal,
+            JColor,
+            JColor32
         }
 
         public virtual async UniTask Awake()
@@ -105,6 +108,10 @@ namespace SCKRM.UI.Setting
                 variableType = VariableType.Double;
             else if (type == typeof(decimal))
                 variableType = VariableType.Decimal;
+            else if (type == typeof(JColor))
+                variableType = VariableType.JColor;
+            else if (type == typeof(JColor32))
+                variableType = VariableType.JColor32;
         }
 
         public virtual object GetValue()

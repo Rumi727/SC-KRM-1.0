@@ -32,6 +32,9 @@
 	
 	
 	
+	"options.theme.title": "Theme",
+	"options.theme.systemColor": "System Color",
+	
 	"options.language.title": "Language",
 	"options.language.language": "Language",
 	

@@ -19,6 +19,9 @@ public class GameObjectAddMenu
         Selection.activeObject = gameObject;
     }
 
+    [MenuItem("GameObject/Kernel/UI/Color Picker")]
+    public static void ColorPicker(MenuCommand menuCommand) => PrefabInstantiate("Color Picker", menuCommand);
+
     [MenuItem("GameObject/Kernel/UI/Dropdown")]
     public static void Dropdown(MenuCommand menuCommand) => PrefabInstantiate("Dropdown", menuCommand);
 
@@ -33,6 +36,9 @@ public class GameObjectAddMenu
 
     [MenuItem("GameObject/Kernel/Setting UI/Toggle")]
     public static void SettingToggle(MenuCommand menuCommand) => PrefabInstantiate("Setting Toggle", menuCommand);
+
+    [MenuItem("GameObject/Kernel/Setting UI/Color Picker")]
+    public static void SettingColorPicker(MenuCommand menuCommand) => PrefabInstantiate("Setting Color Picker", menuCommand);
 
     [MenuItem("GameObject/Kernel/Setting UI/Dropdown")]
     public static void SettingDropdown(MenuCommand menuCommand) => PrefabInstantiate("Setting Dropdown", menuCommand);

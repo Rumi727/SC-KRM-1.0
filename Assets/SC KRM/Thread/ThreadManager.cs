@@ -450,6 +450,11 @@ namespace SCKRM.Threads
         public bool loop { get; set; } = false;
         public bool autoRemoveDisable { get; set; } = false;
 
+        /// <summary>
+        /// 이 함수는 메인 스레드에서만 실행할수 있습니다
+        /// This function can only be executed on the main thread
+        /// </summary>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public void Remove()
         {
             if (!ThreadManager.isMainThread)

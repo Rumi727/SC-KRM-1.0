@@ -7,11 +7,16 @@ using System;
 
 namespace SCKRM.Log
 {
-    public sealed class LogManager : MonoBehaviour
+    [AddComponentMenu("")]
+    public sealed class LogManager : Manager<LogManager>
     {
         ConcurrentQueue<Log> logs = new ConcurrentQueue<Log>();
 
-        void OnEnable() => Application.logMessageReceivedThreaded += log;
+        void OnEnable()
+        {
+            if (SingletonCheck(this))
+                Application.logMessageReceivedThreaded += log;
+        }
 
         void OnDisable() => Application.logMessageReceivedThreaded -= log;
 
