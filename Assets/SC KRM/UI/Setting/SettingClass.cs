@@ -44,9 +44,15 @@ namespace SCKRM.UI.Setting
             JColor32
         }
 
-        public virtual async UniTask Awake()
+        public virtual async UniTask<bool> Awake()
         {
-            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
+            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                return true;
+
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                return true;
+#endif
 
             foreach (var variableType in SaveLoadManager.variableTypeList)
             {
@@ -112,6 +118,8 @@ namespace SCKRM.UI.Setting
                 variableType = VariableType.JColor;
             else if (type == typeof(JColor32))
                 variableType = VariableType.JColor32;
+
+            return false;
         }
 
         public virtual object GetValue()

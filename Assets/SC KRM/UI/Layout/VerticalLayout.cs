@@ -28,13 +28,12 @@ namespace SCKRM.UI.Layout
                     continue;
                 else if (!childRectTransform.gameObject.activeSelf)
                     continue;
+                else if (childRectTransform.sizeDelta.y == 0)
+                    continue;
 
                 VerticalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
                 if (taskBarLayoutSetting != null)
                 {
-                    if (taskBarLayoutSetting.custom)
-                        continue;
-
                     if (!down && taskBarLayoutSetting.mode == VerticalLayoutSetting.Mode.down)
                     {
                         down = true;
@@ -52,6 +51,8 @@ namespace SCKRM.UI.Layout
                             if (rectTransform2 == null)
                                 continue;
                             else if (!rectTransform2.gameObject.activeSelf)
+                                continue;
+                            else if (rectTransform2.sizeDelta.y == 0)
                                 continue;
 
                             VerticalLayoutSetting taskBarLayoutSetting2 = childSettingComponents[j];

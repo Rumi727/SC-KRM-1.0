@@ -7,9 +7,6 @@ namespace SCKRM.UI
     [AddComponentMenu("커널/UI/Layout/수직 레이아웃 설정")]
     public sealed class VerticalLayoutSetting : UI
     {
-        [SerializeField] bool _custom = false;
-        public bool custom => _custom;
-
         [SerializeField] Mode _mode = Mode.none;
         public Mode mode => _mode;
 

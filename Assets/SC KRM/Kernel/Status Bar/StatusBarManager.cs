@@ -67,11 +67,12 @@ namespace SCKRM.UI.StatusBar
                 SceneManager.activeSceneChanged += AniStart;
 
                 //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
-                static async void AniStart(Scene previousActiveScene, Scene newActiveScene)
+                async void AniStart(Scene previousActiveScene, Scene newActiveScene)
                 {
-                    aniStop = false;
-                    await UniTask.DelayFrame(3);
                     aniStop = true;
+                    if (await UniTask.DelayFrame(3, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                        return;
+                    aniStop = false;
                 }
             }
         }
@@ -85,10 +86,10 @@ namespace SCKRM.UI.StatusBar
         static bool tempSelectedStatusBar;
         static bool pointer = false;
         static float timer = 0;
-        static bool aniStop = true;
+        static bool aniStop = false;
         void Update()
         {
-            if (Kernel.isInitialLoadEnd && aniStop)
+            if (Kernel.isInitialLoadEnd && !aniStop)
             {
                 {
                     bool mouseYisScreenY;

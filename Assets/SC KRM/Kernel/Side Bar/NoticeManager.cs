@@ -18,11 +18,7 @@ namespace SCKRM.UI.SideBar
         public static List<Notice> noticeList { get; } = new List<Notice>();
         public static event Action noticeAdd;
 
-        async void Awake()
-        {
-            if (SingletonCheck(this))
-                await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
-        }
+        void Awake() => SingletonCheck(this);
 
         void Update()
         {

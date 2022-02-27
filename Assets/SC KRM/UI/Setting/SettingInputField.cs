@@ -27,9 +27,10 @@ namespace SCKRM.UI.Setting
 
 
 
-        public override async UniTask Awake()
+        public override async UniTask<bool> Awake()
         {
-            await base.Awake();
+            if (await base.Awake())
+                return true;
 
             if (variableType == VariableType.String)
             {
@@ -58,6 +59,8 @@ namespace SCKRM.UI.Setting
 
                 placeholder.ResourceReload();
             }
+
+            return false;
         }
 
         public virtual void OnEndEdit()

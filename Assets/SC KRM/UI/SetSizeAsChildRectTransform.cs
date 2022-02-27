@@ -37,11 +37,6 @@ namespace SCKRM.UI.Layout
             {
                 RectTransform childRectTransform = childRectTransforms[i];
                 if (childRectTransform == null)
-                    continue;
-                else if (!childRectTransform.gameObject.activeSelf)
-                    continue;
-
-                if (childRectTransform == null)
                 {
                     spacingCancel();
                     continue;
@@ -52,6 +47,11 @@ namespace SCKRM.UI.Layout
                     continue;
                 }
                 else if (!childRectTransform.gameObject.activeSelf)
+                {
+                    spacingCancel();
+                    continue;
+                }
+                else if ((mode == Mode.XSize && childRectTransform.sizeDelta.x == 0) || (mode == Mode.YSize && childRectTransform.sizeDelta.y == 0))
                 {
                     spacingCancel();
                     continue;

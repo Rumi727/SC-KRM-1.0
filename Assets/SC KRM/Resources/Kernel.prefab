@@ -1029,10 +1029,10 @@ MonoBehaviour:
   _spacing: 6
   _ignore: []
   _padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: -2
+    m_Right: -2
+    m_Top: -2
+    m_Bottom: -2
 --- !u!114 &3845133973677580453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6176144749820169527}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.48961425
+  m_Size: 0.45994064
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3145,10 +3145,10 @@ MonoBehaviour:
   _spacing: 6
   _ignore: []
   _padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: -2
+    m_Right: -2
+    m_Top: -2
+    m_Bottom: -2
 --- !u!114 &2767632783812548489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3533,7 +3533,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8122386157253284400}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

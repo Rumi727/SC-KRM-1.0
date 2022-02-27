@@ -23,12 +23,14 @@ namespace SCKRM.Renderer
 #endif
             if (thread)
             {
-                await UniTask.WaitUntil(() => rerenderEnd);
+                if (await UniTask.WaitUntil(() => rerenderEnd, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                    return;
 
                 rerenderEnd = false;
 
                 ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, customRenderers, "notice.running_task.rerender.name");
-                await UniTask.WaitUntil(() => threadMetaData.thread == null);
+                if (await UniTask.WaitUntil(() => threadMetaData.thread == null, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                    return;
 
                 rerenderEnd = true;
             }

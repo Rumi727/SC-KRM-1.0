@@ -9,27 +9,28 @@ namespace SCKRM.UI.SideBar
     [AddComponentMenu("")]
     public sealed class RunningTaskList : UI
     {
-        [System.NonSerialized] List<ThreadMetaData> tempList = new List<ThreadMetaData>();
+        [System.NonSerialized] List<AsyncTask> tempList = new List<AsyncTask>();
         void Update()
         {
             if (!Kernel.isInitialLoadEnd)
                 return;
 
-            if (tempList.Count != ThreadManager.runningThreads.Count)
+            if (tempList.Count != AsyncTaskManager.asyncTasks.Count)
             {
                 RunningTaskInfo[] runningTaskInfos = GetComponentsInChildren<RunningTaskInfo>();
-                for (int i = 0; i < ThreadManager.runningThreads.Count; i++)
+                for (int i = 0; i < AsyncTaskManager.asyncTasks.Count; i++)
                 {
                     if (i >= runningTaskInfos.Length)
                     {
                         RunningTaskInfo runningTaskInfo = (RunningTaskInfo)ObjectPoolingSystem.ObjectCreate("running_task_list.running_task", transform);
                         runningTaskInfo.transform.SetSiblingIndex(0);
-                        runningTaskInfo.threadMetaData = ThreadManager.runningThreads[i];
+                        runningTaskInfo.asyncTask = AsyncTaskManager.asyncTasks[i];
+                        runningTaskInfo.asyncTaskIndex = i;
                         runningTaskInfo.InfoLoad();
                     }
                 }
 
-                tempList = new List<ThreadMetaData>(ThreadManager.runningThreads);
+                tempList = new List<AsyncTask>(AsyncTaskManager.asyncTasks);
             }
         }
     }

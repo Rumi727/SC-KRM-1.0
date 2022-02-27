@@ -118,11 +118,7 @@ namespace SCKRM.Resource
 
             isResourceRefesh = true;
 
-            ThreadMetaData threadMetaData = new ThreadMetaData();
-            threadMetaData.name = "notice.running_task.resource_pack_refresh.name";
-            threadMetaData.autoRemoveDisable = true;
-
-            ThreadManager.runningThreads.Add(threadMetaData);
+            AsyncTask asyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.name");
 
             try
             {
@@ -130,21 +126,43 @@ namespace SCKRM.Resource
                 Debug.Log("ResourceManager: Waiting for pack textures to set...");
                 await SetPackTextures();
 
-                threadMetaData.progress = 1f / 4f;
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                    return;
+#endif
+
+                asyncTask.progress = 1f / 4f;
                 Debug.Log("ResourceManager: Waiting for sprite to set...");
                 await SetSprite();
 
-                threadMetaData.progress = 2f / 4f;
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                    return;
+#endif
+
+                asyncTask.progress = 2f / 4f;
                 Debug.Log("ResourceManager: Waiting for language to set...");
                 ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_task.language_refresh.name");
-                await UniTask.WaitUntil(() => threadMetaData2.thread == null);
+                if (await UniTask.WaitUntil(() => threadMetaData2.thread == null, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                    return;
+
                 isInitialLoadLanguageEnd = true;
 
-                threadMetaData.progress = 3f / 4f;
+                #if UNITY_EDITOR
+                if (!Application.isPlaying)
+                    return;
+#endif
+
+                asyncTask.progress = 3f / 4f;
                 Debug.Log("ResourceManager: Waiting for audio to set...");
                 await SetAudio();
 
-                threadMetaData.progress = 1;
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                    return;
+#endif
+
+                asyncTask.progress = 1;
                 Debug.Log("ResourceManager: Resource refresh finished!");
             }
             catch (Exception e)
@@ -165,7 +183,10 @@ namespace SCKRM.Resource
 
                         UnityEditor.EditorApplication.isPlaying = false;
                         while (true)
-                            await UniTask.DelayFrame(1);
+                        {
+                            if (await UniTask.DelayFrame(1, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                                return;
+                        }
                     }
                     else
                         Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
@@ -181,7 +202,7 @@ namespace SCKRM.Resource
                 }
             }
 
-            threadMetaData.autoRemoveDisable = false;
+            asyncTask.Remove();
             isResourceRefesh = false;
         }
 
@@ -245,6 +266,10 @@ namespace SCKRM.Resource
                         //타입 폴더 안의 모든 이미지를 돌아다닙니다 (타입 폴더 안의 폴더 안의... 이미지는 타입으로 취급하기 때문에 감지하지 않습니다)
                         for (int l = 0; l < paths.Count; l++)
                         {
+#if UNITY_EDITOR
+                            if (!Application.isPlaying)
+                                return;
+#endif
                             string path = paths[l].Replace("\\", "/");
                             Texture2D texture = GetTexture(path, true, textureMetaData);
 
@@ -268,7 +293,8 @@ namespace SCKRM.Resource
                                 }
                             }
 
-                            await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
+                            if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                                return;
                         }
                         
                         if (!packTextureTypePaths.ContainsKey(nameSpace))
@@ -318,6 +344,11 @@ namespace SCKRM.Resource
                 /*allTextures*/ Dictionary<string, Texture2D> type_texture = new Dictionary<string, Texture2D>();
                 foreach (var type in nameSpace.Value)
                 {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying)
+                        return;
+#endif
+
                     Texture2D[] textures = type.Value;
                     Texture2D[] textures2 = new Texture2D[textures.Length];
                     string[] textureNames = new string[textures.Length];
@@ -366,6 +397,9 @@ namespace SCKRM.Resource
                         Texture2D texture = textures[j];
                         UnityEngine.Object.Destroy(texture);
                     }
+
+                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                        return;
                 }
                 /*allTextureRects*/ packTextureRects.Add(nameSpace.Key, type_fileName);
                 /*allTextures*/ packTextures.Add(nameSpace.Key, type_texture);
@@ -401,6 +435,11 @@ namespace SCKRM.Resource
                 {
                     foreach (var fileName in type.Value)
                     {
+#if UNITY_EDITOR
+                        if (!Application.isPlaying)
+                            return;
+#endif
+
                         Texture2D background = SearchPackTexture(type.Key, nameSpace.Key);
                         Rect rect = fileName.Value;
                         rect = new Rect(rect.x * background.width, rect.y * background.height, rect.width * background.width, rect.height * background.height);
@@ -437,7 +476,8 @@ namespace SCKRM.Resource
                         else
                             allTextureSprites[nameSpace.Key][type.Key].Add(fileName.Key, sprites);
 
-                        await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
+                        if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                            return;
                     }
                 }
             }
@@ -495,10 +535,17 @@ namespace SCKRM.Resource
                         List<SoundMetaData> soundMetaDatas = new List<SoundMetaData>();
                         for (int k = 0; k < soundData.Value.sounds.Length; k++)
                         {
+#if UNITY_EDITOR
+                            if (!Application.isPlaying)
+                                return;
+#endif
+
                             SoundMetaData sound = soundData.Value.sounds[k];
 
                             string soundPath = PathTool.Combine(path, sound.path);
                             AudioClip audioClip = await GetAudio(soundPath, sound.stream);
+                            if (!Application.isPlaying)
+                                return;
 
                             if (audioClip != null)
                                 soundMetaDatas.Add(new SoundMetaData(sound.path, sound.stream, sound.pitch, sound.tempo, audioClip));

@@ -18,12 +18,15 @@ namespace SCKRM.UI.Setting
 
         [SerializeField] bool _reversal = false; public bool reversal { get => _reversal; set => _reversal = value; }
 
-        public override async UniTask Awake()
+        public override async UniTask<bool> Awake()
         {
-            await base.Awake();
+            if (await base.Awake())
+                return true;
 
             if (type != typeof(bool))
                 enabled = false;
+
+            return false;
         }
 
         public virtual void Update()

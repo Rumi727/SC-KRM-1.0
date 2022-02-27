@@ -28,13 +28,12 @@ namespace SCKRM.UI.Layout
                     continue;
                 else if (!childRectTransform.gameObject.activeSelf)
                     continue;
+                else if (childRectTransform.sizeDelta.x == 0)
+                    continue;
 
                 HorizontalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
                 if (taskBarLayoutSetting != null)
                 {
-                    if (taskBarLayoutSetting.custom)
-                        continue;
-
                     if (!right && taskBarLayoutSetting.mode == HorizontalLayoutSetting.Mode.right)
                     {
                         right = true;
@@ -52,6 +51,8 @@ namespace SCKRM.UI.Layout
                             if (rectTransform2 == null)
                                 continue;
                             else if (!rectTransform2.gameObject.activeSelf)
+                                continue;
+                            else if (rectTransform2.sizeDelta.x == 0)
                                 continue;
 
                             HorizontalLayoutSetting taskBarLayoutSetting2 = childSettingComponents[j];

@@ -43,6 +43,11 @@ namespace SCKRM.Splash
                 bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
                 drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
 
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                    return;
+#endif
+
                 if (Random.Range(0, 2) == 1)
                     xFlip = true;
                 else
@@ -67,7 +72,13 @@ namespace SCKRM.Splash
                 aniEnd = false;
 
                 aniPlay = true;
-                await UniTask.WaitUntil(() => alpha >= 1);
+                if (await UniTask.WaitUntil(() => alpha >= 1, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                    return;
+
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                    return;
+#endif
 
                 AudioSource.PlayClipAtPoint(bow, Vector3.zero);
             }
@@ -119,7 +130,7 @@ namespace SCKRM.Splash
                 CSImage.transform.localEulerAngles = new Vector3(CSImage.transform.localEulerAngles.x, CSImage.transform.localEulerAngles.y, CSImage.transform.localEulerAngles.z + rV * Kernel.fpsUnscaledDeltaTime);
                 yV -= 0.5f * Kernel.fpsUnscaledDeltaTime;
 
-                if (CS.localPosition.x >= -25 && CS.localPosition.x <= 25 && CS.localPosition.y >= -25 && CS.localPosition.y <= 25)
+                if (CS.localPosition.x >= -75 && CS.localPosition.x <= 75 && CS.localPosition.y >= -75 && CS.localPosition.y <= 75)
                 {
                     text.rectTransform.anchoredPosition = new Vector3(0, -13);
                     text.text = showText;

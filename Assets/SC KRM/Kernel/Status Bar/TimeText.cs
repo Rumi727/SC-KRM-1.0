@@ -39,7 +39,8 @@ namespace SCKRM.UI.StatusBar
 
         async UniTaskVoid OnEnable()
         {
-            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
+            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                return;
 
             LanguageManager.currentLanguageChange += LanguageChange;
             LanguageChange();

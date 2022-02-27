@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 836050093905084075}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -3}
-  m_SizeDelta: {x: 410, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -9.000082}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6218630457546078406
 CanvasRenderer:
@@ -160,7 +160,6 @@ GameObject:
   m_Component:
   - component: {fileID: 699772947850157817}
   - component: {fileID: 2547291204185385444}
-  - component: {fileID: 2014936133141391549}
   m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
@@ -187,9 +186,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 13.970001}
-  m_SizeDelta: {x: -20, y: 10}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 6}
+  m_SizeDelta: {x: -16, y: 10}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2547291204185385444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,20 +240,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2014936133141391549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959684388760315950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df7803fc6320f3541b3325dd2c9ffe62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _custom: 1
-  _mode: 0
 --- !u!1 &3050280473071299450
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +284,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 430, y: 19}
+  m_SizeDelta: {x: 0, y: 22}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &8186722587523434855
 MonoBehaviour:
@@ -367,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: button
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 2270588504110008360}
@@ -399,16 +384,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45453fe11c3135f44852cc83f6128203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransformInfo: {fileID: 8186722587523434855}
-  _spacing: 4
   _lerp: 1
   _lerpValue: 0.2
-  _ignore: []
+  _spacing: 2
+  _ignore:
+  - {fileID: 699772947850157817}
   _padding:
     m_Left: 10
     m_Right: 10
-    m_Top: 3
-    m_Bottom: 3
+    m_Top: 5
+    m_Bottom: 5
 --- !u!114 &465263910929733980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,13 +406,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d646b6ab0b1b1bf4cacea338ffa57b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransformInfo: {fileID: 8186722587523434855}
-  _spacing: 3
   _lerp: 1
   _lerpValue: 0.2
+  _spacing: 2
   _ignore: []
   _mode: 2
-  _offset: {x: 0, y: 9}
+  _offset: {x: 0, y: 12}
   _min: 0
   _max: 0
 --- !u!1 &4750328653329970861
@@ -564,8 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
-  _path: button
+  _nameSpace: sc-krm
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 5737086018539426904}
@@ -696,8 +680,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
-  _path: button
+  _nameSpace: sc-krm
+  _path: rounded_rectangle
   _type: gui
   _index: 0
   _image: {fileID: 8543532005718998377}
@@ -735,10 +719,10 @@ RectTransform:
   m_Father: {fileID: 836050093905084075}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -3}
-  m_SizeDelta: {x: 410, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -5}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6316627868617735428
 CanvasRenderer:

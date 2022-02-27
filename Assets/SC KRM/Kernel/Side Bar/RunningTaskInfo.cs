@@ -27,7 +27,8 @@ namespace SCKRM.UI.SideBar
         [SerializeField] RectTransform _fillShow;
         public RectTransform fillShow => _fillShow;
 
-        public ThreadMetaData threadMetaData { get; set; }
+        public AsyncTask asyncTask { get; set; }
+        public int asyncTaskIndex { get; set; }
 
         public override void OnCreate()
         {
@@ -37,8 +38,8 @@ namespace SCKRM.UI.SideBar
 
         public void InfoLoad()
         {
-            nameText.text = ResourceManager.SearchLanguage(threadMetaData.name);
-            infoText.text = ResourceManager.SearchLanguage(threadMetaData.info);
+            nameText.text = ResourceManager.SearchLanguage(asyncTask.name);
+            infoText.text = ResourceManager.SearchLanguage(asyncTask.info);
         }
 
         [System.NonSerialized] bool noResponse = false;
@@ -50,13 +51,13 @@ namespace SCKRM.UI.SideBar
         [System.NonSerialized] float tempMaxX = 0;
         void Update()
         {
-            if (threadMetaData.thread == null && !threadMetaData.autoRemoveDisable)
+            if (asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
             {
                 Remove();
                 return;
             }
 
-            if (!threadMetaData.loop)
+            if (!asyncTask.loop)
             {
                 if (!slider.gameObject.activeSelf)
                     slider.gameObject.SetActive(true);
@@ -92,17 +93,17 @@ namespace SCKRM.UI.SideBar
 
                     noResponse = false;
 
-                    slider.value = threadMetaData.progress;
+                    slider.value = asyncTask.progress;
                     fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsUnscaledDeltaTime);
                     fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                     tempTimer += Kernel.unscaledDeltaTime;
                 }
 
-                if (tempProgress != threadMetaData.progress)
+                if (tempProgress != asyncTask.progress)
                 {
                     tempTimer = 0;
-                    tempProgress = threadMetaData.progress;
+                    tempProgress = asyncTask.progress;
                 }
             }
             else
@@ -123,7 +124,7 @@ namespace SCKRM.UI.SideBar
             base.Remove();
 
             rectTransform.sizeDelta = new Vector2(430, 19);
-            threadMetaData = null;
+            asyncTask = null;
             loopValue = 0;
             noResponse = false;
             tempProgress = 0;

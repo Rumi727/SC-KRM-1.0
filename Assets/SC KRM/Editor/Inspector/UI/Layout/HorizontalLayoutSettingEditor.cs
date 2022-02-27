@@ -15,12 +15,6 @@ namespace SCKRM.Editor
             editor = (HorizontalLayoutSetting)target;
         }
 
-        public override void OnInspectorGUI()
-        {
-            UseProperty("_custom");
-            
-            if (!editor.custom)
-                UseProperty("_mode");
-        }
+        public override void OnInspectorGUI() => UseProperty("_mode");
     }
 }

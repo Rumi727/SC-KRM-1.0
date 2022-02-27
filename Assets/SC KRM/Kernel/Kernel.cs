@@ -399,24 +399,30 @@ namespace SCKRM
                     Debug.Log("Kernel: Waiting for settings to load...");
                     {
                         //프로젝트 설정을 다른 스레드에서 로딩합니다
-                        ThreadMetaData projectSettingLoad = ThreadManager.Create(ProjectSettingManager.Load, "Project Setting Load");
-                        await UniTask.WaitUntil(() => projectSettingLoad.thread == null, PlayerLoopTiming.Initialization);
+                        if (await UniTask.RunOnThreadPool(ProjectSettingManager.Load, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                            return;
 
                         //세이브 데이터의 기본값과 변수들을 다른 스레드에서 로딩합니다
-                        projectSettingLoad = ThreadManager.Create(SaveLoadManager.VariableInfoLoad, "Save Data Load");
-                        await UniTask.WaitUntil(() => projectSettingLoad.thread == null, PlayerLoopTiming.Initialization);
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.VariableInfoLoad, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                            return;
 
                         //세이브 데이터를 다른 스레드에서 로딩합니다
-                        projectSettingLoad = ThreadManager.Create(SaveLoadManager.Load, "Save Data Load");
-                        await UniTask.WaitUntil(() => projectSettingLoad.thread == null, PlayerLoopTiming.Initialization);
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.Load, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                            return;
+
                     }
 
                     {
                         //리소스를 로딩합니다
                         Debug.Log("Kernel: Waiting for resource to load...");
                         await ResourceManager.ResourceRefresh();
+
+#if UNITY_EDITOR
+                        if (!Application.isPlaying)
+                            return;
+#endif
                     }
-                    
+
                     {
                         //초기 로딩이 끝났습니다
                         InitialLoadEnd();
@@ -434,7 +440,8 @@ namespace SCKRM
                     {
                         //씬 애니메이션이 끝날때까지 기다립니다
                         Debug.Log("Kernel: Waiting for scene animation...");
-                        await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, PlayerLoopTiming.Initialization);
+                        if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                            return;
                     }
 
                     StatusBarManager.allowStatusBarShow = true;
@@ -459,7 +466,8 @@ namespace SCKRM
                     InitialLoadEndSceneMove();
 
                     //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
-                    await UniTask.DelayFrame(3);
+                    if (await UniTask.DelayFrame(3, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                        return;
 
                     if (splashScreenBackground != null)
                     {
@@ -468,7 +476,8 @@ namespace SCKRM
                             Color color = splashScreenBackground.color;
                             splashScreenBackground.color = new Color(color.r, color.g, color.b, color.a.MoveTowards(0, 0.05f * fpsUnscaledDeltaTime));
 
-                            await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization);
+                            if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                                return;
                         }
 
                         splashScreenBackground.gameObject.SetActive(false);
@@ -562,6 +571,7 @@ namespace SCKRM
 
         void OnApplicationQuit()
         {
+            AsyncTaskManager.AllAsyncTaskCancel(false);
             ThreadManager.AllThreadRemove();
 
             if (isInitialLoadEnd)

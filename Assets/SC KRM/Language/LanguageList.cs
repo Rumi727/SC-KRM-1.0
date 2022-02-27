@@ -21,7 +21,8 @@ namespace SCKRM.Language.UI
 
         async UniTaskVoid Start()
         {
-            await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
+            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                return;
 
             ListRefresh();
             Kernel.AllRefreshEnd += ListRefresh;
