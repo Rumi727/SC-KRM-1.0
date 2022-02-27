@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 277892881089505804, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 13.000029
+      objectReference: {fileID: 0}
     - target: {fileID: 437937940951011638, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -851,7 +855,7 @@ MonoBehaviour:
   CS: {fileID: 904725997}
   CSImage: {fileID: 937926572}
   text: {fileID: 1542920061}
-  showText: TEAM Bucket
+  showText: TEAM Project
 --- !u!114 &1686849171
 MonoBehaviour:
   m_ObjectHideFlags: 0
