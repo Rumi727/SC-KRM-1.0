@@ -12,14 +12,14 @@ namespace SCKRM.Input.UI
 
         void OnEnable()
         {
-            KernelCanvas.backEventList.Add(Exit);
-            KernelCanvas.homeEvent += Exit;
+            UIManager.BackEventAdd(Exit);
+            UIManager.homeEvent += Exit;
         }
 
         void OnDisable()
         {
-            KernelCanvas.backEventList.Remove(Exit);
-            KernelCanvas.homeEvent -= Exit;
+            UIManager.BackEventRemove(Exit);
+            UIManager.homeEvent -= Exit;
         }
 
         public void Exit()

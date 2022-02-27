@@ -21,13 +21,13 @@ namespace SCKRM.UI.SideBar
                 {
                     if (value)
                     {
-                        KernelCanvas.kernelBackEventList.Add(Hide);
-                        KernelCanvas.homeEvent += Hide;
+                        UIManager.BackEventAdd(Hide, true);
+                        UIManager.homeEvent += Hide;
                     }
                     else
                     {
-                        KernelCanvas.kernelBackEventList.Remove(Hide);
-                        KernelCanvas.homeEvent -= Hide;
+                        UIManager.BackEventRemove(Hide, true);
+                        UIManager.homeEvent -= Hide;
                     }
                 }
 

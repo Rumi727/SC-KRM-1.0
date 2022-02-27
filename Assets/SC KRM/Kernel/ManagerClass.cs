@@ -14,9 +14,7 @@ namespace SCKRM
         {
             if (instance != null && instance != manager)
             {
-                Destroy(manager.gameObject);
-
-                manager.enabled = false;
+                DestroyImmediate(manager.gameObject);
                 return false;
             }
 

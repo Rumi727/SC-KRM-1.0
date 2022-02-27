@@ -97,10 +97,10 @@ namespace SCKRM.UI.StatusBar
                     else
                         mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
 
-                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || SettingBarManager.isSettingBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<KernelCanvas>() != null;
+                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || SettingBarManager.isSettingBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<Kernel>() != null;
                     bool statusBarShow = selectedStatusBar || timer > 0;
                     isStatusBarShow = allowStatusBarShow || statusBarShow;
-                    tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<KernelCanvas>() == null;
+                    tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<UIManager>() == null;
 
                     if (selectedStatusBar)
                         timer = 1;

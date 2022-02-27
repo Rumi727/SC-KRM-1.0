@@ -9,8 +9,7 @@ namespace SCKRM.Editor
     {
         public override void OnInspectorGUI()
         {
-            KernelWindowEditor.instance.Default();
-
+            KernelWindowEditor.Default();
             DrawLine();
 
             EditorGUILayout.HelpBox("로딩이 끝날때 페이드 아웃되는 배경 이미지를 넣어주세요", MessageType.None);

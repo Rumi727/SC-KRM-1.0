@@ -52,7 +52,7 @@ namespace SCKRM.Window
 #if UNITY_STANDALONE_WIN
             return GetActiveWindow();
 #else
-            return (IntPtr)0;
+            throw new NotImplementedException();
 #endif
         }
 
@@ -67,7 +67,7 @@ namespace SCKRM.Window
 
             return new Vector2(rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (Screen.currentResolution.width * screenDatumPoint.x), rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (Screen.currentResolution.height * screenDatumPoint.y));
 #else
-            return Vector2.zero;
+            throw new NotImplementedException();
 #endif
         }
 
@@ -81,7 +81,7 @@ namespace SCKRM.Window
             GetWindowRect(handle, out RECT rect);
             return new Vector2(rect.Right - rect.Left, rect.Bottom - rect.Top);
 #else
-            return Vector2.zero;
+            throw new NotImplementedException();
 #endif
         }
 
@@ -95,7 +95,7 @@ namespace SCKRM.Window
             GetClientRect(handle, out RECT rect);
             return new Vector2(rect.Right, rect.Bottom);
 #else
-            return Vector2.zero;
+            throw new NotImplementedException();
 #endif
         }
 
@@ -143,6 +143,8 @@ namespace SCKRM.Window
                 SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(rect.x), Mathf.RoundToInt(rect.y), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
             else
                 SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(lerpX), Mathf.RoundToInt(lerpY), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+#elif !UNITY_EDITOR
+            throw new NotImplementedException();
 #endif
         }
 
@@ -218,6 +220,8 @@ namespace SCKRM.Window
                 System.Windows.Forms.DialogResult.No => DialogResult.No,
                 _ => DialogResult.None
             };
+#else
+            throw new NotImplementedException();
 #endif
         }
 

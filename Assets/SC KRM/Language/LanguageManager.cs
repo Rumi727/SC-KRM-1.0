@@ -35,7 +35,6 @@ namespace SCKRM.Language
 
 
         public static event Action currentLanguageChange;
-
         public static void LanguageChangeEventInvoke() => currentLanguageChange?.Invoke();
 
         /// <summary>

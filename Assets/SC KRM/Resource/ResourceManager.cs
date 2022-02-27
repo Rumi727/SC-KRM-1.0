@@ -1189,7 +1189,9 @@ namespace SCKRM.Resource
                 if (File.Exists(path + extension))
                 {
                     using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path + extension, type);
-                    ((DownloadHandlerAudioClip)www.downloadHandler).streamAudio = stream;
+                    DownloadHandlerAudioClip downloadHandlerAudioClip = (DownloadHandlerAudioClip)www.downloadHandler;
+                    downloadHandlerAudioClip.streamAudio = stream;
+                    downloadHandlerAudioClip.compressed = false;
 
                     await www.SendWebRequest();
 

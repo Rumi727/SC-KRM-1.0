@@ -123,7 +123,7 @@ namespace SCKRM.Editor
                         Canvas canvas = canvass[i];
                         CanvasSetting canvasSetting = canvas.GetComponent<CanvasSetting>();
 
-                        if (canvas.GetComponent<KernelCanvas>() == null)
+                        if (canvas.GetComponent<UIManager>() == null)
                         {
                             if (canvasSetting == null)
                                 canvas.gameObject.AddComponent<CanvasSetting>();

@@ -337,9 +337,9 @@ namespace SCKRM
             AudioListener.volume = SaveData.mainVolume * 0.005f;
         }
 
-        public static event Action InitialLoadStart;
-        public static event Action InitialLoadEnd;
-        public static event Action InitialLoadEndSceneMove;
+        public static event Action InitialLoadStart = delegate { };
+        public static event Action InitialLoadEnd = delegate { };
+        public static event Action InitialLoadEndSceneMove = delegate { };
         async UniTaskVoid InitialLoad()
         {
             //이미 초기로딩이 시작되었으면 더 이상 초기로딩을 진행하면 안되기 때문에 조건문을 걸어줍니다
@@ -357,7 +357,7 @@ namespace SCKRM
 #endif
                     //초기로딩이 시작됬습니다
                     isInitialLoadStart = true;
-                    InitialLoadStart?.Invoke();
+                    InitialLoadStart();
 
                     StatusBarManager.allowStatusBarShow = false;
 
@@ -419,7 +419,7 @@ namespace SCKRM
                     
                     {
                         //초기 로딩이 끝났습니다
-                        InitialLoadEnd?.Invoke();
+                        InitialLoadEnd();
                         isInitialLoadEnd = true;
 
                         //리소스를 로딩했으니 모든 렌더러를 전부 재렌더링합니다
@@ -456,7 +456,7 @@ namespace SCKRM
 #endif
 
                     //씬을 이동했으면 이벤트를 호출합니다
-                    InitialLoadEndSceneMove?.Invoke();
+                    InitialLoadEndSceneMove();
 
                     //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
                     await UniTask.DelayFrame(3);

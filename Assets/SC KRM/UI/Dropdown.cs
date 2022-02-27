@@ -140,8 +140,8 @@ namespace SCKRM.UI
                 return;
             }
 
-            KernelCanvas.kernelBackEventList.Add(Hide);
-            KernelCanvas.homeEvent += Hide;
+            UIManager.BackEventAdd(Hide, true);
+            UIManager.homeEvent += Hide;
 
             _isShow = true;
             listSetSizeAsTargetRectTransform.enabled = true;
@@ -189,8 +189,8 @@ namespace SCKRM.UI
             if (!isShow)
                 return;
 
-            KernelCanvas.kernelBackEventList.Remove(Hide);
-            KernelCanvas.homeEvent -= Hide;
+            UIManager.BackEventRemove(Hide, true);
+            UIManager.homeEvent -= Hide;
 
             mouseDrag = false;
 

@@ -17,21 +17,6 @@ namespace SCKRM.UI
     [AddComponentMenu("커널/UI/컬러 피커 버튼")]
     public class ColorPickerButton : UIAni, IPointerEnterHandler, IPointerExitHandler
     {
-        [NonSerialized] Graphic _graphic; public Graphic graphic
-        {
-            get
-            {
-                if (_graphic == null)
-                {
-                    _graphic = GetComponent<Graphic>();
-                    if (_graphic == null)
-                        _graphic = gameObject.AddComponent<Graphic>();
-                }
-
-                return _graphic;
-            }
-        }
-
         bool _isShow = false;
         public bool isShow
         {
@@ -91,8 +76,6 @@ namespace SCKRM.UI
                     if (!colorPickerMask.gameObject.activeSelf)
                         colorPickerMask.gameObject.SetActive(true);
                 }
-
-                graphic.color = colorPicker.CurrentColor;
             }
         }
 
@@ -107,8 +90,8 @@ namespace SCKRM.UI
                 return;
             }
 
-            KernelCanvas.kernelBackEventList.Add(Hide);
-            KernelCanvas.homeEvent += Hide;
+            UIManager.BackEventAdd(Hide, true);
+            UIManager.homeEvent += Hide;
 
             _isShow = true;
 
@@ -121,8 +104,8 @@ namespace SCKRM.UI
             if (!isShow)
                 return;
 
-            KernelCanvas.kernelBackEventList.Remove(Hide);
-            KernelCanvas.homeEvent -= Hide;
+            UIManager.BackEventRemove(Hide, true);
+            UIManager.homeEvent -= Hide;
 
             mouseDrag = false;
 

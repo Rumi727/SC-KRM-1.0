@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91a0d89b9a710248a4297a23d92c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
+  _nameSpace: sc-krm
   _path: button
   _type: gui
   _index: 0
@@ -255,9 +255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 8349789208189629143}
+  tempParentGameobject: {fileID: 8349789207973753128}
+  _parentRectTransformSetting: {fileID: 2528726776967143040}
 --- !u!222 &8349789208189629137
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 76171bb219d0d0f409bab571327f7788, type: 3}
+    m_Font: {fileID: 12800000, guid: db9df46fb2c239f419f58486d08ccede, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
@@ -366,9 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 8349789208259354821}
+  tempParentGameobject: {fileID: 8349789209336184074}
+  _parentRectTransformSetting: {fileID: 6148633170038190584}
 --- !u!222 &8349789208259354823
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 76171bb219d0d0f409bab571327f7788, type: 3}
+    m_Font: {fileID: 12800000, guid: db9df46fb2c239f419f58486d08ccede, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
@@ -465,9 +465,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 8349789208412416396}
+  tempParentGameobject: {fileID: 8349789209336184074}
+  _parentRectTransformSetting: {fileID: 6148633170038190584}
 --- !u!222 &8349789208412416392
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 5189649291695125247}
   - component: {fileID: 8349789209269819902}
   - component: {fileID: 8349789209269819901}
-  - component: {fileID: 8349789209269819903}
+  - component: {fileID: 3904977985982576881}
   - component: {fileID: 8349789209269819900}
   m_Layer: 5
   m_Name: Text
@@ -653,9 +653,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  tempParentGameobject: {fileID: 0}
-  _parentRectTransformSetting: {fileID: 0}
+  _rectTransform: {fileID: 8349789209269819651}
+  tempParentGameobject: {fileID: 8349789208412416403}
+  _parentRectTransformSetting: {fileID: 9164373294316303503}
 --- !u!222 &8349789209269819902
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -685,7 +685,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 76171bb219d0d0f409bab571327f7788, type: 3}
+    m_Font: {fileID: 12800000, guid: db9df46fb2c239f419f58486d08ccede, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
@@ -697,8 +697,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reset
---- !u!114 &8349789209269819903
+  m_Text: "\uCD08\uAE30\uD654"
+--- !u!114 &3904977985982576881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -707,11 +707,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8349789209269819650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94c69a80b76470447af56f488af36e2e, type: 3}
+  m_Script: {fileID: 11500000, guid: cc3fc86a84a2aee41add2c23cef317b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: 
+  _nameSpace: sc-krm
   _path: controls.reset
+  _text: {fileID: 8349789209269819901}
 --- !u!114 &8349789209269819900
 MonoBehaviour:
   m_ObjectHideFlags: 0

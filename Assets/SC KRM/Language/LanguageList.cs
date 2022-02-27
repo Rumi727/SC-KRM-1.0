@@ -19,7 +19,7 @@ namespace SCKRM.Language.UI
             RendererManager.AllTextRerender(true);
         }
 
-        async UniTask Start()
+        async UniTaskVoid Start()
         {
             await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd);
 

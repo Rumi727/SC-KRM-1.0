@@ -60,7 +60,7 @@ namespace SCKRM.Editor
 
                 CustomInspectorEditor.DrawLine(2);
             }
-            
+
             switch (tabIndex)
             {
                 case 0:
@@ -82,7 +82,7 @@ namespace SCKRM.Editor
             }
         }
 
-        
+
 
         void OnInspectorUpdate()
         {
@@ -96,7 +96,7 @@ namespace SCKRM.Editor
                 Repaint();
         }
 
-        public void Default()
+        public static void Default()
         {
             if (Application.isPlaying)
             {
@@ -411,7 +411,7 @@ namespace SCKRM.Editor
                 CustomInspectorEditor.DrawLine(2);
 
                 EditorGUILayout.LabelField("재생 목록", EditorStyles.boldLabel);
-                
+
                 if (scrollYSize > 0)
                     nbsScrollPos = EditorGUILayout.BeginScrollView(nbsScrollPos, GUILayout.Height(scrollYSize));
                 else
@@ -792,7 +792,7 @@ namespace SCKRM.Editor
 
                             GUI.enabled = true;
                         }
-                        
+
                         {
                             if (i + 1 >= InputManager.Data.controlSettingList.Count)
                                 GUI.enabled = false;
@@ -1437,7 +1437,7 @@ namespace SCKRM.Editor
                                         {
                                             GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                                             pitch = EditorGUILayout.FloatField(pitch, GUILayout.Width(30)).Clamp(soundMetaData.tempo.Abs() * 0.5f, soundMetaData.tempo.Abs() * 2f);
-                                            
+
                                             GUILayout.Label("템포", GUILayout.ExpandWidth(false));
                                             tempo = EditorGUILayout.FloatField(tempo, GUILayout.Width(30));
 
