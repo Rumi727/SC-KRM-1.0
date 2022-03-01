@@ -48,4 +48,7 @@ public class GameObjectAddMenu
 
     [MenuItem("GameObject/Kernel/Setting UI/Line")]
     public static void SettingLine(MenuCommand menuCommand) => PrefabInstantiate("Line", menuCommand);
+
+    [MenuItem("GameObject/Kernel/Setting UI/Button")]
+    public static void SettingButton(MenuCommand menuCommand) => PrefabInstantiate("Setting Button", menuCommand);
 }

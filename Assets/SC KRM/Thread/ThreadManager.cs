@@ -22,13 +22,13 @@ namespace SCKRM.Threads
         public static bool isMainThread => mainThreadId == Thread.CurrentThread.ManagedThreadId;
 
 
-        public static event Action threadAdd;
-        public static event Action threadChange;
-        public static event Action threadRemove;
+        public static event Action threadAdd = () => { };
+        public static event Action threadChange = () => { };
+        public static event Action threadRemove = () => { };
 
-        public static void ThreadAddEventInvoke() => threadAdd?.Invoke();
-        public static void ThreadRemoveEventInvoke() => threadRemove?.Invoke();
-        public static void ThreadChangeEventInvoke() => threadChange?.Invoke();
+        public static void ThreadAddEventInvoke() => threadAdd();
+        public static void ThreadRemoveEventInvoke() => threadRemove();
+        public static void ThreadChangeEventInvoke() => threadChange();
 
 
 
@@ -416,9 +416,10 @@ namespace SCKRM.Threads
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
 
+            ThreadManager.runningThreads.Remove(this);
+
             ThreadManager.ThreadChangeEventInvoke();
             ThreadManager.ThreadRemoveEventInvoke();
-            ThreadManager.runningThreads.Remove(this);
 
             if (thread != null)
             {

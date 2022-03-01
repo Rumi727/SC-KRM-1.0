@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SCKRM.UI.SideBar
 {
@@ -13,24 +14,40 @@ namespace SCKRM.UI.SideBar
     public sealed class NoticeManager : ManagerUI<NoticeManager>
     {
         [SerializeField] Transform _noticeListTransform; public Transform noticeListTransform => _noticeListTransform;
-
+        [SerializeField] SideBarAni noticeBar;
+        [SerializeField] UnityEvent _noticeAdd;
 
         public static List<Notice> noticeList { get; } = new List<Notice>();
-        public static event Action noticeAdd;
+        public static event Action noticeAdd = () => { };
 
-        void Awake() => SingletonCheck(this);
+        void Awake()
+        {
+            if (SingletonCheck(this))
+                noticeAdd += _noticeAdd.Invoke;
+        }
 
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (SideBarManager.isSideBarShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
+                if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
                 {
                     noticeList[noticeList.Count - 1].Remove();
                     noticeList.RemoveAt(noticeList.Count - 1);
                 }
+
+                if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_clear_all", InputType.Down, "all"))
+                    Clear();
             }
         }
+
+        public void Clear()
+        {
+            for (int i = 0; i < noticeList.Count; i++)
+                noticeList[i].Remove();
+        }
+
+        public void AllAsyncTaskCancel() => AsyncTaskManager.AllAsyncTaskCancel();
 
         public static void Notice(string name, string info) => notice(name, info, null, null, Type.none);
         public static void Notice(string name, string info, Type type) => notice(name, info, null, null, type);

@@ -98,7 +98,7 @@ namespace SCKRM.UI.StatusBar
                     else
                         mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
 
-                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || SettingBarManager.isSettingBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<Kernel>() != null;
+                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<Kernel>() != null;
                     bool statusBarShow = selectedStatusBar || timer > 0;
                     isStatusBarShow = allowStatusBarShow || statusBarShow;
                     tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<UIManager>() == null;
@@ -140,12 +140,6 @@ namespace SCKRM.UI.StatusBar
                         Tab();
                     else if (selectedStatusBar && InputManager.GetKey("gui.back", InputType.Down, "all"))
                         eventSystem.SetSelectedGameObject(null);
-
-                    if (InputManager.GetKey("sidebar_manager.show", InputType.Down, "all"))
-                        SideBarToggle();
-
-                    if (InputManager.GetKey("setting_manager.show", InputType.Down, "all"))
-                        SettingBarToggle();
                 }
 
 
@@ -180,38 +174,6 @@ namespace SCKRM.UI.StatusBar
                                     layout.SetActive(false);
                             }
                         }
-                    }
-
-                    if (SideBarManager.isSideBarShow)
-                    {
-                        GameObject gameObject = SideBarManager.instance.gameObject;
-
-                        if (!gameObject.activeSelf)
-                            gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        GameObject gameObject = SideBarManager.instance.gameObject;
-                        RectTransform rectTransform = SideBarManager.instance.rectTransform;
-
-                        if (gameObject.activeSelf && rectTransform.anchoredPosition.x >= rectTransform.sizeDelta.x - 0.01f)
-                            gameObject.SetActive(false);
-                    }
-
-                    if (SettingBarManager.isSettingBarShow)
-                    {
-                        GameObject gameObject = SettingBarManager.instance.gameObject;
-
-                        if (!gameObject.activeSelf)
-                            gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        GameObject gameObject = SettingBarManager.instance.gameObject;
-                        RectTransform rectTransform = SettingBarManager.instance.rectTransform;
-
-                        if (gameObject.activeSelf && rectTransform.anchoredPosition.x <= (-rectTransform.sizeDelta.x) + 0.01f)
-                            gameObject.SetActive(false);
                     }
 
                     if (backButtonShow && !backButton.activeSelf)
@@ -270,34 +232,6 @@ namespace SCKRM.UI.StatusBar
                     }
                 }
             }
-        }
-
-        public void Hide()
-        {
-            if (SettingBarManager.isSettingBarShow)
-            {
-                SettingBarManager.isSettingBarShow = false;
-                Tab();
-            }
-            else if (SideBarManager.isSideBarShow)
-            {
-                SideBarManager.isSideBarShow = false;
-                Tab();
-            }
-            else
-                eventSystem.SetSelectedGameObject(null);
-        }
-
-        public void SideBarToggle()
-        {
-            SideBarManager.isSideBarShow = !SideBarManager.isSideBarShow;
-            SettingBarManager.isSettingBarShow = false;
-        }
-
-        public void SettingBarToggle()
-        {
-            SettingBarManager.isSettingBarShow = !SettingBarManager.isSettingBarShow;
-            SideBarManager.isSideBarShow = false;
         }
 
         public static void Tab()

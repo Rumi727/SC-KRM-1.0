@@ -15,7 +15,7 @@
     "kernel.full_screen": [
       292
     ],
-    "sidebar_manager.show": [
+    "noticebar.show": [
       306,
       110
     ],
@@ -26,7 +26,7 @@
       306,
       127
     ],
-    "setting_manager.show": [
+    "settingbar.show": [
       306,
       106
     ]

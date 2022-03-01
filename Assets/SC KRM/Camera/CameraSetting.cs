@@ -32,46 +32,30 @@ namespace SCKRM.Camera
 
         void Update()
         {
-            if (camera == null)
-                return;
-
-            if (customSetting)
-                return;
-
 #if UNITY_EDITOR
             if (Application.isPlaying)
+#endif
             {
+                if (camera == null)
+                    return;
+
+                if (customSetting)
+                    return;
+
                 RectTransform taskBar = StatusBarManager.instance.rectTransform;
                 if (StatusBarManager.cropTheScreen)
                 {
                     if (!StatusBarManager.SaveData.bottomMode)
-                        camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.sizeDelta.y - taskBar.anchoredPosition.y) / Screen.height));
+                        camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.sizeDelta.y - taskBar.anchoredPosition.y) * Kernel.guiSize / Screen.height));
                     else
                     {
-                        float y = (taskBar.sizeDelta.y + taskBar.anchoredPosition.y) / Screen.height;
+                        float y = (taskBar.sizeDelta.y + taskBar.anchoredPosition.y) * Kernel.guiSize / Screen.height;
                         camera.rect = new Rect(0, y, 1, 1 - y);
                     }
                 }
                 else
                     camera.rect = new Rect(0, 0, 1, 1);
             }
-#else
-            RectTransform taskBar = StatusBarManager.instance.rectTransform;
-            RectTransform canvas = KernelCanvas.instance.rectTransform;
-
-            if (StatusBarManager.cropTheScreen)
-            {
-                if (!StatusBarManager.SaveData.bottomMode)
-                    camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.sizeDelta.y - taskBar.anchoredPosition.y) / canvas.sizeDelta.y));
-                else
-                {
-                    float y = (taskBar.sizeDelta.y + taskBar.anchoredPosition.y) / canvas.sizeDelta.y;
-                    camera.rect = new Rect(0, y, 1, 1 - y);
-                }
-            }
-            else
-                camera.rect = new Rect(0, 0, 1, 1);
-#endif
         }
     }
 }

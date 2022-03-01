@@ -74,7 +74,9 @@
 	"kernel.full_screen": "Full Screen",
 	
 	"notice.notice": "Notice",
+	"notice.notice.clear_all": "Clear All",
 	"notice.running_task": "Running Task",
+	"notice.running_task.cancel_all": "Cancel All",
 	
 	
 	

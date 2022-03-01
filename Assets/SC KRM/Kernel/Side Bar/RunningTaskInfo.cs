@@ -3,17 +3,19 @@ using SCKRM.Object;
 using SCKRM.Resource;
 using SCKRM.Threads;
 using SCKRM.Tool;
+using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class RunningTaskInfo : ObjectPoolingUI
+    public sealed class RunningTaskInfo : ObjectPoolingUI, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] TMP_Text _nameText;
         public TMP_Text nameText => _nameText;
@@ -27,6 +29,13 @@ namespace SCKRM.UI.SideBar
         [SerializeField] RectTransform _fillShow;
         public RectTransform fillShow => _fillShow;
 
+
+
+        [SerializeField] CanvasGroup _removeButtonCanvasGroup;
+        public CanvasGroup removeButtonCanvasGroup => _removeButtonCanvasGroup;
+
+
+
         public AsyncTask asyncTask { get; set; }
         public int asyncTaskIndex { get; set; }
 
@@ -38,8 +47,11 @@ namespace SCKRM.UI.SideBar
 
         public void InfoLoad()
         {
-            nameText.text = ResourceManager.SearchLanguage(asyncTask.name);
-            infoText.text = ResourceManager.SearchLanguage(asyncTask.info);
+            if (asyncTask != null)
+            {
+                nameText.text = ResourceManager.SearchLanguage(asyncTask.name);
+                infoText.text = ResourceManager.SearchLanguage(asyncTask.info);
+            }
         }
 
         [System.NonSerialized] bool noResponse = false;
@@ -49,9 +61,15 @@ namespace SCKRM.UI.SideBar
         [System.NonSerialized] float tempTimer = 0;
         [System.NonSerialized] float tempMinX = 0;
         [System.NonSerialized] float tempMaxX = 0;
+        [System.NonSerialized] bool pointer = false;
         void Update()
         {
-            if (asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
+            if (pointer || removeButtonCanvasGroup.gameObject == StatusBarManager.instance.eventSystem.currentSelectedGameObject)
+                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.fpsDeltaTime);
+            else
+                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsDeltaTime);
+
+            if (asyncTask == null || asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
             {
                 Remove();
                 return;
@@ -80,8 +98,8 @@ namespace SCKRM.UI.SideBar
                     tempMinX = tempMinX.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
                     tempMaxX = tempMaxX.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
-                    fillShow.anchorMin = new Vector2((loopValue - 0.25f).Clamp01() + tempMinX, fillShow.anchorMin.y);
-                    fillShow.anchorMax = new Vector2(loopValue.Clamp01() + tempMaxX, fillShow.anchorMax.y);
+                    fillShow.anchorMin = new Vector2((loopValue - 0.25f + tempMinX).Clamp01(), fillShow.anchorMin.y);
+                    fillShow.anchorMax = new Vector2((loopValue + tempMaxX).Clamp01(), fillShow.anchorMax.y);
 
                     if (fillShow.anchorMin.x >= 1)
                         loopValue = 0;
@@ -119,6 +137,8 @@ namespace SCKRM.UI.SideBar
             }
         }
 
+        public void Cancel() => asyncTask.Remove();
+
         public override void Remove()
         {
             base.Remove();
@@ -143,5 +163,9 @@ namespace SCKRM.UI.SideBar
             LanguageManager.currentLanguageChange -= InfoLoad;
             ThreadManager.threadChange -= InfoLoad;
         }
+
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;
+
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => pointer = false;
     }
 }
