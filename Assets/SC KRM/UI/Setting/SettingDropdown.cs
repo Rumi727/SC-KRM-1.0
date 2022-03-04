@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SCKRM.UI.Setting
 {
@@ -10,6 +11,7 @@ namespace SCKRM.UI.Setting
     public class SettingDropdown : Setting
     {
         [SerializeField] Dropdown _dropdown; public Dropdown dropdown { get => _dropdown; set => _dropdown = value; }
+        [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
         public virtual void OnValueChanged()
         {
@@ -20,14 +22,36 @@ namespace SCKRM.UI.Setting
             }
             else
                 SaveValue(dropdown.value);
+
+            onValueChanged.Invoke();
         }
 
-        public virtual void Update()
+        public override void SetDefault()
         {
+            base.SetDefault();
+            onValueChanged.Invoke();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
             if (variableType == VariableType.String)
-                dropdown.value = Array.IndexOf(dropdown.options, (string)GetValue());
+            {
+                string value = (string)GetValue();
+
+                dropdown.value = Array.IndexOf(dropdown.options, value);
+                isDefault = (string)defaultValue == value;
+            }
             else
-                dropdown.value = GetValueInt();
+            {
+                int value = GetValueInt();
+
+                dropdown.value = value;
+
+                if (variableType == VariableType.Bool)
+                    isDefault = defaultValue.ToString() == GetValue().ToString();
+            }
         }
     }
 }

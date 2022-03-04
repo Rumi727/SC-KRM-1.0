@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SCKRM.UI.Setting
 {
@@ -12,6 +13,7 @@ namespace SCKRM.UI.Setting
     public class SettingColorPicker : Setting
     {
         [SerializeField] ColorPicker _colorPicker; public ColorPicker colorPicker { get => _colorPicker; set => _colorPicker = value; }
+        [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
         public virtual void OnValueChanged()
         {
@@ -19,14 +21,34 @@ namespace SCKRM.UI.Setting
                 SaveValue((JColor)colorPicker.CurrentColor);
             else if (variableType == VariableType.JColor32)
                 SaveValue((JColor32)colorPicker.CurrentColor);
+
+            onValueChanged.Invoke();
         }
 
-        public virtual void Update()
+        public override void SetDefault()
         {
+            base.SetDefault();
+            onValueChanged.Invoke();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
             if (variableType == VariableType.JColor)
-                colorPicker.CurrentColor = (Color)(JColor)GetValue();
+            {
+                Color value = (Color)(JColor)GetValue();
+
+                colorPicker.CurrentColor = value;
+                isDefault = (Color)(JColor)defaultValue == value;
+            }
             else if (variableType == VariableType.JColor32)
-                colorPicker.CurrentColor = (Color)(JColor32)GetValue();
+            {
+                Color value = (Color)(JColor32)GetValue();
+
+                colorPicker.CurrentColor = value;
+                isDefault = (Color)(JColor32)defaultValue == value;
+            }
         }
     }
 }

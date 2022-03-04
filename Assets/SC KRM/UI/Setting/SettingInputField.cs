@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SCKRM.UI.Setting
 {
@@ -26,8 +27,11 @@ namespace SCKRM.UI.Setting
         [SerializeField] CustomTextMeshProRenderer _placeholder; public CustomTextMeshProRenderer placeholder { get => _placeholder; set => _placeholder = value; }
 
 
+        [SerializeField] UnityEvent _onEndEdit = new UnityEvent(); public UnityEvent onEndEdit { get => _onEndEdit; set => _onEndEdit = value; }
 
-        public override async UniTask<bool> Awake()
+
+
+        protected override async UniTask<bool> Awake()
         {
             if (await base.Awake())
                 return true;
@@ -63,18 +67,32 @@ namespace SCKRM.UI.Setting
             return false;
         }
 
+        public override void SetDefault()
+        {
+            base.SetDefault();
+            onEndEdit.Invoke();
+        }
+
         public virtual void OnEndEdit()
         {
             if (variableType != VariableType.String && string.IsNullOrEmpty(inputField.text))
                 inputField.text = "0";
 
             SaveStringValue(inputField.text);
+            onEndEdit.Invoke();
         }
 
-        public virtual void Update()
+        protected override void Update()
         {
+            base.Update();
+
             if (Kernel.isInitialLoadEnd && !inputField.isFocused)
-                inputField.text = GetValue().ToString();
+            {
+                string value = GetValue().ToString();
+                inputField.text = value;
+
+                isDefault = defaultValue.ToString() == value;
+            }
         }
     }
 }

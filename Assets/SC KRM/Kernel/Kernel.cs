@@ -51,14 +51,14 @@ namespace SCKRM
         [SaveLoad("default")]
         public sealed class SaveData
         {
-            [JsonProperty] public static JColor systemColor { get; set; } = JColor.one;
+            [JsonProperty] public static JColor systemColor { get; set; } = new JColor(0.5137255f, 0.1019608f, 0.627451f);
 
             [JsonProperty] public static int mainVolume { get; set; } = 100;
             [JsonProperty] public static int bgmVolume { get; set; } = 100;
             [JsonProperty] public static int soundVolume { get; set; } = 100;
 
             [JsonProperty] public static bool vSync { get; set; } = true;
-            [JsonProperty] public static int fpsLimit { get; set; } = 300;
+            [JsonProperty] public static int fpsLimit { get; set; } = 480;
             [JsonProperty] public static float guiSize { get; set; } = 1;
             [JsonProperty] public static float fixedGuiSize { get; set; } = 1;
             [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = true;
@@ -347,7 +347,7 @@ namespace SCKRM
             {
                 try
                 {
-                    //이 함수는 어떠한 경우에도 메인스레드에서 실행되면 안됩니다
+                    //이 함수는 어떠한 경우에도 메인스레드가 아닌 스레드에서 실행되면 안됩니다
                     if (!ThreadManager.isMainThread)
                         throw new NotMainThreadMethodException(nameof(InitialLoad));
 #if UNITY_EDITOR

@@ -55,8 +55,6 @@ namespace SCKRM.Renderer
                 customRenderer.ResourceReload();
 
                 threadMetaData.progress = (float)i / (customRenderers.Length - 1);
-
-                Thread.Sleep(100);
             }
         }
     }

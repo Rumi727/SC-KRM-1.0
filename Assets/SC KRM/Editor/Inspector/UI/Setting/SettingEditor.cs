@@ -21,6 +21,11 @@ namespace SCKRM.Editor
             UseProperty("_saveLoadAttributeName", "세이브 로드 어트리뷰트의 키");
             UseProperty("_variableName", "변수 이름");
 
+            DrawLine();
+
+            UseProperty("_resetButton", "리셋 버튼");
+            UseProperty("_nameText", "이름 텍스트");
+
             if (editor.propertyInfo != null)
                 EditorGUILayout.LabelField(editor.type + " " + editor.propertyInfo.Name + " = " + editor.propertyInfo.GetValue(editor.type));
             else if (editor.fieldInfo != null)

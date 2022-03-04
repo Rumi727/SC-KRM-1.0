@@ -23,6 +23,10 @@ namespace SCKRM.Editor
             DrawLine();
 
             UseProperty("_toggle");
+
+            DrawLine();
+
+            UseProperty("_onValueChanged");
         }
     }
 }

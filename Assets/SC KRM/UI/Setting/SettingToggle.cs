@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.Setting
@@ -7,6 +8,7 @@ namespace SCKRM.UI.Setting
     public class SettingToggle : Setting
     {
         [SerializeField] Toggle _toggle; public Toggle toggle { get => _toggle; set => _toggle = value; }
+        [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
         public virtual void OnValueChanged()
         {
@@ -14,14 +16,26 @@ namespace SCKRM.UI.Setting
                 return;
 
             SaveValue(toggle.isOn);
+            onValueChanged.Invoke();
         }
 
-        public virtual void Update()
+        public override void SetDefault()
         {
+            base.SetDefault();
+            onValueChanged.Invoke();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
             if (!Kernel.isInitialLoadEnd || variableType != VariableType.Bool)
                 return;
 
-            toggle.isOn = (bool)GetValue();
+            bool value = (bool)GetValue();
+
+            toggle.isOn = value;
+            isDefault = (bool)defaultValue == value;
         }
     }
 }

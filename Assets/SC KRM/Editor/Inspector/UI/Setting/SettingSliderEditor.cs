@@ -19,7 +19,10 @@ namespace SCKRM.Editor
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            UseProperty("_placeholder");
+
+            DrawLine();
+
+            UseProperty("_onValueChanged");
         }
     }
 }

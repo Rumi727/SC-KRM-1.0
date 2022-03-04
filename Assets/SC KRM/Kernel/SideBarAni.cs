@@ -82,17 +82,8 @@ namespace SCKRM.UI.SideBar
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (InputManager.TryGetKey(showControlKey, InputType.Down, "all"))
+                if (InputManager.GetKey(showControlKey, InputType.Down, "all"))
                     Toggle();
-
-
-                int right;
-                if (this.right)
-                    right = 1;
-                else
-                    right = -1;
-
-
 
                 if (isShow)
                 {
@@ -120,7 +111,16 @@ namespace SCKRM.UI.SideBar
                             scrollBar.gameObject.SetActive(false);
                         }
                     }
+
+                    return;
                 }
+
+
+                int right;
+                if (this.right)
+                    right = 1;
+                else
+                    right = -1;
 
 
 

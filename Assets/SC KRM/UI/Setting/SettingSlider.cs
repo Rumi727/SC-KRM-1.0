@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.Setting
@@ -16,15 +17,29 @@ namespace SCKRM.UI.Setting
     public class SettingSlider : SettingInputField
     {
         [SerializeField] Slider _slider; public Slider slider { get => _slider; set => _slider = value; }
+        [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
-        public void OnValueChanged() => SaveValueFloat(slider.value);
+        public void OnValueChanged()
+        {
+            SaveValueFloat(slider.value);
+            onValueChanged.Invoke();
+        }
 
-        public override void Update()
+        public override void SetDefault()
+        {
+            base.SetDefault();
+            onValueChanged.Invoke();
+        }
+
+        protected override void Update()
         {
             base.Update();
 
             if (Kernel.isInitialLoadEnd && variableType != VariableType.String)
+            {
                 slider.value = GetValueFloat();
+                isDefault = GetValue().ToString() == defaultValue.ToString();
+            }
         }
     }
 }

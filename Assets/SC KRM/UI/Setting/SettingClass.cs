@@ -3,6 +3,7 @@ using SCKRM.Input;
 using SCKRM.Json;
 using SCKRM.Log;
 using SCKRM.SaveLoad;
+using SCKRM.Tool;
 using SCKRM.UI.SideBar;
 using System;
 using System.Collections;
@@ -17,12 +18,19 @@ namespace SCKRM.UI.Setting
         [SerializeField] string _saveLoadAttributeName = ""; public string saveLoadAttributeName { get => _saveLoadAttributeName; set => _saveLoadAttributeName = value; }
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }
 
-        public VariableType variableType { get; protected set; } = VariableType.String;
+        [SerializeField] CanvasGroup _resetButton; public CanvasGroup resetButton { get => _resetButton; set => _resetButton = value; }
+        [SerializeField] RectTransform _nameText; public RectTransform nameText { get => _nameText; set => _nameText = value; }
 
-        public object defaultValue { get; protected set; } = null;
-        public Type type { get; protected set; } = null;
-        public PropertyInfo propertyInfo { get; protected set; } = null;
-        public FieldInfo fieldInfo { get; protected set; } = null;
+
+
+        public VariableType variableType { get; private set; } = VariableType.String;
+
+        public object defaultValue { get; private set; } = null;
+        public Type type { get; private set; } = null;
+        public PropertyInfo propertyInfo { get; private set; } = null;
+        public FieldInfo fieldInfo { get; private set; } = null;
+
+        public bool isDefault { get; protected set; } = true;
 
         public enum VariableType
         {
@@ -44,7 +52,7 @@ namespace SCKRM.UI.Setting
             JColor32
         }
 
-        public virtual async UniTask<bool> Awake()
+        protected virtual async UniTask<bool> Awake()
         {
             if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;
@@ -120,6 +128,28 @@ namespace SCKRM.UI.Setting
                 variableType = VariableType.JColor32;
 
             return false;
+        }
+
+        protected virtual void Update()
+        {
+            if (isDefault)
+            {
+                nameText.offsetMin = nameText.offsetMin.Lerp(new Vector2(0, nameText.offsetMin.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                resetButton.alpha = resetButton.alpha.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+            }
+            else
+            {
+                nameText.offsetMin = nameText.offsetMin.Lerp(new Vector2(22, nameText.offsetMin.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                resetButton.alpha = resetButton.alpha.Lerp(1, 0.2f * Kernel.fpsUnscaledDeltaTime);
+            }
+        }
+
+        public virtual void SetDefault()
+        {
+            if (propertyInfo != null)
+                propertyInfo.SetValue(type, defaultValue);
+            else if (fieldInfo != null)
+                fieldInfo.SetValue(type, defaultValue);
         }
 
         public virtual object GetValue()

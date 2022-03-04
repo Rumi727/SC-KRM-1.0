@@ -38,6 +38,10 @@ namespace SCKRM.Editor
 
             UseProperty("_inputField");
             UseProperty("_placeholder");
+
+            DrawLine();
+
+            UseProperty("_onEndEdit");
         }
     }
 }

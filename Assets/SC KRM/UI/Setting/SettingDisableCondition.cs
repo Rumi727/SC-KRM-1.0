@@ -18,7 +18,7 @@ namespace SCKRM.UI.Setting
 
         [SerializeField] bool _reversal = false; public bool reversal { get => _reversal; set => _reversal = value; }
 
-        public override async UniTask<bool> Awake()
+        protected override async UniTask<bool> Awake()
         {
             if (await base.Awake())
                 return true;
@@ -29,7 +29,7 @@ namespace SCKRM.UI.Setting
             return false;
         }
 
-        public virtual void Update()
+        protected override void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {
