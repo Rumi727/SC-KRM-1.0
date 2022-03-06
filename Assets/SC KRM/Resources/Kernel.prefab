@@ -448,9 +448,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3718307202130384905}
+      - m_Target: {fileID: 1832831369624079839}
         m_TargetAssemblyTypeName: SCKRM.UI.SideBar.SideBarAni, SC KRM
-        m_MethodName: 
+        m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4629,6 +4629,7 @@ GameObject:
   - component: {fileID: 1874001012991600882}
   - component: {fileID: 8869108224681951481}
   - component: {fileID: 6267927436714765281}
+  - component: {fileID: 1221732242466196120}
   m_Layer: 0
   m_Name: Splash Screen Background
   m_TagString: Untagged
@@ -4709,6 +4710,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1221732242466196120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8377794278613922588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341066b8345673d4dadd94af7598334e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphic: {fileID: 6267927436714765281}
 --- !u!1 &8459591421140791699
 GameObject:
   m_ObjectHideFlags: 0
@@ -6500,7 +6514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1670887460736577511, guid: 7097677605ab1144980e1b8e8e342ecb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12.000027
+      value: 12.000015
       objectReference: {fileID: 0}
     - target: {fileID: 2175903226505351713, guid: 7097677605ab1144980e1b8e8e342ecb, type: 3}
       propertyPath: _path
@@ -6600,7 +6614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3595548306818596076, guid: 7097677605ab1144980e1b8e8e342ecb, type: 3}
       propertyPath: m_Value
-      value: -0.0000025431316
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5664882286991922451, guid: 7097677605ab1144980e1b8e8e342ecb, type: 3}
       propertyPath: m_text

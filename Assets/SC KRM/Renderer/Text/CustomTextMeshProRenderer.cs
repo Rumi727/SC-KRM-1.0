@@ -1,3 +1,5 @@
+using K4.Threading;
+using SCKRM.Threads;
 using TMPro;
 using UnityEngine;
 
@@ -19,10 +21,13 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Rerender()
+        public override void Refresh()
         {
-            while (queue.TryDequeue(out object text))
-                textMeshPro.text = (string)text;
+            string text = GetText();
+            if (ThreadManager.isMainThread)
+                textMeshPro.text = text;
+            else
+                K4UnityThreadDispatcher.Execute(() => textMeshPro.text = text);
         }
     }
 }

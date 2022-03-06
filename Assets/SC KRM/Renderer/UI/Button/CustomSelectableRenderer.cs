@@ -1,3 +1,5 @@
+using K4.Threading;
+using SCKRM.Threads;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,26 +30,28 @@ namespace SCKRM.Renderer
         public SpriteStateData selectedSprite { get => _selectedSprite; set => _selectedSprite = value; }
         public SpriteStateData disabledSprite { get => _disabledSprite; set => _disabledSprite = value; }
 
-        public override void ResourceReload()
+        public override void Refresh()
         {
-            base.ResourceReload();
+            base.Refresh();
+
             SpriteState spriteState = new SpriteState();
             spriteState.highlightedSprite = SpriteReload(highlightedSprite.type, highlightedSprite.name, highlightedSprite.index, highlightedSprite.nameSpace);
             spriteState.pressedSprite = SpriteReload(pressedSprite.type, pressedSprite.name, pressedSprite.index, pressedSprite.nameSpace);
             spriteState.selectedSprite = SpriteReload(selectedSprite.type, selectedSprite.name, selectedSprite.index, selectedSprite.nameSpace);
             spriteState.disabledSprite = SpriteReload(disabledSprite.type, disabledSprite.name, disabledSprite.index, disabledSprite.nameSpace);
 
-            queue.Enqueue(spriteState);
-        }
-
-        public override void Rerender()
-        {
-            base.Rerender();
-
-            while (queue.TryDequeue(out var spriteState))
+            if (ThreadManager.isMainThread)
             {
                 if (selectable != null)
-                    selectable.spriteState = (SpriteState)spriteState;
+                    selectable.spriteState = spriteState;
+            }
+            else
+            {
+                K4UnityThreadDispatcher.Execute(() =>
+                {
+                    if (selectable != null)
+                        selectable.spriteState = spriteState;
+                });
             }
         }
 

@@ -97,22 +97,30 @@ namespace SCKRM.UI.SideBar
                 {
                     if (this.right)
                     {
-                        if (viewPort.gameObject.activeSelf && rectTransform.anchoredPosition.x >= rectTransform.sizeDelta.x - 0.01f)
+                        if (rectTransform.anchoredPosition.x >= rectTransform.sizeDelta.x - 0.01f)
                         {
-                            viewPort.gameObject.SetActive(false);
-                            scrollBar.gameObject.SetActive(false);
+                            if (viewPort.gameObject.activeSelf)
+                            {
+                                viewPort.gameObject.SetActive(false);
+                                scrollBar.gameObject.SetActive(false);
+                            }
+
+                            return;
                         }
                     }
                     else
                     {
-                        if (viewPort.gameObject.activeSelf && rectTransform.anchoredPosition.x <= (-rectTransform.sizeDelta.x) + 0.01f)
+                        if (rectTransform.anchoredPosition.x <= (-rectTransform.sizeDelta.x) + 0.01f)
                         {
-                            viewPort.gameObject.SetActive(false);
-                            scrollBar.gameObject.SetActive(false);
+                            if (viewPort.gameObject.activeSelf)
+                            {
+                                viewPort.gameObject.SetActive(false);
+                                scrollBar.gameObject.SetActive(false);
+                            }
+
+                            return;
                         }
                     }
-
-                    return;
                 }
 
 

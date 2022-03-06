@@ -37,8 +37,8 @@ namespace SCKRM.Renderer
                 for (int i = 0; i < customRenderers.Length; i++)
                 {
                     CustomAllRenderer customRenderer = customRenderers[i];
-                    customRenderer.ResourceReload();
-                    customRenderer.Rerender();
+                    customRenderer.Refresh();
+                    //customRenderer.Rerender();
                 }
             }
         }
@@ -51,8 +51,8 @@ namespace SCKRM.Renderer
             for (int i = 0; i < customRenderers.Length; i++)
             {
                 CustomAllRenderer customRenderer = customRenderers[i];
-                customRenderer.Clear();
-                customRenderer.ResourceReload();
+                //customRenderer.Clear();
+                customRenderer.Refresh();
 
                 threadMetaData.progress = (float)i / (customRenderers.Length - 1);
             }

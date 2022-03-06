@@ -109,10 +109,7 @@ namespace SCKRM.Editor
                         AssetDatabase.Refresh();
 
                         if (editor.enabled)
-                        {
-                            editor.ResourceReload();
-                            editor.Rerender();
-                        }
+                            editor.Refresh();
                     }
                 }
                 else if (GUI.changed || GUILayout.Button("새로고침"))
@@ -124,10 +121,7 @@ namespace SCKRM.Editor
                     AssetDatabase.Refresh();
 
                     if (editor.enabled)
-                    {
-                        editor.ResourceReload();
-                        editor.Rerender();
-                    }
+                        editor.Refresh();
                 }
             }
             else if (GUI.changed)
@@ -135,10 +129,7 @@ namespace SCKRM.Editor
                 EditorUtility.SetDirty(target);
 
                 if (editor.enabled)
-                {
-                    editor.ResourceReload();
-                    editor.Rerender();
-                }
+                    editor.Refresh();
             }
 
             DrawLine();

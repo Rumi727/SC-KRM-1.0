@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Tool;
-using SCKRM.Input;
-using SCKRM.Language;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
 using SCKRM.Resource;
@@ -11,19 +9,16 @@ using SCKRM.Sound;
 using SCKRM.Splash;
 using SCKRM.Threads;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using SCKRM.Window;
-using System.Threading.Tasks;
 using SCKRM.UI.SideBar;
 using SCKRM.UI.StatusBar;
 using SCKRM.Json;
+using K4.Threading;
+using System.Collections;
+using SCKRM.Input;
+using SCKRM.Window;
 
 namespace SCKRM
 {
@@ -251,24 +246,6 @@ namespace SCKRM
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
 
-            //AFK
-            //초기 로딩이 끝났고 아무 키를 눌렀을때 AFK 타이머를 0으로 설정합니다
-            if (isInitialLoadEnd && InputManager.GetAnyKeyDown("all"))
-                afkTimer = 0;
-
-            //AFK 타이머가 프로젝트에서 설정한 타이머를 넘었다면 AFK 모드를 활성화합니다
-            if (afkTimer >= Data.afkTimerLimit)
-                isAFK = true;
-            else //아니라면 타이머를 계속 증가시키고 AFK 모드를 비활성화 합니다
-            {
-                isAFK = false;
-                afkTimer += unscaledDeltaTime;
-            }
-
-            //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
-            gameSpeed = gameSpeed.Clamp(0, 100);
-            Time.timeScale = gameSpeed;
-
             //기념일
             //초기로딩이 끝나야 알림을 띄울수 있으니 조건을 걸어둡니다
             //최적화를 위해 년, 월, 일이 변경되어야 실행됩니다
@@ -278,9 +255,14 @@ namespace SCKRM
                 //음력 날짜를 정합니다
                 DateTime dateTimeLunar = dateTime.ToLunarDate();
 
-                //8월 7일이라면...
-                if (dateTime.Month == 8 && dateTime.Day == 7)
-                    NoticeManager.Notice("notice.kurumi_chan.birthday.title", "notice.kurumi_chan.birthday.description");
+                if (dateTime.Month == 8 && dateTime.Day == 7) //8월 7일이라면...
+                    NoticeManager.Notice("notice.ebisuzawa_kurumi_chan.birthday.title", "notice.ebisuzawa_kurumi_chan.birthday.description");
+                else if (dateTime.Month == 4 && dateTime.Day == 5) //4월 5일이라면...
+                    NoticeManager.Notice("notice.takeya_yuki.birthday.title", "notice.takeya_yuki.birthday.description");
+                else if (dateTime.Month == 10 && dateTime.Day == 11) //10월 11일이라면...
+                    NoticeManager.Notice("notice.wakasa_yuri.birthday.title", "notice.wakasa_yuri.birthday.description");
+                else if (dateTime.Month == 12 && dateTime.Day == 10) //12월 10일이라면...
+                    NoticeManager.Notice("notice.naoki_miki.birthday.title", "notice.naoki_miki.birthday.description");
                 else if (dateTime.Month == 2 && dateTime.Day == 9) //2월 9일이라면...
                     NoticeManager.Notice("notice.onell0.birthday.title", "notice.onell0.birthday.description", "%value%", (dateTime.Year - 2010).ToString());
                 else if (dateTimeLunar.Month == 1 && dateTimeLunar.Day == 1) //음력으로 1월 1일이라면...
@@ -303,12 +285,16 @@ namespace SCKRM
             SaveData.bgmVolume = SaveData.bgmVolume.Clamp(0, 200);
             SaveData.soundVolume = SaveData.soundVolume.Clamp(0, 200);
 
-            SaveData.fpsLimit = SaveData.fpsLimit.Clamp(30);
+            SaveData.fpsLimit = SaveData.fpsLimit.Clamp(1);
             SaveData.fixedGuiSize = SaveData.fixedGuiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
             SaveData.guiSize = SaveData.guiSize.Clamp(0.5f, 4);
-            Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(1);
-            Data.afkFpsLimit = Data.afkFpsLimit.Clamp(1);
+            Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(0);
+            Data.afkFpsLimit = Data.afkFpsLimit.Clamp(0);
             Data.afkTimerLimit = Data.afkTimerLimit.Clamp(0);
+
+            //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
+            gameSpeed = gameSpeed.Clamp(0, 100);
+            Time.timeScale = gameSpeed;
 
             //GUI 크기 설정
             //고정 GUI 크기가 꺼져있다면 화면 크기에 따라 유동적으로 GUI 크기가 변경됩니다
@@ -318,13 +304,11 @@ namespace SCKRM
                 guiSize = SaveData.fixedGuiSize;
 
             //FPS Limit
-            //AFK 상태가 아니고 앱이 포커스 상태이거나 에디터 상태라면 사용자가 지정한 프레임으로 고정시킵니다
-            if (!isAFK && (Application.isFocused || Application.isEditor))
+            //앱이 포커스 상태이거나 에디터 상태라면 사용자가 지정한 프레임으로 고정시킵니다
+            if (Application.isFocused || Application.isEditor)
                 Application.targetFrameRate = SaveData.fpsLimit;
-            else if (!isAFK && !Application.isFocused) //AFK 상태가 아니고 앱이 포커스 상태가 아니라면 프로젝트에서 설정한 포커스가 아닌 프레임으로 고정시킵니다
+            else //앱이 포커스 상태가 아니라면 프로젝트에서 설정한 포커스가 아닌 프레임으로 고정시킵니다
                 Application.targetFrameRate = Data.notFocusFpsLimit;
-            else //AFK 상태라면 프로젝트에서 설정한 AFK 프레임으로 고정시킵니다
-                Application.targetFrameRate = Data.afkFpsLimit;
 
             //수직동기화
             if (!SaveData.vSync)
@@ -340,7 +324,8 @@ namespace SCKRM
         public static event Action InitialLoadStart = delegate { };
         public static event Action InitialLoadEnd = delegate { };
         public static event Action InitialLoadEndSceneMove = delegate { };
-        async UniTaskVoid InitialLoad()
+
+        static async UniTaskVoid InitialLoad()
         {
             //이미 초기로딩이 시작되었으면 더 이상 초기로딩을 진행하면 안되기 때문에 조건문을 걸어줍니다
             if (!isInitialLoadStart)
@@ -355,19 +340,19 @@ namespace SCKRM
                     if (!Application.isPlaying)
                         throw new NotPlayModeMethodException(nameof(InitialLoad));
 #endif
+
                     //초기로딩이 시작됬습니다
                     isInitialLoadStart = true;
                     InitialLoadStart();
 
                     StatusBarManager.allowStatusBarShow = false;
 
-                    //스플래시 배경화면을 킵니다, 나중에 페이드 아웃을 하기위해 있습니다
-                    splashScreenBackground.gameObject.SetActive(true);
-                    splashScreenBackground.color = new Color(splashScreenBackground.color.r, splashScreenBackground.color.g, splashScreenBackground.color.b, 1);
-
                     //ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
                     //스레드를 자동 삭제해주는 함수를 작동시킵니다
                     ThreadManager.ThreadAutoRemove().Forget();
+
+                    //메인 스레드 디스페쳐를 생성합니다
+                    K4UnityThreadDispatcher.CreateDispatcher();
 
 #if UNITY_EDITOR
                     //에디터에선 스플래시 씬에서 시작하지 않기 때문에
@@ -399,15 +384,15 @@ namespace SCKRM
                     Debug.Log("Kernel: Waiting for settings to load...");
                     {
                         //프로젝트 설정을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(ProjectSettingManager.Load, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(ProjectSettingManager.Load, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
                             return;
 
                         //세이브 데이터의 기본값과 변수들을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.VariableInfoLoad, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.VariableInfoLoad, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
                             return;
 
                         //세이브 데이터를 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.Load, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.Load, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
                             return;
 
                     }
@@ -440,7 +425,7 @@ namespace SCKRM
                     {
                         //씬 애니메이션이 끝날때까지 기다립니다
                         Debug.Log("Kernel: Waiting for scene animation...");
-                        if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+                        if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
                             return;
                     }
 
@@ -464,24 +449,6 @@ namespace SCKRM
 
                     //씬을 이동했으면 이벤트를 호출합니다
                     InitialLoadEndSceneMove();
-
-                    //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
-                    if (await UniTask.DelayFrame(3, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
-                        return;
-
-                    if (splashScreenBackground != null)
-                    {
-                        while (splashScreenBackground.color.a > 0)
-                        {
-                            Color color = splashScreenBackground.color;
-                            splashScreenBackground.color = new Color(color.r, color.g, color.b, color.a.MoveTowards(0, 0.05f * fpsUnscaledDeltaTime));
-
-                            if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
-                                return;
-                        }
-
-                        splashScreenBackground.gameObject.SetActive(false);
-                    }
                 }
                 catch (Exception e)
                 {

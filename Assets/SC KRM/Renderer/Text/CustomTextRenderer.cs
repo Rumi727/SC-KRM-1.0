@@ -1,3 +1,5 @@
+using K4.Threading;
+using SCKRM.Threads;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,10 +21,13 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Rerender()
+        public override void Refresh()
         {
-            while (queue.TryDequeue(out object text))
-                this.text.text = (string)text;
+            string text = GetText();
+            if (ThreadManager.isMainThread)
+                this.text.text = text;
+            else
+                K4UnityThreadDispatcher.Execute(() => this.text.text = text);
         }
     }
 }

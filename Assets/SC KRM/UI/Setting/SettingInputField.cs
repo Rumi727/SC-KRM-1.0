@@ -43,7 +43,7 @@ namespace SCKRM.UI.Setting
                 placeholder.nameSpace = textPlaceHolderNameSpace;
                 placeholder.path = textPlaceHolderPath;
 
-                placeholder.ResourceReload();
+                placeholder.Refresh();
             }
             else if (variableType != VariableType.Float && variableType != VariableType.Double && variableType != VariableType.Decimal)
             {
@@ -52,7 +52,7 @@ namespace SCKRM.UI.Setting
                 placeholder.nameSpace = numberPlaceHolderNameSpace;
                 placeholder.path = numberPlaceHolderPath;
 
-                placeholder.ResourceReload();
+                placeholder.Refresh();
             }
             else
             {
@@ -61,7 +61,7 @@ namespace SCKRM.UI.Setting
                 placeholder.nameSpace = numberPlaceHolderNameSpace;
                 placeholder.path = numberPlaceHolderPath;
 
-                placeholder.ResourceReload();
+                placeholder.Refresh();
             }
 
             return false;

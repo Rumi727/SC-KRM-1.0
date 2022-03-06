@@ -93,8 +93,14 @@
 	
 	
 	
-	"notice.kurumi_chan.birthday.title": "쿠루미쨩 생일 축하해",
-	"notice.kurumi_chan.birthday.description": "오늘은 '에비스자와 쿠루미'의 생일입니다",
+	"notice.ebisuzawa_kurumi_chan.birthday.title": "쿠루미쨩 생일 축하해",
+	"notice.ebisuzawa_kurumi_chan.birthday.description": "오늘은 '에비스자와 쿠루미'의 생일입니다",
+	"notice.takeya_yuki.birthday.title": "유키 생일 축하해",
+	"notice.takeya_yuki.birthday.description": "오늘은 '타케야 유키'의 생일입니다",
+	"notice.wakasa_yuri.birthday.title": "유리 생일 축하해",
+	"notice.wakasa_yuri.birthday.description": "오늘은 '와카사 유리'의 생일입니다",
+	"notice.naoki_miki.birthday.title": "미키 생일 축하해",
+	"notice.naoki_miki.birthday.description": "오늘은 '나오키 미키'의 생일입니다",
 	
 	"notice.onell0.birthday.title": "스매프 %value%주년",
 	"notice.onell0.birthday.description": "스매프 %value%주년을 진심으로 축하합니다!",

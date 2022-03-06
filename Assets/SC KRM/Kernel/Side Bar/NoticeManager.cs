@@ -78,10 +78,8 @@ namespace SCKRM.UI.SideBar
             notice.nameText.replaceNew = replaceNew;
             notice.infoText.replaceNew = replaceNew;
 
-            notice.nameText.ResourceReload();
-            notice.infoText.ResourceReload();
-            notice.nameText.Rerender();
-            notice.infoText.Rerender();
+            notice.nameText.Refresh();
+            notice.infoText.Refresh();
 
             noticeList.Add(notice);
 
@@ -92,8 +90,7 @@ namespace SCKRM.UI.SideBar
                 notice.icon.nameSpace = "sc-krm";
                 notice.icon.type = "gui";
                 notice.icon.path = "notice_icon_" + type;
-                notice.icon.ResourceReload();
-                notice.icon.Rerender();
+                notice.icon.Refresh();
 
                 notice.setSizeAsChildRectTransform.min = 70;
                 notice.verticalLayout.padding.left = 70;

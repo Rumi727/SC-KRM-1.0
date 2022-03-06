@@ -28,10 +28,7 @@ namespace SCKRM.Editor
                 EditorUtility.SetDirty(target);
 
                 if (editor.enabled)
-                {
-                    editor.ResourceReload();
-                    editor.Rerender();
-                }
+                    editor.Refresh();
             }
 
             GUI.enabled = true;

@@ -1,3 +1,5 @@
+using K4.Threading;
+using SCKRM.Threads;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,10 +21,14 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Rerender()
+        public override void Refresh()
         {
-            if (queue.Count > 0 && queue.TryDequeue(out object sprite))
-                image.sprite = (Sprite)sprite;
+            Sprite sprite = SpriteReload(type, path, index, nameSpace);
+
+            if (ThreadManager.isMainThread)
+                image.sprite = sprite;
+            else
+                K4UnityThreadDispatcher.Execute(() => image.sprite = sprite);
         }
     }
 }

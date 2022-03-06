@@ -16,10 +16,8 @@ namespace SCKRM.Renderer
 
 
 
-        public override void ResourceReload()
+        public string GetText()
         {
-            base.ResourceReload();
-
 #if UNITY_EDITOR
             string text;
             if (!ThreadManager.isMainThread || Application.isPlaying)
@@ -50,9 +48,9 @@ namespace SCKRM.Renderer
             }
 
             if (text != "")
-                queue.Enqueue(text);
+                return text;
             else
-                queue.Enqueue(path);
+                return path;
         }
     }
 }

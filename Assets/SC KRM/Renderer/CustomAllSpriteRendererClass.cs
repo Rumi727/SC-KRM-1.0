@@ -24,11 +24,11 @@ namespace SCKRM.Renderer
 #endif
         }*/
 
-        public override void ResourceReload()
+        /*public override void ResourceReload()
         {
             base.ResourceReload();
-            queue.Enqueue(SpriteReload(type, path, index, nameSpace));
-        }
+            queue.Enqueue();
+        }*/
 
         public Sprite SpriteReload(string type, string name, int index, string nameSpace = "")
         {
@@ -41,7 +41,7 @@ namespace SCKRM.Renderer
 #else
             if (!ThreadManager.isMainThread || Application.isPlaying)
             {
-                Sprite[] sprites = ResourceManager.SearchSprites(type, path, nameSpace);
+                Sprite[] sprites = ResourceManager.SearchSprites(type, name, nameSpace);
                 if (sprites != null && index < sprites.Length)
                     return sprites[index];
 
@@ -49,7 +49,7 @@ namespace SCKRM.Renderer
             }
             else
             {
-                Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, path, nameSpace, TextureFormat.DXT5);
+                Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
                 if (sprites != null && index < sprites.Length)
                     return sprites[index];
                 else
