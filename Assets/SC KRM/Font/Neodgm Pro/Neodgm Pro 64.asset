@@ -47,7 +47,7 @@ MonoBehaviour:
   - {fileID: 1311822543668518434}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 1
-  m_ClearDynamicDataOnBuild: 1
+  m_ClearDynamicDataOnBuild: 0
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
@@ -88,7 +88,9 @@ MonoBehaviour:
     m_GlyphPairAdjustmentRecords: []
   fallbackFontAssets: []
   m_FallbackFontAssetTable:
-  - {fileID: 11400000, guid: 37438fdd41969c44abcfae5b2ee984d0, type: 2}
+  - {fileID: 11400000, guid: ff9ffe352221f6c4fb6861c768c50a67, type: 2}
+  - {fileID: 11400000, guid: 267c846f3759d88499f939d84d79f2bd, type: 2}
+  - {fileID: 11400000, guid: d6ed0d95ad1294446ae65cbdbb74ebe3, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: db9df46fb2c239f419f58486d08ccede

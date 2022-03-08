@@ -47,13 +47,13 @@ MonoBehaviour:
   - {fileID: 8854539904241884774}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 1
-  m_ClearDynamicDataOnBuild: 1
+  m_ClearDynamicDataOnBuild: 0
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
     m_Width: 8191
-    m_Height: 8191
+    m_Height: 4095
   m_fontInfo:
     Name: 
     PointSize: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     AtlasHeight: 0
   atlas: {fileID: 0}
   m_AtlasWidth: 8192
-  m_AtlasHeight: 8192
+  m_AtlasHeight: 4096
   m_AtlasPadding: 9
   m_AtlasRenderMode: 4165
   m_glyphInfoList: []
@@ -88,7 +88,9 @@ MonoBehaviour:
     m_GlyphPairAdjustmentRecords: []
   fallbackFontAssets: []
   m_FallbackFontAssetTable:
-  - {fileID: 11400000, guid: 61638952a4bea5c4a9e873b06ad17323, type: 2}
+  - {fileID: 11400000, guid: cca273a025374014894e2321c38439e0, type: 2}
+  - {fileID: 11400000, guid: ff8db4ce9d021bd4f9480b66f98af115, type: 2}
+  - {fileID: 11400000, guid: 1c69b8a5c32498140b455c2307cf839d, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 50bd209b3c811004d9bf40a3da5d8968
@@ -97,7 +99,7 @@ MonoBehaviour:
     padding: 9
     packingMode: 0
     atlasWidth: 8192
-    atlasHeight: 8192
+    atlasHeight: 4096
     characterSetSelectionMode: 7
     characterSequence: 
     referencedFontAssetGUID: 
@@ -216,7 +218,7 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _TextureHeight: 8192
+    - _TextureHeight: 4096
     - _TextureWidth: 8192
     - _UnderlayDilate: 0
     - _UnderlayOffsetX: 0
