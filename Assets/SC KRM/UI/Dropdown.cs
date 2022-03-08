@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using SCKRM.Input;
+using SCKRM.Object;
 using SCKRM.Renderer;
 using SCKRM.Tool;
 using SCKRM.UI.Layout;
@@ -106,15 +108,8 @@ namespace SCKRM.UI
 
                     if (listRectTransform.gameObject.activeSelf && listRectTransform.sizeDelta.y < listRectTransform.anchoredPosition.y + 0.01f)
                     {
-                        for (int i = 1; i < content.childCount; i++)
-                        {
-                            GameObject gameObject = content.GetChild(i).gameObject;
-                            if (content.gameObject != gameObject)
-                            {
-                                gameObject.SetActive(false);
-                                Destroy(gameObject);
-                            }
-                        }
+                        for (int i = 0; i < dropdownItems.Count; i++)
+                            dropdownItems[i].Remove();
 
                         listRectTransform.gameObject.SetActive(false);
                     }
@@ -143,28 +138,30 @@ namespace SCKRM.UI
             UIManager.BackEventAdd(Hide, true);
             UIManager.homeEvent += Hide;
 
-            _isShow = true;
             listSetSizeAsTargetRectTransform.enabled = true;
 
-            for (int i = 1; i < content.childCount; i++)
-            {
-                GameObject gameObject = content.GetChild(i).gameObject;
-                if (content.gameObject != gameObject)
-                {
-                    gameObject.SetActive(false);
-                    Destroy(gameObject);
-                }
-            }
-
             invokeLock = true;
+
+            for (int i = 0; i < dropdownItems.Count; i++)
+                dropdownItems[i].Remove();
+
             dropdownItems.Clear();
+
+            string templateName = "dropdown_" + GetInstanceID() + "_template";
             for (int i = 0; i < options.Length; i++)
             {
                 string option = options[i];
 
-                DropdownItem dropdownItem = Instantiate(template, content);
+                DropdownItem dropdownItem;
+                if (ObjectPoolingSystem.ObjectContains(templateName))
+                    dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate("dropdown_" + GetInstanceID() + "_template", content);
+                else
+                {
+                    ObjectPoolingSystem.ObjectAdd(templateName, template);
+                    dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate("dropdown_" + GetInstanceID() + "_template", content);
+                }
+                
                 dropdownItem.gameObject.SetActive(true);
-
                 dropdownItem.gameObject.name = option;
 
                 if (i < customLabel.Length)
@@ -177,11 +174,15 @@ namespace SCKRM.UI
                 else
                     dropdownItem.toggle.isOn = false;
 
+                dropdownItem.toggle.interactable = true;
+
                 RendererManager.Rerender(dropdownItem.renderers, false).Forget();
 
                 dropdownItems.Add(dropdownItem);
             }
             invokeLock = false;
+
+            _isShow = true;
         }
 
         public void Hide()

@@ -39,12 +39,12 @@ namespace HSVPicker
 
 
 
-        protected override void SizeUpdate(bool onEnable = false)
+        protected override void SizeUpdate()
         {
 #if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying || onEnable)
+            if (!lerp || !Application.isPlaying)
 #else
-            if (!lerp || onEnable)
+            if (!lerp)
 #endif
                 graphic.color = color;
             else

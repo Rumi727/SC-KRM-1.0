@@ -13,7 +13,7 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void SizeUpdate(bool onEnable = false)
+        protected override void SizeUpdate()
         {
             if (childRectTransforms == null)
                 return;
@@ -70,9 +70,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(1, 0);
                     childRectTransform.pivot = new Vector2(0.5f, 0);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || onEnable)
+                    if (!Application.isPlaying || !lerp)
 #else
-                    if (!lerp || onEnable)
+                    if (!lerp)
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom);
                     else
@@ -86,9 +86,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(1, 0.5f);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || onEnable)
+                    if (!Application.isPlaying || !lerp)
 #else
-                    if (!lerp || onEnable)
+                    if (!lerp)
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y);
                     else
@@ -103,9 +103,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.pivot = new Vector2(0.5f, 1);
                     
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || onEnable)
+                    if (!Application.isPlaying || !lerp)
 #else
-                    if (!lerp || onEnable)
+                    if (!lerp)
 #endif
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y - padding.top);
                     else

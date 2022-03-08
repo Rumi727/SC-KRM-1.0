@@ -13,7 +13,7 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
-        protected override void SizeUpdate(bool onEnable = false)
+        protected override void SizeUpdate()
         {
             if (childRectTransforms == null)
                 return;
@@ -70,9 +70,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(1, 1);
                     childRectTransform.pivot = new Vector2(1, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || onEnable)
+                    if (!Application.isPlaying || !lerp)
 #else
-                    if (!lerp || onEnable)
+                    if (!lerp)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -86,9 +86,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(0.5f, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || onEnable)
+                    if (!Application.isPlaying || !lerp)
 #else
-                    if (!lerp || onEnable)
+                    if (!lerp)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -102,9 +102,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(0, 1);
                     childRectTransform.pivot = new Vector2(0, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || onEnable)
+                    if (!Application.isPlaying || !lerp)
 #else
-                    if (!lerp || onEnable)
+                    if (!lerp)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f);
                     else

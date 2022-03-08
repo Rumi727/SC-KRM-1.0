@@ -144,12 +144,10 @@ namespace SCKRM.UI
                 SizeUpdate();
         }*/
 
-        protected override void OnEnable() => SizeUpdate(true);
-
         protected virtual void Update()
         {
             LayoutRefresh();
-            SizeUpdate(false);
+            SizeUpdate();
         }
 
         protected virtual void LayoutRefresh()
@@ -157,7 +155,7 @@ namespace SCKRM.UI
 
         }
 
-        protected abstract void SizeUpdate(bool onEnable = false);
+        protected abstract void SizeUpdate();
     }
 
     public class ObjectPoolingUI : ObjectPooling

@@ -39,7 +39,7 @@ namespace SCKRM.UI
         Vector2 tempMousePos;
 
 
-        protected override void SizeUpdate(bool onEnable = false)
+        protected override void SizeUpdate()
         {
 #if UNITY_EDITOR
             if (Application.isPlaying)
@@ -53,7 +53,7 @@ namespace SCKRM.UI
                 
                 if (!isShow)
                 {
-                    if (lerp || onEnable)
+                    if (lerp)
                         colorPickerMask.sizeDelta = colorPickerMask.sizeDelta.Lerp(new Vector2(colorPickerMask.sizeDelta.x, colorPickerMask.anchoredPosition.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                     else
                         colorPickerMask.sizeDelta = new Vector2(colorPickerMask.sizeDelta.x, 0);
@@ -68,7 +68,7 @@ namespace SCKRM.UI
 
                 if (isShow)
                 {
-                    if (lerp || onEnable)
+                    if (lerp)
                         colorPickerMask.sizeDelta = colorPickerMask.sizeDelta.Lerp(new Vector2(colorPickerMask.sizeDelta.x, colorPickerRectTransform.sizeDelta.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                     else
                         colorPickerMask.sizeDelta = new Vector2(colorPickerMask.sizeDelta.x, colorPickerRectTransform.sizeDelta.y);

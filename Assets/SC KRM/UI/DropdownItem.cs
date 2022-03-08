@@ -8,11 +8,8 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [AddComponentMenu("커널/UI/드롭다운 아이템")]
-    public class DropdownItem : UI
+    public class DropdownItem : ObjectPoolingUI
     {
-        [SerializeField] CustomAllRenderer[] _renderers;
-        public CustomAllRenderer[] renderers { get => _renderers; }
-
         [SerializeField] TMP_Text _label;
         public TMP_Text label { get => _label; }
 
