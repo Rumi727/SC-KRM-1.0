@@ -1,0 +1,120 @@
+{
+	"language.name": "日本語",
+	"language.region": "日本",
+	
+	
+	
+	"gui.done": "完了",
+	"gui.cancel": "キャンセル",
+	"gui.back": "戻る",
+	"gui.home": "ホームへ",
+	"gui.up": "上へ",
+	"gui.down": "下へ",
+	"gui.yes": "はい",
+	"gui.no": "いいえ",
+    "gui.none": "なし",
+	"gui.all": "みんな",
+	"gui.select": "選択",
+	"gui.selectall": "すべて選択",
+    "gui.ok": "確認",
+	"gui.am": "午前",
+	"gui.pm": "午後",
+	"gui.warning": "警告",
+	"gui.error": "エラー",
+	
+	"gui.inputfield.enternumber": "数値を入力...",
+	"gui.inputfield.entertext": "テキスト入力...",
+	
+	
+	
+	"kernel.allrefresh.warning": "効果音や音楽が再生されている状態でリソースパックを更新すると、プログラムが強制終了されるバグがあります！\n本当に続けますか？",
+	"kernel.allrefresh.error": "効果音または音楽が再生されている間、リソースパックを更新できません！",
+	
+	
+	
+	"options.theme.title": "テーマ",
+	"options.theme.systemColor": "システムカラー",
+	
+	"options.language.title": "言語",
+	"options.language.language": "言語",
+	
+	"options.sound.title": "音",
+	"options.sound.mainVolume": "メイン",
+	"options.sound.bgmVolume": "音楽",
+	"options.sound.soundVolume": "効果音",
+	"options.sound.noteBlockVolume": "ノートブロック",
+	
+	"options.video.title": "画面",
+	"options.video.vSync": "垂直同期",
+	"options.video.fpsLimit": "FPS制限",
+	"options.video.guiSize": "GUIサイズ",
+	"options.video.fixedGuiSizeEnable": "固定GUIサイズの使用",
+	
+	"options.statusbar.title": "ステータスバー",
+	"options.statusbar.bottomMode": "下部に表示",
+	
+	"options.statusbar.time.title": "時間",
+	"options.statusbar.time.twentyFourHourSystem": "24時間制",
+	"options.statusbar.time.toggleSeconds": "秒単位まで表示",
+	
+	"options.controls.title": "操作",
+	"options.controls.controls": "操作設定",
+	
+	
+	
+	"pack.available.title": "사용 가능\n━━━━━━━━━",
+	"pack.selected.title": "선택됨\n━━━━━━",
+	"pack.openFolder": "팩 폴더 열기",
+	
+	"controls.reset": "초기화",
+	"controls.resetAll": "키 설정 초기화",
+	
+	"volume_control.volume_down": "볼륨 줄이기",
+	"volume_control.volume_up": "볼륨 키우기",
+	"kernel.full_screen": "전체 화면",
+	
+	"notice.notice": "お知らせ",
+	"notice.notice.clear_all": "すべてクリア",
+	"notice.running_task": "実行中のジョブ",
+	"notice.running_task.cancel_all": "すべてキャンセル",
+	
+	
+	
+	"notice.running_task.thread_auto_remove.name": "스레드 자동 제거",
+	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
+	
+	"notice.running_task.resource_pack_refresh.name": "リソースパックの更新",
+	
+	"notice.running_task.rerender.name": "レンダラーの更新",
+	
+	"notice.running_task.audio_refresh.name": "オーディオリロード",
+	
+	"notice.running_task.language_refresh.name": "言語の更新",
+	
+	
+	
+	"notice.ebisuzawa_kurumi_chan.birthday.title": "くるみお誕生日おめでとう",
+	"notice.ebisuzawa_kurumi_chan.birthday.description": "今日は「えびすざわ くるみ」の誕生日です",
+	"notice.takeya_yuki.birthday.title": "ゆきお誕生日おめでとう",
+	"notice.takeya_yuki.birthday.description": "今日は「たけや ゆき」の誕生日です",
+	"notice.wakasa_yuri.birthday.title": "ゆうりお誕生日おめでとう",
+	"notice.wakasa_yuri.birthday.description": "今日は「わかさ ゆうり」の誕生日です",
+	"notice.naoki_miki.birthday.title": "みきお誕生日おめでとう",
+	"notice.naoki_miki.birthday.description": "今日は「なおき みき」の誕生日です",
+	
+	"notice.onell0.birthday.title": "SMP％value％周年",
+	"notice.onell0.birthday.description": "SMP％value％周年おめでとうございます！",
+	
+	"notice.korean_new_year.title": "明けましておめでとう",
+	"notice.korean_new_year.description": "今日は韓国のお正月です",
+	
+	
+	
+	"log": "콘솔",
+	"log.search": "검색...",
+	"log.command": "(커맨드 리스트를 보려면 'help'를 입력하세요)",
+	
+	
+	
+	"subtitles.easter_egg_music_play": "イースターエッグ音楽が再生されました"
+}
