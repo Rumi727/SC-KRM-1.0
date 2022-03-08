@@ -1,0 +1,197 @@
+{
+  "op": {
+    "category": 1,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "op",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "anata_to_story": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "anata_to_story",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "colorful_miracle_ballooooon": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "colorful_miracle_ballooooon",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "grateful friends": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "grateful friends",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "grateful friends_i": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "grateful friends_i",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "hero": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "hero",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "my_dream": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "my_dream",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "otome_no_seibun": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "otome_no_seibun",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "pink_no_heart_ball": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "pink_no_heart_ball",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "run_run": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "run_run",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "sora_ni_watashi_no_sunshine": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "sora_ni_watashi_no_sunshine",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "sotsugyou_album": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "sotsugyou_album",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "sweet_violet": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "sweet_violet",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "unhappy_end_world": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": false,
+    "sounds": [
+      {
+        "path": "unhappy_end_world",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "yummy_yappy_recipe": {
+    "category": 0,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": false,
+    "sounds": [
+      {
+        "path": "yummy_yappy_recipe",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  }
+}

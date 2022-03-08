@@ -74,9 +74,9 @@ crashlytics-build.properties
 
 # Custom Ignore
 .vsconfig
-[Aa]ssets/StreamingAssets/assets/school-live/sounds*
+[Aa]ssets/StreamingAssets/assets/school-live/sounds/*
 [Aa]ssets/StreamingAssets/assets/school-live/sounds.meta
-[Aa]ssets/StreamingAssets/assets/sc-krm/sounds*
+[Aa]ssets/StreamingAssets/assets/sc-krm/sounds/*
 [Aa]ssets/StreamingAssets/assets/sc-krm/sounds.meta
-[Aa]ssets/StreamingAssets/assets/sc-krm/nbs*
+[Aa]ssets/StreamingAssets/assets/sc-krm/nbs/*
 [Aa]ssets/StreamingAssets/assets/sc-krm/nbs.meta
