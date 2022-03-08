@@ -33,9 +33,6 @@ namespace SCKRM
 
 
             [JsonProperty] public static int notFocusFpsLimit { get; set; } = 30;
-            [JsonProperty] public static int afkFpsLimit { get; set; } = 30;
-
-            [JsonProperty] public static float afkTimerLimit { get; set; } = 60;
 
 
 
@@ -289,8 +286,6 @@ namespace SCKRM
             SaveData.fixedGuiSize = SaveData.fixedGuiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
             SaveData.guiSize = SaveData.guiSize.Clamp(0.5f, 4);
             Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(0);
-            Data.afkFpsLimit = Data.afkFpsLimit.Clamp(0);
-            Data.afkTimerLimit = Data.afkTimerLimit.Clamp(0);
 
             //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
             gameSpeed = gameSpeed.Clamp(0, 100);

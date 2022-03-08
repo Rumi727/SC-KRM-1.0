@@ -625,14 +625,9 @@ namespace SCKRM.Editor
                 EditorGUILayout.Space();
 
                 Kernel.Data.notFocusFpsLimit = EditorGUILayout.IntField("포커스가 아닐때 FPS 제한", Kernel.Data.notFocusFpsLimit);
-                Kernel.Data.afkFpsLimit = EditorGUILayout.IntField("잠수 상태일때 FPS 제한", Kernel.Data.afkFpsLimit);
-
-                Kernel.Data.afkTimerLimit = EditorGUILayout.FloatField("잠수 상태로 바뀌는 시간", Kernel.Data.afkTimerLimit);
 
                 Kernel.Data.standardFPS = Kernel.Data.standardFPS.Clamp(0.00000001f);
-                Kernel.Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(-1);
-                Kernel.Data.afkFpsLimit = Kernel.Data.afkFpsLimit.Clamp(-1);
-                Kernel.Data.afkTimerLimit = Kernel.Data.afkTimerLimit.Clamp(0);
+                Kernel.Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(0);
 
                 EditorGUILayout.Space();
 

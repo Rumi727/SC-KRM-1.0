@@ -44,7 +44,21 @@ namespace SCKRM.Resource
         public const string languagePath = "assets/%NameSpace%/lang";
         public const string settingsPath = "projectSettings";
 
-        public static List<string> nameSpaces { get => Data.nameSpaces; }
+        static List<string> _nameSpaces = new List<string>();
+#if UNITY_EDITOR
+        public static List<string> nameSpaces
+        {
+            get
+            {
+                if (!ThreadManager.isMainThread || Application.isPlaying)
+                    return _nameSpaces;
+                else
+                    return Data.nameSpaces;
+            }
+        }
+#else
+        public static List<string> nameSpaces => _nameSpaces;
+#endif
 
         public static string[] textureExtension { get; } = new string[] { "tga", "dds", "png", "jpg" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
@@ -114,7 +128,7 @@ namespace SCKRM.Resource
             if (isResourceRefesh)
                 return;
 
-            Data.nameSpaces = Data.nameSpaces.Union(SaveData.nameSpaces).ToList();
+            _nameSpaces = Data.nameSpaces.Union(SaveData.nameSpaces).ToList();
 
             isResourceRefesh = true;
 
@@ -148,7 +162,7 @@ namespace SCKRM.Resource
 
                 isInitialLoadLanguageEnd = true;
 
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (!Application.isPlaying)
                     return;
 #endif
@@ -620,7 +634,7 @@ namespace SCKRM.Resource
         }
 
 
-        #region Search Method
+#region Search Method
         /// <summary>
         /// 합쳐진 텍스쳐의 경로를 찾아서 반환합니다
         /// Finds the path of the merged texture and returns it
@@ -884,11 +898,11 @@ namespace SCKRM.Resource
             }
             return null;
         }
-        #endregion
+#endregion
 
 
 
-        #region Get Resource Method
+#region Get Resource Method
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
         /// Import image files as Texture2D type
@@ -1251,7 +1265,7 @@ namespace SCKRM.Resource
                 return null;
             }
         }
-        #endregion
+#endregion
 
 
 

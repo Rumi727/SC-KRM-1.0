@@ -1,8 +1,6 @@
 {
   "standardFPS": 60.0,
   "notFocusFpsLimit": 30,
-  "afkFpsLimit": 30,
-  "afkTimerLimit": 9999999.0,
   "splashScreenPath": "Assets/SC KRM/Splash Screen",
   "splashScreenName": "Splash Screen"
 }
