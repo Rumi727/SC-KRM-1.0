@@ -10,15 +10,13 @@ using UnityEngine.EventSystems;
 namespace SCKRM.Object
 {
     [AddComponentMenu("커널/Object/오브젝트 풀링 시스템", 0)]
-    public sealed class ObjectPoolingSystem : MonoBehaviour
+    public sealed class ObjectPoolingSystem : Manager<ObjectPoolingSystem>
     {
         [ProjectSetting]
         public sealed class Data
         {
             [JsonProperty] public static Dictionary<string, string> prefabList { get; set; } = new Dictionary<string, string>();
         }
-
-        public static ObjectPoolingSystem instance { get; private set; }
 
         static ObjectList objectList { get; } = new ObjectList();
         class ObjectList
@@ -29,42 +27,41 @@ namespace SCKRM.Object
 
 
 
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
-                Destroy(gameObject);
-        }
+        void Awake() => SingletonCheck(this);
 
         /// <summary>
-        /// 오브젝트를 삭제합니다
+        /// 오브젝트를 미리 생성합니다
         /// </summary>
-        /// <param name="objectKey">지울 오브젝트 키</param>
-        /// <param name="objectPooling">지울 오브젝트</param>
-        public static void ObjectAdd(string objectKey)
+        /// <param name="objectKey">미리 생성할 오브젝트 키</param>
+        public static void ObjectAdvanceCreate(string objectKey) => ObjectAdd(objectKey, Resources.Load<ObjectPooling>(Data.prefabList[objectKey]));
+
+        /// <summary>
+        /// 오브젝트를 리스트에 추가합니다
+        /// </summary>
+        /// <param name="objectKey">추가할 오브젝트의 키</param>
+        /// <param name="gameObject">추가할 오브젝트</param>
+        public static void ObjectAdd(string objectKey, ObjectPooling gameObject)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(ObjectAdd));
+                throw new NotMainThreadMethodException(nameof(ObjectAdvanceCreate));
 #if UNITY_EDITOR
             if (!Application.isPlaying)
-                throw new NotPlayModeMethodException(nameof(ObjectAdd));
+                throw new NotPlayModeMethodException(nameof(ObjectAdvanceCreate));
 #endif
             if (!Kernel.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(ObjectAdd));
+                throw new NotInitialLoadEndMethodException(nameof(ObjectAdvanceCreate));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
 
-            ObjectPooling objectPooling = Instantiate(Resources.Load<ObjectPooling>(Data.prefabList[objectKey]), instance.transform);
-            objectPooling.gameObject.SetActive(false);
-            objectPooling.name = objectKey;
-
-            objectPooling.objectKey = objectKey;
-            objectPooling.actived = false;
-
-            objectList.ObjectKey.Add(objectKey);
-            objectList.Object.Add(objectPooling);
+            ObjectRemove(objectKey, Instantiate(gameObject, instance.transform));
         }
+
+        /// <summary>
+        /// 오브젝트가 리스트에 있는지 감지합니다 (리소스 폴더에 있는 프리팹은 알아서 감지하고 생성하니, 이 함수를 쓸 필요가 없습니다)
+        /// </summary>
+        /// <param name="objectKey">감지할 오브젝트 키</param>
+        /// <returns></returns>
+        public static bool ObjectContains(string objectKey) => objectList.ObjectKey.Contains(objectKey);
 
         /// <summary>
         /// 오브젝트를 생성합니다
