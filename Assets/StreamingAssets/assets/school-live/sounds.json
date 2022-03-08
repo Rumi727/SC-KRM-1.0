@@ -171,7 +171,7 @@
   "unhappy_end_world": {
     "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
-    "isBGM": false,
+    "isBGM": true,
     "sounds": [
       {
         "path": "unhappy_end_world",
@@ -184,7 +184,7 @@
   "yummy_yappy_recipe": {
     "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
-    "isBGM": false,
+    "isBGM": true,
     "sounds": [
       {
         "path": "yummy_yappy_recipe",
