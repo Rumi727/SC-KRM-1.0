@@ -78,7 +78,7 @@ namespace SCKRM.UI.SideBar
                 Show();
         }
 
-        protected override void SizeUpdate(bool onEnable = false)
+        protected override void SizeUpdate()
         {
             if (Kernel.isInitialLoadEnd)
             {
@@ -146,7 +146,7 @@ namespace SCKRM.UI.SideBar
 
 
 
-                if (lerp || onEnable)
+                if (lerp)
                 {
                     if (isShow)
                         rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.anchoredPosition.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
