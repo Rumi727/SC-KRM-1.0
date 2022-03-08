@@ -346,9 +346,6 @@ namespace SCKRM
                     //스레드를 자동 삭제해주는 함수를 작동시킵니다
                     ThreadManager.ThreadAutoRemove().Forget();
 
-                    //메인 스레드 디스페쳐를 생성합니다
-                    K4UnityThreadDispatcher.CreateDispatcher();
-
 #if UNITY_EDITOR
                     //에디터에선 스플래시 씬에서 시작하지 않기 때문에
                     //시작한 씬의 인덱스를 구하고
