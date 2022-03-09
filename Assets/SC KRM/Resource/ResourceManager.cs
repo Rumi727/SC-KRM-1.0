@@ -898,11 +898,107 @@ namespace SCKRM.Resource
             }
             return null;
         }
-#endregion
 
 
 
-#region Get Resource Method
+        public static List<string> SearchSoundDataKeys(string nameSpace = "")
+        {
+#if UNITY_EDITOR
+            if (ThreadManager.isMainThread && !Application.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+#endif
+            if (!isInitialLoadAudioEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SearchSoundDataKeys));
+
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (allSounds.ContainsKey(nameSpace))
+                return allSounds[nameSpace].Keys.ToList();
+            else
+                return null;
+        }
+
+
+
+        public static List<string> SearchSpriteTypes(string nameSpace = "")
+        {
+#if UNITY_EDITOR
+            if (ThreadManager.isMainThread && !Application.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+#endif
+            if (!isInitialLoadAudioEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SearchSpriteTypes));
+
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (allTextureSprites.ContainsKey(nameSpace))
+                return allTextureSprites[nameSpace].Keys.ToList();
+            else
+                return null;
+        }
+
+
+
+        public static List<string> SearchSpriteKeys(string type, string nameSpace = "")
+        {
+#if UNITY_EDITOR
+            if (ThreadManager.isMainThread && !Application.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+#endif
+            if (!isInitialLoadAudioEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SearchSpriteKeys));
+
+            if (type == null)
+                type = "";
+            else if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (allTextureSprites.ContainsKey(nameSpace) && allTextureSprites[nameSpace].ContainsKey(type))
+                return allTextureSprites[nameSpace][type].Keys.ToList();
+            else
+                return null;
+        }
+
+
+
+        public static List<string> SearchLanguageKeys(string language, string nameSpace = "")
+        {
+#if UNITY_EDITOR
+            if (ThreadManager.isMainThread && !Application.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+#endif
+            if (!isInitialLoadAudioEnd)
+                throw new NotInitialLoadEndMethodException(nameof(SearchSpriteKeys));
+
+            if (language == null)
+                language = "";
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (allLanguages.ContainsKey(nameSpace) && allLanguages[nameSpace].ContainsKey(language))
+                return allLanguages[nameSpace][language].Keys.ToList();
+            else
+                return null;
+        }
+        #endregion
+
+
+
+        #region Get Resource Method
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
         /// Import image files as Texture2D type
