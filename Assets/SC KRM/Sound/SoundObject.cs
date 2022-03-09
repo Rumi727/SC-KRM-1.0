@@ -158,12 +158,12 @@ namespace SCKRM.Sound
                 if (isPaused)
                     isPaused = false;
 
-                audioSource.Play();
-
                 if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)
                     audioSource.time = length - 0.001f;
                 else
                     audioSource.time = Mathf.Min(time, length - 0.001f);
+
+                audioSource.Play();
             }
         }
 
