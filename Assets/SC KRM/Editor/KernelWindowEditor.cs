@@ -183,11 +183,21 @@ namespace SCKRM.Editor
                         EditorGUILayout.BeginHorizontal();
 
                         GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                        audioNameSpace = EditorGUILayout.TextField(audioNameSpace);
-                        GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                        audioKey = EditorGUILayout.TextField(audioKey);
-                        GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                        audioClip = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), true);
+                        audioNameSpace = CustomInspectorEditor.DrawNameSpace(audioNameSpace);
+                        if (Application.isPlaying && ResourceManager.isInitialLoadAudioEnd)
+                        {
+                            GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                            audioKey = CustomInspectorEditor.DrawStringArray(audioKey, ResourceManager.SearchSoundDataKeys(audioNameSpace).ToArray());
+                            GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                            audioClip = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), true);
+                        }
+                        else
+                        {
+                            GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                            EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
+                            GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                            EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
+                        }
 
                         if (!Application.isPlaying)
                             GUI.enabled = false;
@@ -339,7 +349,7 @@ namespace SCKRM.Editor
                         EditorGUILayout.BeginHorizontal();
 
                         GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                        nbsNameSpace = EditorGUILayout.TextField(nbsNameSpace);
+                        nbsNameSpace = CustomInspectorEditor.DrawNameSpace(nbsNameSpace);
                         GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
                         nbsKey = EditorGUILayout.TextField(nbsKey);
 
