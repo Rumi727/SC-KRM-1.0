@@ -587,26 +587,24 @@ namespace SCKRM.Editor
             return scrollViewPos;
         }
 
-        public static string DrawNameSpace(string nameSpace)
-        {
-            ProjectSettingManager.Load(typeof(ResourceManager.Data));
+        public static string DrawNameSpace(string nameSpace) => DrawStringArray(nameSpace, ResourceManager.nameSpaces.ToArray());
+        public static string DrawNameSpace(string label, string nameSpace) => DrawStringArray(label, nameSpace, ResourceManager.nameSpaces.ToArray());
 
-            int index = EditorGUILayout.Popup(ResourceManager.nameSpaces.IndexOf(nameSpace), ResourceManager.nameSpaces.ToArray());
+        public static string DrawStringArray(string value, string[] array)
+        {
+            int index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
             if (index >= 0)
-                return ResourceManager.nameSpaces[index];
+                return array[index];
             else
-                return ResourceManager.defaultNameSpace;
+                return "";
         }
-
-        public static string DrawNameSpace(string label, string nameSpace)
+        public static string DrawStringArray(string label, string value, string[] array)
         {
-            ProjectSettingManager.Load(typeof(ResourceManager.Data));
-
-            int index = EditorGUILayout.Popup(label, ResourceManager.nameSpaces.IndexOf(nameSpace), ResourceManager.nameSpaces.ToArray());
+            int index = EditorGUILayout.Popup(label, Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
             if (index >= 0)
-                return ResourceManager.nameSpaces[index];
+                return array[index];
             else
-                return ResourceManager.defaultNameSpace;
+                return "";
         }
     }
 }
