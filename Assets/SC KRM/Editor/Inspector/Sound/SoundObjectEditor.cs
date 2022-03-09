@@ -1,3 +1,4 @@
+using SCKRM.Resource;
 using SCKRM.Sound;
 using SCKRM.Tool;
 using UnityEditor;
@@ -31,11 +32,21 @@ namespace SCKRM.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                soundObject.nameSpace = EditorGUILayout.TextField(soundObject.nameSpace);
-                GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                soundObject.key = EditorGUILayout.TextField(soundObject.key);
-                GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                soundObject.selectedAudioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.selectedAudioClip, typeof(AudioClip), true);
+                soundObject.nameSpace = DrawNameSpace(soundObject.nameSpace);
+                if (Application.isPlaying && ResourceManager.isInitialLoadAudioEnd)
+                {
+                    GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                    soundObject.key = DrawStringArray(soundObject.key, ResourceManager.SearchSoundDataKeys(soundObject.nameSpace).ToArray());
+                    GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                    soundObject.selectedAudioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.selectedAudioClip, typeof(AudioClip), true);
+                }
+                else
+                {
+                    GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                    EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
+                    GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                    EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
+                }
 
                 EditorGUILayout.EndHorizontal();
             }
