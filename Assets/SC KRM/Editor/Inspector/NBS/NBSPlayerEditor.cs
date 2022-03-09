@@ -31,7 +31,7 @@ namespace SCKRM.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
-                nbsPlayer.nameSpace = EditorGUILayout.TextField(nbsPlayer.nameSpace);
+                nbsPlayer.nameSpace = DrawNameSpace(nbsPlayer.nameSpace);
                 GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
                 nbsPlayer.key = EditorGUILayout.TextField(nbsPlayer.key);
 
