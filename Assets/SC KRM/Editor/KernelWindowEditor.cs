@@ -184,20 +184,10 @@ namespace SCKRM.Editor
 
                         GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
                         audioNameSpace = CustomInspectorEditor.DrawNameSpace(audioNameSpace);
-                        if (Application.isPlaying && ResourceManager.isInitialLoadAudioEnd)
-                        {
-                            GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                            audioKey = CustomInspectorEditor.DrawStringArray(audioKey, ResourceManager.SearchSoundDataKeys(audioNameSpace).ToArray());
-                            GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                            audioClip = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), true);
-                        }
-                        else
-                        {
-                            GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                            EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
-                            GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                            EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
-                        }
+                        GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                        audioKey = CustomInspectorEditor.DrawStringArray(audioKey, ResourceManager.GetSoundDataKeys(audioNameSpace));
+                        GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                        audioClip = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), true);
 
                         if (!Application.isPlaying)
                             GUI.enabled = false;

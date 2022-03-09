@@ -7,20 +7,20 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SoundObject), true)]
+    [CustomEditor(typeof(SoundPlayer), true)]
     public sealed class SoundObjectEditor : CustomInspectorEditor
     {
-        SoundObject editor;
+        SoundPlayer editor;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            editor = (SoundObject)target;
+            editor = (SoundPlayer)target;
         }
 
         public override void OnInspectorGUI() => GUI(editor);
 
-        public static void GUI(SoundObject soundObject)
+        public static void GUI(SoundPlayer soundObject)
         {
             if (!Application.isPlaying || !Kernel.isInitialLoadEnd)
                 return;
@@ -33,20 +33,10 @@ namespace SCKRM.Editor
 
                 GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
                 soundObject.nameSpace = DrawNameSpace(soundObject.nameSpace);
-                if (Application.isPlaying && ResourceManager.isInitialLoadAudioEnd)
-                {
-                    GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                    soundObject.key = DrawStringArray(soundObject.key, ResourceManager.SearchSoundDataKeys(soundObject.nameSpace).ToArray());
-                    GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                    soundObject.selectedAudioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.selectedAudioClip, typeof(AudioClip), true);
-                }
-                else
-                {
-                    GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
-                    EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
-                    GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                    EditorGUILayout.Popup("", 0, new string[0], GUILayout.MinWidth(0));
-                }
+                GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                soundObject.key = DrawStringArray(soundObject.key, ResourceManager.GetSoundDataKeys(soundObject.nameSpace));
+                GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
+                soundObject.selectedAudioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.selectedAudioClip, typeof(AudioClip), true);
 
                 EditorGUILayout.EndHorizontal();
             }

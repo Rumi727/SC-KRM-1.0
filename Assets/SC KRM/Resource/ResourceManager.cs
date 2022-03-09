@@ -634,7 +634,7 @@ namespace SCKRM.Resource
         }
 
 
-#region Search Method
+        #region Search Method
         /// <summary>
         /// 합쳐진 텍스쳐의 경로를 찾아서 반환합니다
         /// Finds the path of the merged texture and returns it
@@ -890,109 +890,13 @@ namespace SCKRM.Resource
 
             if (nameSpace == "")
                 nameSpace = defaultNameSpace;
-            
+
             if (allSounds.ContainsKey(nameSpace))
             {
                 if (allSounds[nameSpace].ContainsKey(key))
                     return allSounds[nameSpace][key];
             }
             return null;
-        }
-
-
-
-        public static List<string> SearchSoundDataKeys(string nameSpace = "")
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeSearchMethodException();
-#endif
-            if (!isInitialLoadAudioEnd)
-                throw new NotInitialLoadEndMethodException(nameof(SearchSoundDataKeys));
-
-            if (nameSpace == null)
-                nameSpace = "";
-
-            if (nameSpace == "")
-                nameSpace = defaultNameSpace;
-
-            if (allSounds.ContainsKey(nameSpace))
-                return allSounds[nameSpace].Keys.ToList();
-            else
-                return null;
-        }
-
-
-
-        public static List<string> SearchSpriteTypes(string nameSpace = "")
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeSearchMethodException();
-#endif
-            if (!isInitialLoadAudioEnd)
-                throw new NotInitialLoadEndMethodException(nameof(SearchSpriteTypes));
-
-            if (nameSpace == null)
-                nameSpace = "";
-
-            if (nameSpace == "")
-                nameSpace = defaultNameSpace;
-
-            if (allTextureSprites.ContainsKey(nameSpace))
-                return allTextureSprites[nameSpace].Keys.ToList();
-            else
-                return null;
-        }
-
-
-
-        public static List<string> SearchSpriteKeys(string type, string nameSpace = "")
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeSearchMethodException();
-#endif
-            if (!isInitialLoadAudioEnd)
-                throw new NotInitialLoadEndMethodException(nameof(SearchSpriteKeys));
-
-            if (type == null)
-                type = "";
-            else if (nameSpace == null)
-                nameSpace = "";
-
-            if (nameSpace == "")
-                nameSpace = defaultNameSpace;
-
-            if (allTextureSprites.ContainsKey(nameSpace) && allTextureSprites[nameSpace].ContainsKey(type))
-                return allTextureSprites[nameSpace][type].Keys.ToList();
-            else
-                return null;
-        }
-
-
-
-        public static List<string> SearchLanguageKeys(string language, string nameSpace = "")
-        {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
-                throw new NotPlayModeSearchMethodException();
-#endif
-            if (!isInitialLoadAudioEnd)
-                throw new NotInitialLoadEndMethodException(nameof(SearchSpriteKeys));
-
-            if (language == null)
-                language = "";
-            if (nameSpace == null)
-                nameSpace = "";
-
-            if (nameSpace == "")
-                nameSpace = defaultNameSpace;
-
-            if (allLanguages.ContainsKey(nameSpace) && allLanguages[nameSpace].ContainsKey(language))
-                return allLanguages[nameSpace][language].Keys.ToList();
-            else
-                return null;
         }
         #endregion
 
@@ -1361,7 +1265,121 @@ namespace SCKRM.Resource
                 return null;
             }
         }
-#endregion
+        #endregion
+
+
+
+        #region Get Key List
+        public static string[] GetSoundDataKeys(string nameSpace = "")
+        {
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (isInitialLoadAudioEnd)
+            {
+                if (allSounds.ContainsKey(nameSpace))
+                    return allSounds[nameSpace].Keys.ToArray();
+                else
+                    return null;
+            }
+            else
+            {
+                string path = PathTool.Combine(Kernel.streamingAssetsPath, soundPath.Replace("%NameSpace%", nameSpace));
+                Dictionary<string, SoundData> soundDatas = JsonManager.JsonRead<Dictionary<string, SoundData>>(path + ".json", true);
+                return soundDatas.Keys.ToArray();
+            }
+        }
+
+        public static string[] GetSpriteTypes(string nameSpace = "")
+        {
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (isInitialLoadSpriteEnd)
+            {
+                if (allTextureSprites.ContainsKey(nameSpace))
+                    return allTextureSprites[nameSpace].Keys.ToArray();
+                else
+                    return null;
+            }
+            else
+            {
+                string resourcePackTexturePath = PathTool.Combine(Kernel.streamingAssetsPath, texturePath.Replace("%NameSpace%", nameSpace));
+                string[] paths = Directory.GetDirectories(resourcePackTexturePath, "*", SearchOption.AllDirectories);
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    string path = paths[i];
+                    paths[i] = path.Substring(resourcePackTexturePath.Length + 1, path.Length - resourcePackTexturePath.Length - 1).Replace("\\", "/");
+                }
+
+                return paths;
+            }
+        }
+        public static string[] GetSpriteKeys(string type, string nameSpace = "")
+        {
+            if (type == null)
+                type = "";
+            else if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (isInitialLoadSpriteEnd)
+            {
+                if (allTextureSprites.ContainsKey(nameSpace) && allTextureSprites[nameSpace].ContainsKey(type))
+                    return allTextureSprites[nameSpace][type].Keys.ToArray();
+                else
+                    return null;
+            }
+            else
+            {
+                string typePath = PathTool.Combine(Kernel.streamingAssetsPath, texturePath.Replace("%NameSpace%", nameSpace), type);
+
+                List<string> keys = new List<string>();
+                for (int i = 0; i < textureExtension.Length; i++)
+                {
+                    string[] filePaths = Directory.GetFiles(typePath, "*." + textureExtension[i]);
+                    for (int l = 0; l < filePaths.Length; l++)
+                        filePaths[l] = Path.GetFileNameWithoutExtension(filePaths[l]);
+
+                    keys.AddRange(filePaths);
+                }
+
+                return keys.Distinct().ToArray();
+            }
+        }
+
+        public static string[] GetLanguageKeys(string language, string nameSpace = "")
+        {
+            if (language == null)
+                language = "";
+            if (nameSpace == null)
+                nameSpace = "";
+
+            if (nameSpace == "")
+                nameSpace = defaultNameSpace;
+
+            if (isInitialLoadLanguageEnd)
+            {
+                if (allLanguages.ContainsKey(nameSpace) && allLanguages[nameSpace].ContainsKey(language))
+                    return allLanguages[nameSpace][language].Keys.ToArray();
+                else
+                    return null;
+            }
+            else
+            {
+                Dictionary<string, string> dictionary = JsonManager.JsonRead<Dictionary<string, string>>(PathTool.Combine(Kernel.streamingAssetsPath, languagePath.Replace("%NameSpace%", nameSpace), language) + ".json", true);
+                return dictionary.Keys.ToArray();
+            }
+        }
+        #endregion
 
 
 

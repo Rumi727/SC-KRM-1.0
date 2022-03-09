@@ -11,14 +11,9 @@ using UnityEngine;
 namespace SCKRM.NBS
 {
     [AddComponentMenu("")]
-    public sealed class NBSPlayer : ObjectPooling
+    public sealed class NBSPlayer : SoundPlayerManager
     {
         public NBSFile nbsFile { get; private set; }
-
-        [SerializeField] string _nameSpace = "";
-        public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
-        [SerializeField] string _key = "";
-        public string key { get => _key; set => _key = value; }
 
 
         float tickTimer = 0;
@@ -67,29 +62,6 @@ namespace SCKRM.NBS
 
         public bool isLooped { get; private set; } = false;
         public bool isPaused { get; set; } = false;
-
-
-
-        #region variable
-        [SerializeField] float _volume = 1;
-        [SerializeField] bool _loop = false;
-        [SerializeField] float _tempo = 1;
-        [SerializeField] float _pitch = 1;
-        [SerializeField] bool _spatial = false;
-        [SerializeField] float _panStereo = 0;
-        [SerializeField] float _minDistance = 0;
-        [SerializeField] float _maxDistance = 48;
-        [SerializeField] Vector3 _localPosition = Vector3.zero;
-        public float volume { get => _volume; set => _volume = value; }
-        public bool loop { get => _loop; set => _loop = value; }
-        public float pitch { get => _pitch; set => _pitch = value; }
-        public float tempo { get => _tempo; set => _tempo = value; }
-        public bool spatial { get => _spatial; set => _spatial = value; }
-        public float panStereo { get => _panStereo; set => _panStereo = value; }
-        public float minDistance { get => _minDistance; set => _minDistance = value; }
-        public float maxDistance { get => _maxDistance; set => _maxDistance = value; }
-        public Vector3 localPosition { get => _localPosition; set => _localPosition = value; }
-        #endregion
 
 
 
@@ -152,7 +124,7 @@ namespace SCKRM.NBS
 
 
 
-        void Update()
+        void LateUpdate()
         {
             if (!isPaused)
             {
@@ -294,12 +266,12 @@ namespace SCKRM.NBS
 
             nameSpace = "";
             key = "";
-            _tempo = 1;
+            tempo = 1;
             _index = 0;
             _tick = 0;
 
             SoundManager.nbsList.Remove(this);
-            SoundObject[] soundObjects = GetComponentsInChildren<SoundObject>();
+            SoundPlayer[] soundObjects = GetComponentsInChildren<SoundPlayer>();
             for (int i = 0; i < soundObjects.Length; i++)
                 soundObjects[i].Remove();
         }

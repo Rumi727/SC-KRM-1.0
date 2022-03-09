@@ -25,7 +25,7 @@ namespace SCKRM.Sound
 
         public static SoundManager instance { get; private set; }
 
-        public static List<SoundObject> soundList { get; } = new List<SoundObject>();
+        public static List<SoundPlayer> soundList { get; } = new List<SoundPlayer>();
         public static List<NBSPlayer> nbsList { get; } = new List<NBSPlayer>();
 
 
@@ -59,12 +59,12 @@ namespace SCKRM.Sound
 
 
 
-            SoundObject[] soundObjects = FindObjectsOfType<SoundObject>();
+            SoundPlayer[] soundObjects = FindObjectsOfType<SoundPlayer>();
             NBSPlayer[] nbsPlayers = FindObjectsOfType<NBSPlayer>();
 
             for (int i = 0; i < soundObjects.Length; i++)
             {
-                SoundObject soundObject = soundObjects[i];
+                SoundPlayer soundObject = soundObjects[i];
                 soundObject.Refesh();
             }
 
@@ -100,7 +100,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
-        public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+        public static SoundPlayer PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
         /// 소리를 재생합니다
@@ -145,7 +145,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundObject PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        public static SoundPlayer PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
         /// 오디오 클립을 재생시킵니다
@@ -169,7 +169,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
-        public static SoundObject PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+        public static SoundPlayer PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
         /// 오디오 클립을 재생시킵니다
@@ -193,7 +193,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
-        public static SoundObject PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+        public static SoundPlayer PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
         /// 오디오 클립을 재생시킵니다
@@ -235,7 +235,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundObject PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        public static SoundPlayer PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
         /// 오디오 클립을 재생시킵니다
@@ -277,9 +277,9 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundObject PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        public static SoundPlayer PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
-        static SoundObject playSound(string key, string nameSpace, AudioClip[] audioClips, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
+        static SoundPlayer playSound(string key, string nameSpace, AudioClip[] audioClips, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(PlaySound));
@@ -294,7 +294,7 @@ namespace SCKRM.Sound
             {
                 for (int i = 0; i < soundList.Count; i++)
                 {
-                    SoundObject soundObject2 = soundList[i];
+                    SoundPlayer soundObject2 = soundList[i];
                     if (!soundObject2.soundData.isBGM)
                     {
                         soundList[i].Remove();
@@ -313,7 +313,7 @@ namespace SCKRM.Sound
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            SoundObject soundObject = (SoundObject)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent);
+            SoundPlayer soundObject = (SoundPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent);
             soundObject.key = key;
             soundObject.nameSpace = nameSpace;
             if (audioClips != null)
@@ -377,7 +377,7 @@ namespace SCKRM.Sound
 
             for (int i = 0; i < soundList.Count; i++)
             {
-                SoundObject soundObject = soundList[i];
+                SoundPlayer soundObject = soundList[i];
                 if (soundObject.key == key && soundObject.nameSpace == nameSpace)
                 {
                     soundObject.Remove();
@@ -406,7 +406,7 @@ namespace SCKRM.Sound
 
             for (int i = 0; i < soundList.Count; i++)
             {
-                SoundObject soundObject = soundList[i];
+                SoundPlayer soundObject = soundList[i];
                 soundObject.Remove();
                 i--;
             }
@@ -429,7 +429,7 @@ namespace SCKRM.Sound
 
             for (int i = 0; i < soundList.Count; i++)
             {
-                SoundObject soundObject = soundList[i];
+                SoundPlayer soundObject = soundList[i];
                 if (bgm && soundObject.soundData.isBGM)
                 {
                     soundObject.Remove();
