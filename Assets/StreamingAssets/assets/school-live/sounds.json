@@ -19,7 +19,7 @@
     "sounds": [
       {
         "path": "anata_to_story",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -32,33 +32,33 @@
     "sounds": [
       {
         "path": "colorful_miracle_ballooooon",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
     ]
   },
-  "grateful friends": {
+  "grateful_friends": {
     "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {
-        "path": "grateful friends",
-        "stream": false,
+        "path": "grateful_friends",
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
     ]
   },
-  "grateful friends_i": {
+  "grateful_friends_i": {
     "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {
-        "path": "grateful friends_i",
-        "stream": false,
+        "path": "grateful_friends_i",
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -71,7 +71,7 @@
     "sounds": [
       {
         "path": "hero",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -84,7 +84,7 @@
     "sounds": [
       {
         "path": "my_dream",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -97,7 +97,7 @@
     "sounds": [
       {
         "path": "otome_no_seibun",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -110,7 +110,7 @@
     "sounds": [
       {
         "path": "pink_no_heart_ball",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -123,7 +123,7 @@
     "sounds": [
       {
         "path": "run_run",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -136,7 +136,7 @@
     "sounds": [
       {
         "path": "sora_ni_watashi_no_sunshine",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -149,7 +149,7 @@
     "sounds": [
       {
         "path": "sotsugyou_album",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -162,7 +162,7 @@
     "sounds": [
       {
         "path": "sweet_violet",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -175,7 +175,7 @@
     "sounds": [
       {
         "path": "unhappy_end_world",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }
@@ -188,7 +188,7 @@
     "sounds": [
       {
         "path": "yummy_yappy_recipe",
-        "stream": false,
+        "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
       }

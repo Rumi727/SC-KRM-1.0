@@ -1,47 +1,4 @@
 {
-  "item.armor.equip_iron": {
-    "category": 0,
-    "subtitle": "",
-    "isBGM": false,
-    "sounds": [
-      {
-        "path": "item/armor/equip_iron1",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      },
-      {
-        "path": "item/armor/equip_iron2",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      },
-      {
-        "path": "item/armor/equip_iron3",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      },
-      {
-        "path": "item/armor/equip_iron4",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      },
-      {
-        "path": "item/armor/equip_iron5",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      },
-      {
-        "path": "item/armor/equip_iron6",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      }
-    ]
-  },
   "ui.cartography_table.take_result": {
     "category": 0,
     "subtitle": "",
