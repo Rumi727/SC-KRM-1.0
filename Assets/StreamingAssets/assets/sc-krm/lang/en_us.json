@@ -93,8 +93,16 @@
 	
 	
 	
-	"notice.kurumi_chan.birthday.title": "Kurumi-chan happy birthday",
+	"notice.kurumi_chan.birthday.title": "Happy Birthday Kurumi-chan",
 	"notice.kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
+	"notice.takeya_yuki.birthday.title": "Happy Birthday Yuki-chan",
+	"notice.takeya_yuki.birthday.description": "Today is the birthday of 'Yuki Takeya'",
+	"notice.wakasa_yuri.birthday.title": "Happy Birthday Rii-san",
+	"notice.wakasa_yuri.birthday.description": "Today is the birthday of 'Yuri Wakasa'",
+	"notice.naoki_miki.birthday.title": "Happy Birthday Mii-kun",
+	"notice.naoki_miki.birthday.description": "Today is the birthday of 'Miki Naoki'",
+	"notice.sakura_megumi.birthday.title": "Happy Birthday Megu-nee",
+	"notice.sakura_megumi.birthday.description": "Today is the birthday of 'Megumi Sakura'",
 	
 	"notice.onell0.birthday.title": "%value%st anniversary of SMP",
 	"notice.onell0.birthday.description": "A hearty congratulations on the %value%st anniversary of SMP!",
