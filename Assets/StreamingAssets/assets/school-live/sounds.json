@@ -1,11 +1,37 @@
 {
-  "op": {
+  "friend_shitai": {
     "category": 1,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {
-        "path": "op",
+        "path": "friend_shitai",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "friend_shitai_full": {
+    "category": 1,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "friend_shitai_full",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "friend_shitai_i": {
+    "category": 1,
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "friend_shitai_i",
         "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
