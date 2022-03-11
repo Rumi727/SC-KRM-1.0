@@ -93,8 +93,13 @@
 	
 	
 	
-	"notice.kurumi_chan.birthday.title": "Happy Birthday Kurumi-chan",
-	"notice.kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
+	"notice.school_live.birthday.title": "%value%st anniversary of Gakkou Gurashi!",
+	"notice.school_live.birthday.description": "A hearty congratulations on the %value%st anniversary of Gakkou Gurashi!",
+	"notice.school_live_ani.birthday.title": "%value%st anniversary of Gakkou Gurashi! anime",
+	"notice.school_live_ani.birthday.description": "A hearty congratulations on the %value%st anniversary of Gakkou Gurashi! anime",
+	
+	"notice.ebisuzawa_kurumi_chan.birthday.title": "Happy Birthday Kurumi-chan",
+	"notice.ebisuzawa_kurumi_chan.birthday.description": "Today is the birthday of 'Kurumi Ebisuzawa'",
 	"notice.takeya_yuki.birthday.title": "Happy Birthday Yuki-chan",
 	"notice.takeya_yuki.birthday.description": "Today is the birthday of 'Yuki Takeya'",
 	"notice.wakasa_yuri.birthday.title": "Happy Birthday Rii-san",

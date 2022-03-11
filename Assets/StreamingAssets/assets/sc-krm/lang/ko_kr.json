@@ -93,6 +93,11 @@
 	
 	
 	
+	"notice.school_live.birthday.title": "학교생활! %value%주년",
+	"notice.school_live.birthday.description": "학교생활! %value%주년을 진심으로 축하합니다!",
+	"notice.school_live_ani.birthday.title": "학교생활! 애니 %value%주년",
+	"notice.school_live_ani.birthday.description": "학교생활! 애니 %value%주년을 진심으로 축하합니다!",
+	
 	"notice.ebisuzawa_kurumi_chan.birthday.title": "쿠루미쨩 생일 축하해",
 	"notice.ebisuzawa_kurumi_chan.birthday.description": "오늘은 '에비스자와 쿠루미'의 생일입니다",
 	"notice.takeya_yuki.birthday.title": "유키 생일 축하해",
