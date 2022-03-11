@@ -93,10 +93,10 @@
 	
 	
 	
-	"notice.school_live.birthday.title": "がっこうぐらし!％value％周年",
-	"notice.school_live.birthday.description": "がっこうぐらし!％value％周年おめでとうございます！",
-	"notice.school_live_ani.birthday.title": "がっこうぐらし!アニメ％value％周年",
-	"notice.school_live_ani.birthday.description": "がっこうぐらし!アニメ％value％周年おめでとうございます！",
+	"notice.school_live.birthday.title": "がっこうぐらし！%value%周年",
+	"notice.school_live.birthday.description": "がっこうぐらし！%value%周年おめでとうございます！",
+	"notice.school_live_ani.birthday.title": "がっこうぐらし！アニメ%value%周年",
+	"notice.school_live_ani.birthday.description": "がっこうぐらし！アニメ%value%周年おめでとうございます！",
 	
 	"notice.ebisuzawa_kurumi_chan.birthday.title": "くるみお誕生日おめでとう",
 	"notice.ebisuzawa_kurumi_chan.birthday.description": "今日は「えびすざわ くるみ」の誕生日です",
@@ -109,8 +109,8 @@
 	"notice.sakura_megumi.birthday.title": "めぐみお誕生日おめでとう",
 	"notice.sakura_megumi.birthday.description": "今日は「さくら めぐみ」の誕生日です'",
 	
-	"notice.onell0.birthday.title": "SMP％value％周年",
-	"notice.onell0.birthday.description": "SMP％value％周年おめでとうございます！",
+	"notice.onell0.birthday.title": "SMP%value%周年",
+	"notice.onell0.birthday.description": "SMP%value%周年おめでとうございます！",
 	
 	"notice.korean_new_year.title": "明けましておめでとう",
 	"notice.korean_new_year.description": "今日は韓国のお正月です",
