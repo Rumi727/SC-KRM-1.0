@@ -326,6 +326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2042985875021315855}
+  - component: {fileID: 6321981691785896498}
   - component: {fileID: 1722455210804698870}
   - component: {fileID: 2898394116146612568}
   - component: {fileID: 924608742677864130}
@@ -356,6 +357,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6321981691785896498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981353236672281163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 2042985875021315855}
+  tempParentGameobject: {fileID: 5865970688651289267}
+  _parentRectTransformSetting: {fileID: 6298861477271108649}
 --- !u!222 &1722455210804698870
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1131,6 +1147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5071083024804193252}
+  - component: {fileID: 6875495985165301578}
   - component: {fileID: 6934755266553139406}
   - component: {fileID: 996662984219472233}
   - component: {fileID: 1586188406021413597}
@@ -1161,6 +1178,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -14, y: -14}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6875495985165301578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656574692038339255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 5071083024804193252}
+  tempParentGameobject: {fileID: 5865970688651289267}
+  _parentRectTransformSetting: {fileID: 6298861477271108649}
 --- !u!222 &6934755266553139406
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1225,6 +1257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4794817484995464275}
+  - component: {fileID: 6298861477271108649}
   - component: {fileID: 6167845678910891430}
   - component: {fileID: 3093705122497929214}
   m_Layer: 0
@@ -1257,6 +1290,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 19, y: 19}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &6298861477271108649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865970688651289267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 4794817484995464275}
+  tempParentGameobject: {fileID: 8760098130924868033}
+  _parentRectTransformSetting: {fileID: 5224722738167513530}
 --- !u!225 &6167845678910891430
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1751,6 +1799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7575326574711026135}
+  - component: {fileID: 1605601505816296477}
   - component: {fileID: 6821791962830361523}
   - component: {fileID: 8821212146697834406}
   - component: {fileID: 7791143232158230150}
@@ -1781,6 +1830,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -6, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1605601505816296477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7223693517476732987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ceef09739b005d48a4b492c45566d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 7575326574711026135}
+  tempParentGameobject: {fileID: 5865970688651289267}
+  _parentRectTransformSetting: {fileID: 6298861477271108649}
 --- !u!222 &6821791962830361523
 CanvasRenderer:
   m_ObjectHideFlags: 0

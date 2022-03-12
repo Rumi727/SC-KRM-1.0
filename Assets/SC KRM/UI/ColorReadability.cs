@@ -17,21 +17,6 @@ namespace SCKRM.UI
         [SerializeField] CanvasRenderer _targetCanvasRenderer; public CanvasRenderer targetCanvasRenderer => _targetCanvasRenderer;
         [SerializeField] Graphic _targetGraphic; public Graphic targetGraphic => _targetGraphic;
 
-        [NonSerialized] Graphic _graphic; public Graphic graphic
-        {
-            get
-            {
-                if (_graphic == null)
-                {
-                    _graphic = GetComponent<Graphic>();
-                    if (_graphic == null)
-                        _graphic = gameObject.AddComponent<Graphic>();
-                }
-
-                return _graphic;
-            }
-        }
-
         Color color = Color.white;
         protected override void LayoutRefresh()
         {

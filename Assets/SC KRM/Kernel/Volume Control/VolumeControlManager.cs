@@ -8,8 +8,9 @@ namespace SCKRM.UI
 {
     public sealed class VolumeControlManager : ManagerUI<VolumeControlManager>, IPointerEnterHandler, IPointerExitHandler
     {
-        bool isPointer;
-        float timer = 0;
+        static bool isPointer;
+        static bool isDrag;
+        static float timer = 0;
         [SerializeField] GameObject hide;
 
         void OnEnable() => SingletonCheck(this);
@@ -18,13 +19,13 @@ namespace SCKRM.UI
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (isPointer)
+                if (isPointer || isDrag)
                     timer = 1;
                 else
                     timer -= Kernel.unscaledDeltaTime;
 
                 RectTransform statusBar = StatusBarManager.instance.rectTransform;
-                if (isPointer || timer >= 0)
+                if (isPointer || isDrag || timer >= 0)
                 {
                     if (!hide.activeSelf)
                         hide.SetActive(true);
@@ -44,14 +45,14 @@ namespace SCKRM.UI
 
                 if (InputManager.GetKey("volume_control.minus", InputType.Down, "all"))
                 {
-                    if (isPointer || timer >= 0)
+                    if (isPointer || isDrag || timer >= 0)
                         Kernel.SaveData.mainVolume -= 10;
 
                     timer = 1;
                 }
                 else if (InputManager.GetKey("volume_control.plus", InputType.Down, "all"))
                 {
-                    if (isPointer || timer >= 0)
+                    if (isPointer || isDrag || timer >= 0)
                         Kernel.SaveData.mainVolume += 10;
 
                     timer = 1;
@@ -60,7 +61,8 @@ namespace SCKRM.UI
         }
 
         public void OnPointerEnter(PointerEventData eventData) => isPointer = true;
-
         public void OnPointerExit(PointerEventData eventData) => isPointer = false;
+        public static void OnBeginDrag() => isDrag = true;
+        public static void OnEndDrag() => isDrag = false;
     }
 }

@@ -11,7 +11,6 @@ namespace HSVPicker
 {
     public class SVBoxSliderHandleColor : UIAni
     {
-        public Graphic graphic;
         public ColorPicker colorPicker;
         public Type type;
 

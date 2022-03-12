@@ -102,12 +102,14 @@ namespace SCKRM.UI
         public void OnPointerDown(PointerEventData eventData)
         {
             isDrag = true;
+            VolumeControlManager.OnBeginDrag();
             InputManager.SetInputLock("volumecontrol", true);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             isDrag = false;
+            VolumeControlManager.OnEndDrag();
             InputManager.SetInputLock("volumecontrol", false);
         }
     }
