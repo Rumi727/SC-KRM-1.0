@@ -1256,7 +1256,7 @@ namespace SCKRM.Editor
                                 GUI.enabled = false;
 
                             if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                                soundDatas.Add("", new SoundData(SoundData.SoundCategory.master, "", false, new SoundMetaData[0]));
+                                soundDatas.Add("", new SoundData("", false, new SoundMetaData[0]));
 
                             if (!Application.isPlaying)
                                 GUI.enabled = true;
@@ -1290,7 +1290,7 @@ namespace SCKRM.Editor
                                 for (int i = soundDatas.Count; i < count; i++)
                                 {
                                     if (!soundDatas.ContainsKey(""))
-                                        soundDatas.Add("", new SoundData(SoundData.SoundCategory.master, "", false, new SoundMetaData[0]));
+                                        soundDatas.Add("", new SoundData("", false, new SoundMetaData[0]));
                                     else
                                         count--;
                                 }
@@ -1350,9 +1350,6 @@ namespace SCKRM.Editor
 
                             GUILayout.Label("BGM", GUILayout.ExpandWidth(false));
                             bool isBGM = EditorGUILayout.Toggle(soundData.Value.isBGM, GUILayout.Width(15));
-
-                            GUILayout.Label("카테고리", GUILayout.ExpandWidth(false));
-                            SoundData.SoundCategory soundCategory = (SoundData.SoundCategory)EditorGUILayout.EnumPopup(soundData.Value.category, GUILayout.Width(100));
 
                             EditorGUILayout.EndHorizontal();
 
@@ -1455,7 +1452,7 @@ namespace SCKRM.Editor
 
                                         soundMetaDatas[j] = new SoundMetaData(soundPath, stream, pitch, tempo, null);
                                     }
-                                    valueList.Add(new SoundData(soundCategory, subtitle, isBGM, soundMetaDatas.ToArray()));
+                                    valueList.Add(new SoundData(subtitle, isBGM, soundMetaDatas.ToArray()));
 
                                     //EditorGUILayout.EndScrollView();
                                 }

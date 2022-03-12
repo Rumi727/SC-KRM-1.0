@@ -1,6 +1,5 @@
 {
   "jevil": {
-    "category": 0,
     "subtitle": "",
     "isBGM": true,
     "sounds": [
@@ -13,7 +12,6 @@
     ]
   },
   "big": {
-    "category": 0,
     "subtitle": "",
     "isBGM": true,
     "sounds": [
@@ -26,7 +24,6 @@
     ]
   },
   "big2": {
-    "category": 0,
     "subtitle": "",
     "isBGM": true,
     "sounds": [
@@ -39,7 +36,6 @@
     ]
   },
   "big3": {
-    "category": 0,
     "subtitle": "",
     "isBGM": true,
     "sounds": [
@@ -52,7 +48,6 @@
     ]
   },
   "big4": {
-    "category": 0,
     "subtitle": "",
     "isBGM": true,
     "sounds": [

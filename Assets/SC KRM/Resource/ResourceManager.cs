@@ -568,10 +568,10 @@ namespace SCKRM.Resource
                         if (!allSounds.ContainsKey(nameSpace))
                         {
                             allSounds.Add(nameSpace, new Dictionary<string, SoundData>());
-                            allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.category, soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
+                            allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
                         }
                         else if (!allSounds[nameSpace].ContainsKey(soundData.Key))
-                            allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.category, soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
+                            allSounds[nameSpace].Add(soundData.Key, new SoundData(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
                     }
                 }
             }
@@ -1765,25 +1765,16 @@ namespace SCKRM.Resource
 
     public class SoundData
     {
-        public SoundData(SoundCategory category, string subtitle, bool isBGM, SoundMetaData[] sounds)
+        public SoundData(string subtitle, bool isBGM, SoundMetaData[] sounds)
         {
-            this.category = category;
             this.subtitle = subtitle;
             this.isBGM = isBGM;
             this.sounds = sounds;
         }
 
-        public SoundCategory category { get; } = SoundCategory.master;
         public string subtitle { get; } = "";
         public bool isBGM { get; } = false;
         public SoundMetaData[] sounds { get; } = new SoundMetaData[0];
-
-        public enum SoundCategory
-        {
-            master,
-            music,
-            record
-        }
     }
 
     public class SoundMetaData

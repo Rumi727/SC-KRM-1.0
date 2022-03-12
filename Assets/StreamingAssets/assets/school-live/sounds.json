@@ -1,6 +1,5 @@
 {
   "friend_shitai": {
-    "category": 1,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -13,7 +12,6 @@
     ]
   },
   "friend_shitai_full": {
-    "category": 1,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -26,7 +24,6 @@
     ]
   },
   "friend_shitai_i": {
-    "category": 1,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -39,7 +36,6 @@
     ]
   },
   "anata_to_story": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -52,7 +48,6 @@
     ]
   },
   "colorful_miracle_ballooooon": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -65,7 +60,6 @@
     ]
   },
   "grateful_friends": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -78,7 +72,6 @@
     ]
   },
   "grateful_friends_i": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -91,7 +84,6 @@
     ]
   },
   "hero": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -104,7 +96,6 @@
     ]
   },
   "my_dream": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -117,7 +108,6 @@
     ]
   },
   "otome_no_seibun": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -130,7 +120,6 @@
     ]
   },
   "pink_no_heart_ball": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -143,7 +132,6 @@
     ]
   },
   "run_run": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -156,7 +144,6 @@
     ]
   },
   "sora_ni_watashi_no_sunshine": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -169,7 +156,6 @@
     ]
   },
   "sotsugyou_album": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -182,7 +168,6 @@
     ]
   },
   "sweet_violet": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -195,7 +180,6 @@
     ]
   },
   "unhappy_end_world": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
@@ -208,7 +192,6 @@
     ]
   },
   "yummy_yappy_recipe": {
-    "category": 0,
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
