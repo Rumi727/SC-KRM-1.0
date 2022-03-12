@@ -29,6 +29,12 @@
     "settingbar.show": [
       306,
       106
+    ],
+    "volume_control.minus": [
+      45
+    ],
+    "volume_control.plus": [
+      61
     ]
   },
   "inputLockList": {
@@ -36,6 +42,7 @@
     "sidebar": false,
     "log": false,
     "log.command": false,
-    "settingbar": false
+    "settingbar": false,
+    "volumecontrol": false
   }
 }

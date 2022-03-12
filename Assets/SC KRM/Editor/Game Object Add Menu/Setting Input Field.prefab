@@ -731,7 +731,6 @@ GameObject:
   - component: {fileID: 7323581288829400120}
   - component: {fileID: 6861332770663965595}
   - component: {fileID: 8145220453371415631}
-  - component: {fileID: 656233929529435922}
   - component: {fileID: 2916338846000179462}
   m_Layer: 0
   m_Name: Name
@@ -887,26 +886,6 @@ MonoBehaviour:
   _nameSpace: sc-krm
   _path: 
   _textMeshPro: {fileID: 6861332770663965595}
---- !u!114 &656233929529435922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5434104390641082046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &2916338846000179462
 MonoBehaviour:
   m_ObjectHideFlags: 0

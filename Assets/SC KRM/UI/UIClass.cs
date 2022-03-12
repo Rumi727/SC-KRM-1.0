@@ -2,6 +2,7 @@ using SCKRM.Object;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
@@ -33,6 +34,21 @@ namespace SCKRM.UI
                 }
 
                 return _rectTransformInfo;
+            }
+        }
+
+        [NonSerialized] Graphic _graphic; public Graphic graphic
+        {
+            get
+            {
+                if (_graphic == null)
+                {
+                    _graphic = GetComponent<Graphic>();
+                    if (_graphic == null)
+                        return null;
+                }
+
+                return _graphic;
             }
         }
     }
@@ -67,6 +83,21 @@ namespace SCKRM.UI
                 return _rectTransformInfo;
             }
         }
+
+        [NonSerialized] Graphic _graphic; public Graphic graphic
+        {
+            get
+            {
+                if (_graphic == null)
+                {
+                    _graphic = GetComponent<Graphic>();
+                    if (_graphic == null)
+                        return null;
+                }
+
+                return _graphic;
+            }
+        }
     }
 
     public class UILayout : UIBehaviour
@@ -97,6 +128,21 @@ namespace SCKRM.UI
                 }
 
                 return _rectTransformInfo;
+            }
+        }
+
+        [NonSerialized] Graphic _graphic; public Graphic graphic
+        {
+            get
+            {
+                if (_graphic == null)
+                {
+                    _graphic = GetComponent<Graphic>();
+                    if (_graphic == null)
+                        return null;
+                }
+
+                return _graphic;
             }
         }
     }

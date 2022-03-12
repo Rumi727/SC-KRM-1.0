@@ -184,7 +184,6 @@ GameObject:
   - component: {fileID: 6236679418982111208}
   - component: {fileID: 5800856298254269161}
   - component: {fileID: 8855952369967304975}
-  - component: {fileID: 5689164567337482531}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -339,26 +338,6 @@ MonoBehaviour:
   _nameSpace: sc-krm
   _path: 
   _textMeshPro: {fileID: 5800856298254269161}
---- !u!114 &5689164567337482531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5482758384171305980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &6191042675793530320
 GameObject:
   m_ObjectHideFlags: 0

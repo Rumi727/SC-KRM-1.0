@@ -592,6 +592,9 @@ namespace SCKRM.Editor
 
         public static string DrawStringArray(string value, string[] array)
         {
+            if (array == null)
+                return "";
+
             int index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
             if (index >= 0)
                 return array[index];
@@ -600,6 +603,9 @@ namespace SCKRM.Editor
         }
         public static string DrawStringArray(string label, string value, string[] array)
         {
+            if (array == null)
+                return "";
+
             int index = EditorGUILayout.Popup(label, Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
             if (index >= 0)
                 return array[index];

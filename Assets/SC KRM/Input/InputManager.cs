@@ -239,7 +239,7 @@ namespace SCKRM.Input
                 return Vector2.zero;
         }
 
-        public static bool GetMouseButton(int button, params string[] inputLockDeny)
+        public static bool GetMouseButton(int button, InputType inputType = InputType.Down, params string[] inputLockDeny)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetMouseButton));
@@ -255,7 +255,16 @@ namespace SCKRM.Input
                 inputLockDeny = new string[0];
 
             if (!InputLockCheck(inputLockDeny))
-                return UnityEngine.Input.GetMouseButton(button);
+            {
+                if (inputType == InputType.Down)
+                    return UnityEngine.Input.GetMouseButtonDown(button);
+                else if (inputType == InputType.Alway)
+                    return UnityEngine.Input.GetMouseButton(button);
+                else if (inputType == InputType.Up)
+                    return UnityEngine.Input.GetMouseButtonUp(button);
+
+                return false;
+            }
             else
                 return false;
         }

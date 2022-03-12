@@ -26,7 +26,7 @@ namespace SCKRM.UI.StatusBar
         public static bool backButtonShow { get; set; } = true;
 
         public static bool selectedStatusBar { get; private set; } = false;
-        public static bool isStatusBarShow { get; private set; } = true;
+        public static bool isStatusBarShow { get; private set; } = false;
 
         static bool _cropTheScreen = true; public static bool cropTheScreen
         {
@@ -63,12 +63,13 @@ namespace SCKRM.UI.StatusBar
         {
             if (SingletonCheck(this))
             {
-                SceneManager.activeSceneChanged -= AniStart;
-                SceneManager.activeSceneChanged += AniStart;
+                Kernel.InitialLoadEnd += AniStart;
 
                 //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
-                async void AniStart(Scene previousActiveScene, Scene newActiveScene)
+                async void AniStart()
                 {
+                    BottomMode();
+
                     aniStop = true;
                     if (await UniTask.DelayFrame(3, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                         return;
@@ -200,37 +201,42 @@ namespace SCKRM.UI.StatusBar
 
                     if (tempTopMode != SaveData.bottomMode)
                     {
-                        if (!SaveData.bottomMode)
-                        {
-                            rectTransform.anchorMin = Vector2.up;
-                            rectTransform.anchorMax = Vector2.one;
-                            rectTransform.pivot = Vector2.up;
-
-                            if (!cropTheScreen)
-                                image.sprite = bg;
-                            else
-                                image.sprite = null;
-
-                            if (!isStatusBarShow)
-                                rectTransform.anchoredPosition = new Vector2(0, rectTransform.sizeDelta.y);
-                        }
-                        else
-                        {
-                            rectTransform.anchorMin = Vector2.zero;
-                            rectTransform.anchorMax = Vector2.right;
-                            rectTransform.pivot = Vector2.zero;
-
-                            if (!cropTheScreen)
-                                image.sprite = bg2;
-                            else
-                                image.sprite = null;
-
-                            if (!isStatusBarShow)
-                                rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y);
-                        }
+                        BottomMode();
                         tempTopMode = SaveData.bottomMode;
                     }
                 }
+            }
+        }
+
+        void BottomMode()
+        {
+            if (!SaveData.bottomMode)
+            {
+                rectTransform.anchorMin = Vector2.up;
+                rectTransform.anchorMax = Vector2.one;
+                rectTransform.pivot = Vector2.up;
+
+                if (!cropTheScreen)
+                    image.sprite = bg;
+                else
+                    image.sprite = null;
+
+                if (!isStatusBarShow)
+                    rectTransform.anchoredPosition = new Vector2(0, rectTransform.sizeDelta.y);
+            }
+            else
+            {
+                rectTransform.anchorMin = Vector2.zero;
+                rectTransform.anchorMax = Vector2.right;
+                rectTransform.pivot = Vector2.zero;
+
+                if (!cropTheScreen)
+                    image.sprite = bg2;
+                else
+                    image.sprite = null;
+
+                if (!isStatusBarShow)
+                    rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y);
             }
         }
 

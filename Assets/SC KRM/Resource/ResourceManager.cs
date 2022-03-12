@@ -1347,7 +1347,7 @@ namespace SCKRM.Resource
                 {
                     string[] filePaths = Directory.GetFiles(typePath, "*." + textureExtension[i]);
                     for (int l = 0; l < filePaths.Length; l++)
-                        filePaths[l] = Path.GetFileNameWithoutExtension(filePaths[l]);
+                        filePaths[l] = Path.GetFileNameWithoutExtension(filePaths[l].Replace("\\", "/"));
 
                     keys.AddRange(filePaths);
                 }

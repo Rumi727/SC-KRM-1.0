@@ -320,6 +320,9 @@ namespace SCKRM
             //볼륨을 사용자가 설정한 볼륨으로 조정시킵니다. 사용자가 설정한 볼륨은 int 0 ~ 200 이기 때문에 0.01을 곱해주어야 하고,
             //100 ~ 200 볼륨이 먹혀야하기 때문에 0.5로 볼륨을 낮춰야하기 때문에 0.005를 곱합니다
             AudioListener.volume = SaveData.mainVolume * 0.005f;
+#if UNITY_EDITOR
+            Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
+#endif
         }
 
         public static event Action InitialLoadStart = delegate { };
@@ -328,6 +331,10 @@ namespace SCKRM
 
         static async UniTaskVoid InitialLoad()
         {
+#if !UNITY_EDITOR
+            Cursor.visible = false;
+#endif
+
             //이미 초기로딩이 시작되었으면 더 이상 초기로딩을 진행하면 안되기 때문에 조건문을 걸어줍니다
             if (!isInitialLoadStart)
             {
