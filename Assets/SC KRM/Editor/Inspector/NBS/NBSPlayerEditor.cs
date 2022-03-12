@@ -1,4 +1,5 @@
 using SCKRM.NBS;
+using SCKRM.Resource;
 using SCKRM.Tool;
 using UnityEditor;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace SCKRM.Editor
                 GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
                 nbsPlayer.nameSpace = DrawNameSpace(nbsPlayer.nameSpace);
                 GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
-                nbsPlayer.key = EditorGUILayout.TextField(nbsPlayer.key);
+                nbsPlayer.key = DrawStringArray(nbsPlayer.key, ResourceManager.GetNBSDataKeys(nbsPlayer.nameSpace));
 
                 refesh = GUILayout.Button("새로고침", GUILayout.ExpandWidth(false));
                 string text;
@@ -97,7 +98,7 @@ namespace SCKRM.Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                if (nbsPlayer.nbsFile == null)
+                if (nbsPlayer.soundData == null)
                 {
                     GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
                     GUILayout.HorizontalSlider(0, 0, 1);

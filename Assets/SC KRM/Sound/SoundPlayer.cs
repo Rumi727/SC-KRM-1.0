@@ -24,7 +24,7 @@ namespace SCKRM.Sound
 
 
 
-        public SoundData soundData { get; private set; }
+        public SoundData<SoundMetaData> soundData { get; private set; }
         public SoundMetaData soundMetaData { get; private set; }
 
         public float time { get => audioSource.time; set => audioSource.time = value; }
@@ -63,8 +63,8 @@ namespace SCKRM.Sound
         }
 
         #region variable
-        [SerializeField] AudioClip _audioClip = null;
-        public AudioClip selectedAudioClip { get => _audioClip; set => _audioClip = value; }
+        [SerializeField] AudioClip _selectedAudioClip = null;
+        public AudioClip selectedAudioClip { get => _selectedAudioClip; set => _selectedAudioClip = value; }
         public AudioClip loadedAudioClip { get; private set; }
         #endregion
 
@@ -192,7 +192,7 @@ namespace SCKRM.Sound
         }
 
         float tempTime = 0;
-        void LateUpdate()
+        void Update()
         {
             SetVariable();
 

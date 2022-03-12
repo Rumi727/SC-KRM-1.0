@@ -13,7 +13,9 @@ namespace SCKRM.NBS
     [AddComponentMenu("")]
     public sealed class NBSPlayer : SoundPlayerManager
     {
-        public NBSFile nbsFile { get; private set; }
+        public SoundData<NBSMetaData> soundData { get; private set; }
+        public NBSMetaData nbsMetaData { get; private set; }
+        public NBSFile nbsFile => nbsMetaData.nbsFile;
 
 
         float tickTimer = 0;
@@ -57,43 +59,68 @@ namespace SCKRM.NBS
         }
         public float realTime { get => time / tempo; set => time = value * tempo; }
 
-        public short length => (short)(nbsFile?.songLength);
+        public short length => (short)(nbsMetaData?.nbsFile.songLength);
         public float realLength { get => length / tempo; }
 
         public bool isLooped { get; private set; } = false;
         public bool isPaused { get; set; } = false;
 
-
+        #region variable
+        [SerializeField] NBSFile _selectedNBSFile = null;
+        public NBSFile selectedNBSFile { get => _selectedNBSFile; set => _selectedNBSFile = value; }
+        public NBSFile loadedNBSFile { get; private set; }
+        #endregion
 
         bool allLayerLock;
         public void Refesh()
         {
-            string path = "";
-            for (int i = 0; i < ResourceManager.SaveData.resourcePacks.Count; i++)
             {
-                string resourcePackPath = ResourceManager.SaveData.resourcePacks[i];
-                if (ResourceManager.nameSpaces.Contains(nameSpace))
+                if (!Kernel.isInitialLoadEnd)
                 {
-                    string temppath = PathTool.Combine(resourcePackPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace), key + ".nbs");
+                    Remove();
+                    return;
+                }
 
-                    if (File.Exists(temppath))
+                if (selectedNBSFile == null)
+                {
+                    soundData = ResourceManager.SearchNBSData(key, nameSpace);
+
+                    if (soundData == null)
                     {
-                        path = temppath;
-                        break;
+                        Remove();
+                        return;
+                    }
+                    else if (soundData.sounds == null || soundData.sounds.Length <= 0)
+                    {
+                        Remove();
+                        return;
+                    }
+                    else if (pitch == 0)
+                    {
+                        Remove();
+                        return;
                     }
                 }
-            }
-
-            if (!File.Exists(path))
-            {
-                Remove();
-                return;
+                else
+                    soundData = null;
             }
 
             if (!SoundManager.nbsList.Contains(this))
                 SoundManager.nbsList.Add(this);
-            
-            nbsFile = NBSManager.ReadNBSFile(path);
+
+            {
+                if (selectedNBSFile == null)
+                {
+                    loadedNBSFile = null;
+                    nbsMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                }
+                else
+                {
+                    loadedNBSFile = selectedNBSFile;
+                    nbsMetaData = null;
+                }
+            }
+
             allLayerLock = nbsFile.nbsLayers.Any((b) => b.layerLock == 2);
 
             if (tempo < 0 && tick == 0)
@@ -124,13 +151,13 @@ namespace SCKRM.NBS
 
 
 
-        void LateUpdate()
+        void Update()
         {
             if (!isPaused)
             {
-                if (tempo < 0)
+                if (tempo * nbsMetaData.tempo < 0)
                 {
-                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs();
+                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs() * nbsMetaData.tempo;
                     while (tickTimer <= 0)
                     {
                         _tick--;
@@ -141,7 +168,7 @@ namespace SCKRM.NBS
                 }
                 else
                 {
-                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo;
+                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * (tempo * nbsMetaData.tempo).Abs();
                     while (tickTimer >= 0.05f)
                     {
                         _tick++;
@@ -210,9 +237,9 @@ namespace SCKRM.NBS
                             blockType += "pling";
 
                         if (spatial)
-                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch * nbsMetaData.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
                         else
-                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo);
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch * nbsMetaData.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo);
                     }
 
                     _index++;

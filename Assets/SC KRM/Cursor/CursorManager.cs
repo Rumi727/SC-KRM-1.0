@@ -37,6 +37,8 @@ namespace SCKRM
                         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + 67.5f)), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     }
+                    else
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
                 else
                 {

@@ -323,7 +323,7 @@ namespace SCKRM.Editor
         float nbsPanStereo = 0;
         bool nbsSpatial = false;
 
-        float nbsMinDistance = 0;
+        float nbsMinDistance = 0;   
         float nbsMaxDistance = 48;
         Vector3 nbsLocalPosition = Vector3.zero;
 
@@ -341,7 +341,7 @@ namespace SCKRM.Editor
                         GUILayout.Label("네임스페이스", GUILayout.ExpandWidth(false));
                         nbsNameSpace = CustomInspectorEditor.DrawNameSpace(nbsNameSpace);
                         GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
-                        nbsKey = EditorGUILayout.TextField(nbsKey);
+                        nbsKey = CustomInspectorEditor.DrawStringArray(nbsKey, ResourceManager.GetNBSDataKeys(nbsNameSpace));
 
                         if (!Application.isPlaying)
                             GUI.enabled = false;
@@ -579,7 +579,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "조작 키 설정", "오브젝트 풀링 설정", "오디오 설정", "리소스 설정" }, GUILayout.Width(570));
+                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "조작 키 설정", "오브젝트 풀링 설정", "오디오 설정", "NBS 설정", "리소스 설정" }, GUILayout.ExpandWidth(false));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -602,6 +602,9 @@ namespace SCKRM.Editor
                     AudioSetting();
                     break;
                 case 4:
+                    NBSSetting();
+                    break;
+                case 5:
                     ResourceSetting();
                     break;
             }
@@ -1206,10 +1209,10 @@ namespace SCKRM.Editor
                 }
                 else
                 {
-                    Dictionary<string, SoundData> soundDatas = JsonManager.JsonRead<Dictionary<string, SoundData>>(jsonPath, true);
+                    Dictionary<string, SoundData<SoundMetaData>> soundDatas = JsonManager.JsonRead<Dictionary<string, SoundData<SoundMetaData>>>(jsonPath, true);
 
                     if (soundDatas == null)
-                        soundDatas = new Dictionary<string, SoundData>();
+                        soundDatas = new Dictionary<string, SoundData<SoundMetaData>>();
 
                     {
                         if (soundDatas.Count > 0 && deleteSafety)
@@ -1256,7 +1259,7 @@ namespace SCKRM.Editor
                                 GUI.enabled = false;
 
                             if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                                soundDatas.Add("", new SoundData("", false, new SoundMetaData[0]));
+                                soundDatas.Add("", new SoundData<SoundMetaData>("", false, new SoundMetaData[0]));
 
                             if (!Application.isPlaying)
                                 GUI.enabled = true;
@@ -1265,7 +1268,7 @@ namespace SCKRM.Editor
                         {
                             if (soundDatas.Count > 0)
                             {
-                                SoundData soundData = soundDatas.Values.ToList()[soundDatas.Count - 1];
+                                SoundData<SoundMetaData> soundData = soundDatas.Values.ToList()[soundDatas.Count - 1];
                                 if ((soundDatas.Keys.ToList()[soundDatas.Count - 1] != "" || soundData.subtitle != "" || soundData.sounds == null || soundData.sounds.Count() > 0) && deleteSafety)
                                     GUI.enabled = false;
                             }
@@ -1290,14 +1293,14 @@ namespace SCKRM.Editor
                                 for (int i = soundDatas.Count; i < count; i++)
                                 {
                                     if (!soundDatas.ContainsKey(""))
-                                        soundDatas.Add("", new SoundData("", false, new SoundMetaData[0]));
+                                        soundDatas.Add("", new SoundData<SoundMetaData>("", false, new SoundMetaData[0]));
                                     else
                                         count--;
                                 }
                             }
                             else if (count < soundDatas.Count)
                             {
-                                SoundData soundData = soundDatas.Values.ToList()[soundDatas.Count - 1];
+                                SoundData<SoundMetaData> soundData = soundDatas.Values.ToList()[soundDatas.Count - 1];
                                 for (int i = soundDatas.Count - 1; i >= count; i--)
                                 {
                                     if ((soundDatas.Count > 0 && soundDatas.Keys.ToList()[soundDatas.Count - 1] == "" && soundData.subtitle == "" && soundData.sounds != null && soundData.sounds.Count() <= 0) || !deleteSafety)
@@ -1328,14 +1331,14 @@ namespace SCKRM.Editor
 
                         //GUI.DrawTexture(new Rect(0, 0, maxSize.x, maxSize.y), EditorGUIUtility.whiteTexture, ScaleMode.StretchToFill, false, 0, Color.white * 0.25f, 0, 0);
 
-                        List<KeyValuePair<string, SoundData>> tempSoundDatas = soundDatas.ToList();
+                        List<KeyValuePair<string, SoundData<SoundMetaData>>> tempSoundDatas = soundDatas.ToList();
                         //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
                         List<string> keyList = new List<string>();
-                        List<SoundData> valueList = new List<SoundData>();
+                        List<SoundData<SoundMetaData>> valueList = new List<SoundData<SoundMetaData>>();
 
                         for (int i = 0; i < soundDatas.Count; i++)
                         {
-                            KeyValuePair<string, SoundData> soundData = tempSoundDatas[i];
+                            KeyValuePair<string, SoundData<SoundMetaData>> soundData = tempSoundDatas[i];
 
                             CustomInspectorEditor.DrawLine();
 
@@ -1452,7 +1455,7 @@ namespace SCKRM.Editor
 
                                         soundMetaDatas[j] = new SoundMetaData(soundPath, stream, pitch, tempo, null);
                                     }
-                                    valueList.Add(new SoundData(subtitle, isBGM, soundMetaDatas.ToArray()));
+                                    valueList.Add(new SoundData<SoundMetaData>(subtitle, isBGM, soundMetaDatas.ToArray()));
 
                                     //EditorGUILayout.EndScrollView();
                                 }
@@ -1480,7 +1483,327 @@ namespace SCKRM.Editor
                 ProjectSettingManager.Save(typeof(SoundManager.Data));
         }
 
-        Vector2 resourceSettingScrollPos = Vector2.zero;
+        string nbsSettingNameSpace = "";
+        Vector2 nbsSettingScrollPos = Vector2.zero;
+        public void NBSSetting(int scrollYSize = 0)
+        {
+            //GUI
+            {
+                EditorGUILayout.LabelField("NBS 설정", EditorStyles.boldLabel);
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("안전 삭제 모드 (삭제 할 리스트가 빈 값이 아니면 삭제 금지)", GUILayout.Width(330));
+                deleteSafety = EditorGUILayout.Toggle(deleteSafety);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+            }
+
+            EditorGUILayout.BeginHorizontal();
+
+            nbsSettingNameSpace = CustomInspectorEditor.DrawNameSpace("네임스페이스", nbsSettingNameSpace);
+
+            string nameSpace = nbsSettingNameSpace;
+            string path = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace));
+
+            if (Application.isPlaying)
+                GUI.enabled = false;
+
+            if (!Directory.Exists(path))
+            {
+                if (GUILayout.Button("nbs 폴더 만들기", GUILayout.ExpandWidth(false)))
+                {
+                    Directory.CreateDirectory(path);
+                    AssetDatabase.Refresh();
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+            else
+            {
+                string jsonPath = path + ".json";
+                if (!File.Exists(jsonPath))
+                {
+                    if (GUILayout.Button("nbs.json 파일 만들기", GUILayout.ExpandWidth(false)))
+                    {
+                        File.WriteAllText(jsonPath, "{}");
+                        AssetDatabase.Refresh();
+                    }
+
+                    {
+                        if (Directory.GetFiles(path).Length > 0 && deleteSafety)
+                            GUI.enabled = false;
+
+                        if (GUILayout.Button("nbs 폴더 지우기", GUILayout.ExpandWidth(false)))
+                        {
+                            Directory.Delete(path, true);
+                            File.Delete(path + ".meta");
+                            AssetDatabase.Refresh();
+                            EditorGUILayout.EndHorizontal();
+                            return;
+                        }
+
+                        if (!Application.isPlaying)
+                            GUI.enabled = true;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+                }
+                else
+                {
+                    Dictionary<string, SoundData<NBSMetaData>> soundDatas = JsonManager.JsonRead<Dictionary<string, SoundData<NBSMetaData>>>(jsonPath, true);
+
+                    if (soundDatas == null)
+                        soundDatas = new Dictionary<string, SoundData<NBSMetaData>>();
+
+                    {
+                        if (soundDatas.Count > 0 && deleteSafety)
+                            GUI.enabled = false;
+
+                        if (GUILayout.Button("nbs.json 파일 지우기", GUILayout.ExpandWidth(false)))
+                        {
+                            File.Delete(jsonPath);
+                            File.Delete(jsonPath + ".meta");
+                            AssetDatabase.Refresh();
+                            EditorGUILayout.EndHorizontal();
+                            return;
+                        }
+
+                        if (!Application.isPlaying)
+                            GUI.enabled = true;
+                    }
+
+                    {
+                        if (Directory.GetFiles(path).Length > 0 && deleteSafety)
+                            GUI.enabled = false;
+
+                        if (GUILayout.Button("nbs 폴더 지우기", GUILayout.ExpandWidth(false)))
+                        {
+                            Directory.Delete(path, true);
+                            File.Delete(path + ".meta");
+                            AssetDatabase.Refresh();
+                            EditorGUILayout.EndHorizontal();
+                            return;
+                        }
+
+                        if (!Application.isPlaying)
+                            GUI.enabled = true;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+
+                    //GUI
+                    {
+                        EditorGUILayout.BeginHorizontal();
+
+                        {
+                            if (soundDatas.ContainsKey(""))
+                                GUI.enabled = false;
+
+                            if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
+                                soundDatas.Add("", new SoundData<NBSMetaData>("", false, new NBSMetaData[0]));
+
+                            if (!Application.isPlaying)
+                                GUI.enabled = true;
+                        }
+
+                        {
+                            if (soundDatas.Count > 0)
+                            {
+                                SoundData<NBSMetaData> soundData = soundDatas.Values.ToList()[soundDatas.Count - 1];
+                                if ((soundDatas.Keys.ToList()[soundDatas.Count - 1] != "" || soundData.subtitle != "" || soundData.sounds == null || soundData.sounds.Count() > 0) && deleteSafety)
+                                    GUI.enabled = false;
+                            }
+                            else
+                                GUI.enabled = false;
+
+                            if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && soundDatas.Count > 0)
+                                soundDatas.Remove(soundDatas.ToList()[soundDatas.Count - 1].Key);
+
+                            if (!Application.isPlaying)
+                                GUI.enabled = true;
+                        }
+
+                        {
+                            int count = EditorGUILayout.IntField("리스트 길이", soundDatas.Count, GUILayout.Height(21));
+                            //변수 설정
+                            if (count < 0)
+                                count = 0;
+
+                            if (count > soundDatas.Count)
+                            {
+                                for (int i = soundDatas.Count; i < count; i++)
+                                {
+                                    if (!soundDatas.ContainsKey(""))
+                                        soundDatas.Add("", new SoundData<NBSMetaData>("", false, new NBSMetaData[0]));
+                                    else
+                                        count--;
+                                }
+                            }
+                            else if (count < soundDatas.Count)
+                            {
+                                SoundData<NBSMetaData> soundData = soundDatas.Values.ToList()[soundDatas.Count - 1];
+                                for (int i = soundDatas.Count - 1; i >= count; i--)
+                                {
+                                    if ((soundDatas.Count > 0 && soundDatas.Keys.ToList()[soundDatas.Count - 1] == "" && soundData.subtitle == "" && soundData.sounds != null && soundData.sounds.Count() <= 0) || !deleteSafety)
+                                        soundDatas.Remove(soundDatas.ToList()[soundDatas.Count - 1].Key);
+                                    else
+                                        count++;
+                                }
+                            }
+                        }
+
+                        EditorGUILayout.EndHorizontal();
+                    }
+
+
+
+                    {
+                        {
+                            GUI.enabled = true;
+
+                            if (scrollYSize > 0)
+                                nbsSettingScrollPos = EditorGUILayout.BeginScrollView(nbsSettingScrollPos, GUILayout.Height(scrollYSize));
+                            else
+                                nbsSettingScrollPos = EditorGUILayout.BeginScrollView(nbsSettingScrollPos);
+
+                            if (Application.isPlaying)
+                                GUI.enabled = false;
+                        }
+
+                        //GUI.DrawTexture(new Rect(0, 0, maxSize.x, maxSize.y), EditorGUIUtility.whiteTexture, ScaleMode.StretchToFill, false, 0, Color.white * 0.25f, 0, 0);
+
+                        List<KeyValuePair<string, SoundData<NBSMetaData>>> tempSoundDatas = soundDatas.ToList();
+                        //딕셔너리는 키를 수정할수 없기때문에, 리스트로 분활해줘야함
+                        List<string> keyList = new List<string>();
+                        List<SoundData<NBSMetaData>> valueList = new List<SoundData<NBSMetaData>>();
+
+                        for (int i = 0; i < soundDatas.Count; i++)
+                        {
+                            KeyValuePair<string, SoundData<NBSMetaData>> soundData = tempSoundDatas[i];
+
+                            CustomInspectorEditor.DrawLine();
+
+                            EditorGUILayout.BeginHorizontal();
+                            GUILayout.Space(30);
+
+                            GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
+                            keyList.Add(EditorGUILayout.TextField(soundData.Key));
+
+                            GUILayout.Label("자막", GUILayout.ExpandWidth(false));
+                            string subtitle = EditorGUILayout.TextField(soundData.Value.subtitle);
+
+                            GUILayout.Label("BGM", GUILayout.ExpandWidth(false));
+                            bool isBGM = EditorGUILayout.Toggle(soundData.Value.isBGM, GUILayout.Width(15));
+
+                            EditorGUILayout.EndHorizontal();
+
+
+                            //리스트 안의 리스트
+                            {
+                                List<NBSMetaData> soundMetaDatas = soundData.Value.sounds.ToList();
+                                {
+                                    EditorGUILayout.BeginHorizontal();
+                                    GUILayout.Space(30);
+
+                                    {
+                                        if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
+                                            soundMetaDatas.Add(new NBSMetaData("", 1, 1, null));
+                                    }
+
+                                    {
+                                        if (soundMetaDatas.Count <= 0 || (soundMetaDatas[soundMetaDatas.Count - 1].path != "" && deleteSafety))
+                                            GUI.enabled = false;
+
+                                        if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && soundMetaDatas.Count > 0)
+                                            soundMetaDatas.RemoveAt(soundMetaDatas.Count - 1);
+
+                                        if (!Application.isPlaying)
+                                            GUI.enabled = true;
+                                    }
+
+                                    EditorGUILayout.EndHorizontal();
+                                }
+
+
+
+                                {
+                                    //scrollPosList[i] = EditorGUILayout.BeginScrollView(scrollPosList[i]);
+                                    //GUI.DrawTexture(new Rect(0, 0, maxSize.x, maxSize.y), EditorGUIUtility.whiteTexture, ScaleMode.StretchToFill, false, 0, Color.white * 0.25f, 0, 0);
+
+                                    for (int j = 0; j < soundMetaDatas.Count; j++)
+                                    {
+                                        NBSMetaData soundMetaData = soundMetaDatas[j];
+                                        string soundPath = soundMetaData.path;
+                                        float pitch = soundMetaData.pitch;
+                                        float tempo = soundMetaData.tempo;
+
+                                        //CustomInspectorEditor.DrawLine();
+
+                                        EditorGUILayout.BeginHorizontal();
+                                        GUILayout.Space(60);
+
+                                        GUILayout.Label("경로", GUILayout.ExpandWidth(false));
+                                        soundPath = EditorGUILayout.TextField(soundPath);
+
+                                        //개같네 진짜 안해
+                                        /*{
+                                            string assetAllPath = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
+                                            string assetAllPathAndName = PathTool.Combine(assetAllPath, soundPath);
+
+                                            string assetPath = PathTool.Combine("Assets/StreamingAssets", ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
+                                            string assetPathAndName = PathTool.Combine(assetPath, soundPath);
+
+                                            ResourceManager.FileExtensionExists(assetAllPathAndName, out string outPath, ResourceManager.audioExtension);
+
+                                            DefaultAsset audioClip = AssetDatabase.LoadAssetAtPath<DefaultAsset>(assetPathAndName + Path.GetExtension(outPath));
+                                            audioClip = (DefaultAsset)EditorGUILayout.ObjectField(audioClip, typeof(DefaultAsset), false);
+
+                                            assetPathAndName = AssetDatabase.GetAssetPath(audioClip);
+                                            if (soundData.Key == "jevil")
+                                                Debug.Log(assetPathAndName);
+                                            string assetName = assetPathAndName.Replace(assetPath + "/", "");
+                                            assetAllPathAndName = assetAllPathAndName.Substring(0, assetAllPathAndName.Length - Path.GetExtension(assetAllPathAndName).Length);
+
+                                            if (ResourceManager.FileExtensionExists(assetAllPathAndName, out _, ResourceManager.audioExtension))
+                                                soundPath = Path.GetFileNameWithoutExtension(assetName);
+                                        }*/
+
+                                        GUILayout.Label("피치", GUILayout.ExpandWidth(false));
+                                        pitch = EditorGUILayout.FloatField(pitch, GUILayout.Width(30)).Clamp(soundMetaData.tempo.Abs() * 0.5f, soundMetaData.tempo.Abs() * 2f);
+
+                                        GUILayout.Label("템포", GUILayout.ExpandWidth(false));
+                                        tempo = EditorGUILayout.FloatField(tempo, GUILayout.Width(30));
+
+                                        EditorGUILayout.EndHorizontal();
+
+                                        soundMetaDatas[j] = new NBSMetaData(soundPath, pitch, tempo, null);
+                                    }
+                                    valueList.Add(new SoundData<NBSMetaData>(subtitle, isBGM, soundMetaDatas.ToArray()));
+
+                                    //EditorGUILayout.EndScrollView();
+                                }
+                            }
+                        }
+
+                        EditorGUILayout.EndScrollView();
+
+                        //키 중복 감지
+                        bool overlap = keyList.Count != keyList.Distinct().Count();
+                        if (!overlap)
+                        {
+                            //리스트 2개를 딕셔너리로 변환
+                            soundDatas = keyList.Zip(valueList, (key, value) => new { key, value }).ToDictionary(a => a.key, a => a.value);
+                        }
+                    }
+
+                    //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
+                    if (GUI.changed && !Application.isPlaying)
+                        File.WriteAllText(jsonPath, JsonManager.ObjectToJson(soundDatas));
+                }
+            }
+        }
+
         public void ResourceSetting()
         {
             if (!Application.isPlaying)

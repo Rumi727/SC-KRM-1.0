@@ -194,9 +194,6 @@ namespace SCKRM
 
 
 
-        [SerializeField] Image _splashScreenBackground;
-        public Image splashScreenBackground => _splashScreenBackground;
-
         void Awake()
         {
             if (SingletonCheck(this))
@@ -243,6 +240,8 @@ namespace SCKRM
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
 
+            VariableUpdate();
+
             //기념일
             //초기로딩이 끝나야 알림을 띄울수 있으니 조건을 걸어둡니다
             //최적화를 위해 년, 월, 일이 변경되어야 실행됩니다
@@ -278,7 +277,7 @@ namespace SCKRM
         }
 
         //변수 업데이트
-        void LateUpdate()
+        void VariableUpdate()
         {
             //현제 해상도의 가로랑 1920을 나눠서 모든 해상도에도 가로 픽셀 크기는 똑같이 유지되게 함
             float defaultGuiSize = (float)Screen.width / 1920;
@@ -331,10 +330,6 @@ namespace SCKRM
 
         static async UniTaskVoid InitialLoad()
         {
-#if !UNITY_EDITOR
-            Cursor.visible = false;
-#endif
-
             //이미 초기로딩이 시작되었으면 더 이상 초기로딩을 진행하면 안되기 때문에 조건문을 걸어줍니다
             if (!isInitialLoadStart)
             {
@@ -352,6 +347,10 @@ namespace SCKRM
                     //초기로딩이 시작됬습니다
                     isInitialLoadStart = true;
                     InitialLoadStart();
+
+#if !UNITY_EDITOR
+                    Cursor.visible = false;
+#endif
 
                     StatusBarManager.allowStatusBarShow = false;
 
@@ -415,8 +414,8 @@ namespace SCKRM
 
                     {
                         //초기 로딩이 끝났습니다
-                        InitialLoadEnd();
                         isInitialLoadEnd = true;
+                        InitialLoadEnd();
 
                         //리소스를 로딩했으니 모든 렌더러를 전부 재렌더링합니다
                         RendererManager.AllRerender();
