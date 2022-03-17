@@ -1,6 +1,5 @@
 {
   "ui.cartography_table.take_result": {
-    "category": 0,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -25,7 +24,6 @@
     ]
   },
   "entity.arrow.shoot": {
-    "category": 0,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -37,47 +35,7 @@
       }
     ]
   },
-  "ui.toast.challenge_complete": {
-    "category": 0,
-    "subtitle": "",
-    "isBGM": false,
-    "sounds": [
-      {
-        "path": "ui/toast/challenge_complete",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      }
-    ]
-  },
-  "ui.toast.in": {
-    "category": 0,
-    "subtitle": "",
-    "isBGM": false,
-    "sounds": [
-      {
-        "path": "ui/toast/in",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      }
-    ]
-  },
-  "ui.toast.out": {
-    "category": 0,
-    "subtitle": "",
-    "isBGM": false,
-    "sounds": [
-      {
-        "path": "ui/toast/out",
-        "stream": false,
-        "pitch": 1.0,
-        "tempo": 1.0
-      }
-    ]
-  },
   "block.note_block.banjo": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -90,7 +48,6 @@
     ]
   },
   "block.note_block.bass": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -103,7 +60,6 @@
     ]
   },
   "block.note_block.bassdrum": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -116,7 +72,6 @@
     ]
   },
   "block.note_block.bell": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -129,7 +84,6 @@
     ]
   },
   "block.note_block.bit": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -142,7 +96,6 @@
     ]
   },
   "block.note_block.cow_bell": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -155,7 +108,6 @@
     ]
   },
   "block.note_block.didgeridoo": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -168,7 +120,6 @@
     ]
   },
   "block.note_block.flute": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -181,7 +132,6 @@
     ]
   },
   "block.note_block.guitar": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -194,7 +144,6 @@
     ]
   },
   "block.note_block.harp": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -207,7 +156,6 @@
     ]
   },
   "block.note_block.hat": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -220,7 +168,6 @@
     ]
   },
   "block.note_block.chime": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -233,7 +180,6 @@
     ]
   },
   "block.note_block.iron_xylophone": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -246,7 +192,6 @@
     ]
   },
   "block.note_block.pling": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -259,7 +204,6 @@
     ]
   },
   "block.note_block.snare": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [
@@ -272,7 +216,6 @@
     ]
   },
   "block.note_block.xylobone": {
-    "category": 2,
     "subtitle": "",
     "isBGM": false,
     "sounds": [

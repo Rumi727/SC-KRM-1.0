@@ -93,11 +93,14 @@ namespace SCKRM.UI.StatusBar
             if (Kernel.isInitialLoadEnd && !aniStop)
             {
                 {
-                    bool mouseYisScreenY;
-                    if (SaveData.bottomMode)
-                        mouseYisScreenY = InputManager.mousePosition.y <= 1;
-                    else
-                        mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
+                    bool mouseYisScreenY = false;
+                    if (InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width)
+                    {
+                        if (SaveData.bottomMode)
+                            mouseYisScreenY = InputManager.mousePosition.y <= 1;
+                        else
+                            mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
+                    }
 
                     selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<Kernel>() != null;
                     bool statusBarShow = selectedStatusBar || timer > 0;
