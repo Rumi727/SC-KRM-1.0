@@ -87,6 +87,7 @@ namespace SCKRM.UI.SideBar
                     {
                         viewPort.gameObject.SetActive(true);
                         scrollBarParentRectTransform.gameObject.SetActive(true);
+                        graphic.enabled = true;
                     }
                 }
                 else
@@ -99,6 +100,7 @@ namespace SCKRM.UI.SideBar
                             {
                                 viewPort.gameObject.SetActive(false);
                                 scrollBarParentRectTransform.gameObject.SetActive(false);
+                                graphic.enabled = false;
                             }
 
                             return;
@@ -112,6 +114,7 @@ namespace SCKRM.UI.SideBar
                             {
                                 viewPort.gameObject.SetActive(false);
                                 scrollBarParentRectTransform.gameObject.SetActive(false);
+                                graphic.enabled = false;
                             }
 
                             return;

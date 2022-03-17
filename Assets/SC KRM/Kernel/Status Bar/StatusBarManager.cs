@@ -151,7 +151,10 @@ namespace SCKRM.UI.StatusBar
                         rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                         if (!layout.activeSelf)
+                        {
                             layout.SetActive(true);
+                            graphic.enabled = true;
+                        }
                     }
                     else
                     {
@@ -162,7 +165,10 @@ namespace SCKRM.UI.StatusBar
                             if (rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
                             {
                                 if (layout.activeSelf)
+                                {
                                     layout.SetActive(false);
+                                    graphic.enabled = false;
+                                }
                             }
                         }
                         else
@@ -172,7 +178,10 @@ namespace SCKRM.UI.StatusBar
                             if (rectTransform.anchoredPosition.y <= -rectTransform.sizeDelta.y + 0.01f)
                             {
                                 if (layout.activeSelf)
+                                {
                                     layout.SetActive(false);
+                                    graphic.enabled = false;
+                                }
                             }
                         }
                     }

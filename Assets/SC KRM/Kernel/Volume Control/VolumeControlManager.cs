@@ -27,16 +27,36 @@ namespace SCKRM.UI
                 if (isPointer || isDrag || timer >= 0)
                 {
                     if (!hide.activeSelf)
+                    {
                         hide.SetActive(true);
+                        graphic.enabled = true;
+                    }
 
                     rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, -15), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
                 else
                 {
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.sizeDelta.y + 1), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    if (StatusBarManager.SaveData.bottomMode)
+                    {
+                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
+                        {
+                            hide.SetActive(false);
+                            graphic.enabled = false;
+                        }
 
-                    if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
-                        hide.SetActive(false);
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.sizeDelta.y + 1), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    }
+                    else
+                    {
+                        float statusBarSizeDeltaY = StatusBarManager.instance.rectTransform.sizeDelta.y;
+                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y + statusBarSizeDeltaY - 0.01f)
+                        {
+                            hide.SetActive(false);
+                            graphic.enabled = false;
+                        }
+
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.sizeDelta.y + 1 + statusBarSizeDeltaY), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    }
                 }
 
                 if (InputManager.GetKey("volume_control.minus", InputType.Down, "all"))
