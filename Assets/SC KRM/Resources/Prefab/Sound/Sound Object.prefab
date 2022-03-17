@@ -57,8 +57,6 @@ MonoBehaviour:
   _minDistance: 0
   _maxDistance: 16
   _localPosition: {x: 0, y: 0, z: 0}
-  _audioSource: {fileID: 6257864773840450652}
-  _selectedAudioClip: {fileID: 0}
 --- !u!82 &6257864773840450652
 AudioSource:
   m_ObjectHideFlags: 0

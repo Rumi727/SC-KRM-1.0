@@ -65,11 +65,7 @@ namespace SCKRM.UI.SideBar
         #endregion
 
         public void Show() => isShow = true;
-        public void Hide()
-        {
-            isShow = false;
-            StatusBarManager.Tab();
-        }
+        public void Hide() => isShow = false;
         public void Toggle()
         {
             if (isShow)
