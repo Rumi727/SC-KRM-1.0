@@ -34,13 +34,13 @@ namespace SCKRM.UI
 
             size = new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset;
             if (max.x <= 0)
-                size.x = size.x.Clamp(min.x);
+                size.x.ClampRef(min.x);
             else
-                size.x = size.x.Clamp(min.x, max.x);
+                size.x.ClampRef(min.x, max.x);
             if (max.y <= 0)
-                size.y = size.y.Clamp(min.y);
+                size.y.ClampRef(min.y);
             else
-                size.y = size.y.Clamp(min.y, max.y);
+                size.y.ClampRef(min.y, max.y);
         }
 
         Vector2 size;

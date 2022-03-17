@@ -76,13 +76,13 @@ namespace SCKRM.UI.Layout
             ySize = new Vector2(rectTransform.sizeDelta.x, y + offset.y);
             if (max <= 0)
             {
-                xSize.x = xSize.x.Clamp(min);
-                ySize.y = ySize.y.Clamp(min);
+                xSize.x.ClampRef(min);
+                ySize.y.ClampRef(min);
             }
             else
             {
-                xSize.x = xSize.x.Clamp(min, max);
-                ySize.y = ySize.y.Clamp(min, max);
+                xSize.x.ClampRef(min, max);
+                ySize.y.ClampRef(min, max);
             }
         }
 

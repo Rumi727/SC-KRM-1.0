@@ -629,8 +629,8 @@ namespace SCKRM.Editor
 
                 Kernel.Data.notFocusFpsLimit = EditorGUILayout.IntField("포커스가 아닐때 FPS 제한", Kernel.Data.notFocusFpsLimit);
 
-                Kernel.Data.standardFPS = Kernel.Data.standardFPS.Clamp(0.00000001f);
-                Kernel.Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(0);
+                Kernel.Data.standardFPS.ClampRef(0.00000001f);
+                Kernel.Data.notFocusFpsLimit.ClampRef(0);
 
                 EditorGUILayout.Space();
 
@@ -1437,7 +1437,7 @@ namespace SCKRM.Editor
                                             tempo = EditorGUILayout.FloatField(tempo, GUILayout.Width(30));
 
                                             if (soundMetaData.stream)
-                                                tempo = tempo.Clamp(0);
+                                                tempo.ClampRef(0);
                                         }
                                         else
                                         {
@@ -1445,7 +1445,7 @@ namespace SCKRM.Editor
                                             pitch = EditorGUILayout.FloatField(pitch, GUILayout.Width(30));
 
                                             if (soundMetaData.stream)
-                                                pitch = pitch.Clamp(0);
+                                                pitch.ClampRef(0);
                                         }
 
                                         GUILayout.Label("스트림", GUILayout.ExpandWidth(false));

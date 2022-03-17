@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6257864773840450653}
   - component: {fileID: 6257864773840450655}
   - component: {fileID: 6257864773840450652}
+  - component: {fileID: 3777472876836215483}
   m_Layer: 0
   m_Name: Sound Object
   m_TagString: Untagged
@@ -45,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53188fd11e722954c95f5b05cc8689d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 6257864773840450652}
   _key: 
   _nameSpace: 
   _volume: 1
@@ -57,6 +57,8 @@ MonoBehaviour:
   _minDistance: 0
   _maxDistance: 16
   _localPosition: {x: 0, y: 0, z: 0}
+  _audioSource: {fileID: 6257864773840450652}
+  _selectedAudioClip: {fileID: 0}
 --- !u!82 &6257864773840450652
 AudioSource:
   m_ObjectHideFlags: 0
@@ -139,6 +141,31 @@ AudioSource:
     m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!169 &3777472876836215483
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257864773840450642}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3

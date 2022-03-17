@@ -152,7 +152,7 @@ namespace SCKRM.Object
         }
     }
 
-    public class ObjectPooling : UIBehaviour
+    public class ObjectPooling : MonoBehaviour
     {
         public string objectKey { get; set; } = "";
         public bool actived { get; set; } = false;

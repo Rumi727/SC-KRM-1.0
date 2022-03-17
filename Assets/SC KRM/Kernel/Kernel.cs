@@ -28,32 +28,32 @@ namespace SCKRM
         [ProjectSetting]
         public sealed class Data
         {
-            [JsonProperty] public static float standardFPS { get; set; } = 60;
+            [JsonProperty] public static float standardFPS = 60;
 
 
 
-            [JsonProperty] public static int notFocusFpsLimit { get; set; } = 30;
+            [JsonProperty] public static int notFocusFpsLimit = 30;
 
 
 
-            [JsonProperty] public static string splashScreenPath { get; set; } = "Assets/SC KRM/Splash Screen";
-            [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
+            [JsonProperty] public static string splashScreenPath = "Assets/SC KRM/Splash Screen";
+            [JsonProperty] public static string splashScreenName = "Splash Screen";
         }
 
         [SaveLoad("default")]
         public sealed class SaveData
         {
-            [JsonProperty] public static JColor systemColor { get; set; } = new JColor(0.5137255f, 0.1019608f, 0.627451f);
+            [JsonProperty] public static JColor systemColor = new JColor(0.5137255f, 0.1019608f, 0.627451f);
 
-            [JsonProperty] public static int mainVolume { get; set; } = 100;
-            [JsonProperty] public static int bgmVolume { get; set; } = 100;
-            [JsonProperty] public static int soundVolume { get; set; } = 100;
+            [JsonProperty] public static int mainVolume = 100;
+            [JsonProperty] public static int bgmVolume = 100;
+            [JsonProperty] public static int soundVolume = 100;
 
-            [JsonProperty] public static bool vSync { get; set; } = true;
-            [JsonProperty] public static int fpsLimit { get; set; } = 480;
-            [JsonProperty] public static float guiSize { get; set; } = 1;
-            [JsonProperty] public static float fixedGuiSize { get; set; } = 1;
-            [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = true;
+            [JsonProperty] public static bool vSync = true;
+            [JsonProperty] public static int fpsLimit = 480;
+            [JsonProperty] public static float guiSize = 1;
+            [JsonProperty] public static float fixedGuiSize = 1;
+            [JsonProperty] public static bool fixedGuiSizeEnable = true;
         }
 
         public static float fps { get; private set; } = 60;
@@ -283,14 +283,14 @@ namespace SCKRM
             float defaultGuiSize = (float)Screen.width / 1920;
 
             //변수들의 최소, 최대 수치를 지정합니다
-            SaveData.mainVolume = SaveData.mainVolume.Clamp(0, 200);
-            SaveData.bgmVolume = SaveData.bgmVolume.Clamp(0, 200);
-            SaveData.soundVolume = SaveData.soundVolume.Clamp(0, 200);
+            SaveData.mainVolume.ClampRef(0, 200);
+            SaveData.bgmVolume.ClampRef(0, 200);
+            SaveData.soundVolume.ClampRef(0, 200);
 
-            SaveData.fpsLimit = SaveData.fpsLimit.Clamp(1);
-            SaveData.fixedGuiSize = SaveData.fixedGuiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
-            SaveData.guiSize = SaveData.guiSize.Clamp(0.5f, 4);
-            Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(0);
+            SaveData.fpsLimit.ClampRef(1);
+            SaveData.fixedGuiSize.ClampRef(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
+            SaveData.guiSize.ClampRef(0.5f, 4);
+            Data.notFocusFpsLimit.ClampRef(0);
 
             //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
             gameSpeed = gameSpeed.Clamp(0, 100);

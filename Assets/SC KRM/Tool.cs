@@ -336,280 +336,280 @@ namespace SCKRM.Tool
         public static byte Lerp(this byte current, byte target, byte t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static byte Lerp(this byte current, byte target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static byte Lerp(this byte current, byte target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static byte Lerp(this byte current, byte target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, sbyte t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, short t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, ushort t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, int t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, uint t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, long t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, ulong t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static float Lerp(this float current, float target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return ((1 - t) * current) + (target * t);
         }
 
         public static double Lerp(this double current, double target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return ((1 - t) * current) + (target * t);
         }
 
         public static decimal Lerp(this decimal current, decimal target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return ((1 - t) * current) + (target * t);
         }
 
         public static Vector2 Lerp(this Vector2 current, Vector2 target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return new Vector2(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t);
         }
 
         public static Vector3 Lerp(this Vector3 current, Vector3 target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return new Vector3(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t);
         }
 
         public static Vector4 Lerp(this Vector4 current, Vector4 target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return new Vector4(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t, current.w + (target.w - current.w) * t);
         }
 
         public static Rect Lerp(this Rect current, Rect target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return new Rect(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.width + (target.width - current.width) * t, current.height + (target.height - current.height) * t);
         }
 
         public static Color Lerp(this Color current, Color target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t = t.Clamp01();
+                t.Clamp01Ref();
             return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
         }
 
@@ -745,6 +745,723 @@ namespace SCKRM.Tool
                 return target;
 
             return current + a / magnitude * maxDistanceDelta;
+        }
+    }
+
+    public static class MathfRefTool
+    {
+        public static void AbsRef(this ref sbyte value)
+        {
+            if (value < 0)
+                value = (sbyte)-value;
+        }
+
+        public static void AbsRef(this ref short value)
+        {
+            if (value < 0)
+                value = (sbyte)-value;
+        }
+
+        public static void AbsRef(this ref int value)
+        {
+            if (value < 0)
+                value = -value;
+        }
+
+        public static void AbsRef(this ref long value)
+        {
+            if (value < 0)
+                value = -value;
+        }
+
+        public static void AbsRef(this ref float value)
+        {
+            if (value < 0)
+                value = -value;
+        }
+
+        public static void AbsRef(this ref double value)
+        {
+            if (value < 0)
+                value = -value;
+        }
+
+        public static void AbsRef(this ref decimal value)
+        {
+            if (value < 0)
+                value = -value;
+        }
+
+        public static void SignRef(this ref sbyte value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void SignRef(this ref short value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void SignRef(this ref int value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void SignRef(this ref long value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void SignRef(this ref float value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void SignRef(this ref double value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void SignRef(this ref decimal value)
+        {
+            if (value < 0)
+                value = -1;
+        }
+
+        public static void ClampRef(this ref byte value, byte min, byte max = byte.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref sbyte value, sbyte min, sbyte max = sbyte.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref short value, short min, short max = short.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref ushort value, ushort min, ushort max = ushort.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref int value, int min, int max = int.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref uint value, uint min, uint max = uint.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref long value, long min, long max = long.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref ulong value, ulong min, ulong max = ulong.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref float value, float min, float max = float.PositiveInfinity)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref double value, double min, double max = double.PositiveInfinity)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void ClampRef(this ref decimal value, decimal min, decimal max = decimal.MaxValue)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+        }
+
+        public static void Clamp01Ref(this ref byte value)
+        {
+            if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref sbyte value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref short value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref ushort value)
+        {
+            if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref int value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref uint value)
+        {
+            if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref long value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref ulong value)
+        {
+            if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref float value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref double value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void Clamp01Ref(this ref decimal value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+        }
+
+        public static void LerpRef(this ref byte current, byte target, byte t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref byte current, byte target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref byte current, byte target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref byte current, byte target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (byte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref sbyte current, sbyte target, sbyte t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref sbyte current, sbyte target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref sbyte current, sbyte target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref sbyte current, sbyte target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref short current, short target, short t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref short current, short target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref short current, short target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref short current, short target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (short)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ushort current, ushort target, ushort t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ushort current, ushort target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ushort current, ushort target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ushort current, ushort target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref int current, int target, int t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (int)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref int current, int target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (int)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref int current, int target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (int)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref int current, int target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (int)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref uint current, uint target, uint t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref uint current, uint target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref uint current, uint target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref uint current, uint target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (uint)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref long current, long target, long t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref long current, long target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref long current, long target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref long current, long target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (long)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ulong current, ulong target, ulong t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ulong current, ulong target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ulong current, ulong target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref ulong current, ulong target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        public static void LerpRef(this ref float current, float target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = ((1 - t) * current) + (target * t);
+        }
+
+        public static void LerpRef(this ref double current, double target, double t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = ((1 - t) * current) + (target * t);
+        }
+
+        public static void LerpRef(this ref decimal current, decimal target, decimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = ((1 - t) * current) + (target * t);
+        }
+
+        public static void LerpRef(this ref Vector2 current, Vector2 target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = new Vector2(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t);
+        }
+
+        public static void LerpRef(this ref Vector3 current, Vector3 target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = new Vector3(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t);
+        }
+
+        public static void LerpRef(this ref Vector4 current, Vector4 target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = new Vector4(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t, current.w + (target.w - current.w) * t);
+        }
+
+        public static void LerpRef(this ref Rect current, Rect target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = new Rect(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.width + (target.width - current.width) * t, current.height + (target.height - current.height) * t);
+        }
+
+        public static void LerpRef(this ref Color current, Color target, float t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t.Clamp01Ref();
+            current = new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
+        }
+
+        public static void MoveTowardsRef(this ref byte current, byte target, byte maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current = (byte)(current + maxDelta);
+        }
+
+        public static void MoveTowardsRef(this ref sbyte current, sbyte target, sbyte maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (sbyte)((target - current).Sign() * maxDelta);
+        }
+
+        public static void MoveTowardsRef(this ref short current, short target, short maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (short)((target - current).Sign() * maxDelta);
+        }
+
+        public static void MoveTowardsRef(this ref ushort current, ushort target, ushort maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current = (ushort)(current + maxDelta);
+        }
+
+        public static void MoveTowardsRef(this ref int current, int target, int maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (target - current).Sign() * maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref uint current, uint target, uint maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current = current + maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref long current, long target, long maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (target - current).Sign() * maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref ulong current, ulong target, ulong maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref float current, float target, float maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (target - current).Sign() * maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref double current, double target, double maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (target - current).Sign() * maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref decimal current, decimal target, decimal maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+            {
+                current = target;
+                return;
+            }
+
+            current += (target - current).Sign() * maxDelta;
+        }
+
+        public static void MoveTowardsRef(this ref Vector2 current, Vector2 target, float maxDistanceDelta)
+        {
+            Vector2 a = target - current;
+            float magnitude = a.magnitude;
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            {
+                current = target;
+                return;
+            }
+
+            current += a / magnitude * maxDistanceDelta;
+        }
+        public static void MoveTowardsRef(this ref Vector3 current, Vector3 target, float maxDistanceDelta)
+        {
+            Vector3 a = target - current;
+            float magnitude = a.magnitude;
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            {
+                current = target;
+                return;
+            }
+
+            current += a / magnitude * maxDistanceDelta;
+        }
+        public static void MoveTowardsRef(this ref Vector4 current, Vector4 target, float maxDistanceDelta)
+        {
+            Vector4 a = target - current;
+            float magnitude = a.magnitude;
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            {
+                current = target;
+                return;
+            }
+
+            current += a / magnitude * maxDistanceDelta;
+        }
+        public static void MoveTowardsRef(this ref Rect current, Rect target, float maxDistanceDelta)
+        {
+            Rect a = new Rect(target.x - current.x, target.y - current.y, target.width - current.width, target.height - current.height);
+            float magnitude = Mathf.Sqrt((a.x * a.x) + (a.y * a.y) + (a.width * a.width) + (a.height * a.height));
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            {
+                current = target;
+                return;
+            }
+
+            current = new Rect(current.x + (a.x / magnitude * maxDistanceDelta), current.y + (a.y / magnitude * maxDistanceDelta), current.width + (a.width / magnitude * maxDistanceDelta), current.height + (a.height / magnitude * maxDistanceDelta));
+        }
+        public static void MoveTowardsRef(this ref Color current, Color target, float maxDistanceDelta)
+        {
+            Color a = target - current;
+            float magnitude = Mathf.Sqrt((a.r * a.r) + (a.g * a.g) + (a.b * a.b) + (a.a * a.a));
+            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            {
+                current = target;
+                return;
+            }
+
+            current += a / magnitude * maxDistanceDelta;
         }
     }
 

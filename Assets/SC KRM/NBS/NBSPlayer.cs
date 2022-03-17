@@ -26,7 +26,7 @@ namespace SCKRM.NBS
             get => _index;
             set
             {
-                value = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
+                value.ClampRef(0, nbsFile.nbsNotes.Count - 1);
 
                 tickTimer = 0;
                 _index = value;
@@ -40,7 +40,7 @@ namespace SCKRM.NBS
             get => _tick;
             set
             {
-                value = value.Clamp(0, length);
+                value.ClampRef(0, length);
 
                 tickTimer = 0;
                 _tick = value;
@@ -70,6 +70,41 @@ namespace SCKRM.NBS
         public NBSFile selectedNBSFile { get => _selectedNBSFile; set => _selectedNBSFile = value; }
         public NBSFile loadedNBSFile { get; private set; }
         #endregion
+
+
+
+        void Update()
+        {
+            if (!isPaused)
+            {
+                if (tempo * nbsMetaData.tempo < 0)
+                {
+                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs() * nbsMetaData.tempo;
+                    while (tickTimer <= 0)
+                    {
+                        _tick--;
+                        tickTimer += 0.05f;
+
+                        SoundPlay();
+                    }
+                }
+                else
+                {
+                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * (tempo * nbsMetaData.tempo).Abs();
+                    while (tickTimer >= 0.05f)
+                    {
+                        _tick++;
+                        tickTimer -= 0.05f;
+
+                        SoundPlay();
+                    }
+                }
+            }
+
+            transform.localPosition = localPosition;
+        }
+
+
 
         bool allLayerLock;
         public void Refesh()
@@ -150,37 +185,6 @@ namespace SCKRM.NBS
         }
 
 
-
-        void Update()
-        {
-            if (!isPaused)
-            {
-                if (tempo * nbsMetaData.tempo < 0)
-                {
-                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs() * nbsMetaData.tempo;
-                    while (tickTimer <= 0)
-                    {
-                        _tick--;
-                        tickTimer += 0.05f;
-
-                        SoundPlay();
-                    }
-                }
-                else
-                {
-                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * (tempo * nbsMetaData.tempo).Abs();
-                    while (tickTimer >= 0.05f)
-                    {
-                        _tick++;
-                        tickTimer -= 0.05f;
-
-                        SoundPlay();
-                    }
-                }
-            }
-
-            transform.localPosition = localPosition;
-        }
 
         void SoundPlay()
         {
@@ -286,6 +290,8 @@ namespace SCKRM.NBS
                     Remove();
             }
         }
+
+
 
         public override void Remove()
         {

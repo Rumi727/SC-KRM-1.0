@@ -3,6 +3,7 @@ using SCKRM.Resource;
 using SCKRM.Object;
 using SCKRM.Tool;
 using Cysharp.Threading.Tasks;
+using SCKRM.UI.StatusBar;
 
 namespace SCKRM.Sound
 {
@@ -10,8 +11,7 @@ namespace SCKRM.Sound
     [RequireComponent(typeof(AudioSource))]
     public sealed class SoundPlayer : SoundPlayerManager
     {
-        [SerializeField, HideInInspector] AudioSource _audioSource;
-        public AudioSource audioSource
+        [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource
         {
             get
             {
@@ -19,6 +19,16 @@ namespace SCKRM.Sound
                     _audioSource = GetComponent<AudioSource>();
 
                 return _audioSource;
+            }
+        }
+        [System.NonSerialized] AudioLowPassFilter _audioLowPassFilter; public AudioLowPassFilter audioLowPassFilter
+        {
+            get
+            {
+                if (_audioLowPassFilter == null)
+                    _audioLowPassFilter = GetComponent<AudioLowPassFilter>();
+
+                return _audioLowPassFilter;
             }
         }
 
@@ -63,10 +73,38 @@ namespace SCKRM.Sound
         }
 
         #region variable
-        [SerializeField] AudioClip _selectedAudioClip = null;
-        public AudioClip selectedAudioClip { get => _selectedAudioClip; set => _selectedAudioClip = value; }
+        public AudioClip selectedAudioClip { get; set; }
         public AudioClip loadedAudioClip { get; private set; }
         #endregion
+
+
+
+        float tempTime = 0;
+        void Update()
+        {
+            SetVariable();
+
+            if (audioSource.loop)
+            {
+                isLooped = false;
+                if (audioSource.pitch < 0)
+                {
+                    if (audioSource.time > tempTime)
+                        isLooped = true;
+                }
+                else
+                {
+                    if (audioSource.time < tempTime)
+                        isLooped = true;
+                }
+                tempTime = audioSource.time;
+            }
+
+            if (!isPaused && !audioSource.isPlaying)
+                Remove();
+        }
+
+
 
         public void Refesh()
         {
@@ -144,7 +182,30 @@ namespace SCKRM.Sound
             }
         }
 
+
+
         void SetVariable()
+        {
+            SetTempoAndPitch();
+            SetVolume();
+
+            if (StatusBarManager.isStatusBarShow)
+                audioLowPassFilter.cutoffFrequency = audioLowPassFilter.cutoffFrequency.Lerp(687.5f, 0.125f * Kernel.fpsDeltaTime);
+
+            if (spatial)
+                audioSource.spatialBlend = 1;
+            else
+                audioSource.spatialBlend = 0;
+
+            audioSource.loop = loop;
+            audioSource.panStereo = panStereo;
+            audioSource.minDistance = minDistance;
+            audioSource.maxDistance = maxDistance;
+
+            transform.localPosition = localPosition;
+        }
+
+        void SetTempoAndPitch()
         {
             if (loadedAudioClip == null)
             {
@@ -175,45 +236,6 @@ namespace SCKRM.Sound
                 pitch = pitch.Clamp(0);
                 audioSource.pitch = pitch * Kernel.gameSpeed;
             }
-
-            SetVolume();
-
-            if (spatial)
-                audioSource.spatialBlend = 1;
-            else
-                audioSource.spatialBlend = 0;
-
-            audioSource.loop = loop;
-            audioSource.panStereo = panStereo;
-            audioSource.minDistance = minDistance;
-            audioSource.maxDistance = maxDistance;
-
-            transform.localPosition = localPosition;
-        }
-
-        float tempTime = 0;
-        void Update()
-        {
-            SetVariable();
-
-            if (audioSource.loop)
-            {
-                isLooped = false;
-                if (audioSource.pitch < 0)
-                {
-                    if (audioSource.time > tempTime)
-                        isLooped = true;
-                }
-                else
-                {
-                    if (audioSource.time < tempTime)
-                        isLooped = true;
-                }
-                tempTime = audioSource.time;
-            }
-
-            if (!isPaused && !audioSource.isPlaying)
-                Remove();
         }
 
         void SetVolume()
@@ -233,6 +255,8 @@ namespace SCKRM.Sound
                     audioSource.volume = volume * (Kernel.SaveData.soundVolume * 0.01f);
             }
         }
+
+
 
         public override void Remove()
         {
