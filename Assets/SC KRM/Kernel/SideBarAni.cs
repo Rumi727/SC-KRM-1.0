@@ -128,20 +128,6 @@ namespace SCKRM.UI.SideBar
 
 
 
-                StatusBarManager taskBarManager = StatusBarManager.instance;
-                if (StatusBarManager.SaveData.bottomMode)
-                {
-                    rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, taskBarManager.rectTransform.sizeDelta.y + taskBarManager.rectTransform.anchoredPosition.y);
-                    rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, 0);
-                }
-                else
-                {
-                    rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, 0);
-                    rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y));
-                }
-
-
-
                 if (lerp)
                 {
                     if (isShow)

@@ -1,4 +1,5 @@
 using SCKRM.Input;
+using SCKRM.UI.StatusBar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace SCKRM.UI
     {
         [SerializeField] Canvas _kernelCanvas;
         public Canvas kernelCanvas => _kernelCanvas;
+        [SerializeField] RectTransform _kernelCanvasUI;
+        public RectTransform kernelCanvasUI => _kernelCanvasUI;
 
 
 
@@ -31,6 +34,18 @@ namespace SCKRM.UI
                     BackEventInvoke();
                 else if (InputManager.GetKey("gui.home", InputType.Down, "all"))
                     homeEvent.Invoke();
+            }
+
+            StatusBarManager taskBarManager = StatusBarManager.instance;
+            if (StatusBarManager.SaveData.bottomMode)
+            {
+                kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, taskBarManager.rectTransform.sizeDelta.y + taskBarManager.rectTransform.anchoredPosition.y);
+                kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, 0);
+            }
+            else
+            {
+                kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, 0);
+                kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y));
             }
         }
 
