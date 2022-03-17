@@ -1784,6 +1784,43 @@ MonoBehaviour:
   _layout: {fileID: 1859552556628179040}
   bg: {fileID: 21300000, guid: 3ef9c51c9903c404992c8188c3e7cac7, type: 3}
   bg2: {fileID: 21300000, guid: 996d665671666f143b61f2a84d916b19, type: 3}
+--- !u!1 &2255913229497026602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1404794112264881610}
+  m_Layer: 0
+  m_Name: Scrollbar Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1404794112264881610
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255913229497026602}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1278790355001072982}
+  m_Father: {fileID: 1199465852522579512}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &2281713839079709745
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,6 +2454,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!1 &2562112119123372597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2143263660692259072}
+  m_Layer: 0
+  m_Name: Scrollbar Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2143263660692259072
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2562112119123372597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5675635949197856063}
+  m_Father: {fileID: 3696608626188315236}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &2989892340175765116
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,7 +3232,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4211626738112241587}
-  - {fileID: 5675635949197856063}
+  - {fileID: 2143263660692259072}
   m_Father: {fileID: 3260765865344146849}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3269,7 +3343,7 @@ MonoBehaviour:
   _right: 0
   _viewPort: {fileID: 4211626738112241587}
   _content: {fileID: 4990134292019355782}
-  _scrollBarRectTransform: {fileID: 5675635949197856063}
+  _scrollBarParentRectTransform: {fileID: 2143263660692259072}
   _scrollBar: {fileID: 6624796114493896515}
 --- !u!1 &3871648516956403154
 GameObject:
@@ -3403,13 +3477,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3287485221312871866}
-  m_Father: {fileID: 3696608626188315236}
-  m_RootOrder: 1
+  m_Father: {fileID: 2143263660692259072}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8486034740864907554
 MonoBehaviour:
@@ -3424,8 +3498,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 5675635949197856063}
-  tempParentGameobject: {fileID: 3718307202130384905}
-  _parentRectTransformSetting: {fileID: 2757823549455177593}
+  tempParentGameobject: {fileID: 2562112119123372597}
+  _parentRectTransformSetting: {fileID: 0}
 --- !u!222 &8158185646144680976
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4225,7 +4299,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2695843091107002727}
-  - {fileID: 1278790355001072982}
+  - {fileID: 1404794112264881610}
   m_Father: {fileID: 3260765865344146849}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4336,7 +4410,7 @@ MonoBehaviour:
   _right: 1
   _viewPort: {fileID: 2695843091107002727}
   _content: {fileID: 3839058026210576536}
-  _scrollBarRectTransform: {fileID: 1278790355001072982}
+  _scrollBarParentRectTransform: {fileID: 1404794112264881610}
   _scrollBar: {fileID: 1280585639816651391}
 --- !u!1 &5023839357609110409
 GameObject:
@@ -6962,7 +7036,7 @@ MonoBehaviour:
   _right: 0
   _viewPort: {fileID: 5878557851303932760}
   _content: {fileID: 5552310735164831515}
-  _scrollBarRectTransform: {fileID: 8321882963521534661}
+  _scrollBarParentRectTransform: {fileID: 0}
   _scrollBar: {fileID: 1299434090811773236}
 --- !u!1 &8005868590716000228
 GameObject:
@@ -7210,13 +7284,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9101963719457775472}
-  m_Father: {fileID: 1199465852522579512}
-  m_RootOrder: 1
+  m_Father: {fileID: 1404794112264881610}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &548211828121149897
 MonoBehaviour:
@@ -7231,8 +7305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 1278790355001072982}
-  tempParentGameobject: {fileID: 4710896216259846867}
-  _parentRectTransformSetting: {fileID: 3136442228384470721}
+  tempParentGameobject: {fileID: 2255913229497026602}
+  _parentRectTransformSetting: {fileID: 0}
 --- !u!222 &7516943556765776850
 CanvasRenderer:
   m_ObjectHideFlags: 0

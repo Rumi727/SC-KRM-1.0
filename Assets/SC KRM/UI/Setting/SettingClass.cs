@@ -134,11 +134,13 @@ namespace SCKRM.UI.Setting
         {
             if (isDefault)
             {
+                resetButton.interactable = false;
                 nameText.offsetMin = nameText.offsetMin.Lerp(new Vector2(0, nameText.offsetMin.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 resetButton.alpha = resetButton.alpha.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
             }
             else
             {
+                resetButton.interactable = true;
                 nameText.offsetMin = nameText.offsetMin.Lerp(new Vector2(22, nameText.offsetMin.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 resetButton.alpha = resetButton.alpha.Lerp(1, 0.2f * Kernel.fpsUnscaledDeltaTime);
             }

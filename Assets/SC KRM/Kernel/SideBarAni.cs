@@ -57,8 +57,8 @@ namespace SCKRM.UI.SideBar
         [SerializeField] RectTransformInfo _content;
         public RectTransformInfo content => _content;
 
-        [SerializeField] RectTransform _scrollBarRectTransform;
-        public RectTransform scrollBarRectTransform => _scrollBarRectTransform;
+        [SerializeField] RectTransform _scrollBarParentRectTransform;
+        public RectTransform scrollBarParentRectTransform => _scrollBarParentRectTransform;
 
         [SerializeField] Scrollbar _scrollBar;
         public Scrollbar scrollBar => _scrollBar;
@@ -86,7 +86,7 @@ namespace SCKRM.UI.SideBar
                     if (!viewPort.gameObject.activeSelf)
                     {
                         viewPort.gameObject.SetActive(true);
-                        scrollBar.gameObject.SetActive(true);
+                        scrollBarParentRectTransform.gameObject.SetActive(true);
                     }
                 }
                 else
@@ -98,7 +98,7 @@ namespace SCKRM.UI.SideBar
                             if (viewPort.gameObject.activeSelf)
                             {
                                 viewPort.gameObject.SetActive(false);
-                                scrollBar.gameObject.SetActive(false);
+                                scrollBarParentRectTransform.gameObject.SetActive(false);
                             }
 
                             return;
@@ -111,7 +111,7 @@ namespace SCKRM.UI.SideBar
                             if (viewPort.gameObject.activeSelf)
                             {
                                 viewPort.gameObject.SetActive(false);
-                                scrollBar.gameObject.SetActive(false);
+                                scrollBarParentRectTransform.gameObject.SetActive(false);
                             }
 
                             return;
@@ -155,18 +155,18 @@ namespace SCKRM.UI.SideBar
                     {
                         scrollBar.interactable = true;
 
-                        scrollBarRectTransform.anchoredPosition = scrollBarRectTransform.anchoredPosition.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                        scrollBarParentRectTransform.anchoredPosition = scrollBarParentRectTransform.anchoredPosition.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
 
                         if (this.right)
-                            viewPort.offsetMax = viewPort.offsetMax.Lerp(new Vector2(-scrollBarRectTransform.sizeDelta.x, 0), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            viewPort.offsetMax = viewPort.offsetMax.Lerp(new Vector2(-scrollBarParentRectTransform.sizeDelta.x, 0), lerpValue * Kernel.fpsUnscaledDeltaTime);
                         else
-                            viewPort.offsetMin = viewPort.offsetMin.Lerp(new Vector2(scrollBarRectTransform.sizeDelta.x, 1), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            viewPort.offsetMin = viewPort.offsetMin.Lerp(new Vector2(scrollBarParentRectTransform.sizeDelta.x, 1), lerpValue * Kernel.fpsUnscaledDeltaTime);
                     }
                     else
                     {
                         scrollBar.interactable = false;
 
-                        scrollBarRectTransform.anchoredPosition = scrollBarRectTransform.anchoredPosition.Lerp(new Vector2(right * scrollBarRectTransform.sizeDelta.x, 0), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        scrollBarParentRectTransform.anchoredPosition = scrollBarParentRectTransform.anchoredPosition.Lerp(new Vector2(right * scrollBarParentRectTransform.sizeDelta.x, 0), 0.2f * Kernel.fpsUnscaledDeltaTime);
                         viewPort.offsetMin = viewPort.offsetMin.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
                         viewPort.offsetMax = viewPort.offsetMax.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
                     }
@@ -184,18 +184,18 @@ namespace SCKRM.UI.SideBar
                     {
                         scrollBar.interactable = true;
 
-                        scrollBarRectTransform.anchoredPosition = Vector2.zero;
+                        scrollBarParentRectTransform.anchoredPosition = Vector2.zero;
 
                         if (this.right)
-                            viewPort.offsetMax = new Vector2(-scrollBarRectTransform.sizeDelta.x, 0);
+                            viewPort.offsetMax = new Vector2(-scrollBarParentRectTransform.sizeDelta.x, 0);
                         else
-                            viewPort.offsetMin = new Vector2(scrollBarRectTransform.sizeDelta.x, 1);
+                            viewPort.offsetMin = new Vector2(scrollBarParentRectTransform.sizeDelta.x, 1);
                     }
                     else
                     {
                         scrollBar.interactable = false;
 
-                        scrollBarRectTransform.anchoredPosition = new Vector2(right * scrollBarRectTransform.sizeDelta.x, 0);
+                        scrollBarParentRectTransform.anchoredPosition = new Vector2(right * scrollBarParentRectTransform.sizeDelta.x, 0);
                         viewPort.offsetMin = Vector2.zero;
                         viewPort.offsetMax = Vector2.zero;
                     }
