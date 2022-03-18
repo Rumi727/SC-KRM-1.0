@@ -95,12 +95,36 @@
       }
     ]
   },
+  "hero_i": {
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "hero_i",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
   "my_dream": {
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {
         "path": "my_dream",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "my_dream_i": {
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "my_dream_i",
         "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
@@ -131,12 +155,24 @@
       }
     ]
   },
-  "run_run": {
+  "run_and_run": {
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {
-        "path": "run_run",
+        "path": "run_and_run",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "run_and_run_i": {
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "run_and_run_i",
         "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
@@ -149,6 +185,18 @@
     "sounds": [
       {
         "path": "sora_ni_watashi_no_sunshine",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "sora_ni_watashi_no_sunshine_i": {
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "sora_ni_watashi_no_sunshine_i",
         "stream": true,
         "pitch": 1.0,
         "tempo": 1.0
@@ -179,6 +227,18 @@
       }
     ]
   },
+  "sweet_violet_i": {
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "sweet_violet_i",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
   "unhappy_end_world": {
     "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
@@ -191,8 +251,32 @@
       }
     ]
   },
+  "unhappy_end_world_i": {
+    "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "unhappy_end_world_i",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
   "yummy_yappy_recipe": {
     "subtitle": "subtitles.easter_egg_music_play",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "yummy_yappy_recipe",
+        "stream": true,
+        "pitch": 1.0,
+        "tempo": 1.0
+      }
+    ]
+  },
+  "yummy_yappy_recipe_i": {
+    "subtitle": "subtitles.easter_egg_music_play_i",
     "isBGM": true,
     "sounds": [
       {
