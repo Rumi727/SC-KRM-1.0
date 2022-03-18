@@ -242,6 +242,10 @@ namespace SCKRM
 
             VariableUpdate();
 
+#if UNITY_EDITOR
+            Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
+#endif
+
             //기념일
             //초기로딩이 끝나야 알림을 띄울수 있으니 조건을 걸어둡니다
             //최적화를 위해 년, 월, 일이 변경되어야 실행됩니다
@@ -283,14 +287,14 @@ namespace SCKRM
             float defaultGuiSize = (float)Screen.width / 1920;
 
             //변수들의 최소, 최대 수치를 지정합니다
-            SaveData.mainVolume.ClampRef(0, 200);
-            SaveData.bgmVolume.ClampRef(0, 200);
-            SaveData.soundVolume.ClampRef(0, 200);
+            SaveData.mainVolume = SaveData.mainVolume.Clamp(0, 200);
+            SaveData.bgmVolume = SaveData.bgmVolume.Clamp(0, 200);
+            SaveData.soundVolume = SaveData.soundVolume.Clamp(0, 200);
 
-            SaveData.fpsLimit.ClampRef(1);
-            SaveData.fixedGuiSize.ClampRef(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
-            SaveData.guiSize.ClampRef(0.5f, 4);
-            Data.notFocusFpsLimit.ClampRef(0);
+            SaveData.fpsLimit = SaveData.fpsLimit.Clamp(1);
+            SaveData.fixedGuiSize = SaveData.fixedGuiSize.Clamp(defaultGuiSize * 0.5f, defaultGuiSize * 4f);
+            SaveData.guiSize = SaveData.guiSize.Clamp(0.5f, 4);
+            Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(0);
 
             //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
             gameSpeed = gameSpeed.Clamp(0, 100);
@@ -319,9 +323,6 @@ namespace SCKRM
             //볼륨을 사용자가 설정한 볼륨으로 조정시킵니다. 사용자가 설정한 볼륨은 int 0 ~ 200 이기 때문에 0.01을 곱해주어야 하고,
             //100 ~ 200 볼륨이 먹혀야하기 때문에 0.5로 볼륨을 낮춰야하기 때문에 0.005를 곱합니다
             AudioListener.volume = SaveData.mainVolume * 0.005f;
-#if UNITY_EDITOR
-            Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
-#endif
         }
 
         public static event Action InitialLoadStart = delegate { };
