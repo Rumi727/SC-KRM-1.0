@@ -28,16 +28,16 @@ namespace SCKRM
         [ProjectSetting]
         public sealed class Data
         {
-            [JsonProperty] public static float standardFPS = 60;
+            [JsonProperty] public static float standardFPS { get; set; } = 60;
 
 
 
-            [JsonProperty] public static int notFocusFpsLimit = 30;
+            [JsonProperty] public static int notFocusFpsLimit { get; set; } = 30;
 
 
 
-            [JsonProperty] public static string splashScreenPath = "Assets/SC KRM/Splash Screen";
-            [JsonProperty] public static string splashScreenName = "Splash Screen";
+            [JsonProperty] public static string splashScreenPath { get; set; } = "Assets/SC KRM/Splash Screen";
+            [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
         }
 
         [SaveLoad("default")]
@@ -45,15 +45,15 @@ namespace SCKRM
         {
             [JsonProperty] public static JColor systemColor = new JColor(0.5137255f, 0.1019608f, 0.627451f);
 
-            [JsonProperty] public static int mainVolume = 100;
-            [JsonProperty] public static int bgmVolume = 100;
-            [JsonProperty] public static int soundVolume = 100;
+            [JsonProperty] public static int mainVolume { get; set; } = 100;
+            [JsonProperty] public static int bgmVolume { get; set; } = 100;
+            [JsonProperty] public static int soundVolume { get; set; } = 100;
 
-            [JsonProperty] public static bool vSync = true;
-            [JsonProperty] public static int fpsLimit = 480;
-            [JsonProperty] public static float guiSize = 1;
-            [JsonProperty] public static float fixedGuiSize = 1;
-            [JsonProperty] public static bool fixedGuiSizeEnable = true;
+            [JsonProperty] public static bool vSync { get; set; } = true;
+            [JsonProperty] public static int fpsLimit { get; set; } = 480;
+            [JsonProperty] public static float guiSize { get; set; } = 1;
+            [JsonProperty] public static float fixedGuiSize { get; set; } = 1;
+            [JsonProperty] public static bool fixedGuiSizeEnable { get; set; } = true;
         }
 
         public static float fps { get; private set; } = 60;
