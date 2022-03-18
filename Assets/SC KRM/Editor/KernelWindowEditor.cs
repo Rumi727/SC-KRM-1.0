@@ -629,8 +629,8 @@ namespace SCKRM.Editor
 
                 Kernel.Data.notFocusFpsLimit = EditorGUILayout.IntField("포커스가 아닐때 FPS 제한", Kernel.Data.notFocusFpsLimit);
 
-                Kernel.Data.standardFPS.ClampRef(0.00000001f);
-                Kernel.Data.notFocusFpsLimit.ClampRef(0);
+                Kernel.Data.standardFPS = Kernel.Data.standardFPS.Clamp(0.00000001f);
+                Kernel.Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(0);
 
                 EditorGUILayout.Space();
 

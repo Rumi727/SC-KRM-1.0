@@ -64,7 +64,7 @@ namespace SCKRM.UI
                     if (isPointer || isDrag || timer >= 0)
                         Kernel.SaveData.mainVolume -= 10;
 
-                    Kernel.SaveData.mainVolume.ClampRef(0, 200);
+                    Kernel.SaveData.mainVolume = Kernel.SaveData.mainVolume.Clamp(0, 200);
 
                     timer = 1;
                 }
@@ -73,7 +73,7 @@ namespace SCKRM.UI
                     if (isPointer || isDrag || timer >= 0)
                         Kernel.SaveData.mainVolume += 10;
 
-                    Kernel.SaveData.mainVolume.ClampRef(0, 200);
+                    Kernel.SaveData.mainVolume = Kernel.SaveData.mainVolume.Clamp(0, 200);
 
                     timer = 1;
                 }
