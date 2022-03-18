@@ -23,21 +23,7 @@ namespace SCKRM.Renderer
             if (!ThreadManager.isMainThread || Application.isPlaying)
                 text = ResourceManager.SearchLanguage(path, nameSpace);
             else
-            {
-                try
-                {
-                    string value = JsonManager.JsonReadDictionary<string, string>(path, PathTool.Combine(ResourceManager.languagePath, LanguageManager.SaveData.currentLanguage), nameSpace).ConstEnvironmentVariable();
-                    if (value == default)
-                        text = path;
-                    else
-                        text = value;
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    text = path;
-                }
-            }
+                text = LanguageManager.LanguageLoad(path, nameSpace, "en_us");
 #else
             string text = ResourceManager.SearchLanguage(path, nameSpace);
 #endif

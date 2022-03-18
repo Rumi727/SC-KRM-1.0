@@ -677,8 +677,16 @@ namespace SCKRM.Resource
         }
 
 
+        /// <summary>
+        /// 오디오 찌꺼기를 삭제합니다
+        /// delete audio garbage
+        /// </summary>
+        /// <exception cref="NotMainThreadMethodException"></exception>
         public static void AudioGarbageRemoval()
         {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(SetAudio));
+
             for (int i = 0; i < garbages.Count; i++)
                 UnityEngine.Object.Destroy(garbages[i]);
         }
@@ -882,7 +890,7 @@ namespace SCKRM.Resource
             if (ThreadManager.isMainThread && !Application.isPlaying)
                 throw new NotPlayModeSearchMethodException();
 #endif
-            if (!isInitialLoadSpriteEnd)
+            if (!isInitialLoadLanguageEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchLanguage));
 
             if (key == null)
@@ -1360,6 +1368,15 @@ namespace SCKRM.Resource
 
 
         #region Get Key List
+        /// <summary>
+        /// 로드 된 오디오 키 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
+        /// Get the list of loaded audio keys (manually find in the default resource pack if not playing or not initially loaded)
+        /// </summary>
+        /// <param name="nameSpace">
+        /// 가져올 네임스페이스
+        /// namespace to import
+        /// </param>
+        /// <returns></returns>
         public static string[] GetSoundDataKeys(string nameSpace = "")
         {
             if (nameSpace == null)
@@ -1385,6 +1402,15 @@ namespace SCKRM.Resource
                     return new string[0];
             }
         }
+        /// <summary>
+        /// 로드 된 NBS 키 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
+        /// Get the list of loaded nbs keys (manually find in the default resource pack if not playing or not initially loaded)
+        /// </summary>
+        /// <param name="nameSpace">
+        /// 가져올 네임스페이스
+        /// namespace to import
+        /// </param>
+        /// <returns></returns>
         public static string[] GetNBSDataKeys(string nameSpace = "")
         {
             if (nameSpace == null)
@@ -1411,6 +1437,15 @@ namespace SCKRM.Resource
             }
         }
 
+        /// <summary>
+        /// 로드 된 스프라이트 타입 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
+        /// Get the list of loaded sprite type (manually find in the default resource pack if not playing or not initially loaded)
+        /// </summary>
+        /// <param name="nameSpace">
+        /// 가져올 네임스페이스
+        /// namespace to import
+        /// </param>
+        /// <returns></returns>
         public static string[] GetSpriteTypes(string nameSpace = "")
         {
             if (nameSpace == null)
@@ -1439,6 +1474,15 @@ namespace SCKRM.Resource
                 return paths;
             }
         }
+        /// <summary>
+        /// 로드 된 스프라이트 키 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
+        /// Get the list of loaded sprite keys (manually find in the default resource pack if not playing or not initially loaded)
+        /// </summary>
+        /// <param name="nameSpace">
+        /// 가져올 네임스페이스
+        /// namespace to import
+        /// </param>
+        /// <returns></returns>
         public static string[] GetSpriteKeys(string type, string nameSpace = "")
         {
             if (type == null)
@@ -1474,6 +1518,15 @@ namespace SCKRM.Resource
             }
         }
 
+        /// <summary>
+        /// 로드 된 언어 키 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
+        /// Get the list of loaded language keys (manually find in the default resource pack if not playing or not initially loaded)
+        /// </summary>
+        /// <param name="nameSpace">
+        /// 가져올 네임스페이스
+        /// namespace to import
+        /// </param>
+        /// <returns></returns>
         public static string[] GetLanguageKeys(string language, string nameSpace = "")
         {
             if (language == null)
@@ -1580,6 +1633,7 @@ namespace SCKRM.Resource
 
 
 
+        #region Texture Average Color
         /// <summary>
         /// 텍스쳐의 평균 색상을 구합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Gets the average color of a texture (Since the Unity API is used, we need to run it on the main thread)
@@ -1659,7 +1713,9 @@ namespace SCKRM.Resource
 
             return new Color(r / length, g / length, b / length, a / length);
         }
+        #endregion
 
+        #region Texture Color
         /// <summary>
         /// 색상을 텍스쳐로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Convert color to texture (Since the Unity API is used, we need to run it on the main thread)
@@ -1823,6 +1879,7 @@ namespace SCKRM.Resource
             texture.Apply();
             return GetSprite(texture, spriteMetaData);
         }
+        #endregion
     }
 
     public class TextureMetaData

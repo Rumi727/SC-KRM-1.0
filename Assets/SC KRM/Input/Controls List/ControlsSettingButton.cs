@@ -14,7 +14,6 @@ namespace SCKRM.Input.UI
 
         IEnumerator InputSetStartCoroutine()
         {
-            InputManager.defaultInputLock = true;
             controlsButton.inputLockObject.SetActive(true);
 
             controlsButton.valueText.text = ">   <";
@@ -74,7 +73,6 @@ namespace SCKRM.Input.UI
 
             controlsButton.valueText.color = Color.white;
 
-            InputManager.defaultInputLock = false;
             controlsButton.inputLockObject.SetActive(false);
         }
     }

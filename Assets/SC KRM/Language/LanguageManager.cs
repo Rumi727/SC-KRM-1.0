@@ -52,7 +52,7 @@ namespace SCKRM.Language
         /// 언어
         /// </param>
         /// <returns></returns>
-        /*public static string TextLoad(string key, string nameSpace = "", string language = "")
+        public static string LanguageLoad(string key, string nameSpace = "", string language = "")
         {
             if (key == null)
                 key = "";
@@ -77,8 +77,13 @@ namespace SCKRM.Language
                 Debug.LogException(e);
                 return key;
             }
-        }*/
+        }
 
+        /// <summary>
+        /// 언어 리스트를 가져옵니다
+        /// Get a list of languages
+        /// </summary>
+        /// <returns></returns>
         public static Language[] GetLanguages()
         {
             List<Language> languages = new List<Language>();
