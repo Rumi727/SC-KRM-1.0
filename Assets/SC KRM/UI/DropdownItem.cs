@@ -10,10 +10,10 @@ namespace SCKRM.UI
     [AddComponentMenu("커널/UI/드롭다운 아이템")]
     public class DropdownItem : ObjectPoolingUI
     {
-        [SerializeField] TMP_Text _label;
+        [SerializeField, NotNull] TMP_Text _label;
         public TMP_Text label { get => _label; }
 
-        [SerializeField] Toggle _toggle;
+        [SerializeField, NotNull] Toggle _toggle;
         public Toggle toggle { get => _toggle; }
     }
 }

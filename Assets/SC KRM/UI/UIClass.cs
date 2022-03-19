@@ -22,21 +22,6 @@ namespace SCKRM.UI
                 return _rectTransform;
             }
         }
-        [NonSerialized] RectTransformInfo _rectTransformInfo; public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                {
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-                    if (_rectTransformInfo == null)
-                        _rectTransformInfo = gameObject.AddComponent<RectTransformInfo>();
-                }
-
-                return _rectTransformInfo;
-            }
-        }
-
         [NonSerialized] Graphic _graphic; public Graphic graphic
         {
             get
@@ -69,21 +54,6 @@ namespace SCKRM.UI
                 return _rectTransform;
             }
         }
-        [NonSerialized] RectTransformInfo _rectTransformInfo; public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                {
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-                    if (_rectTransformInfo == null)
-                        _rectTransformInfo = gameObject.AddComponent<RectTransformInfo>();
-                }
-
-                return _rectTransformInfo;
-            }
-        }
-
         [NonSerialized] Graphic _graphic; public Graphic graphic
         {
             get
@@ -116,21 +86,6 @@ namespace SCKRM.UI
                 return _rectTransform;
             }
         }
-        [NonSerialized] RectTransformInfo _rectTransformInfo; public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                {
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-                    if (_rectTransformInfo == null)
-                        _rectTransformInfo = gameObject.AddComponent<RectTransformInfo>();
-                }
-
-                return _rectTransformInfo;
-            }
-        }
-
         [NonSerialized] Graphic _graphic; public Graphic graphic
         {
             get
@@ -151,7 +106,7 @@ namespace SCKRM.UI
     {
         [SerializeField] bool _lerp = true;
         public bool lerp { get => _lerp; set => _lerp = value; }
-        [SerializeField, Range(0, 1)] float _lerpValue = 0.2f;
+        [SerializeField, Range(0, 1), EnableIf(nameof(lerp), true)] float _lerpValue = 0.2f;
         public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
 
         /*//protected override void OnEnable() => update();
@@ -218,20 +173,6 @@ namespace SCKRM.UI
                 }
 
                 return _rectTransform;
-            }
-        }
-        [NonSerialized] RectTransformInfo _rectTransformInfo; public RectTransformInfo rectTransformInfo
-        {
-            get
-            {
-                if (_rectTransformInfo == null)
-                {
-                    _rectTransformInfo = GetComponent<RectTransformInfo>();
-                    if (_rectTransformInfo == null)
-                        _rectTransformInfo = gameObject.AddComponent<RectTransformInfo>();
-                }
-
-                return _rectTransformInfo;
             }
         }
 

@@ -1,4 +1,3 @@
-using SCKRM.Editor;
 using SCKRM.UI;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ namespace SCKRM.Input.UI
     [AddComponentMenu("커널/Input/입력 리스트/입력 리스트 설정", 0)]
     public class ControlsListManager : MonoBehaviour
     {
-        [SerializeField, SetName("Exit 키를 눌렀을때 보여질 오브젝트")]
+        [SerializeField]
         GameObject visibleGameObject;
 
         void OnEnable()

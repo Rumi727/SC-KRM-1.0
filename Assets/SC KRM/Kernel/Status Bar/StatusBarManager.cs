@@ -163,9 +163,9 @@ namespace SCKRM.UI.StatusBar
                     {
                         if (!SaveData.bottomMode)
                         {
-                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.sizeDelta.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.rect.size.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
 
-                            if (rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
+                            if (rectTransform.anchoredPosition.y >= rectTransform.rect.size.y - 0.01f)
                             {
                                 if (layout.activeSelf)
                                 {
@@ -176,9 +176,9 @@ namespace SCKRM.UI.StatusBar
                         }
                         else
                         {
-                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.sizeDelta.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.rect.size.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
 
-                            if (rectTransform.anchoredPosition.y <= -rectTransform.sizeDelta.y + 0.01f)
+                            if (rectTransform.anchoredPosition.y <= -rectTransform.rect.size.y + 0.01f)
                             {
                                 if (layout.activeSelf)
                                 {
@@ -234,7 +234,7 @@ namespace SCKRM.UI.StatusBar
                     image.sprite = null;
 
                 if (!isStatusBarShow)
-                    rectTransform.anchoredPosition = new Vector2(0, rectTransform.sizeDelta.y);
+                    rectTransform.anchoredPosition = new Vector2(0, rectTransform.rect.size.y);
             }
             else
             {
@@ -248,7 +248,7 @@ namespace SCKRM.UI.StatusBar
                     image.sprite = null;
 
                 if (!isStatusBarShow)
-                    rectTransform.anchoredPosition = new Vector2(0, -rectTransform.sizeDelta.y);
+                    rectTransform.anchoredPosition = new Vector2(0, -rectTransform.rect.size.y);
             }
         }
 

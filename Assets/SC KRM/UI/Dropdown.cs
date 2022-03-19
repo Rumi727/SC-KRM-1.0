@@ -44,14 +44,14 @@ namespace SCKRM.UI
         [SerializeField] UnityEvent _onValueChanged = new UnityEvent();
         public UnityEvent onValueChanged { get => _onValueChanged; }
 
-        [SerializeField] TMP_Text label;
-        [SerializeField] RectTransform listRectTransform;
-        [SerializeField] SetSizeAsTargetRectTransform listSetSizeAsTargetRectTransform;
-        [SerializeField] DropdownItem template;
-        [SerializeField] RectTransform viewport;
-        [SerializeField] Transform content;
-        [SerializeField] RectTransform scrollbar;
-        [SerializeField] GameObject scrollbarHandle;
+        [SerializeField, NotNull] TMP_Text label;
+        [SerializeField, NotNull] RectTransform listRectTransform;
+        [SerializeField, NotNull] SetSizeAsTargetRectTransform listSetSizeAsTargetRectTransform;
+        [SerializeField, NotNull] DropdownItem template;
+        [SerializeField, NotNull] RectTransform viewport;
+        [SerializeField, NotNull] Transform content;
+        [SerializeField, NotNull] RectTransform scrollbar;
+        [SerializeField, NotNull] GameObject scrollbarHandle;
 
         bool pointer;
         bool mouseDrag = false;

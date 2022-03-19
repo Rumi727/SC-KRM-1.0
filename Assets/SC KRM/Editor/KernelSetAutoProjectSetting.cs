@@ -89,22 +89,25 @@ namespace SCKRM.Editor
                 if (hierarchyChangedEnable)
                 {
                     hierarchyChangedEnable = false;
-
-                    Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
-                    if (kernel == null)
+                    
+                    if (SceneManager.GetActiveScene().path == $"{PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName)}.unity")
                     {
-                        GameObject gameObject = Resources.Load<GameObject>("Kernel");
-                        if (gameObject != null)
-                            PrefabUtility.InstantiatePrefab(gameObject);
-                        else
-                            throw new NullResourceObjectException("Kernel");
+                        Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
+                        if (kernel == null)
+                        {
+                            GameObject gameObject = Resources.Load<GameObject>("Kernel");
+                            if (gameObject != null)
+                                PrefabUtility.InstantiatePrefab(gameObject);
+                            else
+                                throw new NullResourceObjectException("Kernel");
 
-                        hierarchyChangedEnable = true;
+                            hierarchyChangedEnable = true;
+                        }
+                        else if (!kernel.enabled)
+                            UnityEngine.Object.DestroyImmediate(kernel.gameObject);
+                        else if (!kernel.gameObject.activeSelf)
+                            UnityEngine.Object.DestroyImmediate(kernel.gameObject);
                     }
-                    else if (!kernel.enabled)
-                        UnityEngine.Object.DestroyImmediate(kernel.gameObject);
-                    else if (!kernel.gameObject.activeSelf)
-                        UnityEngine.Object.DestroyImmediate(kernel.gameObject);
 
                     UnityEngine.Camera[] cameras = UnityEngine.Object.FindObjectsOfType<UnityEngine.Camera>(true);
                     for (int i = 0; i < cameras.Length; i++)
@@ -141,32 +144,6 @@ namespace SCKRM.Editor
                                     UnityEngine.Object.DestroyImmediate(canvasScaler);
                             }
                         }
-                    }
-
-                    Transform[] transforms = UnityEngine.Object.FindObjectsOfType<Transform>(true);
-                    for (int i = 0; i < transforms.Length; i++)
-                    {
-                        Transform transform = transforms[i];
-                        RectTransform rectTransform = transform.gameObject.GetComponent<RectTransform>();
-                        RectTransformInfo rectTransformSetting = transform.GetComponent<RectTransformInfo>();
-
-                        if (rectTransform != null)
-                        {
-                            if (rectTransformSetting == null)
-                            {
-                                RectTransformInfo rectTransformSetting2 = rectTransform.gameObject.AddComponent<RectTransformInfo>();
-                                if (PrefabUtility.GetPrefabAssetType(rectTransform.gameObject) == PrefabAssetType.NotAPrefab)
-                                {
-                                    int length = rectTransform.GetComponents<Component>().Length;
-                                    for (int j = 0; j < length - 2; j++)
-                                        ComponentUtility.MoveComponentUp(rectTransformSetting2);
-                                }
-                            }
-                            else if (!rectTransformSetting.enabled)
-                                UnityEngine.Object.DestroyImmediate(rectTransformSetting);
-                        }
-                        else if (rectTransformSetting != null)
-                            UnityEngine.Object.DestroyImmediate(rectTransformSetting);
                     }
 
                     hierarchyChangedEnable = true;

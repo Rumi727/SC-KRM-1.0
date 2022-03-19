@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SCKRM.UI.Layout
 {
     [ExecuteAlways]
-    [RequireComponent(typeof(RectTransform), typeof(RectTransformInfo))]
+    [RequireComponent(typeof(RectTransform))]
     [AddComponentMenu("커널/UI/Layout/수평 레이아웃")]
     public sealed class HorizontalLayout : LayoutChildSetting<HorizontalLayoutSetting>
     {

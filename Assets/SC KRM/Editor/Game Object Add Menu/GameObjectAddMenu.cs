@@ -51,4 +51,10 @@ public class GameObjectAddMenu
 
     [MenuItem("GameObject/Kernel/Setting UI/Button")]
     public static void SettingButton(MenuCommand menuCommand) => PrefabInstantiate("Setting Button", menuCommand);
+
+    [MenuItem("GameObject/Kernel/UI/Side Bar/Left")]
+    public static void SideBarLeft(MenuCommand menuCommand) => PrefabInstantiate("Side Bar", menuCommand);
+
+    [MenuItem("GameObject/Kernel/UI/Side Bar/Right")]
+    public static void SideBarRight(MenuCommand menuCommand) => PrefabInstantiate("Side Bar Right", menuCommand);
 }

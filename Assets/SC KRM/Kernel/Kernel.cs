@@ -19,6 +19,7 @@ using K4.Threading;
 using System.Collections;
 using SCKRM.Input;
 using SCKRM.Window;
+using UnityEngine.LowLevel;
 
 namespace SCKRM
 {
@@ -194,17 +195,18 @@ namespace SCKRM
 
 
 
+        public static event Func<bool> shutdownEvent = () => true;
+
+
+
         void Awake()
         {
             if (SingletonCheck(this))
-            {
                 DontDestroyOnLoad(instance);
-                InitialLoad().Forget();
-            }
         }
 
 #if !UNITY_EDITOR
-        IEnumerator Start()
+        async UniTaskVoid Start()
         {
             while (true)
             {
@@ -215,14 +217,19 @@ namespace SCKRM
                     else
                     {
                         Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
-                        yield return new WaitForEndOfFrame();
-                        yield return new WaitForEndOfFrame();
-                        yield return new WaitForEndOfFrame();
-                        yield return new WaitForEndOfFrame();
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (await UniTask.WaitForEndOfFrame(AsyncTaskManager.cancel).SuppressCancellationThrow())
+                                return;
+                        }
+                        
                         Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
                     }
                 }
-                yield return null;
+
+                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                    return;
             }
         }
 #endif
@@ -244,6 +251,8 @@ namespace SCKRM
 
 #if UNITY_EDITOR
             Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
+#else
+            Cursor.visible = false;
 #endif
 
             //기념일
@@ -329,6 +338,7 @@ namespace SCKRM
         public static event Action InitialLoadEnd = delegate { };
         public static event Action InitialLoadEndSceneMove = delegate { };
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         static async UniTaskVoid InitialLoad()
         {
             //이미 초기로딩이 시작되었으면 더 이상 초기로딩을 진행하면 안되기 때문에 조건문을 걸어줍니다
@@ -344,10 +354,12 @@ namespace SCKRM
                     if (!Application.isPlaying)
                         throw new NotPlayModeMethodException(nameof(InitialLoad));
 #endif
-
                     //초기로딩이 시작됬습니다
                     isInitialLoadStart = true;
                     InitialLoadStart();
+
+                    PlayerLoopSystem loop = PlayerLoop.GetCurrentPlayerLoop();
+                    PlayerLoopHelper.Initialize(ref loop);
 
 #if !UNITY_EDITOR
                     Cursor.visible = false;
@@ -355,7 +367,6 @@ namespace SCKRM
 
                     StatusBarManager.allowStatusBarShow = false;
 
-                    //ThreadManager.Create(() => ThreadManager.ThreadAutoRemove(true), "notice.running_task.thread_auto_remove.name", "notice.running_task.thread_auto_remove.info", true);
                     //스레드를 자동 삭제해주는 함수를 작동시킵니다
                     ThreadManager.ThreadAutoRemove().Forget();
 
@@ -496,8 +507,8 @@ namespace SCKRM
         static void LoadedSceneEvent(Scene scene, LoadSceneMode mode) => RendererManager.AllRerender();
 
 
-        public static event Action AllRefreshStart;
-        public static event Action AllRefreshEnd;
+        public static event Action AllRefreshStart = () => { };
+        public static event Action AllRefreshEnd = () => { };
         public static async UniTaskVoid AllRefresh(bool onlyText = false)
         {
             if (!ThreadManager.isMainThread)
@@ -506,7 +517,7 @@ namespace SCKRM
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(AllRefresh));
 #endif
-            AllRefreshStart?.Invoke();
+            AllRefreshStart();
 
             if (onlyText)
                 RendererManager.AllTextRerender();
@@ -522,8 +533,8 @@ namespace SCKRM
                     if (dialogResult != WindowManager.DialogResult.OK)
                         return;
 #else
-                Debug.LogError(LanguageManager.TextLoad("kernel.allrefresh.error"));
-                return;
+                    Debug.LogError(LanguageManager.TextLoad("kernel.allrefresh.error"));
+                    return;
 #endif
                 }
 #endif*/
@@ -538,11 +549,27 @@ namespace SCKRM
             }
             
             GC.Collect();
-            AllRefreshEnd?.Invoke();
+            AllRefreshEnd();
         }
 
         void OnApplicationQuit()
         {
+            Delegate[] delegates = shutdownEvent.GetInvocationList();
+            for (int i = 0; i < delegates.Length; i++)
+            {
+                try
+                {
+                    if (!((Func<bool>)delegates[i])())
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                        Application.CancelQuit();
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+
             AsyncTaskManager.AllAsyncTaskCancel(false);
             ThreadManager.AllThreadRemove();
 
