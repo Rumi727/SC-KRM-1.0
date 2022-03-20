@@ -263,6 +263,9 @@ namespace SCKRM.Editor
 
                     EditorGUILayout.Space();
 
+                    if (GUILayout.Button("오디오 리셋", GUILayout.ExpandWidth(false)))
+                        ResourceManager.AudioReset();
+
                     bool audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
                     if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
                         SoundManager.StopSound(audioKey, audioNameSpace);
@@ -1366,7 +1369,7 @@ namespace SCKRM.Editor
 
                                     {
                                         if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                                            soundMetaDatas.Add(new SoundMetaData("", false, 1, 1, null));
+                                            soundMetaDatas.Add(new SoundMetaData("", false, 1, 1, 0, null));
                                     }
 
                                     {
@@ -1396,6 +1399,7 @@ namespace SCKRM.Editor
                                         bool stream = soundMetaData.stream;
                                         float pitch = soundMetaData.pitch;
                                         float tempo = soundMetaData.tempo;
+                                        float loopStartTime = soundMetaData.loopStartTime;
 
                                         //CustomInspectorEditor.DrawLine();
 
@@ -1448,12 +1452,15 @@ namespace SCKRM.Editor
                                                 pitch.ClampRef(0);
                                         }
 
+                                        GUILayout.Label("루프 시작 시간", GUILayout.ExpandWidth(false));
+                                        loopStartTime = EditorGUILayout.FloatField(loopStartTime, GUILayout.Width(50)).Clamp(0);
+
                                         GUILayout.Label("스트림", GUILayout.ExpandWidth(false));
                                         stream = EditorGUILayout.Toggle(stream, GUILayout.Width(20));
 
                                         EditorGUILayout.EndHorizontal();
 
-                                        soundMetaDatas[j] = new SoundMetaData(soundPath, stream, pitch, tempo, null);
+                                        soundMetaDatas[j] = new SoundMetaData(soundPath, stream, pitch, tempo, loopStartTime, null);
                                     }
                                     valueList.Add(new SoundData<SoundMetaData>(subtitle, isBGM, soundMetaDatas.ToArray()));
 

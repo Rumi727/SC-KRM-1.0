@@ -30,7 +30,14 @@ namespace SCKRM
         public static void AllAsyncTaskCancel(bool onlyAsyncTaskClass = true)
         {
             for (int i = 0; i < asyncTasks.Count; i++)
-                asyncTasks[i].Remove();
+            {
+                AsyncTask asyncTask = asyncTasks[i];
+                if (!asyncTask.cantCancel)
+                {
+                    asyncTask.Remove();
+                    i--;
+                }
+            }
 
             if (!onlyAsyncTaskClass)
             {
@@ -44,11 +51,12 @@ namespace SCKRM
 
     public class AsyncTask
     {
-        public AsyncTask(string name = "", string info = "", bool loop = false)
+        public AsyncTask(string name = "", string info = "", bool loop = false, bool cantCancel = false)
         {
             this.name = name;
             this.info = info;
             this.loop = loop;
+            this.cantCancel = cantCancel;
 
             AsyncTaskManager.asyncTasks.Add(this);
 
@@ -59,6 +67,7 @@ namespace SCKRM
         public string name { get; }
         public string info { get; }
         public bool loop { get; }
+        public bool cantCancel { get; }
 
         /// <summary>
         /// 0.0 - 1.0
@@ -78,12 +87,15 @@ namespace SCKRM
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
 
-            AsyncTaskManager.asyncTasks.Remove(this);
+            if (!cantCancel)
+            {
+                AsyncTaskManager.asyncTasks.Remove(this);
 
-            AsyncTaskManager.AsyncTaskChangeEventInvoke();
-            AsyncTaskManager.AsyncTaskRemoveEventInvoke();
+                AsyncTaskManager.AsyncTaskChangeEventInvoke();
+                AsyncTaskManager.AsyncTaskRemoveEventInvoke();
 
-            _cancel.Cancel();
+                _cancel.Cancel();
+            }
         }
     }
 }

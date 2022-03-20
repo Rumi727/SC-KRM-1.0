@@ -7,19 +7,22 @@
         "path": "ui/cartography_table/drawmap1",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       },
       {
         "path": "ui/cartography_table/drawmap2",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       },
       {
         "path": "ui/cartography_table/drawmap3",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -31,7 +34,8 @@
         "path": "random/bow",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -43,7 +47,8 @@
         "path": "note/banjo",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -55,7 +60,8 @@
         "path": "note/bass",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -67,7 +73,8 @@
         "path": "note/bd",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -79,7 +86,8 @@
         "path": "note/bell",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -91,7 +99,8 @@
         "path": "note/bit",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -103,7 +112,8 @@
         "path": "note/cow_bell",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -115,7 +125,8 @@
         "path": "note/didgeridoo",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -127,7 +138,8 @@
         "path": "note/flute",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -139,7 +151,8 @@
         "path": "note/guitar",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -151,7 +164,8 @@
         "path": "note/harp",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -163,7 +177,8 @@
         "path": "note/hat",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -175,7 +190,8 @@
         "path": "note/icechime",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -187,7 +203,8 @@
         "path": "note/iron_xylophone",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -199,7 +216,8 @@
         "path": "note/pling",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -211,7 +229,8 @@
         "path": "note/snare",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -223,7 +242,8 @@
         "path": "note/xylobone",
         "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   }

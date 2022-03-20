@@ -5,6 +5,7 @@ using SCKRM.Language;
 using SCKRM.NBS;
 using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
+using SCKRM.Sound;
 using SCKRM.Threads;
 using SCKRM.Tool;
 using SCKRM.Window;
@@ -112,6 +113,7 @@ namespace SCKRM.Resource
         public static bool isInitialLoadPackTexturesEnd { get; private set; } = false;
         public static bool isInitialLoadSpriteEnd { get; private set; } = false;
         public static bool isInitialLoadAudioEnd { get; private set; } = false;
+        public static bool isAudioReset { get; private set; } = false;
         public static bool isInitialLoadLanguageEnd { get; private set; } = false;
         public static bool isResourceRefesh { get; private set; } = false;
 
@@ -539,89 +541,91 @@ namespace SCKRM.Resource
                     string nameSpace = nameSpaces[j];
                     string soundFolderPath = PathTool.Combine(resourcePack, soundPath.Replace("%NameSpace%", nameSpace));
                     string nbsFolderPath = PathTool.Combine(resourcePack, nbsPath.Replace("%NameSpace%", nameSpace));
+                    
+                    (bool success, bool cancel) = await TryGetSoundData(soundFolderPath, allSounds, soundMetaDataCreateFunc);
+                    if (!success && !cancel)
+                        continue;
+                    else if (cancel)
+                        return;
+                    
+                    (success, cancel) = await TryGetSoundData(nbsFolderPath, allNBS, nbsMetaDataCreateFunc);
+                    if (!success && !cancel)
+                        continue;
+                    else if (cancel)
+                        return;
 
-                    if (Directory.Exists(soundFolderPath))
+
+                    async UniTask<SoundMetaData> soundMetaDataCreateFunc(string folderPath, SoundMetaData soundMetaData)
                     {
-                        Dictionary<string, SoundData<SoundMetaData>> soundDatas = JsonManager.JsonRead<Dictionary<string, SoundData<SoundMetaData>>>(soundFolderPath + ".json", true);
-                        if (soundDatas != null)
-                        {
-                            foreach (var soundData in soundDatas)
-                            {
-                                if (soundData.Value.sounds == null)
-                                    continue;
+                        string audioPath = PathTool.Combine(folderPath, soundMetaData.path);
+                        AudioClip audioClip = await GetAudio(audioPath, soundMetaData.stream);
+                        if (!Application.isPlaying)
+                            return null;
 
-                                List<SoundMetaData> soundMetaDatas = new List<SoundMetaData>();
-                                for (int k = 0; k < soundData.Value.sounds.Length; k++)
-                                {
-#if UNITY_EDITOR
-                                    if (!Application.isPlaying)
-                                        return;
-#endif
-                                    SoundMetaData sound = soundData.Value.sounds[k];
+                        if (audioClip != null)
+                            return new SoundMetaData(soundMetaData.path, soundMetaData.stream, soundMetaData.pitch, soundMetaData.tempo, soundMetaData.loopStartTime, audioClip);
 
-                                    string soundPath = PathTool.Combine(soundFolderPath, sound.path);
-                                    AudioClip audioClip = await GetAudio(soundPath, sound.stream);
-                                    if (!Application.isPlaying)
-                                        return;
-
-                                    if (audioClip != null)
-                                        soundMetaDatas.Add(new SoundMetaData(sound.path, sound.stream, sound.pitch, sound.tempo, audioClip));
-                                }
-
-                                if (!allSounds.ContainsKey(nameSpace))
-                                {
-                                    allSounds.Add(nameSpace, new Dictionary<string, SoundData<SoundMetaData>>());
-                                    allSounds[nameSpace].Add(soundData.Key, new SoundData<SoundMetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
-                                }
-                                else if (!allSounds[nameSpace].ContainsKey(soundData.Key))
-                                    allSounds[nameSpace].Add(soundData.Key, new SoundData<SoundMetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
-                            }
-                        }
+                        return null;
                     }
 
+                    async UniTask<NBSMetaData> nbsMetaDataCreateFunc(string folderPath, NBSMetaData nbsMetaData)
                     {
-                        if (!Directory.Exists(nbsFolderPath))
-                            continue;
+                        string soundPath = PathTool.Combine(nbsFolderPath, nbsMetaData.path);
+                        if (!File.Exists(soundPath + ".nbs"))
+                            return null;
 
-                        Dictionary<string, SoundData<NBSMetaData>> nbsDatas = JsonManager.JsonRead<Dictionary<string, SoundData<NBSMetaData>>>(nbsFolderPath + ".json", true);
-                        if (nbsDatas == null)
-                            continue;
-
-                        foreach (var nbsData in nbsDatas)
+                        NBSFile nbsFile = NBSManager.ReadNBSFile(soundPath + ".nbs");
+                        if (nbsFile != null)
                         {
-                            if (nbsData.Value.sounds == null)
-                                continue;
-
-                            List<NBSMetaData> nbsMetaDatas = new List<NBSMetaData>();
-                            for (int k = 0; k < nbsData.Value.sounds.Length; k++)
-                            {
-#if UNITY_EDITOR
-                                if (!Application.isPlaying)
-                                    return;
-#endif
-                                NBSMetaData nbs = nbsData.Value.sounds[k];
-
-                                string soundPath = PathTool.Combine(nbsFolderPath, nbs.path);
-                                if (!File.Exists(soundPath + ".nbs"))
-                                    continue;
-
-                                NBSFile nbsFile = NBSManager.ReadNBSFile(soundPath + ".nbs");
-                                if (nbsFile != null)
-                                    nbsMetaDatas.Add(new NBSMetaData(nbs.path, nbs.pitch, nbs.tempo, nbsFile));
-
-                                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancel).SuppressCancellationThrow())
-                                    return;
-                                    
-                            }
-
-                            if (!allNBS.ContainsKey(nameSpace))
-                            {
-                                allNBS.Add(nameSpace, new Dictionary<string, SoundData<NBSMetaData>>());
-                                allNBS[nameSpace].Add(nbsData.Key, new SoundData<NBSMetaData>(nbsData.Value.subtitle, nbsData.Value.isBGM, nbsMetaDatas.ToArray()));
-                            }
-                            else if (!allNBS[nameSpace].ContainsKey(nbsData.Key))
-                                allNBS[nameSpace].Add(nbsData.Key, new SoundData<NBSMetaData>(nbsData.Value.subtitle, nbsData.Value.isBGM, nbsMetaDatas.ToArray()));
+                            await UniTask.DelayFrame(1);
+                            return new NBSMetaData(nbsMetaData.path, nbsMetaData.pitch, nbsMetaData.tempo, nbsFile);
                         }
+
+                        return null;
+                    }
+
+                    ///<returns>
+                    ///(bool success, bool cancel)
+                    ///</returns>
+                    async UniTask<(bool, bool)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc)
+                    {
+                        if (Directory.Exists(folderPath))
+                        {
+                            Dictionary<string, SoundData<MetaData>> soundDatas = JsonManager.JsonRead<Dictionary<string, SoundData<MetaData>>>(folderPath + ".json", true);
+                            if (soundDatas != null)
+                            {
+                                foreach (var soundData in soundDatas)
+                                {
+                                    if (soundData.Value.sounds == null)
+                                        continue;
+
+                                    List<MetaData> soundMetaDatas = new List<MetaData>();
+                                    for (int k = 0; k < soundData.Value.sounds.Length; k++)
+                                    {
+#if UNITY_EDITOR
+                                        if (!Application.isPlaying)
+                                            return (false, true);
+#endif
+                                        MetaData soundMetaData = soundData.Value.sounds[k];
+                                        soundMetaData = await metaDataCreateFunc.Invoke(folderPath, soundMetaData);
+                                        if (soundMetaData != null)
+                                            soundMetaDatas.Add(soundMetaData);
+                                    }
+
+                                    if (!allSounds.ContainsKey(nameSpace))
+                                    {
+                                        allSounds.Add(nameSpace, new Dictionary<string, SoundData<MetaData>>());
+                                        allSounds[nameSpace].Add(soundData.Key, new SoundData<MetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
+                                    }
+                                    else if (!allSounds[nameSpace].ContainsKey(soundData.Key))
+                                        allSounds[nameSpace].Add(soundData.Key, new SoundData<MetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
+                                }
+                            }
+
+                            return (true, false);
+                        }
+
+                        return (false, false);
                     }
                 }
             }
@@ -689,6 +693,30 @@ namespace SCKRM.Resource
 
             for (int i = 0; i < garbages.Count; i++)
                 UnityEngine.Object.Destroy(garbages[i]);
+
+            garbages.Clear();
+        }
+
+        public static async void AudioReset()
+        {
+            isAudioReset = true;
+            List<float> playersTime = new List<float>();
+            for (int i = 0; i < SoundManager.soundList.Count; i++)
+                playersTime.Add(SoundManager.soundList[i].time);
+
+            AudioSettings.Reset(AudioSettings.GetConfiguration());
+
+            AsyncTask asyncTask = new AsyncTask("notice.running_task.audio_refresh.name", "");
+            await SetAudio();
+            asyncTask.Remove();
+
+            isAudioReset = false;
+
+            SoundManager.SoundRefresh();
+            AudioGarbageRemoval();
+
+            for (int i = 0; i < SoundManager.soundList.Count; i++)
+                SoundManager.soundList[i].time = playersTime[i];
         }
 
 
@@ -1957,12 +1985,14 @@ namespace SCKRM.Resource
 
     public class SoundMetaData
     {
-        public SoundMetaData(string path, bool stream, float pitch, float tempo, AudioClip audioClip)
+        public SoundMetaData(string path, bool stream, float pitch, float tempo, float loopStartTime, AudioClip audioClip)
         {
             this.path = path;
             this.stream = stream;
             this.pitch = pitch;
             this.tempo = tempo;
+            this.loopStartTime = loopStartTime;
+
             this.audioClip = audioClip;
         }
 
@@ -1970,6 +2000,7 @@ namespace SCKRM.Resource
         public bool stream { get; } = false;
         public float pitch { get; } = 1;
         public float tempo { get; } = 1;
+        public float loopStartTime { get; } = 0;
 
         [JsonIgnore] public AudioClip audioClip { get; }
     }

@@ -7,7 +7,8 @@
         "path": "joker",
         "stream": true,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -19,7 +20,8 @@
         "path": "big",
         "stream": true,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -31,7 +33,8 @@
         "path": "big2",
         "stream": true,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -43,7 +46,8 @@
         "path": "big3",
         "stream": true,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -55,7 +59,8 @@
         "path": "big4",
         "stream": true,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 0.0
       }
     ]
   },
@@ -65,9 +70,23 @@
     "sounds": [
       {
         "path": "slider",
-        "stream": true,
+        "stream": false,
         "pitch": 1.0,
-        "tempo": 1.0
+        "tempo": 1.0,
+        "loopStartTime": 2.775
+      }
+    ]
+  },
+  "slider2": {
+    "subtitle": "",
+    "isBGM": true,
+    "sounds": [
+      {
+        "path": "slider2",
+        "stream": false,
+        "pitch": 1.0,
+        "tempo": 1.0,
+        "loopStartTime": 11.54
       }
     ]
   }

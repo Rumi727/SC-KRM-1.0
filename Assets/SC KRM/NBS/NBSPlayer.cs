@@ -267,7 +267,7 @@ namespace SCKRM.NBS
             }
 
             isLooped = false;
-            if (tick < 0 || index >= nbsFile.nbsNotes.Count)
+            if (tick < nbsFile.loopStartTick || index >= nbsFile.nbsNotes.Count)
             {
                 if (loop)
                 {
@@ -280,8 +280,14 @@ namespace SCKRM.NBS
                     else
                     {
                         tickTimer = 0;
-                        _tick = 0;
-                        _index = 0;
+
+                        if (nbsFile.loopStartTick > 0)
+                            _tick = nbsFile.loopStartTick;
+                        else
+                        {
+                            _tick = 0;
+                            _index = 0;
+                        }
                     }
 
                     isLooped = true;

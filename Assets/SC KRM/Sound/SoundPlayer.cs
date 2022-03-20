@@ -37,7 +37,15 @@ namespace SCKRM.Sound
         public SoundData<SoundMetaData> soundData { get; private set; }
         public SoundMetaData soundMetaData { get; private set; }
 
-        public float time { get => audioSource.time; set => audioSource.time = value; }
+        public float time
+        {
+            get => audioSource.time;
+            set
+            {
+                audioSource.time = value;
+                tempTime = audioSource.time;
+            }
+        }
         public float realTime { get => time / speed; set => audioSource.time = value * speed; }
 
         public float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
@@ -89,18 +97,27 @@ namespace SCKRM.Sound
                 isLooped = false;
                 if (audioSource.pitch < 0)
                 {
+                    if (audioSource.time < soundMetaData.loopStartTime)
+                        audioSource.time = length - 0.001f;
+
                     if (audioSource.time > tempTime)
                         isLooped = true;
                 }
                 else
                 {
                     if (audioSource.time < tempTime)
+                    {
+                        if (soundMetaData.loopStartTime > 0)
+                            audioSource.time = soundMetaData.loopStartTime;
+
                         isLooped = true;
+                    }
                 }
+
                 tempTime = audioSource.time;
             }
 
-            if (!isPaused && !audioSource.isPlaying)
+            if (!isPaused && !audioSource.isPlaying && !ResourceManager.isAudioReset)
                 Remove();
         }
 
@@ -111,7 +128,7 @@ namespace SCKRM.Sound
             float time = audioSource.time;
 
             {
-                if (!Kernel.isInitialLoadEnd)
+                if (ResourceManager.isAudioReset)
                 {
                     Remove();
                     return;
@@ -120,7 +137,7 @@ namespace SCKRM.Sound
                 if (selectedAudioClip == null)
                 {
                     soundData = ResourceManager.SearchSoundData(key, nameSpace);
-
+                    
                     if (soundData == null)
                     {
                         Remove();
@@ -178,6 +195,7 @@ namespace SCKRM.Sound
                 else
                     audioSource.time = Mathf.Min(time, length - 0.001f);
 
+                tempTime = audioSource.time;
                 audioSource.Play();
             }
         }
