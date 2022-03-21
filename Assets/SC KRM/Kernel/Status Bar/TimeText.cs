@@ -37,13 +37,16 @@ namespace SCKRM.UI.StatusBar
         static bool tempTwentyFourHourSystem = false;
         static bool tempToggleSeconds = false;
 
-        async UniTaskVoid OnEnable()
+        protected override void OnEnable()
         {
-            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
-                return;
-
+            Kernel.InitialLoadEnd += LanguageChange;
             LanguageManager.currentLanguageChange += LanguageChange;
-            LanguageChange();
+        }
+
+        protected override void OnDestroy()
+        {
+            Kernel.InitialLoadEnd -= LanguageChange;
+            LanguageManager.currentLanguageChange -= LanguageChange;
         }
 
         void Update()

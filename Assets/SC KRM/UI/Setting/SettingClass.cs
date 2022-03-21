@@ -52,7 +52,8 @@ namespace SCKRM.UI.Setting
             JColor32
         }
 
-        protected virtual async UniTask<bool> Awake()
+        /// <returns>is Cancel?</returns>
+        new protected virtual async UniTask<bool> Awake()
         {
             if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;

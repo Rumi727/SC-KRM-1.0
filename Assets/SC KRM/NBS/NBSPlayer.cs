@@ -40,7 +40,7 @@ namespace SCKRM.NBS
             get => _tick;
             set
             {
-                value.ClampRef(0, length);
+                value.ClampRef(0, (int)length);
 
                 tickTimer = 0;
                 _tick = value;
@@ -48,7 +48,7 @@ namespace SCKRM.NBS
             }
         }
 
-        public float time
+        public override float time
         {
             get => (_tick * 0.05f) + tickTimer;
             set
@@ -57,13 +57,13 @@ namespace SCKRM.NBS
                 tickTimer = ((value * 20) - (int)(value * 20)) * 0.05f;
             }
         }
-        public float realTime { get => time / tempo; set => time = value * tempo; }
+        public override float realTime { get => time / tempo; set => time = value * tempo; }
 
-        public short length => (short)(nbsMetaData?.nbsFile.songLength);
-        public float realLength { get => length / tempo; }
+        public override float length => (float)(nbsMetaData?.nbsFile.songLength);
+        public override float realLength { get => length / tempo; }
 
-        public bool isLooped { get; private set; } = false;
-        public bool isPaused { get; set; } = false;
+        public override bool isLooped { get; protected set; } = false;
+        public override bool isPaused { get; set; } = false;
 
         #region variable
         [SerializeField] NBSFile _selectedNBSFile = null;

@@ -7,6 +7,20 @@ namespace SCKRM.Sound
 {
     public class SoundPlayerManager : ObjectPooling
     {
+        public virtual float time { get; set; }
+        public virtual float realTime { get; set; }
+
+        public virtual float length { get; }
+        public virtual float realLength { get; }
+
+        public virtual float speed { get; set; }
+
+        public virtual bool isLooped { get; protected set; } = false;
+
+        public virtual bool isPaused { get; set; }
+
+
+
         [SerializeField] string _key = "";
         [SerializeField] string _nameSpace = "";
         public string key { get => _key; set => _key = value; }

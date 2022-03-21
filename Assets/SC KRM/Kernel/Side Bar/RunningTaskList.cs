@@ -11,7 +11,7 @@ namespace SCKRM.UI.SideBar
     {
         [System.NonSerialized] List<AsyncTask> tempList = new List<AsyncTask>();
 
-        void Awake()
+        protected override void Awake()
         {
             AsyncTaskManager.asyncTaskChange -= Refresh;
             AsyncTaskManager.asyncTaskChange += Refresh;

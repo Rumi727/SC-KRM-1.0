@@ -59,7 +59,7 @@ namespace SCKRM.UI.StatusBar
 
         [SerializeField] Sprite bg;
         [SerializeField] Sprite bg2;
-        void OnEnable()
+        protected override void OnEnable()
         {
             if (SingletonCheck(this))
             {

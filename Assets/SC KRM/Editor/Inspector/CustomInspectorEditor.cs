@@ -599,7 +599,7 @@ namespace SCKRM.Editor
             if (index >= 0)
                 return array[index];
             else
-                return "";
+                return value;
         }
         public static string DrawStringArray(string label, string value, string[] array)
         {
@@ -610,7 +610,7 @@ namespace SCKRM.Editor
             if (index >= 0)
                 return array[index];
             else
-                return "";
+                return value;
         }
     }
 }

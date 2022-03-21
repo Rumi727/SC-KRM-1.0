@@ -104,7 +104,10 @@ namespace SCKRM.Object
 
                 RendererManager.Rerender(objectPooling.renderers, false).Forget();
 
-                objectPooling.actived = true;
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                objectPooling._actived = true;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+
                 objectPooling.OnCreate();
                 return objectPooling;
             }
@@ -116,7 +119,10 @@ namespace SCKRM.Object
 
                 RendererManager.Rerender(objectPooling.renderers, false).Forget();
 
-                objectPooling.actived = true;
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                objectPooling._actived = true;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+
                 objectPooling.OnCreate();
                 return objectPooling;
             }
@@ -145,7 +151,9 @@ namespace SCKRM.Object
             objectPooling.gameObject.SetActive(false);
             objectPooling.transform.SetParent(instance.transform);
 
-            objectPooling.actived = false;
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+            objectPooling._actived = false;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
             objectList.ObjectKey.Add(objectKey);
             objectList.Object.Add(objectPooling);
@@ -155,7 +163,12 @@ namespace SCKRM.Object
     public class ObjectPooling : MonoBehaviour
     {
         public string objectKey { get; set; } = "";
-        public bool actived { get; set; } = false;
+
+        [Obsolete("It is managed by the ObjectPoolingSystem class. Please do not touch it.", false)]
+        internal bool _actived;
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+        public bool actived => _actived;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
         [NonSerialized] CustomAllRenderer[] _renderers;
         public CustomAllRenderer[] renderers

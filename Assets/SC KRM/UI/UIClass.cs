@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
-    public class UI : MonoBehaviour
+    public class UI : UIBehaviour
     {
         [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
         {
@@ -38,8 +38,23 @@ namespace SCKRM.UI
         }
     }
 
-    public class ManagerUI<T> : Manager<T> where T : MonoBehaviour
+    public class ManagerUI<T> : UIBehaviour where T : MonoBehaviour
     {
+        public static T instance { get; private set; }
+
+
+
+        protected static bool SingletonCheck(T manager)
+        {
+            if (instance != null && instance != manager)
+            {
+                DestroyImmediate(manager.gameObject);
+                return false;
+            }
+
+            return (instance = manager) == manager;
+        }
+
         [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get

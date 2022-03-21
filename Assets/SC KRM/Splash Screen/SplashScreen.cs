@@ -10,7 +10,7 @@ using SCKRM.UI;
 namespace SCKRM.Splash
 {
     [AddComponentMenu("커널/스플래시/스플래시 스크린")]
-    public sealed class SplashScreen : ManagerUI<SplashScreen>
+    public sealed class SplashScreen : Manager<SplashScreen>
     {
         public static bool isAniPlayed { get; set; } = true;
         [SerializeField] Image LogoImage;

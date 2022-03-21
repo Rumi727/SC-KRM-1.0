@@ -11,7 +11,7 @@ namespace SCKRM
     {
         public static bool visible { get; set; } = true;
 
-        void OnEnable() => SingletonCheck(this);
+        protected override void OnEnable() => SingletonCheck(this);
 
         Vector2 dragStartMousePosition;
         void LateUpdate()

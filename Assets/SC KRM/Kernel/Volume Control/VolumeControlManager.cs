@@ -13,7 +13,7 @@ namespace SCKRM.UI
         static float timer = 0;
         [SerializeField] GameObject hide;
 
-        void OnEnable() => SingletonCheck(this);
+        protected override void OnEnable() => SingletonCheck(this);
 
         void Update()
         {

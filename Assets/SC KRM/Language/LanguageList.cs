@@ -19,16 +19,17 @@ namespace SCKRM.Language.UI
             RendererManager.AllTextRerender(true);
         }
 
-        async UniTaskVoid Start()
+        protected override void Awake()
         {
-            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
-                return;
-
-            ListRefresh();
+            Kernel.InitialLoadEnd += ListRefresh;
             Kernel.AllRefreshEnd += ListRefresh;
         }
 
-        void OnDestroy() => Kernel.AllRefreshEnd -= ListRefresh;
+        protected override void OnDestroy()
+        {
+            Kernel.InitialLoadEnd -= ListRefresh;
+            Kernel.AllRefreshEnd -= ListRefresh;
+        }
 
         public void ListRefresh()
         {

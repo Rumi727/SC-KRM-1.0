@@ -237,6 +237,7 @@ namespace SCKRM
         static int tempYear;
         static int tempMonth;
         static int tempDay;
+        static float timer = 0;
         void Update()
         {
             //유니티의 내장 변수들은 테스트 결과, 약간의 성능을 더 먹는것으로 확인되었기 때문에
@@ -248,6 +249,20 @@ namespace SCKRM
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
 
             VariableUpdate();
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+                RhythmManager.isBeatPlay = !RhythmManager.isBeatPlay;
+
+            if (RhythmManager.isBeatPlay)
+            {
+                RhythmManager.bpmFpsDeltaTime = 180;
+                if (timer >= 0.333333333333f)
+                {
+                    timer = 0;
+                    RhythmManager.OneBeatInvoke();
+                }
+                timer += deltaTime;
+            }
 
 #if UNITY_EDITOR
             Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;

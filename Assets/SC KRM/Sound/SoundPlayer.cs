@@ -37,7 +37,7 @@ namespace SCKRM.Sound
         public SoundData<SoundMetaData> soundData { get; private set; }
         public SoundMetaData soundMetaData { get; private set; }
 
-        public float time
+        public override float time
         {
             get => audioSource.time;
             set
@@ -46,12 +46,12 @@ namespace SCKRM.Sound
                 tempTime = audioSource.time;
             }
         }
-        public float realTime { get => time / speed; set => audioSource.time = value * speed; }
+        public override float realTime { get => time / speed; set => audioSource.time = value * speed; }
 
-        public float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
-        public float realLength => length / speed;
+        public override float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
+        public override float realLength => length / speed;
 
-        public float speed
+        public override float speed
         {
             get => (soundData != null && soundData.isBGM && SoundManager.Data.useTempo) ? tempo : pitch;
             set
@@ -63,10 +63,10 @@ namespace SCKRM.Sound
             }
         }
 
-        public bool isLooped { get; private set; } = false;
+        public override bool isLooped { get; protected set; } = false;
 
         bool _isPaused = false;
-        public bool isPaused
+        public override bool isPaused
         {
             get => _isPaused;
             set

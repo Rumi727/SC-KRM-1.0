@@ -954,8 +954,9 @@ GameObject:
   - component: {fileID: 2854331197266034819}
   - component: {fileID: 667547153537709898}
   - component: {fileID: 7260335578112448451}
+  - component: {fileID: 7659518556223335339}
   - component: {fileID: 1482219120415777069}
-  - component: {fileID: 5235654438590483782}
+  - component: {fileID: 4772741202132473119}
   - component: {fileID: 2589625528442728322}
   m_Layer: 0
   m_Name: Input Field
@@ -1023,6 +1024,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3
+--- !u!114 &7659518556223335339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691767713636167457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9ce2512b769b34eb106c9f5d2f502d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameSpace: sc-krm
+  _path: rounded_rectangle
+  _type: gui
+  _index: 0
+  _image: {fileID: 7260335578112448451}
 --- !u!114 &1482219120415777069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1119,22 +1137,22 @@ MonoBehaviour:
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_CustomCaretColor: 0
-  m_SelectionColor: {r: 1, g: 1, b: 1, a: 0.7529412}
+  m_CaretColor: {r: 1, g: 1, b: 1, a: 0.7490196}
+  m_CustomCaretColor: 1
+  m_SelectionColor: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_Text: 
   m_CaretBlinkRate: 0.85
-  m_CaretWidth: 1
+  m_CaretWidth: 2
   m_ReadOnly: 0
   m_RichText: 1
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_OnFocusSelectAll: 1
+  m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
---- !u!114 &5235654438590483782
+--- !u!114 &4772741202132473119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1143,35 +1161,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7691767713636167457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91a0d89b9a710248a4297a23d92c006, type: 3}
+  m_Script: {fileID: 11500000, guid: 98ce6f2fd59b85d4d8a94c7f108064f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameSpace: sc-krm
-  _path: rounded_rectangle
-  _type: gui
-  _index: 0
-  _image: {fileID: 7260335578112448451}
-  _selectable: {fileID: 1482219120415777069}
-  _highlightedSprite:
-    _nameSpace: 
-    _type: 
-    _name: 
-    _index: 0
-  _pressedSprite:
-    _nameSpace: 
-    _type: 
-    _name: 
-    _index: 0
-  _selectedSprite:
-    _nameSpace: 
-    _type: 
-    _name: 
-    _index: 0
-  _disabledSprite:
-    _nameSpace: 
-    _type: 
-    _name: 
-    _index: 0
+  inputField: {fileID: 1482219120415777069}
 --- !u!114 &2589625528442728322
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -124,8 +124,8 @@ namespace SCKRM.UI
             }
         }
 
-        void OnEnable() => Hide();
-        void OnDisable() => Hide();
+        protected override void OnEnable() => Hide();
+        protected override void OnDisable() => Hide();
 
         public void Toggle()
         {
