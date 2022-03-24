@@ -101,6 +101,21 @@ namespace SCKRM
             }
         }
 
+        static string _temporaryCachePath = "";
+        /// <summary>
+        /// Application.temporaryCachePath
+        /// </summary>
+        public static string temporaryCachePath
+        {
+            get
+            {
+                if (_temporaryCachePath != "")
+                    return _temporaryCachePath;
+                else
+                    return _temporaryCachePath = Application.temporaryCachePath;
+            }
+        }
+
         static string _saveDataPath = "";
         /// <summary>
         /// Kernel.persistentDataPath + "/Save Data"
@@ -403,6 +418,7 @@ namespace SCKRM
                     {
                         _ = dataPath;
                         _ = persistentDataPath;
+                        _ = temporaryCachePath;
                         _ = saveDataPath;
 
                         _ = companyName;
