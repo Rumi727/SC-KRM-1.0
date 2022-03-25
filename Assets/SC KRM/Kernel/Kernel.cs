@@ -270,7 +270,7 @@ namespace SCKRM
 
             if (RhythmManager.isBeatPlay)
             {
-                RhythmManager.bpmFpsDeltaTime = 180;
+                RhythmManager.bpm = 180;
                 if (timer >= 0.333333333333f)
                 {
                     timer = 0;

@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(VerticalLayout), true)]
-    public sealed class VerticalLayoutEditor : CustomInspectorEditor
+    public sealed class VerticalLayoutEditor : UIEditor
     {
         VerticalLayout editor;
         protected override void OnEnable()
@@ -17,6 +17,10 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
+            base.OnInspectorGUI();
+
+            DrawLine();
+
             UseProperty("_padding");
 
             EditorGUILayout.Space();

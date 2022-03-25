@@ -107,6 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1887213292518046481
 GameObject:
@@ -215,6 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1962228321916858561
 GameObject:
@@ -719,7 +723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ce6f2fd59b85d4d8a94c7f108064f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 1791092580311224857}
+  _rectTransform: {fileID: 176758533710355098}
+  _graphic: {fileID: 5466385238261106426}
+  _inputField: {fileID: 1791092580311224857}
 --- !u!114 &3785414500590463996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,6 +1733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd531d430cd6bb47ab5353a0d2bb83d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: 
   _variableName: 
   _resetButton: {fileID: 6167845678910891430}

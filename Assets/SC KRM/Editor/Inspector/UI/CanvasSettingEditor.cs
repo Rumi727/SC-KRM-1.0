@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(CanvasSetting), true)]
-    public sealed class CanvasSettingEditor : CustomInspectorEditor
+    public sealed class CanvasSettingEditor : UIEditor
     {
         CanvasSetting editor;
 
@@ -17,6 +17,10 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
+            base.OnInspectorGUI();
+
+            DrawLine();
+
             UseProperty("_customSetting", "커스텀 설정");
 
             if (!editor.customSetting)

@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SetSizeAsTargetRectTransform), true)]
-    public sealed class SetSizeAsTargetRectTransformEditor : CustomInspectorEditor
+    public sealed class SetSizeAsTargetRectTransformEditor : UIEditor
     {
         SetSizeAsTargetRectTransform editor;
         protected override void OnEnable()
@@ -16,6 +16,10 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
+            base.OnInspectorGUI();
+
+            DrawLine();
+
             UseProperty("_targetRectTransform", "대상");
 
             EditorGUILayout.Space();

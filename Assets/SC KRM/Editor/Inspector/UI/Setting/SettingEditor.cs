@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Setting), true)]
-    public class SettingEditor : CustomInspectorEditor
+    public class SettingEditor : UIEditor
     {
         Setting editor;
 
@@ -18,6 +18,10 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
+            base.OnInspectorGUI();
+
+            DrawLine();
+
             UseProperty("_saveLoadAttributeName", "세이브 로드 어트리뷰트의 키");
             UseProperty("_variableName", "변수 이름");
 

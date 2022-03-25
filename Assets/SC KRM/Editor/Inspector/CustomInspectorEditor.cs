@@ -77,6 +77,8 @@ namespace SCKRM.Editor
             EditorGUI.DrawRect(r, color);
         }
 
+        public static void Space() => EditorGUILayout.Space();
+
         public static void DrawList(List<int> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<int> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
         static Vector2 drawList(List<int> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)

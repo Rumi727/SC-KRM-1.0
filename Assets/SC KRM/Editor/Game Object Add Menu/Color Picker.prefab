@@ -8316,7 +8316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ce6f2fd59b85d4d8a94c7f108064f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 8817590006326237711}
+  _rectTransform: {fileID: 4214016976091756237}
+  _graphic: {fileID: 3631906754726945372}
+  _inputField: {fileID: 8817590006326237711}
 --- !u!114 &6803810342523681403
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,39 @@ namespace SCKRM
 {
     public class CursorManager : ManagerUI<CursorManager>
     {
-        public static bool visible { get; set; } = true;
+        static bool _visible = true;
+        public static bool visible
+        {
+            get => _visible;
+            set
+            {
+                if (value)
+                    instance.canvasGroup.alpha = 1;
+                else
+                    instance.canvasGroup.alpha = 0;
+
+                _visible = value;
+            }
+        }
+
+
+
+        [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup
+        {
+            get
+            {
+                if (_canvasGroup == null)
+                {
+                    _canvasGroup = GetComponent<CanvasGroup>();
+                    if (_canvasGroup == null)
+                        return null;
+                }
+
+                return _canvasGroup;
+            }
+        }
+
+
 
         protected override void OnEnable() => SingletonCheck(this);
 

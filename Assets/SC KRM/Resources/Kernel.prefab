@@ -2347,6 +2347,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da9137b72f0ae445a57be41778a5d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
 --- !u!114 &6230842138419436292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2495,6 +2497,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9baacbdf58619d74084840077b9cfd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 5180749512132245982}
+  _graphic: {fileID: 84690655566138625}
   _alpha: 0.5
 --- !u!1 &3390760288997500701
 GameObject:
@@ -3237,7 +3241,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6176144749820169527}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.46421662
+  m_Size: 0.49806577
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3483,6 +3487,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ecb8ef662169534d924de2bfe30f059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _text: {fileID: 0}
 --- !u!114 &9020161984062096115
 MonoBehaviour:
@@ -4108,6 +4114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &5114006853039030976
 GameObject:
@@ -4925,6 +4933,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbc677e7bb011943a60ae6a963d6b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: default
   _variableName: vSync
   _resetButton: {fileID: 0}
@@ -4943,6 +4953,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbc677e7bb011943a60ae6a963d6b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: default
   _variableName: fixedGuiSizeEnable
   _resetButton: {fileID: 0}
@@ -4961,6 +4973,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbc677e7bb011943a60ae6a963d6b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: default
   _variableName: fixedGuiSizeEnable
   _resetButton: {fileID: 0}
@@ -5449,6 +5463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6694186650542926871
 GameObject:
@@ -5822,6 +5838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1030472412274821016}
   - component: {fileID: 4687464810925558029}
+  - component: {fileID: 6788790350663394239}
   - component: {fileID: 7003216529628852269}
   - component: {fileID: 5247263924464933427}
   - component: {fileID: 5068985252576666174}
@@ -5863,6 +5880,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301492723009425780}
   m_CullTransparentMesh: 1
+--- !u!225 &6788790350663394239
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301492723009425780}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &7003216529628852269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5936,6 +5965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd2b314d89a0ed4fb28b8b0f1dccaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 6788790350663394239}
 --- !u!1 &7536704660314640111
 GameObject:
   m_ObjectHideFlags: 0
@@ -6855,6 +6885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8459591421140791699
 GameObject:
@@ -7024,6 +7056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fab8e6fd083e9349bb30802000fd0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _mode: 2
 --- !u!1 &8497560066164025253
 GameObject:
@@ -7114,6 +7148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7803fc6320f3541b3325dd2c9ffe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _mode: 0
 --- !u!1 &8700909570375490130
 GameObject:
@@ -7392,6 +7428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _customSetting: 1
   _customGuiSize: 0
   _worldRenderMode: 0
@@ -9130,6 +9168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203a645f42296a04f870fef34ca8dcc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   dropdown: {fileID: 8172763209603253154}
 --- !u!224 &3756693617863029385 stripped
 RectTransform:

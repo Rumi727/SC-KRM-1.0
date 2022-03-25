@@ -10,17 +10,13 @@ namespace SCKRM
     {
         public static bool isBeatPlay { get; set; } = false;
         public static bool dropPart { get; set; } = false;
+        public static float bpm { get; set; } = 100;
 
-        static float _bpmDeltaTime = 1;
         /// <summary>
         /// get = (bpm * 0.01f) * Kernel.fpsDeltaTime;
         /// set = bpm;
         /// </summary>
-        public static float bpmFpsDeltaTime 
-        { 
-            get => unscaledFpsDeltaTimeEnable ? _bpmDeltaTime * Kernel.fpsUnscaledDeltaTime : _bpmDeltaTime * Kernel.fpsDeltaTime; 
-            set => _bpmDeltaTime = value * 0.01f; 
-        }
+        public static float bpmFpsDeltaTime => unscaledFpsDeltaTimeEnable ? bpm * Kernel.fpsUnscaledDeltaTime : bpm * Kernel.fpsDeltaTime;
 
         public static bool unscaledFpsDeltaTimeEnable { get; set; } = false;
 

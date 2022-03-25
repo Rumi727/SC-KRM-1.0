@@ -8,7 +8,7 @@ namespace SCKRM.UI
 {
     public class UI : UIBehaviour
     {
-        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
+        [SerializeField, NotNull] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get
             {
@@ -22,7 +22,7 @@ namespace SCKRM.UI
                 return _rectTransform;
             }
         }
-        [NonSerialized] Graphic _graphic; public Graphic graphic
+        [SerializeField] Graphic _graphic; public Graphic graphic
         {
             get
             {
@@ -55,7 +55,7 @@ namespace SCKRM.UI
             return (instance = manager) == manager;
         }
 
-        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
+        [NonSerialized, NotNull] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get
             {
@@ -85,43 +85,11 @@ namespace SCKRM.UI
         }
     }
 
-    public class UILayout : UIBehaviour
-    {
-        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                {
-                    _rectTransform = GetComponent<RectTransform>();
-                    if (_rectTransform == null)
-                        _rectTransform = gameObject.AddComponent<RectTransform>();
-                }
-
-                return _rectTransform;
-            }
-        }
-        [NonSerialized] Graphic _graphic; public Graphic graphic
-        {
-            get
-            {
-                if (_graphic == null)
-                {
-                    _graphic = GetComponent<Graphic>();
-                    if (_graphic == null)
-                        return null;
-                }
-
-                return _graphic;
-            }
-        }
-    }
-
-    public abstract class UIAni : UILayout
+    public abstract class UIAni : UI
     {
         [SerializeField] bool _lerp = true;
         public bool lerp { get => _lerp; set => _lerp = value; }
-        [SerializeField, Range(0, 1), EnableIf(nameof(lerp), true)] float _lerpValue = 0.2f;
+        [SerializeField, Range(0, 1)] float _lerpValue = 0.2f;
         public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
 
         /*//protected override void OnEnable() => update();
@@ -188,6 +156,20 @@ namespace SCKRM.UI
                 }
 
                 return _rectTransform;
+            }
+        }
+        [SerializeField] Graphic _graphic; public Graphic graphic
+        {
+            get
+            {
+                if (_graphic == null)
+                {
+                    _graphic = GetComponent<Graphic>();
+                    if (_graphic == null)
+                        return null;
+                }
+
+                return _graphic;
             }
         }
 

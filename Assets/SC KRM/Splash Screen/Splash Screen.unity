@@ -633,6 +633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _customSetting: 1
   _customGuiSize: 1
   _worldRenderMode: 0
@@ -812,6 +814,10 @@ PrefabInstance:
       propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1305053952172185828, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Theme
+      objectReference: {fileID: 0}
     - target: {fileID: 1311135958682274448, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -823,6 +829,10 @@ PrefabInstance:
     - target: {fileID: 1311135958682274448, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423239715491681229, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Controls
       objectReference: {fileID: 0}
     - target: {fileID: 1535942616384400398, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -842,7 +852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1818760885789760683, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00001347065
+      value: -0.0000014901161
       objectReference: {fileID: 0}
     - target: {fileID: 2309909942247051807, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -854,7 +864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2445179934866750458, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.7299957
+      value: 3.7299986
       objectReference: {fileID: 0}
     - target: {fileID: 2562515841607823891, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -992,6 +1002,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3969719046146433782, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Status Bar
+      objectReference: {fileID: 0}
     - target: {fileID: 3977140737324948733, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1044,6 +1058,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5212624830402476285, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Sound
+      objectReference: {fileID: 0}
     - target: {fileID: 5235668794171918997, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -691
@@ -1078,7 +1096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5984847113046664266, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.0000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 6176144749820169527, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1100,9 +1118,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -907
       objectReference: {fileID: 0}
+    - target: {fileID: 6315576604440051997, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Video
+      objectReference: {fileID: 0}
     - target: {fileID: 6482325315080664562, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -274
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554990549245028401, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Time
       objectReference: {fileID: 0}
     - target: {fileID: 6624796114493896515, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_Size
@@ -1140,10 +1166,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7756743887944632177, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: m_Name
+      value: Title Language
+      objectReference: {fileID: 0}
     - target: {fileID: 7835356157910579063, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -481
       objectReference: {fileID: 0}
+    - target: {fileID: 8172763209603253154, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: _graphic
+      value: 
+      objectReference: {fileID: 1972003763}
+    - target: {fileID: 8172763209603253154, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+      propertyPath: _rectTransform
+      value: 
+      objectReference: {fileID: 1972003762}
     - target: {fileID: 8357719890220378099, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1178,3 +1216,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+--- !u!224 &1972003762 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5615289107670931074, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+  m_PrefabInstance: {fileID: 1972003761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1972003763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 805305352667873454, guid: 8b8992fd40d91564899ed537de4e3b1f, type: 3}
+  m_PrefabInstance: {fileID: 1972003761}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

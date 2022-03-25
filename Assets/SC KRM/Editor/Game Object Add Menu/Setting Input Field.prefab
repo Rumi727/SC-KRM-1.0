@@ -562,6 +562,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff38414fb559714aad97e78f8ad1a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: 
   _variableName: 
   _resetButton: {fileID: 3755035708715362219}
@@ -1164,7 +1166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ce6f2fd59b85d4d8a94c7f108064f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 1482219120415777069}
+  _rectTransform: {fileID: 2854331197266034819}
+  _graphic: {fileID: 7260335578112448451}
+  _inputField: {fileID: 1482219120415777069}
 --- !u!114 &2589625528442728322
 MonoBehaviour:
   m_ObjectHideFlags: 0

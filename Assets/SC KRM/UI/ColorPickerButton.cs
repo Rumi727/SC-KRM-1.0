@@ -30,9 +30,9 @@ namespace SCKRM.UI
             }
         }
 
-        [SerializeField] RectTransform colorPickerMask;
-        [SerializeField] RectTransform colorPickerRectTransform;
-        [SerializeField] ColorPicker colorPicker;
+        [SerializeField, NotNull] RectTransform colorPickerMask;
+        [SerializeField, NotNull] RectTransform colorPickerRectTransform;
+        [SerializeField, NotNull] ColorPicker colorPicker;
 
         bool pointer;
         bool mouseDrag = false;

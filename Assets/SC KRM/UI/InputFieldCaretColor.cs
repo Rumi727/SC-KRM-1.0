@@ -10,7 +10,7 @@ namespace SCKRM.UI
     [ExecuteAlways]
     public sealed class InputFieldCaretColor : UI
     {
-        [SerializeField] TMP_InputField inputField;
+        [SerializeField, NotNull] TMP_InputField _inputField; public TMP_InputField inputField => _inputField;
 
         protected override void OnEnable()
         {
