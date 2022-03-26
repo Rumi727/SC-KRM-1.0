@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3345402497779371383}
   - component: {fileID: 1209962108600287978}
   - component: {fileID: 4371041619413473526}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 862822874367464358}
   - component: {fileID: 2144675843622878881}
   - component: {fileID: 7404143063082529532}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5160214378331734503}
   - component: {fileID: 5749721302920524200}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 1722455210804698870}
   - component: {fileID: 2898394116146612568}
   - component: {fileID: 924608742677864130}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 2733205185716395291}
   - component: {fileID: 7010635997858727996}
   - component: {fileID: 3955887672206866245}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 1791092580311224857}
   - component: {fileID: 4975623069471605057}
   - component: {fileID: 3785414500590463996}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Input Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -755,7 +755,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7196837574605799118}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 1477358942574049235}
   - component: {fileID: 3680059765596297886}
   - component: {fileID: 6920877081624627594}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -986,7 +986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4934411962984573885}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1026,7 +1026,7 @@ GameObject:
   - component: {fileID: 6934755266553139406}
   - component: {fileID: 996662984219472233}
   - component: {fileID: 1586188406021413597}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1119,7 +1119,7 @@ GameObject:
   - component: {fileID: 4794817484995464275}
   - component: {fileID: 6167845678910891430}
   - component: {fileID: 3093705122497929214}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1230,7 +1230,7 @@ GameObject:
   - component: {fileID: 3786419507776623498}
   - component: {fileID: 84958662780164157}
   - component: {fileID: 8593250709410461788}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1401,7 +1401,7 @@ GameObject:
   - component: {fileID: 6157512268212829538}
   - component: {fileID: 4248796807706826218}
   - component: {fileID: 3174002295103184412}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1493,7 +1493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5074375552698377066}
   - component: {fileID: 8783961056898264259}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1598,7 +1598,7 @@ GameObject:
   - component: {fileID: 6821791962830361523}
   - component: {fileID: 8821212146697834406}
   - component: {fileID: 7791143232158230150}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1690,7 +1690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 304766158498055115}
   - component: {fileID: 6203627955292521566}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Setting Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1733,7 +1733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd531d430cd6bb47ab5353a0d2bb83d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 304766158498055115}
   _graphic: {fileID: 0}
   _saveLoadAttributeName: 
   _variableName: 

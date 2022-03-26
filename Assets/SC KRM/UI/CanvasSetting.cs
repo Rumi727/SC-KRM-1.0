@@ -30,6 +30,7 @@ namespace SCKRM.UI
             }
         }
 
+        [SerializeField, HideInInspector] RectTransform safeScreen;
         void Update()
         {
             if (canvas == null)
@@ -49,15 +50,75 @@ namespace SCKRM.UI
 
             if (!customSetting && !worldRenderMode)
             {
-                canvas.worldCamera = UnityEngine.Camera.main;
+                SafeScreenSetting();
+#if UNITY_EDITOR
+                if (Application.isPlaying)
+#endif
+                {
+                    RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
 
-                if (canvas.worldCamera != null)
-                    canvas.renderMode = RenderMode.ScreenSpaceCamera;
-                else
-                    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                    float guiSize = 1;
+                    if (customGuiSize)
+                        guiSize = Kernel.guiSize / canvas.scaleFactor;
+
+                    if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                    {
+                        if (StatusBarManager.cropTheScreen)
+                        {
+                            if (StatusBarManager.SaveData.bottomMode)
+                                safeScreen.offsetMin = new Vector2(safeScreen.offsetMin.x, (taskBarManager.rect.size.y + taskBarManager.anchoredPosition.y) * guiSize);
+                            else
+                                safeScreen.offsetMax = new Vector2(0, -(taskBarManager.rect.size.y - taskBarManager.anchoredPosition.y) * guiSize);
+                        }
+                    }
+                }
             }
             else if (!customSetting)
                 WorldRenderCamera();
+        }
+
+        void SafeScreenSetting()
+        {
+            if (safeScreen == null)
+            {
+#if UNITY_EDITOR
+                if (Application.isPlaying)
+                    safeScreen = Instantiate(Kernel.emptyRectTransform, transform.parent);
+                else
+                    safeScreen = new GameObject().AddComponent<RectTransform>();
+#else
+                safeScreen = Instantiate(Kernel.emptyRectTransform, transform.parent);
+#endif
+
+                safeScreen.name = "Safe Screen";
+            }
+
+            if (safeScreen.parent != transform)
+                safeScreen.SetParent(transform);
+
+            safeScreen.anchorMin = Vector2.zero;
+            safeScreen.anchorMax = Vector2.one;
+
+            safeScreen.offsetMin = Vector2.zero;
+            safeScreen.offsetMax = Vector2.zero;
+
+            safeScreen.pivot = Vector2.zero;
+
+            safeScreen.eulerAngles = Vector3.zero;
+            safeScreen.localScale = Vector3.one;
+
+            int childCount = transform.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Transform childtransform = transform.GetChild(i);
+                if (childtransform != safeScreen)
+                {
+                    childtransform.SetParent(safeScreen);
+
+                    i--;
+                    childCount--;
+                }
+            }
         }
 
         void WorldRenderCamera()
@@ -102,7 +163,7 @@ namespace SCKRM.UI
 #else
                 if (StatusBarManager.cropTheScreen)
 #endif
-                    height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.sizeDelta.y);
+                    height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.rect.size.y);
                 else
                     height = Screen.height * (1 / Kernel.guiSize);
 

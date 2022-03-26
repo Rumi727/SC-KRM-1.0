@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6282299988513908025}
   - component: {fileID: 6081314165114462904}
   - component: {fileID: 9009219115338824121}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4879827535997354942}
   - component: {fileID: 3740434180860354804}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Setting Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e2b98b28ca87e4ea0bfcb61e3717fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 4879827535997354942}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: 
   _variableName: 
   _resetButton: {fileID: 8548872407520592868}
@@ -167,7 +169,7 @@ GameObject:
   - component: {fileID: 6236679418982111208}
   - component: {fileID: 5800856298254269161}
   - component: {fileID: 8855952369967304975}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +321,7 @@ GameObject:
   - component: {fileID: 1983648433373221627}
   - component: {fileID: 9208971970543642751}
   - component: {fileID: 2256654234338568651}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,6 +415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6368022071948269525
 GameObject:
@@ -428,7 +432,7 @@ GameObject:
   - component: {fileID: 5652662923118441648}
   - component: {fileID: 8596587557350854144}
   - component: {fileID: 7912384135170662591}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,6 +586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6442030549491609546
 GameObject:
@@ -594,7 +600,7 @@ GameObject:
   - component: {fileID: 813573427423090324}
   - component: {fileID: 8548872407520592868}
   - component: {fileID: 2904651555025553615}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -704,7 +710,7 @@ GameObject:
   - component: {fileID: 5888864043554738874}
   - component: {fileID: 8359431386467622852}
   - component: {fileID: 5769428259870624661}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -798,7 +804,7 @@ GameObject:
   - component: {fileID: 867895316427773173}
   - component: {fileID: 8333446689144095024}
   - component: {fileID: 3052101656650368843}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}

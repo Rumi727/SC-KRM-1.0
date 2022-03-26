@@ -8,9 +8,6 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(CameraSetting), true)]
     public sealed class CameraSettingEditor : CustomInspectorEditor
     {
-        public override void OnInspectorGUI()
-        {
-            UseProperty("_customSetting", "커스텀 설정");
-        }
+        public override void OnInspectorGUI() => UseProperty("_customSetting", "커스텀 설정");
     }
 }

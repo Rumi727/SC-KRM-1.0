@@ -38,18 +38,17 @@ namespace SCKRM.Camera
             {
                 if (camera == null)
                     return;
-
-                if (customSetting)
+                else if (customSetting)
                     return;
 
                 RectTransform taskBar = StatusBarManager.instance.rectTransform;
                 if (StatusBarManager.cropTheScreen)
                 {
                     if (!StatusBarManager.SaveData.bottomMode)
-                        camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.sizeDelta.y - taskBar.anchoredPosition.y) * Kernel.guiSize / Screen.height));
+                        camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.rect.size.y - taskBar.anchoredPosition.y) * Kernel.guiSize / Screen.height));
                     else
                     {
-                        float y = (taskBar.sizeDelta.y + taskBar.anchoredPosition.y) * Kernel.guiSize / Screen.height;
+                        float y = (taskBar.rect.size.y + taskBar.anchoredPosition.y) * Kernel.guiSize / Screen.height;
                         camera.rect = new Rect(0, y, 1, 1 - y);
                     }
                 }

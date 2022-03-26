@@ -10,10 +10,8 @@ namespace SCKRM.UI
     [AddComponentMenu("")]
     public sealed class UIManager : Manager<UIManager>
     {
-        [SerializeField] Canvas _kernelCanvas;
-        public Canvas kernelCanvas => _kernelCanvas;
-        [SerializeField] RectTransform _kernelCanvasUI;
-        public RectTransform kernelCanvasUI => _kernelCanvasUI;
+        [SerializeField] Canvas _kernelCanvas; public Canvas kernelCanvas => _kernelCanvas;
+        [SerializeField] RectTransform _kernelCanvasUI; public RectTransform kernelCanvasUI => _kernelCanvasUI;
 
 
 
@@ -36,16 +34,16 @@ namespace SCKRM.UI
                     homeEvent.Invoke();
             }
 
-            StatusBarManager taskBarManager = StatusBarManager.instance;
+            RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
             if (StatusBarManager.SaveData.bottomMode)
             {
-                kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, taskBarManager.rectTransform.sizeDelta.y + taskBarManager.rectTransform.anchoredPosition.y);
+                kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, taskBarManager.rect.size.y + taskBarManager.anchoredPosition.y);
                 kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, 0);
             }
             else
             {
                 kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, 0);
-                kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, -(taskBarManager.rectTransform.sizeDelta.y - taskBarManager.rectTransform.anchoredPosition.y));
+                kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, -(taskBarManager.rect.size.y - taskBarManager.anchoredPosition.y));
             }
         }
 

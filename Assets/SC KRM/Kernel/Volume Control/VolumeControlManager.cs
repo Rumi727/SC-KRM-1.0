@@ -38,24 +38,24 @@ namespace SCKRM.UI
                 {
                     if (StatusBarManager.SaveData.bottomMode)
                     {
-                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y - 0.01f)
+                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.rect.size.y - 0.01f)
                         {
                             hide.SetActive(false);
                             graphic.enabled = false;
                         }
 
-                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.sizeDelta.y + 1), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.rect.size.y + 1), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     }
                     else
                     {
-                        float statusBarSizeDeltaY = StatusBarManager.instance.rectTransform.sizeDelta.y;
-                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.sizeDelta.y + statusBarSizeDeltaY - 0.01f)
+                        float statusBarSizeDeltaY = StatusBarManager.instance.rectTransform.rect.size.y;
+                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.rect.size.y + statusBarSizeDeltaY - 0.01f)
                         {
                             hide.SetActive(false);
                             graphic.enabled = false;
                         }
 
-                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.sizeDelta.y + 1 + statusBarSizeDeltaY), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.rect.size.y + 1 + statusBarSizeDeltaY), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     }
                 }
 

@@ -66,6 +66,8 @@ namespace SCKRM
 
         public const float fps60second = 1f / 60f;
         
+
+
         static string _dataPath = "";
         /// <summary>
         /// Application.dataPath
@@ -199,14 +201,37 @@ namespace SCKRM
 
 
 
-
-
-
         public static float gameSpeed { get; set; } = 1;
         public static float guiSize { get; private set; } = 1;
 
         public static bool isInitialLoadStart { get; private set; } = false;
         public static bool isInitialLoadEnd { get; private set; } = false;
+
+
+
+        static Transform _emptyTransform;
+        public static Transform emptyTransform
+        {
+            get
+            {
+                if (!Application.isPlaying)
+                    throw new NotPlayModePropertyException(nameof(emptyTransform));
+
+                return _emptyTransform;
+            }
+        }
+
+        static RectTransform _emptyRectTransform;
+        public static RectTransform emptyRectTransform
+        {
+            get
+            {
+                if (!Application.isPlaying)
+                    throw new NotPlayModePropertyException(nameof(emptyTransform));
+
+                return _emptyRectTransform;
+            }
+        }
 
 
 
@@ -217,7 +242,21 @@ namespace SCKRM
         void Awake()
         {
             if (SingletonCheck(this))
+            {
                 DontDestroyOnLoad(instance);
+
+                Transform emptyTransform = new GameObject().transform;
+                emptyTransform.SetParent(transform);
+                emptyTransform.name = "Empty Transform";
+
+                _emptyTransform = emptyTransform;
+
+                RectTransform emptyRectTransform = new GameObject().AddComponent<RectTransform>();
+                emptyRectTransform.SetParent(transform);
+                emptyRectTransform.name = "Empty Rect Transform";
+
+                _emptyRectTransform = emptyRectTransform;
+            }
         }
 
 #if !UNITY_EDITOR
@@ -297,7 +336,7 @@ namespace SCKRM
                 if (dateTime.Month == 7 && dateTime.Day == 1) //7월이라면...
                     NoticeManager.Notice("notice.school_live.birthday.title", "notice.school_live.birthday.description", "%value%", (dateTime.Year - 2012).ToString());
                 else if (dateTime.Month == 7 && dateTime.Day == 9) //7월 9일이라면...
-                    NoticeManager.Notice("notice.school_live_ani.birthday.title", "notice.school_live_ani.birthday.description", "%value%", (dateTime.Year - 2015).ToString()); 
+                    NoticeManager.Notice("notice.school_live_ani.birthday.title", "notice.school_live_ani.birthday.description", "%value%", (dateTime.Year - 2015).ToString());
                 else if (dateTime.Month == 8 && dateTime.Day == 7) //8월 7일이라면...
                     NoticeManager.Notice("notice.ebisuzawa_kurumi_chan.birthday.title", "notice.ebisuzawa_kurumi_chan.birthday.description");
                 else if (dateTime.Month == 4 && dateTime.Day == 5) //4월 5일이라면...
@@ -554,21 +593,21 @@ namespace SCKRM
                 RendererManager.AllTextRerender();
             else
             {
-/*#if !UNITY_EDITOR
-                if (SoundManager.soundList.Count > 0)
-                {
-#if UNITY_STANDALONE_WIN
-                    string text = LanguageManager.TextLoad("kernel.allrefresh.warning");
-                    string caption = LanguageManager.TextLoad("gui.warning");
-                    WindowManager.DialogResult dialogResult = WindowManager.MessageBox(text, caption, WindowManager.MessageBoxButtons.OKCancel, WindowManager.MessageBoxIcon.Warning);
-                    if (dialogResult != WindowManager.DialogResult.OK)
-                        return;
-#else
-                    Debug.LogError(LanguageManager.TextLoad("kernel.allrefresh.error"));
-                    return;
-#endif
-                }
-#endif*/
+                /*#if !UNITY_EDITOR
+                                if (SoundManager.soundList.Count > 0)
+                                {
+                #if UNITY_STANDALONE_WIN
+                                    string text = LanguageManager.TextLoad("kernel.allrefresh.warning");
+                                    string caption = LanguageManager.TextLoad("gui.warning");
+                                    WindowManager.DialogResult dialogResult = WindowManager.MessageBox(text, caption, WindowManager.MessageBoxButtons.OKCancel, WindowManager.MessageBoxIcon.Warning);
+                                    if (dialogResult != WindowManager.DialogResult.OK)
+                                        return;
+                #else
+                                    Debug.LogError(LanguageManager.TextLoad("kernel.allrefresh.error"));
+                                    return;
+                #endif
+                                }
+                #endif*/
                 if (!ResourceManager.isResourceRefesh)
                 {
                     await ResourceManager.ResourceRefresh();
@@ -578,7 +617,7 @@ namespace SCKRM
                     ResourceManager.AudioGarbageRemoval();
                 }
             }
-            
+
             GC.Collect();
             AllRefreshEnd();
         }
@@ -623,6 +662,23 @@ namespace SCKRM
         /// 플레이 모드가 아닐때 이 함수를 사용하는건 불가능합니다.
         /// </summary>
         public NotPlayModeMethodException(string method) : base($"It is not possible to use {method} functions when not in play mode.\n플레이 모드가 아닐때 {method} 함수를 사용하는건 불가능합니다") { }
+    }
+
+
+
+    public class NotPlayModePropertyException : Exception
+    {
+        /// <summary>
+        /// It is not possible to use this property when not in play mode.
+        /// 플레이 모드가 아닐때 이 프로퍼티를 사용하는건 불가능합니다.
+        /// </summary>
+        public NotPlayModePropertyException() : base("It is not possible to use this property when not in play mode.\n플레이 모드가 아닐때 이 프로퍼티를 사용하는건 불가능합니다") { }
+
+        /// <summary>
+        /// It is not possible to use {method} property when not in play mode.
+        /// 플레이 모드가 아닐때 이 프로퍼티를 사용하는건 불가능합니다.
+        /// </summary>
+        public NotPlayModePropertyException(string property) : base($"It is not possible to use {property} propertys when not in play mode.\n플레이 모드가 아닐때 {property} 프로퍼티를 사용하는건 불가능합니다") { }
     }
 
 

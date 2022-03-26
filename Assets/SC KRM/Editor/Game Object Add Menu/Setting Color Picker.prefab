@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9211079710849222178}
   - component: {fileID: 3421535222054633744}
   - component: {fileID: 2477620899454417491}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba592989150be745953d1b3f4dca6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 9211079710849222178}
   _lerp: 1
   _lerpValue: 0.2
   _targetCanvasRenderer: {fileID: 8878320999164723711}
@@ -180,7 +182,7 @@ GameObject:
   - component: {fileID: 759064713272876988}
   - component: {fileID: 8025502280564626631}
   - component: {fileID: 7827582895991366127}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +276,7 @@ GameObject:
   - component: {fileID: 1684635787538165097}
   - component: {fileID: 426515310816623987}
   - component: {fileID: 5132338554097820434}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +372,7 @@ GameObject:
   - component: {fileID: 6560614357291395795}
   - component: {fileID: 7478798626025008675}
   - component: {fileID: 3184884671929898866}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Color Picker Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,6 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc892b9548b3b040b5bdc87f0ca3e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.4
   colorPickerMask: {fileID: 7268723893568988090}
@@ -538,7 +542,7 @@ GameObject:
   - component: {fileID: 1261287160559756371}
   - component: {fileID: 2198548218864597343}
   - component: {fileID: 8169272895087023493}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Setting Color Picker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,6 +584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1045c5602d3f02e44a55b78fb741e0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 1261287160559756371}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: 
   _variableName: 
   _resetButton: {fileID: 530220546367565090}
@@ -600,6 +606,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 1261287160559756371}
+  _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
   _targetRectTransform: {fileID: 7268723893568988090}
@@ -620,7 +628,7 @@ GameObject:
   - component: {fileID: 7119471431342422842}
   - component: {fileID: 5759612905055279438}
   - component: {fileID: 7555683233946695380}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -714,7 +722,7 @@ GameObject:
   - component: {fileID: 8859738925051386530}
   - component: {fileID: 1865932519913000456}
   - component: {fileID: 8791448003806059529}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -807,7 +815,7 @@ GameObject:
   - component: {fileID: 6723790223032794885}
   - component: {fileID: 530220546367565090}
   - component: {fileID: 6579649200091354513}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +926,7 @@ GameObject:
   - component: {fileID: 1192733951536039370}
   - component: {fileID: 8285435303507616550}
   - component: {fileID: 3397370707031046243}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Color Picker Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}

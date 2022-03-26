@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3326470629321916527}
   - component: {fileID: 1694981404211094456}
   - component: {fileID: 3699227958295884167}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2362452059621128034}
   - component: {fileID: 7170476850409186395}
   - component: {fileID: 4618149182129309364}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Setting Dropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf66429e26a3c5408d912910e30ebf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 2362452059621128034}
+  _graphic: {fileID: 0}
   _saveLoadAttributeName: 
   _variableName: 
   _resetButton: {fileID: 2758041487891954719}
@@ -167,6 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 2362452059621128034}
+  _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
   _targetRectTransform: {fileID: 1019530223916582975}
@@ -187,7 +191,7 @@ GameObject:
   - component: {fileID: 7824769697172478844}
   - component: {fileID: 5664882286991922451}
   - component: {fileID: 2175903226505351713}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +341,7 @@ GameObject:
   - component: {fileID: 5813287431138278529}
   - component: {fileID: 2758041487891954719}
   - component: {fileID: 7024296486900933821}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +451,7 @@ GameObject:
   - component: {fileID: 8123150491019886861}
   - component: {fileID: 6059935138705898438}
   - component: {fileID: 8194329269440869277}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +545,7 @@ GameObject:
   - component: {fileID: 2142066522252906300}
   - component: {fileID: 4600117747656545544}
   - component: {fileID: 6831470735158147962}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background Gradation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
