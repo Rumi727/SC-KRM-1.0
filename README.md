@@ -11,7 +11,7 @@ Simsimhan Chobo Kernel Manager
 - UniTask (https://github.com/Cysharp/UniTask)
 - HSV-Color-Picker-Unity (https://github.com/judah4/HSV-Color-Picker-Unity)
 - K4UnityThreadDispatcher (https://gist.github.com/heshuimu/f63cd9126117afc4004be37b19fa1c09#file-k4unitythreaddispatcher-cs)
-- Unity Editor Toolbox (https://github.com/arimger/Unity-Editor-Toolbox)
+- ~~Unity Editor Toolbox (https://github.com/arimger/Unity-Editor-Toolbox)~~
 - ~~In-game Debug Console (https://github.com/yasirkula/UnityIngameDebugConsole)~~
 
 볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (링크가 없는것은 유니티 레지스트리에 있습니다)
