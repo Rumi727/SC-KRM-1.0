@@ -56,7 +56,7 @@ namespace SCKRM.UI
             if (RhythmManager.isBeatPlay)
             {
                 inputField.caretBlinkRate = 0;
-                inputField.caretColor = new Color(inputField.caretColor.r, inputField.caretColor.g, inputField.caretColor.b, inputField.caretColor.a - 0.01f * RhythmManager.bpmFpsDeltaTime);
+                inputField.caretColor = new Color(inputField.caretColor.r, inputField.caretColor.g, inputField.caretColor.b, inputField.caretColor.a - 0.0125f * RhythmManager.bpmFpsDeltaTime);
             }
             else
             {

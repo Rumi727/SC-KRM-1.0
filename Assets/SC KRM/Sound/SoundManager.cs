@@ -145,7 +145,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        public static SoundPlayer PlaySound(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
         /// 오디오 클립을 재생시킵니다
@@ -235,7 +235,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        public static SoundPlayer PlaySound(AudioClip audioClip, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
         /// 오디오 클립을 재생시킵니다

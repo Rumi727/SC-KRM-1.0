@@ -10,8 +10,24 @@ namespace SCKRM.UI
         [SerializeField] float _alpha = 1;
         public float alpha { get => _alpha; set => _alpha = value; }
 
-        protected override void OnEnable() => RhythmManager.oneBeat += ColorChange;
-        protected override void OnDisable() => RhythmManager.oneBeat -= ColorChange;
+        [SerializeField] bool _dropPartMode = false;
+        public bool dropPartMode => _dropPartMode;
+
+        protected override void OnEnable()
+        {
+            if (dropPartMode)
+                RhythmManager.oneBeatDropPart += ColorChange;
+            else
+                RhythmManager.oneBeat += ColorChange;
+        }
+
+        protected override void OnDisable()
+        {
+            if (dropPartMode)
+                RhythmManager.oneBeatDropPart -= ColorChange;
+            else
+                RhythmManager.oneBeat -= ColorChange;
+        }
 
         void Update()
         {

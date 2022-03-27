@@ -17,39 +17,29 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            bool error = false;
-            if (editor.rectTransform == null)
-            {
-                EditorGUILayout.HelpBox("이 게임 오브젝트의 RectTransform 컴포넌트를 넣어주세요", MessageType.Warning);
-                UseProperty("_rectTransform");
-
-                error = true;
-            }
-            else if (editor.rectTransform.gameObject != editor.gameObject)
+            if (editor.rectTransform.gameObject != editor.gameObject)
             {
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 RectTramsform 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_rectTransform");
-
-                error = true;
             }
 
-            if (editor.graphic == null)
-            {
-                EditorGUILayout.HelpBox("이 게임 오브젝트에 그래픽 컴포넌트가 있다면 넣어주세요", MessageType.Warning);
-                UseProperty("_graphic");
-
-                error = true;
-            }
-            else if (editor.graphic.gameObject != editor.gameObject)
+            if (editor.graphic != null && editor.graphic.gameObject != editor.gameObject)
             {
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 그래픽 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_graphic");
-
-                error = true;
             }
 
-            if (!error)
-                EditorGUILayout.HelpBox("중요한 필드에 문제가 없는것같습니다", MessageType.None);
+            EditorGUILayout.LabelField("Anchored Position: " + editor.rectTransform.anchoredPosition);
+            EditorGUILayout.LabelField("Size Delta: " + editor.rectTransform.sizeDelta);
+
+            Space();
+
+            EditorGUILayout.LabelField("Offset Min: " + editor.rectTransform.offsetMin);
+            EditorGUILayout.LabelField("Offset Max: " + editor.rectTransform.offsetMax);
+
+            Space();
+
+            EditorGUILayout.LabelField("Rect: " + editor.rectTransform.rect);
         }
     }
 

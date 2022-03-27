@@ -1,6 +1,7 @@
 using SCKRM.UI;
 using SCKRM.UI.Layout;
 using UnityEditor;
+using UnityEngine;
 
 namespace SCKRM.Editor
 {
@@ -15,6 +16,13 @@ namespace SCKRM.Editor
             DrawLine();
 
             UseProperty("_alpha");
+
+            if (Application.isPlaying)
+                GUI.enabled = false;
+
+            UseProperty("_dropPartMode");
+
+            GUI.enabled = true;
         }
     }
 }

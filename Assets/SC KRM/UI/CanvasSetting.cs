@@ -1,9 +1,11 @@
+using SCKRM.Input;
 using SCKRM.UI.StatusBar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
@@ -45,25 +47,25 @@ namespace SCKRM.UI
                     canvas.scaleFactor = 1;
             }
 #else
-                canvas.scaleFactor = Kernel.guiSize;
+            canvas.scaleFactor = Kernel.guiSize;
 #endif
 
-            if (!customSetting && !worldRenderMode)
+            if (!customSetting)
             {
-                SafeScreenSetting();
-#if UNITY_EDITOR
-                if (Application.isPlaying)
-#endif
+                if (!worldRenderMode)
                 {
-                    RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
-
-                    float guiSize = 1;
-                    if (customGuiSize)
-                        guiSize = Kernel.guiSize / canvas.scaleFactor;
-
-                    if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                    SafeScreenSetting();
+#if UNITY_EDITOR
+                    if (Application.isPlaying)
+#endif
                     {
-                        if (StatusBarManager.cropTheScreen)
+                        RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
+
+                        float guiSize = 1;
+                        if (customGuiSize)
+                            guiSize = Kernel.guiSize / canvas.scaleFactor;
+
+                        if (StatusBarManager.cropTheScreen && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         {
                             if (StatusBarManager.SaveData.bottomMode)
                                 safeScreen.offsetMin = new Vector2(safeScreen.offsetMin.x, (taskBarManager.rect.size.y + taskBarManager.anchoredPosition.y) * guiSize);
@@ -72,9 +74,9 @@ namespace SCKRM.UI
                         }
                     }
                 }
+                else
+                    WorldRenderCamera();
             }
-            else if (!customSetting)
-                WorldRenderCamera();
         }
 
         void SafeScreenSetting()
@@ -104,7 +106,7 @@ namespace SCKRM.UI
 
             safeScreen.pivot = Vector2.zero;
 
-            safeScreen.eulerAngles = Vector3.zero;
+            safeScreen.localEulerAngles = Vector3.zero;
             safeScreen.localScale = Vector3.one;
 
             int childCount = transform.childCount;
@@ -123,30 +125,17 @@ namespace SCKRM.UI
 
         void WorldRenderCamera()
         {
-            if (worldRenderMode)
-            {
-                canvas.worldCamera = UnityEngine.Camera.main;
+            canvas.worldCamera = UnityEngine.Camera.main;
 
-                if (canvas.worldCamera == null)
-                {
-                    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                    return;
-                }
+            if (canvas.worldCamera == null)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                return;
+            }
 
 #if UNITY_EDITOR
-                if (Application.isPlaying)
-                {
-                    if (transform.parent != UnityEngine.Camera.main.transform)
-                        transform.SetParent(UnityEngine.Camera.main.transform);
-
-                    canvas.renderMode = RenderMode.WorldSpace;
-
-                    transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
-                    transform.localEulerAngles = Vector3.zero;
-                }
-                else
-                    canvas.renderMode = RenderMode.ScreenSpaceCamera;
-#else
+            if (Application.isPlaying)
+            {
                 if (transform.parent != UnityEngine.Camera.main.transform)
                     transform.SetParent(UnityEngine.Camera.main.transform);
 
@@ -154,55 +143,65 @@ namespace SCKRM.UI
 
                 transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
                 transform.localEulerAngles = Vector3.zero;
-#endif
-
-                float width = Screen.width * (1 / Kernel.guiSize);
-                float height;
-#if UNITY_EDITOR
-                if (Application.isPlaying && StatusBarManager.cropTheScreen)
-#else
-                if (StatusBarManager.cropTheScreen)
-#endif
-                    height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.rect.size.y);
-                else
-                    height = Screen.height * (1 / Kernel.guiSize);
-
-                rectTransform.sizeDelta = new Vector2(width, height);
-                rectTransform.pivot = new Vector2(0.5f, 0.5f);
-
-                UnityEngine.Camera camera;
-                if (canvas.worldCamera != null)
-                    camera = canvas.worldCamera;
-                else
-                    camera = UnityEngine.Camera.main;
-
-
-
-                float spriteX;
-                float spriteY;
-
-                float screenX;
-                float screenY;
-
-                if (camera.orthographic)
-                {
-                    spriteX = rectTransform.sizeDelta.x;
-                    spriteY = rectTransform.sizeDelta.y;
-
-                    screenY = camera.orthographicSize * 2;
-                    screenX = screenY / height * width;
-                }
-                else
-                {
-                    spriteX = rectTransform.sizeDelta.x;
-                    spriteY = rectTransform.sizeDelta.y;
-
-                    screenY = Mathf.Tan(camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * 2.0f * transform.localPosition.z;
-                    screenX = screenY / height * width;
-                }
-
-                transform.localScale = new Vector3(screenX / spriteX, screenY / spriteY, screenX / spriteX);
             }
+            else
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+#else
+            if (transform.parent != UnityEngine.Camera.main.transform)
+                transform.SetParent(UnityEngine.Camera.main.transform);
+
+            canvas.renderMode = RenderMode.WorldSpace;
+
+            transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
+            transform.localEulerAngles = Vector3.zero;
+#endif
+
+            float width = Screen.width * (1 / Kernel.guiSize);
+            float height;
+#if UNITY_EDITOR
+            if (Application.isPlaying && StatusBarManager.cropTheScreen)
+#else
+            if (StatusBarManager.cropTheScreen)
+#endif
+                height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.rect.size.y);
+            else
+                height = Screen.height * (1 / Kernel.guiSize);
+
+            rectTransform.sizeDelta = new Vector2(width, height);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+            UnityEngine.Camera camera;
+            if (canvas.worldCamera != null)
+                camera = canvas.worldCamera;
+            else
+                camera = UnityEngine.Camera.main;
+
+
+
+            float spriteX;
+            float spriteY;
+
+            float screenX;
+            float screenY;
+
+            if (camera.orthographic)
+            {
+                spriteX = rectTransform.sizeDelta.x;
+                spriteY = rectTransform.sizeDelta.y;
+
+                screenY = camera.orthographicSize * 2;
+                screenX = screenY / height * width;
+            }
+            else
+            {
+                spriteX = rectTransform.sizeDelta.x;
+                spriteY = rectTransform.sizeDelta.y;
+
+                screenY = Mathf.Tan(camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * 2.0f * transform.localPosition.z;
+                screenX = screenY / height * width;
+            }
+
+            transform.localScale = new Vector3(screenX / spriteX, screenY / spriteY, screenX / spriteX);
         }
     }
 }

@@ -26,9 +26,12 @@ namespace SCKRM.Editor
             if (!editor.customSetting)
                 UseProperty("_worldRenderMode", "월드 렌더 모드");
 
-            DrawLine();
+            if (!editor.customSetting || editor.canvas.renderMode != UnityEngine.RenderMode.WorldSpace)
+            {
+                DrawLine();
 
-            UseProperty("_customGuiSize", "GUI 크기 커스텀");
+                UseProperty("_customGuiSize", "GUI 크기 커스텀");
+            }
         }
     }
 }

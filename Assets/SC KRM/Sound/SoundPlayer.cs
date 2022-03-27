@@ -207,10 +207,10 @@ namespace SCKRM.Sound
             SetTempoAndPitch();
             SetVolume();
 
-            if (StatusBarManager.selectedStatusBar)
+            /*if (StatusBarManager.selectedStatusBar)
                 audioLowPassFilter.cutoffFrequency = 687.5f;
             else
-                audioLowPassFilter.cutoffFrequency = 11000f;
+                audioLowPassFilter.cutoffFrequency = 11000f;*/
 
             if (spatial)
                 audioSource.spatialBlend = 1;
