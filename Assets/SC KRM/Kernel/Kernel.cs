@@ -336,6 +336,8 @@ namespace SCKRM
                     NoticeManager.Notice("notice.onell0.birthday.title", "notice.onell0.birthday.description", "%value%", (dateTime.Year - 2010).ToString());
                 else if (dateTimeLunar.Month == 1 && dateTimeLunar.Day == 1) //음력으로 1월 1일이라면...
                     NoticeManager.Notice("notice.korean_new_year.title", "notice.korean_new_year.description");
+                else if (dateTime.Month == 4 && dateTimeLunar.Day == 1) //4월 1일이라면...
+                    NoticeManager.Notice("notice.april_fools_day.title", "notice.april_fools_day.description");
 
                 tempYear = dateTime.Year;
                 tempMonth = dateTime.Month;

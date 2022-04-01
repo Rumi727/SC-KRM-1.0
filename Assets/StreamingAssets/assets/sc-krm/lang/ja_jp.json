@@ -115,6 +115,9 @@
 	"notice.korean_new_year.title": "明けましておめでとう",
 	"notice.korean_new_year.description": "今日は韓国のお正月です",
 	
+	"notice.april_fools_day.title": "今日は何日？",
+	"notice.april_fools_day.description": "今日はエイプリルフールです！\n<s>しかし今は私の昼食です</s>",
+	
 	
 	
 	"log": "콘솔",

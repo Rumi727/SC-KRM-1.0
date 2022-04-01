@@ -115,6 +115,9 @@
 	"notice.korean_new_year.title": "새해 복 많이 받으세요",
 	"notice.korean_new_year.description": "오늘은 한국의 설날입니다\n<s>용돈 받으러 갑시다</s>",
 	
+	"notice.april_fools_day.title": "오늘은 무슨 날?",
+	"notice.april_fools_day.description": "오늘은 만우절 입니다!\n<s>하지만 지금은 제 점심이죠</s>",
+	
 	
 	
 	"log": "콘솔",

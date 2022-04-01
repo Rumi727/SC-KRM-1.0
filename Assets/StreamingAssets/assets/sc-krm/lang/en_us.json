@@ -115,6 +115,9 @@
 	"notice.korean_new_year.title": "Happy Korean New Year",
 	"notice.korean_new_year.description": "Today is Korean New Year's Day",
 	
+	"notice.april_fools_day.title": "What day is today?",
+	"notice.april_fools_day.description": "Today is April Fool's Day!\n<s>But now it's my lunch</s>",
+	
 	
 	
 	"log": "Console",
