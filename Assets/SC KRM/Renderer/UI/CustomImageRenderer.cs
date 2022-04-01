@@ -21,14 +21,14 @@ namespace SCKRM.Renderer
             }
         }
 
-        public override void Refresh()
+        public override async void Refresh()
         {
-            Sprite sprite = SpriteReload(type, path, index, nameSpace);
+            Sprite sprite = await SpriteReload(type, path, index, nameSpace);
 
             if (ThreadManager.isMainThread)
                 image.sprite = sprite;
             else
-                K4UnityThreadDispatcher.Execute(() => image.sprite = sprite);
+                await K4UnityThreadDispatcher.Execute(() => image.sprite = sprite);
         }
     }
 }

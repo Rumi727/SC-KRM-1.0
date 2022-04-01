@@ -1,11 +1,22 @@
+using Cysharp.Threading.Tasks;
+using SCKRM.Object;
+using SCKRM.Renderer;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace SCKRM.Window
 {
-    public static class WindowManager
+    public sealed class WindowManager : Manager<WindowManager>
     {
+        [SerializeField] CanvasGroup messageBoxCanvasGroup;
+        [SerializeField] Transform messageBoxButtons;
+        [SerializeField] CustomAllTextRenderer messageBoxInfo;
+
+        void Awake() => SingletonCheck(this);
+
+
+
 #if UNITY_STANDALONE_WIN
 #if !UNITY_EDITOR
         static float lerpX = 0;
@@ -149,115 +160,32 @@ namespace SCKRM.Window
         }
 
 
-        public static DialogResult MessageBox(string text, string caption, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OK, MessageBoxIcon messageBoxIcon = MessageBoxIcon.None)
+
+        static MessageBoxButton[] createdMessageBoxButton;
+        public static async UniTask<int> MessageBox(string text, int defaultIndex, string[] buttons)
         {
-#if UNITY_STANDALONE_WIN
-            System.Windows.Forms.MessageBoxButtons messageBoxButtons2;
-            switch (messageBoxButtons)
+            for (int i = 0; i < createdMessageBoxButton.Length; i++)
+                ObjectPoolingSystem.ObjectRemove("window_manager.message_box_button", createdMessageBoxButton[i]);
+
+            createdMessageBoxButton = new MessageBoxButton[buttons.Length];
+            for (int i = 0; i < buttons.Length; i++)
             {
-                case MessageBoxButtons.OKCancel:
-                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.OKCancel;
-                    break;
-                case MessageBoxButtons.AbortRetryIgnore:
-                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.AbortRetryIgnore;
-                    break;
-                case MessageBoxButtons.YesNoCancel:
-                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.YesNoCancel;
-                    break;
-                case MessageBoxButtons.YesNo:
-                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.YesNo;
-                    break;
-                case MessageBoxButtons.RetryCancel:
-                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.RetryCancel;
-                    break;
-                default:
-                    messageBoxButtons2 = System.Windows.Forms.MessageBoxButtons.OK;
-                    break;
+                MessageBoxButton button = (MessageBoxButton)ObjectPoolingSystem.ObjectCreate("window_manager.message_box_button", instance.messageBoxButtons);
+                createdMessageBoxButton[i] = button;
+
+                button.index = i;
+                button.text.path = buttons[i];
+                button.text.Refresh();
+
+                button.button.onClick.AddListener(() => action(button));
             }
 
-            System.Windows.Forms.MessageBoxIcon messageBoxIcon2;
-            switch (messageBoxIcon)
-            {
-                case MessageBoxIcon.Hand:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Hand;
-                    break;
-                case MessageBoxIcon.Question:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Question;
-                    break;
-                case MessageBoxIcon.Exclamation:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Exclamation;
-                    break;
-                case MessageBoxIcon.Asterisk:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Asterisk;
-                    break;
-                case MessageBoxIcon.Stop:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Stop;
-                    break;
-                case MessageBoxIcon.Error:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Error;
-                    break;
-                case MessageBoxIcon.Warning:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Warning;
-                    break;
-                case MessageBoxIcon.Information:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.Information;
-                    break;
-                default:
-                    messageBoxIcon2 = System.Windows.Forms.MessageBoxIcon.None;
-                    break;
-            }
+            int clickedIndex = -1;
+            await UniTask.WaitUntil(() => clickedIndex < 0);
 
-            System.Windows.Forms.DialogResult dialogResult = System.Windows.Forms.MessageBox.Show(text, caption, messageBoxButtons2, messageBoxIcon2);
+            return clickedIndex;
 
-            return dialogResult switch
-            {
-                System.Windows.Forms.DialogResult.OK => DialogResult.OK,
-                System.Windows.Forms.DialogResult.Cancel => DialogResult.Cancel,
-                System.Windows.Forms.DialogResult.Abort => DialogResult.Abort,
-                System.Windows.Forms.DialogResult.Retry => DialogResult.Retry,
-                System.Windows.Forms.DialogResult.Ignore => DialogResult.Ignore,
-                System.Windows.Forms.DialogResult.Yes => DialogResult.Yes,
-                System.Windows.Forms.DialogResult.No => DialogResult.No,
-                _ => DialogResult.None
-            };
-#else
-            throw new NotImplementedException();
-#endif
-        }
-
-        public enum DialogResult
-        {
-            None,
-            OK,
-            Cancel,
-            Abort,
-            Retry,
-            Ignore,
-            Yes,
-            No
-        }
-
-        public enum MessageBoxButtons
-        {
-            OK,
-            OKCancel,
-            AbortRetryIgnore,
-            YesNoCancel,
-            YesNo,
-            RetryCancel
-        }
-
-        public enum MessageBoxIcon
-        {
-            None,
-            Hand,
-            Question,
-            Exclamation,
-            Asterisk,
-            Stop,
-            Error,
-            Warning,
-            Information
+            void action(MessageBoxButton messageBoxButton) => clickedIndex = messageBoxButton.index;
         }
     }
 }

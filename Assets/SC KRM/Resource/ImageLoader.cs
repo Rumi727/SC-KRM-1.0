@@ -11,7 +11,6 @@ namespace SCKRM.Resource
     {
         public static Texture2D LoadTGA(string path, bool mipmapUse = false)
         {
-
             using (BinaryReader r = new BinaryReader(File.OpenRead(path)))
             {
                 // Skip some header info we don't care about.

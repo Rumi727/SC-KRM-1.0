@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using SCKRM.Resource;
 using SCKRM.Tool;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,19 @@ namespace SCKRM.Json
         {
             string json;
             json = ResourceManager.GetText(path, pathExtensionUse);
-            
+
             if (json != "")
-                return JsonConvert.DeserializeObject<T>(json);
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    return default;
+                }
+            }
             else
                 return default;
         }

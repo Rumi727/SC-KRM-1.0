@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using SCKRM.Resource;
 using SCKRM.Threads;
 using UnityEngine;
@@ -30,15 +31,9 @@ namespace SCKRM.Renderer
             queue.Enqueue();
         }*/
 
-        public Sprite SpriteReload(string type, string name, int index, string nameSpace = "")
+        public async UniTask<Sprite> SpriteReload(string type, string name, int index, string nameSpace = "")
         {
-#if !UNITY_EDITOR
-            Sprite[] sprites = ResourceManager.SearchSprites(type, path, nameSpace);
-            if (sprites != null && index < sprites.Length)
-                return sprites[index];
-
-            return null;
-#else
+#if UNITY_EDITOR
             if (!ThreadManager.isMainThread || Application.isPlaying)
             {
                 Sprite[] sprites = ResourceManager.SearchSprites(type, name, nameSpace);
@@ -48,14 +43,14 @@ namespace SCKRM.Renderer
                 return null;
             }
             else
+#endif
             {
-                Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
+                Sprite[] sprites = await ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
                 if (sprites != null && index < sprites.Length)
                     return sprites[index];
                 else
                     return null;
             }
-#endif
         }
     }
 }

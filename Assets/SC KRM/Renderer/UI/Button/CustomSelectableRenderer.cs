@@ -30,15 +30,15 @@ namespace SCKRM.Renderer
         public SpriteStateData selectedSprite { get => _selectedSprite; set => _selectedSprite = value; }
         public SpriteStateData disabledSprite { get => _disabledSprite; set => _disabledSprite = value; }
 
-        public override void Refresh()
+        public override async void Refresh()
         {
             base.Refresh();
 
             SpriteState spriteState = new SpriteState();
-            spriteState.highlightedSprite = SpriteReload(highlightedSprite.type, highlightedSprite.name, highlightedSprite.index, highlightedSprite.nameSpace);
-            spriteState.pressedSprite = SpriteReload(pressedSprite.type, pressedSprite.name, pressedSprite.index, pressedSprite.nameSpace);
-            spriteState.selectedSprite = SpriteReload(selectedSprite.type, selectedSprite.name, selectedSprite.index, selectedSprite.nameSpace);
-            spriteState.disabledSprite = SpriteReload(disabledSprite.type, disabledSprite.name, disabledSprite.index, disabledSprite.nameSpace);
+            spriteState.highlightedSprite = await SpriteReload(highlightedSprite.type, highlightedSprite.name, highlightedSprite.index, highlightedSprite.nameSpace);
+            spriteState.pressedSprite = await SpriteReload(pressedSprite.type, pressedSprite.name, pressedSprite.index, pressedSprite.nameSpace);
+            spriteState.selectedSprite = await SpriteReload(selectedSprite.type, selectedSprite.name, selectedSprite.index, selectedSprite.nameSpace);
+            spriteState.disabledSprite = await SpriteReload(disabledSprite.type, disabledSprite.name, disabledSprite.index, disabledSprite.nameSpace);
 
             if (ThreadManager.isMainThread)
             {
@@ -47,7 +47,7 @@ namespace SCKRM.Renderer
             }
             else
             {
-                K4UnityThreadDispatcher.Execute(() =>
+                await K4UnityThreadDispatcher.Execute(() =>
                 {
                     if (selectable != null)
                         selectable.spriteState = spriteState;

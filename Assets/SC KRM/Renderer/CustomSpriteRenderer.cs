@@ -1,4 +1,5 @@
 using K4.Threading;
+using SCKRM.Threads;
 using UnityEngine;
 
 namespace SCKRM.Renderer
@@ -25,15 +26,24 @@ namespace SCKRM.Renderer
         [SerializeField] SpriteDrawMode _drawMode = SpriteDrawMode.Simple;
         public SpriteDrawMode drawMode { get => _drawMode; set => _drawMode = value; }
 
-        public override void Refresh()
+        public override async void Refresh()
         {
-            Sprite sprite = SpriteReload(type, path, index, nameSpace);
-            K4UnityThreadDispatcher.Execute(() =>
+            Sprite sprite = await SpriteReload(type, path, index, nameSpace);
+            if (ThreadManager.isMainThread)
             {
                 spriteRenderer.sprite = sprite;
                 spriteRenderer.drawMode = drawMode;
                 spriteRenderer.size = size;
-            });
+            }
+            else
+            {
+                await K4UnityThreadDispatcher.Execute(() =>
+                {
+                    spriteRenderer.sprite = sprite;
+                    spriteRenderer.drawMode = drawMode;
+                    spriteRenderer.size = size;
+                });
+            }
         }
     }
 }

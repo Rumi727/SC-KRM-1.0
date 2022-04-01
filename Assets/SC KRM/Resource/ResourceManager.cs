@@ -262,7 +262,19 @@ namespace SCKRM.Resource
                     if (!Directory.Exists(resourcePackTexturePath))
                         continue;
 
-                    string[] types = Directory.GetDirectories(resourcePackTexturePath, "*", SearchOption.AllDirectories);
+                    string[] types;
+                    try
+                    {
+                        types = Directory.GetDirectories(resourcePackTexturePath, "*", SearchOption.AllDirectories);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                        Debug.LogError($"Exception occurred while trying to find the type of resource pack texture");
+                        Debug.LogError($"Texture type path where the exception occurred: {resourcePackTexturePath}");
+
+                        continue;
+                    }
 
                     //리소스팩 폴더 안에 있는 텍스쳐 타입 폴더를 돌아다닙니다 (타입 폴더 안의 폴더도 타입으로 간주합니다 즉 파일 경로가 "assets/sc-krm/textures/asdf/asdf2/asdf3.png" 이라면 타입은 "asdf/asdf2"가 됩니다)
                     for (int k = 0; k < types.Length; k++)
@@ -279,7 +291,23 @@ namespace SCKRM.Resource
                         List<string> paths = new List<string>();
 
                         for (int l = 0; l < textureExtension.Length; l++)
-                            paths.AddRange(Directory.GetFiles(typePath, "*." + textureExtension[l]));
+                        {
+                            string[] files;
+                            try
+                            {
+                                files = Directory.GetFiles(typePath, "*." + textureExtension[l]);
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                                Debug.LogError($"An exception occurred while locating the texture file in the resource pack texture type folder.");
+                                Debug.LogError($"Texture path where the exception occurred: {typePath}");
+
+                                continue;
+                            }
+
+                            paths.AddRange(files);
+                        }
 
                         if (paths.Count <= 0)
                             continue;
@@ -292,7 +320,7 @@ namespace SCKRM.Resource
                                 return;
 #endif
                             string path = paths[l].Replace("\\", "/");
-                            Texture2D texture = GetTexture(path, true, textureMetaData);
+                            Texture2D texture = await GetTexture(path, true, textureMetaData);
 
                             if (textureNames.Contains(texture.name))
                                 continue;
@@ -313,9 +341,6 @@ namespace SCKRM.Resource
                                     textures.Add(texture);
                                 }
                             }
-
-                            if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancel).SuppressCancellationThrow())
-                                return;
                         }
                         
                         if (!packTextureTypePaths.ContainsKey(nameSpace))
@@ -1029,9 +1054,10 @@ namespace SCKRM.Resource
 
 
         #region Get Resource Method
+
         /// <summary>
-        /// 이미지 파일을 Texture2D 타입으로 가져옵니다
-        /// Import image files as Texture2D type
+        /// 파일의 바이트 가져오기 (Android에서는 UnityWebRequest를 사용하여 파일의 Byte를 가져옵니다)
+        /// Get the bytes of a file (On Android, I get the file with UnityWebRequest)
         /// </summary>
         /// <param name="path">
         /// 파일의 경로
@@ -1041,19 +1067,34 @@ namespace SCKRM.Resource
         /// 경로에 확장자 사용
         /// Use extension in path
         /// </param>
-        /// <param name="textureFormat">
-        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
-        /// </param>
         /// <returns></returns>
-        public static Texture2D GetTexture(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
+#pragma warning disable CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
+        public static async UniTask<byte[]> GetFileBytes(string path, bool pathExtensionUse = false)
+#pragma warning restore CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
         {
-            TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(path + ".json", true);
-            if (textureMetaData == null)
+            bool exists;
+            if (!pathExtensionUse)
+                exists = FileExtensionExists(path, out path, textureExtension);
+            else
+                exists = File.Exists(path);
+
+            if (exists)
             {
-                textureMetaData = new TextureMetaData();
-                return GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
+#if UNITY_ANDROID && !UNITY_EDITOR
+                using UnityWebRequest www = UnityWebRequest.Get(path);
+
+                await www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                    Debug.LogError(www.error);
+
+                return www.downloadHandler.data;
+#else
+                return File.ReadAllBytes(path);
+#endif
             }
-            return GetTexture(path, pathExtensionUse, FilterMode.Point, true, TextureMetaData.CompressionType.none, textureFormat);
+
+            return null;
         }
 
         /// <summary>
@@ -1072,7 +1113,34 @@ namespace SCKRM.Resource
         /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
         /// </param>
         /// <returns></returns>
-        public static Texture2D GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
+        public static async UniTask<Texture2D> GetTexture(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
+        {
+            TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(path + ".json", true);
+            if (textureMetaData == null)
+            {
+                textureMetaData = new TextureMetaData();
+                return await GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
+            }
+            return await GetTexture(path, pathExtensionUse, FilterMode.Point, true, TextureMetaData.CompressionType.none, textureFormat);
+        }
+
+        /// <summary>
+        /// 이미지 파일을 Texture2D 타입으로 가져옵니다
+        /// Import image files as Texture2D type
+        /// </summary>
+        /// <param name="path">
+        /// 파일의 경로
+        /// Path
+        /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// Use extension in path
+        /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// </param>
+        /// <returns></returns>
+        public static async UniTask<Texture2D> GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => await GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
 
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
@@ -1091,7 +1159,7 @@ namespace SCKRM.Resource
         /// </param>
         /// <returns></returns>
         /// 
-        public static Texture2D GetTexture(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureMetaData.CompressionType compressionType, TextureFormat textureFormat = TextureFormat.RGBA32)
+        public static async UniTask<Texture2D> GetTexture(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureMetaData.CompressionType compressionType, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (path == null)
                 path = "";
@@ -1104,9 +1172,18 @@ namespace SCKRM.Resource
             
             if (exists)
             {
-                if (Path.GetExtension(path).ToLower() == ".tga")
+                string pathExtension = Path.GetExtension(path).ToLower();
+                if (pathExtension == ".tga")
                 {
-                    Texture2D texture = ImageLoader.LoadTGA(path, mipmapUse);
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    string uuid = Guid.NewGuid().ToString();
+                    string tempFilePath = PathTool.Combine(Kernel.temporaryCachePath, uuid);
+                    File.WriteAllBytes(tempFilePath, await GetFileBytes(path, true));
+#else
+                    string tempFilePath = path;
+#endif
+
+                    Texture2D texture = ImageLoader.LoadTGA(tempFilePath, mipmapUse);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
 
@@ -1114,12 +1191,24 @@ namespace SCKRM.Resource
                         texture.Compress(false);
                     else if (compressionType == TextureMetaData.CompressionType.highQuality)
                         texture.Compress(true);
-                    
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    File.Delete(tempFilePath);
+#endif
+
                     return texture;
                 }
-                else if (Path.GetExtension(path).ToLower() == ".dds")
+                else if (pathExtension == ".dds")
                 {
-                    Texture2D texture = ImageLoader.LoadDDS(path);
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    string uuid = Guid.NewGuid().ToString();
+                    string tempFilePath = PathTool.Combine(Kernel.temporaryCachePath, uuid);
+                    File.WriteAllBytes(tempFilePath, await GetFileBytes(path, true));
+#else
+                    string tempFilePath = path;
+#endif
+
+                    Texture2D texture = ImageLoader.LoadDDS(tempFilePath);
                     texture.name = Path.GetFileNameWithoutExtension(path);
                     texture.filterMode = filterMode;
 
@@ -1127,15 +1216,17 @@ namespace SCKRM.Resource
                         texture.Compress(false);
                     else if (compressionType == TextureMetaData.CompressionType.highQuality)
                         texture.Compress(true);
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+                    File.Delete(tempFilePath);
+#endif
 
                     return texture;
                 }
                 else
                 {
                     Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
-
-                    byte[] bytes = File.ReadAllBytes(path);
-                    if (texture.LoadImage(bytes))
+                    if (texture.LoadImage(await GetFileBytes(path, true)))
                     {
                         texture.name = Path.GetFileNameWithoutExtension(path);
                         texture.filterMode = filterMode;
@@ -1205,7 +1296,7 @@ namespace SCKRM.Resource
         /// </param>
         /// <returns></returns>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public static Sprite[] GetSprites(string resourcePackPath, string type, string name, string nameSpace = "", TextureFormat textureFormat = TextureFormat.RGBA32)
+        public static async UniTask<Sprite[]> GetSprites(string resourcePackPath, string type, string name, string nameSpace = "", TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetSprites));
@@ -1229,7 +1320,7 @@ namespace SCKRM.Resource
             if (textureMetaData == null)
                 textureMetaData = new TextureMetaData();
 
-            Texture2D texture = GetTexture(allPath, false, textureMetaData, textureFormat);
+            Texture2D texture = await GetTexture(allPath, false, textureMetaData, textureFormat);
             FileExtensionExists(allPath, out string allPath2, textureExtension);
             SpriteMetaData[] spriteMetaDatas = JsonManager.JsonRead<SpriteMetaData[]>(allPath2 + ".json", true);
             return GetSprites(texture, spriteMetaDatas);
@@ -1249,7 +1340,7 @@ namespace SCKRM.Resource
         /// </param>
         /// <returns></returns>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public static Sprite[] GetSprites(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
+        public static async UniTask<Sprite[]> GetSprites(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetSprites));
@@ -1257,7 +1348,7 @@ namespace SCKRM.Resource
             if (path == null)
                 path = "";
 
-            Texture2D texture = GetTexture(path, pathExtensionUse, textureFormat);
+            Texture2D texture = await GetTexture(path, pathExtensionUse, textureFormat);
             SpriteMetaData[] spriteMetaDatas = JsonManager.JsonRead<SpriteMetaData[]>(path + ".json", true);
             return GetSprites(texture, spriteMetaDatas);
         }
@@ -1383,7 +1474,7 @@ namespace SCKRM.Resource
                     await www.SendWebRequest();
 
                     if (www.result != UnityWebRequest.Result.Success)
-                        throw new Exception(www.error);
+                        Debug.LogError(www.error);
 
                     return DownloadHandlerAudioClip.GetContent(www);
                 }
@@ -1391,11 +1482,11 @@ namespace SCKRM.Resource
                 return null;
             }
         }
-        #endregion
+#endregion
 
 
 
-        #region Get Key List
+#region Get Key List
         /// <summary>
         /// 로드 된 오디오 키 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
         /// Get the list of loaded audio keys (manually find in the default resource pack if not playing or not initially loaded)
@@ -1581,7 +1672,7 @@ namespace SCKRM.Resource
                     return new string[0];
             }
         }
-        #endregion
+#endregion
 
 
 
@@ -1661,7 +1752,7 @@ namespace SCKRM.Resource
 
 
 
-        #region Texture Average Color
+#region Texture Average Color
         /// <summary>
         /// 텍스쳐의 평균 색상을 구합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Gets the average color of a texture (Since the Unity API is used, we need to run it on the main thread)
@@ -1741,9 +1832,9 @@ namespace SCKRM.Resource
 
             return new Color(r / length, g / length, b / length, a / length);
         }
-        #endregion
+#endregion
 
-        #region Texture Color
+#region Texture Color
         /// <summary>
         /// 색상을 텍스쳐로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Convert color to texture (Since the Unity API is used, we need to run it on the main thread)
@@ -1907,7 +1998,7 @@ namespace SCKRM.Resource
             texture.Apply();
             return GetSprite(texture, spriteMetaData);
         }
-        #endregion
+#endregion
     }
 
     public class TextureMetaData

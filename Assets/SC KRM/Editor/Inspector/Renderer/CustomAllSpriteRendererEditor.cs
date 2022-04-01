@@ -21,7 +21,7 @@ namespace SCKRM.Editor
             editor = (CustomAllSpriteRenderer)target;
         }
 
-        public override void OnInspectorGUI()
+        public override async void OnInspectorGUI()
         {
             if (!Application.isPlaying)
             {
@@ -67,7 +67,7 @@ namespace SCKRM.Editor
                 textureMetaData.mipmapUse = EditorGUILayout.Toggle("밉맵 사용", textureMetaData.mipmapUse);
                 textureMetaData.compressionType = (TextureMetaData.CompressionType)EditorGUILayout.EnumPopup("압축 타입", textureMetaData.compressionType);
 
-                Texture2D texture = ResourceManager.GetTexture(fileAllPath, true, textureMetaData, TextureFormat.Alpha8);
+                Texture2D texture = await ResourceManager.GetTexture(fileAllPath, true, textureMetaData, TextureFormat.Alpha8);
                 if (texture != null && editor.path != null && editor.path != "")
                 {
                     DrawLine();
