@@ -45,8 +45,6 @@ namespace SCKRM
                 _cancel.Dispose();
             }
         }
-
-        public static int GetAsyncTaskClassCount() => asyncTasks.Count;
     }
 
     public class AsyncTask
