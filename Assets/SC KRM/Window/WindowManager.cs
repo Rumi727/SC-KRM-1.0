@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
+using SCKRM.Tool;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -11,6 +12,20 @@ namespace SCKRM.Window
     public sealed class WindowManager : Manager<WindowManager>
     {
         void Awake() => SingletonCheck(this);
+
+        void Update()
+        {
+            if (isMessageBoxShow)
+            {
+                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.MoveTowards(1, 0.01f * Kernel.fpsDeltaTime);
+                messageBoxCanvasGroup.interactable = true;
+            }
+            else
+            {
+                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.MoveTowards(0, 0.01f * Kernel.fpsDeltaTime);
+                messageBoxCanvasGroup.interactable = false;
+            }
+        }
 
 
 
