@@ -10,8 +10,8 @@ namespace SCKRM
     public class SplashScreenBackground : MonoBehaviour
     {
         [SerializeField] Graphic graphic;
-        void OnEnable() => Kernel.InitialLoadEndSceneMove += PadeOut;
-        void OnDisable() => Kernel.InitialLoadEndSceneMove -= PadeOut;
+        void OnEnable() => Kernel.initialLoadEndSceneMove += PadeOut;
+        void OnDisable() => Kernel.initialLoadEndSceneMove -= PadeOut;
 
         async void PadeOut()
         {
