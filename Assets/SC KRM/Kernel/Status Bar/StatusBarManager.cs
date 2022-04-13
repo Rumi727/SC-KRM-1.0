@@ -63,7 +63,7 @@ namespace SCKRM.UI.StatusBar
         {
             if (SingletonCheck(this))
             {
-                Kernel.InitialLoadEnd += AniStart;
+                Kernel.initialLoadEnd += AniStart;
 
                 //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
                 async void AniStart()
@@ -102,7 +102,7 @@ namespace SCKRM.UI.StatusBar
                             mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
                     }
 
-                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || eventSystem.currentSelectedGameObject?.GetComponentInParent<Kernel>() != null;
+                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || (eventSystem.currentSelectedGameObject == null && eventSystem.currentSelectedGameObject.GetComponentInParent<Kernel>() != null);
                     bool statusBarShow = selectedStatusBar || timer > 0;
                     isStatusBarShow = allowStatusBarShow || statusBarShow;
                     tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<UIManager>() == null;
