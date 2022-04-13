@@ -319,9 +319,9 @@ namespace SCKRM
                 DateTime dateTimeLunar = dateTime.ToLunarDate();
 
                 if (dateTime.Month == 7 && dateTime.Day == 1) //7월이라면...
-                    NoticeManager.Notice("notice.school_live.birthday.title", "notice.school_live.birthday.description", "%value%", (dateTime.Year - 2012).ToString());
+                    NoticeManager.Notice("notice.school_live.birthday.title", "notice.school_live.birthday.description", new ReplaceOldNewPair("%value%", (dateTime.Year - 2012).ToString()));
                 else if (dateTime.Month == 7 && dateTime.Day == 9) //7월 9일이라면...
-                    NoticeManager.Notice("notice.school_live_ani.birthday.title", "notice.school_live_ani.birthday.description", "%value%", (dateTime.Year - 2015).ToString());
+                    NoticeManager.Notice("notice.school_live_ani.birthday.title", "notice.school_live_ani.birthday.description", new ReplaceOldNewPair("%value%", (dateTime.Year - 2015).ToString()));
                 else if (dateTime.Month == 8 && dateTime.Day == 7) //8월 7일이라면...
                     NoticeManager.Notice("notice.ebisuzawa_kurumi_chan.birthday.title", "notice.ebisuzawa_kurumi_chan.birthday.description");
                 else if (dateTime.Month == 4 && dateTime.Day == 5) //4월 5일이라면...
@@ -333,7 +333,7 @@ namespace SCKRM
                 else if (dateTime.Month == 3 && dateTime.Day == 10) //3월 10일이라면...
                     NoticeManager.Notice("notice.sakura_megumi.birthday.title", "notice.sakura_megumi.birthday.description");
                 else if (dateTime.Month == 2 && dateTime.Day == 9) //2월 9일이라면...
-                    NoticeManager.Notice("notice.onell0.birthday.title", "notice.onell0.birthday.description", "%value%", (dateTime.Year - 2010).ToString());
+                    NoticeManager.Notice("notice.onell0.birthday.title", "notice.onell0.birthday.description", new ReplaceOldNewPair("%value%", (dateTime.Year - 2010).ToString()));
                 else if (dateTimeLunar.Month == 1 && dateTimeLunar.Day == 1) //음력으로 1월 1일이라면...
                     NoticeManager.Notice("notice.korean_new_year.title", "notice.korean_new_year.description");
                 else if (dateTime.Month == 4 && dateTimeLunar.Day == 1) //4월 1일이라면...
@@ -343,6 +343,15 @@ namespace SCKRM
                 tempMonth = dateTime.Month;
                 tempDay = dateTime.Day;
             }
+
+            /*if (isInitialLoadEnd)
+            {
+                if (InputManager.GetKey(KeyCode.I, InputType.Down, "all"))
+                {
+                    Debug.Log("asdf");
+                    Debug.Log(await WindowManager.MessageBox(new NameSpacePathPair[] { new NameSpacePathPair("asdf"), new NameSpacePathPair("asdfasdf") }, 0, "asdfasdf"));
+                }
+            }*/
         }
 
         //변수 업데이트
@@ -457,15 +466,15 @@ namespace SCKRM
                     Debug.Log("Kernel: Waiting for settings to load...");
                     {
                         //프로젝트 설정을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(ProjectSettingManager.Load, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(ProjectSettingManager.Load, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
                         //세이브 데이터의 기본값과 변수들을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.VariableInfoLoad, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.VariableInfoLoad, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
                         //세이브 데이터를 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.Load, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.Load, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
                     }
@@ -498,7 +507,7 @@ namespace SCKRM
                     {
                         //씬 애니메이션이 끝날때까지 기다립니다
                         Debug.Log("Kernel: Waiting for scene animation...");
-                        if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                        if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
                     }
 

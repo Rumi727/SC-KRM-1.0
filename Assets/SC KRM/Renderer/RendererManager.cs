@@ -29,7 +29,7 @@ namespace SCKRM.Renderer
                 ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, customRenderers, "notice.running_task.rerender.name");
                 rerenderThread = threadMetaData;
 
-                if (await UniTask.WaitUntil(() => threadMetaData.thread == null, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                if (await UniTask.WaitUntil(() => threadMetaData.thread == null, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
             }
             else

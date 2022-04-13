@@ -11,8 +11,7 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public class CustomAllTextRenderer : CustomAllRenderer
     {
-        public string[] replaceOld { get; set; }
-        public string[] replaceNew { get; set; }
+        public ReplaceOldNewPair[] replace { get; set; }
 
 
 
@@ -27,16 +26,28 @@ namespace SCKRM.Renderer
 #else
             string text = ResourceManager.SearchLanguage(path, nameSpace);
 #endif
-            if (replaceOld != null && replaceNew != null && replaceOld.Length == replaceNew.Length)
+            if (replace != null)
             {
-                for (int i = 0; i < replaceOld.Length; i++)
-                    text = text.Replace(replaceOld[i], replaceNew[i]);
+                for (int i = 0; i < replace.Length; i++)
+                    text = text.Replace(replace[i].replaceOld, replace[i].replaceNew);
             }
 
             if (text != "")
                 return text;
             else
                 return path;
+        }
+    }
+
+    public struct ReplaceOldNewPair
+    {
+        public string replaceOld;
+        public string replaceNew;
+
+        public ReplaceOldNewPair(string replaceOld, string replaceNew)
+        {
+            this.replaceOld = replaceOld;
+            this.replaceNew = replaceNew;
         }
     }
 }

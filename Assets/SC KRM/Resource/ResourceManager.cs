@@ -164,7 +164,7 @@ namespace SCKRM.Resource
                 asyncTask.progress = 2f / 4f;
                 Debug.Log("ResourceManager: Waiting for language to set...");
                 ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_task.language_refresh.name");
-                if (await UniTask.WaitUntil(() => threadMetaData2.thread == null, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                if (await UniTask.WaitUntil(() => threadMetaData2.thread == null, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
 
                 isInitialLoadLanguageEnd = true;
@@ -205,7 +205,7 @@ namespace SCKRM.Resource
                         UnityEditor.EditorApplication.isPlaying = false;
                         while (true)
                         {
-                            if (await UniTask.DelayFrame(1, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                            if (await UniTask.DelayFrame(1, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                                 return;
                         }
                     }
@@ -444,7 +444,7 @@ namespace SCKRM.Resource
                         UnityEngine.Object.Destroy(texture);
                     }
 
-                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
                 }
                 /*allTextureRects*/ packTextureRects.Add(nameSpace.Key, type_fileName);
@@ -522,7 +522,7 @@ namespace SCKRM.Resource
                         else
                             allTextureSprites[nameSpace.Key][type.Key].Add(fileName.Key, sprites);
 
-                        if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                        if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
                     }
                 }

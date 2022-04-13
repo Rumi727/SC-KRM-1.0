@@ -11,7 +11,7 @@ namespace SCKRM
     public static class AsyncTaskManager
     {
         static readonly CancellationTokenSource _cancel = new CancellationTokenSource();
-        public static CancellationToken cancel => _cancel.Token;
+        public static CancellationToken cancelToken => _cancel.Token;
 
 
 

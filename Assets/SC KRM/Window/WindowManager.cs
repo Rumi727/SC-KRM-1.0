@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
 using System;
@@ -9,14 +10,11 @@ namespace SCKRM.Window
 {
     public sealed class WindowManager : Manager<WindowManager>
     {
-        [SerializeField] CanvasGroup messageBoxCanvasGroup;
-        [SerializeField] Transform messageBoxButtons;
-        [SerializeField] CustomAllTextRenderer messageBoxInfo;
-
         void Awake() => SingletonCheck(this);
 
 
 
+        #region Window Pos, Size
 #if UNITY_STANDALONE_WIN
 #if !UNITY_EDITOR
         static float lerpX = 0;
@@ -158,12 +156,29 @@ namespace SCKRM.Window
             throw new NotImplementedException();
 #endif
         }
+        #endregion
 
 
 
-        static MessageBoxButton[] createdMessageBoxButton;
-        public static async UniTask<int> MessageBox(string text, int defaultIndex, string[] buttons)
+        [SerializeField] CanvasGroup messageBoxCanvasGroup;
+        [SerializeField] Transform messageBoxButtons;
+        [SerializeField] CustomAllTextRenderer messageBoxInfo;
+
+        static MessageBoxButton[] createdMessageBoxButton = new MessageBoxButton[0];
+        public static bool isMessageBoxShow { get; private set; } = false;
+
+        public static async UniTask<int> MessageBox(NameSpacePathPair buttons, int defaultIndex, string text, string nameSpace = "") => await messageBox(new NameSpacePathPair[] { buttons }, defaultIndex, text, nameSpace, new ReplaceOldNewPair[0]);
+        public static async UniTask<int> MessageBox(NameSpacePathPair buttons, int defaultIndex, string text, string nameSpace, ReplaceOldNewPair replace) => await messageBox(new NameSpacePathPair[] { buttons }, defaultIndex, text, nameSpace, new ReplaceOldNewPair[] { replace });
+        public static async UniTask<int> MessageBox(NameSpacePathPair buttons, int defaultIndex, string text, string nameSpace, ReplaceOldNewPair[] replace) => await messageBox(new NameSpacePathPair[] { buttons }, defaultIndex, text, nameSpace, replace);
+        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, string text, string nameSpace = "") => await messageBox(buttons, defaultIndex, text, nameSpace, new ReplaceOldNewPair[0]);
+        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, string text, string nameSpace, ReplaceOldNewPair replace) => await messageBox(buttons, defaultIndex, text, nameSpace, new ReplaceOldNewPair[] { replace });
+        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, string text, string nameSpace, ReplaceOldNewPair[] replace) => await messageBox(buttons, defaultIndex, text, nameSpace, replace);
+
+        static async UniTask<int> messageBox(NameSpacePathPair[] buttons, int defaultIndex, string text, string nameSpace, ReplaceOldNewPair[] replace)
         {
+            if (isMessageBoxShow)
+                return defaultIndex;
+
             for (int i = 0; i < createdMessageBoxButton.Length; i++)
                 ObjectPoolingSystem.ObjectRemove("window_manager.message_box_button", createdMessageBoxButton[i]);
 
@@ -173,17 +188,27 @@ namespace SCKRM.Window
                 MessageBoxButton button = (MessageBoxButton)ObjectPoolingSystem.ObjectCreate("window_manager.message_box_button", instance.messageBoxButtons);
                 createdMessageBoxButton[i] = button;
 
+                instance.messageBoxInfo.replace = replace;
+
+                instance.messageBoxInfo.nameSpace = nameSpace;
+                instance.messageBoxInfo.path = text;
+
                 button.index = i;
-                button.text.path = buttons[i];
+
+                button.text.nameSpace = buttons[i].nameSpace;
+                button.text.path = buttons[i].path;
                 button.text.Refresh();
 
                 button.button.onClick.AddListener(() => action(button));
             }
 
             int clickedIndex = -1;
-            await UniTask.WaitUntil(() => clickedIndex < 0);
-
-            return clickedIndex;
+            if (await UniTask.WaitUntil(() => InputManager.GetKey("gui.back", InputType.Down, "all") || clickedIndex >= 0, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                return defaultIndex;
+            else if (clickedIndex < 0)
+                return defaultIndex;
+            else
+                return clickedIndex;
 
             void action(MessageBoxButton messageBoxButton) => clickedIndex = messageBoxButton.index;
         }

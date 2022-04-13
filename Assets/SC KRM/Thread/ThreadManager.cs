@@ -61,7 +61,7 @@ namespace SCKRM.Threads
                         runningThread.Remove();
                 }
 
-                if (await UniTask.Delay(100, cancellationToken: AsyncTaskManager.cancel).SuppressCancellationThrow())
+                if (await UniTask.Delay(100, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
             }
         }

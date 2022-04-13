@@ -19,7 +19,19 @@ namespace SCKRM.Renderer
         /// </summary>
         public virtual void Refresh()
         {
+            
+        }
+    }
 
+    public struct NameSpacePathPair
+    {
+        public string path;
+        public string nameSpace;
+
+        public NameSpacePathPair(string path, string nameSpace = "")
+        {
+            this.path = path;
+            this.nameSpace = nameSpace;
         }
     }
 }
