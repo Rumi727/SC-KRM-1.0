@@ -71,11 +71,15 @@ namespace SCKRM.Input
 
 
 
+        public static bool forceInputLock { get; set; } = false;
+
+
+
         /// <summary>
         /// 픽셀 좌표의 현재 마우스 위치
         /// The current mouse position in pixel coordinates
         /// </summary>
-        public static Vector2 mousePosition { get; private set; }
+        public static Vector2 mousePosition { get; private set; } = Vector2.zero;
 
 
 
@@ -498,7 +502,9 @@ namespace SCKRM.Input
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
 
-            if (inputLockDeny.Contains("all"))
+            if (!inputLockDeny.Contains("force") && forceInputLock)
+                return true;
+            else if (inputLockDeny.Contains("all"))
                 return false;
 
             foreach (var item in Data.inputLockList)
