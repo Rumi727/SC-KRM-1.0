@@ -33,5 +33,8 @@ namespace SCKRM.Renderer
             this.path = path;
             this.nameSpace = nameSpace;
         }
+
+        public static explicit operator string(NameSpacePathPair value) => value.path;
+        public static implicit operator NameSpacePathPair(string value) => new NameSpacePathPair(value);
     }
 }
