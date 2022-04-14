@@ -28,6 +28,7 @@ namespace SCKRM.UI.StatusBar
         public static bool selectedStatusBar { get; private set; } = false;
         public static bool isStatusBarShow { get; private set; } = false;
 
+
         static bool _cropTheScreen = true; public static bool cropTheScreen
         {
             get => _cropTheScreen;
@@ -40,6 +41,9 @@ namespace SCKRM.UI.StatusBar
             }
         }
 
+        public static GameObject tabSelectGameObject { get; set; } = null;
+        public static bool tabAllow { get; set; } = false;
+
         [SerializeField, HideInInspector] Image _image; public Image image
         {
             get
@@ -51,7 +55,6 @@ namespace SCKRM.UI.StatusBar
             }
         }
 
-        [SerializeField] EventSystem _eventSystem; public EventSystem eventSystem => _eventSystem;
         [SerializeField] Image _background; public Image background => _background;
         [SerializeField] GameObject _backButton; public GameObject backButton => _backButton;
         [SerializeField] GameObject _layout; public GameObject layout => _layout;
@@ -80,7 +83,7 @@ namespace SCKRM.UI.StatusBar
 
 
 
-        static bool tabAllow = false;
+        static bool defaultTabAllow = false;
         static GameObject oldSelectedObject;
         static bool tempTopMode;
         static bool tempCropTheScreen;
@@ -102,10 +105,10 @@ namespace SCKRM.UI.StatusBar
                             mouseYisScreenY = InputManager.mousePosition.y >= (Screen.height - 1);
                     }
 
-                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || (eventSystem.currentSelectedGameObject == null && eventSystem.currentSelectedGameObject.GetComponentInParent<Kernel>() != null);
+                    selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponentInParent<Kernel>() != null);
                     bool statusBarShow = selectedStatusBar || timer > 0;
                     isStatusBarShow = allowStatusBarShow || statusBarShow;
-                    tabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<UIManager>() == null;
+                    defaultTabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<UIManager>() == null;
 
                     if (selectedStatusBar)
                         timer = 1;
@@ -119,10 +122,13 @@ namespace SCKRM.UI.StatusBar
 
                     if (selectedStatusBar)
                     {
-                        oldSelectedObject = eventSystem.currentSelectedGameObject;
+                        oldSelectedObject = EventSystem.current.currentSelectedGameObject;
 
                         if (!background.gameObject.activeSelf)
+                        {
                             background.gameObject.SetActive(true);
+                            background.raycastTarget = true;
+                        }
 
                         background.color = background.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     }
@@ -134,16 +140,17 @@ namespace SCKRM.UI.StatusBar
                             {
                                 background.color = new Color(0, 0, 0, 0);
                                 background.gameObject.SetActive(false);
+                                background.raycastTarget = false;
                             }
                             else
                                 background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsUnscaledDeltaTime);
                         }
                     }
                     
-                    if ((!selectedStatusBar || (statusBarShow && tabAllow)) && (InputManager.GetKey("gui.tab", InputType.Down, "all")))
+                    if ((!selectedStatusBar || (statusBarShow && defaultTabAllow)) && (InputManager.GetKey("gui.tab", InputType.Down, "all")))
                         Tab();
                     else if (selectedStatusBar && InputManager.GetKey("gui.back", InputType.Down, "all"))
-                        eventSystem.SetSelectedGameObject(null);
+                        EventSystem.current.SetSelectedGameObject(null);
                 }
 
 
@@ -257,16 +264,25 @@ namespace SCKRM.UI.StatusBar
             if (!instance.layout.activeSelf)
                 instance.layout.SetActive(true);
             
-            if (tabAllow)
+            if (tabSelectGameObject != null)
+            {
+                if (!tabAllow)
+                    return;
+
+                EventSystem.current.SetSelectedGameObject(tabSelectGameObject);
+                return;
+            }
+
+            if (defaultTabAllow)
             {
                 Selectable[] selectables = instance.GetComponentsInChildren<Selectable>();
                 if (selectables.Length > 0)
-                    instance.eventSystem.SetSelectedGameObject(selectables[0].gameObject);
+                    EventSystem.current.SetSelectedGameObject(selectables[0].gameObject);
                 else
-                    instance.eventSystem.SetSelectedGameObject(instance.gameObject);
+                    EventSystem.current.SetSelectedGameObject(instance.gameObject);
             }
             else
-                instance.eventSystem.SetSelectedGameObject(oldSelectedObject);
+                EventSystem.current.SetSelectedGameObject(oldSelectedObject);
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;
