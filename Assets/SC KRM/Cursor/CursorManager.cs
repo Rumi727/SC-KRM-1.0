@@ -56,9 +56,9 @@ namespace SCKRM
                     transform.position = Vector3.zero;
                 }
 
-                if (InputManager.GetMouseButton(0, InputType.Down, "all"))
+                if (InputManager.GetMouseButton(0, InputType.Down, "all", "force"))
                     dragStartMousePosition = InputManager.mousePosition;
-                else if (InputManager.GetMouseButton(0, InputType.Alway, "all"))
+                else if (InputManager.GetMouseButton(0, InputType.Alway, "all", "force"))
                 {
                     graphic.color = graphic.color.Lerp(Kernel.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     transform.localScale = transform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);

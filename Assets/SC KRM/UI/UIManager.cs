@@ -3,6 +3,7 @@ using SCKRM.UI.StatusBar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace SCKRM.UI
@@ -12,6 +13,7 @@ namespace SCKRM.UI
     {
         [SerializeField] Canvas _kernelCanvas; public Canvas kernelCanvas => _kernelCanvas;
         [SerializeField] RectTransform _kernelCanvasUI; public RectTransform kernelCanvasUI => _kernelCanvasUI;
+        [SerializeField] TMP_Text _exceptionText; public TMP_Text exceptionText => _exceptionText;
 
 
 
@@ -28,9 +30,9 @@ namespace SCKRM.UI
         {
             if (Kernel.isInitialLoadEnd)
             {
-                if (InputManager.GetKey("gui.back", InputType.Down, "all"))
+                if (InputManager.GetKey("gui.back", InputType.Down, "all", "force"))
                     BackEventInvoke();
-                else if (InputManager.GetKey("gui.home", InputType.Down, "all"))
+                else if (InputManager.GetKey("gui.home", InputType.Down, "all", "force"))
                     homeEvent.Invoke();
             }
 
