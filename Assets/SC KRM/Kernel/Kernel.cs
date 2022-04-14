@@ -20,6 +20,7 @@ using System.Collections;
 using SCKRM.Input;
 using SCKRM.Window;
 using UnityEngine.LowLevel;
+using SCKRM.UI;
 
 namespace SCKRM
 {
@@ -343,16 +344,6 @@ namespace SCKRM
                 tempMonth = dateTime.Month;
                 tempDay = dateTime.Day;
             }
-
-            /*if (isInitialLoadEnd)
-            {
-                if (InputManager.GetKey(KeyCode.I, InputType.Down, "all"))
-                {
-                    Debug.Log("asdf");
-                    Debug.Log(await WindowManager.MessageBox(new NameSpacePathPair[] { new NameSpacePathPair("asdf"), new NameSpacePathPair("asdfasdf") }, 0, "asdfasdf"));
-                    Debug.Log("asdf2");
-                }
-            }*/
         }
 
         //변수 업데이트
@@ -542,30 +533,11 @@ namespace SCKRM
                     if (!isInitialLoadEnd)
                     {
                         Debug.LogError("Kernel: Initial loading failed");
-#if UNITY_EDITOR
-                        if (Application.isPlaying)
-                        {
-                            //플레이 모드가 바로 종료되지 않기 때문에
-                            //다른 예외가 날 가능성이 있어서 먼저 모든 게임 오브젝트를 지웁니다
-                            GameObject[] gameObjects = FindObjectsOfType<GameObject>(true);
-                            int length = gameObjects.Length;
-                            for (int i = 0; i < length; i++)
-                                DestroyImmediate(gameObjects[i]);
 
-                            UnityEditor.EditorApplication.isPlaying = false;
-                        }
-                        else
-                        {
-                            //예외가 났는데 플레이 모드가 종료된 상태면
-                            //십중팔구로 초기로딩이 끝나지 않은상태에서
-                            //플레이 모드를 종료한거기 때문에 경고만 띄워줍니다
-                            Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
-                        }
-#else
+                        if (await UniTask.WaitUntil(() => UIManager.instance != null, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
 
-                        WindowManager.MessageBox(e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5), "Kernel: Initial loading failed", WindowManager.MessageBoxButtons.OK, WindowManager.MessageBoxIcon.Error);
-                        Application.Quit(1);
-#endif
+                        Instantiate(UIManager.instance.exceptionText, UIManager.instance.kernelCanvas.transform).text = "Kernel: Initial loading failed\n\n" + e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5);
                     }
                 }
             }

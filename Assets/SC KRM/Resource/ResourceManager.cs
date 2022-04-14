@@ -8,6 +8,7 @@ using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using SCKRM.Threads;
 using SCKRM.Tool;
+using SCKRM.UI;
 using SCKRM.Window;
 using System;
 using System.Collections;
@@ -193,33 +194,13 @@ namespace SCKRM.Resource
 
                 if (!Kernel.isInitialLoadEnd)
                 {
-#if UNITY_EDITOR
-                    Debug.LogError("Kernel: Initial loading failed");
-                    if (Application.isPlaying)
-                    {
-                        GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
-                        int length = gameObjects.Length;
-                        for (int i = 0; i < length; i++)
-                            UnityEngine.Object.DestroyImmediate(gameObjects[i]);
+                    if (await UniTask.WaitUntil(() => UIManager.instance != null, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        return;
 
-                        UnityEditor.EditorApplication.isPlaying = false;
-                        while (true)
-                        {
-                            if (await UniTask.DelayFrame(1, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                                return;
-                        }
-                    }
-                    else
-                        Debug.LogWarning("Kernel: Do not exit play mode during initial loading");
-#else
-                    WindowManager.MessageBox(e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5), "ResourceManager: Resource refresh failed", WindowManager.MessageBoxButtons.OK, WindowManager.MessageBoxIcon.Error);
-                    Debug.LogError("Kernel: Initial loading failed");
+                    UnityEngine.Object.Instantiate(UIManager.instance.exceptionText, UIManager.instance.kernelCanvas.transform).text = "Kernel: Initial loading failed\nResourceManager: Resource refresh failed\n\n" + e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5);
 
-                    Application.Quit(1);
-
-                    while (true)
-                        await UniTask.DelayFrame(1);
-#endif
+                    if (await UniTask.Never(AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        return;
                 }
             }
 
