@@ -64,6 +64,7 @@ namespace SCKRM
         public static float fpsDeltaTime { get; private set; } = 1;
         public static float unscaledDeltaTime { get; private set; } = fps60second;
         public static float fpsUnscaledDeltaTime { get; private set; } = 1;
+        public static float fixedDeltaTime { get; private set; } = fps60second;
 
         public const float fps60second = 1f / 60f;
         
@@ -301,6 +302,8 @@ namespace SCKRM
             fpsDeltaTime = deltaTime * Data.standardFPS;
             unscaledDeltaTime = Time.unscaledDeltaTime;
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
+            fixedDeltaTime = 1f / Data.standardFPS;
+            Time.fixedDeltaTime = fixedDeltaTime;
 
             VariableUpdate();
 
