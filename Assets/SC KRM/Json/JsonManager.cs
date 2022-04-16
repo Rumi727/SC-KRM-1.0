@@ -125,7 +125,7 @@ namespace SCKRM.Json
             this.z = z;
         }
 
-        public static implicit operator JVector2(JVector3 value) => new JVector2(value.x, value.y);
+        public static explicit operator JVector2(JVector3 value) => new JVector2(value.x, value.y);
         public static implicit operator JVector4(JVector3 value) => new JVector4(value.x, value.y);
 
         public static implicit operator JVector3(JRect value) => new JVector3(value.x, value.y, value.width);
@@ -133,7 +133,7 @@ namespace SCKRM.Json
         public static implicit operator JVector3(Vector2 value) => new JVector3(value);
         public static implicit operator JVector3(Vector3 value) => new JVector3(value);
         public static implicit operator JVector3(Vector4 value) => new JVector3(value);
-        public static implicit operator Vector2(JVector3 value) => new Vector3(value.x, value.y);
+        public static explicit operator Vector2(JVector3 value) => new Vector3(value.x, value.y);
         public static implicit operator Vector3(JVector3 value) => new Vector3(value.x, value.y, value.z);
         public static implicit operator Vector4(JVector3 value) => new Vector4(value.x, value.y, value.z);
 
@@ -182,8 +182,8 @@ namespace SCKRM.Json
             this.w = w;
         }
 
-        public static implicit operator JVector2(JVector4 value) => new JVector2(value.x, value.y);
-        public static implicit operator JVector3(JVector4 value) => new JVector3(value.x, value.y, value.z);
+        public static explicit operator JVector2(JVector4 value) => new JVector2(value.x, value.y);
+        public static explicit operator JVector3(JVector4 value) => new JVector3(value.x, value.y, value.z);
 
         public static implicit operator JVector4(JRect value) => new JVector4(value.x, value.y, value.width, value.height);
         public static implicit operator JVector4(Rect value) => new JVector4(value.x, value.y, value.width, value.height);
@@ -191,8 +191,8 @@ namespace SCKRM.Json
         public static implicit operator JVector4(Vector2 value) => new JVector4(value);
         public static implicit operator JVector4(Vector3 value) => new JVector4(value);
         public static implicit operator JVector4(Vector4 value) => new JVector4(value);
-        public static implicit operator Vector2(JVector4 value) => new Vector2(value.x, value.y);
-        public static implicit operator Vector3(JVector4 value) => new Vector3(value.x, value.y, value.z);
+        public static explicit operator Vector2(JVector4 value) => new Vector2(value.x, value.y);
+        public static explicit operator Vector3(JVector4 value) => new Vector3(value.x, value.y, value.z);
         public static implicit operator Vector4(JVector4 value) => new Vector4(value.x, value.y, value.z, value.w);
 
         public override string ToString() => $"({x}, {y}, {z}, {w})";
@@ -241,18 +241,18 @@ namespace SCKRM.Json
             this.height = height;
         }
 
-        public static implicit operator JRect(JVector2 value) => new JRect(value.x, value.y);
-        public static implicit operator JRect(JVector3 value) => new JRect(value.x, value.y, value.z);
+        public static explicit operator JRect(JVector2 value) => new JRect(value.x, value.y);
+        public static explicit operator JRect(JVector3 value) => new JRect(value.x, value.y, value.z);
         public static implicit operator JRect(JVector4 value) => new JRect(value.x, value.y, value.z, value.w);
         public static implicit operator JRect(JColor value) => new JRect(value.r, value.g, value.b, value.a);
 
-        public static implicit operator JRect(Vector2 value) => new JRect(value.x, value.y);
-        public static implicit operator JRect(Vector3 value) => new JRect(value.x, value.y, value.z);
+        public static explicit operator JRect(Vector2 value) => new JRect(value.x, value.y);
+        public static explicit operator JRect(Vector3 value) => new JRect(value.x, value.y, value.z);
         public static implicit operator JRect(Vector4 value) => new JRect(value.x, value.y, value.z, value.w);
         public static implicit operator JRect(Color value) => new JRect(value.r, value.g, value.b, value.a);
 
-        public static implicit operator Vector2(JRect value) => new Vector2(value.x, value.y);
-        public static implicit operator Vector3(JRect value) => new Vector3(value.x, value.y, value.width);
+        public static explicit operator Vector2(JRect value) => new Vector2(value.x, value.y);
+        public static explicit operator Vector3(JRect value) => new Vector3(value.x, value.y, value.width);
         public static implicit operator Vector4(JRect value) => new Vector4(value.x, value.y, value.width, value.height);
         public static implicit operator Color(JRect value) => new Color(value.x, value.y, value.width, value.height);
 
@@ -318,15 +318,15 @@ namespace SCKRM.Json
             this.a = a;
         }
 
-        public static implicit operator JColor(Vector3 value) => new JColor(value.x, value.y, value.z);
+        public static explicit operator JColor(Vector3 value) => new JColor(value.x, value.y, value.z);
         public static implicit operator JColor(Vector4 value) => new JColor(value.x, value.y, value.z, value.w);
         public static implicit operator JColor(Rect value) => new JColor(value.x, value.y, value.width, value.height);
 
-        public static implicit operator JColor(JVector3 value) => new JColor(value.x, value.y, value.z);
+        public static explicit operator JColor(JVector3 value) => new JColor(value.x, value.y, value.z);
         public static implicit operator JColor(JVector4 value) => new JColor(value.x, value.y, value.z, value.w);
         public static implicit operator JColor(JRect value) => new JColor(value.x, value.y, value.width, value.height);
 
-        public static implicit operator Vector3(JColor value) => new Vector3(value.r, value.g, value.b);
+        public static explicit operator Vector3(JColor value) => new Vector3(value.r, value.g, value.b);
         public static implicit operator Vector4(JColor value) => new Vector4(value.r, value.g, value.b, value.a);
         public static implicit operator Rect(JColor value) => new Rect(value.r, value.g, value.b, value.a);
 
@@ -395,15 +395,15 @@ namespace SCKRM.Json
             this.a = a;
         }
 
-        public static implicit operator JColor32(Vector3 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z);
+        public static explicit operator JColor32(Vector3 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z);
         public static implicit operator JColor32(Vector4 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z, (byte)value.w);
         public static implicit operator JColor32(Rect value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.width, (byte)value.height);
 
-        public static implicit operator JColor32(JVector3 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z);
+        public static explicit operator JColor32(JVector3 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z);
         public static implicit operator JColor32(JVector4 value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.z, (byte)value.w);
         public static implicit operator JColor32(JRect value) => new JColor32((byte)value.x, (byte)value.y, (byte)value.width, (byte)value.height);
 
-        public static implicit operator Vector3(JColor32 value) => new Vector3(value.r, value.g, value.b);
+        public static explicit operator Vector3(JColor32 value) => new Vector3(value.r, value.g, value.b);
         public static implicit operator Vector4(JColor32 value) => new Vector4(value.r, value.g, value.b, value.a);
         public static implicit operator Rect(JColor32 value) => new Rect(value.r, value.g, value.b, value.a);
 
