@@ -6,7 +6,7 @@ Simsimhan Chobo Kernel Manager
 - **Input System**
 - **TextMeshPro**
 - **Post Processing**
-- **Newtonsoft.Json for Unity** (https://github.com/jilleJr/Newtonsoft.Json-for-Unity)
+- **Newtonsoft.Json for Unity** (https://github.com/jilleJr/Newtonsoft.Json-for-Unity/wiki/Install-official-via-UPM)
 - **Editor Coroutine**
 - UniTask (https://github.com/Cysharp/UniTask)
 - HSV-Color-Picker-Unity (https://github.com/judah4/HSV-Color-Picker-Unity)
