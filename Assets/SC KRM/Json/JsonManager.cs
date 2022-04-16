@@ -126,7 +126,7 @@ namespace SCKRM.Json
         }
 
         public static explicit operator JVector2(JVector3 value) => new JVector2(value.x, value.y);
-        public static implicit operator JVector4(JVector3 value) => new JVector4(value.x, value.y);
+        public static implicit operator JVector4(JVector3 value) => new JVector4(value.x, value.y, value.z);
 
         public static implicit operator JVector3(JRect value) => new JVector3(value.x, value.y, value.width);
 
