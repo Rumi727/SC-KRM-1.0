@@ -394,9 +394,9 @@ namespace SCKRM
             AudioListener.volume = SaveData.mainVolume * 0.005f;
         }
 
-        public static event Action initialLoadStart = delegate { };
-        public static event Action initialLoadEnd = delegate { };
-        public static event Action initialLoadEndSceneMove = delegate { };
+        public static event Action initialLoadStart;
+        public static event Action initialLoadEnd;
+        public static event Action initialLoadEndSceneMove;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         static async UniTaskVoid InitialLoad()
@@ -416,7 +416,7 @@ namespace SCKRM
 #endif
                     //초기로딩이 시작됬습니다
                     isInitialLoadStart = true;
-                    initialLoadStart();
+                    initialLoadStart?.Invoke();
 
                     PlayerLoopSystem loop = PlayerLoop.GetCurrentPlayerLoop();
                     PlayerLoopHelper.Initialize(ref loop);
@@ -488,7 +488,7 @@ namespace SCKRM
                     {
                         //초기 로딩이 끝났습니다
                         isInitialLoadEnd = true;
-                        initialLoadEnd();
+                        initialLoadEnd?.Invoke();
 
                         //리소스를 로딩했으니 모든 렌더러를 전부 재렌더링합니다
                         RendererManager.AllRerender();
@@ -509,7 +509,7 @@ namespace SCKRM
                     StatusBarManager.allowStatusBarShow = true;
 
                     //씬이 바뀌었을때 렌더러를 재 렌더링해야하기때문에 이벤트를 걸어줍니다
-                    SceneManager.sceneLoaded += LoadedSceneEvent;
+                    SceneManager.sceneLoaded += (Scene scene, LoadSceneMode loadSceneMode) => RendererManager.AllRerender();
 
                     //GC를 호출합니다
                     GC.Collect();
@@ -525,7 +525,7 @@ namespace SCKRM
 #endif
 
                     //씬을 이동했으면 이벤트를 호출합니다
-                    initialLoadEndSceneMove();
+                    initialLoadEndSceneMove?.Invoke();
                 }
                 catch (Exception e)
                 {
@@ -546,11 +546,10 @@ namespace SCKRM
             }
         }
 
-        static void LoadedSceneEvent(Scene scene, LoadSceneMode mode) => RendererManager.AllRerender();
 
 
-        public static event Action allRefreshStart = () => { };
-        public static event Action allRefreshEnd = () => { };
+        public static event Action allRefreshStart;
+        public static event Action allRefreshEnd;
         public static async UniTaskVoid AllRefresh(bool onlyText = false)
         {
             if (!ThreadManager.isMainThread)
@@ -559,7 +558,7 @@ namespace SCKRM
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(AllRefresh));
 #endif
-            allRefreshStart();
+            allRefreshStart?.Invoke();
 
             if (onlyText)
                 RendererManager.AllTextRerender();
@@ -591,7 +590,7 @@ namespace SCKRM
             }
 
             GC.Collect();
-            allRefreshEnd();
+            allRefreshEnd?.Invoke();
         }
 
         void OnApplicationQuit()
