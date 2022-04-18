@@ -1,12 +1,17 @@
 using SCKRM.Object;
+using SCKRM.Resource;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerManager : ObjectPooling
+    public abstract class SoundPlayerManager<MetaData> : ObjectPooling
     {
+        public SoundData<MetaData> soundData { get; protected set; }
+        public MetaData metaData { get; protected set; }
+
+
         public abstract float time { get; set; }
         public abstract float realTime { get; set; }
 

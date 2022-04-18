@@ -9,7 +9,7 @@ namespace SCKRM.Sound
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(AudioSource))]
-    public sealed class SoundPlayer : SoundPlayerManager
+    public sealed class SoundPlayer : SoundPlayerManager<SoundMetaData>
     {
         [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource
         {
@@ -32,10 +32,10 @@ namespace SCKRM.Sound
             }
         }
 
+        public AudioClip selectedAudioClip { get; set; }
+        public AudioClip loadedAudioClip { get; private set; }
 
 
-        public SoundData<SoundMetaData> soundData { get; private set; }
-        public SoundMetaData soundMetaData { get; private set; }
 
         public override float time
         {
@@ -63,6 +63,8 @@ namespace SCKRM.Sound
             }
         }
 
+
+
         public override bool isLooped { get; protected set; } = false;
 
         bool _isPaused = false;
@@ -80,11 +82,6 @@ namespace SCKRM.Sound
             }
         }
 
-        #region variable
-        public AudioClip selectedAudioClip { get; set; }
-        public AudioClip loadedAudioClip { get; private set; }
-        #endregion
-
 
 
         float tempTime = 0;
@@ -97,7 +94,7 @@ namespace SCKRM.Sound
                 isLooped = false;
                 if (audioSource.pitch < 0)
                 {
-                    if (audioSource.time < soundMetaData.loopStartTime)
+                    if (audioSource.time < metaData.loopStartTime)
                         audioSource.time = length - 0.001f;
 
                     if (audioSource.time > tempTime)
@@ -107,8 +104,8 @@ namespace SCKRM.Sound
                 {
                     if (audioSource.time < tempTime)
                     {
-                        if (soundMetaData.loopStartTime > 0)
-                            audioSource.time = soundMetaData.loopStartTime;
+                        if (metaData.loopStartTime > 0)
+                            audioSource.time = metaData.loopStartTime;
 
                         isLooped = true;
                     }
@@ -166,8 +163,8 @@ namespace SCKRM.Sound
                 {
                     loadedAudioClip = null;
 
-                    soundMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
-                    audioSource.clip = soundMetaData.audioClip;
+                    metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                    audioSource.clip = metaData.audioClip;
 
                     if (soundData.isBGM && SoundManager.Data.useTempo)
                         audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
@@ -180,7 +177,7 @@ namespace SCKRM.Sound
                     audioSource.clip = selectedAudioClip;
                     audioSource.outputAudioMixerGroup = null;
 
-                    soundMetaData = null;
+                    metaData = null;
                 }
             }
 
@@ -190,7 +187,7 @@ namespace SCKRM.Sound
                 if (isPaused)
                     isPaused = false;
 
-                if (audioSource.pitch < 0 && !soundMetaData.stream && tempTime == 0)
+                if (audioSource.pitch < 0 && !metaData.stream && tempTime == 0)
                     audioSource.time = length - 0.001f;
                 else
                     audioSource.time = Mathf.Min(time, length - 0.001f);
@@ -231,13 +228,13 @@ namespace SCKRM.Sound
             {
                 if (soundData.isBGM && SoundManager.Data.useTempo)
                 {
-                    if (soundMetaData.stream)
+                    if (metaData.stream)
                         tempo = tempo.Clamp(0);
 
-                    float allPitch = pitch * soundMetaData.pitch;
-                    float allTempo = tempo * soundMetaData.tempo;
+                    float allPitch = pitch * metaData.pitch;
+                    float allTempo = tempo * metaData.tempo;
 
-                    pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / soundMetaData.pitch;
+                    pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / metaData.pitch;
 
                     allTempo *= Kernel.gameSpeed;
                     audioSource.pitch = allTempo;
@@ -245,10 +242,10 @@ namespace SCKRM.Sound
                 }
                 else
                 {
-                    if (soundMetaData.stream)
+                    if (metaData.stream)
                         pitch = pitch.Clamp(0);
 
-                    audioSource.pitch = pitch * soundMetaData.pitch * Kernel.gameSpeed;
+                    audioSource.pitch = pitch * metaData.pitch * Kernel.gameSpeed;
                 }
             }
             else

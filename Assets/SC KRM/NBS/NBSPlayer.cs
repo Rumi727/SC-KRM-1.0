@@ -11,11 +11,14 @@ using UnityEngine;
 namespace SCKRM.NBS
 {
     [AddComponentMenu("")]
-    public sealed class NBSPlayer : SoundPlayerManager
+    public sealed class NBSPlayer : SoundPlayerManager<NBSMetaData>
     {
-        public SoundData<NBSMetaData> soundData { get; private set; }
-        public NBSMetaData nbsMetaData { get; private set; }
-        public NBSFile nbsFile => nbsMetaData.nbsFile;
+        public NBSFile nbsFile => metaData.nbsFile;
+
+        public NBSFile selectedNBSFile { get; set; }
+        public NBSFile loadedNBSFile { get; private set; }
+
+
 
 
         float tickTimer = 0;
@@ -59,17 +62,11 @@ namespace SCKRM.NBS
         }
         public override float realTime { get => time / tempo; set => time = value * tempo; }
 
-        public override float length => (float)(nbsMetaData?.nbsFile.songLength);
+        public override float length => (float)(metaData?.nbsFile.songLength);
         public override float realLength { get => length / tempo; }
 
         public override bool isLooped { get; protected set; } = false;
         public override bool isPaused { get; set; } = false;
-
-        #region variable
-        [SerializeField] NBSFile _selectedNBSFile = null;
-        public NBSFile selectedNBSFile { get => _selectedNBSFile; set => _selectedNBSFile = value; }
-        public NBSFile loadedNBSFile { get; private set; }
-        #endregion
 
 
 
@@ -77,9 +74,9 @@ namespace SCKRM.NBS
         {
             if (!isPaused)
             {
-                if (tempo * nbsMetaData.tempo < 0)
+                if (tempo * metaData.tempo < 0)
                 {
-                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs() * nbsMetaData.tempo;
+                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs() * metaData.tempo;
                     while (tickTimer <= 0)
                     {
                         _tick--;
@@ -90,7 +87,7 @@ namespace SCKRM.NBS
                 }
                 else
                 {
-                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * (tempo * nbsMetaData.tempo).Abs();
+                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * (tempo * metaData.tempo).Abs();
                     while (tickTimer >= 0.05f)
                     {
                         _tick++;
@@ -147,12 +144,12 @@ namespace SCKRM.NBS
                 if (selectedNBSFile == null)
                 {
                     loadedNBSFile = null;
-                    nbsMetaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                    metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
                 }
                 else
                 {
                     loadedNBSFile = selectedNBSFile;
-                    nbsMetaData = null;
+                    metaData = null;
                 }
             }
 
@@ -241,9 +238,9 @@ namespace SCKRM.NBS
                             blockType += "pling";
 
                         if (spatial)
-                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch * nbsMetaData.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch * metaData.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo, minDistance, maxDistance, transform);
                         else
-                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch * nbsMetaData.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo);
+                            SoundManager.PlaySound(blockType, "minecraft", volume * this.volume, false, pitch * this.pitch * metaData.pitch / Kernel.gameSpeed, 1, panStereo + this.panStereo);
                     }
 
                     _index++;

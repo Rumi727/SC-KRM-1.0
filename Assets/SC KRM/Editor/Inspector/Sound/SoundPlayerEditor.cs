@@ -22,7 +22,7 @@ namespace SCKRM.Editor
 
         public static void GUI(SoundPlayer soundObject)
         {
-            if (!Application.isPlaying || !Kernel.isInitialLoadEnd || soundObject == null || soundObject.audioSource == null || soundObject.soundData == null || soundObject.soundMetaData == null)
+            if (!Application.isPlaying || !Kernel.isInitialLoadEnd || soundObject == null || soundObject.audioSource == null || soundObject.soundData == null || soundObject.metaData == null)
                 return;
 
             bool refesh;
@@ -49,7 +49,7 @@ namespace SCKRM.Editor
                 soundObject.loop = EditorGUILayout.Toggle(soundObject.loop, GUILayout.Width(15));
 
                 int minPitch = -3;
-                if (soundObject.loadedAudioClip == null && soundObject.soundMetaData.stream)
+                if (soundObject.loadedAudioClip == null && soundObject.metaData.stream)
                     minPitch = 0;
 
                 if (soundObject.loadedAudioClip == null && soundObject.soundData.isBGM && SoundManager.Data.useTempo)
