@@ -5,19 +5,17 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public class SoundPlayerManager : ObjectPooling
+    public abstract class SoundPlayerManager : ObjectPooling
     {
-        public virtual float time { get; set; }
-        public virtual float realTime { get; set; }
+        public abstract float time { get; set; }
+        public abstract float realTime { get; set; }
 
-        public virtual float length { get; }
-        public virtual float realLength { get; }
+        public abstract float length { get; }
+        public abstract float realLength { get; }
 
-        public virtual float speed { get; set; }
+        public abstract bool isLooped { get; protected set; }
 
-        public virtual bool isLooped { get; protected set; } = false;
-
-        public virtual bool isPaused { get; set; }
+        public abstract bool isPaused { get; set; }
 
 
 
