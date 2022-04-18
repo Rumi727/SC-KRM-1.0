@@ -51,7 +51,7 @@ namespace SCKRM.Sound
         public override float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
         public override float realLength => length / speed;
 
-        public override float speed
+        public float speed
         {
             get => (soundData != null && soundData.isBGM && SoundManager.Data.useTempo) ? tempo : pitch;
             set
