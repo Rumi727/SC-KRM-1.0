@@ -9,7 +9,7 @@ namespace SCKRM.Sound
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(AudioSource))]
-    public sealed class SoundPlayer : SoundPlayerManager<SoundMetaData>
+    public sealed class SoundPlayer : SoundPlayerManager<SoundMetaData, AudioClip>
     {
         [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource
         {
@@ -31,9 +31,6 @@ namespace SCKRM.Sound
                 return _audioLowPassFilter;
             }
         }
-
-        public AudioClip selectedAudioClip { get; set; }
-        public AudioClip loadedAudioClip { get; private set; }
 
 
 
@@ -131,55 +128,38 @@ namespace SCKRM.Sound
                     return;
                 }
 
-                if (selectedAudioClip == null)
+
+
+                soundData = ResourceManager.SearchSoundData(key, nameSpace);
+                if (soundData == null)
                 {
-                    soundData = ResourceManager.SearchSoundData(key, nameSpace);
-                    
-                    if (soundData == null)
-                    {
-                        Remove();
-                        return;
-                    }
-                    else if (soundData.sounds == null || soundData.sounds.Length <= 0)
-                    {
-                        Remove();
-                        return;
-                    }
-                    else if (pitch == 0)
-                    {
-                        Remove();
-                        return;
-                    }
+                    Remove();
+                    return;
                 }
+                else if (soundData.sounds == null || soundData.sounds.Length <= 0)
+                {
+                    Remove();
+                    return;
+                }
+                else if (pitch == 0)
+                {
+                    Remove();
+                    return;
+                }
+            }
+
+            {
+                metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                audioSource.clip = metaData.audioClip;
+
+                if (soundData.isBGM && SoundManager.Data.useTempo)
+                    audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
                 else
-                    soundData = null;
+                    audioSource.outputAudioMixerGroup = null;
             }
 
             if (!SoundManager.soundList.Contains(this))
                 SoundManager.soundList.Add(this);
-
-            {
-                if (selectedAudioClip == null)
-                {
-                    loadedAudioClip = null;
-
-                    metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
-                    audioSource.clip = metaData.audioClip;
-
-                    if (soundData.isBGM && SoundManager.Data.useTempo)
-                        audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
-                    else
-                        audioSource.outputAudioMixerGroup = null;
-                }
-                else
-                {
-                    loadedAudioClip = selectedAudioClip;
-                    audioSource.clip = selectedAudioClip;
-                    audioSource.outputAudioMixerGroup = null;
-
-                    metaData = null;
-                }
-            }
 
             {
                 SetVariable();
@@ -224,34 +204,26 @@ namespace SCKRM.Sound
 
         void SetTempoAndPitch()
         {
-            if (loadedAudioClip == null)
+            if (soundData.isBGM && SoundManager.Data.useTempo)
             {
-                if (soundData.isBGM && SoundManager.Data.useTempo)
-                {
-                    if (metaData.stream)
-                        tempo = tempo.Clamp(0);
+                if (metaData.stream)
+                    tempo = tempo.Clamp(0);
 
-                    float allPitch = pitch * metaData.pitch;
-                    float allTempo = tempo * metaData.tempo;
+                float allPitch = pitch * metaData.pitch;
+                float allTempo = tempo * metaData.tempo;
 
-                    pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / metaData.pitch;
+                pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / metaData.pitch;
 
-                    allTempo *= Kernel.gameSpeed;
-                    audioSource.pitch = allTempo;
-                    audioSource.outputAudioMixerGroup.audioMixer.SetFloat("pitch", 1f / allTempo.Abs() * allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f));
-                }
-                else
-                {
-                    if (metaData.stream)
-                        pitch = pitch.Clamp(0);
-
-                    audioSource.pitch = pitch * metaData.pitch * Kernel.gameSpeed;
-                }
+                allTempo *= Kernel.gameSpeed;
+                audioSource.pitch = allTempo;
+                audioSource.outputAudioMixerGroup.audioMixer.SetFloat("pitch", 1f / allTempo.Abs() * allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f));
             }
             else
             {
-                pitch = pitch.Clamp(0);
-                audioSource.pitch = pitch * Kernel.gameSpeed;
+                if (metaData.stream)
+                    pitch = pitch.Clamp(0);
+
+                audioSource.pitch = pitch * metaData.pitch * Kernel.gameSpeed;
             }
         }
 
@@ -261,33 +233,16 @@ namespace SCKRM.Sound
                 audioSource.volume = 0;
             else
             {
-                if (loadedAudioClip == null)
-                {
-                    if (soundData.isBGM)
-                        audioSource.volume = volume * (Kernel.SaveData.bgmVolume * 0.01f);
-                    else
-                        audioSource.volume = volume * (Kernel.SaveData.soundVolume * 0.01f);
-                }
+                if (soundData.isBGM)
+                    audioSource.volume = volume * (Kernel.SaveData.bgmVolume * 0.01f);
                 else
                     audioSource.volume = volume * (Kernel.SaveData.soundVolume * 0.01f);
             }
         }
 
-
-
         public override void Remove()
         {
             base.Remove();
-
-            key = "";
-            nameSpace = "";
-            loadedAudioClip = null;
-            selectedAudioClip = null;
-
-            volume = 1;
-            tempo = 1;
-            pitch = 1;
-            panStereo = 0;
 
             tempTime = 0;
 

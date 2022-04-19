@@ -11,13 +11,9 @@ using UnityEngine;
 namespace SCKRM.NBS
 {
     [AddComponentMenu("")]
-    public sealed class NBSPlayer : SoundPlayerManager<NBSMetaData>
+    public sealed class NBSPlayer : SoundPlayerManager<NBSMetaData, NBSFile>
     {
         public NBSFile nbsFile => metaData.nbsFile;
-
-        public NBSFile selectedNBSFile { get; set; }
-        public NBSFile loadedNBSFile { get; private set; }
-
 
 
 
@@ -113,45 +109,30 @@ namespace SCKRM.NBS
                     return;
                 }
 
-                if (selectedNBSFile == null)
-                {
-                    soundData = ResourceManager.SearchNBSData(key, nameSpace);
 
-                    if (soundData == null)
-                    {
-                        Remove();
-                        return;
-                    }
-                    else if (soundData.sounds == null || soundData.sounds.Length <= 0)
-                    {
-                        Remove();
-                        return;
-                    }
-                    else if (pitch == 0)
-                    {
-                        Remove();
-                        return;
-                    }
+
+                soundData = ResourceManager.SearchNBSData(key, nameSpace);
+                if (soundData == null)
+                {
+                    Remove();
+                    return;
                 }
-                else
-                    soundData = null;
+                else if (soundData.sounds == null || soundData.sounds.Length <= 0)
+                {
+                    Remove();
+                    return;
+                }
+                else if (pitch == 0)
+                {
+                    Remove();
+                    return;
+                }
+
+                metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
             }
 
             if (!SoundManager.nbsList.Contains(this))
                 SoundManager.nbsList.Add(this);
-
-            {
-                if (selectedNBSFile == null)
-                {
-                    loadedNBSFile = null;
-                    metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
-                }
-                else
-                {
-                    loadedNBSFile = selectedNBSFile;
-                    metaData = null;
-                }
-            }
 
             allLayerLock = nbsFile.nbsLayers.Any((b) => b.layerLock == 2);
 
@@ -249,6 +230,12 @@ namespace SCKRM.NBS
             else
                 _index = 0;
 
+            SetIndex();
+            Loop();
+        }
+
+        void SetIndex()
+        {
             if (tempo < 0)
             {
                 while (index > 0 && index < nbsFile.nbsNotes.Count && nbsFile.nbsNotes[index].delayTick >= tick)
@@ -262,7 +249,10 @@ namespace SCKRM.NBS
                 while (index > 0 && index < nbsFile.nbsNotes.Count && nbsFile.nbsNotes[index].delayTick < tick)
                     _index++;
             }
+        }
 
+        void Loop()
+        {
             isLooped = false;
             if (tick < nbsFile.loopStartTick || index >= nbsFile.nbsNotes.Count)
             {
@@ -300,11 +290,9 @@ namespace SCKRM.NBS
         {
             base.Remove();
 
-            nameSpace = "";
-            key = "";
-            tempo = 1;
             _index = 0;
             _tick = 0;
+            tickTimer = 0;
 
             SoundManager.nbsList.Remove(this);
             SoundPlayer[] soundObjects = GetComponentsInChildren<SoundPlayer>();
