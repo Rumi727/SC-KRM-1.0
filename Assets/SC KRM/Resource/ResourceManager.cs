@@ -1980,6 +1980,33 @@ namespace SCKRM.Resource
             return GetSprite(texture, spriteMetaData);
         }
         #endregion
+
+
+
+        public static SoundData<MetaData> CreateSoundData<MetaData>(string subtitle, bool isBGM, MetaData sounds) where MetaData : SoundMetaDataManager
+            => new SoundData<MetaData>(subtitle, isBGM, new MetaData[] { sounds });
+
+        public static SoundData<MetaData> CreateSoundData<MetaData>(string subtitle, bool isBGM, MetaData[] sounds) where MetaData : SoundMetaDataManager
+            => new SoundData<MetaData>(subtitle, isBGM, sounds);
+
+        public static SoundMetaData CreateSoundMetaData(float pitch, float tempo, float loopStartTime, AudioClip audioClip)
+        {
+            if (audioClip == null)
+                return null;
+
+            if (audioClip.loadType == AudioClipLoadType.Streaming)
+                return new SoundMetaData("", pitch, tempo, true, loopStartTime, audioClip);
+            else
+                return new SoundMetaData("", pitch, tempo, false, loopStartTime, audioClip);
+        }
+
+        public static NBSMetaData CreateNBSMetaData(float pitch, float tempo, NBSFile nbsFile)
+        {
+            if (nbsFile == null)
+                return null;
+
+            return new NBSMetaData("", pitch, tempo, nbsFile);
+        }
     }
 
     public class TextureMetaData
