@@ -569,7 +569,7 @@ namespace SCKRM.Resource
                             return null;
 
                         if (audioClip != null)
-                            return new SoundMetaData(soundMetaData.path, soundMetaData.stream, soundMetaData.pitch, soundMetaData.tempo, soundMetaData.loopStartTime, audioClip);
+                            return new SoundMetaData(soundMetaData.path, soundMetaData.pitch, soundMetaData.tempo, soundMetaData.stream, soundMetaData.loopStartTime, audioClip);
 
                         return null;
                     }
@@ -593,7 +593,7 @@ namespace SCKRM.Resource
                     ///<returns>
                     ///(bool success, bool cancel)
                     ///</returns>
-                    async UniTask<(bool, bool)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc)
+                    async UniTask<(bool, bool)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc) where MetaData : SoundMetaDataManager
                     {
                         if (Directory.Exists(folderPath))
                         {
@@ -2041,7 +2041,7 @@ namespace SCKRM.Resource
 
 
 
-    public class SoundData<MetaData>
+    public class SoundData<MetaData> where MetaData : SoundMetaDataManager
     {
         public SoundData(string subtitle, bool isBGM, MetaData[] sounds)
         {
@@ -2055,41 +2055,39 @@ namespace SCKRM.Resource
         public MetaData[] sounds { get; } = new MetaData[0];
     }
 
-    public class SoundMetaData
+    public class SoundMetaDataManager
     {
-        public SoundMetaData(string path, bool stream, float pitch, float tempo, float loopStartTime, AudioClip audioClip)
+        public SoundMetaDataManager(string path, float pitch, float tempo)
         {
             this.path = path;
-            this.stream = stream;
             this.pitch = pitch;
             this.tempo = tempo;
+        }
+
+        public string path { get; } = "";
+        public float pitch { get; } = 1;
+        public float tempo { get; } = 1;
+    }
+
+    public class SoundMetaData : SoundMetaDataManager
+    {
+        public SoundMetaData(string path, float pitch, float tempo, bool stream, float loopStartTime, AudioClip audioClip) : base(path, pitch, tempo)
+        {
+            this.stream = stream;
             this.loopStartTime = loopStartTime;
 
             this.audioClip = audioClip;
         }
 
-        public string path { get; } = "";
         public bool stream { get; } = false;
-        public float pitch { get; } = 1;
-        public float tempo { get; } = 1;
         public float loopStartTime { get; } = 0;
 
         [JsonIgnore] public AudioClip audioClip { get; }
     }
 
-    public class NBSMetaData
+    public class NBSMetaData : SoundMetaDataManager
     {
-        public NBSMetaData(string path, float pitch, float tempo, NBSFile nbsFile)
-        {
-            this.path = path;
-            this.pitch = pitch;
-            this.tempo = tempo;
-            this.nbsFile = nbsFile;
-        }
-
-        public string path { get; } = "";
-        public float pitch { get; } = 1;
-        public float tempo { get; } = 1;
+        public NBSMetaData(string path, float pitch, float tempo, NBSFile nbsFile) : base(path, pitch, tempo) => this.nbsFile = nbsFile;
 
         [JsonIgnore] public NBSFile nbsFile { get; }
     }

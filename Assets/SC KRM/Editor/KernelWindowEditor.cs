@@ -1359,7 +1359,7 @@ namespace SCKRM.Editor
 
                                     {
                                         if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                                            soundMetaDatas.Add(new SoundMetaData("", false, 1, 1, 0, null));
+                                            soundMetaDatas.Add(new SoundMetaData("", 1, 1, false, 0, null));
                                     }
 
                                     {
@@ -1450,7 +1450,7 @@ namespace SCKRM.Editor
 
                                         EditorGUILayout.EndHorizontal();
 
-                                        soundMetaDatas[j] = new SoundMetaData(soundPath, stream, pitch, tempo, loopStartTime, null);
+                                        soundMetaDatas[j] = new SoundMetaData(soundPath, pitch, tempo, stream, loopStartTime, null);
                                     }
                                     valueList.Add(new SoundData<SoundMetaData>(subtitle, isBGM, soundMetaDatas.ToArray()));
 

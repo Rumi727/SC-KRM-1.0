@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerManager<MetaData, File> : ObjectPooling where MetaData : class where File : class
+    public abstract class SoundPlayerManager<MetaData> : ObjectPooling where MetaData : SoundMetaDataManager
     {
         public SoundData<MetaData> soundData { get; protected set; }
         public SoundData<MetaData> customSoundData { get; set; }
