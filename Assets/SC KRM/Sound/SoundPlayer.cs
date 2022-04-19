@@ -9,7 +9,7 @@ namespace SCKRM.Sound
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(AudioSource))]
-    public sealed class SoundPlayer : SoundPlayerManager<SoundMetaData, AudioClip>
+    public sealed class SoundPlayer : SoundPlayerManager<SoundMetaData>
     {
         [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource
         {
