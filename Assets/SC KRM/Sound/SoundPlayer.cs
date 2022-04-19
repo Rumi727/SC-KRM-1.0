@@ -122,7 +122,12 @@ namespace SCKRM.Sound
             float time = audioSource.time;
 
             {
-                if (ResourceManager.isAudioReset)
+                if (!Kernel.isInitialLoadEnd)
+                {
+                    Remove();
+                    return;
+                }
+                else if (ResourceManager.isAudioReset)
                 {
                     Remove();
                     return;
