@@ -35,8 +35,6 @@ namespace SCKRM.Editor
                 soundObject.nameSpace = DrawNameSpace(soundObject.nameSpace);
                 GUILayout.Label("오디오 키", GUILayout.ExpandWidth(false));
                 soundObject.key = DrawStringArray(soundObject.key, ResourceManager.GetSoundDataKeys(soundObject.nameSpace));
-                GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
-                soundObject.selectedAudioClip = (AudioClip)EditorGUILayout.ObjectField(soundObject.selectedAudioClip, typeof(AudioClip), true);
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -49,10 +47,10 @@ namespace SCKRM.Editor
                 soundObject.loop = EditorGUILayout.Toggle(soundObject.loop, GUILayout.Width(15));
 
                 int minPitch = -3;
-                if (soundObject.loadedAudioClip == null && soundObject.metaData.stream)
+                if (soundObject.metaData.stream)
                     minPitch = 0;
 
-                if (soundObject.loadedAudioClip == null && soundObject.soundData.isBGM && SoundManager.Data.useTempo)
+                if (soundObject.soundData.isBGM && SoundManager.Data.useTempo)
                 {
                     GUILayout.Label("피치", GUILayout.ExpandWidth(false));
                     soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, soundObject.tempo.Abs() * 0.5f, soundObject.tempo.Abs() * 2f);
@@ -110,7 +108,7 @@ namespace SCKRM.Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                if (soundObject.loadedAudioClip == null && (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0))
+                if (soundObject.soundData == null || soundObject.soundData.sounds == null || soundObject.soundData.sounds.Length <= 0)
                 {
                     GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
                     GUILayout.HorizontalSlider(0, 0, 1);

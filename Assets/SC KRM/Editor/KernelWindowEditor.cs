@@ -273,19 +273,9 @@ namespace SCKRM.Editor
                     if (audioPlay)
                     {
                         if (audioSpatial)
-                        {
-                            if (audioClip == null)
-                                SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo, audioMinDistance, audioMaxDistance, null, audioLocalPosition.x, audioLocalPosition.y, audioLocalPosition.z);
-                            else
-                                SoundManager.PlaySound(audioClip, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo, audioMinDistance, audioMaxDistance, null, audioLocalPosition.x, audioLocalPosition.y, audioLocalPosition.z);
-                        }
+                            SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo, audioMinDistance, audioMaxDistance, null, audioLocalPosition.x, audioLocalPosition.y, audioLocalPosition.z);
                         else
-                        {
-                            if (audioClip == null)
-                                SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo);
-                            else
-                                SoundManager.PlaySound(audioClip, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo);
-                        }
+                            SoundManager.PlaySound(audioKey, audioNameSpace, audioVolume, audioLoop, audioPitch, audioTempo, audioPanStereo);
                     }
 
                     GUI.enabled = true;
