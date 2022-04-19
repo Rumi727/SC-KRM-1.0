@@ -111,7 +111,11 @@ namespace SCKRM.NBS
 
 
 
-                soundData = ResourceManager.SearchNBSData(key, nameSpace);
+                if (customSoundData == null)
+                    soundData = ResourceManager.SearchNBSData(key, nameSpace);
+                else
+                    soundData = customSoundData;
+
                 if (soundData == null)
                 {
                     Remove();

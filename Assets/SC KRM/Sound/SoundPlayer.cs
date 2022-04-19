@@ -135,7 +135,11 @@ namespace SCKRM.Sound
 
 
 
-                soundData = ResourceManager.SearchSoundData(key, nameSpace);
+                if (customSoundData == null)
+                    soundData = ResourceManager.SearchSoundData(key, nameSpace);
+                else
+                    soundData = customSoundData;
+
                 if (soundData == null)
                 {
                     Remove();

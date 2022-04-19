@@ -9,6 +9,8 @@ namespace SCKRM.Sound
     public abstract class SoundPlayerManager<MetaData, File> : ObjectPooling where MetaData : class where File : class
     {
         public SoundData<MetaData> soundData { get; protected set; }
+        public SoundData<MetaData> customSoundData { get; set; }
+
         public MetaData metaData { get; protected set; }
 
 
