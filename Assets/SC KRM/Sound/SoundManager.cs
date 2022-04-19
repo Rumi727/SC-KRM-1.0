@@ -148,58 +148,10 @@ namespace SCKRM.Sound
         public static SoundPlayer PlaySound(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
-        /// 오디오 클립을 재생시킵니다
+        /// 소리를 재생합니다
         /// </summary>
-        /// <param name="audioClip">
-        /// 오디오 클립
-        /// </param>
-        /// <param name="volume">
-        /// 볼륨
-        /// </param>
-        /// <param name="loop">
-        /// 반복
-        /// </param>
-        /// <param name="pitch">
-        /// 피치
-        /// </param>
-        /// <param name="tempo">
-        /// 템포
-        /// </param>
-        /// <param name="panStereo">
-        /// 스테레오
-        /// </param>
-        /// <returns></returns>
-        public static SoundPlayer PlaySound(AudioClip audioClip, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
-
-        /// <summary>
-        /// 오디오 클립을 재생시킵니다
-        /// </summary>
-        /// <param name="audioClips">
-        /// 오디오 클립
-        /// </param>
-        /// <param name="volume">
-        /// 볼륨
-        /// </param>
-        /// <param name="loop">
-        /// 반복
-        /// </param>
-        /// <param name="pitch">
-        /// 피치
-        /// </param>
-        /// <param name="tempo">
-        /// 템포
-        /// </param>
-        /// <param name="panStereo">
-        /// 스테레오
-        /// </param>
-        /// <returns></returns>
-        public static SoundPlayer PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
-
-        /// <summary>
-        /// 오디오 클립을 재생시킵니다
-        /// </summary>
-        /// <param name="audioClip">
-        /// 오디오 클립
+        /// <param name="soundData">
+        /// 사운드 데이터
         /// </param>
         /// <param name="volume">
         /// 볼륨
@@ -235,51 +187,9 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(AudioClip audioClip, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", new AudioClip[] { audioClip }, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        public static SoundPlayer PlaySound(SoundData<SoundMetaData> soundData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", soundData, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
-        /// <summary>
-        /// 오디오 클립을 재생시킵니다
-        /// </summary>
-        /// <param name="audioClips">
-        /// 오디오 클립
-        /// </param>
-        /// <param name="volume">
-        /// 볼륨
-        /// </param>
-        /// <param name="loop">
-        /// 반복
-        /// </param>
-        /// <param name="pitch">
-        /// 피치
-        /// </param>
-        /// <param name="tempo">
-        /// 템포
-        /// </param>
-        /// <param name="panStereo">
-        /// 스테레오
-        /// </param>
-        /// <param name="minDistance">
-        /// 최소 거리
-        /// </param>
-        /// <param name="maxDistance">
-        /// 최대 거리
-        /// </param>
-        /// <param name="parent">
-        /// 부모
-        /// </param>
-        /// <param name="x">
-        /// X 좌표
-        /// </param>
-        /// <param name="y">
-        /// Y 좌표
-        /// </param>
-        /// <param name="z">
-        /// Z 좌표
-        /// </param>
-        /// <returns></returns>
-        public static SoundPlayer PlaySound(AudioClip[] audioClips, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", audioClips, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
-
-        static SoundPlayer playSound(string key, string nameSpace, AudioClip[] audioClips, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
+        static SoundPlayer playSound(string key, string nameSpace, SoundData<SoundMetaData> soundData, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(PlaySound));
@@ -302,7 +212,7 @@ namespace SCKRM.Sound
                     }
                 }
             }
-
+            
             if (key == null)
                 key = "";
             if (nameSpace == null)
@@ -316,8 +226,8 @@ namespace SCKRM.Sound
             SoundPlayer soundObject = (SoundPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent);
             soundObject.key = key;
             soundObject.nameSpace = nameSpace;
-            if (audioClips != null)
-                soundObject.selectedAudioClip = audioClips[Random.Range(0, audioClips.Length)];
+            if (soundData != null)
+                soundObject.customSoundData = soundData;
 
             soundObject.volume = volume;
             soundObject.loop = loop;
