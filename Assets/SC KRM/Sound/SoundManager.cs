@@ -12,7 +12,7 @@ using UnityEngine.Audio;
 namespace SCKRM.Sound
 {
     [AddComponentMenu("커널/Audio/오디오 매니저", 0)]
-    public sealed class SoundManager : MonoBehaviour
+    public sealed class SoundManager : Manager<SoundManager>
     {
         [ProjectSetting]
         public sealed class Data
@@ -22,8 +22,6 @@ namespace SCKRM.Sound
 
         [SerializeField] AudioMixerGroup _audioMixerGroup;
         public AudioMixerGroup audioMixerGroup => _audioMixerGroup;
-
-        public static SoundManager instance { get; private set; }
 
         public static List<SoundPlayer> soundList { get; } = new List<SoundPlayer>();
         public static List<NBSPlayer> nbsList { get; } = new List<NBSPlayer>();
@@ -35,13 +33,7 @@ namespace SCKRM.Sound
 
 
 
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
-                Destroy(gameObject);
-        }
+        void Awake() => SingletonCheck(this);
 
         /// <summary>
         /// It should only run on the main thread
