@@ -1467,7 +1467,7 @@ namespace SCKRM.Resource
 
 
 
-#region Get Key List
+        #region Get Key List
         /// <summary>
         /// 로드 된 오디오 키 리스트를 가져옵니다 (플레이 중이 아니거나, 초기 로딩이 안되어있다면 기본 리소스팩에서 수동으로 찾습니다)
         /// Get the list of loaded audio keys (manually find in the default resource pack if not playing or not initially loaded)
@@ -1653,7 +1653,7 @@ namespace SCKRM.Resource
                     return new string[0];
             }
         }
-#endregion
+        #endregion
 
 
 
@@ -1733,7 +1733,7 @@ namespace SCKRM.Resource
 
 
 
-#region Texture Average Color
+        #region Texture Average Color
         /// <summary>
         /// 텍스쳐의 평균 색상을 구합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Gets the average color of a texture (Since the Unity API is used, we need to run it on the main thread)
@@ -1813,9 +1813,9 @@ namespace SCKRM.Resource
 
             return new Color(r / length, g / length, b / length, a / length);
         }
-#endregion
+        #endregion
 
-#region Texture Color
+        #region Texture Color
         /// <summary>
         /// 색상을 텍스쳐로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Convert color to texture (Since the Unity API is used, we need to run it on the main thread)
@@ -1979,7 +1979,7 @@ namespace SCKRM.Resource
             texture.Apply();
             return GetSprite(texture, spriteMetaData);
         }
-#endregion
+        #endregion
     }
 
     public class TextureMetaData
