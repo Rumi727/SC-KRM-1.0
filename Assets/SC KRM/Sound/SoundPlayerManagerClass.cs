@@ -6,10 +6,11 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerManager<MetaData> : ObjectPooling
+    public abstract class SoundPlayerManager<MetaData, File> : ObjectPooling where MetaData : class where File : class
     {
         public SoundData<MetaData> soundData { get; protected set; }
         public MetaData metaData { get; protected set; }
+
 
 
         public abstract float time { get; set; }
@@ -47,5 +48,34 @@ namespace SCKRM.Sound
         public float minDistance { get => _minDistance; set => _minDistance = value; }
         public float maxDistance { get => _maxDistance; set => _maxDistance = value; }
         public Vector3 localPosition { get => _localPosition; set => _localPosition = value; }
+
+
+
+        public override void Remove()
+        {
+            base.Remove();
+
+            soundData = null;
+            metaData = null;
+
+            time = 0;
+            realTime = 0;
+
+            isLooped = false;
+            isPaused = false;
+
+            key = "";
+            nameSpace = "";
+
+            volume = 1;
+            loop = false;
+            pitch = 1;
+            tempo = 1;
+            spatial = false;
+            panStereo = 0;
+            minDistance = 0;
+            maxDistance = 16;
+            localPosition = Vector3.zero;
+        }
     }
 }
