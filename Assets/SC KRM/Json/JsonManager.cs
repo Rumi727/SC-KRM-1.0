@@ -66,10 +66,9 @@ namespace SCKRM.Json
 
         public static JVector2 zero { get; } = new JVector2();
 
-        public JVector2(Vector2 value)
+        public JVector2(Vector2 value) : this(value.x, value.y)
         {
-            x = value.x;
-            y = value.y;
+
         }
 
         public JVector2(float value) => x = y = value;
@@ -102,20 +101,16 @@ namespace SCKRM.Json
 
         public static JVector3 zero { get; } = new JVector3();
 
-        public JVector3(Vector3 value)
+        public JVector3(Vector3 value) : this(value.x, value.y, value.z)
         {
-            x = value.x;
-            y = value.y;
-            z = value.z;
+
         }
 
         public JVector3(float value) => x = y = z = value;
 
-        public JVector3(float x, float y)
+        public JVector3(float x, float y) : this(x, y, 0)
         {
-            this.x = x;
-            this.y = y;
-            z = 0;
+
         }
 
         public JVector3(float x, float y, float z)
@@ -148,30 +143,21 @@ namespace SCKRM.Json
 
         public static JVector4 zero { get; } = new JVector4();
 
-        public JVector4(Vector4 value)
+        public JVector4(Vector4 value) : this(value.x, value.y, value.z, value.w)
         {
-            x = value.x;
-            y = value.y;
-            z = value.z;
-            w = value.w;
+
         }
 
         public JVector4(float value) => x = y = z = w = value;
 
-        public JVector4(float x, float y)
+        public JVector4(float x, float y) : this(x, y, 0, 0)
         {
-            this.x = x;
-            this.y = y;
-            z = 0;
-            w = 0;
+
         }
 
-        public JVector4(float x, float y, float z)
+        public JVector4(float x, float y, float z) : this(x, y, z, 0)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            w = 0;
+
         }
 
         public JVector4(float x, float y, float z, float w)
@@ -207,30 +193,21 @@ namespace SCKRM.Json
 
         public static JRect zero { get; } = new JRect();
 
-        public JRect(Rect value)
+        public JRect(Rect value) : this(value.x, value.y, value.width, value.height)
         {
-            x = value.x;
-            y = value.y;
-            width = value.width;
-            height = value.height;
+
         }
 
         public JRect(float value) => x = y = width = height = value;
 
-        public JRect(float x, float y)
+        public JRect(float x, float y) : this(x, y, 0, 0)
         {
-            this.x = x;
-            this.y = y;
-            width = 0;
-            height = 0;
+
         }
 
-        public JRect(float x, float y, float width)
+        public JRect(float x, float y, float width) : this(x, y, width, 0)
         {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            height = 0;
+
         }
 
         public JRect(float x, float y, float width, float height)
@@ -272,28 +249,19 @@ namespace SCKRM.Json
         public static JColor zero { get; } = new JColor();
         public static JColor one { get; } = new JColor(1);
 
-        public JColor(Color value)
+        public JColor(Color value) : this(value.r, value.g, value.b, value.a)
         {
-            r = value.r;
-            g = value.g;
-            b = value.b;
-            a = value.a;
+
         }
 
-        public JColor(Color32 value)
+        public JColor(Color32 value) : this(value.r / 255f, value.g / 255f, value.b / 255f, value.a / 255f)
         {
-            r = value.r / 255;
-            g = value.g / 255;
-            b = value.b / 255;
-            a = value.a / 255;
+
         }
 
-        public JColor(JColor32 value)
+        public JColor(JColor32 value) : this(value.r / 255f, value.g / 255f, value.b / 255f, value.a / 255f)
         {
-            r = value.r / 255;
-            g = value.g / 255;
-            b = value.b / 255;
-            a = value.a / 255;
+
         }
 
         public JColor(float value)
@@ -302,12 +270,9 @@ namespace SCKRM.Json
             a = 1;
         }
 
-        public JColor(float r, float g, float b)
+        public JColor(float r, float g, float b) : this(r, g, b, 1)
         {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            a = 1;
+
         }
 
         public JColor(float r, float g, float b, float a)
@@ -349,28 +314,19 @@ namespace SCKRM.Json
         public static JColor32 zero { get; } = new JColor32();
         public static JColor32 one { get; } = new JColor32(1);
 
-        public JColor32(Color value)
+        public JColor32(Color value) : this((byte)(value.r * 255), (byte)(value.g * 255), (byte)(value.b * 255), (byte)(value.a * 255))
         {
-            r = (byte)(value.r * 255);
-            g = (byte)(value.g * 255);
-            b = (byte)(value.b * 255);
-            a = (byte)(value.a * 255);
+
         }
 
-        public JColor32(JColor value)
+        public JColor32(JColor value) : this((byte)(value.r * 255), (byte)(value.g * 255), (byte)(value.b * 255), (byte)(value.a * 255))
         {
-            r = (byte)(value.r * 255);
-            g = (byte)(value.g * 255);
-            b = (byte)(value.b * 255);
-            a = (byte)(value.a * 255);
+
         }
 
-        public JColor32(Color32 value)
+        public JColor32(Color32 value) : this(value.r, value.g, value.b, value.a)
         {
-            r = value.r;
-            g = value.g;
-            b = value.b;
-            a = value.a;
+
         }
 
         public JColor32(byte value)
@@ -379,12 +335,9 @@ namespace SCKRM.Json
             a = 1;
         }
 
-        public JColor32(byte r, byte g, byte b)
+        public JColor32(byte r, byte g, byte b) : this(r, g, b, 1)
         {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            a = 1;
+
         }
 
         public JColor32(byte r, byte g, byte b, byte a)
@@ -411,7 +364,7 @@ namespace SCKRM.Json
         public static implicit operator Color32(JColor32 value) => new Color32() { r = value.r, g = value.g, b = value.b, a = value.a };
 
         public static implicit operator JColor32(Color value) => new JColor32(value);
-        public static implicit operator Color(JColor32 value) => new Color() { r = value.r / 255, g = value.g / 255, b = value.b / 255, a = value.a / 255 };
+        public static implicit operator Color(JColor32 value) => new Color() { r = value.r / 255f, g = value.g / 255f, b = value.b / 255f, a = value.a / 255f };
 
 
         public static implicit operator JColor32(JColor value) => new JColor32(value);
