@@ -42,6 +42,9 @@ namespace SCKRM.Editor
             DrawLine();
 
             UseProperty("_onEndEdit");
+
+            if (GUI.changed)
+                EditorUtility.SetDirty(target);
         }
     }
 }
