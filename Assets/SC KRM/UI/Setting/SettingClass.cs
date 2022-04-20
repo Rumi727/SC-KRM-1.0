@@ -63,7 +63,7 @@ namespace SCKRM.UI.Setting
                 return true;
 #endif
 
-            foreach (var variableType in SaveLoadManager.variableTypeList)
+            foreach (var variableType in SaveLoadManager.generalSLVList)
             {
                 if (variableType.name == saveLoadAttributeName)
                 {
