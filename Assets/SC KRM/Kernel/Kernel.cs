@@ -474,7 +474,7 @@ namespace SCKRM
 
                         void SaveLoadClassLoad()
                         {
-                            SaveLoadManager.SaveLoadClassLoad<GeneralSaveLoadAttribute>(out SaveLoadClass[] saveLoadClass);
+                            SaveLoadManager.Initialize<GeneralSaveLoadAttribute>(out SaveLoadClass[] saveLoadClass);
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                             SaveLoadManager.generalSLCList = saveLoadClass;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
