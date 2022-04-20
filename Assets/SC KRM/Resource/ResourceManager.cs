@@ -29,7 +29,7 @@ namespace SCKRM.Resource
             [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>() { "sc-krm", "minecraft", "school-live" };
         }
 
-        [SaveLoad("resource")]
+        [GeneralSaveLoad("resource")]
         public sealed class SaveData
         {
             [JsonProperty] public static List<string> resourcePacks { get; set; } = new List<string>() { Kernel.streamingAssetsPath };

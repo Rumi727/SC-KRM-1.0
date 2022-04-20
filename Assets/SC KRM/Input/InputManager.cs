@@ -22,7 +22,7 @@ namespace SCKRM.Input
             [JsonProperty] public static Dictionary<string, bool> inputLockList { get; set; } = new Dictionary<string, bool>();
         }
 
-        [SaveLoad("control")]
+        [GeneralSaveLoad("control")]
         public sealed class SaveData
         {
             [JsonProperty] public static Dictionary<string, List<KeyCode>> controlSettingList { get; set; } = new Dictionary<string, List<KeyCode>>();

@@ -42,7 +42,7 @@ namespace SCKRM
             [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
         }
 
-        [SaveLoad("default")]
+        [GeneralSaveLoad("default")]
         public sealed class SaveData
         {
             [JsonProperty] public static JColor systemColor = new JColor(0.5137255f, 0.1019608f, 0.627451f);
@@ -465,7 +465,7 @@ namespace SCKRM
                             return;
 
                         //세이브 데이터의 기본값과 변수들을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.VariableInfoLoad, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(SaveLoadManager.SaveLoadClassLoad, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
                         //세이브 데이터를 다른 스레드에서 로딩합니다
