@@ -1,4 +1,7 @@
+using SCKRM.SaveLoad;
 using SCKRM.UI.Setting;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +11,8 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(Setting), true)]
     public class SettingEditor : UIEditor
     {
+        public static SaveLoadClass[] saveLoadClassList;
+
         Setting editor;
 
         protected override void OnEnable()
@@ -20,10 +25,28 @@ namespace SCKRM.Editor
         {
             base.OnInspectorGUI();
 
+            if (saveLoadClassList == null)
+                SaveLoadManager.InitializeAll<GeneralSaveLoadAttribute>(out saveLoadClassList);
+
             DrawLine();
 
-            UseProperty("_saveLoadAttributeName", "세이브 로드 어트리뷰트의 키");
-            UseProperty("_variableName", "변수 이름");
+            SaveLoadClass selectedSaveLoadClass = null;
+
+            string[] fullNames = new string[saveLoadClassList.Length];
+            for (int i = 0; i < saveLoadClassList.Length; i++)
+            {
+                SaveLoadClass saveLoadClass = saveLoadClassList[i];
+                string fullName = saveLoadClass.name;
+                fullNames[i] = fullName;
+
+                if (fullName == editor.saveLoadAttributeName)
+                    selectedSaveLoadClass = saveLoadClass;
+            }
+
+            editor.saveLoadAttributeName = DrawStringArray("값을 변경 할 클래스", editor.saveLoadAttributeName, fullNames);
+
+            if (selectedSaveLoadClass != null)
+                editor.variableName = DrawStringArray("값을 변경 할 변수", editor.variableName, selectedSaveLoadClass.GetVariableNames());
 
             DrawLine();
 
@@ -34,6 +57,9 @@ namespace SCKRM.Editor
                 EditorGUILayout.LabelField(editor.type + " " + editor.propertyInfo.Name + " = " + editor.propertyInfo.GetValue(editor.type));
             else if (editor.fieldInfo != null)
                 EditorGUILayout.LabelField(editor.type + " " + editor.fieldInfo.Name + " = " + editor.fieldInfo.GetValue(editor.type));
+
+            if (GUI.changed)
+                EditorUtility.SetDirty(target);
         }
     }
 }
