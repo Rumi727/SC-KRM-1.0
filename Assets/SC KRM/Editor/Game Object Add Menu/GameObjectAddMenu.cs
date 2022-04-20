@@ -57,4 +57,7 @@ public class GameObjectAddMenu
 
     [MenuItem("GameObject/Kernel/UI/Side Bar/Right")]
     public static void SideBarRight(MenuCommand menuCommand) => PrefabInstantiate("Side Bar Right", menuCommand);
+
+    [MenuItem("GameObject/Kernel/UI/Progress Bar")]
+    public static void ProgressBar(MenuCommand menuCommand) => PrefabInstantiate("Progress Bar", menuCommand);
 }

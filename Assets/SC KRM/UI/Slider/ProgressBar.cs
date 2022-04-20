@@ -1,0 +1,76 @@
+using SCKRM.Tool;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace SCKRM
+{
+    public class ProgressBar : MonoBehaviour
+    {
+        [System.NonSerialized] float _progress;
+        public float progress { get => _progress; set => _progress = value.Clamp01(); }
+
+        [SerializeField] Slider _slider;
+        public Slider slider => _slider;
+
+        [SerializeField] RectTransform _fillShow;
+        public RectTransform fillShow => _fillShow;
+
+
+        [System.NonSerialized] bool noResponse = false;
+
+        [System.NonSerialized] float loopValue = 0;
+        [System.NonSerialized] float tempProgress = 0;
+        [System.NonSerialized] float tempTimer = 0;
+        [System.NonSerialized] float tempMinX = 0;
+        [System.NonSerialized] float tempMaxX = 0;
+
+        void Update()
+        {
+            if (tempTimer >= 1)
+            {
+                if (slider.enabled)
+                    slider.enabled = false;
+
+                if (!noResponse)
+                {
+                    tempMinX = fillShow.anchorMin.x - (loopValue - 0.25f).Clamp01();
+                    tempMaxX = fillShow.anchorMax.x - loopValue.Clamp01();
+
+                    noResponse = true;
+                }
+
+                loopValue += 0.0125f * Kernel.fpsUnscaledDeltaTime;
+
+                tempMinX.LerpRef(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                tempMaxX.LerpRef(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+
+                fillShow.anchorMin = new Vector2((loopValue - 0.25f + tempMinX).Clamp01(), fillShow.anchorMin.y);
+                fillShow.anchorMax = new Vector2((loopValue + tempMaxX).Clamp01(), fillShow.anchorMax.y);
+
+                if (fillShow.anchorMin.x >= 1)
+                    loopValue = 0;
+            }
+            else
+            {
+                if (!slider.enabled)
+                    slider.enabled = true;
+
+                noResponse = false;
+
+                slider.value = progress;
+                fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsUnscaledDeltaTime);
+
+                tempTimer += Kernel.unscaledDeltaTime;
+            }
+
+            if (tempProgress != progress)
+            {
+                tempTimer = 0;
+                tempProgress = progress;
+            }
+        }
+    }
+}
