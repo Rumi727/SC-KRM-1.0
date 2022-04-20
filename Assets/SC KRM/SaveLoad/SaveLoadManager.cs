@@ -21,16 +21,16 @@ namespace SCKRM.SaveLoad
 
     public static class SaveLoadManager
     {
-        public static List<SaveLoadVariable> generalSLVList { get; } = new List<SaveLoadVariable>();
+        public static List<SaveLoadClass> generalSLCList { get; } = new List<SaveLoadClass>();
 
-        public class SaveLoadVariable
+        public class SaveLoadClass
         {
             public string name { get; }
             public Type type { get; }
-            public Info<PropertyInfo>[] propertyInfos { get; } = new Info<PropertyInfo>[0];
-            public Info<FieldInfo>[] fieldInfos { get; } = new Info<FieldInfo>[0];
+            public SaveLoadVariable<PropertyInfo>[] propertyInfos { get; } = new SaveLoadVariable<PropertyInfo>[0];
+            public SaveLoadVariable<FieldInfo>[] fieldInfos { get; } = new SaveLoadVariable<FieldInfo>[0];
 
-            public SaveLoadVariable(string name, Type type, Info<PropertyInfo>[] propertyInfos, Info<FieldInfo>[] fieldInfos)
+            public SaveLoadClass(string name, Type type, SaveLoadVariable<PropertyInfo>[] propertyInfos, SaveLoadVariable<FieldInfo>[] fieldInfos)
             {
                 this.name = name;
                 this.type = type;
@@ -38,12 +38,12 @@ namespace SCKRM.SaveLoad
                 this.fieldInfos = fieldInfos;
             }
 
-            public class Info<T>
+            public class SaveLoadVariable<T>
             {
                 public T variableInfo { get; }
                 public object defaultValue { get; }
 
-                public Info(T variableInfo, object defaultValue)
+                public SaveLoadVariable(T variableInfo, object defaultValue)
                 {
                     this.variableInfo = variableInfo;
                     this.defaultValue = defaultValue;
@@ -72,8 +72,8 @@ namespace SCKRM.SaveLoad
 
                     #region 경고 및 기본값 저장
                     PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
-                    List<SaveLoadVariable.Info<PropertyInfo>> propertyInfoList = new List<SaveLoadVariable.Info<PropertyInfo>>();
-                    List<SaveLoadVariable.Info<FieldInfo>> fieldInfoList = new List<SaveLoadVariable.Info<FieldInfo>>();
+                    List<SaveLoadClass.SaveLoadVariable<PropertyInfo>> propertyInfoList = new List<SaveLoadClass.SaveLoadVariable<PropertyInfo>>();
+                    List<SaveLoadClass.SaveLoadVariable<FieldInfo>> fieldInfoList = new List<SaveLoadClass.SaveLoadVariable<FieldInfo>>();
                     for (int i = 0; i < propertyInfos.Length; i++)
                     {
                         PropertyInfo propertyInfo = propertyInfos[i];
@@ -81,7 +81,7 @@ namespace SCKRM.SaveLoad
                         if (!propertyInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
                             Debug.LogWarning(type.Name + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
                         else if (!ignore)
-                            propertyInfoList.Add(new SaveLoadVariable.Info<PropertyInfo>(propertyInfo, propertyInfo.GetValue(propertyInfo.PropertyType)));
+                            propertyInfoList.Add(new SaveLoadClass.SaveLoadVariable<PropertyInfo>(propertyInfo, propertyInfo.GetValue(propertyInfo.PropertyType)));
                     }
 
                     FieldInfo[] fieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.Static);
@@ -92,10 +92,10 @@ namespace SCKRM.SaveLoad
                         if (!fieldInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
                             Debug.LogWarning(type.Name + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
                         else if (!ignore)
-                            fieldInfoList.Add(new SaveLoadVariable.Info<FieldInfo>(fieldInfo, fieldInfo.GetValue(fieldInfo.FieldType)));
+                            fieldInfoList.Add(new SaveLoadClass.SaveLoadVariable<FieldInfo>(fieldInfo, fieldInfo.GetValue(fieldInfo.FieldType)));
                     }
 
-                    generalSLVList.Add(new SaveLoadVariable(name, type, propertyInfoList.ToArray(), fieldInfoList.ToArray()));
+                    generalSLCList.Add(new SaveLoadClass(name, type, propertyInfoList.ToArray(), fieldInfoList.ToArray()));
                     #endregion
                 }
             }
@@ -106,19 +106,19 @@ namespace SCKRM.SaveLoad
             if (!Directory.Exists(Kernel.saveDataPath))
                 Directory.CreateDirectory(Kernel.saveDataPath);
 
-            for (int i = 0; i < generalSLVList.Count; i++)
+            for (int i = 0; i < generalSLCList.Count; i++)
             {
-                SaveLoadVariable variableType = generalSLVList[i];
+                SaveLoadClass variableType = generalSLCList[i];
                 JObject jObject = new JObject();
                 for (int j = 0; j < variableType.propertyInfos.Length; j++)
                 {
-                    SaveLoadVariable.Info<PropertyInfo> propertyInfo = variableType.propertyInfos[j];
+                    SaveLoadClass.SaveLoadVariable<PropertyInfo> propertyInfo = variableType.propertyInfos[j];
                     jObject.Add(propertyInfo.variableInfo.Name, JToken.FromObject(propertyInfo.variableInfo.GetValue(propertyInfo.variableInfo.PropertyType)));
                 }
 
                 for (int j = 0; j < variableType.fieldInfos.Length; j++)
                 {
-                    SaveLoadVariable.Info<FieldInfo> fieldInfo = variableType.fieldInfos[j];
+                    SaveLoadClass.SaveLoadVariable<FieldInfo> fieldInfo = variableType.fieldInfos[j];
                     jObject.Add(fieldInfo.variableInfo.Name, JToken.FromObject(fieldInfo.variableInfo.GetValue(fieldInfo.variableInfo.FieldType)));
                 }
 
@@ -131,9 +131,9 @@ namespace SCKRM.SaveLoad
             if (!Directory.Exists(Kernel.saveDataPath))
                 Directory.CreateDirectory(Kernel.saveDataPath);
 
-            for (int i = 0; i < generalSLVList.Count; i++)
+            for (int i = 0; i < generalSLCList.Count; i++)
             {
-                SaveLoadVariable variableType = generalSLVList[i];
+                SaveLoadClass variableType = generalSLCList[i];
                 string path = PathTool.Combine(Kernel.saveDataPath, variableType.name) + ".json";
                 if (!File.Exists(path))
                     continue;
@@ -141,13 +141,13 @@ namespace SCKRM.SaveLoad
                 #region null 설정
                 for (int j = 0; j < variableType.propertyInfos.Length; j++)
                 {
-                    SaveLoadVariable.Info<PropertyInfo> propertyInfo = variableType.propertyInfos[j];
+                    SaveLoadClass.SaveLoadVariable<PropertyInfo> propertyInfo = variableType.propertyInfos[j];
                     propertyInfo.variableInfo.SetValue(propertyInfo.variableInfo.PropertyType, null);
                 }
 
                 for (int j = 0; j < variableType.fieldInfos.Length; j++)
                 {
-                    SaveLoadVariable.Info<FieldInfo> fieldInfo = variableType.fieldInfos[j];
+                    SaveLoadClass.SaveLoadVariable<FieldInfo> fieldInfo = variableType.fieldInfos[j];
                     fieldInfo.variableInfo.SetValue(fieldInfo.variableInfo.FieldType, null);
                 }
                 #endregion
@@ -157,14 +157,14 @@ namespace SCKRM.SaveLoad
                 #region json을 로드 했는데도 null이면 기본값으로 되돌리기
                 for (int j = 0; j < variableType.propertyInfos.Length; j++)
                 {
-                    SaveLoadVariable.Info<PropertyInfo> propertyInfo = variableType.propertyInfos[j];
+                    SaveLoadClass.SaveLoadVariable<PropertyInfo> propertyInfo = variableType.propertyInfos[j];
                     if (propertyInfo.variableInfo.GetValue(propertyInfo.variableInfo.PropertyType) == null)
                         propertyInfo.variableInfo.SetValue(propertyInfo.variableInfo.PropertyType, propertyInfo.defaultValue);
                 }
 
                 for (int j = 0; j < variableType.fieldInfos.Length; j++)
                 {
-                    SaveLoadVariable.Info<FieldInfo> fieldInfo = variableType.fieldInfos[j];
+                    SaveLoadClass.SaveLoadVariable<FieldInfo> fieldInfo = variableType.fieldInfos[j];
                     if (fieldInfo.variableInfo.GetValue(fieldInfo.variableInfo.FieldType) == null)
                         fieldInfo.variableInfo.SetValue(fieldInfo.variableInfo.FieldType, fieldInfo.defaultValue);
                 }
