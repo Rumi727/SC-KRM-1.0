@@ -431,7 +431,7 @@ MonoBehaviour:
   _graphic: {fileID: 2270588504110008360}
   _nameText: {fileID: 1825936432925828226}
   _infoText: {fileID: 2763273285959432173}
-  _progressBar: {fileID: 0}
+  _progressBar: {fileID: 4252615146911722368}
   _removeButtonCanvasGroup: {fileID: 8496771085619530406}
 --- !u!114 &6095498022105680824
 MonoBehaviour:
@@ -831,3 +831,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7065992300477098094, guid: d76865c05b3f40d4ab83110bb6f1cc3f, type: 3}
   m_PrefabInstance: {fileID: 7762346786279945879}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4252615146911722368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5817867554319899927, guid: d76865c05b3f40d4ab83110bb6f1cc3f, type: 3}
+  m_PrefabInstance: {fileID: 7762346786279945879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9835ac66ec7c644abdc857203ba2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
