@@ -83,7 +83,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.7299986, y: 0}
+  m_AnchoredPosition: {x: 3.7299957, y: 0}
   m_SizeDelta: {x: -65.08, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8474851857294884457
@@ -5494,7 +5494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 0}
   _graphic: {fileID: 0}
-  _saveLoadAttributeName: default
+  _saveLoadAttributeName: SCKRM.Kernel+SaveData
   _variableName: vSync
   _resetButton: {fileID: 0}
   _nameText: {fileID: 0}
@@ -5514,7 +5514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 0}
   _graphic: {fileID: 0}
-  _saveLoadAttributeName: default
+  _saveLoadAttributeName: SCKRM.Kernel+SaveData
   _variableName: fixedGuiSizeEnable
   _resetButton: {fileID: 0}
   _nameText: {fileID: 0}
@@ -5534,7 +5534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 0}
   _graphic: {fileID: 0}
-  _saveLoadAttributeName: default
+  _saveLoadAttributeName: SCKRM.Kernel+SaveData
   _variableName: fixedGuiSizeEnable
   _resetButton: {fileID: 0}
   _nameText: {fileID: 0}
@@ -5578,7 +5578,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000009536743, y: -20}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: -39.999996, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3290166329890333913
@@ -8352,7 +8352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 6961220906199775541, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: m_text
@@ -8649,7 +8649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 6961220906199775541, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: m_text
@@ -8926,7 +8926,7 @@ PrefabInstance:
       objectReference: {fileID: 1675043996443457789}
     - target: {fileID: 2198548218864597343, guid: fa27a19e62c84d9489d028b8d8355792, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 2325660304237473101, guid: fa27a19e62c84d9489d028b8d8355792, type: 3}
       propertyPath: Setup.ShowAlpha
@@ -9253,7 +9253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740434180860354804, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: statusbar
+      value: SCKRM.UI.StatusBar.StatusBarManager+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Pivot.x
@@ -9431,7 +9431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3783897986454623060, guid: f7b81d59f7b6ff3448c5388eef898eeb, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4142802723435177967, guid: f7b81d59f7b6ff3448c5388eef898eeb, type: 3}
       propertyPath: m_Name
@@ -9704,7 +9704,7 @@ PrefabInstance:
       objectReference: {fileID: 1535942616384400398}
     - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 6961220906199775541, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: m_text
@@ -9934,7 +9934,7 @@ PrefabInstance:
       objectReference: {fileID: 3756693617863029385}
     - target: {fileID: 7170476850409186395, guid: 7097677605ab1144980e1b8e8e342ecb, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: language
+      value: SCKRM.Language.LanguageManager+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 7170476850409186395, guid: 7097677605ab1144980e1b8e8e342ecb, type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.size
@@ -11023,7 +11023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 6961220906199775541, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: m_text
@@ -11537,7 +11537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3783897986454623060, guid: f7b81d59f7b6ff3448c5388eef898eeb, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4142802723435177967, guid: f7b81d59f7b6ff3448c5388eef898eeb, type: 3}
       propertyPath: m_Name
@@ -12137,7 +12137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740434180860354804, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Pivot.x
@@ -12287,7 +12287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740434180860354804, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: statusbar
+      value: SCKRM.UI.StatusBar.StatusBarManager+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Pivot.x
@@ -13018,7 +13018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740434180860354804, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: statusbar
+      value: SCKRM.UI.StatusBar.StatusBarManager+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Pivot.x
@@ -13418,7 +13418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740434180860354804, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: _saveLoadAttributeName
-      value: default
+      value: SCKRM.Kernel+SaveData
       objectReference: {fileID: 0}
     - target: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Pivot.x
