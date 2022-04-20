@@ -100,7 +100,7 @@ namespace SCKRM.NBS
 
 
         bool allLayerLock;
-        public void Refesh()
+        public override void Refresh()
         {
             {
                 if (!Kernel.isInitialLoadEnd)

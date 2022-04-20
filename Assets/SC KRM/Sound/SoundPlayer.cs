@@ -117,7 +117,7 @@ namespace SCKRM.Sound
 
 
 
-        public void Refesh()
+        public override void Refresh()
         {
             float time = audioSource.time;
 

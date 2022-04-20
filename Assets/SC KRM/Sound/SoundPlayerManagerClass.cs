@@ -53,6 +53,10 @@ namespace SCKRM.Sound
 
 
 
+        public abstract void Refresh();
+
+
+
         public override void Remove()
         {
             base.Remove();
