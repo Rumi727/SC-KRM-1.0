@@ -57,13 +57,13 @@ namespace SCKRM.Sound
             for (int i = 0; i < soundObjects.Length; i++)
             {
                 SoundPlayer soundObject = soundObjects[i];
-                soundObject.Refesh();
+                soundObject.Refresh();
             }
 
             for (int ii = 0; ii < nbsPlayers.Length; ii++)
             {
                 NBSPlayer nbsPlayer = nbsPlayers[ii];
-                nbsPlayer.Refesh();
+                nbsPlayer.Refresh();
             }
         }
 
@@ -239,7 +239,7 @@ namespace SCKRM.Sound
             else
                 soundObject.name = nameSpace + ":" + key;
 
-            soundObject.Refesh();
+            soundObject.Refresh();
             return soundObject;
         }
 
@@ -397,7 +397,7 @@ namespace SCKRM.Sound
             else
                 nbsPlayer.name = nameSpace + ":" + key;
 
-            nbsPlayer.Refesh();
+            nbsPlayer.Refresh();
             return nbsPlayer;
         }
 
