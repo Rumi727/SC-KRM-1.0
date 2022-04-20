@@ -45,7 +45,8 @@ namespace SCKRM
 
         protected override void OnEnable() => SingletonCheck(this);
 
-        Vector2 dragStartMousePosition;
+        Vector2 dragStartMousePosition = Vector2.zero;
+        bool dragStart = false;
         void LateUpdate()
         {
             if (Kernel.isInitialLoadEnd)
@@ -56,14 +57,19 @@ namespace SCKRM
                     transform.position = Vector3.zero;
                 }
 
-                if (InputManager.GetMouseButton(0, InputType.Down, "all", "force"))
+                if (UnityEngine.Input.GetMouseButtonDown(0))
+                {
+                    dragStart = false;
                     dragStartMousePosition = InputManager.mousePosition;
-                else if (InputManager.GetMouseButton(0, InputType.Alway, "all", "force"))
+                }
+                else if (UnityEngine.Input.GetMouseButton(0))
                 {
                     graphic.color = graphic.color.Lerp(Kernel.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     transform.localScale = transform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);
 
-                    if (dragStartMousePosition != (Vector2)transform.position)
+                    if (!dragStart && Vector2.Distance(transform.position, dragStartMousePosition) >= 10)
+                        dragStart = true;
+                    else if (dragStart)
                     {
                         Vector3 dir = (Vector2)transform.position - dragStartMousePosition;
                         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

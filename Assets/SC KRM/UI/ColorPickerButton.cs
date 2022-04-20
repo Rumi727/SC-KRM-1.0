@@ -1,16 +1,8 @@
 using HSVPicker;
 using SCKRM.Input;
-using SCKRM.Renderer;
 using SCKRM.Tool;
-using SCKRM.UI.Layout;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
@@ -45,12 +37,11 @@ namespace SCKRM.UI
             if (Application.isPlaying)
 #endif
             {
-                if (!mouseDrag)
-                {
-                    mouseDrag = UnityEngine.Input.GetMouseButton(0) && tempMousePos != InputManager.mousePosition;
+                if (UnityEngine.Input.GetMouseButtonDown(0))
                     tempMousePos = InputManager.mousePosition;
-                }
-                
+                else if (!mouseDrag)
+                    mouseDrag = UnityEngine.Input.GetMouseButton(0) && Vector2.Distance(InputManager.mousePosition, tempMousePos) >= 10;
+
                 if (!isShow)
                 {
                     if (lerp)
