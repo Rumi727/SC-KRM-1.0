@@ -12,11 +12,20 @@ using UnityEngine;
 namespace SCKRM.SaveLoad
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class SaveLoadAttribute : Attribute
+    public class SaveLoadAttribute : Attribute
     {
         public string name { get; private set; }
 
         public SaveLoadAttribute(string name = "") => this.name = name;
+    }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    public class GeneralSaveLoadAttribute : SaveLoadAttribute
+    {
+        public GeneralSaveLoadAttribute(string name = "") : base(name)
+        {
+
+        }
     }
 
     public static class SaveLoadManager
@@ -51,7 +60,7 @@ namespace SCKRM.SaveLoad
             }
         }
 
-        public static void VariableInfoLoad()
+        public static void SaveLoadClassLoad()
         {
             Assembly[] assemblys = AppDomain.CurrentDomain.GetAssemblies();
             for (int assemblysIndex = 0; assemblysIndex < assemblys.Length; assemblysIndex++)
@@ -60,7 +69,7 @@ namespace SCKRM.SaveLoad
                 for (int typesIndex = 0; typesIndex < types.Length; typesIndex++)
                 {
                     Type type = types[typesIndex];
-                    SaveLoadAttribute saveLoadAttribute = type.GetCustomAttribute(typeof(SaveLoadAttribute)) as SaveLoadAttribute;
+                    GeneralSaveLoadAttribute saveLoadAttribute = type.GetCustomAttribute(typeof(GeneralSaveLoadAttribute)) as GeneralSaveLoadAttribute;
                     if (saveLoadAttribute == null)
                         continue;
 
