@@ -14,15 +14,16 @@ namespace SCKRM.SaveLoad
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class SaveLoadAttribute : Attribute
     {
-        public string name { get; private set; }
+        public SaveLoadAttribute(string name = "")
+        {
 
-        public SaveLoadAttribute(string name = "") => this.name = name;
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class GeneralSaveLoadAttribute : SaveLoadAttribute
     {
-        public GeneralSaveLoadAttribute(string name = "") : base(name)
+        public GeneralSaveLoadAttribute()
         {
 
         }
@@ -54,6 +55,19 @@ namespace SCKRM.SaveLoad
                 this.defaultValue = defaultValue;
             }
         }
+
+        public string[] GetVariableNames()
+        {
+            string[] propertyNames = new string[propertyInfos.Length];
+            for (int i = 0; i < propertyInfos.Length; i++)
+                propertyNames[i] = propertyInfos[i].variableInfo.Name;
+
+            string[] fieldNames = new string[fieldInfos.Length];
+            for (int i = 0; i < fieldInfos.Length; i++)
+                fieldNames[i] = fieldInfos[i].variableInfo.Name;
+
+            return propertyNames.Union(fieldNames).ToArray();
+        }
     }
 
     public static class SaveLoadManager
@@ -72,7 +86,9 @@ namespace SCKRM.SaveLoad
                     Type type = types[typesIndex];
 
                     Initialize<T>(type, out SaveLoadClass result2);
-                    saveLoadClassList.Add(result2);
+
+                    if (result2 != null)
+                        saveLoadClassList.Add(result2);
                 }
             }
 
@@ -88,12 +104,6 @@ namespace SCKRM.SaveLoad
                 return;
             }
 
-            string name;
-            if (saveLoadAttribute.name != "")
-                name = saveLoadAttribute.name;
-            else
-                name = type.Name;
-
             #region 경고 및 기본값 저장
             PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
             List<SaveLoadClass.SaveLoadVariable<PropertyInfo>> propertyInfoList = new List<SaveLoadClass.SaveLoadVariable<PropertyInfo>>();
@@ -103,7 +113,7 @@ namespace SCKRM.SaveLoad
                 PropertyInfo propertyInfo = propertyInfos[i];
                 bool ignore = propertyInfo.GetCustomAttributes(typeof(JsonIgnoreAttribute)).Any();
                 if (!propertyInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
-                    Debug.LogWarning(type.Name + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                    Debug.LogWarning(type.FullName + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
                 else if (!ignore)
                     propertyInfoList.Add(new SaveLoadClass.SaveLoadVariable<PropertyInfo>(propertyInfo, propertyInfo.GetValue(propertyInfo.PropertyType)));
             }
@@ -114,12 +124,12 @@ namespace SCKRM.SaveLoad
                 FieldInfo fieldInfo = fieldInfos[i];
                 bool ignore = fieldInfo.GetCustomAttributes(typeof(JsonIgnoreAttribute)).Any();
                 if (!fieldInfo.GetCustomAttributes(typeof(JsonPropertyAttribute)).Any() && !ignore)
-                    Debug.LogWarning(type.Name + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                    Debug.LogWarning(type.FullName + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
                 else if (!ignore)
                     fieldInfoList.Add(new SaveLoadClass.SaveLoadVariable<FieldInfo>(fieldInfo, fieldInfo.GetValue(fieldInfo.FieldType)));
             }
 
-            result = new SaveLoadClass(name, type, propertyInfoList.ToArray(), fieldInfoList.ToArray());
+            result = new SaveLoadClass(type.FullName, type, propertyInfoList.ToArray(), fieldInfoList.ToArray());
             #endregion
         }
 

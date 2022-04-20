@@ -14,7 +14,7 @@ namespace SCKRM.UI.StatusBar
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
     public sealed class StatusBarManager : ManagerUI<StatusBarManager>, IPointerEnterHandler, IPointerExitHandler
     {
-        [GeneralSaveLoad("statusbar")]
+        [GeneralSaveLoad]
         public sealed class SaveData
         {
             [JsonProperty] public static bool bottomMode { get; set; } = false;

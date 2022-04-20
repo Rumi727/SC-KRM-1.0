@@ -42,7 +42,7 @@ namespace SCKRM
             [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
         }
 
-        [GeneralSaveLoad("default")]
+        [GeneralSaveLoad]
         public sealed class SaveData
         {
             [JsonProperty] public static JColor systemColor = new JColor(0.5137255f, 0.1019608f, 0.627451f);
