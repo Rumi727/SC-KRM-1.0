@@ -465,13 +465,20 @@ namespace SCKRM
                             return;
 
                         //세이브 데이터의 기본값과 변수들을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.SaveLoadClassLoad, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(SaveLoadClassLoad, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
-                        //세이브 데이터를 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadManager.Load, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            //세이브 데이터를 다른 스레드에서 로딩합니다
+                        if (await UniTask.RunOnThreadPool(() => SaveLoadManager.Load(SaveLoadManager.generalSLCList, saveDataPath), cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
+                        void SaveLoadClassLoad()
+                        {
+                            SaveLoadManager.SaveLoadClassLoad<GeneralSaveLoadAttribute>(out SaveLoadClass[] saveLoadClass);
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                            SaveLoadManager.generalSLCList = saveLoadClass;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                        }
                     }
 
                     {
@@ -615,7 +622,7 @@ namespace SCKRM
             ThreadManager.AllThreadRemove();
 
             if (isInitialLoadEnd)
-                SaveLoadManager.Save();
+                SaveLoadManager.Save(SaveLoadManager.generalSLCList, saveDataPath);
         }
     }
 
