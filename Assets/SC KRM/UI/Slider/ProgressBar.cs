@@ -72,5 +72,19 @@ namespace SCKRM
                 tempProgress = progress;
             }
         }
+
+        public void Initialize()
+        {
+            loopValue = 0;
+            noResponse = false;
+            tempProgress = 0;
+            tempTimer = 0;
+            tempMinX = 0;
+            tempMaxX = 0;
+
+            slider.value = 0;
+            fillShow.anchorMin = new Vector2(0, slider.fillRect.anchorMin.y);
+            fillShow.anchorMax = new Vector2(0, slider.fillRect.anchorMax.y);
+        }
     }
 }

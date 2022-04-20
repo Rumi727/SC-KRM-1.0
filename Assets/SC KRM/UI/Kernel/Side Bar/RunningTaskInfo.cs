@@ -51,13 +51,6 @@ namespace SCKRM.UI.SideBar
             }
         }
 
-        [System.NonSerialized] bool noResponse = false;
-
-        [System.NonSerialized] float loopValue = 0;
-        [System.NonSerialized] float tempProgress = 0;
-        [System.NonSerialized] float tempTimer = 0;
-        [System.NonSerialized] float tempMinX = 0;
-        [System.NonSerialized] float tempMaxX = 0;
         [System.NonSerialized] bool pointer = false;
         void Update()
         {
@@ -76,15 +69,11 @@ namespace SCKRM.UI.SideBar
             {
                 if (!progressBar.gameObject.activeSelf)
                     progressBar.gameObject.SetActive(true);
-            }
-            else
-            {
-                if (progressBar.gameObject.activeSelf)
-                    progressBar.gameObject.SetActive(false);
 
-                loopValue = 0;
-                noResponse = false;
+                progressBar.progress = asyncTask.progress;
             }
+            else if (progressBar.gameObject.activeSelf)
+                    progressBar.gameObject.SetActive(false);
         }
 
         public void Cancel() => asyncTask.Remove();
@@ -95,17 +84,10 @@ namespace SCKRM.UI.SideBar
 
             rectTransform.sizeDelta = new Vector2(430, 19);
             asyncTask = null;
-            loopValue = 0;
-            noResponse = false;
-            tempProgress = 0;
-            tempTimer = 0;
-            tempMinX = 0;
-            tempMaxX = 0;
             nameText.text = "";
             infoText.text = "";
-            progressBar.slider.value = 0;
-            progressBar.fillShow.anchorMin = new Vector2(0, progressBar.slider.fillRect.anchorMin.y);
-            progressBar.fillShow.anchorMax = new Vector2(0, progressBar.slider.fillRect.anchorMax.y);
+
+            progressBar.Initialize();
 
             progressBar.gameObject.SetActive(true);
             progressBar.enabled = true;
