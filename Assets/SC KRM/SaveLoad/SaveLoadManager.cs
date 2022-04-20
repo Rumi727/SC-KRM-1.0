@@ -21,7 +21,6 @@ namespace SCKRM.SaveLoad
 
     public static class SaveLoadManager
     {
-        public static Dictionary<string, object> defaultList { get; } = new Dictionary<string, object>();
         public static List<VariableType> variableTypeList { get; } = new List<VariableType>();
 
         public class VariableType
