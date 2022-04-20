@@ -28,37 +28,37 @@ namespace SCKRM.SaveLoad
         }
     }
 
-    public static class SaveLoadManager
+    public class SaveLoadClass
     {
-        public static List<SaveLoadClass> generalSLCList { get; [Obsolete("It is managed by the Kernel class. Please do not touch it.", false)] internal set; } = new List<SaveLoadClass>();
+        public string name { get; }
+        public Type type { get; }
+        public SaveLoadVariable<PropertyInfo>[] propertyInfos { get; } = new SaveLoadVariable<PropertyInfo>[0];
+        public SaveLoadVariable<FieldInfo>[] fieldInfos { get; } = new SaveLoadVariable<FieldInfo>[0];
 
-        public class SaveLoadClass
+        public SaveLoadClass(string name, Type type, SaveLoadVariable<PropertyInfo>[] propertyInfos, SaveLoadVariable<FieldInfo>[] fieldInfos)
         {
-            public string name { get; }
-            public Type type { get; }
-            public SaveLoadVariable<PropertyInfo>[] propertyInfos { get; } = new SaveLoadVariable<PropertyInfo>[0];
-            public SaveLoadVariable<FieldInfo>[] fieldInfos { get; } = new SaveLoadVariable<FieldInfo>[0];
+            this.name = name;
+            this.type = type;
+            this.propertyInfos = propertyInfos;
+            this.fieldInfos = fieldInfos;
+        }
 
-            public SaveLoadClass(string name, Type type, SaveLoadVariable<PropertyInfo>[] propertyInfos, SaveLoadVariable<FieldInfo>[] fieldInfos)
+        public class SaveLoadVariable<T>
+        {
+            public T variableInfo { get; }
+            public object defaultValue { get; }
+
+            public SaveLoadVariable(T variableInfo, object defaultValue)
             {
-                this.name = name;
-                this.type = type;
-                this.propertyInfos = propertyInfos;
-                this.fieldInfos = fieldInfos;
-            }
-
-            public class SaveLoadVariable<T>
-            {
-                public T variableInfo { get; }
-                public object defaultValue { get; }
-
-                public SaveLoadVariable(T variableInfo, object defaultValue)
-                {
-                    this.variableInfo = variableInfo;
-                    this.defaultValue = defaultValue;
-                }
+                this.variableInfo = variableInfo;
+                this.defaultValue = defaultValue;
             }
         }
+    }
+
+    public static class SaveLoadManager
+    {
+        public static SaveLoadClass[] generalSLCList { get; [Obsolete("It is managed by the Kernel class. Please do not touch it.", false)] internal set; } = new SaveLoadClass[0];
 
         public static void SaveLoadClassLoad<T>(out SaveLoadClass[] result) where T : SaveLoadAttribute
         {
@@ -113,14 +113,14 @@ namespace SCKRM.SaveLoad
             result = saveLoadClassList.ToArray();
         }
 
-        public static void Save(List<SaveLoadClass> saveLoadClassList, string saveDataPath)
+        public static void Save(SaveLoadClass[] saveLoadClassList, string saveDataPath)
         {
             if (saveLoadClassList == null || saveDataPath == null || saveDataPath == "")
                 return;
             else if (!Directory.Exists(saveDataPath))
                 Directory.CreateDirectory(saveDataPath);
 
-            for (int i = 0; i < saveLoadClassList.Count; i++)
+            for (int i = 0; i < saveLoadClassList.Length; i++)
             {
                 SaveLoadClass saveLoadClass = saveLoadClassList[i];
                 JObject jObject = new JObject();
@@ -140,14 +140,14 @@ namespace SCKRM.SaveLoad
             }
         }
 
-        public static void Load(List<SaveLoadClass> saveLoadClassList, string loadDataPath)
+        public static void Load(SaveLoadClass[] saveLoadClassList, string loadDataPath)
         {
             if (saveLoadClassList == null || loadDataPath == null || loadDataPath == "")
                 return;
             else if (!Directory.Exists(loadDataPath))
                 Directory.CreateDirectory(loadDataPath);
 
-            for (int i = 0; i < saveLoadClassList.Count; i++)
+            for (int i = 0; i < saveLoadClassList.Length; i++)
             {
                 SaveLoadClass saveLoadClass = saveLoadClassList[i];
                 string path = PathTool.Combine(loadDataPath, saveLoadClass.name) + ".json";
