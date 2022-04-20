@@ -23,11 +23,8 @@ namespace SCKRM.UI.SideBar
         [SerializeField] TMP_Text _infoText;
         public TMP_Text infoText => _infoText;
 
-        [SerializeField] Slider _slider;
-        public Slider slider => _slider;
-
-        [SerializeField] RectTransform _fillShow;
-        public RectTransform fillShow => _fillShow;
+        [SerializeField] ProgressBar _progressBar;
+        public ProgressBar progressBar => _progressBar;
 
 
 
@@ -77,60 +74,13 @@ namespace SCKRM.UI.SideBar
 
             if (!asyncTask.loop)
             {
-                if (!slider.gameObject.activeSelf)
-                    slider.gameObject.SetActive(true);
-
-                if (tempTimer >= 1)
-                {
-                    if (slider.enabled)
-                        slider.enabled = false;
-
-                    if (!noResponse)
-                    {
-                        tempMinX = fillShow.anchorMin.x - (loopValue - 0.25f).Clamp01();
-                        tempMaxX = fillShow.anchorMax.x - loopValue.Clamp01();
-
-                        noResponse = true;
-                    }
-
-                    loopValue += 0.0125f * Kernel.fpsUnscaledDeltaTime;
-
-                    tempMinX.LerpRef(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
-                    tempMaxX.LerpRef(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
-
-                    fillShow.anchorMin = new Vector2((loopValue - 0.25f + tempMinX).Clamp01(), fillShow.anchorMin.y);
-                    fillShow.anchorMax = new Vector2((loopValue + tempMaxX).Clamp01(), fillShow.anchorMax.y);
-
-                    if (fillShow.anchorMin.x >= 1)
-                        loopValue = 0;
-                }
-                else
-                {
-                    if (!slider.enabled)
-                        slider.enabled = true;
-
-                    noResponse = false;
-
-                    slider.value = asyncTask.progress;
-                    fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsUnscaledDeltaTime);
-                    fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsUnscaledDeltaTime);
-
-                    tempTimer += Kernel.unscaledDeltaTime;
-                }
-
-                if (tempProgress != asyncTask.progress)
-                {
-                    tempTimer = 0;
-                    tempProgress = asyncTask.progress;
-                }
+                if (!progressBar.gameObject.activeSelf)
+                    progressBar.gameObject.SetActive(true);
             }
             else
             {
-                if (slider.gameObject.activeSelf)
-                    slider.gameObject.SetActive(false);
-
-                if (!slider.enabled)
-                    slider.enabled = true;
+                if (progressBar.gameObject.activeSelf)
+                    progressBar.gameObject.SetActive(false);
 
                 loopValue = 0;
                 noResponse = false;
@@ -153,12 +103,12 @@ namespace SCKRM.UI.SideBar
             tempMaxX = 0;
             nameText.text = "";
             infoText.text = "";
-            slider.value = 0;
-            fillShow.anchorMin = new Vector2(0, slider.fillRect.anchorMin.y);
-            fillShow.anchorMax = new Vector2(0, slider.fillRect.anchorMax.y);
+            progressBar.slider.value = 0;
+            progressBar.fillShow.anchorMin = new Vector2(0, progressBar.slider.fillRect.anchorMin.y);
+            progressBar.fillShow.anchorMax = new Vector2(0, progressBar.slider.fillRect.anchorMax.y);
 
-            slider.gameObject.SetActive(true);
-            slider.enabled = true;
+            progressBar.gameObject.SetActive(true);
+            progressBar.enabled = true;
 
             LanguageManager.currentLanguageChange -= InfoLoad;
             ThreadManager.threadChange -= InfoLoad;
