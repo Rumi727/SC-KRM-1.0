@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(NBSPlayer), true)]
+    [CustomEditor(typeof(NBSPlayer))]
     public sealed class NBSPlayerEditor : CustomInspectorEditor
     {
         NBSPlayer editor;
@@ -134,7 +134,7 @@ namespace SCKRM.Editor
             }
 
             if (refesh)
-                nbsPlayer.Refesh();
+                nbsPlayer.Refresh();
             else if (pauseToggle)
                 nbsPlayer.isPaused = !nbsPlayer.isPaused;
             else if (stop)

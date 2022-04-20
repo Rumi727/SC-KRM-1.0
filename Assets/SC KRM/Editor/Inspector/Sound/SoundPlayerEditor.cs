@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SoundPlayer), true)]
+    [CustomEditor(typeof(SoundPlayer))]
     public sealed class SoundObjectEditor : CustomInspectorEditor
     {
         SoundPlayer editor;
@@ -139,7 +139,7 @@ namespace SCKRM.Editor
             }
 
             if (refesh)
-                soundObject.Refesh();
+                soundObject.Refresh();
             else if (pauseToggle)
                 soundObject.isPaused = !soundObject.isPaused;
             else if (stop)

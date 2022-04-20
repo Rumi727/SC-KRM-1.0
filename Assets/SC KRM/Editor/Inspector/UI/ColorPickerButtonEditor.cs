@@ -5,7 +5,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(ColorPickerButton), true)]
+    [CustomEditor(typeof(ColorPickerButton))]
     public sealed class ColorPickerButtonEditor : UIAniEditor
     {
         public override void OnInspectorGUI()

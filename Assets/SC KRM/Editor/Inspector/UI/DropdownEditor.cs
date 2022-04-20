@@ -5,7 +5,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(Dropdown), true)]
+    [CustomEditor(typeof(Dropdown))]
     public sealed class DropdownEditor : UIEditor
     {
         public override void OnInspectorGUI()

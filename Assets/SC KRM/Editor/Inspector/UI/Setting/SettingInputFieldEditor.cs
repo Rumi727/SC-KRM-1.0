@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SettingInputField), true)]
+    [CustomEditor(typeof(SettingInputField))]
     public class SettingInputFieldEditor : SettingEditor
     {
         SettingInputField editor;

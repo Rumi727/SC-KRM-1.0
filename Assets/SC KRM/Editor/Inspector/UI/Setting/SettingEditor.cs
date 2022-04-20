@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(Setting), true)]
+    [CustomEditor(typeof(Setting))]
     public class SettingEditor : UIEditor
     {
         public static SaveLoadClass[] saveLoadClassList;

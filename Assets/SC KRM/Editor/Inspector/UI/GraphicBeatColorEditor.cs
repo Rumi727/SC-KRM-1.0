@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(GraphicBeatColor), true)]
+    [CustomEditor(typeof(GraphicBeatColor))]
     public sealed class GraphicBeatColorEditor : UIEditor
     {
         public override void OnInspectorGUI()

@@ -4,7 +4,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(HorizontalLayoutSetting), true)]
+    [CustomEditor(typeof(HorizontalLayoutSetting))]
     public sealed class HorizontalLayoutSettingEditor : CustomInspectorEditor
     {
         HorizontalLayoutSetting editor;

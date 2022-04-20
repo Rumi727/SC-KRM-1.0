@@ -4,7 +4,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SoundManager), true)]
+    [CustomEditor(typeof(SoundManager))]
     public sealed class SoundManagerEditor : CustomInspectorEditor
     {
         SoundManager editor;

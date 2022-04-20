@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SettingColorPicker), true)]
+    [CustomEditor(typeof(SettingColorPicker))]
     public sealed class SettingColorPickerEditor : SettingEditor
     {
         SettingColorPicker editor;

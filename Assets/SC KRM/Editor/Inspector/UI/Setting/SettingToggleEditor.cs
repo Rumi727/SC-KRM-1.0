@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SettingToggle), true)]
+    [CustomEditor(typeof(SettingToggle))]
     public sealed class SettingToggleEditor : SettingEditor
     {
         SettingToggle editor;

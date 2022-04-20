@@ -5,7 +5,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(InputFieldCaretColor), true)]
+    [CustomEditor(typeof(InputFieldCaretColor))]
     public sealed class InputFieldCaretColorEditor : UIEditor
     {
         public override void OnInspectorGUI()

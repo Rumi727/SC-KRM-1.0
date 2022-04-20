@@ -4,7 +4,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SetSizeAsTargetRectTransform), true)]
+    [CustomEditor(typeof(SetSizeAsTargetRectTransform))]
     public sealed class SetSizeAsTargetRectTransformEditor : UIEditor
     {
         SetSizeAsTargetRectTransform editor;

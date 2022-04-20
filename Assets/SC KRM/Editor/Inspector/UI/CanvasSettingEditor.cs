@@ -4,7 +4,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(CanvasSetting), true)]
+    [CustomEditor(typeof(CanvasSetting))]
     public sealed class CanvasSettingEditor : UIEditor
     {
         CanvasSetting editor;

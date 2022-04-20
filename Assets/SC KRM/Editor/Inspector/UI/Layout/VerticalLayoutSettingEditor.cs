@@ -4,7 +4,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(VerticalLayoutSetting), true)]
+    [CustomEditor(typeof(VerticalLayoutSetting))]
     public sealed class VerticalLayoutSettingEditor : CustomInspectorEditor
     {
         VerticalLayoutSetting editor;

@@ -4,7 +4,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(UI.UI), true)]
+    [CustomEditor(typeof(UI.UI))]
     public class UIEditor : CustomInspectorEditor
     {
         UI.UI editor;
@@ -44,7 +44,7 @@ namespace SCKRM.Editor
     }
 
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(ObjectPoolingUI), true)]
+    [CustomEditor(typeof(ObjectPoolingUI))]
     public class ObjectPoolingUIEditor : CustomInspectorEditor
     {
         ObjectPoolingUI editor;
@@ -78,6 +78,18 @@ namespace SCKRM.Editor
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 그래픽 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_graphic");
             }
+
+            EditorGUILayout.LabelField("Anchored Position: " + editor.rectTransform.anchoredPosition);
+            EditorGUILayout.LabelField("Size Delta: " + editor.rectTransform.sizeDelta);
+
+            Space();
+
+            EditorGUILayout.LabelField("Offset Min: " + editor.rectTransform.offsetMin);
+            EditorGUILayout.LabelField("Offset Max: " + editor.rectTransform.offsetMax);
+
+            Space();
+
+            EditorGUILayout.LabelField("Rect: " + editor.rectTransform.rect);
         }
     }
 

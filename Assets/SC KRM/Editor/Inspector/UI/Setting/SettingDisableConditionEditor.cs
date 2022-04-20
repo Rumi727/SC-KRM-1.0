@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SettingDisableCondition), true)]
+    [CustomEditor(typeof(SettingDisableCondition))]
     public sealed class SettingDisableConditionEditor : CustomInspectorEditor
     {
         SettingDisableCondition editor;

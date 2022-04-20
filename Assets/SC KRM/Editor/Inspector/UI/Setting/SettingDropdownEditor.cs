@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SettingDropdown), true)]
+    [CustomEditor(typeof(SettingDropdown))]
     public sealed class SettingDropdownEditor : SettingEditor
     {
         SettingDropdown editor;

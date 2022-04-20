@@ -5,7 +5,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(ColorReadability), true)]
+    [CustomEditor(typeof(ColorReadability))]
     public sealed class ColorReadabilityEditor : UIAniEditor
     {
         public override void OnInspectorGUI()

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SettingSlider), true)]
+    [CustomEditor(typeof(SettingSlider))]
     public sealed class SettingSliderEditor : SettingInputFieldEditor
     {
         SettingSlider editor;

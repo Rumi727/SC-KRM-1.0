@@ -5,7 +5,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SideBarAni), true)]
+    [CustomEditor(typeof(SideBarAni))]
     public sealed class SideBarAniEditor : UIAniEditor
     {
         public override void OnInspectorGUI()

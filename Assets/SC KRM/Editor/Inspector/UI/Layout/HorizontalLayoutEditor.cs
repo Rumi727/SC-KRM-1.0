@@ -5,7 +5,7 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(HorizontalLayout), true)]
+    [CustomEditor(typeof(HorizontalLayout))]
     public sealed class HorizontalLayoutEditor : UIEditor
     {
         HorizontalLayout editor;
