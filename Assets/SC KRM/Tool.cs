@@ -2184,9 +2184,6 @@ namespace SCKRM.Tool
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
             T temp = array[newIndex];
             array[newIndex] = array[oldIndex];
             array[oldIndex] = temp;
