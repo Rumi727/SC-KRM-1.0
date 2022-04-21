@@ -16,7 +16,7 @@ namespace SCKRM.UI.Setting
 {
     public class Setting : UI
     {
-        [SerializeField] string _saveLoadAttributeName = ""; public string saveLoadAttributeName { get => _saveLoadAttributeName; set => _saveLoadAttributeName = value; }
+        [SerializeField] string _saveLoadClassName = ""; public string saveLoadClassName { get => _saveLoadClassName; set => _saveLoadClassName = value; }
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }
 
         [SerializeField] CanvasGroup _resetButton; public CanvasGroup resetButton { get => _resetButton; set => _resetButton = value; }
@@ -66,7 +66,7 @@ namespace SCKRM.UI.Setting
 
             foreach (var variableType in SaveLoadManager.generalSLCList)
             {
-                if (variableType.name == saveLoadAttributeName)
+                if (variableType.name == saveLoadClassName)
                 {
                     foreach (var propertyInfo in variableType.propertyInfos)
                     {
@@ -465,19 +465,19 @@ namespace SCKRM.UI.Setting
         public virtual void OnDrag()
         {
 #if UNITY_STANDALONE_WIN
-            Vector2Int mousePos = WindowManager.GetCursorPosition();
+            Vector2Int mousePos = CursorManager.GetCursorPosition();
             if (mousePos.x < 10)
-                WindowManager.SetCursorPosition(Screen.currentResolution.width - 10, mousePos.y);
+                CursorManager.SetCursorPosition(Screen.currentResolution.width - 10, mousePos.y);
             else if (mousePos.x > Screen.currentResolution.width - 10)
-                WindowManager.SetCursorPosition(10, mousePos.y);
+                CursorManager.SetCursorPosition(10, mousePos.y);
 
             if (mousePos.y < 10)
-                WindowManager.SetCursorPosition(mousePos.x, Screen.currentResolution.height - 10);
+                CursorManager.SetCursorPosition(mousePos.x, Screen.currentResolution.height - 10);
             else if (mousePos.y > Screen.currentResolution.height - 10)
-                WindowManager.SetCursorPosition(mousePos.x, 10);
+                CursorManager.SetCursorPosition(mousePos.x, 10);
 #endif
 
-            Vector2 mouseDeltaVector = InputManager.GetMouseDelta("all");
+            Vector2 mouseDeltaVector = InputManager.GetMouseDelta(false, "all");
             float mouseDelta = mouseDeltaVector.magnitude * mouseSensitivity;
 
             if ((mouseDeltaVector.x + mouseDeltaVector.y) * 0.5f < 0)

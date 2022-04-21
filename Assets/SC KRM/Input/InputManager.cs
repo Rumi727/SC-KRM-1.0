@@ -308,7 +308,7 @@ namespace SCKRM.Input
         /// <exception cref="NotMainThreadMethodException"></exception>
         /// <exception cref="NotPlayModeMethodException"></exception>
         /// <exception cref="NotInitialLoadEndMethodException"></exception>
-        public static Vector2 GetMouseDelta(params string[] inputLockDeny)
+        public static Vector2 GetMouseDelta(bool IgnoreMouseSensitivity = false, params string[] inputLockDeny)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetMouseDelta));
@@ -324,7 +324,12 @@ namespace SCKRM.Input
                 inputLockDeny = new string[0];
 
             if (!InputLockCheck(inputLockDeny))
-                return mouseDelta;
+            {
+                if (!IgnoreMouseSensitivity)
+                    return mouseDelta * CursorManager.SaveData.mouseSensitivity;
+                else
+                    return mouseDelta;
+            }
             else
                 return Vector2.zero;
         }

@@ -57,8 +57,10 @@
 	"options.statusbar.time.twentyFourHourSystem": "24時間制",
 	"options.statusbar.time.toggleSeconds": "秒単位まで表示",
 	
-	"options.controls.title": "操作",
-	"options.controls.controls": "操作設定",
+	"options.input.title": "入力",
+	"options.input.highPrecisionMouse": "高精度マウス",
+	"options.input.mouseSensitivity": "マウス感度",
+	"options.input.controls": "操作設定",
 	
 	
 	

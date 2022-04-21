@@ -57,8 +57,10 @@
 	"options.statusbar.time.twentyFourHourSystem": "24시간제",
 	"options.statusbar.time.toggleSeconds": "초 단위까지 표시",
 	
-	"options.controls.title": "조작",
-	"options.controls.controls": "조작 설정",
+	"options.input.title": "입력",
+	"options.input.highPrecisionMouse": "고정밀 마우스",
+	"options.input.mouseSensitivity": "마우스 감도",
+	"options.input.controls": "조작 설정",
 	
 	
 	

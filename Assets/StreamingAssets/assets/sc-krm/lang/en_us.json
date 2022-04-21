@@ -57,8 +57,10 @@
 	"options.statusbar.time.twentyFourHourSystem": "24-hour system",
 	"options.statusbar.time.toggleSeconds": "Toggle Seconds",
 	
-	"options.controls.title": "Controls",
-	"options.controls.controls": "Control Settings",
+	"options.input.title": "Input",
+	"options.input.highPrecisionMouse": "High Precision Mouse",
+	"options.input.mouseSensitivity": "Mouse Sensitivity",
+	"options.input.controls": "Control Settings",
 	
 	
 	

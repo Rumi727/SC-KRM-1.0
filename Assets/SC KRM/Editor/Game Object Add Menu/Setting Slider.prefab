@@ -1570,7 +1570,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.494
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1735,7 +1735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 304766158498055115}
   _graphic: {fileID: 0}
-  _saveLoadAttributeName: 
+  _saveLoadClassName: 
   _variableName: 
   _resetButton: {fileID: 6167845678910891430}
   _nameText: {fileID: 7104122106398558262}
