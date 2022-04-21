@@ -38,6 +38,8 @@ namespace SCKRM.UI.SideBar
 
         public override void OnCreate()
         {
+            base.OnCreate();
+
             LanguageManager.currentLanguageChange += InfoLoad;
             ThreadManager.threadChange += InfoLoad;
         }

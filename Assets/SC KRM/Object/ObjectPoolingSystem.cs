@@ -182,9 +182,17 @@ namespace SCKRM.Object
             }
         }
 
+        /// <summary>
+        /// Please put base.OnCreate() when overriding
+        /// </summary>
         public virtual void OnCreate()
         {
-            
+            gameObject.name = objectKey;
+
+            transform.localPosition = Vector3.zero;
+
+            transform.localEulerAngles = Vector3.zero;
+            transform.localScale = Vector3.one;
         }
 
         /// <summary>
