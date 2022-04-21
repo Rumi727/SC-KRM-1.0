@@ -59,6 +59,7 @@
 	
 	"options.input.title": "入力",
 	"options.input.highPrecisionMouse": "高精度マウス",
+	"options.input.highPrecisionMouse.warning": "高精度マウスは非常に不安定な設定です。\nそれでもオンにしますか？",
 	"options.input.mouseSensitivity": "マウス感度",
 	"options.input.controls": "操作設定",
 	

@@ -59,6 +59,7 @@
 	
 	"options.input.title": "입력",
 	"options.input.highPrecisionMouse": "고정밀 마우스",
+	"options.input.highPrecisionMouse.warning": "고정밀 마우스는 많이 불안정한 설정입니다.\n그래도 켜시겠습니까?",
 	"options.input.mouseSensitivity": "마우스 감도",
 	"options.input.controls": "조작 설정",
 	

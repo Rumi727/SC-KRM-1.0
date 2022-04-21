@@ -59,6 +59,7 @@
 	
 	"options.input.title": "Input",
 	"options.input.highPrecisionMouse": "High Precision Mouse",
+	"options.input.highPrecisionMouse.warning": "A high-precision mouse is a very unstable setup.\nWould you still like to turn it on?",
 	"options.input.mouseSensitivity": "Mouse Sensitivity",
 	"options.input.controls": "Control Settings",
 	

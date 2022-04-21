@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Input;
 using SCKRM.SaveLoad;
 using SCKRM.Tool;
 using SCKRM.UI;
+using SCKRM.UI.MessageBox;
 using SCKRM.Window;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,6 +68,8 @@ namespace SCKRM
             highPrecisionMousePos = new Vector2Int(pos.x, Mathf.RoundToInt(Screen.currentResolution.height - pos.y));
         }
 
+        Vector2 dragStartMousePosition = Vector2.zero;
+        bool dragStart = false;
         void Update()
         {
             if (Kernel.isInitialLoadEnd)
@@ -80,15 +84,8 @@ namespace SCKRM
                     Vector2Int pos = GetCursorPosition(0, 1);
                     highPrecisionMousePos = new Vector2Int(pos.x, Mathf.RoundToInt(Screen.currentResolution.height - pos.y));
                 }
-            }
-        }
 
-        Vector2 dragStartMousePosition = Vector2.zero;
-        bool dragStart = false;
-        void LateUpdate()
-        {
-            if (Kernel.isInitialLoadEnd)
-            {
+                #region Pos Move
                 if (graphic.enabled != visible)
                 {
                     graphic.enabled = visible;
@@ -125,6 +122,19 @@ namespace SCKRM
                 }
 
                 transform.position = InputManager.mousePosition;
+                #endregion
+            }
+        }
+
+
+
+        public static async void HighPrecisionMouseWarning()
+        {
+            if (Kernel.isInitialLoadEnd && SaveData.highPrecisionMouse)
+            {
+                SaveData.highPrecisionMouse = false;
+                if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
+                    SaveData.highPrecisionMouse = true;
             }
         }
 
