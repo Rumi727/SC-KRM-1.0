@@ -8,6 +8,8 @@ using SCKRM.UI;
 using UnityEngine.UI;
 using SCKRM.Tool;
 using UnityEditorInternal;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SCKRM.Editor
 {
@@ -37,17 +39,19 @@ namespace SCKRM.Editor
                     sceneListChangedEnable = false;
 
                     EditorSceneManager.OpenScene($"{PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName)}.unity");
+                    HierarchyChanged();
 
                     string splashScenePath = SceneManager.GetActiveScene().path;
 
                     bool exists = false;
-                    for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+                    List<EditorBuildSettingsScene> buildScenes = EditorBuildSettings.scenes.ToList();
+                    for (int i = 0; i < buildScenes.Count; i++)
                     {
                         EditorBuildSettingsScene scene = EditorBuildSettings.scenes[i];
                         if (splashScenePath == scene.path)
                         {
                             if (i != 0)
-                                EditorBuildSettings.scenes = EditorBuildSettings.scenes.Move(i, 0);
+                                buildScenes.Move(i, 0);
 
                             exists = true;
                             break;
@@ -55,12 +59,14 @@ namespace SCKRM.Editor
                     }
 
                     if (!exists)
-                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.Insert(0, new EditorBuildSettingsScene() { path = splashScenePath, enabled = true });
+                        buildScenes.Insert(0, new EditorBuildSettingsScene() { path = splashScenePath, enabled = true });
 
                     sceneListChangedEnable = true;
 
                     if (!EditorBuildSettings.scenes[0].enabled)
-                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.RemoveAt(0);
+                        buildScenes.RemoveAt(0);
+
+                    EditorBuildSettings.scenes = buildScenes.ToArray();
 
                     EditorSceneManager.OpenScene(activeScenePath);
                 }
