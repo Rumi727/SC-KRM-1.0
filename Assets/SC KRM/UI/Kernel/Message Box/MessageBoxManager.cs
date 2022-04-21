@@ -111,6 +111,8 @@ namespace SCKRM.UI.MessageBox
             #endregion
 
             StatusBarManager.tabSelectGameObject = createdMessageBoxButton[defaultIndex].gameObject;
+
+            GameObject previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
             EventSystem.current.SetSelectedGameObject(createdMessageBoxButton[defaultIndex].gameObject);
 
             InputManager.forceInputLock = true;
@@ -147,7 +149,7 @@ namespace SCKRM.UI.MessageBox
             {
                 isMessageBoxShow = false;
                 StatusBarManager.tabSelectGameObject = null;
-                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);
 
                 InputManager.forceInputLock = false;
 
