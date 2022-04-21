@@ -20,14 +20,14 @@ namespace SCKRM.UI.MessageBox
         static MessageBoxButton[] createdMessageBoxButton = new MessageBoxButton[0];
         public static bool isMessageBoxShow { get; private set; } = false;
 
-        public static async UniTask<int> MessageBox(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await messageBox(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
-        public static async UniTask<int> MessageBox(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await messageBox(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
-        public static async UniTask<int> MessageBox(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await messageBox(new NameSpacePathPair[] { button }, defaultIndex, info, icon, replace);
-        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await messageBox(buttons, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
-        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await messageBox(buttons, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
-        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await messageBox(buttons, defaultIndex, info, icon, replace);
+        public static async UniTask<int> Show(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await show(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
+        public static async UniTask<int> Show(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await show(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
+        public static async UniTask<int> Show(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await show(new NameSpacePathPair[] { button }, defaultIndex, info, icon, replace);
+        public static async UniTask<int> Show(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await show(buttons, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
+        public static async UniTask<int> Show(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await show(buttons, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
+        public static async UniTask<int> Show(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await show(buttons, defaultIndex, info, icon, replace);
 
-        static async UniTask<int> messageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace)
+        static async UniTask<int> show(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace)
         {
             await UniTask.WaitUntil(() => instance != null);
 
