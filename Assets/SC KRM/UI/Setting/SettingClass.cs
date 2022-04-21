@@ -5,6 +5,7 @@ using SCKRM.Log;
 using SCKRM.SaveLoad;
 using SCKRM.Tool;
 using SCKRM.UI.SideBar;
+using SCKRM.Window;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -463,6 +464,19 @@ namespace SCKRM.UI.Setting
 
         public virtual void OnDrag()
         {
+#if UNITY_STANDALONE_WIN
+            Vector2Int mousePos = WindowManager.GetCursorPosition();
+            if (mousePos.x < 10)
+                WindowManager.SetCursorPosition(Screen.currentResolution.width - 10, mousePos.y);
+            else if (mousePos.x > Screen.currentResolution.width - 10)
+                WindowManager.SetCursorPosition(10, mousePos.y);
+
+            if (mousePos.y < 10)
+                WindowManager.SetCursorPosition(mousePos.x, Screen.currentResolution.height - 10);
+            else if (mousePos.y > Screen.currentResolution.height - 10)
+                WindowManager.SetCursorPosition(mousePos.x, 10);
+#endif
+
             Vector2 mouseDeltaVector = InputManager.GetMouseDelta("all");
             float mouseDelta = mouseDeltaVector.magnitude * mouseSensitivity;
 
