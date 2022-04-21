@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using SCKRM.Resource;
 
 namespace SCKRM.Renderer
 {
@@ -34,7 +35,11 @@ namespace SCKRM.Renderer
             this.nameSpace = nameSpace;
         }
 
-        public static explicit operator string(NameSpacePathPair value) => value.path;
-        public static implicit operator NameSpacePathPair(string value) => new NameSpacePathPair(value);
+        public static implicit operator string(NameSpacePathPair value) => value.nameSpace + ":" +value.path;
+        public static implicit operator NameSpacePathPair(string value)
+        {
+            string nameSpace = ResourceManager.GetNameSpace(value, out value);
+            return new NameSpacePathPair(value, nameSpace);
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Resource;
 using SCKRM.Threads;
+using SCKRM.Tool;
 using UnityEngine;
 
 namespace SCKRM.Renderer
@@ -51,6 +52,29 @@ namespace SCKRM.Renderer
                 else
                     return null;
             }
+        }
+    }
+
+    public struct NameSpaceTypePathPair
+    {
+        public string type;
+        public string path;
+        public string nameSpace;
+
+        public NameSpaceTypePathPair(string type, string path, string nameSpace = "")
+        {
+            this.type = type;
+            this.path = path;
+            this.nameSpace = nameSpace;
+        }
+
+        public static implicit operator string(NameSpaceTypePathPair value) => value.nameSpace + ":" + PathTool.Combine(value.type, value.path);
+
+        public static implicit operator NameSpaceTypePathPair(string value)
+        {
+            string nameSpace = ResourceManager.GetNameSpace(value, out value);
+            int index = value.LastIndexOf('/');
+            return new NameSpaceTypePathPair(value.Remove(index), value.Substring(index), nameSpace);
         }
     }
 }
