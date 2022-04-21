@@ -15,7 +15,7 @@ namespace SCKRM.Input
     [AddComponentMenu("커널/Input/조작 매니저", 0)]
     public sealed class InputManager : MonoBehaviour
     {
-        [ProjectSetting]
+        [ProjectSettingSaveLoad]
         public sealed class Data
         {
             [JsonProperty] public static Dictionary<string, List<KeyCode>> controlSettingList { get; set; } = new Dictionary<string, List<KeyCode>>();

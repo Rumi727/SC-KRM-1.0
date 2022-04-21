@@ -23,7 +23,7 @@ namespace SCKRM.Resource
 {
     public static class ResourceManager
     {
-        [ProjectSetting]
+        [ProjectSettingSaveLoad]
         public sealed class Data
         {
             [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>() { "sc-krm", "minecraft", "school-live" };

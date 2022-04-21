@@ -12,7 +12,7 @@ namespace SCKRM.Object
     [AddComponentMenu("커널/Object/오브젝트 풀링 시스템", 0)]
     public sealed class ObjectPoolingSystem : Manager<ObjectPoolingSystem>
     {
-        [ProjectSetting]
+        [ProjectSettingSaveLoad]
         public sealed class Data
         {
             [JsonProperty] public static Dictionary<string, string> prefabList { get; set; } = new Dictionary<string, string>();

@@ -14,7 +14,7 @@ namespace SCKRM.Sound
     [AddComponentMenu("커널/Audio/오디오 매니저", 0)]
     public sealed class SoundManager : Manager<SoundManager>
     {
-        [ProjectSetting]
+        [ProjectSettingSaveLoad]
         public sealed class Data
         {
             [JsonProperty] public static bool useTempo { get; set; }

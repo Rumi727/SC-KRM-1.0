@@ -27,7 +27,7 @@ namespace SCKRM
     [AddComponentMenu("커널/커널")]
     public sealed class Kernel : Manager<Kernel>
     {
-        [ProjectSetting]
+        [ProjectSettingSaveLoad]
         public sealed class Data
         {
             [JsonProperty] public static float standardFPS { get; set; } = 60;
@@ -460,23 +460,28 @@ namespace SCKRM
 
                     Debug.Log("Kernel: Waiting for settings to load...");
                     {
-                        //프로젝트 설정을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(ProjectSettingManager.Load, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                            return;
-
                         //세이브 데이터의 기본값과 변수들을 다른 스레드에서 로딩합니다
-                        if (await UniTask.RunOnThreadPool(SaveLoadClassLoad, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        if (await UniTask.RunOnThreadPool(Initialize, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
-                            //세이브 데이터를 다른 스레드에서 로딩합니다
+                        //세이브 데이터를 다른 스레드에서 로딩합니다
+                        if (await UniTask.RunOnThreadPool(() => SaveLoadManager.LoadAll(ProjectSettingManager.projectSettingSLCList, projectSettingPath), cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
+
+                        //세이브 데이터를 다른 스레드에서 로딩합니다
                         if (await UniTask.RunOnThreadPool(() => SaveLoadManager.LoadAll(SaveLoadManager.generalSLCList, saveDataPath), cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
 
-                        void SaveLoadClassLoad()
+                        void Initialize()
                         {
                             SaveLoadManager.InitializeAll<GeneralSaveLoadAttribute>(out SaveLoadClass[] saveLoadClass);
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                             SaveLoadManager.generalSLCList = saveLoadClass;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+
+                            SaveLoadManager.InitializeAll<ProjectSettingSaveLoadAttribute>(out saveLoadClass);
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                            ProjectSettingManager.projectSettingSLCList = saveLoadClass;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                         }
                     }
