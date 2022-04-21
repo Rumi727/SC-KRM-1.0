@@ -12,8 +12,6 @@ public class Postest : MonoBehaviour
 
     SoundPlayer soundPlayer;
 
-    void Awake() => soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.3333333f, true);
-
     void Update()
     {
         float speed;
