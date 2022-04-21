@@ -466,7 +466,7 @@ namespace SCKRM.UI.Setting
             Vector2 mouseDeltaVector = InputManager.GetMouseDelta("all");
             float mouseDelta = mouseDeltaVector.magnitude * mouseSensitivity;
 
-            if ((mouseDeltaVector.x + mouseDeltaVector.y) / 2 < 0)
+            if ((mouseDeltaVector.x + mouseDeltaVector.y) * 0.5f < 0)
                 mouseDelta *= -1;
 
             if (propertyInfo != null)
