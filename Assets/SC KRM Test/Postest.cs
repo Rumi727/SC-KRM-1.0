@@ -8,7 +8,7 @@ using UnityEngine;
 public class Postest : MonoBehaviour
 {
     Vector2 rotation = Vector2.zero;
-    int nextBeat = 0;
+    //int nextBeat = 0;
 
     SoundPlayer soundPlayer;
 
