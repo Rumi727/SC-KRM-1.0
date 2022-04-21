@@ -12,7 +12,9 @@ namespace SCKRM.UI.Setting
 
         public virtual void OnValueChanged()
         {
-            if (variableType != VariableType.Bool)
+            if (invokeLock)
+                return;
+            else if (variableType != VariableType.Bool)
                 return;
 
             SaveValue(toggle.isOn);
@@ -25,6 +27,7 @@ namespace SCKRM.UI.Setting
             onValueChanged.Invoke();
         }
 
+        bool invokeLock = false;
         protected override void Update()
         {
             base.Update();
@@ -34,7 +37,10 @@ namespace SCKRM.UI.Setting
 
             bool value = (bool)GetValue();
 
+            invokeLock = true;
             toggle.isOn = value;
+            invokeLock = false;
+
             isDefault = (bool)defaultValue == value;
         }
     }

@@ -21,6 +21,9 @@ namespace SCKRM.UI.Setting
 
         public void OnValueChanged()
         {
+            if (invokeLock)
+                return;
+
             SaveValueFloat(slider.value);
             onValueChanged.Invoke();
         }
@@ -31,13 +34,17 @@ namespace SCKRM.UI.Setting
             onValueChanged.Invoke();
         }
 
+        bool invokeLock = false;
         protected override void Update()
         {
             base.Update();
 
             if (Kernel.isInitialLoadEnd && variableType != VariableType.String)
             {
+                invokeLock = true;
                 slider.value = GetValueFloat();
+                invokeLock = false;
+
                 isDefault = GetValue().ToString() == defaultValue.ToString();
             }
         }

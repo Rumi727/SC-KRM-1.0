@@ -76,13 +76,16 @@ namespace SCKRM.UI.Setting
 
         public virtual void OnEndEdit()
         {
-            if (variableType != VariableType.String && string.IsNullOrEmpty(inputField.text))
+            if (invokeLock)
+                return;
+            else if (variableType != VariableType.String && string.IsNullOrEmpty(inputField.text))
                 inputField.text = "0";
 
             SaveStringValue(inputField.text);
             onEndEdit.Invoke();
         }
 
+        bool invokeLock = false;
         protected override void Update()
         {
             base.Update();
@@ -90,7 +93,10 @@ namespace SCKRM.UI.Setting
             if (Kernel.isInitialLoadEnd && !inputField.isFocused)
             {
                 string value = GetValue().ToString();
+
+                invokeLock = true;
                 inputField.text = value;
+                invokeLock = false;
 
                 isDefault = defaultValue.ToString() == value;
             }

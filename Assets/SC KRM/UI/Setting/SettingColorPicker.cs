@@ -17,7 +17,9 @@ namespace SCKRM.UI.Setting
 
         public virtual void OnValueChanged()
         {
-            if (variableType == VariableType.JColor)
+            if (invokeLock)
+                return;
+            else if (variableType == VariableType.JColor)
                 SaveValue((JColor)colorPicker.CurrentColor);
             else if (variableType == VariableType.JColor32)
                 SaveValue((JColor32)colorPicker.CurrentColor);
@@ -31,6 +33,7 @@ namespace SCKRM.UI.Setting
             onValueChanged.Invoke();
         }
 
+        bool invokeLock = false;
         protected override void Update()
         {
             base.Update();
@@ -39,14 +42,20 @@ namespace SCKRM.UI.Setting
             {
                 Color value = (Color)(JColor)GetValue();
 
+                invokeLock = true;
                 colorPicker.CurrentColor = value;
+                invokeLock = false;
+
                 isDefault = (Color)(JColor)defaultValue == value;
             }
             else if (variableType == VariableType.JColor32)
             {
                 Color value = (Color)(JColor32)GetValue();
 
+                invokeLock = true;
                 colorPicker.CurrentColor = value;
+                invokeLock = false;
+
                 isDefault = (Color)(JColor32)defaultValue == value;
             }
         }
