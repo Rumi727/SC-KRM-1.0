@@ -49,7 +49,6 @@ namespace SCKRM.UI
             }
         }
 
-        [SerializeField] void backEventInvoke() => BackEventInvoke();
         public static void BackEventInvoke()
         {
             if (highPriorityBackEventList.Count > 0)
@@ -58,7 +57,6 @@ namespace SCKRM.UI
                 backEventList[0].Invoke();
         }
 
-        [SerializeField] void homeEventInvoke() => HomeEventInvoke();
         public static void HomeEventInvoke() => homeEvent.Invoke();
 
         public static void BackEventAdd(Action action, bool highPriority = false)
