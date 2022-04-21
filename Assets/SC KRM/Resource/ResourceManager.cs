@@ -646,6 +646,9 @@ namespace SCKRM.Resource
             if (ThreadManager.isMainThread && !Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetLanguage));
 #endif
+
+            allLanguages.Clear();
+
             int l = 0;
             LanguageManager.Language[] languages = LanguageManager.GetLanguages();
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
