@@ -1,11 +1,9 @@
 using SCKRM.Object;
 using SCKRM.Renderer;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM.Window
+namespace SCKRM.UI.MessageBox
 {
     public class MessageBoxButton : ObjectPooling
     {
