@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.MessageBox
 {
-    public class MessageBoxManager : Manager<MessageBoxManager>
+    public class MessageBoxManager : ManagerUI<MessageBoxManager>
     {
         [SerializeField] CanvasGroup messageBoxCanvasGroup;
         [SerializeField] Transform messageBoxButtons;
@@ -133,7 +133,7 @@ namespace SCKRM.UI.MessageBox
         }
 
 
-        void Awake() => SingletonCheck(this);
+        protected override void Awake() => SingletonCheck(this);
 
         void Update()
         {
