@@ -48,7 +48,7 @@ public class Postest : MonoBehaviour
 
         transform.localEulerAngles = rotation;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
             RhythmManager.isBeatPlay = !RhythmManager.isBeatPlay;
 
         float currentBeat = (soundPlayer.time - 1.18f) * (171f / 60f);
@@ -57,6 +57,6 @@ public class Postest : MonoBehaviour
         {
             nextBeat++;
             RhythmManager.OneBeatInvoke();
-        }
+        }*/
     }
 }
