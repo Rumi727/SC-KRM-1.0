@@ -15,37 +15,10 @@ using UnityEngine.UI;
 
 namespace SCKRM.Window
 {
-    public sealed class WindowManager : Manager<WindowManager>
+    public static class WindowManager
     {
-        void Awake() => SingletonCheck(this);
-
-        void Update()
-        {
-            if (isMessageBoxShow)
-            {
-                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(1, 0.2f * Kernel.fpsDeltaTime);
-                if (messageBoxCanvasGroup.alpha > 0.99f)
-                    messageBoxCanvasGroup.alpha = 1;
-
-                messageBoxCanvasGroup.interactable = true;
-                messageBoxCanvasGroup.blocksRaycasts = true;
-            }
-            else
-            {
-                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
-                if (messageBoxCanvasGroup.alpha < 0.01f)
-                    messageBoxCanvasGroup.alpha = 0;
-
-                messageBoxCanvasGroup.interactable = false;
-                messageBoxCanvasGroup.blocksRaycasts = false;
-            }
-        }
-
-
-
         #region Window Pos, Size
 #if UNITY_STANDALONE_WIN
-#if !UNITY_EDITOR
         static float lerpX = 0;
         static float lerpY = 0;
 
@@ -56,7 +29,7 @@ namespace SCKRM.Window
         const int SWP_NOMOVE = 0x0002;
         const int SWP_NOZORDER = 0x0004;
         const int SWP_SHOWWINDOW = 0x0040;
-#endif
+
         static IntPtr handle;
 
         [DllImport("user32.dll")]
@@ -94,7 +67,8 @@ namespace SCKRM.Window
 #endif
         }
 
-        public static Vector2 GetWindowPos(Vector2 windowDatumPoint, Vector2 screenDatumPoint)
+        public static Vector2Int GetWindowPos() => GetWindowPos(Vector2.zero, Vector2.zero);
+        public static Vector2Int GetWindowPos(Vector2 windowDatumPoint, Vector2 screenDatumPoint)
         {
 #if UNITY_STANDALONE_WIN
             IntPtr temp = GetWindowHandle();
@@ -103,13 +77,13 @@ namespace SCKRM.Window
 
             GetWindowRect(handle, out RECT rect);
 
-            return new Vector2(rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (Screen.currentResolution.width * screenDatumPoint.x), rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (Screen.currentResolution.height * screenDatumPoint.y));
+            return new Vector2Int(Mathf.RoundToInt(rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (Screen.currentResolution.width * screenDatumPoint.x)), Mathf.RoundToInt(rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (Screen.currentResolution.height * screenDatumPoint.y)));
 #else
             throw new NotImplementedException();
 #endif
         }
 
-        public static Vector2 GetWindowSize()
+        public static Vector2Int GetWindowSize()
         {
 #if UNITY_STANDALONE_WIN
             IntPtr temp = GetWindowHandle();
@@ -117,13 +91,13 @@ namespace SCKRM.Window
                 handle = temp;
 
             GetWindowRect(handle, out RECT rect);
-            return new Vector2(rect.Right - rect.Left, rect.Bottom - rect.Top);
+            return new Vector2Int(rect.Right - rect.Left, rect.Bottom - rect.Top);
 #else
             throw new NotImplementedException();
 #endif
         }
 
-        public static Vector2 GetClientSize()
+        public static Vector2Int GetClientSize()
         {
 #if UNITY_STANDALONE_WIN
             IntPtr temp = GetWindowHandle();
@@ -131,7 +105,7 @@ namespace SCKRM.Window
                 handle = temp;
 
             GetClientRect(handle, out RECT rect);
-            return new Vector2(rect.Right, rect.Bottom);
+            return new Vector2Int(rect.Right, rect.Bottom);
 #else
             throw new NotImplementedException();
 #endif
@@ -143,9 +117,9 @@ namespace SCKRM.Window
         /// </summary>
         public static void SetWindowRect(Rect rect, Vector2 windowDatumPoint, Vector2 screenDatumPoint, bool clientDatum = true, bool Lerp = false, float time = 0.05f)
         {
-#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
-            if (UnityEngine.Screen.fullScreen)
-                UnityEngine.Screen.SetResolution(UnityEngine.Screen.currentResolution.width, UnityEngine.Screen.currentResolution.height, false);
+#if UNITY_STANDALONE_WIN
+            if (Screen.fullScreen)
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
 
             IntPtr temp = GetWindowHandle();
             if (temp != IntPtr.Zero)
@@ -163,8 +137,8 @@ namespace SCKRM.Window
             rect.x -= size.x * windowDatumPoint.x;
             rect.y -= size.y * windowDatumPoint.y;
 
-            rect.x += UnityEngine.Screen.currentResolution.width * screenDatumPoint.x;
-            rect.y += UnityEngine.Screen.currentResolution.height * screenDatumPoint.y;
+            rect.x += Screen.currentResolution.width * screenDatumPoint.x;
+            rect.y += Screen.currentResolution.height * screenDatumPoint.y;
 
             if (!Lerp)
             {
@@ -173,141 +147,95 @@ namespace SCKRM.Window
             }
             else
             {
-                lerpX = Mathf.Lerp(lerpX, rect.x, time * 60 * Kernel.deltaTime);
-                lerpY = Mathf.Lerp(lerpY, rect.y, time * 60 * Kernel.deltaTime);
+                lerpX.LerpRef(rect.x, time);
+                lerpY.LerpRef(rect.y, time);
             }
 
             if (!Lerp)
                 SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(rect.x), Mathf.RoundToInt(rect.y), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
             else
                 SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(lerpX), Mathf.RoundToInt(lerpY), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
-#elif !UNITY_EDITOR
+#else
             throw new NotImplementedException();
 #endif
         }
         #endregion
 
-
-
-        [SerializeField] CanvasGroup messageBoxCanvasGroup;
-        [SerializeField] Transform messageBoxButtons;
-        [SerializeField] CustomAllTextRenderer messageBoxInfo;
-        [SerializeField] CustomAllSpriteRenderer messageBoxIcon;
-        [SerializeField] MessageBoxButton messageBoxButtonPrefab;
-
-        static MessageBoxButton[] createdMessageBoxButton = new MessageBoxButton[0];
-        public static bool isMessageBoxShow { get; private set; } = false;
-
-        public static async UniTask<int> MessageBox(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await messageBox(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
-        public static async UniTask<int> MessageBox(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await messageBox(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
-        public static async UniTask<int> MessageBox(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await messageBox(new NameSpacePathPair[] { button }, defaultIndex, info, icon, replace);
-        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await messageBox(buttons, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
-        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await messageBox(buttons, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
-        public static async UniTask<int> MessageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await messageBox(buttons, defaultIndex, info, icon, replace);
-
-        static async UniTask<int> messageBox(NameSpacePathPair[] buttons, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace)
+        #region Cursor Pos
+#if UNITY_STANDALONE_WIN
+        [StructLayout(LayoutKind.Sequential)]
+        struct POINT
         {
-            await UniTask.WaitUntil(() => instance != null);
-
-            if (isMessageBoxShow)
-                return defaultIndex;
-            else if (defaultIndex < 0 || buttons.Length < defaultIndex)
-                return defaultIndex;
-
-            isMessageBoxShow = true;
-
-            instance.messageBoxIcon.nameSpace = icon.nameSpace;
-            instance.messageBoxIcon.path = icon.path;
-            instance.messageBoxIcon.Refresh();
-
-            instance.messageBoxInfo.replace = replace;
-
-            instance.messageBoxInfo.nameSpace = info.nameSpace;
-            instance.messageBoxInfo.path = info.path;
-            instance.messageBoxInfo.Refresh();
-
-            #region Button Object Create
-            for (int i = 0; i < createdMessageBoxButton.Length; i++)
-                ObjectPoolingSystem.ObjectRemove("window_manager.message_box_button", createdMessageBoxButton[i]);
-
-            createdMessageBoxButton = new MessageBoxButton[buttons.Length];
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                MessageBoxButton button = (MessageBoxButton)ObjectPoolingSystem.ObjectCreate("window_manager.message_box_button", instance.messageBoxButtons);
-                createdMessageBoxButton[i] = button;
-
-                button.index = i;
-
-                button.text.nameSpace = buttons[i].nameSpace;
-                button.text.path = buttons[i].path;
-                button.text.Refresh();
-
-                //버튼이 눌렸을때, UI를 닫기 위해서 버튼에 있는 OnClick 이벤트에 clickedIndex를 button.index로 바꾸는 action 메소드를 추가합니다
-                button.button.onClick.AddListener(() => action(button));
-            }
-
-            for (int i = 0; i < createdMessageBoxButton.Length; i++)
-            {
-                Navigation navigation = new Navigation();
-                navigation.mode = Navigation.Mode.Explicit;
-
-                if (i > 0)
-                    navigation.selectOnUp = createdMessageBoxButton[i - 1].button;
-                if (i < createdMessageBoxButton.Length - 1)
-                    navigation.selectOnDown = createdMessageBoxButton[i + 1].button;
-
-                createdMessageBoxButton[i].button.navigation = navigation;
-            }
-            #endregion
-
-            StatusBarManager.tabSelectGameObject = createdMessageBoxButton[defaultIndex].gameObject;
-            EventSystem.current.SetSelectedGameObject(createdMessageBoxButton[defaultIndex].gameObject);
-
-            InputManager.forceInputLock = true;
-
-
-
-            int clickedIndex = -1;
-
-            //Back 버튼을 눌렀을때, UI를 닫기 위해 이벤트에 clickedIndex를 defaultIndex로 변경하는 BackEvent 메소드를 추가합니다
-            UIManager.BackEventAdd(backEvent, true);
-
-            GameObject oldSelectedGameObject = null;
-            while (clickedIndex < 0)
-            {
-                /*
-                 * BackEvent 함수가 호출되거나, 버튼이 눌려서 clickedIndex가 0 이상이 되거나
-                 * select 함수가 호출되서 함수가 리턴 될 때까지 대기합니다
-                 */
-
-                if (EventSystem.current.currentSelectedGameObject == null)
-                    EventSystem.current.SetSelectedGameObject(oldSelectedGameObject);
-                else
-                    oldSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-
-                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                    return 0;
-            }
-
-            return select(clickedIndex);
-
-
-
-            int select(int index)
-            {
-                isMessageBoxShow = false;
-                StatusBarManager.tabSelectGameObject = null;
-                EventSystem.current.SetSelectedGameObject(null);
-
-                InputManager.forceInputLock = false;
-
-                UIManager.BackEventRemove(backEvent, true);
-
-                return index;
-            }
-
-            void backEvent() => clickedIndex = defaultIndex;
-            void action(MessageBoxButton messageBoxButton) => clickedIndex = messageBoxButton.index;
+            public int X;
+            public int Y;
         }
+
+        [DllImport("user32.dll")]
+        static extern bool GetCursorPos(out POINT lpPoint);
+
+
+
+        [DllImport("user32.dll")]
+        static extern bool SetCursorPos(int x, int y);
+#endif
+
+
+
+        public static Vector2Int GetCursorPosition() => GetCursorPosition(0, 0);
+        public static Vector2Int GetCursorPosition(Vector2 datumPoint) => GetCursorPosition(datumPoint.x, datumPoint.y);
+        public static Vector2Int GetCursorPosition(float xDatumPoint, float yDatumPoint)
+        {
+#if UNITY_STANDALONE_WIN
+            POINT lpPoint;
+            bool success = GetCursorPos(out lpPoint);
+            if (!success)
+                return Vector2Int.zero;
+
+            return new Vector2Int(Mathf.RoundToInt(lpPoint.X - (Screen.currentResolution.width * xDatumPoint)), Mathf.RoundToInt(lpPoint.Y - (Screen.currentResolution.height * yDatumPoint)));
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+
+        public static Vector2Int GetClientCursorPosition() => GetClientCursorPosition(0, 0);
+        public static Vector2Int GetClientCursorPosition(Vector2 datumPoint) => GetClientCursorPosition(datumPoint.x, datumPoint.y);
+        public static Vector2Int GetClientCursorPosition(float xDatumPoint, float yDatumPoint)
+        {
+#if UNITY_STANDALONE_WIN
+            POINT lpPoint;
+            bool success = GetCursorPos(out lpPoint);
+            if (!success)
+                return Vector2Int.zero;
+
+            Vector2Int clientSize = GetClientSize();
+            Vector2 border = (Vector2)(GetWindowSize() - clientSize) * 0.5f;
+            Vector2Int offset = GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int(Mathf.RoundToInt(border.x), Mathf.RoundToInt(border.y));
+            return new Vector2Int(Mathf.RoundToInt(lpPoint.X - (clientSize.x * xDatumPoint)) - offset.x, Mathf.RoundToInt(lpPoint.Y - offset.y - (clientSize.y * yDatumPoint)) - offset.y);
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+
+
+        public static void SetCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
+        public static void SetCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
+        public static void SetCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => SetCursorPos(Mathf.RoundToInt(x + ((Screen.currentResolution.width - 1) * xDatumPoint)), Mathf.RoundToInt(y + ((Screen.currentResolution.height - 1) * yDatumPoint)));
+
+        public static void SetClientCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
+        public static void SetClientCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
+        public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0)
+        {
+#if UNITY_STANDALONE_WIN
+            Vector2Int clientSize = GetClientSize();
+            Vector2 border = (Vector2)(GetWindowSize() - clientSize) * 0.5f;
+            Vector2Int offset = GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int(Mathf.RoundToInt(border.x), Mathf.RoundToInt(border.y));
+            SetCursorPos(Mathf.RoundToInt(x + ((clientSize.x - 1) * xDatumPoint)) - offset.x, Mathf.RoundToInt(y + ((clientSize.y - 1) * yDatumPoint)) - offset.y);
+#else
+            throw new NotImplementedException();
+#endif
+        }
+        #endregion
     }
 }
