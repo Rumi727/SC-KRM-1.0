@@ -26,6 +26,11 @@ namespace SCKRM.Editor
 
             DrawLine();
 
+            UseProperty("_saveLoadAttributeName", "값을 변경 할 클래스");
+            UseProperty("_variableName", "값을 변경 할 변수");
+
+            Space();
+
             SaveLoadClass selectedSaveLoadClass = null;
 
             string[] fullNames = new string[SettingEditor.saveLoadClassList.Length];
