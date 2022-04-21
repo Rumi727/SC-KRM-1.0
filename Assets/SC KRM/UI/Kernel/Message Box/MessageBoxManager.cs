@@ -20,6 +20,34 @@ namespace SCKRM.UI.MessageBox
         static MessageBoxButton[] createdMessageBoxButton = new MessageBoxButton[0];
         public static bool isMessageBoxShow { get; private set; } = false;
 
+
+
+        protected override void Awake() => SingletonCheck(this);
+
+        void Update()
+        {
+            if (isMessageBoxShow)
+            {
+                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(1, 0.2f * Kernel.fpsDeltaTime);
+                if (messageBoxCanvasGroup.alpha > 0.99f)
+                    messageBoxCanvasGroup.alpha = 1;
+
+                messageBoxCanvasGroup.interactable = true;
+                messageBoxCanvasGroup.blocksRaycasts = true;
+            }
+            else
+            {
+                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
+                if (messageBoxCanvasGroup.alpha < 0.01f)
+                    messageBoxCanvasGroup.alpha = 0;
+
+                messageBoxCanvasGroup.interactable = false;
+                messageBoxCanvasGroup.blocksRaycasts = false;
+            }
+        }
+
+
+
         public static async UniTask<int> Show(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon) => await show(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[0]);
         public static async UniTask<int> Show(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair replace) => await show(new NameSpacePathPair[] { button }, defaultIndex, info, icon, new ReplaceOldNewPair[] { replace });
         public static async UniTask<int> Show(NameSpacePathPair button, int defaultIndex, NameSpacePathPair info, NameSpacePathPair icon, ReplaceOldNewPair[] replace) => await show(new NameSpacePathPair[] { button }, defaultIndex, info, icon, replace);
@@ -130,31 +158,6 @@ namespace SCKRM.UI.MessageBox
 
             void backEvent() => clickedIndex = defaultIndex;
             void action(MessageBoxButton messageBoxButton) => clickedIndex = messageBoxButton.index;
-        }
-
-
-        protected override void Awake() => SingletonCheck(this);
-
-        void Update()
-        {
-            if (isMessageBoxShow)
-            {
-                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(1, 0.2f * Kernel.fpsDeltaTime);
-                if (messageBoxCanvasGroup.alpha > 0.99f)
-                    messageBoxCanvasGroup.alpha = 1;
-
-                messageBoxCanvasGroup.interactable = true;
-                messageBoxCanvasGroup.blocksRaycasts = true;
-            }
-            else
-            {
-                messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsDeltaTime);
-                if (messageBoxCanvasGroup.alpha < 0.01f)
-                    messageBoxCanvasGroup.alpha = 0;
-
-                messageBoxCanvasGroup.interactable = false;
-                messageBoxCanvasGroup.blocksRaycasts = false;
-            }
         }
     }
 }
