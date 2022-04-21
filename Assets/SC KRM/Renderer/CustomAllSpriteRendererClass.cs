@@ -74,7 +74,7 @@ namespace SCKRM.Renderer
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
             int index = value.LastIndexOf('/');
-            return new NameSpaceTypePathPair(value.Remove(index), value.Substring(index), nameSpace);
+            return new NameSpaceTypePathPair(value.Remove(index), value.Substring(index + 1), nameSpace);
         }
     }
 }
