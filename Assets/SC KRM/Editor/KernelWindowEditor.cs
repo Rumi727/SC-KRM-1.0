@@ -4,6 +4,7 @@ using SCKRM.NBS;
 using SCKRM.Object;
 using SCKRM.ProjectSetting;
 using SCKRM.Resource;
+using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using SCKRM.Tool;
 using System;
@@ -502,7 +503,7 @@ namespace SCKRM.Editor
                                     }
                                 }
                             }
-
+                            
                             EditorGUILayout.EndHorizontal();
                         }
 
@@ -603,10 +604,16 @@ namespace SCKRM.Editor
             }
         }
 
+        public static SaveLoadClass kernelProjectSetting = null;
         public void KernelSetting()
         {
             if (!Application.isPlaying)
-                ProjectSettingManager.Load(typeof(Kernel.Data));
+            {
+                if (kernelProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(Kernel.Data), out kernelProjectSetting);
+                
+                SaveLoadManager.Load(kernelProjectSetting, Kernel.projectSettingPath);
+            }
 
 
             //GUI
@@ -628,9 +635,8 @@ namespace SCKRM.Editor
                 EditorGUILayout.Space();
 
                 {
-                    SceneAsset scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName) + ".unity");
-
-                    scene = (SceneAsset)EditorGUILayout.ObjectField("스플래시 씬", scene, typeof(SceneAsset), false);
+                    SceneAsset oldScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName) + ".unity");
+                    SceneAsset scene = (SceneAsset)EditorGUILayout.ObjectField("스플래시 씬", oldScene, typeof(SceneAsset), false);
 
                     string sceneAllPath = AssetDatabase.GetAssetPath(scene);
                     if (sceneAllPath != "")
@@ -645,23 +651,29 @@ namespace SCKRM.Editor
 
                     string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
                     EditorGUILayout.LabelField($"경로: {path}.unity");
+
+                    if (oldScene != scene)
+                        KernelSetAutoProjectSetting.SceneListChanged();
                 }
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
             if (GUI.changed && !Application.isPlaying)
-            {
-                ProjectSettingManager.Save(typeof(Kernel.Data));
-                KernelSetAutoProjectSetting.SceneListChanged();
-            }
+                SaveLoadManager.Save(kernelProjectSetting, Kernel.projectSettingPath);
         }
 
+        public static SaveLoadClass controlProjectSetting;
         Vector2 controlSettingScrollPos = Vector2.zero;
         Vector2 controlLockSettingScrollPos = Vector2.zero;
         public void ControlSetting(int scrollYSize = 0)
         {
             if (!Application.isPlaying)
-                ProjectSettingManager.Load(typeof(InputManager.Data));
+            {
+                if (controlProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(InputManager.Data), out controlProjectSetting);
+
+                SaveLoadManager.Load(controlProjectSetting, Kernel.projectSettingPath);
+            }
 
             if (InputManager.Data.controlSettingList == null)
                 InputManager.Data.controlSettingList = new Dictionary<string, List<KeyCode>>();
@@ -958,14 +970,20 @@ namespace SCKRM.Editor
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
             if (GUI.changed && !Application.isPlaying)
-                ProjectSettingManager.Save(typeof(InputManager.Data));
+                SaveLoadManager.Save(controlProjectSetting, Kernel.projectSettingPath);
         }
 
+        public static SaveLoadClass objectPoolingProjectSetting = null;
         Vector2 objectPoolingSettingScrollPos = Vector2.zero;
         public void ObjectPoolingSetting(int scrollYSize = 0)
         {
             if (!Application.isPlaying)
-                ProjectSettingManager.Load(typeof(ObjectPoolingSystem.Data));
+            {
+                if (objectPoolingProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(ObjectPoolingSystem.Data), out objectPoolingProjectSetting);
+
+                SaveLoadManager.Load(objectPoolingProjectSetting, Kernel.projectSettingPath);
+            }
 
             if (ObjectPoolingSystem.Data.prefabList == null)
                 ObjectPoolingSystem.Data.prefabList = new Dictionary<string, string>();
@@ -1117,15 +1135,21 @@ namespace SCKRM.Editor
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
             if (GUI.changed && !Application.isPlaying)
-                ProjectSettingManager.Save(typeof(ObjectPoolingSystem.Data));
+                SaveLoadManager.Save(objectPoolingProjectSetting, Kernel.projectSettingPath);
         }
 
+        public static SaveLoadClass audioProjectSetting = null;
         string audioSettingNameSpace = "";
         Vector2 audioSettingScrollPos = Vector2.zero;
         public void AudioSetting(int scrollYSize = 0)
         {
             if (!Application.isPlaying)
-                ProjectSettingManager.Load(typeof(SoundManager.Data));
+            {
+                if (audioProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SoundManager.Data), out audioProjectSetting);
+
+                SaveLoadManager.Load(audioProjectSetting, Kernel.projectSettingPath);
+            }
 
             //GUI
             {
@@ -1477,7 +1501,7 @@ namespace SCKRM.Editor
             }
 
             if (GUI.changed && !Application.isPlaying)
-                ProjectSettingManager.Save(typeof(SoundManager.Data));
+                SaveLoadManager.Save(audioProjectSetting, Kernel.projectSettingPath);
         }
 
         string nbsSettingNameSpace = "";
@@ -1801,10 +1825,16 @@ namespace SCKRM.Editor
             }
         }
 
+        public static SaveLoadClass resourceProjectSetting;
         public void ResourceSetting()
         {
             if (!Application.isPlaying)
-                ProjectSettingManager.Load(typeof(ResourceManager.Data));
+            {
+                if (resourceProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(ResourceManager.Data), out resourceProjectSetting);
+
+                SaveLoadManager.Load(resourceProjectSetting, Kernel.projectSettingPath);
+            }
 
             //GUI
             {
@@ -1821,7 +1851,7 @@ namespace SCKRM.Editor
             CustomInspectorEditor.DrawList(ResourceManager.Data.nameSpaces, "네임스페이스", 0, 0, deleteSafety);
 
             if (GUI.changed && !Application.isPlaying)
-                ProjectSettingManager.Save(typeof(ResourceManager.Data));
+                SaveLoadManager.Save(resourceProjectSetting, Kernel.projectSettingPath);
         }
     }
 }
