@@ -26,7 +26,7 @@ namespace SCKRM.Editor
 
             DrawLine();
 
-            UseProperty("_saveLoadAttributeName", "값을 변경 할 클래스");
+            UseProperty("_saveLoadClassName", "값을 변경 할 클래스");
             UseProperty("_variableName", "값을 변경 할 변수");
 
             Space();
@@ -40,11 +40,11 @@ namespace SCKRM.Editor
                 string fullName = saveLoadClass.name;
                 fullNames[i] = fullName;
 
-                if (fullName == editor.saveLoadAttributeName)
+                if (fullName == editor.saveLoadClassName)
                     selectedSaveLoadClass = saveLoadClass;
             }
 
-            editor.saveLoadAttributeName = DrawStringArray("값을 변경 할 클래스", editor.saveLoadAttributeName, fullNames);
+            editor.saveLoadClassName = DrawStringArray("값을 변경 할 클래스", editor.saveLoadClassName, fullNames);
 
             if (selectedSaveLoadClass != null)
                 editor.variableName = DrawStringArray("값을 변경 할 변수", editor.variableName, selectedSaveLoadClass.GetVariableNames());
