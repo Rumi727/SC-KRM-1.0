@@ -295,6 +295,8 @@ namespace SCKRM
         static int tempDay;
         void Update()
         {
+            VariableUpdate();
+
             //유니티의 내장 변수들은 테스트 결과, 약간의 성능을 더 먹는것으로 확인되었기 때문에
             //이렇게 관리 스크립트가 변수를 할당하고 다른 스크립트가 그 변수를 가져오는것이 성능에 더 도움 되는것을 확인하였습니다
             fps = 1f / deltaTime;
@@ -304,8 +306,6 @@ namespace SCKRM
             fpsUnscaledDeltaTime = unscaledDeltaTime * Data.standardFPS;
             fixedDeltaTime = 1f / Data.standardFPS;
             Time.fixedDeltaTime = fixedDeltaTime;
-
-            VariableUpdate();
 
 #if UNITY_EDITOR
             Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
@@ -356,6 +356,9 @@ namespace SCKRM
             float defaultGuiSize = (float)Screen.width / 1920;
 
             //변수들의 최소, 최대 수치를 지정합니다
+            Data.standardFPS = Kernel.Data.standardFPS.Clamp(0);
+            Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(0);
+
             SaveData.mainVolume = SaveData.mainVolume.Clamp(0, 200);
             SaveData.bgmVolume = SaveData.bgmVolume.Clamp(0, 200);
             SaveData.soundVolume = SaveData.soundVolume.Clamp(0, 200);
