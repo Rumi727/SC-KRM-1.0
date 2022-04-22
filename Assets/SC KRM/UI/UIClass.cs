@@ -85,13 +85,16 @@ namespace SCKRM.UI
         }
     }
 
-    public abstract class UIAni : UI
+    public class UIAni : UI
     {
         [SerializeField] bool _lerp = true;
         public bool lerp { get => _lerp; set => _lerp = value; }
         [SerializeField, Range(0, 1)] float _lerpValue = 0.2f;
         public float lerpValue { get => _lerpValue; set => _lerpValue = value; }
+    }
 
+    public abstract class UIAniLayout : UIAni
+    {
         /*//protected override void OnEnable() => update();
 
         //protected override void OnValidate() => update();

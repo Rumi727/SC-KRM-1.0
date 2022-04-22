@@ -97,7 +97,7 @@ namespace SCKRM.Editor
     }
 
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(UIAni), true)]
+    [CustomEditor(typeof(UIAni))]
     public class UIAniEditor : UIEditor
     {
         UIAni editor;

@@ -31,7 +31,7 @@ namespace SCKRM.UI
         Vector2 tempMousePos;
 
 
-        protected override void SizeUpdate()
+        void Update()
         {
 #if UNITY_EDITOR
             if (Application.isPlaying)
@@ -87,7 +87,7 @@ namespace SCKRM.UI
             _isShow = true;
 
             if (!lerp)
-                SizeUpdate();
+                Update();
         }
 
         public void Hide()
@@ -103,7 +103,7 @@ namespace SCKRM.UI
             _isShow = false;
 
             if (!lerp)
-                SizeUpdate();
+                Update();
         }
 
         public void OnPointerEnter(PointerEventData eventData) => pointer = true;

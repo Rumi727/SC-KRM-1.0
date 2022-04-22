@@ -38,7 +38,7 @@ namespace HSVPicker
 
 
 
-        protected override void SizeUpdate()
+        void Update()
         {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)

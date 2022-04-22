@@ -74,7 +74,7 @@ namespace SCKRM.UI.SideBar
                 Show();
         }
 
-        protected override void SizeUpdate()
+        void Update()
         {
             if (Kernel.isInitialLoadEnd)
             {

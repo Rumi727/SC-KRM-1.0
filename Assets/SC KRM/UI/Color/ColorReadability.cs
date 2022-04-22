@@ -18,14 +18,11 @@ namespace SCKRM.UI
         [SerializeField] Graphic _targetGraphic; public Graphic targetGraphic => _targetGraphic;
 
         Color color = Color.white;
-        protected override void LayoutRefresh()
+        void Update()
         {
             if (targetCanvasRenderer != null && targetGraphic != null && graphic != null && targetCanvasRenderer != graphic)
                 color = GetReadbilityColor(targetGraphic.color * targetCanvasRenderer.GetColor());
-        }
 
-        protected override void SizeUpdate()
-        {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
 #else

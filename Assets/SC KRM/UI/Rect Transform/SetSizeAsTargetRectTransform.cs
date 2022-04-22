@@ -9,7 +9,7 @@ namespace SCKRM.UI
     [ExecuteAlways]
     [AddComponentMenu("커널/UI/선택한 Rect Transform의 크기 따라가기")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class SetSizeAsTargetRectTransform : UIAni
+    public sealed class SetSizeAsTargetRectTransform : UIAniLayout
     {
         [SerializeField] RectTransform _targetRectTransform;
         public RectTransform targetRectTransform { get => _targetRectTransform; set => _targetRectTransform = value; }

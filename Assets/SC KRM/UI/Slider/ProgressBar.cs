@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM
+namespace SCKRM.UI
 {
-    public class ProgressBar : MonoBehaviour
+    public class ProgressBar : UIAni
     {
-        [System.NonSerialized] float _progress; public float progress { get => _progress; set => _progress = value.Clamp(0); }
-        [System.NonSerialized] float _maxProgress; public float maxProgress { get => _maxProgress; set => _maxProgress = value.Clamp(0); }
+        [SerializeField] float _progress; public float progress { get => _progress; set => _progress = value.Clamp(0); }
+        [SerializeField] float _maxProgress; public float maxProgress { get => _maxProgress; set => _maxProgress = value.Clamp(0); }
 
 
 
