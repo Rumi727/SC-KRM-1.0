@@ -395,7 +395,7 @@ namespace SCKRM.Threads
 
     public sealed class ThreadMetaData : AsyncTask
     {
-        public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false) : base(name, info, loop)
+        public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false) : base(name, info, loop, cantCancel)
         {
             this.autoRemoveDisable = autoRemoveDisable;
             ThreadManager.runningThreads.Add(this);
