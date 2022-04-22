@@ -796,42 +796,56 @@ namespace SCKRM.Tool
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void SignRef(this ref short value)
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void SignRef(this ref int value)
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void SignRef(this ref long value)
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void SignRef(this ref float value)
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void SignRef(this ref double value)
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void SignRef(this ref decimal value)
         {
             if (value < 0)
                 value = -1;
+            else
+                value = 1;
         }
 
         public static void ClampRef(this ref byte value, byte min, byte max = byte.MaxValue)
