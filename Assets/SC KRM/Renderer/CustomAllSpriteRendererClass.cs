@@ -36,6 +36,7 @@ namespace SCKRM.Renderer
         {
 #if UNITY_EDITOR
             if (!ThreadManager.isMainThread || Application.isPlaying)
+#endif
             {
                 Sprite[] sprites = ResourceManager.SearchSprites(type, name, nameSpace);
                 if (sprites != null && index < sprites.Length)
@@ -43,8 +44,8 @@ namespace SCKRM.Renderer
 
                 return null;
             }
+#if UNITY_EDITOR
             else
-#endif
             {
                 Sprite[] sprites = await ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
                 if (sprites != null && index < sprites.Length)
@@ -52,6 +53,7 @@ namespace SCKRM.Renderer
                 else
                     return null;
             }
+#endif
         }
     }
 
