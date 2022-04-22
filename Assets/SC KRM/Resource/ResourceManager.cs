@@ -37,27 +37,27 @@ namespace SCKRM.Resource
             {
                 get
                 {
-                    if (_resourcePacks.Count > 0)
-                        _resourcePacks[0] = Kernel.streamingAssetsPath;
-                    else
-                        _resourcePacks.Insert(0, Kernel.streamingAssetsPath);
+                    if (_resourcePacks != null)
+                    {
+                        if (_resourcePacks.Count > 0)
+                            _resourcePacks[_resourcePacks.Count - 1] = Kernel.streamingAssetsPath;
+                        else
+                            _resourcePacks.Add(Kernel.streamingAssetsPath);
+                    }
 
                     return _resourcePacks;
                 }
-
                 set
                 {
-                    if (value == null)
-                    {
-                        value = new List<string>();
-                        value.Add(Kernel.streamingAssetsPath);
-                    }
-                    else if (value.Count > 0)
-                        value[0] = Kernel.streamingAssetsPath;
-                    else
-                        value.Insert(0, Kernel.streamingAssetsPath);
-
                     _resourcePacks = value;
+
+                    if (_resourcePacks != null)
+                    {
+                        if (_resourcePacks.Count > 0)
+                            _resourcePacks[_resourcePacks.Count - 1] = Kernel.streamingAssetsPath;
+                        else
+                            _resourcePacks.Add(Kernel.streamingAssetsPath);
+                    }
                 }
             }
             [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>();
@@ -323,12 +323,12 @@ namespace SCKRM.Resource
                         //타입 폴더 안의 모든 이미지를 돌아다닙니다 (타입 폴더 안의 폴더 안의... 이미지는 타입으로 취급하기 때문에 감지하지 않습니다)
                         for (int l = 0; l < paths.Count; l++)
                         {
+                            string path = paths[l].Replace("\\", "/");
+                            Texture2D texture = await GetTexture(path, true, textureMetaData);
 #if UNITY_EDITOR
                             if (!Application.isPlaying)
                                 return;
 #endif
-                            string path = paths[l].Replace("\\", "/");
-                            Texture2D texture = await GetTexture(path, true, textureMetaData);
 
                             if (textureNames.Contains(texture.name))
                                 continue;
@@ -349,6 +349,9 @@ namespace SCKRM.Resource
                                     textures.Add(texture);
                                 }
                             }
+
+                            if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                                return;
                         }
                         
                         if (!packTextureTypePaths.ContainsKey(nameSpace))
