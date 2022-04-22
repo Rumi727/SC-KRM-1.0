@@ -14,10 +14,7 @@ namespace SCKRM.SaveLoad
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class SaveLoadAttribute : Attribute
     {
-        public SaveLoadAttribute(string name = "")
-        {
 
-        }
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
