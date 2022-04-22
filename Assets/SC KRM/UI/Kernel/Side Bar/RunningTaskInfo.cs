@@ -56,6 +56,12 @@ namespace SCKRM.UI.SideBar
         [System.NonSerialized] bool pointer = false;
         void Update()
         {
+            if (asyncTask == null || asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
+            {
+                Remove();
+                return;
+            }
+
             if (!asyncTask.cantCancel)
             {
                 if (pointer || removeButtonCanvasGroup.gameObject == EventSystem.current.currentSelectedGameObject)
@@ -67,12 +73,6 @@ namespace SCKRM.UI.SideBar
             {
                 removeButtonCanvasGroup.alpha = 0;
                 removeButtonCanvasGroup.interactable = false;
-            }
-
-            if (asyncTask == null || asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
-            {
-                Remove();
-                return;
             }
 
             if (!asyncTask.loop)
