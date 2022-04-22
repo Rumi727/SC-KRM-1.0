@@ -207,6 +207,7 @@ namespace SCKRM
         public static float guiSize { get; private set; } = 1;
 
         public static bool isInitialLoadStart { get; private set; } = false;
+        public static bool isSettingLoadEnd { get; private set; } = false;
         public static bool isInitialLoadEnd { get; private set; } = false;
 
 
@@ -276,7 +277,7 @@ namespace SCKRM
 
                         for (int i = 0; i < 4; i++)
                         {
-                            if (await UniTask.WaitForEndOfFrame(AsyncTaskManager.cancel).SuppressCancellationThrow())
+                            if (await UniTask.WaitForEndOfFrame(AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                                 return;
                         }
                         
@@ -284,7 +285,7 @@ namespace SCKRM
                     }
                 }
 
-                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancel).SuppressCancellationThrow())
+                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
             }
         }
@@ -488,6 +489,8 @@ namespace SCKRM
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                         }
                     }
+
+                    isSettingLoadEnd = true;
 
                     {
                         //리소스를 로딩합니다
