@@ -85,7 +85,7 @@ namespace SCKRM.UI.Setting
             onEndEdit.Invoke();
         }
 
-        bool invokeLock = false;
+        [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
             base.Update();

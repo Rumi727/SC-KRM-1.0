@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -27,7 +28,7 @@ namespace SCKRM.UI.Setting
             onValueChanged.Invoke();
         }
 
-        bool invokeLock = false;
+        [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
             base.Update();
