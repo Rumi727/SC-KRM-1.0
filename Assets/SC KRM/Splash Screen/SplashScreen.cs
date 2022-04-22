@@ -7,12 +7,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using SCKRM.UI;
 using TMPro;
+using SCKRM.SaveLoad;
+using Newtonsoft.Json;
 
 namespace SCKRM.Splash
 {
     [AddComponentMenu("커널/스플래시/스플래시 스크린")]
     public sealed class SplashScreen : Manager<SplashScreen>
     {
+        [GeneralSaveLoad]
+        public sealed class SaveData
+        {
+            [JsonProperty] public static bool allowProgressBarShow = false;
+        }
+
         public static bool isAniPlayed { get; set; } = true;
 
 
@@ -80,6 +88,8 @@ namespace SCKRM.Splash
                         return;
                 }
 
+                await UniTask.WaitUntil(() => Kernel.isSettingLoadEnd);
+
                 canvasGroup.alpha = 1;
                 AudioSource.PlayClipAtPoint(bow, Vector3.zero);
 
@@ -89,6 +99,9 @@ namespace SCKRM.Splash
                     CS.localPosition = new Vector2(CS.localPosition.x + xV * Kernel.fpsUnscaledDeltaTime, CS.localPosition.y + yV * Kernel.fpsUnscaledDeltaTime);
                     CSImage.transform.localEulerAngles = new Vector3(CSImage.transform.localEulerAngles.x, CSImage.transform.localEulerAngles.y, CSImage.transform.localEulerAngles.z + rV * Kernel.fpsUnscaledDeltaTime);
                     yV -= 0.5f * Kernel.fpsUnscaledDeltaTime;
+
+                    if (SaveData.allowProgressBarShow)
+                        progressBarCanvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
 
                     if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
@@ -120,6 +133,9 @@ namespace SCKRM.Splash
                             else
                                 timer += Kernel.unscaledDeltaTime;
                         }
+
+                        if (SaveData.allowProgressBarShow)
+                            progressBarCanvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
 
                         if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;

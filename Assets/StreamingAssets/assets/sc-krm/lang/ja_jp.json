@@ -63,6 +63,9 @@
 	"options.input.mouseSensitivity": "マウス感度",
 	"options.input.controls": "操作設定",
 	
+	"options.advanced.title": "詳細",
+	"options.advanced.allowProgressBarShow.controls": "スタート画面に常にロードバーを表示",
+	
 	
 	
 	"pack.available.title": "사용 가능\n━━━━━━━━━",

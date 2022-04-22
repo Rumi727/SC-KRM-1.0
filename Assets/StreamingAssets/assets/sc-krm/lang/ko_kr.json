@@ -63,6 +63,9 @@
 	"options.input.mouseSensitivity": "마우스 감도",
 	"options.input.controls": "조작 설정",
 	
+	"options.advanced.title": "고급",
+	"options.advanced.allowProgressBarShow.controls": "시작 화면에 항상 로딩 바 표시",
+	
 	
 	
 	"pack.available.title": "사용 가능\n━━━━━━━━━",

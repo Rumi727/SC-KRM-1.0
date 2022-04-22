@@ -63,6 +63,9 @@
 	"options.input.mouseSensitivity": "Mouse Sensitivity",
 	"options.input.controls": "Control Settings",
 	
+	"options.advanced.title": "Advanced",
+	"options.advanced.allowProgressBarShow.controls": "Always show loading bar on splash screen",
+	
 	
 	
 	"pack.available.title": "Available\n━━━━━━━━━",
