@@ -8,7 +8,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(VerticalLayout))]
     public sealed class VerticalLayoutEditor : UIEditor
     {
-        VerticalLayout editor;
+        [System.NonSerialized] VerticalLayout editor;
         protected override void OnEnable()
         {
             base.OnEnable();

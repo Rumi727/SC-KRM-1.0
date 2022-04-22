@@ -8,7 +8,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SettingToggle))]
     public sealed class SettingToggleEditor : SettingEditor
     {
-        SettingToggle editor;
+        [System.NonSerialized] SettingToggle editor;
 
         protected override void OnEnable()
         {

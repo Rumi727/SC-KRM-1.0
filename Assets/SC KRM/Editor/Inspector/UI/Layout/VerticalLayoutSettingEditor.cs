@@ -7,7 +7,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(VerticalLayoutSetting))]
     public sealed class VerticalLayoutSettingEditor : CustomInspectorEditor
     {
-        VerticalLayoutSetting editor;
+        [System.NonSerialized] VerticalLayoutSetting editor;
 
         protected override void OnEnable()
         {

@@ -7,7 +7,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SetSizeAsTargetRectTransform))]
     public sealed class SetSizeAsTargetRectTransformEditor : UIEditor
     {
-        SetSizeAsTargetRectTransform editor;
+        [System.NonSerialized] SetSizeAsTargetRectTransform editor;
         protected override void OnEnable()
         {
             base.OnEnable();

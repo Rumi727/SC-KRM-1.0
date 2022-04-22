@@ -7,7 +7,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(UI.UI))]
     public class UIEditor : CustomInspectorEditor
     {
-        UI.UI editor;
+        [System.NonSerialized] UI.UI editor;
 
         protected override void OnEnable()
         {

@@ -8,7 +8,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SettingColorPicker))]
     public sealed class SettingColorPickerEditor : SettingEditor
     {
-        SettingColorPicker editor;
+        [System.NonSerialized] SettingColorPicker editor;
 
         protected override void OnEnable()
         {

@@ -11,7 +11,7 @@ namespace SCKRM.Editor
 {
     public class CustomInspectorEditor : UnityEditor.Editor
     {
-        bool repaint = false;
+        [System.NonSerialized] bool repaint = false;
 
         /// <summary>
         /// Please put base.OnEnable() when overriding

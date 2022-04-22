@@ -7,7 +7,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(HorizontalLayoutSetting))]
     public sealed class HorizontalLayoutSettingEditor : CustomInspectorEditor
     {
-        HorizontalLayoutSetting editor;
+        [System.NonSerialized] HorizontalLayoutSetting editor;
 
         protected override void OnEnable()
         {

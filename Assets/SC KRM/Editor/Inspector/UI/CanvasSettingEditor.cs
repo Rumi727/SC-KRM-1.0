@@ -7,7 +7,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(CanvasSetting))]
     public sealed class CanvasSettingEditor : UIEditor
     {
-        CanvasSetting editor;
+        [System.NonSerialized] CanvasSetting editor;
 
         protected override void OnEnable()
         {

@@ -9,7 +9,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SettingDisableCondition))]
     public sealed class SettingDisableConditionEditor : CustomInspectorEditor
     {
-        SettingDisableCondition editor;
+        [System.NonSerialized] SettingDisableCondition editor;
 
         protected override void OnEnable()
         {

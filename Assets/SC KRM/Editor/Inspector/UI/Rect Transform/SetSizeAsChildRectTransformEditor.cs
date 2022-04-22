@@ -8,7 +8,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SetSizeAsChildRectTransform))]
     public sealed class SetSizeAsChildRectTransformEditor : UIEditor
     {
-        SetSizeAsChildRectTransform editor;
+        [System.NonSerialized] SetSizeAsChildRectTransform editor;
         protected override void OnEnable()
         {
             base.OnEnable();

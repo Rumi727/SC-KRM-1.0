@@ -8,7 +8,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SettingInputField))]
     public class SettingInputFieldEditor : SettingEditor
     {
-        SettingInputField editor;
+        [System.NonSerialized] SettingInputField editor;
 
         protected override void OnEnable()
         {

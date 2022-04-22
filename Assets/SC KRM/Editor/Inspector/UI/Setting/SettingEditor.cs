@@ -13,7 +13,7 @@ namespace SCKRM.Editor
     {
         public static SaveLoadClass[] saveLoadClassList;
 
-        Setting editor;
+        [System.NonSerialized] Setting editor;
 
         protected override void OnEnable()
         {

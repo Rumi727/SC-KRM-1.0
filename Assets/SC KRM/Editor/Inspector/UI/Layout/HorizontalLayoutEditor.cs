@@ -8,7 +8,7 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(HorizontalLayout))]
     public sealed class HorizontalLayoutEditor : UIEditor
     {
-        HorizontalLayout editor;
+        [System.NonSerialized] HorizontalLayout editor;
         protected override void OnEnable()
         {
             base.OnEnable();

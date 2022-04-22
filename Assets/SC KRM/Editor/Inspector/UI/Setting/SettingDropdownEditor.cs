@@ -8,14 +8,6 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(SettingDropdown))]
     public sealed class SettingDropdownEditor : SettingEditor
     {
-        SettingDropdown editor;
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            editor = (SettingDropdown)target;
-        }
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
