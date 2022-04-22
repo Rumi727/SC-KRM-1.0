@@ -119,7 +119,6 @@ namespace SCKRM.Resource
 
 
 
-        static List<AudioClip> garbages = new List<AudioClip>();
         /// <summary>
         /// SoundData = allSounds[nameSpace][key];
         /// </summary>
@@ -135,6 +134,10 @@ namespace SCKRM.Resource
         /// string = allLanguages[nameSpace][language][key];
         /// </summary>
         static Dictionary<string, Dictionary<string, Dictionary<string, string>>> allLanguages { get; } = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
+
+
+
+        static List<UnityEngine.Object> garbages = new List<UnityEngine.Object>();
 
 
 
@@ -187,7 +190,7 @@ namespace SCKRM.Resource
 
                 resourceRefreshAsyncTask.progress = 1;
 
-                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
 #if UNITY_EDITOR
@@ -198,11 +201,12 @@ namespace SCKRM.Resource
                 Debug.Log("ResourceManager: Waiting for sprite to set...");
 
                 resourceRefreshDetailedAsyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.set_sprite.name", "", false, true);
+
                 await SetSprite();
 
                 resourceRefreshAsyncTask.progress = 2;
 
-                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
 #if UNITY_EDITOR
@@ -222,7 +226,7 @@ namespace SCKRM.Resource
 
                 resourceRefreshAsyncTask.progress = 3;
 
-                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
 #if UNITY_EDITOR
@@ -238,7 +242,7 @@ namespace SCKRM.Resource
 
                 resourceRefreshAsyncTask.progress = 4;
 
-                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
 #if UNITY_EDITOR
@@ -266,7 +270,7 @@ namespace SCKRM.Resource
             }
 
             resourceRefreshAsyncTask.progress = resourceRefreshAsyncTask.maxProgress;
-            resourceRefreshAsyncTask.Remove();
+            resourceRefreshAsyncTask.Remove(true);
             resourceRefreshAsyncTask = null;
 
             isResourceRefesh = false;
@@ -287,6 +291,10 @@ namespace SCKRM.Resource
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetPackTextures));
 #endif
+            foreach (var item in packTextures)
+                foreach (var item2 in item.Value)
+                    garbages.Add(item2.Value);
+
             packTextures.Clear();
             packTextureRects.Clear();
             packTexturePaths.Clear();
@@ -432,9 +440,9 @@ namespace SCKRM.Resource
 
                         if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
-
-                        resourceRefreshDetailedAsyncTask.progress++;
                     }
+
+                    resourceRefreshDetailedAsyncTask.progress++;
                 }
             }
 
@@ -504,7 +512,7 @@ namespace SCKRM.Resource
                         UnityEngine.Object.Destroy(texture);
                     }
 
-                    if (await UniTask.DelayFrame(100, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
 
                     resourceRefreshDetailedAsyncTask.progress++;
@@ -534,6 +542,11 @@ namespace SCKRM.Resource
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetSprite));
 #endif
+            foreach (var item in allTextureSprites)
+                foreach (var item2 in item.Value)
+                    foreach (var item3 in item2.Value)
+                        for (int i = 0; i < item3.Value.Length; i++)
+                            garbages.Add(item3.Value[i]);
 
             allTextureSprites.Clear();
 
@@ -683,10 +696,7 @@ namespace SCKRM.Resource
                         return null;
                     }
 
-                    ///<returns>
-                    ///(bool success, bool cancel)
-                    ///</returns>
-                    async UniTask<(bool, bool)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc) where MetaData : SoundMetaDataManager
+                    async UniTask<(bool success, bool cancel)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc) where MetaData : SoundMetaDataManager
                     {
                         if (Directory.Exists(folderPath))
                         {
@@ -785,17 +795,17 @@ namespace SCKRM.Resource
 
 
         /// <summary>
-        /// 오디오 찌꺼기를 삭제합니다
+        /// 찌꺼기를 삭제합니다
         /// delete audio garbage
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public static void AudioGarbageRemoval()
+        public static void GarbageRemoval()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetAudio));
 
             for (int i = 0; i < garbages.Count; i++)
-                UnityEngine.Object.Destroy(garbages[i]);
+                UnityEngine.Object.DestroyImmediate(garbages[i]);
 
             garbages.Clear();
         }
@@ -811,12 +821,12 @@ namespace SCKRM.Resource
 
             AsyncTask asyncTask = new AsyncTask("notice.running_task.audio_refresh.name", "", false, true);
             await SetAudio();
-            asyncTask.Remove();
+            asyncTask.Remove(true);
 
             isAudioReset = false;
 
             SoundManager.SoundRefresh();
-            AudioGarbageRemoval();
+            GarbageRemoval();
 
             for (int i = 0; i < SoundManager.soundList.Count; i++)
                 SoundManager.soundList[i].time = playersTime[i];

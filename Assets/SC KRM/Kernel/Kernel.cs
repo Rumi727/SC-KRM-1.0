@@ -308,11 +308,7 @@ namespace SCKRM
             fixedDeltaTime = 1f / Data.standardFPS;
             Time.fixedDeltaTime = fixedDeltaTime;
 
-#if UNITY_EDITOR
             Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
-#else
-            Cursor.visible = false;
-#endif
 
             //기념일
             //초기로딩이 끝나야 알림을 띄울수 있으니 조건을 걸어둡니다
@@ -424,10 +420,6 @@ namespace SCKRM
 
                     PlayerLoopSystem loop = PlayerLoop.GetCurrentPlayerLoop();
                     PlayerLoopHelper.Initialize(ref loop);
-
-#if !UNITY_EDITOR
-                    Cursor.visible = false;
-#endif
 
                     StatusBarManager.allowStatusBarShow = false;
 
@@ -603,7 +595,7 @@ namespace SCKRM
                     RendererManager.AllRerender();
 
                     SoundManager.SoundRefresh();
-                    ResourceManager.AudioGarbageRemoval();
+                    ResourceManager.GarbageRemoval();
                 }
             }
 
