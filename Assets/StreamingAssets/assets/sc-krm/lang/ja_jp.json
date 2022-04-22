@@ -59,7 +59,7 @@
 	
 	"options.input.title": "入力",
 	"options.input.highPrecisionMouse": "高精度マウス",
-	"options.input.highPrecisionMouse.warning": "高精度マウスは非常に不安定な設定です。\nそれでもオンにしますか？<size=10>\n\n</size><size=15>(Windowsのマウス感度またはハードウェアのマウス感度をゲームの設定と同様に設定することをお勧めします。)</size>",
+	"options.input.highPrecisionMouse.warning": "システムマウスのアクセラレーションを無視することは非常に不安定な設定です\nそれでもオンにしますか？<size=10>\n\n</size><size=15>(Windowsのマウス感度またはハードウェアのマウス感度をゲームの設定と同様に設定することをお勧めします。)</size>",
 	"options.input.mouseSensitivity": "マウス感度",
 	"options.input.controls": "操作設定",
 	

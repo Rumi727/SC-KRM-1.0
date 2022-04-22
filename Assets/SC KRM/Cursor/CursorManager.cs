@@ -18,7 +18,7 @@ namespace SCKRM
         [GeneralSaveLoad]
         public class SaveData
         {
-            [JsonProperty] public static bool highPrecisionMouse { get; set; } = false;
+            [JsonProperty] public static bool IgnoreMouseAcceleration { get; set; } = false;
             [JsonProperty] public static float mouseSensitivity { get; set; } = 1;
         }
 
@@ -58,8 +58,8 @@ namespace SCKRM
         protected override void OnEnable() => SingletonCheck(this);
 
 #if UNITY_STANDALONE_WIN
-        static Vector2 highPrecisionMousePos = Vector2.zero;
-        protected override void Awake() => highPrecisionMousePos = GetCursorPosition(0, 0);
+        static Vector2 IgnoreMouseAccelerationPos = Vector2.zero;
+        protected override void Awake() => IgnoreMouseAccelerationPos = GetCursorPosition(0, 0);
 #endif
 
         Vector2 dragStartMousePosition = Vector2.zero;
@@ -69,16 +69,16 @@ namespace SCKRM
             if (Kernel.isInitialLoadEnd)
             {
 #if UNITY_STANDALONE_WIN
-                if (SaveData.highPrecisionMouse && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
+                if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
                 {
-                    setCursorPosition(Mathf.RoundToInt(highPrecisionMousePos.x), Mathf.RoundToInt(highPrecisionMousePos.y), 0, 0, true);
+                    setCursorPosition(Mathf.RoundToInt(IgnoreMouseAccelerationPos.x), Mathf.RoundToInt(IgnoreMouseAccelerationPos.y), 0, 0, true);
 
                     Vector2 delta = InputManager.GetMouseDelta(false, "all", "force");
                     delta.y = -delta.y;
-                    highPrecisionMousePos += delta;
+                    IgnoreMouseAccelerationPos += delta;
                 }
                 else
-                    highPrecisionMousePos = GetCursorPosition(0, 0);
+                    IgnoreMouseAccelerationPos = GetCursorPosition(0, 0);
 #endif
 
                 #region Pos Move
@@ -126,11 +126,11 @@ namespace SCKRM
 
         public static async void HighPrecisionMouseWarning()
         {
-            if (Kernel.isInitialLoadEnd && SaveData.highPrecisionMouse)
+            if (Kernel.isInitialLoadEnd && SaveData.IgnoreMouseAcceleration)
             {
-                SaveData.highPrecisionMouse = false;
+                SaveData.IgnoreMouseAcceleration = false;
                 if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
-                    SaveData.highPrecisionMouse = true;
+                    SaveData.IgnoreMouseAcceleration = true;
             }
         }
 
@@ -201,10 +201,10 @@ namespace SCKRM
         static void setCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
 #if UNITY_STANDALONE_WIN
-            if (!SaveData.highPrecisionMouse || force)
+            if (!SaveData.IgnoreMouseAcceleration || force)
                 SetCursorPos(Mathf.RoundToInt(x + ((Screen.currentResolution.width - 1) * xDatumPoint)), Mathf.RoundToInt(y + ((Screen.currentResolution.height - 1) * yDatumPoint)));
             else
-                highPrecisionMousePos = new Vector2(x, y);
+                IgnoreMouseAccelerationPos = new Vector2(x, y);
 #else
             throw new NotImplementedException();
 #endif
@@ -222,10 +222,10 @@ namespace SCKRM
             int x2 = Mathf.RoundToInt(x + ((clientSize.x - 1) * xDatumPoint)) - offset.x;
             int y2 = Mathf.RoundToInt(y + ((clientSize.y - 1) * yDatumPoint)) - offset.y;
 
-            if (!SaveData.highPrecisionMouse || force)
+            if (!SaveData.IgnoreMouseAcceleration || force)
                 SetCursorPos(x, y);
             else
-                highPrecisionMousePos = new Vector2(x, y);
+                IgnoreMouseAccelerationPos = new Vector2(x, y);
 #else
             throw new NotImplementedException();
 #endif

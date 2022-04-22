@@ -59,7 +59,7 @@
 	
 	"options.input.title": "Input",
 	"options.input.highPrecisionMouse": "High Precision Mouse",
-	"options.input.highPrecisionMouse.warning": "A high-precision mouse is a very unstable setup.\nWould you still like to turn it on?<size=10>\n\n</size><size=15>(It is recommended to set the Windows mouse sensitivity or hardware mouse sensitivity similar to the game settings.)</size>",
+	"options.input.highPrecisionMouse.warning": "Ignoring system mouse acceleration is a very unstable setting\nWould you still like to turn it on?<size=10>\n\n</size><size=15>(It is recommended to set the Windows mouse sensitivity or hardware mouse sensitivity similar to the game settings.)</size>",
 	"options.input.mouseSensitivity": "Mouse Sensitivity",
 	"options.input.controls": "Control Settings",
 	
