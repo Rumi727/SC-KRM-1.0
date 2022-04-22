@@ -32,7 +32,34 @@ namespace SCKRM.Resource
         [GeneralSaveLoad]
         public sealed class SaveData
         {
-            [JsonProperty] public static List<string> resourcePacks { get; set; } = new List<string>() { Kernel.streamingAssetsPath };
+            static List<string> _resourcePacks = new List<string>() { Kernel.streamingAssetsPath };
+            [JsonProperty] public static List<string> resourcePacks
+            {
+                get
+                {
+                    if (_resourcePacks.Count > 0)
+                        _resourcePacks[0] = Kernel.streamingAssetsPath;
+                    else
+                        _resourcePacks.Insert(0, Kernel.streamingAssetsPath);
+
+                    return _resourcePacks;
+                }
+
+                set
+                {
+                    if (value == null)
+                    {
+                        value = new List<string>();
+                        value.Add(Kernel.streamingAssetsPath);
+                    }
+                    else if (value.Count > 0)
+                        value[0] = Kernel.streamingAssetsPath;
+                    else
+                        value.Insert(0, Kernel.streamingAssetsPath);
+
+                    _resourcePacks = value;
+                }
+            }
             [JsonProperty] public static List<string> nameSpaces { get; set; } = new List<string>();
         }
 
