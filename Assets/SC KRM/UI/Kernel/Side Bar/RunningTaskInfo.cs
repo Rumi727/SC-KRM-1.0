@@ -56,10 +56,18 @@ namespace SCKRM.UI.SideBar
         [System.NonSerialized] bool pointer = false;
         void Update()
         {
-            if (pointer || removeButtonCanvasGroup.gameObject == EventSystem.current.currentSelectedGameObject)
-                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.fpsDeltaTime);
+            if (!asyncTask.cantCancel)
+            {
+                if (pointer || removeButtonCanvasGroup.gameObject == EventSystem.current.currentSelectedGameObject)
+                    removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.fpsDeltaTime);
+                else
+                    removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsDeltaTime);
+            }
             else
-                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsDeltaTime);
+            {
+                removeButtonCanvasGroup.alpha = 0;
+                removeButtonCanvasGroup.interactable = false;
+            }
 
             if (asyncTask == null || asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
             {
