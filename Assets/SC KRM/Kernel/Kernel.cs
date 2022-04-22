@@ -355,8 +355,8 @@ namespace SCKRM
             float defaultGuiSize = (float)Screen.width / 1920;
 
             //변수들의 최소, 최대 수치를 지정합니다
-            Data.standardFPS = Kernel.Data.standardFPS.Clamp(0);
-            Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(0);
+            Data.standardFPS = Data.standardFPS.Clamp(0);
+            Data.notFocusFpsLimit = Data.notFocusFpsLimit.Clamp(0);
 
             SaveData.mainVolume = SaveData.mainVolume.Clamp(0, 200);
             SaveData.bgmVolume = SaveData.bgmVolume.Clamp(0, 200);
