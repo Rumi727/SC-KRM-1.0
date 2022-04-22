@@ -1,4 +1,3 @@
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
@@ -66,6 +65,7 @@ namespace SCKRM.Threads
             }
         }
 
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
         #region Thread Create Method
         public static ThreadMetaData Create(Action method, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false)
         {
@@ -391,6 +391,7 @@ namespace SCKRM.Threads
             return threadMetaData;
         }
         #endregion
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
     }
 
     public sealed class ThreadMetaData : AsyncTask
@@ -401,8 +402,8 @@ namespace SCKRM.Threads
             ThreadManager.runningThreads.Add(this);
         }
 
-        public Thread thread { get; set; } = null;
-        public bool autoRemoveDisable { get; } = false;
+        public Thread thread { get; [Obsolete("It is managed by the ThreadManager class. Please do not touch it.", false)] internal set; } = null;
+        public bool autoRemoveDisable { get; set; } = false;
 
         /// <summary>
         /// 이 함수는 메인 스레드에서만 실행할수 있습니다
@@ -424,7 +425,9 @@ namespace SCKRM.Threads
             if (thread != null)
             {
                 Thread _thread = thread;
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                 thread = null;
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                 _thread.Abort();
             }
         }
@@ -469,4 +472,3 @@ namespace SCKRM.Threads
         public NotPlayModeThreadCreateException() : base("It is forbidden to spawn threads when not in play mode. Please create your own thread\n플레이 모드가 아닐때 스레드를 생성하는건 금지되어있습니다. 직접 스레드를 생성해주세요") { }
     }
 }
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
