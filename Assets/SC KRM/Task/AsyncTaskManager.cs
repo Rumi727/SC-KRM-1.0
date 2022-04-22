@@ -78,12 +78,12 @@ namespace SCKRM
         /// This function can only be executed on the main thread
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public virtual void Remove()
+        public virtual void Remove(bool force = false)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
 
-            if (!cantCancel)
+            if (!cantCancel || force)
             {
                 AsyncTaskManager.asyncTasks.Remove(this);
 

@@ -410,25 +410,28 @@ namespace SCKRM.Threads
         /// This function can only be executed on the main thread
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public override void Remove()
+        public override void Remove(bool force)
         {
             base.Remove();
 
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
 
-            ThreadManager.runningThreads.Remove(this);
-
-            ThreadManager.ThreadChangeEventInvoke();
-            ThreadManager.ThreadRemoveEventInvoke();
-
-            if (thread != null)
+            if (!cantCancel || force)
             {
-                Thread _thread = thread;
+                ThreadManager.runningThreads.Remove(this);
+
+                ThreadManager.ThreadChangeEventInvoke();
+                ThreadManager.ThreadRemoveEventInvoke();
+
+                if (thread != null)
+                {
+                    Thread _thread = thread;
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                thread = null;
+                    thread = null;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                _thread.Abort();
+                    _thread.Abort();
+                }
             }
         }
     }
