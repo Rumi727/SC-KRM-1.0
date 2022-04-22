@@ -87,12 +87,14 @@
 	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
 	
 	"notice.running_task.resource_pack_refresh.name": "リソースパックの更新",
+	"notice.running_task.resource_pack_refresh_set_pack_textures.name": "リソースパックの更新（テクスチャマージ）",
+	"notice.running_task.resource_pack_refresh_set_sprite.name": "リソースパックの更新（スプライト設定）",
+	"notice.running_task.resource_pack_refresh_set_audio.name": "リソースパックの更新（オーディオ設定）",
+	"notice.running_task.resource_pack_refresh_set_language.name": "リソースパックの更新（言語設定）",
 	
 	"notice.running_task.rerender.name": "レンダラーの更新",
 	
 	"notice.running_task.audio_refresh.name": "オーディオリロード",
-	
-	"notice.running_task.language_refresh.name": "言語の更新",
 	
 	
 	

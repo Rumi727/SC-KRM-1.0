@@ -20,7 +20,8 @@ namespace SCKRM.UI
         public RectTransform fillShow => _fillShow;
 
 
-        [System.NonSerialized] bool noResponse = false;
+        public bool allowNoResponse { get; set; } = true;
+        public bool isNoResponse { get; private set; } = false;
 
         [System.NonSerialized] float loopValue = 0;
         [System.NonSerialized] float tempProgress = 0;
@@ -30,17 +31,17 @@ namespace SCKRM.UI
 
         void Update()
         {
-            if (tempTimer >= 1)
+            if (tempTimer >= 1 && allowNoResponse && progress < maxProgress)
             {
                 if (slider.enabled)
                     slider.enabled = false;
 
-                if (!noResponse)
+                if (!isNoResponse)
                 {
                     tempMinX = fillShow.anchorMin.x - (loopValue - 0.25f).Clamp01();
                     tempMaxX = fillShow.anchorMax.x - loopValue.Clamp01();
 
-                    noResponse = true;
+                    isNoResponse = true;
                 }
 
                 loopValue += 0.0125f * Kernel.fpsUnscaledDeltaTime;
@@ -59,7 +60,7 @@ namespace SCKRM.UI
                 if (!slider.enabled)
                     slider.enabled = true;
 
-                noResponse = false;
+                isNoResponse = false;
 
                 slider.value = progress;
                 slider.maxValue = maxProgress;
@@ -80,7 +81,7 @@ namespace SCKRM.UI
         public void Initialize()
         {
             loopValue = 0;
-            noResponse = false;
+            isNoResponse = false;
             tempProgress = 0;
             tempTimer = 0;
             tempMinX = 0;

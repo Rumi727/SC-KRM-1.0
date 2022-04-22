@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SCKRM.UI;
+using TMPro;
 
 namespace SCKRM.Splash
 {
@@ -13,10 +14,17 @@ namespace SCKRM.Splash
     public sealed class SplashScreen : Manager<SplashScreen>
     {
         public static bool isAniPlayed { get; set; } = true;
-        [SerializeField] Image LogoImage;
+
+
+
+        [SerializeField] CanvasGroup progressBarCanvasGroup;
+        [SerializeField] ProgressBar progressBar;
+        [SerializeField] ProgressBar progressBarDetailed;
+
+        [SerializeField] CanvasGroup canvasGroup;
+        [SerializeField] Transform CSImage;
         [SerializeField] Transform CS;
-        [SerializeField] Image CSImage;
-        [SerializeField] Text text;
+        [SerializeField] TMP_Text text;
         [SerializeField] string showText = "";
 
         float xV;
@@ -24,11 +32,6 @@ namespace SCKRM.Splash
         float rV;
 
         bool xFlip = false;
-        bool aniEnd = false;
-
-        float timer = 0;
-
-        bool aniPlay = false;
 
         AudioClip bow;
         AudioClip drawmap;
@@ -38,15 +41,16 @@ namespace SCKRM.Splash
             if (SingletonCheck(this))
             {
                 isAniPlayed = true;
-                aniPlay = false;
+
+                canvasGroup.alpha = 0;
+                progressBarCanvasGroup.alpha = 0;
+                progressBar.allowNoResponse = false;
 
                 bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
                 drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
 
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (await UniTask.DelayFrame(10, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
-#endif
 
                 if (Random.Range(0, 2) == 1)
                     xFlip = true;
@@ -68,95 +72,86 @@ namespace SCKRM.Splash
 
                 yV = Random.Range(8f, 15f);
 
-                timer = 0;
-                aniEnd = false;
+                //페이드 인
+                while (canvasGroup.alpha < 1)
+                {
+                    canvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
+                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        return;
+                }
 
-                aniPlay = true;
-                if (await UniTask.WaitUntil(() => alpha >= 1, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
-                    return;
-
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                    return;
-#endif
-
+                canvasGroup.alpha = 1;
                 AudioSource.PlayClipAtPoint(bow, Vector3.zero);
+
+                //C# 던지기
+                while (!((CS.localPosition.x >= -75 && CS.localPosition.x <= 75 && CS.localPosition.y >= -75 && CS.localPosition.y <= 75) || (xFlip && (CS.localPosition.x <= -500 || CS.localPosition.y <= -300)) || (!xFlip && (CS.localPosition.x >= 500 || CS.localPosition.y <= -300))))
+                {
+                    CS.localPosition = new Vector2(CS.localPosition.x + xV * Kernel.fpsUnscaledDeltaTime, CS.localPosition.y + yV * Kernel.fpsUnscaledDeltaTime);
+                    CSImage.transform.localEulerAngles = new Vector3(CSImage.transform.localEulerAngles.x, CSImage.transform.localEulerAngles.y, CSImage.transform.localEulerAngles.z + rV * Kernel.fpsUnscaledDeltaTime);
+                    yV -= 0.5f * Kernel.fpsUnscaledDeltaTime;
+
+                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        return;
+                }
+
+                text.rectTransform.anchoredPosition = new Vector3(0, -13);
+                text.text = showText;
+
+                AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
+
+                //페이드 아웃
+                {
+                    float timer = 0;
+                    while (canvasGroup.alpha > 0)
+                    {
+                        text.rectTransform.anchoredPosition = text.rectTransform.anchoredPosition.Lerp(Vector3.zero, 0.1f * Kernel.fpsUnscaledDeltaTime);
+                        CSImage.transform.rotation = Quaternion.Lerp(CSImage.transform.rotation, Quaternion.Euler(Vector3.zero), 0.1f * Kernel.fpsUnscaledDeltaTime);
+                        CS.localPosition = CS.localPosition.Lerp(new Vector3(24, -24), 0.1f * Kernel.fpsUnscaledDeltaTime);
+
+                        if (timer >= 2 && Kernel.isInitialLoadEnd)
+                            canvasGroup.alpha -= 0.05f * Kernel.fpsUnscaledDeltaTime;
+                        else
+                        {
+                            if (timer >= 3)
+                            {
+                                text.text = "Please wait...";
+                                progressBarCanvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
+                            }
+                            else
+                                timer += Kernel.unscaledDeltaTime;
+                        }
+
+                        if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
+                    }
+                }
+
+                isAniPlayed = false;
             }
         }
 
-        float alpha = 0;
         void Update()
         {
-            if (!aniPlay)
-                return;
-
-            if (alpha < 1 && !aniEnd)
+            if (ResourceManager.resourceRefreshAsyncTask != null)
             {
-                LogoImage.color = new Color(1, 1, 1, alpha);
-                CSImage.color = new Color(1, 1, 1, alpha);
-                text.color = new Color(1, 1, 1, alpha);
-                alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
-
-                return;
-            }
-
-            if (aniEnd)
-            {
-                text.rectTransform.anchoredPosition = text.rectTransform.anchoredPosition.Lerp(Vector3.zero, 0.1f * Kernel.fpsUnscaledDeltaTime);
-                CSImage.transform.rotation = Quaternion.Lerp(CSImage.transform.rotation, Quaternion.Euler(Vector3.zero), 0.1f * Kernel.fpsUnscaledDeltaTime);
-                CS.localPosition = CS.localPosition.Lerp(new Vector3(24, -24), 0.1f * Kernel.fpsUnscaledDeltaTime);
-
-                if (timer >= 2)
-                {
-                    LogoImage.color = new Color(1, 1, 1, alpha);
-                    CSImage.color = new Color(1, 1, 1, alpha);
-                    text.color = new Color(1, 1, 1, alpha);
-                    alpha -= 0.05f * Kernel.fpsUnscaledDeltaTime;
-
-                    if (alpha < 0)
-                        isAniPlayed = false;
-                }
-                else
-                    timer += Kernel.unscaledDeltaTime;
+                progressBar.progress = ResourceManager.resourceRefreshAsyncTask.progress;
+                progressBar.maxProgress = ResourceManager.resourceRefreshAsyncTask.maxProgress;
             }
             else
             {
-                LogoImage.color = Color.white;
-                CSImage.color = Color.white;
-                text.color = Color.white;
-                alpha = 1;
+                progressBar.progress = 1;
+                progressBar.maxProgress = 1;
+            }
 
-                CS.localPosition = new Vector2(CS.localPosition.x + xV * Kernel.fpsUnscaledDeltaTime, CS.localPosition.y + yV * Kernel.fpsUnscaledDeltaTime);
-                CSImage.transform.localEulerAngles = new Vector3(CSImage.transform.localEulerAngles.x, CSImage.transform.localEulerAngles.y, CSImage.transform.localEulerAngles.z + rV * Kernel.fpsUnscaledDeltaTime);
-                yV -= 0.5f * Kernel.fpsUnscaledDeltaTime;
-
-                if (CS.localPosition.x >= -75 && CS.localPosition.x <= 75 && CS.localPosition.y >= -75 && CS.localPosition.y <= 75)
-                {
-                    text.rectTransform.anchoredPosition = new Vector3(0, -13);
-                    text.text = showText;
-
-                    AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
-
-                    aniEnd = true;
-                }
-                else if (xFlip && (CS.localPosition.x <= -500 || CS.localPosition.y <= -300))
-                {
-                    text.rectTransform.anchoredPosition = new Vector3(0, -13);
-                    text.text = showText;
-
-                    AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
-
-                    aniEnd = true;
-                }
-                else if (!xFlip && (CS.localPosition.x >= 500 || CS.localPosition.y <= -300))
-                {
-                    text.rectTransform.anchoredPosition = new Vector3(0, -13);
-                    text.text = showText;
-
-                    AudioSource.PlayClipAtPoint(drawmap, Vector3.zero);
-
-                    aniEnd = true;
-                }
+            if (ResourceManager.resourceRefreshDetailedAsyncTask != null)
+            {
+                progressBarDetailed.progress = ResourceManager.resourceRefreshDetailedAsyncTask.progress;
+                progressBarDetailed.maxProgress = ResourceManager.resourceRefreshDetailedAsyncTask.maxProgress;
+            }
+            else
+            {
+                progressBarDetailed.progress = 1;
+                progressBarDetailed.maxProgress = 1;
             }
         }
     }

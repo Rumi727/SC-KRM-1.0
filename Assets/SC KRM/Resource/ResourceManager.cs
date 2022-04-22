@@ -145,6 +145,11 @@ namespace SCKRM.Resource
         public static bool isInitialLoadLanguageEnd { get; private set; } = false;
         public static bool isResourceRefesh { get; private set; } = false;
 
+
+
+        public static AsyncTask resourceRefreshAsyncTask = null;
+        public static AsyncTask resourceRefreshDetailedAsyncTask = null;
+
         /// <summary>
         /// 리소스 새로고침 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Resource refresh (Since the Unity API is used, we need to run it on the main thread)
@@ -167,52 +172,80 @@ namespace SCKRM.Resource
 
             isResourceRefesh = true;
 
-            AsyncTask asyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.name");
-            asyncTask.maxProgress = 4;
+            resourceRefreshAsyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.name", "", false, true);
+            resourceRefreshAsyncTask.progress = 0;
+            resourceRefreshAsyncTask.maxProgress = 4;
 
             try
             {
                 Debug.Log("ResourceManager: Resource refresh start!");
                 Debug.Log("ResourceManager: Waiting for pack textures to set...");
+                
+                resourceRefreshDetailedAsyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.set_pack_textures.name", "", false, true);
+
                 await SetPackTextures();
 
+                resourceRefreshAsyncTask.progress = 1;
+
+                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask = null;
+
 #if UNITY_EDITOR
                 if (!Application.isPlaying)
                     return;
 #endif
 
-                asyncTask.progress = 1;
                 Debug.Log("ResourceManager: Waiting for sprite to set...");
+
+                resourceRefreshDetailedAsyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.set_sprite.name", "", false, true);
                 await SetSprite();
 
+                resourceRefreshAsyncTask.progress = 2;
+
+                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask = null;
+
 #if UNITY_EDITOR
                 if (!Application.isPlaying)
                     return;
 #endif
 
-                asyncTask.progress = 2;
                 Debug.Log("ResourceManager: Waiting for language to set...");
-                ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_task.language_refresh.name");
+
+                ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_taskresource_pack_refresh.set_language.name");
+                resourceRefreshDetailedAsyncTask = threadMetaData2;
+
                 if (await UniTask.WaitUntil(() => threadMetaData2.thread == null, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
 
                 isInitialLoadLanguageEnd = true;
 
+                resourceRefreshAsyncTask.progress = 3;
+
+                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask = null;
+
 #if UNITY_EDITOR
                 if (!Application.isPlaying)
                     return;
 #endif
 
-                asyncTask.progress = 3;
                 Debug.Log("ResourceManager: Waiting for audio to set...");
+
+                resourceRefreshDetailedAsyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.set_audio.name", "", false, true);
+
                 await SetAudio();
 
+                resourceRefreshAsyncTask.progress = 4;
+
+                resourceRefreshDetailedAsyncTask.Remove();
+                resourceRefreshDetailedAsyncTask = null;
+
 #if UNITY_EDITOR
                 if (!Application.isPlaying)
                     return;
 #endif
 
-                asyncTask.progress = 4;
                 Debug.Log("ResourceManager: Resource refresh finished!");
             }
             catch (Exception e)
@@ -232,7 +265,10 @@ namespace SCKRM.Resource
                 }
             }
 
-            asyncTask.Remove();
+            resourceRefreshAsyncTask.progress = resourceRefreshAsyncTask.maxProgress;
+            resourceRefreshAsyncTask.Remove();
+            resourceRefreshAsyncTask = null;
+
             isResourceRefesh = false;
         }
 
@@ -258,14 +294,16 @@ namespace SCKRM.Resource
             Dictionary<string, Dictionary<string, Texture2D[]>> nameSpace_type_textures = new Dictionary<string, Dictionary<string, Texture2D[]>>();
             Dictionary<string, Dictionary<string, List<string>>> nameSpace_type_textureNames = new Dictionary<string, Dictionary<string, List<string>>>();
 
+            resourceRefreshDetailedAsyncTask.maxProgress = SaveData.resourcePacks.Count * nameSpaces.Count;
+
             //모든 리소스팩을 돌아다닙니다
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
                 string resourcePack = SaveData.resourcePacks[i];
                 //연결된 네임스페이스를 돌아다닙니다 (리소스팩에 있는 네임스페이스를 감지하지 않습니다!)
-                for (int j = 0; j < Data.nameSpaces.Count; j++)
+                for (int j = 0; j < nameSpaces.Count; j++)
                 {
-                    string nameSpace = Data.nameSpaces[j];
+                    string nameSpace = nameSpaces[j];
                     string resourcePackTexturePath = PathTool.Combine(resourcePack, texturePath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(resourcePackTexturePath))
@@ -350,9 +388,6 @@ namespace SCKRM.Resource
                                     textures.Add(texture);
                                 }
                             }
-
-                            if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                                return;
                         }
                         
                         if (!packTextureTypePaths.ContainsKey(nameSpace))
@@ -392,9 +427,23 @@ namespace SCKRM.Resource
                             nameSpace_type_textures[nameSpace].Add(type, textures.ToArray());
                         else
                             nameSpace_type_textures[nameSpace][type] = nameSpace_type_textures[nameSpace][type].Concat(textures).ToArray();
+
+
+
+                        if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
+
+                        resourceRefreshDetailedAsyncTask.progress++;
                     }
                 }
             }
+
+
+
+            resourceRefreshDetailedAsyncTask.progress = 0;
+            resourceRefreshDetailedAsyncTask.maxProgress = 0;
+            foreach (var nameSpace in nameSpace_type_textures)
+                resourceRefreshDetailedAsyncTask.maxProgress += nameSpace.Value.Count;
 
             foreach (var nameSpace in nameSpace_type_textures)
             {
@@ -406,7 +455,6 @@ namespace SCKRM.Resource
                     if (!Application.isPlaying)
                         return;
 #endif
-
                     Texture2D[] textures = type.Value;
                     Texture2D[] textures2 = new Texture2D[textures.Length];
                     string[] textureNames = new string[textures.Length];
@@ -456,8 +504,10 @@ namespace SCKRM.Resource
                         UnityEngine.Object.Destroy(texture);
                     }
 
-                    if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                    if (await UniTask.DelayFrame(100, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
+
+                    resourceRefreshDetailedAsyncTask.progress++;
                 }
                 /*allTextureRects*/ packTextureRects.Add(nameSpace.Key, type_fileName);
                 /*allTextures*/ packTextures.Add(nameSpace.Key, type_texture);
@@ -486,6 +536,10 @@ namespace SCKRM.Resource
 #endif
 
             allTextureSprites.Clear();
+
+            foreach (var nameSpace in packTextureRects)
+                foreach (var type in nameSpace.Value)
+                    resourceRefreshDetailedAsyncTask.maxProgress += type.Value.Count;
 
             foreach (var nameSpace in packTextureRects)
             {
@@ -536,6 +590,8 @@ namespace SCKRM.Resource
 
                         if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
+
+                        resourceRefreshDetailedAsyncTask.progress++;
                     }
                 }
             }
@@ -569,7 +625,7 @@ namespace SCKRM.Resource
             }
 
             allSounds.Clear();
-
+            resourceRefreshDetailedAsyncTask.maxProgress = SaveData.resourcePacks.Count * nameSpaces.Count;
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
                 string resourcePack = SaveData.resourcePacks[i];
@@ -581,13 +637,19 @@ namespace SCKRM.Resource
                     
                     (bool success, bool cancel) = await TryGetSoundData(soundFolderPath, allSounds, soundMetaDataCreateFunc);
                     if (!success && !cancel)
+                    {
+                        resourceRefreshDetailedAsyncTask.progress++;
                         continue;
+                    }
                     else if (cancel)
                         return;
                     
                     (success, cancel) = await TryGetSoundData(nbsFolderPath, allNBS, nbsMetaDataCreateFunc);
                     if (!success && !cancel)
+                    {
+                        resourceRefreshDetailedAsyncTask.progress++;
                         continue;
+                    }
                     else if (cancel)
                         return;
 
@@ -747,7 +809,7 @@ namespace SCKRM.Resource
 
             AudioSettings.Reset(AudioSettings.GetConfiguration());
 
-            AsyncTask asyncTask = new AsyncTask("notice.running_task.audio_refresh.name", "");
+            AsyncTask asyncTask = new AsyncTask("notice.running_task.audio_refresh.name", "", false, true);
             await SetAudio();
             asyncTask.Remove();
 

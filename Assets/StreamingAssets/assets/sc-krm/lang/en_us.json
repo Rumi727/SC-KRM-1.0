@@ -87,12 +87,14 @@
 	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
 	
 	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
+	"notice.running_task.resource_pack_refresh_set_pack_textures.name": "Refresh resource pack (Merging textures)",
+	"notice.running_task.resource_pack_refresh_set_sprite.name": "Refresh resource pack (Sprite settings)",
+	"notice.running_task.resource_pack_refresh_set_audio.name": "Refresh resource pack (Audio settings)",
+	"notice.running_task.resource_pack_refresh_set_language.name": "Refresh resource pack (Audio settings)",
 	
 	"notice.running_task.rerender.name": "Refresh renderer",
 	
 	"notice.running_task.audio_refresh.name": "Refresh audio",
-	
-	"notice.running_task.language_refresh.name": "Refresh language",
 	
 	
 	
