@@ -16,7 +16,7 @@ namespace SCKRM
     public class CursorManager : ManagerUI<CursorManager>
     {
         [GeneralSaveLoad]
-        public class SaveData
+        public sealed class SaveData
         {
             [JsonProperty] public static bool IgnoreMouseAcceleration { get; set; } = false;
             [JsonProperty] public static float mouseSensitivity { get; set; } = 1;
