@@ -22,12 +22,7 @@ namespace SCKRM
             [JsonProperty] public static float mouseSensitivity { get; set; } = 1;
         }
 
-
-
-        public static Vector2 highPrecisionMousePos { get; set; } = Vector2.zero;
-
-        static bool _visible = true;
-        public static bool visible
+        static bool _visible = true; public static bool visible
         {
             get => _visible;
             set
@@ -62,11 +57,10 @@ namespace SCKRM
 
         protected override void OnEnable() => SingletonCheck(this);
 
-        protected override void Awake()
-        {
-            Vector2Int pos = GetCursorPosition(0, 1);
-            highPrecisionMousePos = new Vector2Int(pos.x, Mathf.RoundToInt(Screen.currentResolution.height - pos.y));
-        }
+#if UNITY_STANDALONE_WIN
+        static Vector2 highPrecisionMousePos = Vector2.zero;
+        protected override void Awake() => highPrecisionMousePos = GetCursorPosition(0, 0);
+#endif
 
         Vector2 dragStartMousePosition = Vector2.zero;
         bool dragStart = false;
@@ -74,16 +68,18 @@ namespace SCKRM
         {
             if (Kernel.isInitialLoadEnd)
             {
+#if UNITY_STANDALONE_WIN
                 if (SaveData.highPrecisionMouse && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
                 {
-                    SetCursorPosition(Mathf.RoundToInt(highPrecisionMousePos.x), Mathf.RoundToInt(Screen.currentResolution.height - highPrecisionMousePos.y), 0, 1);
-                    highPrecisionMousePos += InputManager.GetMouseDelta(false, "all", "force");
+                    setCursorPosition(Mathf.RoundToInt(highPrecisionMousePos.x), Mathf.RoundToInt(highPrecisionMousePos.y), 0, 0, true);
+
+                    Vector2 delta = InputManager.GetMouseDelta(false, "all", "force");
+                    delta.y = -delta.y;
+                    highPrecisionMousePos += delta;
                 }
                 else
-                {
-                    Vector2Int pos = GetCursorPosition(0, 1);
-                    highPrecisionMousePos = new Vector2Int(pos.x, Mathf.RoundToInt(Screen.currentResolution.height - pos.y));
-                }
+                    highPrecisionMousePos = GetCursorPosition(0, 0);
+#endif
 
                 #region Pos Move
                 if (graphic.enabled != visible)
@@ -200,17 +196,36 @@ namespace SCKRM
 
         public static void SetCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
         public static void SetCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
-        public static void SetCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => SetCursorPos(Mathf.RoundToInt(x + ((Screen.currentResolution.width - 1) * xDatumPoint)), Mathf.RoundToInt(y + ((Screen.currentResolution.height - 1) * yDatumPoint)));
+        public static void SetCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
+
+        static void setCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
+        {
+#if UNITY_STANDALONE_WIN
+            if (!SaveData.highPrecisionMouse || force)
+                SetCursorPos(Mathf.RoundToInt(x + ((Screen.currentResolution.width - 1) * xDatumPoint)), Mathf.RoundToInt(y + ((Screen.currentResolution.height - 1) * yDatumPoint)));
+            else
+                highPrecisionMousePos = new Vector2(x, y);
+#else
+            throw new NotImplementedException();
+#endif
+        }
 
         public static void SetClientCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
         public static void SetClientCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
-        public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0)
+        public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setClientCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
+        public static void setClientCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
 #if UNITY_STANDALONE_WIN
             Vector2Int clientSize = WindowManager.GetClientSize();
             Vector2 border = (Vector2)(WindowManager.GetWindowSize() - clientSize) * 0.5f;
             Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int(Mathf.RoundToInt(border.x), Mathf.RoundToInt(border.y));
-            SetCursorPos(Mathf.RoundToInt(x + ((clientSize.x - 1) * xDatumPoint)) - offset.x, Mathf.RoundToInt(y + ((clientSize.y - 1) * yDatumPoint)) - offset.y);
+            int x2 = Mathf.RoundToInt(x + ((clientSize.x - 1) * xDatumPoint)) - offset.x;
+            int y2 = Mathf.RoundToInt(y + ((clientSize.y - 1) * yDatumPoint)) - offset.y;
+
+            if (!SaveData.highPrecisionMouse || force)
+                SetCursorPos(x, y);
+            else
+                highPrecisionMousePos = new Vector2(x, y);
 #else
             throw new NotImplementedException();
 #endif
