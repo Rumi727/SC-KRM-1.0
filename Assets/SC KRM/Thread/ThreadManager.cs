@@ -410,7 +410,7 @@ namespace SCKRM.Threads
         /// This function can only be executed on the main thread
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public override void Remove(bool force)
+        public override void Remove(bool force = false)
         {
             base.Remove();
 
