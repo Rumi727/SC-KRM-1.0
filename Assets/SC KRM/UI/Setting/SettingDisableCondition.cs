@@ -31,7 +31,7 @@ namespace SCKRM.UI.Setting
 
         protected override void Update()
         {
-            if (Kernel.isInitialLoadEnd)
+            if (Kernel.isInitialLoadEnd && isLoad)
             {
                 if ((bool)GetValue())
                 {

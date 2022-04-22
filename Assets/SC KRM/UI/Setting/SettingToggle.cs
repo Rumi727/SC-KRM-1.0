@@ -33,7 +33,7 @@ namespace SCKRM.UI.Setting
         {
             base.Update();
 
-            if (!Kernel.isInitialLoadEnd || variableType != VariableType.Bool)
+            if (!Kernel.isInitialLoadEnd || !isLoad || variableType != VariableType.Bool)
                 return;
 
             bool value = (bool)GetValue();

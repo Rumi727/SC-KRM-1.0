@@ -36,6 +36,9 @@ namespace SCKRM.UI.Setting
         [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
+            if (!Kernel.isInitialLoadEnd || !isLoad)
+                return;
+
             base.Update();
 
             if (variableType == VariableType.JColor)

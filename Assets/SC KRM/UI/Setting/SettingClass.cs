@@ -54,15 +54,11 @@ namespace SCKRM.UI.Setting
         }
 
         /// <returns>is Cancel?</returns>
+        protected bool isLoad { get; private set; } = false;
         new protected virtual async UniTask<bool> Awake()
         {
-            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, cancellationToken: this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;
-
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-                return true;
-#endif
 
             foreach (var variableType in SaveLoadManager.generalSLCList)
             {
@@ -129,11 +125,15 @@ namespace SCKRM.UI.Setting
             else if (type == typeof(JColor32))
                 variableType = VariableType.JColor32;
 
+            isLoad = true;
             return false;
         }
 
         protected virtual void Update()
         {
+            if (!Kernel.isInitialLoadEnd || !isLoad)
+                return;
+
             if (isDefault)
             {
                 resetButton.interactable = false;

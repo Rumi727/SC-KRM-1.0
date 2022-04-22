@@ -90,7 +90,7 @@ namespace SCKRM.UI.Setting
         {
             base.Update();
 
-            if (Kernel.isInitialLoadEnd && !inputField.isFocused)
+            if (Kernel.isInitialLoadEnd && isLoad && !inputField.isFocused)
             {
                 string value = GetValue().ToString();
 
