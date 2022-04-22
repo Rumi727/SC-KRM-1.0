@@ -8,8 +8,10 @@ namespace SCKRM
 {
     public class ProgressBar : MonoBehaviour
     {
-        [System.NonSerialized] float _progress;
-        public float progress { get => _progress; set => _progress = value.Clamp01(); }
+        [System.NonSerialized] float _progress; public float progress { get => _progress; set => _progress = value.Clamp(0); }
+        [System.NonSerialized] float _maxProgress; public float maxProgress { get => _maxProgress; set => _maxProgress = value.Clamp(0); }
+
+
 
         [SerializeField] Slider _slider;
         public Slider slider => _slider;
@@ -60,6 +62,8 @@ namespace SCKRM
                 noResponse = false;
 
                 slider.value = progress;
+                slider.maxValue = maxProgress;
+
                 fillShow.anchorMin = fillShow.anchorMin.Lerp(slider.fillRect.anchorMin, 0.2f * Kernel.fpsUnscaledDeltaTime);
                 fillShow.anchorMax = fillShow.anchorMax.Lerp(slider.fillRect.anchorMax, 0.2f * Kernel.fpsUnscaledDeltaTime);
 

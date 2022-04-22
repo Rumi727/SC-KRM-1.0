@@ -67,10 +67,8 @@ namespace SCKRM
         public bool loop { get; }
         public bool cantCancel { get; }
 
-        /// <summary>
-        /// 0.0 - 1.0
-        /// </summary>
         public float progress { get; set; }
+        public float maxProgress { get; set; }
 
         readonly CancellationTokenSource _cancel = new CancellationTokenSource();
         public CancellationToken cancel => _cancel.Token;

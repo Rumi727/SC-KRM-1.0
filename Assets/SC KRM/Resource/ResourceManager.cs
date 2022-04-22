@@ -168,6 +168,7 @@ namespace SCKRM.Resource
             isResourceRefesh = true;
 
             AsyncTask asyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.name");
+            asyncTask.maxProgress = 4;
 
             try
             {
@@ -180,7 +181,7 @@ namespace SCKRM.Resource
                     return;
 #endif
 
-                asyncTask.progress = 1f / 4f;
+                asyncTask.progress = 1;
                 Debug.Log("ResourceManager: Waiting for sprite to set...");
                 await SetSprite();
 
@@ -189,7 +190,7 @@ namespace SCKRM.Resource
                     return;
 #endif
 
-                asyncTask.progress = 2f / 4f;
+                asyncTask.progress = 2;
                 Debug.Log("ResourceManager: Waiting for language to set...");
                 ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_task.language_refresh.name");
                 if (await UniTask.WaitUntil(() => threadMetaData2.thread == null, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
@@ -202,7 +203,7 @@ namespace SCKRM.Resource
                     return;
 #endif
 
-                asyncTask.progress = 3f / 4f;
+                asyncTask.progress = 3;
                 Debug.Log("ResourceManager: Waiting for audio to set...");
                 await SetAudio();
 
@@ -211,7 +212,7 @@ namespace SCKRM.Resource
                     return;
 #endif
 
-                asyncTask.progress = 1;
+                asyncTask.progress = 4;
                 Debug.Log("ResourceManager: Resource refresh finished!");
             }
             catch (Exception e)
@@ -676,11 +677,12 @@ namespace SCKRM.Resource
             if (ThreadManager.isMainThread && !Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetLanguage));
 #endif
-
             allLanguages.Clear();
 
-            int l = 0;
             LanguageManager.Language[] languages = LanguageManager.GetLanguages();
+            threadMetaData.maxProgress = SaveData.resourcePacks.Count * nameSpaces.Count * languages.Length;
+
+            int l = 0;
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
             {
                 string resourcePack = SaveData.resourcePacks[i];
@@ -689,7 +691,7 @@ namespace SCKRM.Resource
                     string nameSpace = nameSpaces[j];
                     for (int k = 0; k < languages.Length; k++)
                     {
-                        threadMetaData.progress = l / (float)(SaveData.resourcePacks.Count * nameSpaces.Count * languages.Length);
+                        threadMetaData.progress = l;
                         l++;
 
                         LanguageManager.Language language = languages[k];

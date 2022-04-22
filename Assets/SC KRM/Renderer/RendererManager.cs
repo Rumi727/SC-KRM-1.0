@@ -45,8 +45,7 @@ namespace SCKRM.Renderer
 
         static void Rerender(CustomAllRenderer[] customRenderers, ThreadMetaData threadMetaData)
         {
-            if (customRenderers.Length == 0)
-                threadMetaData.progress = 1;
+            threadMetaData.maxProgress = customRenderers.Length - 1;
 
             for (int i = 0; i < customRenderers.Length; i++)
             {
@@ -54,7 +53,7 @@ namespace SCKRM.Renderer
                 //customRenderer.Clear();
                 customRenderer.Refresh();
 
-                threadMetaData.progress = (float)i / (customRenderers.Length - 1);
+                threadMetaData.progress = i;
             }
         }
     }
