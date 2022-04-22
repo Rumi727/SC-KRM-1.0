@@ -15,6 +15,9 @@ namespace SCKRM.Editor
             editor = (UI.UI)target;
         }
 
+        /// <summary>
+        /// Please put base.OnInspectorGUI() when overriding
+        /// </summary>
         public override void OnInspectorGUI()
         {
             if (editor.rectTransform.gameObject != editor.gameObject)
