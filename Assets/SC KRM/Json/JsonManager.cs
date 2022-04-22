@@ -46,8 +46,7 @@ namespace SCKRM.Json
             {
                 string resourcePack = ResourceManager.SaveData.resourcePacks[i];
                 Dictionary<TKey, TValue> dictionary = JsonRead<Dictionary<TKey, TValue>>(PathTool.Combine(resourcePack, path));
-
-                if (dictionary.ContainsKey(key))
+                if (dictionary != null && dictionary.ContainsKey(key))
                     return dictionary[key];
             }
 
