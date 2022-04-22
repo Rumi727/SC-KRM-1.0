@@ -516,9 +516,9 @@ namespace SCKRM
                         Debug.Log("Kernel: Waiting for scene animation...");
                         if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
-
-                        SplashScreen.isAniPlayed = false;
                     }
+                    else
+                        SplashScreen.isAniPlayed = false;
 
                     StatusBarManager.allowStatusBarShow = true;
 
