@@ -90,10 +90,10 @@
 	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
 	
 	"notice.running_task.resource_pack_refresh.name": "리소스팩 새로고침",
-	"notice.running_task.resource_pack_refresh_set_pack_textures.name": "리소스팩 새로고침 (텍스쳐 합치기)",
-	"notice.running_task.resource_pack_refresh_set_sprite.name": "리소스팩 새로고침 (스프라이트 설정)",
-	"notice.running_task.resource_pack_refresh_set_audio.name": "리소스팩 새로고침 (오디오 설정)",
-	"notice.running_task.resource_pack_refresh_set_language.name": "리소스팩 새로고침 (언어 설정)",
+	"notice.running_task.resource_pack_refresh.set_pack_textures.name": "리소스팩 새로고침 (텍스쳐 합치기)",
+	"notice.running_task.resource_pack_refresh.set_sprite.name": "리소스팩 새로고침 (스프라이트 설정)",
+	"notice.running_task.resource_pack_refresh.set_audio.name": "리소스팩 새로고침 (오디오 설정)",
+	"notice.running_task.resource_pack_refresh.set_language.name": "리소스팩 새로고침 (언어 설정)",
 	
 	"notice.running_task.rerender.name": "렌더러 새로고침",
 	
