@@ -59,6 +59,8 @@ namespace SCKRM.Splash
 
                 if (await UniTask.DelayFrame(10, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
+                else if (!SplashScreen.isAniPlayed)
+                    return;
 
                 if (Random.Range(0, 2) == 1)
                     xFlip = true;
@@ -86,6 +88,8 @@ namespace SCKRM.Splash
                     canvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
                     if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
+                    else if (!SplashScreen.isAniPlayed)
+                        return;
                 }
 
                 await UniTask.WaitUntil(() => Kernel.isSettingLoadEnd);
@@ -104,6 +108,8 @@ namespace SCKRM.Splash
                         progressBarCanvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
 
                     if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                        return;
+                    else if (!SplashScreen.isAniPlayed)
                         return;
                 }
 
@@ -138,6 +144,8 @@ namespace SCKRM.Splash
                             progressBarCanvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
 
                         if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
+                        else if (!SplashScreen.isAniPlayed)
                             return;
                     }
                 }
