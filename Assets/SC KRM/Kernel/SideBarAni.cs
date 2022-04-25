@@ -16,8 +16,8 @@ namespace SCKRM.UI.SideBar
         [SerializeField] string _inputLockName; public string inputLockName => _inputLockName;
 
 
-        [SerializeField] UnityEvent _showEvent; public UnityEvent showEvent => showEvent;
-        [SerializeField] UnityEvent _hideEvent; public UnityEvent hideEvent => hideEvent;
+        [SerializeField] UnityEvent _showEvent; public UnityEvent showEvent => _showEvent;
+        [SerializeField] UnityEvent _hideEvent; public UnityEvent hideEvent => _hideEvent;
 
 
 
