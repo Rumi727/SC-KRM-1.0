@@ -5,6 +5,7 @@ using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.SideBar
@@ -13,6 +14,12 @@ namespace SCKRM.UI.SideBar
     {
         [SerializeField] string _showControlKey; public string showControlKey => _showControlKey;
         [SerializeField] string _inputLockName; public string inputLockName => _inputLockName;
+
+
+        [SerializeField] UnityEvent _showEvent; public UnityEvent showEvent => showEvent;
+        [SerializeField] UnityEvent _hideEvent; public UnityEvent hideEvent => hideEvent;
+
+
 
         bool _isShow;
         public bool isShow
@@ -64,8 +71,18 @@ namespace SCKRM.UI.SideBar
         public Scrollbar scrollBar => _scrollBar;
         #endregion
 
-        public void Show() => isShow = true;
-        public void Hide() => isShow = false;
+        public void Show()
+        {
+            isShow = true;
+            showEvent.Invoke();
+        }
+
+        public void Hide()
+        {
+            isShow = false;
+            hideEvent.Invoke();
+        }
+
         public void Toggle()
         {
             if (isShow)
