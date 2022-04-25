@@ -43,6 +43,7 @@
     "log": false,
     "log.command": false,
     "settingbar": false,
-    "volumecontrol": false
+    "volumecontrol": false,
+    "controlbar": false
   }
 }
