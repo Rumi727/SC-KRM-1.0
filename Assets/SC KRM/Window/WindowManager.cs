@@ -32,6 +32,7 @@ namespace SCKRM.Window
         static IntPtr handle;
 
         [DllImport("user32.dll")]
+        [Obsolete("You can now get the main window handle from the process class. Use only when you can't bring it")]
         static extern IntPtr GetActiveWindow();
 
         [DllImport("user32.dll")]
@@ -57,6 +58,7 @@ namespace SCKRM.Window
 
 
 
+        [Obsolete("You can now get the main window handle from the process class. Use only when you can't bring it")]
         public static IntPtr GetWindowHandle()
         {
 #if UNITY_STANDALONE_WIN
