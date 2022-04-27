@@ -64,7 +64,7 @@ namespace SCKRM
 
         Vector2 dragStartMousePosition = Vector2.zero;
         bool dragStart = false;
-        void Update()
+        void LateUpdate()
         {
             if (Kernel.isInitialLoadEnd)
             {
