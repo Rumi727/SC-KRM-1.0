@@ -26,7 +26,7 @@ namespace SCKRM.Window
         static float lerpY = 0;
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
+        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int sizeX, int sizeY, int uFlags);
 
         const int SWP_NOSIZE = 0x0001;
         const int SWP_NOMOVE = 0x0002;
@@ -55,7 +55,7 @@ namespace SCKRM.Window
         }
 
         [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        static extern IntPtr FindWindow(string LpClassName, string lpWindowName);
+        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 #endif
 
 
