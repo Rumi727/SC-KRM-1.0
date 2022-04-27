@@ -7,6 +7,7 @@ using SCKRM.Tool;
 using SCKRM.UI;
 using SCKRM.UI.StatusBar;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace SCKRM.Window
 {
     public static class WindowManager
     {
+        public static Process currentProcess { get; } = Process.GetCurrentProcess();
+        public static IntPtr currentHandle { get; } = currentProcess.MainWindowHandle;
+
 #if UNITY_STANDALONE_WIN
         static float lerpX = 0;
         static float lerpY = 0;
@@ -28,8 +32,6 @@ namespace SCKRM.Window
         const int SWP_NOMOVE = 0x0002;
         const int SWP_NOZORDER = 0x0004;
         const int SWP_SHOWWINDOW = 0x0040;
-
-        static IntPtr handle;
 
         [DllImport("user32.dll")]
         [Obsolete("You can now get the main window handle from the process class. Use only when you can't bring it")]
@@ -72,12 +74,7 @@ namespace SCKRM.Window
         public static Vector2Int GetWindowPos(Vector2 windowDatumPoint, Vector2 screenDatumPoint)
         {
 #if UNITY_STANDALONE_WIN
-            IntPtr temp = GetWindowHandle();
-            if (temp != IntPtr.Zero)
-                handle = temp;
-
-            GetWindowRect(handle, out RECT rect);
-
+            GetWindowRect(currentHandle, out RECT rect);
             return new Vector2Int(Mathf.RoundToInt(rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (Screen.currentResolution.width * screenDatumPoint.x)), Mathf.RoundToInt(rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (Screen.currentResolution.height * screenDatumPoint.y)));
 #else
             throw new NotImplementedException();
@@ -87,11 +84,7 @@ namespace SCKRM.Window
         public static Vector2Int GetWindowSize()
         {
 #if UNITY_STANDALONE_WIN
-            IntPtr temp = GetWindowHandle();
-            if (temp != IntPtr.Zero)
-                handle = temp;
-
-            GetWindowRect(handle, out RECT rect);
+            GetWindowRect(currentHandle, out RECT rect);
             return new Vector2Int(rect.Right - rect.Left, rect.Bottom - rect.Top);
 #else
             throw new NotImplementedException();
@@ -101,11 +94,7 @@ namespace SCKRM.Window
         public static Vector2Int GetClientSize()
         {
 #if UNITY_STANDALONE_WIN
-            IntPtr temp = GetWindowHandle();
-            if (temp != IntPtr.Zero)
-                handle = temp;
-
-            GetClientRect(handle, out RECT rect);
+            GetClientRect(currentHandle, out RECT rect);
             return new Vector2Int(rect.Right, rect.Bottom);
 #else
             throw new NotImplementedException();
@@ -121,17 +110,13 @@ namespace SCKRM.Window
 #if UNITY_STANDALONE_WIN
             if (Screen.fullScreen)
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
-
-            IntPtr temp = GetWindowHandle();
-            if (temp != IntPtr.Zero)
-                handle = temp;
-
+            
             Vector2 border = GetWindowSize() - GetClientSize();
 
             if (clientDatum)
-                SetWindowPos(handle, IntPtr.Zero, 0, 0, Mathf.RoundToInt(rect.width + border.x), Mathf.RoundToInt(rect.height + border.y), SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+                SetWindowPos(currentHandle, IntPtr.Zero, 0, 0, Mathf.RoundToInt(rect.width + border.x), Mathf.RoundToInt(rect.height + border.y), SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
             else
-                SetWindowPos(handle, IntPtr.Zero, 0, 0, Mathf.RoundToInt(rect.width), Mathf.RoundToInt(rect.height), SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+                SetWindowPos(currentHandle, IntPtr.Zero, 0, 0, Mathf.RoundToInt(rect.width), Mathf.RoundToInt(rect.height), SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 
             Vector2 size = GetWindowSize();
 
@@ -153,9 +138,9 @@ namespace SCKRM.Window
             }
 
             if (!Lerp)
-                SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(rect.x), Mathf.RoundToInt(rect.y), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                SetWindowPos(currentHandle, IntPtr.Zero, Mathf.RoundToInt(rect.x), Mathf.RoundToInt(rect.y), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
             else
-                SetWindowPos(handle, IntPtr.Zero, Mathf.RoundToInt(lerpX), Mathf.RoundToInt(lerpY), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                SetWindowPos(currentHandle, IntPtr.Zero, Mathf.RoundToInt(lerpX), Mathf.RoundToInt(lerpY), 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
 #else
             throw new NotImplementedException();
 #endif
