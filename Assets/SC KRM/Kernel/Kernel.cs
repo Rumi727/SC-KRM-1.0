@@ -517,8 +517,10 @@ namespace SCKRM
                         if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
                     }
+#if UNITY_EDITOR
                     else
                         SplashScreen.isAniPlayed = false;
+#endif
 
                     StatusBarManager.allowStatusBarShow = true;
 
