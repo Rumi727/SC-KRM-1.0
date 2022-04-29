@@ -1,3 +1,4 @@
+using SCKRM.Tool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -142,6 +143,10 @@ public static class PolygonManager
         if (lineRenderer == null)
             throw new ArgumentNullException(nameof(lineRenderer));
 
+
+        sides.ClampRef(1);
+        radius.ClampRef(0);
+        width.ClampRef(0);
 
 
         lineRenderer.startWidth = width;
