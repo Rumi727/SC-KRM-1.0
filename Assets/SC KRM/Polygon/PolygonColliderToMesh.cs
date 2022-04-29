@@ -34,17 +34,24 @@ namespace SCKRM.Polygon
 
 
 
-        Mesh mesh;
-        void Awake()
+        void Update()
+        {
+            if (meshFilter.sharedMesh == null)
+                Initialize();
+
+            polygonCollider.ToMesh(meshFilter.sharedMesh);
+        }
+
+
+
+        public void Initialize()
         {
             // This creates a unique mesh per instance. If you re-use shapes
             // frequently, then you may want to look into sharing them in a pool.
-            mesh = new Mesh();
+            Mesh mesh = new Mesh();
             mesh.MarkDynamic();
 
             meshFilter.sharedMesh = mesh;
         }
-
-        void Update() => polygonCollider.ToMesh(mesh);
     }
 }
