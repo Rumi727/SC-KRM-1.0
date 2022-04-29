@@ -1,6 +1,5 @@
 using SCKRM.Tool;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -177,5 +176,32 @@ public static class PolygonManager
         int posCount = lineRenderer.positionCount;
         for (int i = 0; i < extraSteps; i++)
             lineRenderer.SetPosition(posCount - extraSteps + i, lineRenderer.GetPosition(i));
+    }
+
+    public static void ToPolygonCollider(this LineRenderer lineRenderer, PolygonCollider2D polygonCollider)
+    {
+        if (lineRenderer == null)
+            throw new ArgumentNullException(nameof(lineRenderer));
+        if (polygonCollider == null)
+            throw new ArgumentNullException(nameof(polygonCollider));
+
+        Vector2[] line = new Vector2[lineRenderer.positionCount];
+        for (int i = 0; i < line.Length; i++)
+            line[i] = lineRenderer.GetPosition(i);
+
+        polygonCollider.pathCount = 1;
+        polygonCollider.SetPath(0, line);
+    }
+
+    public static void ToLineRenderer(this PolygonCollider2D polygonCollider, LineRenderer lineRenderer)
+    {
+        if (polygonCollider == null)
+            throw new ArgumentNullException(nameof(polygonCollider));
+        if (lineRenderer == null)
+            throw new ArgumentNullException(nameof(lineRenderer));
+
+        Vector2[] paths = polygonCollider.GetPath(0);
+        for (int i = 0; i < paths.Length; i++)
+            lineRenderer.SetPosition(i, paths[i]);
     }
 }
