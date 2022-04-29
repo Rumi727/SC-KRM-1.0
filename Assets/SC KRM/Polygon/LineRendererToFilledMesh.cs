@@ -4,7 +4,7 @@ namespace SCKRM.Polygon
 {
     [ExecuteAlways]
     [RequireComponent(typeof(MeshFilter))]
-    [RequireComponent(typeof(PolygonCollider2D))]
+    [RequireComponent(typeof(LineRenderer))]
     public class LineRendererToFilledMesh : MonoBehaviour
     {
         LineRenderer _lineRenderer;
