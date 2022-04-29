@@ -606,11 +606,15 @@ namespace SCKRM.Tool
             return new Rect(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.width + (target.width - current.width) * t, current.height + (target.height - current.height) * t);
         }
 
-        public static Color Lerp(this Color current, Color target, float t, bool unclamped = false)
+        public static Color Lerp(this Color current, Color target, float t, bool alpha = true, bool unclamped = false)
         {
             if (!unclamped)
                 t.Clamp01Ref();
-            return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
+
+            if (alpha)
+                return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
+            else
+                return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a);
         }
 
         public static byte MoveTowards(this byte current, byte target, byte maxDelta)
@@ -2363,8 +2367,6 @@ namespace SCKRM.Tool
             value = value.Replace("%CompanyName%", Kernel.companyName);
             value = value.Replace("%ProductName%", Kernel.productName);
             value = value.Replace("%Version%", Kernel.version);
-
-            value = value.Replace("%Platform%", Kernel.platform.ToString());
 
             return value;
         }
