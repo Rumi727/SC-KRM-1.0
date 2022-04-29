@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class PolygonManager
 {
-    public static void ToMesh(this LineRenderer lineRenderer, Mesh mesh)
+    public static void PositionToMeshFill(this LineRenderer lineRenderer, Mesh mesh)
     {
         if (lineRenderer == null)
             throw new ArgumentNullException(nameof(lineRenderer));
@@ -137,7 +137,7 @@ public static class PolygonManager
         // Dot product of the perpendicular of vector a against vector b.
         float DotPerp(Vector2 a, Vector2 b) => a.x * b.y - a.y * b.x;
     }
-    public static void ToMesh(this PolygonCollider2D collider, Mesh mesh)
+    public static void PathToMeshFill(this PolygonCollider2D collider, Mesh mesh)
     {
         if (collider == null)
             throw new ArgumentNullException(nameof(collider));
@@ -310,7 +310,7 @@ public static class PolygonManager
             lineRenderer.SetPosition(posCount - extraSteps + i, lineRenderer.GetPosition(i));
     }
 
-    public static void ToPolygonCollider(this LineRenderer lineRenderer, PolygonCollider2D polygonCollider)
+    public static void PositionToPolygonCollider(this LineRenderer lineRenderer, PolygonCollider2D polygonCollider)
     {
         if (lineRenderer == null)
             throw new ArgumentNullException(nameof(lineRenderer));
@@ -324,7 +324,7 @@ public static class PolygonManager
         polygonCollider.pathCount = 1;
         polygonCollider.SetPath(0, line);
     }
-    public static void ToLineRenderer(this PolygonCollider2D polygonCollider, LineRenderer lineRenderer)
+    public static void PathToLineRenderer(this PolygonCollider2D polygonCollider, LineRenderer lineRenderer)
     {
         if (polygonCollider == null)
             throw new ArgumentNullException(nameof(polygonCollider));
