@@ -39,7 +39,7 @@ namespace SCKRM.Polygon
             if (meshFilter.sharedMesh == null)
                 Initialize();
 
-            polygonCollider.ToMesh(meshFilter.sharedMesh);
+            polygonCollider.PathToMesh(meshFilter.sharedMesh);
         }
 
 

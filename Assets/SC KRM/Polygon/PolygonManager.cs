@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class PolygonManager
 {
-    public static void PositionToMeshFill(this LineRenderer lineRenderer, Mesh mesh)
+    public static void PositionToFilledMesh(this LineRenderer lineRenderer, Mesh mesh)
     {
         if (lineRenderer == null)
             throw new ArgumentNullException(nameof(lineRenderer));
@@ -137,7 +137,7 @@ public static class PolygonManager
         // Dot product of the perpendicular of vector a against vector b.
         float DotPerp(Vector2 a, Vector2 b) => a.x * b.y - a.y * b.x;
     }
-    public static void PathToMeshFill(this PolygonCollider2D collider, Mesh mesh)
+    public static void PathToMesh(this PolygonCollider2D collider, Mesh mesh)
     {
         if (collider == null)
             throw new ArgumentNullException(nameof(collider));
