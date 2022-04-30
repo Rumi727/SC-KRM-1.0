@@ -37,6 +37,10 @@ public static class PolygonManager
             mesh.triangles = triangles.ToArray();
         }
 
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+        mesh.RecalculateBounds();
+
         void LoopToTriangles()
         {
             // This uses a naive O(n^3) ear clipping approach for simplicity.
