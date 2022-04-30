@@ -131,6 +131,14 @@ public static class PolygonManager
         // Dot product of the perpendicular of vector a against vector b.
         float DotPerp(Vector2 a, Vector2 b) => a.x * b.y - a.y * b.x;
     }
+    public static void ToFilledMesh(this Vector3[] positions, Mesh mesh)
+    {
+        Vector2[] positions2D = new Vector2[positions.Length];
+        for (int i = 0; i < positions.Length; i++)
+            positions2D[i] = positions[i];
+
+        ToFilledMesh(positions2D, mesh);
+    }
     public static void PositionToFilledMesh(this LineRenderer lineRenderer, Mesh mesh)
     {
         if (lineRenderer == null)
