@@ -10,6 +10,8 @@ public static class PolygonManager
     {
         if (positions == null)
             throw new ArgumentNullException(nameof(positions));
+        if (mesh == null)
+            throw new ArgumentNullException(nameof(mesh));
 
         List<int> triangles = new List<int>();
 
@@ -131,19 +133,29 @@ public static class PolygonManager
     }
     public static void PositionToFilledMesh(this LineRenderer lineRenderer, Mesh mesh)
     {
+        if (lineRenderer == null)
+            throw new ArgumentNullException(nameof(lineRenderer));
+        if (mesh == null)
+            throw new ArgumentNullException(nameof(mesh));
+
         Vector2[] positions = new Vector2[lineRenderer.positionCount];
         for (int i = 0; i < positions.Length; i++)
             positions[i] = lineRenderer.GetPosition(i);
 
         positions.ToFilledMesh(mesh);
     }
-    public static void PathToMesh(this PolygonCollider2D collider, Mesh mesh) =>
+    public static void PathToMesh(this PolygonCollider2D collider, Mesh mesh)
+    {
+        if (collider == null)
+            throw new ArgumentNullException(nameof(collider));
+        if (mesh == null)
+            throw new ArgumentNullException(nameof(mesh));
+
         // For simplicity, we'll only handle colliders made of a single path.
         // This method can be extended to handle multi-part colliders and
         // colliders with holes, but triangulating these gets more complex.
         collider.GetPath(0).ToFilledMesh(mesh);
-
-
+    }
 
     public static void DrawRegularPolygon(this LineRenderer lineRenderer, float sides, float radius, float width)
     {
