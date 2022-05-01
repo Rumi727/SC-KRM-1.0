@@ -707,48 +707,65 @@ namespace SCKRM.Tool
 
         public static Vector2 MoveTowards(this Vector2 current, Vector2 target, float maxDistanceDelta)
         {
-            Vector2 a = target - current;
-            float magnitude = a.magnitude;
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = num * num + num2 * num2;
+            if (num3 == 0f || (maxDistanceDelta >= 0f && num3 <= maxDistanceDelta * maxDistanceDelta))
                 return target;
 
-            return current + a / magnitude * maxDistanceDelta;
+            float num4 = (float)Math.Sqrt(num3);
+            return new Vector2(current.x + num / num4 * maxDistanceDelta, current.y + num2 / num4 * maxDistanceDelta);
         }
         public static Vector3 MoveTowards(this Vector3 current, Vector3 target, float maxDistanceDelta)
         {
-            Vector3 a = target - current;
-            float magnitude = a.magnitude;
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.z - current.z;
+            float num4 = num * num + num2 * num2 + num3 * num3;
+            if (num4 == 0f || (maxDistanceDelta >= 0f && num4 <= maxDistanceDelta * maxDistanceDelta))
                 return target;
 
-            return current + a / magnitude * maxDistanceDelta;
+            float num5 = (float)Math.Sqrt(num4);
+            return new Vector3(current.x + num / num5 * maxDistanceDelta, current.y + num2 / num5 * maxDistanceDelta, current.z + num3 / num5 * maxDistanceDelta);
         }
         public static Vector4 MoveTowards(this Vector4 current, Vector4 target, float maxDistanceDelta)
         {
-            Vector4 a = target - current;
-            float magnitude = a.magnitude;
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.z - current.z;
+            float num4 = target.w - current.w;
+            float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
                 return target;
 
-            return current + a / magnitude * maxDistanceDelta;
+            float num6 = (float)Math.Sqrt(num5);
+            return new Vector4(current.x + num / num6 * maxDistanceDelta, current.y + num2 / num6 * maxDistanceDelta, current.z + num3 / num6 * maxDistanceDelta, current.w + num4 / num6 * maxDistanceDelta);
         }
         public static Rect MoveTowards(this Rect current, Rect target, float maxDistanceDelta)
         {
-            Rect a = new Rect(target.x - current.x, target.y - current.y, target.width - current.width, target.height - current.height);
-            float magnitude = Mathf.Sqrt((a.x * a.x) + (a.y * a.y) + (a.width * a.width) + (a.height * a.height));
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.width - current.width;
+            float num4 = target.height - current.height;
+            float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
                 return target;
 
-            return new Rect(current.x + (a.x / magnitude * maxDistanceDelta), current.y + (a.y / magnitude * maxDistanceDelta), current.width + (a.width / magnitude * maxDistanceDelta), current.height + (a.height / magnitude * maxDistanceDelta));
+            float num6 = (float)Math.Sqrt(num5);
+            return new Rect(current.x + num / num6 * maxDistanceDelta, current.y + num2 / num6 * maxDistanceDelta, current.width + num3 / num6 * maxDistanceDelta, current.height + num4 / num6 * maxDistanceDelta);
         }
         public static Color MoveTowards(this Color current, Color target, float maxDistanceDelta)
         {
-            Color a = target - current;
-            float magnitude = Mathf.Sqrt((a.r * a.r) + (a.g * a.g) + (a.b * a.b) + (a.a * a.a));
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
+            float num = target.r - current.r;
+            float num2 = target.g - current.g;
+            float num3 = target.b - current.b;
+            float num4 = target.a - current.a;
+            float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
                 return target;
 
-            return current + a / magnitude * maxDistanceDelta;
+            float num6 = (float)Math.Sqrt(num5);
+            return new Color(current.r + num / num6 * maxDistanceDelta, current.g + num2 / num6 * maxDistanceDelta, current.b + num3 / num6 * maxDistanceDelta, current.a + num4 / num6 * maxDistanceDelta);
         }
     }
 
@@ -1423,63 +1440,65 @@ namespace SCKRM.Tool
 
         public static void MoveTowardsRef(this ref Vector2 current, Vector2 target, float maxDistanceDelta)
         {
-            Vector2 a = target - current;
-            float magnitude = a.magnitude;
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
-            {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = num * num + num2 * num2;
+            if (num3 == 0f || (maxDistanceDelta >= 0f && num3 <= maxDistanceDelta * maxDistanceDelta))
                 current = target;
-                return;
-            }
 
-            current += a / magnitude * maxDistanceDelta;
+            float num4 = (float)Math.Sqrt(num3);
+            current = new Vector2(current.x + num / num4 * maxDistanceDelta, current.y + num2 / num4 * maxDistanceDelta);
         }
         public static void MoveTowardsRef(this ref Vector3 current, Vector3 target, float maxDistanceDelta)
         {
-            Vector3 a = target - current;
-            float magnitude = a.magnitude;
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
-            {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.z - current.z;
+            float num4 = num * num + num2 * num2 + num3 * num3;
+            if (num4 == 0f || (maxDistanceDelta >= 0f && num4 <= maxDistanceDelta * maxDistanceDelta))
                 current = target;
-                return;
-            }
 
-            current += a / magnitude * maxDistanceDelta;
+            float num5 = (float)Math.Sqrt(num4);
+            current = new Vector3(current.x + num / num5 * maxDistanceDelta, current.y + num2 / num5 * maxDistanceDelta, current.z + num3 / num5 * maxDistanceDelta);
         }
         public static void MoveTowardsRef(this ref Vector4 current, Vector4 target, float maxDistanceDelta)
         {
-            Vector4 a = target - current;
-            float magnitude = a.magnitude;
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
-            {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.z - current.z;
+            float num4 = target.w - current.w;
+            float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
                 current = target;
-                return;
-            }
 
-            current += a / magnitude * maxDistanceDelta;
+            float num6 = (float)Math.Sqrt(num5);
+            current = new Vector4(current.x + num / num6 * maxDistanceDelta, current.y + num2 / num6 * maxDistanceDelta, current.z + num3 / num6 * maxDistanceDelta, current.w + num4 / num6 * maxDistanceDelta);
         }
         public static void MoveTowardsRef(this ref Rect current, Rect target, float maxDistanceDelta)
         {
-            Rect a = new Rect(target.x - current.x, target.y - current.y, target.width - current.width, target.height - current.height);
-            float magnitude = Mathf.Sqrt((a.x * a.x) + (a.y * a.y) + (a.width * a.width) + (a.height * a.height));
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
-            {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.width - current.width;
+            float num4 = target.height - current.height;
+            float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
                 current = target;
-                return;
-            }
 
-            current = new Rect(current.x + (a.x / magnitude * maxDistanceDelta), current.y + (a.y / magnitude * maxDistanceDelta), current.width + (a.width / magnitude * maxDistanceDelta), current.height + (a.height / magnitude * maxDistanceDelta));
+            float num6 = (float)Math.Sqrt(num5);
+            current = new Rect(current.x + num / num6 * maxDistanceDelta, current.y + num2 / num6 * maxDistanceDelta, current.width + num3 / num6 * maxDistanceDelta, current.height + num4 / num6 * maxDistanceDelta);
         }
         public static void MoveTowardsRef(this ref Color current, Color target, float maxDistanceDelta)
         {
-            Color a = target - current;
-            float magnitude = Mathf.Sqrt((a.r * a.r) + (a.g * a.g) + (a.b * a.b) + (a.a * a.a));
-            if (magnitude <= maxDistanceDelta || magnitude == 0f)
-            {
+            float num = target.r - current.r;
+            float num2 = target.g - current.g;
+            float num3 = target.b - current.b;
+            float num4 = target.a - current.a;
+            float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
                 current = target;
-                return;
-            }
 
-            current += a / magnitude * maxDistanceDelta;
+            float num6 = (float)Math.Sqrt(num5);
+            current = new Color(current.r + num / num6 * maxDistanceDelta, current.g + num2 / num6 * maxDistanceDelta, current.b + num3 / num6 * maxDistanceDelta, current.a + num4 / num6 * maxDistanceDelta);
         }
     }
 
