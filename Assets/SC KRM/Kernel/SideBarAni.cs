@@ -1,5 +1,4 @@
 using SCKRM.Input;
-using SCKRM.Tool;
 using SCKRM.UI;
 using SCKRM.UI.StatusBar;
 using System.Collections;

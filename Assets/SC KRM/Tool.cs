@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace SCKRM.Tool
+namespace SCKRM
 {
-    public static class MathfTool
+    public static class MathTool
     {
         public static sbyte Abs(this sbyte value)
         {
@@ -769,7 +769,7 @@ namespace SCKRM.Tool
         }
     }
 
-    public static class MathfRefTool
+    public static class MathRefTool
     {
         public static void AbsRef(this ref sbyte value)
         {
