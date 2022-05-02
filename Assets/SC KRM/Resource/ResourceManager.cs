@@ -7,7 +7,6 @@ using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using SCKRM.Threads;
-using SCKRM.Tool;
 using SCKRM.UI;
 using SCKRM.Window;
 using System;

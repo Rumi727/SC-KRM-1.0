@@ -5,7 +5,6 @@ using SCKRM.Renderer;
 using SCKRM.Resource;
 using System.IO;
 using SCKRM.Json;
-using SCKRM.Tool;
 
 namespace SCKRM.Editor
 {

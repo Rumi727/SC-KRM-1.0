@@ -1,5 +1,4 @@
 using SCKRM.Input;
-using SCKRM.Tool;
 using SCKRM.UI.StatusBar;
 using UnityEngine;
 using UnityEngine.EventSystems;

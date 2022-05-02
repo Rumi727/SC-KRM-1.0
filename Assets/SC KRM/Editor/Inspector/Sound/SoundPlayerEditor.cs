@@ -1,6 +1,5 @@
 using SCKRM.Resource;
 using SCKRM.Sound;
-using SCKRM.Tool;
 using UnityEditor;
 using UnityEngine;
 

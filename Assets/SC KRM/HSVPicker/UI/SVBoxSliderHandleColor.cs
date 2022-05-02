@@ -1,6 +1,5 @@
 using HSVPicker;
 using SCKRM;
-using SCKRM.Tool;
 using SCKRM.UI;
 using System.Collections;
 using System.Collections.Generic;

@@ -3,7 +3,6 @@ using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
 using SCKRM.Resource;
-using SCKRM.Tool;
 using SCKRM.UI;
 using SCKRM.UI.StatusBar;
 using System;

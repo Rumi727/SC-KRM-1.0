@@ -2,7 +2,6 @@ using SCKRM.Language;
 using SCKRM.Object;
 using SCKRM.Resource;
 using SCKRM.Threads;
-using SCKRM.Tool;
 using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;

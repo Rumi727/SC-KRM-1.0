@@ -1,5 +1,4 @@
 using SCKRM.Input;
-using SCKRM.Tool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

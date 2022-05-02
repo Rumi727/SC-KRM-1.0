@@ -2,7 +2,6 @@ using SCKRM.Json;
 using SCKRM.Language;
 using SCKRM.Resource;
 using SCKRM.Threads;
-using SCKRM.Tool;
 using System;
 using UnityEngine;
 

@@ -1,7 +1,6 @@
 using SCKRM.Language;
 using SCKRM.Object;
 using SCKRM.Resource;
-using SCKRM.Tool;
 using System.Collections.Generic;
 using UnityEngine;
 

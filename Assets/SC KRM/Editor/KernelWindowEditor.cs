@@ -6,7 +6,6 @@ using SCKRM.ProjectSetting;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
-using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
 using System.IO;

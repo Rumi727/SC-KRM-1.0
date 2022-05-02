@@ -3,7 +3,6 @@ using SCKRM.Input;
 using SCKRM.Json;
 using SCKRM.Log;
 using SCKRM.SaveLoad;
-using SCKRM.Tool;
 using SCKRM.UI.SideBar;
 using SCKRM.Window;
 using System;

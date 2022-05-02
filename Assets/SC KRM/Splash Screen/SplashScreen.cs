@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using SCKRM.Tool;
 using SCKRM.Resource;
 using System.Collections;
 using System.Collections.Generic;

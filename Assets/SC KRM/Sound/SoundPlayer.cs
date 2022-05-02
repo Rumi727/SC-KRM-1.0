@@ -1,7 +1,6 @@
 using UnityEngine;
 using SCKRM.Resource;
 using SCKRM.Object;
-using SCKRM.Tool;
 using Cysharp.Threading.Tasks;
 using SCKRM.UI.StatusBar;
 

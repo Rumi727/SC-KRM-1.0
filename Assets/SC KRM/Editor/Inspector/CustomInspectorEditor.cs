@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using SCKRM.Tool;
 using System;
 using SCKRM.Resource;
 using SCKRM.ProjectSetting;

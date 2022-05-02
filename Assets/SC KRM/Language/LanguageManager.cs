@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using SCKRM.Json;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
-using SCKRM.Tool;
 using System;
 using System.Collections.Generic;
 using System.IO;

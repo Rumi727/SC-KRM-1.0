@@ -1,7 +1,6 @@
 using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
-using SCKRM.Tool;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using SCKRM.Camera;
 using SCKRM.UI;
 using UnityEngine.UI;
-using SCKRM.Tool;
 using UnityEditorInternal;
 using System.Collections.Generic;
 using System.Linq;

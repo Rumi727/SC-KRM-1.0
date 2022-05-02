@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-using SCKRM.Tool;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
 using SCKRM.Resource;

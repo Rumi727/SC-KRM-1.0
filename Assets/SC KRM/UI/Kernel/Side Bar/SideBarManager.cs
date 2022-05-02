@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Input;
 using SCKRM.Threads;
-using SCKRM.Tool;
 using SCKRM.UI.StatusBar;
 using System.Collections;
 using System.Collections.Generic;

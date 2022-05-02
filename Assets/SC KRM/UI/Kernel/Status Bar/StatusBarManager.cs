@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Input;
 using SCKRM.SaveLoad;
-using SCKRM.Tool;
 using SCKRM.UI.SideBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
