@@ -1,4 +1,3 @@
-using SCKRM.Object;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -95,15 +94,15 @@ namespace SCKRM.UI
 
     public abstract class UIAniLayout : UIAni
     {
-        /*//protected override void OnEnable() => update();
+        //protected override void OnEnable() => update();
 
         //protected override void OnValidate() => update();
 
-        //protected override void OnTransformParentChanged() => update();
+        protected override void OnTransformParentChanged() => Update();
 
-        protected override void OnRectTransformDimensionsChange() => update();
+        protected override void OnRectTransformDimensionsChange() => Update();
 
-        void update()
+        /*void update()
         {
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
