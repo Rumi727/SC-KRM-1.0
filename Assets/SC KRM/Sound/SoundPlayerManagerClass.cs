@@ -62,6 +62,7 @@ namespace SCKRM.Sound
             base.Remove();
 
             soundData = null;
+            customSoundData = null;
             metaData = null;
 
             time = 0;
