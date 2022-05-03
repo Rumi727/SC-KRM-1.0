@@ -7,7 +7,7 @@ namespace SCKRM.UI
 {
     public class UI : UIBehaviour
     {
-        [SerializeField, NotNull] RectTransform _rectTransform; public RectTransform rectTransform
+        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get
             {
@@ -54,7 +54,7 @@ namespace SCKRM.UI
             return (instance = manager) == manager;
         }
 
-        [NonSerialized, NotNull] RectTransform _rectTransform; public RectTransform rectTransform
+        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get
             {
@@ -146,7 +146,7 @@ namespace SCKRM.UI
 
     public class ObjectPoolingUI : ObjectPooling
     {
-        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
+        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform
         {
             get
             {
