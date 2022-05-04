@@ -42,7 +42,7 @@ namespace SCKRM.UI
 #if UNITY_EDITOR
             {
                 if (Application.isPlaying)
-                    canvas.scaleFactor = Kernel.guiSize;
+                    canvas.scaleFactor = UIManager.currentGuiSize;
                 else
                     canvas.scaleFactor = 1;
             }
@@ -63,7 +63,7 @@ namespace SCKRM.UI
 
                         float guiSize = 1;
                         if (customGuiSize)
-                            guiSize = Kernel.guiSize / canvas.scaleFactor;
+                            guiSize = UIManager.currentGuiSize / canvas.scaleFactor;
 
                         if (StatusBarManager.cropTheScreen && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         {
@@ -156,16 +156,16 @@ namespace SCKRM.UI
             transform.localEulerAngles = Vector3.zero;
 #endif
 
-            float width = Screen.width * (1 / Kernel.guiSize);
+            float width = Screen.width * (1 / UIManager.currentGuiSize);
             float height;
 #if UNITY_EDITOR
             if (Application.isPlaying && StatusBarManager.cropTheScreen)
 #else
             if (StatusBarManager.cropTheScreen)
 #endif
-                height = Screen.height * (1 / Kernel.guiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.rect.size.y);
+                height = Screen.height * (1 / UIManager.currentGuiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.rect.size.y);
             else
-                height = Screen.height * (1 / Kernel.guiSize);
+                height = Screen.height * (1 / UIManager.currentGuiSize);
 
             rectTransform.sizeDelta = new Vector2(width, height);
             rectTransform.pivot = new Vector2(0.5f, 0.5f);

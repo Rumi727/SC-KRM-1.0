@@ -48,7 +48,7 @@ namespace SCKRM.Object
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectAdvanceCreate));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(ObjectAdvanceCreate));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
@@ -84,7 +84,7 @@ namespace SCKRM.Object
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectCreate));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectCreate));
@@ -143,7 +143,7 @@ namespace SCKRM.Object
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectRemove));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));

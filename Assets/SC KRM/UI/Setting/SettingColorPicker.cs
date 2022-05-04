@@ -36,7 +36,7 @@ namespace SCKRM.UI.Setting
         [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
-            if (!Kernel.isInitialLoadEnd || !isLoad)
+            if (!InitialLoadManager.isInitialLoadEnd || !isLoad)
                 return;
 
             base.Update();

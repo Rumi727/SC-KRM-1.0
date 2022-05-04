@@ -256,7 +256,7 @@ namespace SCKRM.Resource
                 Debug.LogException(e);
                 Debug.LogError("ResourceManager: Resource refresh failed");
 
-                if (!Kernel.isInitialLoadEnd)
+                if (!InitialLoadManager.isInitialLoadEnd)
                 {
                     if (await UniTask.WaitUntil(() => UIManager.instance != null, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;

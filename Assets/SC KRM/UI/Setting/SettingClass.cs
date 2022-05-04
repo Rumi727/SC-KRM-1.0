@@ -56,7 +56,7 @@ namespace SCKRM.UI.Setting
         protected bool isLoad { get; private set; } = false;
         new protected virtual async UniTask<bool> Awake()
         {
-            if (await UniTask.WaitUntil(() => Kernel.isInitialLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+            if (await UniTask.WaitUntil(() => InitialLoadManager.isInitialLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;
 
             foreach (var variableType in SaveLoadManager.generalSLCList)
@@ -130,7 +130,7 @@ namespace SCKRM.UI.Setting
 
         protected virtual void Update()
         {
-            if (!Kernel.isInitialLoadEnd || !isLoad)
+            if (!InitialLoadManager.isInitialLoadEnd || !isLoad)
                 return;
 
             if (isDefault)

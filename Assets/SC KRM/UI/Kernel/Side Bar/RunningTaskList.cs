@@ -19,7 +19,7 @@ namespace SCKRM.UI.SideBar
 
         void Refresh()
         {
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 return;
 
             RunningTaskInfo[] runningTaskInfos = GetComponentsInChildren<RunningTaskInfo>();

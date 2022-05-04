@@ -4,6 +4,7 @@ using SCKRM.NBS;
 using SCKRM.Object;
 using SCKRM.ProjectSetting;
 using SCKRM.Resource;
+using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,25 @@ namespace SCKRM.Sound
         public sealed class Data
         {
             [JsonProperty] public static bool useTempo { get; set; }
+        }
+
+        [GeneralSaveLoad]
+        public sealed class SaveData
+        {
+            static int _mainVolume = 100; [JsonProperty] public static int mainVolume
+            {
+                get => _mainVolume.Clamp(0, 200);
+                set
+                {
+                    _mainVolume = value;
+
+                    //볼륨을 사용자가 설정한 볼륨으로 조정시킵니다. 사용자가 설정한 볼륨은 int 0 ~ 200 이기 때문에 0.01을 곱해주어야 하고,
+                    //100 ~ 200 볼륨이 먹혀야하기 때문에 0.5로 볼륨을 낮춰야하기 때문에 0.005를 곱합니다
+                    AudioListener.volume = value.Clamp(0, 200) * 0.005f;
+                }
+            }
+            static int _bgmVolume = 100; [JsonProperty] public static int bgmVolume { get => _bgmVolume.Clamp(0, 200); set => _bgmVolume = value; }
+            static int _soundVolume = 100; [JsonProperty] public static int soundVolume { get => _soundVolume.Clamp(0, 200); set => _soundVolume = value; }
         }
 
         [SerializeField] AudioMixerGroup _audioMixerGroup;
@@ -46,7 +66,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SoundRefresh));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SoundRefresh));
 
 
@@ -189,7 +209,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(PlaySound));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(PlaySound));
 
             if (soundList.Count >= maxSoundCount)
@@ -266,7 +286,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSound));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSound));
 
             if (key == null)
@@ -303,7 +323,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSoundAll));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
             for (int i = 0; i < soundList.Count; i++)
@@ -326,7 +346,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSoundAll));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
             for (int i = 0; i < soundList.Count; i++)
@@ -359,7 +379,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(PlayNBS));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(PlayNBS));
 
             if (nbsList.Count >= maxNBSCount)
@@ -412,7 +432,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopNBS));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopNBS));
 
             if (key == null)
@@ -451,7 +471,7 @@ namespace SCKRM.Sound
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopNBSAll));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopNBSAll));
 
             for (int i = 0; i < nbsList.Count; i++)

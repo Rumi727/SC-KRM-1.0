@@ -39,13 +39,13 @@ namespace SCKRM.UI.StatusBar
 
         protected override void OnEnable()
         {
-            Kernel.initialLoadEnd += LanguageChange;
+            InitialLoadManager.initialLoadEnd += LanguageChange;
             LanguageManager.currentLanguageChange += LanguageChange;
         }
 
         protected override void OnDestroy()
         {
-            Kernel.initialLoadEnd -= LanguageChange;
+            InitialLoadManager.initialLoadEnd -= LanguageChange;
             LanguageManager.currentLanguageChange -= LanguageChange;
         }
 

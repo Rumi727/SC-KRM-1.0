@@ -21,7 +21,7 @@ namespace SCKRM.Editor
 
         public static void GUI(NBSPlayer nbsPlayer)
         {
-            if (!Application.isPlaying || !Kernel.isInitialLoadEnd || nbsPlayer == null || nbsPlayer.soundData == null || nbsPlayer.metaData == null || nbsPlayer.nbsFile == null)
+            if (!Application.isPlaying || !InitialLoadManager.isInitialLoadEnd || nbsPlayer == null || nbsPlayer.soundData == null || nbsPlayer.metaData == null || nbsPlayer.nbsFile == null)
                 return;
 
             bool refesh;

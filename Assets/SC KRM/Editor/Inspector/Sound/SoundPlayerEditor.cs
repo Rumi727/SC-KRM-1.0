@@ -21,7 +21,7 @@ namespace SCKRM.Editor
 
         public static void GUI(SoundPlayer soundObject)
         {
-            if (!Application.isPlaying || !Kernel.isInitialLoadEnd || soundObject == null || soundObject.audioSource == null || soundObject.soundData == null || soundObject.metaData == null)
+            if (!Application.isPlaying || !InitialLoadManager.isInitialLoadEnd || soundObject == null || soundObject.audioSource == null || soundObject.soundData == null || soundObject.metaData == null)
                 return;
 
             bool refesh;

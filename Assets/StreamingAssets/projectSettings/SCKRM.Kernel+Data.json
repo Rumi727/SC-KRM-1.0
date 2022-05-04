@@ -1,6 +1,4 @@
 {
-  "standardFPS": 60.0,
-  "notFocusFpsLimit": 30,
   "splashScreenPath": "Assets/SC KRM/Splash Screen",
   "splashScreenName": "Splash Screen"
 }

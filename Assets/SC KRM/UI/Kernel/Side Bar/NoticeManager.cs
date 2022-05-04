@@ -29,7 +29,7 @@ namespace SCKRM.UI.SideBar
 
         void Update()
         {
-            if (Kernel.isInitialLoadEnd)
+            if (InitialLoadManager.isInitialLoadEnd)
             {
                 if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
                 {
@@ -65,7 +65,7 @@ namespace SCKRM.UI.SideBar
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(Notice));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
             Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform);

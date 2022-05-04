@@ -65,7 +65,7 @@ namespace SCKRM
         bool dragStart = false;
         void LateUpdate()
         {
-            if (Kernel.isInitialLoadEnd)
+            if (InitialLoadManager.isInitialLoadEnd)
             {
 #if UNITY_STANDALONE_WIN
                 if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
@@ -94,7 +94,7 @@ namespace SCKRM
                 }
                 else if (UnityEngine.Input.GetMouseButton(0))
                 {
-                    graphic.color = graphic.color.Lerp(Kernel.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    graphic.color = graphic.color.Lerp(UIManager.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     transform.localScale = transform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);
 
                     if (!dragStart && Vector2.Distance(transform.position, dragStartMousePosition) >= 10)
@@ -125,7 +125,7 @@ namespace SCKRM
 
         public static async void HighPrecisionMouseWarning()
         {
-            if (Kernel.isInitialLoadEnd && SaveData.IgnoreMouseAcceleration)
+            if (InitialLoadManager.isInitialLoadEnd && SaveData.IgnoreMouseAcceleration)
             {
                 SaveData.IgnoreMouseAcceleration = false;
                 if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)

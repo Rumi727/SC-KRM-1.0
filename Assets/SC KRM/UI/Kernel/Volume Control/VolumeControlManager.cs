@@ -1,4 +1,5 @@
 using SCKRM.Input;
+using SCKRM.Sound;
 using SCKRM.UI.StatusBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,7 +17,7 @@ namespace SCKRM.UI
 
         void Update()
         {
-            if (Kernel.isInitialLoadEnd)
+            if (InitialLoadManager.isInitialLoadEnd)
             {
                 if (isPointer || isDrag)
                     timer = 1;
@@ -61,18 +62,14 @@ namespace SCKRM.UI
                 if (InputManager.GetKey("volume_control.minus", InputType.Down, "all"))
                 {
                     if (isPointer || isDrag || timer >= 0)
-                        Kernel.SaveData.mainVolume -= 10;
-
-                    Kernel.SaveData.mainVolume = Kernel.SaveData.mainVolume.Clamp(0, 200);
+                        SoundManager.SaveData.mainVolume -= 10;
 
                     timer = 1;
                 }
                 else if (InputManager.GetKey("volume_control.plus", InputType.Down, "all"))
                 {
                     if (isPointer || isDrag || timer >= 0)
-                        Kernel.SaveData.mainVolume += 10;
-
-                    Kernel.SaveData.mainVolume = Kernel.SaveData.mainVolume.Clamp(0, 200);
+                        SoundManager.SaveData.mainVolume += 10;
 
                     timer = 1;
                 }

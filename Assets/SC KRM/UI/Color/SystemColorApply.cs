@@ -11,6 +11,6 @@ namespace SCKRM.UI
     {
         [SerializeField] Color _offset = Color.white; public Color offset { get => _offset; set => _offset = value; }
 
-        void Update() => graphic.color = Kernel.SaveData.systemColor * offset;
+        void Update() => graphic.color = UIManager.SaveData.systemColor * offset;
     }
 }

@@ -128,12 +128,6 @@ namespace SCKRM.Editor
                 CustomInspectorEditor.DrawLine();
 
                 Kernel.gameSpeed = EditorGUILayout.FloatField("게임 속도", Kernel.gameSpeed);
-
-                if (Kernel.isAFK)
-                {
-                    CustomInspectorEditor.DrawLine();
-                    EditorGUILayout.LabelField("AFK 상태");
-                }
             }
             else
             {
@@ -284,7 +278,7 @@ namespace SCKRM.Editor
                 }
             }
 
-            if (Application.isPlaying && Kernel.isInitialLoadEnd)
+            if (Application.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -399,7 +393,7 @@ namespace SCKRM.Editor
                 }
             }
 
-            if (Application.isPlaying && Kernel.isInitialLoadEnd)
+            if (Application.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -444,7 +438,7 @@ namespace SCKRM.Editor
                 GUILayout.EndHorizontal();
             }
 
-            if (Application.isPlaying && Kernel.isInitialLoadEnd)
+            if (Application.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -572,7 +566,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "조작 키 설정", "오브젝트 풀링 설정", "오디오 설정", "NBS 설정", "리소스 설정" }, GUILayout.ExpandWidth(false));
+                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "비디오 설정", "조작 키 설정", "풀링 설정", "오디오 설정", "NBS 설정", "리소스 설정" }, GUILayout.ExpandWidth(false));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -586,18 +580,21 @@ namespace SCKRM.Editor
                     KernelSetting();
                     break;
                 case 1:
-                    ControlSetting();
+                    VideoSetting();
                     break;
                 case 2:
-                    ObjectPoolingSetting();
+                    ControlSetting();
                     break;
                 case 3:
-                    AudioSetting();
+                    ObjectPoolingSetting();
                     break;
                 case 4:
-                    NBSSetting();
+                    AudioSetting();
                     break;
                 case 5:
+                    NBSSetting();
+                    break;
+                case 6:
                     ResourceSetting();
                     break;
             }
@@ -622,43 +619,61 @@ namespace SCKRM.Editor
             }
 
             {
-                Kernel.Data.standardFPS = EditorGUILayout.FloatField("기준 프레임", Kernel.Data.standardFPS);
+                SceneAsset oldScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName) + ".unity");
+                SceneAsset scene = (SceneAsset)EditorGUILayout.ObjectField("스플래시 씬", oldScene, typeof(SceneAsset), false);
 
-                EditorGUILayout.Space();
-
-                Kernel.Data.notFocusFpsLimit = EditorGUILayout.IntField("포커스가 아닐때 FPS 제한", Kernel.Data.notFocusFpsLimit);
-
-                Kernel.Data.standardFPS = Kernel.Data.standardFPS.Clamp(0);
-                Kernel.Data.notFocusFpsLimit = Kernel.Data.notFocusFpsLimit.Clamp(0);
-
-                EditorGUILayout.Space();
-
+                string sceneAllPath = AssetDatabase.GetAssetPath(scene);
+                if (sceneAllPath != "")
                 {
-                    SceneAsset oldScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName) + ".unity");
-                    SceneAsset scene = (SceneAsset)EditorGUILayout.ObjectField("스플래시 씬", oldScene, typeof(SceneAsset), false);
+                    string scenePath = sceneAllPath.Substring(0, sceneAllPath.LastIndexOf("/"));
+                    string sceneName = sceneAllPath.Remove(0, sceneAllPath.LastIndexOf("/") + 1);
+                    sceneName = sceneName.Substring(0, sceneName.Length - 6);
 
-                    string sceneAllPath = AssetDatabase.GetAssetPath(scene);
-                    if (sceneAllPath != "")
-                    {
-                        string scenePath = sceneAllPath.Substring(0, sceneAllPath.LastIndexOf("/"));
-                        string sceneName = sceneAllPath.Remove(0, sceneAllPath.LastIndexOf("/") + 1);
-                        sceneName = sceneName.Substring(0, sceneName.Length - 6);
-
-                        Kernel.Data.splashScreenPath = scenePath;
-                        Kernel.Data.splashScreenName = sceneName;
-                    }
-
-                    string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
-                    EditorGUILayout.LabelField($"경로: {path}.unity");
-
-                    if (oldScene != scene)
-                        KernelSetAutoProjectSetting.SceneListChanged();
+                    Kernel.Data.splashScreenPath = scenePath;
+                    Kernel.Data.splashScreenName = sceneName;
                 }
+
+                string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
+                EditorGUILayout.LabelField($"경로: {path}.unity");
+
+                if (oldScene != scene)
+                    KernelSetAutoProjectSetting.SceneListChanged();
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
             if (GUI.changed && !Application.isPlaying)
                 SaveLoadManager.Save(kernelProjectSetting, Kernel.projectSettingPath);
+        }
+
+        public static SaveLoadClass videoProjectSetting = null;
+        public void VideoSetting()
+        {
+            if (!Application.isPlaying)
+            {
+                if (videoProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(VideoManager.Data), out videoProjectSetting);
+
+                SaveLoadManager.Load(videoProjectSetting, Kernel.projectSettingPath);
+            }
+
+
+            //GUI
+            {
+                EditorGUILayout.LabelField("비디오 설정", EditorStyles.boldLabel);
+                EditorGUILayout.Space();
+            }
+
+            {
+                VideoManager.Data.standardFPS = EditorGUILayout.FloatField("기준 프레임", VideoManager.Data.standardFPS);
+                VideoManager.Data.notFocusFpsLimit = EditorGUILayout.IntField("포커스가 아닐때 FPS 제한", VideoManager.Data.notFocusFpsLimit);
+
+                VideoManager.Data.standardFPS = VideoManager.Data.standardFPS;
+                VideoManager.Data.notFocusFpsLimit = VideoManager.Data.notFocusFpsLimit;
+            }
+
+            //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
+            if (GUI.changed && !Application.isPlaying)
+                SaveLoadManager.Save(videoProjectSetting, Kernel.projectSettingPath);
         }
 
         public static SaveLoadClass controlProjectSetting;

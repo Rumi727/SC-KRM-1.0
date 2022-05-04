@@ -40,7 +40,7 @@ namespace SCKRM.UI.Setting
         {
             base.Update();
 
-            if (!Kernel.isInitialLoadEnd || !isLoad)
+            if (!InitialLoadManager.isInitialLoadEnd || !isLoad)
                 return;
 
             if (variableType == VariableType.String)

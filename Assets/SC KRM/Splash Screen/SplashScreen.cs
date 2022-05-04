@@ -17,7 +17,7 @@ namespace SCKRM.Splash
         [GeneralSaveLoad]
         public sealed class SaveData
         {
-            [JsonProperty] public static bool allowProgressBarShow = false;
+            [JsonProperty] public static bool allowProgressBarShow { get; set; } = false;
         }
 
         public static bool isAniPlayed { get; set; } = true;
@@ -91,7 +91,7 @@ namespace SCKRM.Splash
                         return;
                 }
 
-                if (await UniTask.WaitUntil(() => Kernel.isSettingLoadEnd, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                if (await UniTask.WaitUntil(() => InitialLoadManager.isSettingLoadEnd, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
                 else if (!isAniPlayed)
                     return;
@@ -129,7 +129,7 @@ namespace SCKRM.Splash
                         CSImage.transform.rotation = Quaternion.Lerp(CSImage.transform.rotation, Quaternion.Euler(Vector3.zero), 0.1f * Kernel.fpsUnscaledDeltaTime);
                         CS.localPosition = CS.localPosition.Lerp(new Vector3(24, -24), 0.1f * Kernel.fpsUnscaledDeltaTime);
 
-                        if (timer >= 2 && Kernel.isInitialLoadEnd)
+                        if (timer >= 2 && InitialLoadManager.isInitialLoadEnd)
                             canvasGroup.alpha -= 0.05f * Kernel.fpsUnscaledDeltaTime;
                         else
                         {

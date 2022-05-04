@@ -121,7 +121,7 @@ namespace SCKRM.Sound
             float time = audioSource.time;
 
             {
-                if (!Kernel.isInitialLoadEnd)
+                if (!InitialLoadManager.isInitialLoadEnd)
                 {
                     Remove();
                     return;
@@ -242,9 +242,9 @@ namespace SCKRM.Sound
             else
             {
                 if (soundData.isBGM)
-                    audioSource.volume = volume * (Kernel.SaveData.bgmVolume * 0.01f);
+                    audioSource.volume = volume * (SoundManager.SaveData.bgmVolume * 0.01f);
                 else
-                    audioSource.volume = volume * (Kernel.SaveData.soundVolume * 0.01f);
+                    audioSource.volume = volume * (SoundManager.SaveData.soundVolume * 0.01f);
             }
         }
 

@@ -8,9 +8,11 @@ using UnityEngine;
 public class Postest : MonoBehaviour
 {
     Vector2 rotation = Vector2.zero;
-    //int nextBeat = 0;
+    int nextBeat = 0;
 
     SoundPlayer soundPlayer;
+
+    void Awake() => soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
 
     void Update()
     {
@@ -48,7 +50,7 @@ public class Postest : MonoBehaviour
 
         transform.localEulerAngles = rotation;
 
-        /*if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             RhythmManager.isBeatPlay = !RhythmManager.isBeatPlay;
 
         float currentBeat = (soundPlayer.time - 1.18f) * (171f / 60f);
@@ -57,6 +59,6 @@ public class Postest : MonoBehaviour
         {
             nextBeat++;
             RhythmManager.OneBeatInvoke();
-        }*/
+        }
     }
 }

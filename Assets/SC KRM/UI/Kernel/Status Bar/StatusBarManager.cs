@@ -65,7 +65,7 @@ namespace SCKRM.UI.StatusBar
         {
             if (SingletonCheck(this))
             {
-                Kernel.initialLoadEnd += AniStart;
+                InitialLoadManager.initialLoadEnd += AniStart;
 
                 //씬이 이동하고 나서 잠깐 렉이 있기 때문에, 애니메이션이 제대로 재생될려면 딜레이를 걸어줘야합니다
                 async void AniStart()
@@ -92,7 +92,7 @@ namespace SCKRM.UI.StatusBar
         static bool aniStop = false;
         void Update()
         {
-            if (Kernel.isInitialLoadEnd && !aniStop)
+            if (InitialLoadManager.isInitialLoadEnd && !aniStop)
             {
                 {
                     bool mouseYisScreenY = false;

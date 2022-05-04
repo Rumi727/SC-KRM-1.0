@@ -92,7 +92,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (controlSettingList.TryGetValue(key, out List<KeyCode> list))
@@ -126,7 +126,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             List<KeyCode> list = controlSettingList[key];
@@ -179,7 +179,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (inputLockDeny == null)
@@ -226,7 +226,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (inputLockDeny == null)
@@ -274,7 +274,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetKey));
 
             if (inputLockDeny == null)
@@ -317,7 +317,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseDelta));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetMouseDelta));
 
             if (inputLockDeny == null)
@@ -363,7 +363,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseButton));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetMouseButton));
 
             if (inputLockDeny == null)
@@ -406,7 +406,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseScrollDelta));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetMouseScrollDelta));
 
             if (inputLockDeny == null)
@@ -441,7 +441,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetAnyKeyDown));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetAnyKeyDown));
 
             if (inputLockDeny == null)
@@ -471,7 +471,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetAnyKey));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(GetAnyKey));
 
             if (inputLockDeny == null)
@@ -501,7 +501,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(InputLockCheck));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(InputLockCheck));
 
             if (inputLockDeny == null)
@@ -547,7 +547,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SetInputLock));
 
             Data.inputLockList[key] = value;
@@ -576,7 +576,7 @@ namespace SCKRM.Input
             if (!Application.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
-            if (!Kernel.isInitialLoadEnd)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SetInputLock));
 
             if (Data.inputLockList.ContainsKey(key))

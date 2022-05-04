@@ -102,7 +102,7 @@ namespace SCKRM.NBS
         public override void Refresh()
         {
             {
-                if (!Kernel.isInitialLoadEnd)
+                if (!InitialLoadManager.isInitialLoadEnd)
                 {
                     Remove();
                     return;

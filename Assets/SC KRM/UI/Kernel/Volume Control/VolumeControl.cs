@@ -1,4 +1,5 @@
 using SCKRM.Input;
+using SCKRM.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -38,13 +39,13 @@ namespace SCKRM.UI
                     switch (type)
                     {
                         case Type.main:
-                            slider.value = slider.value.Lerp(Kernel.SaveData.mainVolume, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            slider.value = slider.value.Lerp(SoundManager.SaveData.mainVolume, lerpValue * Kernel.fpsUnscaledDeltaTime);
                             break;
                         case Type.bgm:
-                            slider.value = slider.value.Lerp(Kernel.SaveData.bgmVolume, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            slider.value = slider.value.Lerp(SoundManager.SaveData.bgmVolume, lerpValue * Kernel.fpsUnscaledDeltaTime);
                             break;
                         case Type.sound:
-                            slider.value = slider.value.Lerp(Kernel.SaveData.soundVolume, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            slider.value = slider.value.Lerp(SoundManager.SaveData.soundVolume, lerpValue * Kernel.fpsUnscaledDeltaTime);
                             break;
                     }
                 }
@@ -53,13 +54,13 @@ namespace SCKRM.UI
                     switch (type)
                     {
                         case Type.main:
-                            slider.value = Kernel.SaveData.mainVolume;
+                            slider.value = SoundManager.SaveData.mainVolume;
                             break;
                         case Type.bgm:
-                            slider.value = Kernel.SaveData.bgmVolume;
+                            slider.value = SoundManager.SaveData.bgmVolume;
                             break;
                         case Type.sound:
-                            slider.value = Kernel.SaveData.soundVolume;
+                            slider.value = SoundManager.SaveData.soundVolume;
                             break;
                     }
                 }
@@ -68,13 +69,13 @@ namespace SCKRM.UI
             switch (type)
             {
                 case Type.main:
-                    valueText.text = Kernel.SaveData.mainVolume.ToString();
+                    valueText.text = SoundManager.SaveData.mainVolume.ToString();
                     break;
                 case Type.bgm:
-                    valueText.text = Kernel.SaveData.bgmVolume.ToString();
+                    valueText.text = SoundManager.SaveData.bgmVolume.ToString();
                     break;
                 case Type.sound:
-                    valueText.text = Kernel.SaveData.soundVolume.ToString();
+                    valueText.text = SoundManager.SaveData.soundVolume.ToString();
                     break;
             }
         }
@@ -86,13 +87,13 @@ namespace SCKRM.UI
                 switch (type)
                 {
                     case Type.main:
-                        Kernel.SaveData.mainVolume = (int)slider.value;
+                        SoundManager.SaveData.mainVolume = (int)slider.value;
                         break;
                     case Type.bgm:
-                        Kernel.SaveData.bgmVolume = (int)slider.value;
+                        SoundManager.SaveData.bgmVolume = (int)slider.value;
                         break;
                     case Type.sound:
-                        Kernel.SaveData.soundVolume = (int)slider.value;
+                        SoundManager.SaveData.soundVolume = (int)slider.value;
                         break;
                 }
             }

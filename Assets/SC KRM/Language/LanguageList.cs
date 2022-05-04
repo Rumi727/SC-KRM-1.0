@@ -21,13 +21,13 @@ namespace SCKRM.Language.UI
 
         protected override void Awake()
         {
-            Kernel.initialLoadEnd += ListRefresh;
+            InitialLoadManager.initialLoadEnd += ListRefresh;
             Kernel.allRefreshEnd += ListRefresh;
         }
 
         protected override void OnDestroy()
         {
-            Kernel.initialLoadEnd -= ListRefresh;
+            InitialLoadManager.initialLoadEnd -= ListRefresh;
             Kernel.allRefreshEnd -= ListRefresh;
         }
 

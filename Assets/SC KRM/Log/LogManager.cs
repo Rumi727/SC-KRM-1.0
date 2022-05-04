@@ -22,7 +22,7 @@ namespace SCKRM.Log
 
         void Update()
         {
-            if (Kernel.isInitialLoadEnd)
+            if (InitialLoadManager.isInitialLoadEnd)
             {
                 if (logs.TryDequeue(out Log log))
                 {
