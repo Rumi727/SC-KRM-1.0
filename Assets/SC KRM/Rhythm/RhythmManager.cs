@@ -12,7 +12,16 @@ namespace SCKRM
         public static bool dropPart { get; set; } = false;
         public static float bpm { get; set; } = 100;
 
-        public static float bpmFpsDeltaTime => unscaledFpsDeltaTimeEnable ? bpm * 0.01f * Kernel.fpsUnscaledDeltaTime : bpm * 0.01f * Kernel.fpsDeltaTime;
+        public static float bpmFpsDeltaTime
+        {
+            get
+            {
+                if (unscaledFpsDeltaTimeEnable)
+                    return bpm * 0.01f * Kernel.fpsUnscaledDeltaTime;
+                else
+                    return bpm * 0.01f * Kernel.fpsDeltaTime;
+            }
+        }
 
         public static bool unscaledFpsDeltaTimeEnable { get; set; } = false;
 

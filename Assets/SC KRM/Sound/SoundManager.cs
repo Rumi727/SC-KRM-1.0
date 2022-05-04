@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using K4.Threading;
 using Newtonsoft.Json;
 using SCKRM.NBS;
 using SCKRM.Object;
@@ -31,9 +32,17 @@ namespace SCKRM.Sound
                 {
                     _mainVolume = value;
 
-                    //볼륨을 사용자가 설정한 볼륨으로 조정시킵니다. 사용자가 설정한 볼륨은 int 0 ~ 200 이기 때문에 0.01을 곱해주어야 하고,
-                    //100 ~ 200 볼륨이 먹혀야하기 때문에 0.5로 볼륨을 낮춰야하기 때문에 0.005를 곱합니다
-                    AudioListener.volume = value.Clamp(0, 200) * 0.005f;
+                    if (ThreadManager.isMainThread)
+                        VolumeChange();
+                    else
+                        K4UnityThreadDispatcher.Execute(VolumeChange);
+
+                    void VolumeChange()
+                    {
+                        //볼륨을 사용자가 설정한 볼륨으로 조정시킵니다. 사용자가 설정한 볼륨은 int 0 ~ 200 이기 때문에 0.01을 곱해주어야 하고,
+                        //100 ~ 200 볼륨이 먹혀야하기 때문에 0.5로 볼륨을 낮춰야하기 때문에 0.005를 곱합니다
+                        AudioListener.volume = value.Clamp(0, 200) * 0.005f;
+                    }
                 }
             }
             static int _bgmVolume = 100; [JsonProperty] public static int bgmVolume { get => _bgmVolume.Clamp(0, 200); set => _bgmVolume = value; }

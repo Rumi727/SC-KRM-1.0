@@ -256,7 +256,9 @@ namespace SCKRM
 
         void Update()
         {
-            VariableUpdate();
+            //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
+            gameSpeed = gameSpeed.Clamp(0, 100);
+            Time.timeScale = gameSpeed;
 
             //유니티의 내장 변수들은 테스트 결과, 약간의 성능을 더 먹는것으로 확인되었기 때문에
             //이렇게 관리 스크립트가 변수를 할당하고 다른 스크립트가 그 변수를 가져오는것이 성능에 더 도움 되는것을 확인하였습니다
@@ -267,19 +269,6 @@ namespace SCKRM
             fpsUnscaledDeltaTime = unscaledDeltaTime * VideoManager.Data.standardFPS;
             fixedDeltaTime = 1f / VideoManager.Data.standardFPS;
             Time.fixedDeltaTime = fixedDeltaTime;
-
-            Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
-        }
-
-        //변수 업데이트
-        void VariableUpdate()
-        {
-            //현제 해상도의 가로랑 1920을 나눠서 모든 해상도에도 가로 픽셀 크기는 똑같이 유지되게 함
-            float defaultGuiSize = Screen.width / 1920f;
-
-            //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
-            gameSpeed = gameSpeed.Clamp(0, 100);
-            Time.timeScale = gameSpeed;
         }
 
 

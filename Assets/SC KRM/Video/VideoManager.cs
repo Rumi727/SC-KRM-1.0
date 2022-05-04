@@ -1,6 +1,8 @@
+using K4.Threading;
 using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
+using SCKRM.Threads;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,11 +30,19 @@ namespace SCKRM
                 {
                     _vSync = value;
 
-                    //수직동기화
-                    if (value)
-                        QualitySettings.vSyncCount = 1;
+                    if (ThreadManager.isMainThread)
+                        VSyncChange();
                     else
-                        QualitySettings.vSyncCount = 0;
+                        K4UnityThreadDispatcher.Execute(VSyncChange);
+
+                    void VSyncChange()
+                    {
+                        //수직동기화
+                        if (value)
+                            QualitySettings.vSyncCount = 1;
+                        else
+                            QualitySettings.vSyncCount = 0;
+                    }
                 }
             }
 
@@ -44,7 +54,14 @@ namespace SCKRM
                 set
                 {
                     _fpsLimit = value;
-                    Application.targetFrameRate = value.Clamp(1);
+
+                    if (ThreadManager.isMainThread)
+                        FpsLimitChange();
+                    else
+                        K4UnityThreadDispatcher.Execute(FpsLimitChange);
+                        
+
+                    void FpsLimitChange() => Application.targetFrameRate = value.Clamp(1);
                 }
             }
         }

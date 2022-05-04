@@ -65,6 +65,8 @@ namespace SCKRM
         bool dragStart = false;
         void LateUpdate()
         {
+            Cursor.visible = InputManager.mousePosition.x < 0 || InputManager.mousePosition.x > Screen.width || InputManager.mousePosition.y < 0 || InputManager.mousePosition.y > Screen.height;
+
             if (InitialLoadManager.isInitialLoadEnd)
             {
 #if UNITY_STANDALONE_WIN
