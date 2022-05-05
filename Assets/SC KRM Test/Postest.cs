@@ -8,14 +8,44 @@ using UnityEngine;
 public class Postest : MonoBehaviour
 {
     Vector2 rotation = Vector2.zero;
-    int nextBeat = 0;
 
     SoundPlayer soundPlayer;
+    Map map;
 
-    void Awake() => soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
+    public GameObject test;
+
+    void Awake()
+    {
+        soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
+        map = new Map(new MapInfo(), new MapEffect());
+        map.info.offset = 1.195;
+        map.effect.bpm.Add(new BeatValuePair<double>(0, 171));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(0, false));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(161, true));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(288, false));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(429, true));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(556, false));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(605, true));
+        map.effect.dropPart.Add(new BeatValuePair<bool>(732, false));
+
+        /*map.effect.test.Add(new BeatValuePairAni<double>(0, 0, 0, EasingFunction.Ease.Linear));
+        bool temp = false;
+        for (int i = 0; i < 1000; i += 4)
+        {
+            if (temp)
+                map.effect.test.Add(new BeatValuePairAni<double>(i, 0, 3, EasingFunction.Ease.EaseInOutBounce));
+            else
+                map.effect.test.Add(new BeatValuePairAni<double>(i, 1, 3, EasingFunction.Ease.EaseInOutBounce));
+
+            temp = !temp;
+        }*/
+    }
 
     void Update()
     {
+        if (!RhythmManager.isPlaying)
+            RhythmManager.Play(soundPlayer, map);
+
         float speed;
         if (InputManager.GetKey(KeyCode.LeftControl, InputType.Alway))
             speed = 0.25f * Kernel.fpsUnscaledDeltaTime;
@@ -50,15 +80,6 @@ public class Postest : MonoBehaviour
 
         transform.localEulerAngles = rotation;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            RhythmManager.isBeatPlay = !RhythmManager.isBeatPlay;
-
-        float currentBeat = (soundPlayer.time - 1.18f) * (171f / 60f);
-        RhythmManager.bpm = 171;
-        while (currentBeat >= nextBeat)
-        {
-            nextBeat++;
-            RhythmManager.OneBeatInvoke();
-        }
+        //test.transform.position = new Vector2((float)RhythmManager.map.effect.test.GetValue(), 0);
     }
 }

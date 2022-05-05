@@ -30,7 +30,7 @@ namespace SCKRM.UI
 
         void Update()
         {
-            if (RhythmManager.isBeatPlay)
+            if (RhythmManager.isPlaying)
                 graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, graphic.color.a - 0.01f * RhythmManager.bpmFpsDeltaTime);
             else
                 graphic.color = graphic.color.MoveTowards(new Color(graphic.color.r, graphic.color.g, graphic.color.b, 0), 0.025f * Kernel.fpsUnscaledDeltaTime);
