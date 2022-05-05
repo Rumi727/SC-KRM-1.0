@@ -54,14 +54,28 @@ namespace SCKRM
                     Stop();
                 else
                 {
-                    currentBeat = (double)((time - map.info.offset - bpmOffsetTime) * (bpm / 60d)) + bpmOffsetBeat;
+                    void SetCurrentBeat() => currentBeat = (double)((time - map.info.offset - bpmOffsetTime) * (bpm / 60d)) + bpmOffsetBeat;
+                    SetCurrentBeat();
 
-                    bpm = map.effect.bpm.GetValue(currentBeat, out double beat, out bool isValueChanged);
-                    if (isValueChanged)
-                        BPMChange(bpm, beat);
+                    {
+                        bpm = map.effect.bpm.GetValue(currentBeat, out double beat, out bool isValueChanged);
 
-                    bpmFpsDeltaTime = (float)(bpm * 0.01f * Kernel.fpsDeltaTime * soundPlayer.speed);
-                    bpmUnscaledFpsDeltaTime = (float)(bpm * 0.01f * Kernel.fpsUnscaledDeltaTime * soundPlayer.speed);
+                        soundPlayer.timeChanged -= TimeChange;
+                        soundPlayer.timeChanged += TimeChange;
+
+                        if (isValueChanged)
+                        {
+                            BPMChange(bpm, beat);
+                            SetCurrentBeat();
+                        }
+
+                        void TimeChange() => BPMChange(bpm, beat);
+                    }
+
+                    {
+                        bpmFpsDeltaTime = (float)(bpm * 0.01f * Kernel.fpsDeltaTime * soundPlayer.speed);
+                        bpmUnscaledFpsDeltaTime = (float)(bpm * 0.01f * Kernel.fpsUnscaledDeltaTime * soundPlayer.speed);
+                    }
 
                     dropPart = map.effect.dropPart.GetValue();
 
@@ -84,7 +98,7 @@ namespace SCKRM
 
         static void BPMChange(double bpm, double offsetBeat)
         {
-            bpmOffsetBeat = offsetBeat + (bpm / map.effect.bpm[0].value) - 1;
+            bpmOffsetBeat = offsetBeat + (bpm / map.effect.bpm[0].value);
 
             bpmOffsetTime = 0;
             double tempBeat = 0;

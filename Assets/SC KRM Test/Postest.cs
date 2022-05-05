@@ -4,6 +4,7 @@ using SCKRM.Sound;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Postest : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Postest : MonoBehaviour
 
     SoundPlayer soundPlayer;
     Map map;
+    public Text text;
 
     public GameObject test;
 
@@ -18,7 +20,7 @@ public class Postest : MonoBehaviour
     {
         soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
         map = new Map(new MapInfo(), new MapEffect());
-        map.info.offset = 1.195;
+        map.info.offset = 1.545;
         map.effect.bpm.Add(new BeatValuePair<double>(0, 171));
         map.effect.dropPart.Add(new BeatValuePair<bool>(0, false));
         map.effect.dropPart.Add(new BeatValuePair<bool>(161, true));
@@ -27,6 +29,20 @@ public class Postest : MonoBehaviour
         map.effect.dropPart.Add(new BeatValuePair<bool>(556, false));
         map.effect.dropPart.Add(new BeatValuePair<bool>(605, true));
         map.effect.dropPart.Add(new BeatValuePair<bool>(732, false));
+
+        /*bool temp = false;
+        for (int i = 4; i < 1000; i += 4)
+        {
+            if (temp)
+                map.effect.bpm.Add(new BeatValuePair<double>(i, 171));
+            else
+            {
+                map.effect.bpm.Add(new BeatValuePair<double>(i, 342));
+                i += 4;
+            }
+
+            temp = !temp;
+        }*/
 
         /*map.effect.test.Add(new BeatValuePairAni<double>(0, 0, 0, EasingFunction.Ease.Linear));
         bool temp = false;
@@ -79,6 +95,7 @@ public class Postest : MonoBehaviour
         }
 
         transform.localEulerAngles = rotation;
+        text.text = RhythmManager.currentBeat.ToString();
 
         //test.transform.position = new Vector2((float)RhythmManager.map.effect.test.GetValue(), 0);
     }
