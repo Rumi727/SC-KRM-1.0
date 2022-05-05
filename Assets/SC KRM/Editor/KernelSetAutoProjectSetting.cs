@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 using SCKRM.Camera;
 using SCKRM.UI;
 using UnityEngine.UI;
-using UnityEditorInternal;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.IO;
 
 namespace SCKRM.Editor
 {
@@ -20,7 +21,9 @@ namespace SCKRM.Editor
 
         static KernelSetAutoProjectSetting()
         {
+            PlayerSettings.allowFullscreenSwitch = false;
             AudioListener.volume = 0.5f;
+
             EditorBuildSettings.sceneListChanged += SceneListChanged;
             EditorApplication.hierarchyChanged += HierarchyChanged;
         }
