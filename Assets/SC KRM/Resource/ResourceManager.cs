@@ -819,8 +819,14 @@ namespace SCKRM.Resource
             AudioSettings.Reset(AudioSettings.GetConfiguration());
 
             AsyncTask asyncTask = new AsyncTask("notice.running_task.audio_refresh.name", "", false, true);
+            resourceRefreshAsyncTask = asyncTask;
+            resourceRefreshDetailedAsyncTask = asyncTask;
+
             await SetAudio();
             asyncTask.Remove(true);
+
+            resourceRefreshAsyncTask = null;
+            resourceRefreshDetailedAsyncTask = null;
 
             isAudioReset = false;
 

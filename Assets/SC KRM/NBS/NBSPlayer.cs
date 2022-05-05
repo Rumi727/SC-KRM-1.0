@@ -10,7 +10,7 @@ using UnityEngine;
 namespace SCKRM.NBS
 {
     [AddComponentMenu("")]
-    public sealed class NBSPlayer : SoundPlayerManager<NBSMetaData>
+    public sealed class NBSPlayer : SoundPlayerParent<NBSMetaData>
     {
         public NBSFile nbsFile => metaData.nbsFile;
 

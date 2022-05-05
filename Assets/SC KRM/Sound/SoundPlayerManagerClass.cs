@@ -6,15 +6,8 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerManager<MetaData> : ObjectPooling where MetaData : SoundMetaDataManager
+    public abstract class SoundPlayerVariable : ObjectPooling
     {
-        public SoundData<MetaData> soundData { get; protected set; }
-        public SoundData<MetaData> customSoundData { get; set; }
-
-        public MetaData metaData { get; protected set; }
-
-
-
         public abstract float time { get; set; }
         public abstract float realTime { get; set; }
 
@@ -61,10 +54,6 @@ namespace SCKRM.Sound
         {
             base.Remove();
 
-            soundData = null;
-            customSoundData = null;
-            metaData = null;
-
             time = 0;
             realTime = 0;
 
@@ -84,5 +73,13 @@ namespace SCKRM.Sound
             maxDistance = 16;
             localPosition = Vector3.zero;
         }
+    }
+
+    public abstract class SoundPlayerParent<MetaData> : SoundPlayerVariable where MetaData : SoundMetaDataManager
+    {
+        public SoundData<MetaData> soundData { get; protected set; }
+        public SoundData<MetaData> customSoundData { get; set; }
+
+        public MetaData metaData { get; protected set; }
     }
 }
