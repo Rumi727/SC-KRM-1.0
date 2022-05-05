@@ -40,14 +40,16 @@ namespace SCKRM.Sound
             {
                 audioSource.time = value;
                 tempTime = audioSource.time;
+
+                TimeChangedInvoke();
             }
         }
-        public override float realTime { get => time / speed; set => audioSource.time = value * speed; }
+        public override float realTime { get => time / speed; set => time = value * speed; }
 
         public override float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
         public override float realLength => length / speed;
 
-        public float speed
+        public override float speed
         {
             get => (soundData != null && soundData.isBGM && SoundManager.Data.useTempo) ? tempo : pitch;
             set
@@ -94,7 +96,10 @@ namespace SCKRM.Sound
                         audioSource.time = length - 0.001f;
 
                     if (audioSource.time > tempTime)
+                    {
                         isLooped = true;
+                        LoopedInvoke();
+                    }
                 }
                 else
                 {
@@ -104,6 +109,7 @@ namespace SCKRM.Sound
                             audioSource.time = metaData.loopStartTime;
 
                         isLooped = true;
+                        LoopedInvoke();
                     }
                 }
 

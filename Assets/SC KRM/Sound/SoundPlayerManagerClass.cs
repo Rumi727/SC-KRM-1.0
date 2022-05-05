@@ -1,5 +1,6 @@
 using SCKRM.Object;
 using SCKRM.Resource;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,21 @@ namespace SCKRM.Sound
         public abstract float length { get; }
         public abstract float realLength { get; }
 
-        public abstract bool isLooped { get; protected set; }
 
+
+        public abstract bool isLooped { get; protected set; }
         public abstract bool isPaused { get; set; }
+
+
+
+        public abstract float speed { get; set; }
+
+
+
+        public event Action timeChanged;
+        public event Action looped;
+        protected void TimeChangedInvoke() => timeChanged?.Invoke();
+        protected void LoopedInvoke() => looped?.Invoke();
 
 
 

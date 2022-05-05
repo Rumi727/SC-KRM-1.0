@@ -43,6 +43,8 @@ namespace SCKRM.NBS
                 tickTimer = 0;
                 _tick = value;
                 _index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
+
+                TimeChangedInvoke();
             }
         }
 
@@ -53,6 +55,8 @@ namespace SCKRM.NBS
             {
                 tick = (int)(value * 20);
                 tickTimer = ((value * 20) - (int)(value * 20)) * 0.05f;
+
+                TimeChangedInvoke();
             }
         }
         public override float realTime { get => time / tempo; set => time = value * tempo; }
@@ -62,6 +66,8 @@ namespace SCKRM.NBS
 
         public override bool isLooped { get; protected set; } = false;
         public override bool isPaused { get; set; } = false;
+
+        public override float speed { get => tempo; set => tempo = value; }
 
 
 
@@ -281,6 +287,7 @@ namespace SCKRM.NBS
                     }
 
                     isLooped = true;
+                    LoopedInvoke();
                 }
                 else
                     Remove();
