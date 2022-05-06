@@ -176,16 +176,15 @@ namespace SCKRM
     {
         public BeatValuePairList<double> bpm = new BeatValuePairList<double>();
         public BeatValuePairList<bool> dropPart = new BeatValuePairList<bool>();
-        //public BeatValuePairAniListDouble test = new BeatValuePairAniListDouble();
     }
 
-    public class BeatValuePairList<T> : List<BeatValuePair<T>> where T : struct
+    public sealed class BeatValuePairList<T> : List<BeatValuePair<T>> where T : struct
     {
         public T GetValue() => GetValue(RhythmManager.currentBeat, out _, out _);
         public T GetValue(double currentBeat) => GetValue(currentBeat, out _, out _);
 
         T tempValue = default;
-        public virtual T GetValue(double currentBeat, out double beat, out bool isValueChanged)
+        public T GetValue(double currentBeat, out double beat, out bool isValueChanged)
         {
             T value;
             if (Count <= 0)
@@ -216,13 +215,13 @@ namespace SCKRM
         }
     }
 
-    public class BeatValuePairAniListDouble : List<BeatValuePairAni<double>>
+    public sealed class BeatValuePairAniListDouble : List<BeatValuePairAni<double>>
     {
         public double GetValue() => GetValue(RhythmManager.currentBeat, out _, out _);
         public double GetValue(double currentBeat) => GetValue(currentBeat, out _, out _);
 
         double tempValue = default;
-        public virtual double GetValue(double currentBeat, out double beat, out bool isValueChanged)
+        public double GetValue(double currentBeat, out double beat, out bool isValueChanged)
         {
             double value;
             if (Count <= 0)
