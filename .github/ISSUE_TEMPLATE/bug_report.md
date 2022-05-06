@@ -1,39 +1,33 @@
 ---
-name: Bug report
-about: I hate bugs!!
-title: ''
+name: 버그 리포트
+about: 난 버그가 싫어!!
+title: "[버그] 심심한 초보가 쿠루미를 좋아하지 않는 심각한 버그"
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**- 버그에 대한 설명 -**
+버그에 대한 짧지만 명확한 설명
 
-**To Reproduce**
-Steps to reproduce the behavior
-1. Left-click the mouse to view 'School Live!'
-2. Scroll down
-3. See error
+**- 재연 방법 -**
+버그를 재연 하는 단계
+1. '학교생활!' 애니를 보기 위해 마우스를 왼쪽 클릭
+2. 아래로 스크롤
+3. 버그 발생
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**- 스크린샷 (동영상) -**
+버그를 설명하는데 도움 되는 스크린샷 (동영상)을 업로드
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**- 데스크탑 -**
+ - 운영체제: Windows 10
+ - 버전: 21H2
 
-**Desktop**
- - OS: [e.g. iOS]
- - Version [e.g. 22]
+**- 스마트폰 -**
+ - 기종: 삼성 갤럭시 A31
+ - 운영체제: One UI (안드로이드)
+ - 버전: 11
 
-**Smartphone**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Version [e.g. 22]
-
-Simsimhan Chobo: (~~Ebisuzawa Kurumi~~): ... In fact, even if I know the OS information, I can't figure out the bug.
-You do not need to bother writing OS information.
-Well... it's not bad to write
-
-**Additional context**
-Add any other context about the problem here.
+Simsimhan Chobo: (~~Ebisuzawa Kurumi~~): ... 사실 제 실력으로는 운영체제 정보를 안다고 해서 버그를 쉽게 고칠 수 있진 않습니다
+운영체제 정보를 구지 적지 않으셔도 됩니다
+뭐... 써도 나쁘진 않습니다 가상머신으로 테스트 할 순 있거든요
