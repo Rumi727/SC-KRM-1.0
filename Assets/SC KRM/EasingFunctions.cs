@@ -102,10 +102,7 @@ public static class EasingFunction
     // Easing functions
     //
 
-    public static double Linear(double start, double end, double value)
-    {
-        return start + (end - value) * value;
-    }
+    public static double Linear(double start, double end, double value) => start.Lerp(end, value, true);
 
     public static double Spring(double start, double end, double value)
     {
