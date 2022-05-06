@@ -45,6 +45,12 @@ namespace SCKRM
         public static event Action oneBeat = () => { };
         public static event Action oneBeatDropPart = () => { };
 
+
+
+        void Awake() => SingletonCheck(this);
+
+
+
         static int tempCurrentBeat = 0;
         void Update()
         {
@@ -88,10 +94,10 @@ namespace SCKRM
                         tempCurrentBeat = (int)currentBeat;
                     }
 
-                    Debug.Log("time: " + time);
+                    /*Debug.Log("time: " + time);
                     Debug.Log("currentBeat: " + currentBeat);
                     Debug.Log("bpm: " + bpm);
-                    Debug.Log("dropPart: " + dropPart);
+                    Debug.Log("dropPart: " + dropPart);*/
                 }
             }
         }
