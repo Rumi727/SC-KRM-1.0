@@ -1,5 +1,3 @@
-//이 커밋은 단지 풀 리퀘스트를 테스트 하기 위함입니다
-
 using SCKRM;
 using SCKRM.Input;
 using SCKRM.Sound;
