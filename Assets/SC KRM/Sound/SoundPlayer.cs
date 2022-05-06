@@ -82,6 +82,11 @@ namespace SCKRM.Sound
 
 
 
+        public delegate void OnAudioFilterReadAction(float[] data, int channels);
+        public event OnAudioFilterReadAction onAudioFilterReadEvent;
+
+
+
         float tempTime = 0;
         void Update()
         {
@@ -122,10 +127,19 @@ namespace SCKRM.Sound
 
 
 
+        void OnAudioFilterRead(float[] data, int channels)
+        {
+#if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isCompiling)
+                return;
+#endif
+            onAudioFilterReadEvent?.Invoke(data, channels);
+        }
+
+
+
         public override void Refresh()
         {
-            float time = audioSource.time;
-
             {
                 if (!InitialLoadManager.isInitialLoadEnd)
                 {
@@ -253,6 +267,8 @@ namespace SCKRM.Sound
                     audioSource.volume = volume * (SoundManager.SaveData.soundVolume * 0.01f);
             }
         }
+
+
 
         public override void Remove()
         {
