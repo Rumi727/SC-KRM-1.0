@@ -16,10 +16,19 @@ public class Postest : MonoBehaviour
 
     public GameObject test;
 
+    public class MapEffect : SCKRM.MapEffect
+    {
+        public BeatValuePairAniListDouble test = new BeatValuePairAniListDouble();
+    }
+
+    MapEffect mapEffect;
+
     void Awake()
     {
         soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
         map = new Map(new MapInfo(), new MapEffect());
+        mapEffect = (MapEffect)map.effect;
+
         map.info.offset = 1.545;
         map.effect.bpm.Add(new BeatValuePair<double>(0, 171));
         map.effect.dropPart.Add(new BeatValuePair<bool>(0, false));
@@ -44,17 +53,20 @@ public class Postest : MonoBehaviour
             temp = !temp;
         }*/
 
-        /*map.effect.test.Add(new BeatValuePairAni<double>(0, 0, 0, EasingFunction.Ease.Linear));
+        mapEffect.test.Add(new BeatValuePairAni<double>(-3, -2, 0, EasingFunction.Ease.Linear));
+        mapEffect.test.Add(new BeatValuePairAni<double>(-3, -1, 1, EasingFunction.Ease.Linear));
+        mapEffect.test.Add(new BeatValuePairAni<double>(-2, -2, 1, EasingFunction.Ease.Linear));
+        mapEffect.test.Add(new BeatValuePairAni<double>(-1, 2, 1, EasingFunction.Ease.Linear));
         bool temp = false;
         for (int i = 0; i < 1000; i += 4)
         {
             if (temp)
-                map.effect.test.Add(new BeatValuePairAni<double>(i, 0, 3, EasingFunction.Ease.EaseInOutBounce));
+                mapEffect.test.Add(new BeatValuePairAni<double>(i, 1, 3, EasingFunction.Ease.EaseInOutElastic));
             else
-                map.effect.test.Add(new BeatValuePairAni<double>(i, 1, 3, EasingFunction.Ease.EaseInOutBounce));
+                mapEffect.test.Add(new BeatValuePairAni<double>(i, 0, 3, EasingFunction.Ease.EaseInOutElastic));
 
             temp = !temp;
-        }*/
+        }
     }
 
     void Update()
@@ -97,6 +109,6 @@ public class Postest : MonoBehaviour
         transform.localEulerAngles = rotation;
         text.text = RhythmManager.currentBeat.ToString();
 
-        //test.transform.position = new Vector2((float)RhythmManager.map.effect.test.GetValue(), 0);
+        test.transform.position = new Vector2((float)mapEffect.test.GetValue(), 0);
     }
 }
