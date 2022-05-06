@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/UI/Selectable")]
+    [RequireComponent(typeof(RequireComponent))]
     public sealed class CustomSelectableRenderer : CustomImageRenderer
     {
         [SerializeField, HideInInspector] Selectable _selectable;
@@ -41,17 +42,10 @@ namespace SCKRM.Renderer
             spriteState.disabledSprite = await SpriteReload(disabledSprite.type, disabledSprite.name, disabledSprite.index, disabledSprite.nameSpace);
 
             if (ThreadManager.isMainThread)
-            {
-                if (selectable != null)
-                    selectable.spriteState = spriteState;
-            }
+                selectable.spriteState = spriteState;
             else
             {
-                await K4UnityThreadDispatcher.Execute(() =>
-                {
-                    if (selectable != null)
-                        selectable.spriteState = spriteState;
-                });
+                await K4UnityThreadDispatcher.Execute(() => selectable.spriteState = spriteState);
             }
         }
 
