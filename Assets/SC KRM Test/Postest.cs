@@ -25,7 +25,7 @@ public class Postest : MonoBehaviour
 
     void Awake()
     {
-        soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
+        /*soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
         map = new Map(new MapInfo(), new MapEffect());
         mapEffect = (MapEffect)map.effect;
 
@@ -53,7 +53,7 @@ public class Postest : MonoBehaviour
             temp = !temp;
         }*/
 
-        mapEffect.test.Add(new BeatValuePairAni<double>(-3, -2, 0, EasingFunction.Ease.Linear));
+        /*mapEffect.test.Add(new BeatValuePairAni<double>(-3, -2, 0, EasingFunction.Ease.Linear));
         mapEffect.test.Add(new BeatValuePairAni<double>(-3, -1, 1, EasingFunction.Ease.Linear));
         mapEffect.test.Add(new BeatValuePairAni<double>(-2, -2, 1, EasingFunction.Ease.Linear));
         mapEffect.test.Add(new BeatValuePairAni<double>(-1, 2, 1, EasingFunction.Ease.Linear));
@@ -66,13 +66,13 @@ public class Postest : MonoBehaviour
                 mapEffect.test.Add(new BeatValuePairAni<double>(i, 0, 3, EasingFunction.Ease.EaseInOutElastic));
 
             temp = !temp;
-        }
+        }*/
     }
 
     void Update()
     {
-        if (!RhythmManager.isPlaying)
-            RhythmManager.Play(soundPlayer, map);
+        /*if (!RhythmManager.isPlaying)
+            RhythmManager.Play(soundPlayer, map);*/
 
         float speed;
         if (InputManager.GetKey(KeyCode.LeftControl, InputType.Alway))
