@@ -21,6 +21,7 @@ namespace SCKRM.Editor
 
             UseProperty("_showEvent");
             UseProperty("_hideEvent");
+            UseProperty("_backEvent");
         }
     }
 }
