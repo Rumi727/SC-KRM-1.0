@@ -48,6 +48,11 @@ namespace SCKRM.Input
         {
             get
             {
+#if UNITY_EDITOR
+                if (Application.isPlaying)
+                    throw new NotPlayModeMethodException();
+#endif
+
                 if (_controlSettingList == null)
                     _controlSettingList = InputListMerge();
 
