@@ -80,6 +80,10 @@ namespace SCKRM.Input
 
 
 
+        public static event Action controlSaveDataResetEvent;
+
+
+
         /// <summary>
         /// 픽셀 좌표의 현재 마우스 위치
         /// The current mouse position in pixel coordinates
@@ -592,6 +596,13 @@ namespace SCKRM.Input
 
 
         public static void ControlListRefresh() => _controlSettingList = InputListMerge();
+        public static void ControlSaveDataReset()
+        {
+            SaveData.controlSettingList.Clear();
+            ControlListRefresh();
+
+            controlSaveDataResetEvent?.Invoke();
+        }
 
 
 
