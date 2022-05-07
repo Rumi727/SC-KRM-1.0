@@ -117,6 +117,12 @@ namespace SCKRM.Editor
                         else if (!kernel.gameObject.activeSelf)
                             UnityEngine.Object.DestroyImmediate(kernel.gameObject);
                     }
+                    else
+                    {
+                        Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
+                        if (kernel != null)
+                            UnityEngine.Object.DestroyImmediate(kernel.gameObject);
+                    }
 
                     UnityEngine.Camera[] cameras = UnityEngine.Object.FindObjectsOfType<UnityEngine.Camera>(true);
                     for (int i = 0; i < cameras.Length; i++)
