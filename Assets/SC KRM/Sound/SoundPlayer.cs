@@ -127,14 +127,7 @@ namespace SCKRM.Sound
 
 
 
-        void OnAudioFilterRead(float[] data, int channels)
-        {
-#if UNITY_EDITOR
-            if (UnityEditor.EditorApplication.isCompiling)
-                return;
-#endif
-            onAudioFilterReadEvent?.Invoke(data, channels);
-        }
+        void OnAudioFilterRead(float[] data, int channels) => onAudioFilterReadEvent?.Invoke(data, channels);
 
 
 
