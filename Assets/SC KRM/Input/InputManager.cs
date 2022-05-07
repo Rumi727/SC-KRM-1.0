@@ -49,7 +49,7 @@ namespace SCKRM.Input
             get
             {
 #if UNITY_EDITOR
-                if (Application.isPlaying)
+                if (!Application.isPlaying)
                     throw new NotPlayModeMethodException();
 #endif
 
