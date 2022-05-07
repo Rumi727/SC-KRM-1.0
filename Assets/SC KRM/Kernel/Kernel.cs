@@ -22,13 +22,6 @@ namespace SCKRM
     [AddComponentMenu("커널/커널")]
     public sealed class Kernel : Manager<Kernel>
     {
-        [ProjectSettingSaveLoad]
-        public sealed class Data
-        {
-            [JsonProperty] public static string splashScreenPath { get; set; } = "Assets/SC KRM/Splash Screen";
-            [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
-        }
-
         public static float fps { get; private set; } = 60;
 
         public static float deltaTime { get; private set; } = fps60second;

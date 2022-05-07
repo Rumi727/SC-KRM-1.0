@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using SCKRM.Splash;
 
 namespace SCKRM.Editor
 {
@@ -40,7 +41,7 @@ namespace SCKRM.Editor
                 {
                     sceneListChangedEnable = false;
 
-                    EditorSceneManager.OpenScene($"{PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName)}.unity");
+                    EditorSceneManager.OpenScene($"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity");
                     HierarchyChanged();
 
                     string splashScenePath = SceneManager.GetActiveScene().path;
@@ -77,7 +78,7 @@ namespace SCKRM.Editor
             {
                 sceneListChangedEnable = true;
                 Debug.LogException(e);
-                Debug.LogWarning($"{Kernel.Data.splashScreenName} 씬이 없는것같습니다 씬을 추가해주세요");
+                Debug.LogWarning($"{SplashScreen.Data.splashScreenName} 씬이 없는것같습니다 씬을 추가해주세요");
             }
             catch (Exception e)
             {
@@ -98,7 +99,7 @@ namespace SCKRM.Editor
                 {
                     hierarchyChangedEnable = false;
                     
-                    if (SceneManager.GetActiveScene().path == $"{PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName)}.unity")
+                    if (SceneManager.GetActiveScene().path == $"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity")
                     {
                         Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
                         if (kernel == null)
