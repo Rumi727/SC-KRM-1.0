@@ -1,11 +1,4 @@
-using Cysharp.Threading.Tasks;
-using SCKRM.Resource;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using SCKRM.UI;
-using TMPro;
 using SCKRM.SaveLoad;
 using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
