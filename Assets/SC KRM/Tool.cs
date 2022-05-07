@@ -2623,6 +2623,9 @@ namespace SCKRM
                 case KeyCode.LeftParen:
                     text = "(";
                     break;
+                case KeyCode.LeftWindows when simply:
+                    text = "LW";
+                    break;
                 case KeyCode.Less:
                     text = "<";
                     break;
@@ -2694,6 +2697,9 @@ namespace SCKRM
                     break;
                 case KeyCode.RightParen:
                     text = ")";
+                    break;
+                case KeyCode.RightWindows when simply:
+                    text = "LW";
                     break;
                 case KeyCode.Semicolon:
                     text = ";";
