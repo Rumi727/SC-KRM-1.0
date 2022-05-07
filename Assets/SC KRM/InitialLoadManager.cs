@@ -59,7 +59,14 @@ namespace SCKRM
                     Scene scene = SceneManager.GetActiveScene();
                     int startedSceneIndex = scene.buildIndex;
                     if (startedSceneIndex != 0)
+                    {
+                        //씬을 이동하기 전에 Awake가 작동하지 않게 모든 오브젝트를 삭제합니다
+                        MonoBehaviour[] gameObjects = UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true);
+                        for (int i = 0; i < gameObjects.Length; i++)
+                            UnityEngine.Object.DestroyImmediate(gameObjects[i]);
+
                         SceneManager.LoadScene(0);
+                    }
 #endif
                     //빌드된곳에선 스플래시 씬에서 시작하기 때문에
                     //아무런 조건문 없이 바로 시작합니다
