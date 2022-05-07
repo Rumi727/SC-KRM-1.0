@@ -31,12 +31,11 @@ namespace SCKRM.Threads
 
 
 
-        /// <summary>
-        /// If possible, don't use it in another thread
-        /// 웬만하면 다른 스레드에서 사용하지 마세요
-        /// </summary>
         public static void AllThreadRemove()
         {
+            if (!isMainThread)
+                throw new NotMainThreadMethodException(nameof(AllThreadRemove));
+
             for (int i = 0; i < runningThreads.Count; i++)
                 runningThreads[i]?.Remove();
         }
