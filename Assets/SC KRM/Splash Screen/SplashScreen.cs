@@ -12,7 +12,6 @@ using SCKRM.ProjectSetting;
 
 namespace SCKRM.Splash
 {
-    [AddComponentMenu("커널/스플래시/스플래시 스크린")]
     public static class SplashScreen
     {
         [ProjectSettingSaveLoad]
