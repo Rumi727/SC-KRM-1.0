@@ -66,7 +66,7 @@ namespace SCKRM.UI
             {
                 if (InputManager.GetKey("gui.back", InputType.Down, "all", "force"))
                     BackEventInvoke();
-                else if (InputManager.GetKey("gui.home", InputType.Down, "all", "force"))
+                else if (InputManager.GetKey("gui.home", InputType.Down, "all"))
                     homeEvent.Invoke();
             }
 
