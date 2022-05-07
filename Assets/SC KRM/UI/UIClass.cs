@@ -99,9 +99,27 @@ namespace SCKRM.UI
 
         //protected override void OnValidate() => update();
 
-        protected override void OnTransformParentChanged() => Update();
+        bool onTransformParentChangedMethodLock = false;
+        protected override void OnTransformParentChanged()
+        {
+            if (onTransformParentChangedMethodLock)
+                return;
 
-        protected override void OnRectTransformDimensionsChange() => Update();
+            onTransformParentChangedMethodLock = true;
+            Update();
+            onTransformParentChangedMethodLock = false;
+        }
+
+        bool onRectTransformDimensionsChangeMethodLock = false;
+        protected override void OnRectTransformDimensionsChange()
+        {
+            if (onRectTransformDimensionsChangeMethodLock)
+                return;
+
+            onRectTransformDimensionsChangeMethodLock = true;
+            Update();
+            onRectTransformDimensionsChangeMethodLock = false;
+        }
 
         /*void update()
         {
