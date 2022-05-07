@@ -6,6 +6,7 @@ using SCKRM.ProjectSetting;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
+using SCKRM.Splash;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -566,7 +567,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "커널 설정", "비디오 설정", "조작 키 설정", "풀링 설정", "오디오 설정", "NBS 설정", "리소스 설정" }, GUILayout.ExpandWidth(false));
+                settingTabIndex = GUILayout.Toolbar(settingTabIndex, new string[] { "스플래시 설정", "비디오 설정", "조작 키 설정", "풀링 설정", "오디오 설정", "NBS 설정", "리소스 설정" }, GUILayout.ExpandWidth(false));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -577,7 +578,7 @@ namespace SCKRM.Editor
             switch (settingTabIndex)
             {
                 case 0:
-                    KernelSetting();
+                    SplashSetting();
                     break;
                 case 1:
                     VideoSetting();
@@ -600,26 +601,26 @@ namespace SCKRM.Editor
             }
         }
 
-        public static SaveLoadClass kernelProjectSetting = null;
-        public void KernelSetting()
+        public static SaveLoadClass splashProjectSetting = null;
+        public void SplashSetting()
         {
             if (!Application.isPlaying)
             {
-                if (kernelProjectSetting == null)
-                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(Kernel.Data), out kernelProjectSetting);
+                if (splashProjectSetting == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
                 
-                SaveLoadManager.Load(kernelProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
             }
 
 
             //GUI
             {
-                EditorGUILayout.LabelField("커널 설정", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("스플래시 설정", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
             }
 
             {
-                SceneAsset oldScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName) + ".unity");
+                SceneAsset oldScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName) + ".unity");
                 SceneAsset scene = (SceneAsset)EditorGUILayout.ObjectField("스플래시 씬", oldScene, typeof(SceneAsset), false);
 
                 string sceneAllPath = AssetDatabase.GetAssetPath(scene);
@@ -629,11 +630,11 @@ namespace SCKRM.Editor
                     string sceneName = sceneAllPath.Remove(0, sceneAllPath.LastIndexOf("/") + 1);
                     sceneName = sceneName.Substring(0, sceneName.Length - 6);
 
-                    Kernel.Data.splashScreenPath = scenePath;
-                    Kernel.Data.splashScreenName = sceneName;
+                    SplashScreen.Data.splashScreenPath = scenePath;
+                    SplashScreen.Data.splashScreenName = sceneName;
                 }
 
-                string path = PathTool.Combine(Kernel.Data.splashScreenPath, Kernel.Data.splashScreenName);
+                string path = PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName);
                 EditorGUILayout.LabelField($"경로: {path}.unity");
 
                 if (oldScene != scene)
@@ -642,7 +643,7 @@ namespace SCKRM.Editor
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
             if (GUI.changed && !Application.isPlaying)
-                SaveLoadManager.Save(kernelProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Save(splashProjectSetting, Kernel.projectSettingPath);
         }
 
         public static SaveLoadClass videoProjectSetting = null;

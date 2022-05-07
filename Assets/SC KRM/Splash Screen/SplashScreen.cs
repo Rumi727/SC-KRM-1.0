@@ -8,12 +8,20 @@ using SCKRM.UI;
 using TMPro;
 using SCKRM.SaveLoad;
 using Newtonsoft.Json;
+using SCKRM.ProjectSetting;
 
 namespace SCKRM.Splash
 {
     [AddComponentMenu("커널/스플래시/스플래시 스크린")]
     public static class SplashScreen
     {
+        [ProjectSettingSaveLoad]
+        public sealed class Data
+        {
+            [JsonProperty] public static string splashScreenPath { get; set; } = "Assets/SC KRM/Splash Screen";
+            [JsonProperty] public static string splashScreenName { get; set; } = "Splash Screen";
+        }
+
         [GeneralSaveLoad]
         public sealed class SaveData
         {
