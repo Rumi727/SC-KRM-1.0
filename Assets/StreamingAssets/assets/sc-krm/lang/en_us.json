@@ -68,16 +68,10 @@
 	
 	
 	
-	"pack.available.title": "Available\n━━━━━━━━━",
-	"pack.selected.title": "Selected\n━━━━━━",
-	"pack.openFolder": "Open Pack Folder",
+	"controls.emptying": "Emptying",
+	"controls.reset_all": "Reset all key settings",
 	
-	"controls.reset": "Reset",
-	"controls.resetAll": "Reset Keys",
 	
-	"volume_control.volume_down": "Volume Down",
-	"volume_control.volume_up": "Volume Up",
-	"kernel.full_screen": "Full Screen",
 	
 	"notice.notice": "Notice",
 	"notice.notice.clear_all": "Clear All",
@@ -85,9 +79,6 @@
 	"notice.running_task.cancel_all": "Cancel All",
 	
 	
-	
-	"notice.running_task.thread_auto_remove.name": "Thread Auto Remove",
-	"notice.running_task.thread_auto_remove.info": "Automatically remove terminated threads",
 	
 	"notice.running_task.resource_pack_refresh.name": "Refresh resource pack",
 	"notice.running_task.resource_pack_refresh.set_pack_textures.name": "Refresh resource pack (Merging textures)",
@@ -128,12 +119,6 @@
 	
 	"notice.april_fools_day.title": "What day is today?",
 	"notice.april_fools_day.description": "Today is April Fool's Day!\n<s>But now it's my lunch</s>",
-	
-	
-	
-	"log": "Console",
-	"log.search": "Search...",
-	"log.command": "(type 'help' for list of commands)",
 	
 	
 	
