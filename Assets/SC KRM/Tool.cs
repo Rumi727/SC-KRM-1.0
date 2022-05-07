@@ -2671,6 +2671,12 @@ namespace SCKRM
                 case KeyCode.Plus:
                     text = "+";
                     break;
+                case KeyCode.Print when !simply:
+                    text = "Print Screen";
+                    break;
+                case KeyCode.Print when simply:
+                    text = "PS";
+                    break;
                 case KeyCode.Question:
                     text = "?";
                     break;
