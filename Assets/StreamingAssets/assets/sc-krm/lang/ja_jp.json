@@ -68,16 +68,26 @@
 	
 	
 	
-	"pack.available.title": "사용 가능\n━━━━━━━━━",
-	"pack.selected.title": "선택됨\n━━━━━━",
-	"pack.openFolder": "팩 폴더 열기",
+	"controls.emptying": "空にする",
+	"controls.reset_all": "すべてのキー設定の初期化",
 	
-	"controls.reset": "초기화",
-	"controls.resetAll": "키 설정 초기화",
+	"controls.video.title": "動画",
+	"kernel.full_screen": "フルスクリーン",
 	
-	"volume_control.volume_down": "볼륨 줄이기",
-	"volume_control.volume_up": "볼륨 키우기",
-	"kernel.full_screen": "전체 화면",
+	"controls.side_bar.title": "サイドバー",
+	"noticebar.show": "通知バーの切り替え",
+	"settingbar.show": "設定バーの切り替え",
+	"controlbar.show": "操作バーの切り替え",
+	
+	"controls.notice_bar.title": "通知バー",
+	"notice_manager.notice_remove": "通知をクリア",
+	"notice_manager.notice_clear_all": "すべての通知をクリア",
+	
+	"controls.volume_control.title": "ボリュームコントロール",
+	"volume_control.minus": "ボリュームを減らす",
+	"volume_control.plus": "ボリュームを上げる",
+	
+	
 	
 	"notice.notice": "お知らせ",
 	"notice.notice.clear_all": "すべてクリア",
@@ -85,9 +95,6 @@
 	"notice.running_task.cancel_all": "すべてキャンセル",
 	
 	
-	
-	"notice.running_task.thread_auto_remove.name": "스레드 자동 제거",
-	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
 	
 	"notice.running_task.resource_pack_refresh.name": "リソースパックの更新",
 	"notice.running_task.resource_pack_refresh.set_pack_textures.name": "リソースパックの更新（テクスチャマージ）",
@@ -128,12 +135,6 @@
 	
 	"notice.april_fools_day.title": "今日は何日？",
 	"notice.april_fools_day.description": "今日はエイプリルフールです！\n<s>しかし今は私の昼食です</s>",
-	
-	
-	
-	"log": "콘솔",
-	"log.search": "검색...",
-	"log.command": "(커맨드 리스트를 보려면 'help'를 입력하세요)",
 	
 	
 	

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 149191433057823382}
-  - component: {fileID: 5133766285544108840}
   - component: {fileID: 4895079024698297325}
   m_Layer: 5
   m_Name: Setting Button
@@ -40,14 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -40, y: 50}
   m_Pivot: {x: 0.5, y: 1}
---- !u!222 &5133766285544108840
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7415276968854388600}
-  m_CullTransparentMesh: 1
 --- !u!114 &4895079024698297325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +251,7 @@ MonoBehaviour:
   _graphic: {fileID: 4205948363159493598}
   _lerp: 1
   _lerpValue: 0.2
-  _targetCanvasRenderer: {fileID: 5133766285544108840}
+  _targetCanvasRenderer: {fileID: 1143155284997355180}
   _targetGraphic: {fileID: 8350708535258979915}
 --- !u!1 &8769101219243043486
 GameObject:

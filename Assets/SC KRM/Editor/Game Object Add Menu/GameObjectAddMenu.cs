@@ -60,4 +60,7 @@ public class GameObjectAddMenu
 
     [MenuItem("GameObject/Kernel/UI/Progress Bar")]
     public static void ProgressBar(MenuCommand menuCommand) => PrefabInstantiate("Progress Bar", menuCommand);
+
+    [MenuItem("GameObject/Kernel/Input/Control Setting")]
+    public static void ControlSetting(MenuCommand menuCommand) => PrefabInstantiate("Control Setting", menuCommand);
 }

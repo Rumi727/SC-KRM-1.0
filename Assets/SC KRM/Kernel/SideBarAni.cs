@@ -17,6 +17,7 @@ namespace SCKRM.UI.SideBar
 
         [SerializeField] UnityEvent _showEvent; public UnityEvent showEvent => _showEvent;
         [SerializeField] UnityEvent _hideEvent; public UnityEvent hideEvent => _hideEvent;
+        [SerializeField] UnityEvent _backEvent; public UnityEvent backEvent => _backEvent;
 
 
 
@@ -32,14 +33,14 @@ namespace SCKRM.UI.SideBar
                     {
                         SideBarManager.AllHide();
 
-                        UIManager.BackEventAdd(Hide, true);
+                        UIManager.BackEventAdd(Back, true);
                         UIManager.homeEvent += Hide;
 
                         SideBarManager.showedSideBars.Add(this);
                     }
                     else
                     {
-                        UIManager.BackEventRemove(Hide, true);
+                        UIManager.BackEventRemove(Back, true);
                         UIManager.homeEvent -= Hide;
 
                         SideBarManager.showedSideBars.Remove(this);
@@ -88,6 +89,12 @@ namespace SCKRM.UI.SideBar
                 Hide();
             else
                 Show();
+        }
+
+        public void Back()
+        {
+            Hide();
+            backEvent.Invoke();
         }
 
         void Update()

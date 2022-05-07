@@ -68,26 +68,33 @@
 	
 	
 	
-	"pack.available.title": "사용 가능\n━━━━━━━━━",
-	"pack.selected.title": "선택됨\n━━━━━━",
-	"pack.openFolder": "팩 폴더 열기",
+	"controls.emptying": "비우기",
+	"controls.reset_all": "모든 키 설정 초기화",
 	
-	"controls.reset": "초기화",
-	"controls.resetAll": "키 설정 초기화",
-	
-	"volume_control.volume_down": "볼륨 줄이기",
-	"volume_control.volume_up": "볼륨 키우기",
+	"controls.video.title": "비디오",
 	"kernel.full_screen": "전체 화면",
+	
+	"controls.side_bar.title": "사이드 바",
+	"noticebar.show": "알림 표시줄 토글",
+	"settingbar.show": "설정 표시줄 토글",
+	"controlbar.show": "조작 표시줄 토글",
+	
+	"controls.notice_bar.title": "알림 표시줄",
+	"notice_manager.notice_remove": "알림 지우기",
+	"notice_manager.notice_clear_all": "모든 알림 지우기",
+	
+	"controls.volume_control.title": "볼륨 컨트롤",
+	"volume_control.minus": "볼륨 줄이기",
+	"volume_control.plus": "볼륨 올리기",
+	
+	
 	
 	"notice.notice": "알림",
 	"notice.notice.clear_all": "모두 지우기",
 	"notice.running_task": "실행중인 작업",
 	"notice.running_task.cancel_all": "모두 취소",
 	
-	
-	
-	"notice.running_task.thread_auto_remove.name": "스레드 자동 제거",
-	"notice.running_task.thread_auto_remove.info": "종료된 스레드를 자동으로 제거합니다",
+
 	
 	"notice.running_task.resource_pack_refresh.name": "리소스팩 새로고침",
 	"notice.running_task.resource_pack_refresh.set_pack_textures.name": "리소스팩 새로고침 (텍스쳐 합치기)",
@@ -130,12 +137,6 @@
 	"notice.april_fools_day.description": "오늘은 만우절 입니다!\n<s>하지만 지금은 제 점심이죠</s>",
 	
 	
-	
-	"log": "콘솔",
-	"log.search": "검색...",
-	"log.command": "(커맨드 리스트를 보려면 'help'를 입력하세요)",
-	
-	
-	
+
 	"subtitles.easter_egg_music_play": "이스터에그 음악이 재생됨"
 }
