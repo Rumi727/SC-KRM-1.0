@@ -586,6 +586,10 @@ namespace SCKRM.Input
 
 
 
+        public static void ControlListRefresh() => _controlSettingList = InputListMerge();
+
+
+
         [SerializeField] void OnDelta(InputAction.CallbackContext context) => mouseDelta = context.ReadValue<Vector2>();
         [SerializeField] void OnPosition(InputAction.CallbackContext context) => mousePosition = context.ReadValue<Vector2>();
         [SerializeField] void OnScroll(InputAction.CallbackContext context) => mouseScrollDelta = context.ReadValue<Vector2>();
