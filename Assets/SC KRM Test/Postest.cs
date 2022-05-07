@@ -109,6 +109,6 @@ public class Postest : MonoBehaviour
         transform.localEulerAngles = rotation;
         text.text = RhythmManager.currentBeat.ToString();
 
-        test.transform.position = new Vector2((float)mapEffect.test.GetValue(), 0);
+        //test.transform.position = new Vector2((float)mapEffect.test.GetValue(), 0);
     }
 }
