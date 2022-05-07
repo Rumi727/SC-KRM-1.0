@@ -36,6 +36,9 @@ namespace SCKRM.Input.UI
             TextRefresh();
         }
 
+        protected override void OnEnable() => InputManager.controlSaveDataResetEvent += TextRefresh;
+        protected override void OnDisable() => InputManager.controlSaveDataResetEvent -= TextRefresh;
+
         void Update()
         {
             if (!InitialLoadManager.isSettingLoadEnd)

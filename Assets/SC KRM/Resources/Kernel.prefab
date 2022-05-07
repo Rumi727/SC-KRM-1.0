@@ -18094,9 +18094,37 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2930579594741947279}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ControlSaveDataReset
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SCKRM.Input.InputManager, SC KRM
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895079024698297325, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7415276968854388600, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
       propertyPath: m_Name
-      value: Setting Button
+      value: All Reset
       objectReference: {fileID: 0}
     - target: {fileID: 8350708535258979915, guid: 02be26bd3dd3c5040ab91f2f6d8792a3, type: 3}
       propertyPath: m_Color.b
