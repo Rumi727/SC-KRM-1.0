@@ -100,6 +100,7 @@ namespace SCKRM.Input.UI
             
             InputManager.forceInputLock = true;
             isSelected = true;
+            UIManager.BackEventAdd(Cancel, true);
 
             EventSystem.current.SetSelectedGameObject(null);
 
@@ -110,6 +111,7 @@ namespace SCKRM.Input.UI
 
             List<KeyCode> keyDowns = new List<KeyCode>();
             bool loopBreak = false;
+            bool cancel = false;
             while (!loopBreak)
             {
                 if (!gameObject.activeSelf)
@@ -137,16 +139,26 @@ namespace SCKRM.Input.UI
                     return;
             }
 
-            if (InputManager.SaveData.controlSettingList.ContainsKey(targetKey))
-                InputManager.SaveData.controlSettingList[targetKey] = keyDowns;
-            else
-                InputManager.SaveData.controlSettingList.Add(targetKey, keyDowns);
+            if (!cancel)
+            {
+                if (InputManager.SaveData.controlSettingList.ContainsKey(targetKey))
+                    InputManager.SaveData.controlSettingList[targetKey] = keyDowns;
+                else
+                    InputManager.SaveData.controlSettingList.Add(targetKey, keyDowns);
+            }
 
             InputManager.ControlListRefresh();
             TextRefresh();
 
             InputManager.forceInputLock = false;
             isSelected = false;
+            UIManager.BackEventRemove(Cancel, true);
+
+            void Cancel()
+            {
+                loopBreak = true;
+                cancel = true;
+            }
         }
 
         public void ResetButton()
