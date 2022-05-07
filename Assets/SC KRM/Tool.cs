@@ -2420,185 +2420,350 @@ namespace SCKRM
         /// </summary>
         /// <param name="keyCode"></param>
         /// <returns></returns>
-        public static string KeyCodeToString(this KeyCode keyCode)
+        public static string KeyCodeToString(this KeyCode keyCode, bool simply = false)
         {
             string text;
-            if (keyCode == KeyCode.Escape)
-                text = "None";
-            else if (keyCode == KeyCode.Return)
-                text = "␣";
-            else if (keyCode == KeyCode.Alpha0)
-                text = "0";
-            else if (keyCode == KeyCode.Alpha1)
-                text = "1";
-            else if (keyCode == KeyCode.Alpha2)
-                text = "2";
-            else if (keyCode == KeyCode.Alpha3)
-                text = "3";
-            else if (keyCode == KeyCode.Alpha4)
-                text = "4";
-            else if (keyCode == KeyCode.Alpha5)
-                text = "5";
-            else if (keyCode == KeyCode.Alpha6)
-                text = "6";
-            else if (keyCode == KeyCode.Alpha7)
-                text = "7";
-            else if (keyCode == KeyCode.Alpha8)
-                text = "8";
-            else if (keyCode == KeyCode.Alpha9)
-                text = "9";
-            else if (keyCode == KeyCode.AltGr)
-                text = "AG";
-            else if (keyCode == KeyCode.Ampersand)
-                text = "&";
-            else if (keyCode == KeyCode.Asterisk)
-                text = "*";
-            else if (keyCode == KeyCode.At)
-                text = "@";
-            else if (keyCode == KeyCode.BackQuote)
-                text = "`";
-            else if (keyCode == KeyCode.Backslash)
-                text = "\\";
-            else if (keyCode == KeyCode.Caret)
-                text = "^";
-            else if (keyCode == KeyCode.Colon)
-                text = ":";
-            else if (keyCode == KeyCode.Comma)
-                text = ",";
-            else if (keyCode == KeyCode.Dollar)
-                text = "$";
-            else if (keyCode == KeyCode.DoubleQuote)
-                text = "\"";
-            else if (keyCode == KeyCode.Equals)
-                text = "=";
-            else if (keyCode == KeyCode.Exclaim)
-                text = "!";
-            else if (keyCode == KeyCode.Greater)
-                text = ">";
-            else if (keyCode == KeyCode.Hash)
-                text = "#";
-            else if (keyCode == KeyCode.Keypad0)
-                text = "0";
-            else if (keyCode == KeyCode.Keypad1)
-                text = "1";
-            else if (keyCode == KeyCode.Keypad2)
-                text = "2";
-            else if (keyCode == KeyCode.Keypad3)
-                text = "3";
-            else if (keyCode == KeyCode.Keypad4)
-                text = "4";
-            else if (keyCode == KeyCode.Keypad5)
-                text = "5";
-            else if (keyCode == KeyCode.Keypad6)
-                text = "6";
-            else if (keyCode == KeyCode.Keypad7)
-                text = "7";
-            else if (keyCode == KeyCode.Keypad8)
-                text = "8";
-            else if (keyCode == KeyCode.Keypad9)
-                text = "9";
-            else if (keyCode == KeyCode.KeypadDivide)
-                text = "/";
-            else if (keyCode == KeyCode.KeypadEnter)
-                text = "↵";
-            else if (keyCode == KeyCode.KeypadEquals)
-                text = "=";
-            else if (keyCode == KeyCode.KeypadMinus)
-                text = "-";
-            else if (keyCode == KeyCode.KeypadMultiply)
-                text = "*";
-            else if (keyCode == KeyCode.KeypadPeriod)
-                text = ".";
-            else if (keyCode == KeyCode.KeypadPlus)
-                text = "+";
-            else if (keyCode == KeyCode.LeftApple)
-                text = "Left Command";
-            else if (keyCode == KeyCode.LeftBracket)
-                text = "[";
-            else if (keyCode == KeyCode.LeftCurlyBracket)
-                text = "{";
-            else if (keyCode == KeyCode.LeftParen)
-                text = "(";
-            else if (keyCode == KeyCode.Less)
-                text = "<";
-            else if (keyCode == KeyCode.Minus)
-                text = "-";
-            else if (keyCode == KeyCode.Mouse0)
-                text = "LM";
-            else if (keyCode == KeyCode.Mouse1)
-                text = "RM";
-            else if (keyCode == KeyCode.Mouse2)
-                text = "MM";
-            else if (keyCode == KeyCode.Mouse3)
-                text = "3M";
-            else if (keyCode == KeyCode.Mouse4)
-                text = "4M";
-            else if (keyCode == KeyCode.Mouse5)
-                text = "5M";
-            else if (keyCode == KeyCode.Mouse6)
-                text = "6M";
-            else if (keyCode == KeyCode.Percent)
-                text = "%";
-            else if (keyCode == KeyCode.Period)
-                text = ".";
-            else if (keyCode == KeyCode.Pipe)
-                text = "|";
-            else if (keyCode == KeyCode.Plus)
-                text = "+";
-            else if (keyCode == KeyCode.Question)
-                text = "?";
-            else if (keyCode == KeyCode.Quote)
-                text = "'";
-            else if (keyCode == KeyCode.RightApple)
-                text = "Right Command";
-            else if (keyCode == KeyCode.RightBracket)
-                text = "]";
-            else if (keyCode == KeyCode.RightCurlyBracket)
-                text = "}";
-            else if (keyCode == KeyCode.RightParen)
-                text = ")";
-            else if (keyCode == KeyCode.Semicolon)
-                text = ";";
-            else if (keyCode == KeyCode.Slash)
-                text = "/";
-            else if (keyCode == KeyCode.SysReq)
-                text = "Print Screen";
-            else if (keyCode == KeyCode.Tilde)
-                text = "~";
-            else if (keyCode == KeyCode.Underscore)
-                text = "_";
-            else if (keyCode == KeyCode.UpArrow)
-                text = "↑";
-            else if (keyCode == KeyCode.DownArrow)
-                text = "↓";
-            else if (keyCode == KeyCode.LeftArrow)
-                text = "←";
-            else if (keyCode == KeyCode.RightArrow)
-                text = "→";
-            else if (keyCode == KeyCode.LeftControl)
-                text = "LC";
-            else if (keyCode == KeyCode.RightControl)
-                text = "RC";
-            else if (keyCode == KeyCode.LeftAlt)
-                text = "LA";
-            else if (keyCode == KeyCode.RightAlt)
-                text = "RA";
-            else if (keyCode == KeyCode.LeftShift)
-                text = "L⇧";
-            else if (keyCode == KeyCode.RightShift)
-                text = "R⇧";
-            else if (keyCode == KeyCode.Backspace)
-                text = "B←";
-            else if (keyCode == KeyCode.Delete)
-                text = "D←";
-            else if (keyCode == KeyCode.PageUp)
-                text = "P↑";
-            else if (keyCode == KeyCode.PageDown)
-                text = "P↓";
-            else
-                text = keyCode.ToString();
+            switch (keyCode)
+            {
+                case KeyCode.Escape:
+                    text = "ESC";
+                    break;
+                case KeyCode.Return when !simply:
+                    text = "Enter";
+                    break;
+                case KeyCode.Return when simply:
+                    text = "↵";
+                    break;
+                case KeyCode.Alpha0:
+                    text = "0";
+                    break;
+                case KeyCode.Alpha1:
+                    text = "1";
+                    break;
+                case KeyCode.Alpha2:
+                    text = "2";
+                    break;
+                case KeyCode.Alpha3:
+                    text = "3";
+                    break;
+                case KeyCode.Alpha4:
+                    text = "4";
+                    break;
+                case KeyCode.Alpha5:
+                    text = "5";
+                    break;
+                case KeyCode.Alpha6:
+                    text = "6";
+                    break;
+                case KeyCode.Alpha7:
+                    text = "7";
+                    break;
+                case KeyCode.Alpha8:
+                    text = "8";
+                    break;
+                case KeyCode.Alpha9:
+                    text = "9";
+                    break;
+                case KeyCode.AltGr when simply:
+                    text = "AG";
+                    break;
+                case KeyCode.Ampersand:
+                    text = "&";
+                    break;
+                case KeyCode.Asterisk:
+                    text = "*";
+                    break;
+                case KeyCode.At:
+                    text = "@";
+                    break;
+                case KeyCode.BackQuote:
+                    text = "`";
+                    break;
+                case KeyCode.Backslash:
+                    text = "\\";
+                    break;
+                case KeyCode.Caret:
+                    text = "^";
+                    break;
+                case KeyCode.Colon:
+                    text = ":";
+                    break;
+                case KeyCode.Comma:
+                    text = ",";
+                    break;
+                case KeyCode.Dollar:
+                    text = "$";
+                    break;
+                case KeyCode.DoubleQuote:
+                    text = "\"";
+                    break;
+                case KeyCode.Equals:
+                    text = "=";
+                    break;
+                case KeyCode.Exclaim:
+                    text = "!";
+                    break;
+                case KeyCode.Greater:
+                    text = ">";
+                    break;
+                case KeyCode.Hash:
+                    text = "#";
+                    break;
+                case KeyCode.Keypad0 when !simply:
+                    text = "Keypad 0";
+                    break;
+                case KeyCode.Keypad1 when !simply:
+                    text = "Keypad 1";
+                    break;
+                case KeyCode.Keypad2 when !simply:
+                    text = "Keypad 2";
+                    break;
+                case KeyCode.Keypad3 when !simply:
+                    text = "Keypad 3";
+                    break;
+                case KeyCode.Keypad4 when !simply:
+                    text = "Keypad 4";
+                    break;
+                case KeyCode.Keypad5 when !simply:
+                    text = "Keypad 5";
+                    break;
+                case KeyCode.Keypad6 when !simply:
+                    text = "Keypad 6";
+                    break;
+                case KeyCode.Keypad7 when !simply:
+                    text = "Keypad 7";
+                    break;
+                case KeyCode.Keypad8 when !simply:
+                    text = "Keypad 8";
+                    break;
+                case KeyCode.Keypad9 when !simply:
+                    text = "Keypad 9";
+                    break;
+                case KeyCode.KeypadDivide when !simply:
+                    text = "Keypad /";
+                    break;
+                case KeyCode.KeypadEnter when !simply:
+                    text = "Keypad ↵";
+                    break;
+                case KeyCode.KeypadEquals when !simply:
+                    text = "Keypad =";
+                    break;
+                case KeyCode.KeypadMinus when !simply:
+                    text = "Keypad -";
+                    break;
+                case KeyCode.KeypadMultiply when !simply:
+                    text = "Keypad *";
+                    break;
+                case KeyCode.KeypadPeriod when !simply:
+                    text = "Keypad .";
+                    break;
+                case KeyCode.KeypadPlus when !simply:
+                    text = "Keypad +";
+                    break;
+                case KeyCode.Keypad0 when simply:
+                    text = "K0";
+                    break;
+                case KeyCode.Keypad1 when simply:
+                    text = "K1";
+                    break;
+                case KeyCode.Keypad2 when simply:
+                    text = "K2";
+                    break;
+                case KeyCode.Keypad3 when simply:
+                    text = "K3";
+                    break;
+                case KeyCode.Keypad4 when simply:
+                    text = "K4";
+                    break;
+                case KeyCode.Keypad5 when simply:
+                    text = "K5";
+                    break;
+                case KeyCode.Keypad6 when simply:
+                    text = "K6";
+                    break;
+                case KeyCode.Keypad7 when simply:
+                    text = "K7";
+                    break;
+                case KeyCode.Keypad8 when simply:
+                    text = "K8";
+                    break;
+                case KeyCode.Keypad9 when simply:
+                    text = "K9";
+                    break;
+                case KeyCode.KeypadDivide when simply:
+                    text = "K/";
+                    break;
+                case KeyCode.KeypadEnter when simply:
+                    text = "K↵";
+                    break;
+                case KeyCode.KeypadEquals when simply:
+                    text = "K=";
+                    break;
+                case KeyCode.KeypadMinus when simply:
+                    text = "K-";
+                    break;
+                case KeyCode.KeypadMultiply when simply:
+                    text = "K*";
+                    break;
+                case KeyCode.KeypadPeriod when simply:
+                    text = "K.";
+                    break;
+                case KeyCode.KeypadPlus when simply:
+                    text = "K+";
+                    break;
+                case KeyCode.LeftApple:
+                    text = "Left Command";
+                    break;
+                case KeyCode.LeftBracket:
+                    text = "[";
+                    break;
+                case KeyCode.LeftCurlyBracket:
+                    text = "{";
+                    break;
+                case KeyCode.LeftParen:
+                    text = "(";
+                    break;
+                case KeyCode.Less:
+                    text = "<";
+                    break;
+                case KeyCode.Minus:
+                    text = "-";
+                    break;
+                case KeyCode.Mouse0 when !simply:
+                    text = "Left Mouse";
+                    break;
+                case KeyCode.Mouse1 when !simply:
+                    text = "Right Mouse";
+                    break;
+                case KeyCode.Mouse2 when !simply:
+                    text = "Middle Mouse";
+                    break;
+                case KeyCode.Mouse0 when simply:
+                    text = "LM";
+                    break;
+                case KeyCode.Mouse1 when simply:
+                    text = "RM";
+                    break;
+                case KeyCode.Mouse2 when simply:
+                    text = "MM";
+                    break;
+                case KeyCode.Mouse3 when simply:
+                    text = "M3";
+                    break;
+                case KeyCode.Mouse4 when simply:
+                    text = "M4";
+                    break;
+                case KeyCode.Mouse5 when simply:
+                    text = "M5";
+                    break;
+                case KeyCode.Mouse6 when simply:
+                    text = "M6";
+                    break;
+                case KeyCode.Percent:
+                    text = "%";
+                    break;
+                case KeyCode.Period:
+                    text = ".";
+                    break;
+                case KeyCode.Pipe:
+                    text = "|";
+                    break;
+                case KeyCode.Plus:
+                    text = "+";
+                    break;
+                case KeyCode.Question:
+                    text = "?";
+                    break;
+                case KeyCode.Quote:
+                    text = "'";
+                    break;
+                case KeyCode.RightApple:
+                    text = "Right Command";
+                    break;
+                case KeyCode.RightBracket:
+                    text = "]";
+                    break;
+                case KeyCode.RightCurlyBracket:
+                    text = "}";
+                    break;
+                case KeyCode.RightParen:
+                    text = ")";
+                    break;
+                case KeyCode.Semicolon:
+                    text = ";";
+                    break;
+                case KeyCode.Slash:
+                    text = "/";
+                    break;
+                case KeyCode.Space when simply:
+                    text = "␣";
+                    break;
+                case KeyCode.SysReq when !simply:
+                    text = "Print Screen";
+                    break;
+                case KeyCode.SysReq when simply:
+                    text = "PS";
+                    break;
+                case KeyCode.Tilde:
+                    text = "~";
+                    break;
+                case KeyCode.Underscore:
+                    text = "_";
+                    break;
+                case KeyCode.UpArrow:
+                    text = "↑";
+                    break;
+                case KeyCode.DownArrow:
+                    text = "↓";
+                    break;
+                case KeyCode.LeftArrow:
+                    text = "←";
+                    break;
+                case KeyCode.RightArrow:
+                    text = "→";
+                    break;
+                case KeyCode.LeftControl when !simply:
+                    text = "Left Ctrl";
+                    break;
+                case KeyCode.RightControl when !simply:
+                    text = "Right Ctrl";
+                    break;
+                case KeyCode.LeftControl when simply:
+                    text = "LC";
+                    break;
+                case KeyCode.RightControl when simply:
+                    text = "RC";
+                    break;
+                case KeyCode.LeftAlt when simply:
+                    text = "LA";
+                    break;
+                case KeyCode.RightAlt when simply:
+                    text = "RA";
+                    break;
+                case KeyCode.LeftShift when simply:
+                    text = "L⇧";
+                    break;
+                case KeyCode.RightShift when simply:
+                    text = "R⇧";
+                    break;
+                case KeyCode.Backspace when simply:
+                    text = "B←";
+                    break;
+                case KeyCode.Delete when simply:
+                    text = "D←";
+                    break;
+                case KeyCode.PageUp when simply:
+                    text = "P↑";
+                    break;
+                case KeyCode.PageDown when simply:
+                    text = "P↓";
+                    break;
+                default:
+                    text = keyCode.ToString().AddSpacesToSentence();
+                    break;
+            }
 
-            return text.AddSpacesToSentence();
+            return text;
         }
 
         /// <summary>
