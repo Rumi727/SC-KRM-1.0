@@ -120,7 +120,7 @@ namespace SCKRM.Input.UI
                 for (int i = 0; i < InputManager.unityKeyCodeList.Length; i++)
                 {
                     KeyCode key = InputManager.unityKeyCodeList[i];
-                    if (key == KeyCode.Escape || key == KeyCode.Return || key == KeyCode.KeypadEnter || key == KeyCode.Print || key == KeyCode.SysReq)
+                    if (key == KeyCode.Escape || key == KeyCode.Return || key == KeyCode.KeypadEnter || key == KeyCode.Print || key == KeyCode.SysReq || key == KeyCode.LeftWindows || key == KeyCode.RightWindows || key == KeyCode.LeftCommand || key == KeyCode.RightCommand)
                         continue;
 
                     if (InputManager.GetKey(key, InputType.Down, "all", "force"))
