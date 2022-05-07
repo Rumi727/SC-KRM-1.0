@@ -25,6 +25,10 @@
     ],
     "settingbar.show": [
       306,
+      111
+    ],
+    "controlbar.show": [
+      306,
       106
     ],
     "volume_control.minus": [

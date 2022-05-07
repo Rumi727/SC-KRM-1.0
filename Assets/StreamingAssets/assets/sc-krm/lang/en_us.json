@@ -71,6 +71,22 @@
 	"controls.emptying": "Emptying",
 	"controls.reset_all": "Reset all key settings",
 	
+	"controls.video.title": "Video",
+	"kernel.full_screen": "Full Screen",
+	
+	"controls.side_bar.title": "Side Bar",
+	"noticebar.show": "Notice bar toggle",
+	"settingbar.show": "Settings bar toggle",
+	"controlbar.show": "Control bar toggle",
+	
+	"controls.notice_bar.title": "Notice Bar",
+	"notice_manager.notice_remove": "Clear notifications",
+	"notice_manager.notice_clear_all": "Clear all notifications",
+	
+	"controls.volume_control.title": "Volume Control",
+	"volume_control.minus": "Reduce the volume",
+	"volume_control.plus": "Turn up the volume",
+	
 	
 	
 	"notice.notice": "Notice",

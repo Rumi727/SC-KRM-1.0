@@ -71,6 +71,22 @@
 	"controls.emptying": "비우기",
 	"controls.reset_all": "모든 키 설정 초기화",
 	
+	"controls.video.title": "비디오",
+	"kernel.full_screen": "전체 화면",
+	
+	"controls.side_bar.title": "사이드 바",
+	"noticebar.show": "알림 표시줄 토글",
+	"settingbar.show": "설정 표시줄 토글",
+	"controlbar.show": "조작 표시줄 토글",
+	
+	"controls.notice_bar.title": "알림 표시줄",
+	"notice_manager.notice_remove": "알림 지우기",
+	"notice_manager.notice_clear_all": "모든 알림 지우기",
+	
+	"controls.volume_control.title": "볼륨 컨트롤",
+	"volume_control.minus": "볼륨 줄이기",
+	"volume_control.plus": "볼륨 올리기",
+	
 	
 	
 	"notice.notice": "알림",

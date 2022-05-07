@@ -71,6 +71,22 @@
 	"controls.emptying": "空にする",
 	"controls.reset_all": "すべてのキー設定の初期化",
 	
+	"controls.video.title": "動画",
+	"kernel.full_screen": "フルスクリーン",
+	
+	"controls.side_bar.title": "サイドバー",
+	"noticebar.show": "通知バーの切り替え",
+	"settingbar.show": "設定バーの切り替え",
+	"controlbar.show": "操作バーの切り替え",
+	
+	"controls.notice_bar.title": "通知バー",
+	"notice_manager.notice_remove": "通知をクリア",
+	"notice_manager.notice_clear_all": "すべての通知をクリア",
+	
+	"controls.volume_control.title": "ボリュームコントロール",
+	"volume_control.minus": "ボリュームを減らす",
+	"volume_control.plus": "ボリュームを上げる",
+	
 	
 	
 	"notice.notice": "お知らせ",
