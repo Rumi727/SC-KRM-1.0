@@ -1,8 +1,6 @@
 using UnityEngine;
 using SCKRM.Resource;
-using SCKRM.Object;
-using Cysharp.Threading.Tasks;
-using SCKRM.UI.StatusBar;
+using SCKRM.UI.MessageBox;
 
 namespace SCKRM.Sound
 {
@@ -205,10 +203,10 @@ namespace SCKRM.Sound
             SetTempoAndPitch();
             SetVolume();
 
-            /*if (StatusBarManager.selectedStatusBar)
+            if (MessageBoxManager.isMessageBoxShow)
                 audioLowPassFilter.cutoffFrequency = 687.5f;
             else
-                audioLowPassFilter.cutoffFrequency = 11000f;*/
+                audioLowPassFilter.cutoffFrequency = 22000f;
 
             if (spatial)
                 audioSource.spatialBlend = 1;
