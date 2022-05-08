@@ -102,7 +102,7 @@ namespace SCKRM.UI
         bool onTransformParentChangedMethodLock = false;
         protected override void OnTransformParentChanged()
         {
-            if (onTransformParentChangedMethodLock)
+            if (onTransformParentChangedMethodLock || (lerp && lerpValue < 1) || !isActiveAndEnabled)
                 return;
 
             onTransformParentChangedMethodLock = true;
@@ -113,7 +113,7 @@ namespace SCKRM.UI
         bool onRectTransformDimensionsChangeMethodLock = false;
         protected override void OnRectTransformDimensionsChange()
         {
-            if (onRectTransformDimensionsChangeMethodLock)
+            if (onRectTransformDimensionsChangeMethodLock || (lerp && lerpValue < 1) || !isActiveAndEnabled)
                 return;
 
             onRectTransformDimensionsChangeMethodLock = true;
