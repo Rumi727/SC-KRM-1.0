@@ -811,9 +811,10 @@ namespace SCKRM.Resource
 
         public static async void AudioReset()
         {
-            isAudioReset = true;
             if (isAudioReset)
                 return;
+
+            isAudioReset = true;
 
             List<float> playersTime = new List<float>();
             for (int i = 0; i < SoundManager.soundList.Count; i++)
