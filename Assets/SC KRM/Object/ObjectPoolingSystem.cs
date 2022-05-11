@@ -187,6 +187,9 @@ namespace SCKRM.Object
         /// </summary>
         public virtual void OnCreate()
         {
+            if (!actived)
+                throw new MissingReferenceException();
+
             gameObject.name = objectKey;
 
             transform.localPosition = Vector3.zero;
@@ -201,7 +204,7 @@ namespace SCKRM.Object
         public virtual void Remove()
         {
             if (!actived)
-                return;
+                throw new MissingReferenceException();
 
             ObjectPoolingSystem.ObjectRemove(objectKey, this);
             gameObject.name = objectKey;
@@ -213,5 +216,20 @@ namespace SCKRM.Object
 
             StopAllCoroutines();
         }
+
+
+
+        public static bool operator ==(ObjectPooling lhs, object rhs) => lhs.Equals(rhs);
+        public static bool operator !=(ObjectPooling lhs, object rhs) => !lhs.Equals(rhs);
+
+        public override bool Equals(object other)
+        {
+            if (other == null)
+                return !actived || base.Equals(other);
+            else
+                return base.Equals(other);
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
