@@ -104,7 +104,7 @@ namespace SCKRM
 
         static void BPMChange(double bpm, double offsetBeat)
         {
-            bpmOffsetBeat = offsetBeat + (bpm / map.effect.bpm[0].value);
+            bpmOffsetBeat = offsetBeat;
 
             bpmOffsetTime = 0;
             double tempBeat = 0;
