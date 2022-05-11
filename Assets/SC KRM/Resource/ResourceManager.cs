@@ -272,6 +272,9 @@ namespace SCKRM.Resource
             resourceRefreshAsyncTask.Remove(true);
             resourceRefreshAsyncTask = null;
 
+            GarbageRemoval();
+            GC.Collect();
+
             isResourceRefesh = false;
         }
 
