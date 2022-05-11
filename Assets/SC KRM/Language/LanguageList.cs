@@ -9,7 +9,7 @@ using UnityEngine;
 namespace SCKRM.Language.UI
 {
     [AddComponentMenu("언어 리스트")]
-    public class LanguageList : SCKRM.UI.UI, IResourceRefresh
+    public class LanguageList : SCKRM.UI.UI
     {
         [SerializeField] Dropdown dropdown;
 
@@ -19,7 +19,19 @@ namespace SCKRM.Language.UI
             RendererManager.AllTextRerender(true);
         }
 
-        public void Refresh()
+        protected override void Awake()
+        {
+            InitialLoadManager.initialLoadEnd += ListRefresh;
+            Kernel.allRefreshEnd += ListRefresh;
+        }
+
+        protected override void OnDestroy()
+        {
+            InitialLoadManager.initialLoadEnd -= ListRefresh;
+            Kernel.allRefreshEnd -= ListRefresh;
+        }
+
+        public void ListRefresh()
         {
             LanguageManager.Language[] languages = LanguageManager.GetLanguages();
             List<string> options = new List<string>();
