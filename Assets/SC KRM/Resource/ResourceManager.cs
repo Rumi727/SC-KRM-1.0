@@ -798,7 +798,7 @@ namespace SCKRM.Resource
 
         /// <summary>
         /// 찌꺼기를 삭제합니다
-        /// delete audio garbage
+        /// delete garbage
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
         public static void GarbageRemoval()
