@@ -5,13 +5,8 @@ using SCKRM.Resource;
 
 namespace SCKRM.Renderer
 {
-    public interface IResourceRefresh
-    {
-        void Refresh();
-    }
-
     [AddComponentMenu("")]
-    public class CustomAllRenderer : MonoBehaviour, IResourceRefresh
+    public class CustomAllRenderer : MonoBehaviour
     {
         [SerializeField] string _nameSpace = "";
         public string nameSpace { get => _nameSpace; set => _nameSpace = value; }

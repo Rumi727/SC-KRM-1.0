@@ -7,13 +7,8 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
-    public interface IResourceTextRefresh : IResourceRefresh
-    {
-
-    }
-
     [AddComponentMenu("")]
-    public class CustomAllTextRenderer : CustomAllRenderer, IResourceTextRefresh
+    public class CustomAllTextRenderer : CustomAllRenderer
     {
         public ReplaceOldNewPair[] replace { get; set; }
 
