@@ -80,19 +80,11 @@ namespace SCKRM.Sound
 
 
 
-            SoundPlayer[] soundObjects = FindObjectsOfType<SoundPlayer>();
-            NBSPlayer[] nbsPlayers = FindObjectsOfType<NBSPlayer>();
-
-            for (int i = 0; i < soundObjects.Length; i++)
+            SoundPlayerVariable[] soundPlayers = FindObjectsOfType<SoundPlayerVariable>();
+            for (int i = 0; i < soundPlayers.Length; i++)
             {
-                SoundPlayer soundObject = soundObjects[i];
-                soundObject.Refresh();
-            }
-
-            for (int ii = 0; ii < nbsPlayers.Length; ii++)
-            {
-                NBSPlayer nbsPlayer = nbsPlayers[ii];
-                nbsPlayer.Refresh();
+                SoundPlayerVariable soundPlayer = soundPlayers[i];
+                soundPlayer.Refresh();
             }
         }
 
