@@ -3,6 +3,7 @@ using SCKRM.Json;
 using SCKRM.NBS;
 using SCKRM.Object;
 using SCKRM.ProjectSetting;
+using SCKRM.Renderer;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
@@ -429,7 +430,7 @@ namespace SCKRM.Editor
                     GUI.enabled = false;
 
                 if (GUILayout.Button("텍스트 새로고침", GUILayout.ExpandWidth(false)))
-                    Kernel.AllRefresh(true).Forget();
+                    RendererManager.AllTextRerender(true);
 
                 if (GUILayout.Button("모든 리소스 새로고침", GUILayout.ExpandWidth(false)))
                     Kernel.AllRefresh().Forget();

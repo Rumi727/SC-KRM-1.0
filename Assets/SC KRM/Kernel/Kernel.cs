@@ -268,7 +268,7 @@ namespace SCKRM
 
         public static event Action allRefreshStart;
         public static event Action allRefreshEnd;
-        public static async UniTaskVoid AllRefresh(bool onlyText = false)
+        public static async UniTaskVoid AllRefresh()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(AllRefresh));
@@ -278,36 +278,14 @@ namespace SCKRM
 #endif
             allRefreshStart?.Invoke();
 
-            if (onlyText)
-                RendererManager.AllTextRerender();
-            else
+            if (!ResourceManager.isResourceRefesh)
             {
-                /*#if !UNITY_EDITOR
-                                if (SoundManager.soundList.Count > 0)
-                                {
-                #if UNITY_STANDALONE_WIN
-                                    string text = LanguageManager.TextLoad("kernel.allrefresh.warning");
-                                    string caption = LanguageManager.TextLoad("gui.warning");
-                                    WindowManager.DialogResult dialogResult = WindowManager.MessageBox(text, caption, WindowManager.MessageBoxButtons.OKCancel, WindowManager.MessageBoxIcon.Warning);
-                                    if (dialogResult != WindowManager.DialogResult.OK)
-                                        return;
-                #else
-                                    Debug.LogError(LanguageManager.TextLoad("kernel.allrefresh.error"));
-                                    return;
-                #endif
-                                }
-                #endif*/
-                if (!ResourceManager.isResourceRefesh)
-                {
-                    await ResourceManager.ResourceRefresh();
-                    RendererManager.AllRerender();
+                await ResourceManager.ResourceRefresh();
+                RendererManager.AllRerender();
 
-                    SoundManager.SoundRefresh();
-                    ResourceManager.GarbageRemoval();
-                }
+                SoundManager.SoundRefresh();
             }
 
-            GC.Collect();
             allRefreshEnd?.Invoke();
         }
 
