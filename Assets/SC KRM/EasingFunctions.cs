@@ -425,7 +425,7 @@ public static class EasingFunction
 
     public static double EaseInQuadD(double start, double end, double value)
     {
-        return 2f * (end - start) * value;
+        return 2d * (end - start) * value;
     }
 
     public static double EaseOutQuadD(double start, double end, double value)
@@ -436,7 +436,7 @@ public static class EasingFunction
 
     public static double EaseInOutQuadD(double start, double end, double value)
     {
-        value /= .5f;
+        value /= .5;
         end -= start;
 
         if (value < 1)
@@ -451,271 +451,271 @@ public static class EasingFunction
 
     public static double EaseInCubicD(double start, double end, double value)
     {
-        return 3f * (end - start) * value * value;
+        return 3d * (end - start) * value * value;
     }
 
     public static double EaseOutCubicD(double start, double end, double value)
     {
         value--;
         end -= start;
-        return 3f * end * value * value;
+        return 3d * end * value * value;
     }
 
     public static double EaseInOutCubicD(double start, double end, double value)
     {
-        value /= .5f;
+        value /= .5;
         end -= start;
 
         if (value < 1)
         {
-            return (3f / 2f) * end * value * value;
+            return (3d / 2d) * end * value * value;
         }
 
         value -= 2;
 
-        return (3f / 2f) * end * value * value;
+        return (3d / 2d) * end * value * value;
     }
 
     public static double EaseInQuartD(double start, double end, double value)
     {
-        return 4f * (end - start) * value * value * value;
+        return 4d * (end - start) * value * value * value;
     }
 
     public static double EaseOutQuartD(double start, double end, double value)
     {
         value--;
         end -= start;
-        return -4f * end * value * value * value;
+        return -4d * end * value * value * value;
     }
 
     public static double EaseInOutQuartD(double start, double end, double value)
     {
-        value /= .5f;
+        value /= .5;
         end -= start;
 
         if (value < 1)
         {
-            return 2f * end * value * value * value;
+            return 2d * end * value * value * value;
         }
 
         value -= 2;
 
-        return -2f * end * value * value * value;
+        return -2d * end * value * value * value;
     }
 
     public static double EaseInQuintD(double start, double end, double value)
     {
-        return 5f * (end - start) * value * value * value * value;
+        return 5d * (end - start) * value * value * value * value;
     }
 
     public static double EaseOutQuintD(double start, double end, double value)
     {
         value--;
         end -= start;
-        return 5f * end * value * value * value * value;
+        return 5d * end * value * value * value * value;
     }
 
     public static double EaseInOutQuintD(double start, double end, double value)
     {
-        value /= .5f;
+        value /= .5;
         end -= start;
 
         if (value < 1)
         {
-            return (5f / 2f) * end * value * value * value * value;
+            return (5d / 2d) * end * value * value * value * value;
         }
 
         value -= 2;
 
-        return (5f / 2f) * end * value * value * value * value;
+        return (5d / 2d) * end * value * value * value * value;
     }
 
     public static double EaseInSineD(double start, double end, double value)
     {
-        return (end - start) * 0.5f * Math.PI * Math.Sin(0.5f * Math.PI * value);
+        return (end - start) * 0.5d * Math.PI * Math.Sin(0.5d * Math.PI * value);
     }
 
     public static double EaseOutSineD(double start, double end, double value)
     {
         end -= start;
-        return (Math.PI * 0.5f) * end * Math.Cos(value * (Math.PI * 0.5f));
+        return (Math.PI * 0.5d) * end * Math.Cos(value * (Math.PI * 0.5d));
     }
 
     public static double EaseInOutSineD(double start, double end, double value)
     {
         end -= start;
-        return end * 0.5f * Math.PI * Math.Sin(Math.PI * value);
+        return end * 0.5d * Math.PI * Math.Sin(Math.PI * value);
     }
     public static double EaseInExpoD(double start, double end, double value)
     {
-        return (10f * NATURAL_LOG_OF_2 * (end - start) * Math.Pow(2f, 10f * (value - 1)));
+        return (10d * NATURAL_LOG_OF_2 * (end - start) * Math.Pow(2d, 10d * (value - 1)));
     }
 
     public static double EaseOutExpoD(double start, double end, double value)
     {
         end -= start;
-        return 5f * NATURAL_LOG_OF_2 * end * Math.Pow(2f, 1f - 10f * value);
+        return 5d * NATURAL_LOG_OF_2 * end * Math.Pow(2d, 1d - 10d * value);
     }
 
     public static double EaseInOutExpoD(double start, double end, double value)
     {
-        value /= .5f;
+        value /= .5;
         end -= start;
 
         if (value < 1)
         {
-            return 5f * NATURAL_LOG_OF_2 * end * Math.Pow(2f, 10f * (value - 1));
+            return 5d * NATURAL_LOG_OF_2 * end * Math.Pow(2d, 10d * (value - 1));
         }
 
         value--;
 
-        return (5f * NATURAL_LOG_OF_2 * end) / (Math.Pow(2f, 10f * value));
+        return (5d * NATURAL_LOG_OF_2 * end) / (Math.Pow(2d, 10d * value));
     }
 
     public static double EaseInCircD(double start, double end, double value)
     {
-        return ((end - start) * value) / Math.Sqrt(1f - value * value);
+        return ((end - start) * value) / Math.Sqrt(1d - value * value);
     }
 
     public static double EaseOutCircD(double start, double end, double value)
     {
         value--;
         end -= start;
-        return (-end * value) / Math.Sqrt(1f - value * value);
+        return (-end * value) / Math.Sqrt(1d - value * value);
     }
 
     public static double EaseInOutCircD(double start, double end, double value)
     {
-        value /= .5f;
+        value /= .5;
         end -= start;
 
         if (value < 1)
         {
-            return (end * value) / (2f * Math.Sqrt(1f - value * value));
+            return (end * value) / (2d * Math.Sqrt(1d - value * value));
         }
 
-        value -= 2;
+        value -= 2d;
 
-        return (-end * value) / (2f * Math.Sqrt(1f - value * value));
+        return (-end * value) / (2d * Math.Sqrt(1d - value * value));
     }
 
     public static double EaseInBounceD(double start, double end, double value)
     {
         end -= start;
-        double d = 1f;
+        double d = 1d;
 
         return EaseOutBounceD(0, end, d - value);
     }
 
     public static double EaseOutBounceD(double start, double end, double value)
     {
-        value /= 1f;
+        value /= 1d;
         end -= start;
 
-        if (value < (1 / 2.75f))
+        if (value < (1d / 2.75))
         {
-            return 2f * end * 7.5625f * value;
+            return 2d * end * 7.5625 * value;
         }
-        else if (value < (2 / 2.75f))
+        else if (value < (2 / 2.75))
         {
-            value -= (1.5f / 2.75f);
-            return 2f * end * 7.5625f * value;
+            value -= (1.5 / 2.75);
+            return 2d * end * 7.5625 * value;
         }
         else if (value < (2.5 / 2.75))
         {
-            value -= (2.25f / 2.75f);
-            return 2f * end * 7.5625f * value;
+            value -= (2.25 / 2.75);
+            return 2d * end * 7.5625 * value;
         }
         else
         {
-            value -= (2.625f / 2.75f);
-            return 2f * end * 7.5625f * value;
+            value -= (2.625 / 2.75);
+            return 2d * end * 7.5625 * value;
         }
     }
 
     public static double EaseInOutBounceD(double start, double end, double value)
     {
         end -= start;
-        double d = 1f;
+        double d = 1d;
 
-        if (value < d * 0.5f)
+        if (value < d * 0.5)
         {
-            return EaseInBounceD(0, end, value * 2) * 0.5f;
+            return EaseInBounceD(0, end, value * 2d) * 0.5;
         }
         else
         {
-            return EaseOutBounceD(0, end, value * 2 - d) * 0.5f;
+            return EaseOutBounceD(0, end, value * 2d - d) * 0.5;
         }
     }
 
     public static double EaseInBackD(double start, double end, double value)
     {
-        double s = 1.70158f;
+        double s = 1.70158;
 
-        return 3f * (s + 1f) * (end - start) * value * value - 2f * s * (end - start) * value;
+        return 3d * (s + 1d) * (end - start) * value * value - 2d * s * (end - start) * value;
     }
 
     public static double EaseOutBackD(double start, double end, double value)
     {
-        double s = 1.70158f;
+        double s = 1.70158;
         end -= start;
         value = (value) - 1;
 
-        return end * ((s + 1f) * value * value + 2f * value * ((s + 1f) * value + s));
+        return end * ((s + 1d) * value * value + 2d * value * ((s + 1d) * value + s));
     }
 
     public static double EaseInOutBackD(double start, double end, double value)
     {
-        double s = 1.70158f;
+        double s = 1.70158;
         end -= start;
-        value /= .5f;
+        value /= .5;
 
         if ((value) < 1)
         {
-            s *= (1.525f);
-            return 0.5f * end * (s + 1) * value * value + end * value * ((s + 1f) * value - s);
+            s *= (1.525);
+            return 0.5 * end * (s + 1) * value * value + end * value * ((s + 1d) * value - s);
         }
 
         value -= 2;
-        s *= (1.525f);
-        return 0.5f * end * ((s + 1) * value * value + 2f * value * ((s + 1f) * value + s));
+        s *= (1.525);
+        return 0.5 * end * ((s + 1) * value * value + 2f * value * ((s + 1f) * value + s));
     }
 
     public static double EaseInElasticD(double start, double end, double value)
     {
-        return EaseOutElasticD(start, end, 1f - value);
+        return EaseOutElasticD(start, end, 1d - value);
     }
 
     public static double EaseOutElasticD(double start, double end, double value)
     {
         end -= start;
 
-        double d = 1f;
-        double p = d * .3f;
+        double d = 1d;
+        double p = d * .3d;
         double s;
         double a = 0;
 
-        if (a == 0f || a < Math.Abs(end))
+        if (a == 0d || a < Math.Abs(end))
         {
             a = end;
-            s = p * 0.25f;
+            s = p * 0.25d;
         }
         else
         {
             s = p / (2 * Math.PI) * Math.Asin(end / a);
         }
 
-        return (a * Math.PI * d * Math.Pow(2f, 1f - 10f * value) *
-            Math.Cos((2f * Math.PI * (d * value - s)) / p)) / p - 5f * NATURAL_LOG_OF_2 * a *
-            Math.Pow(2f, 1f - 10f * value) * Math.Sin((2f * Math.PI * (d * value - s)) / p);
+        return (a * Math.PI * d * Math.Pow(2d, 1d - 10d * value) *
+            Math.Cos((2d * Math.PI * (d * value - s)) / p)) / p - 5d * NATURAL_LOG_OF_2 * a *
+            Math.Pow(2d, 1d - 10d * value) * Math.Sin((2d * Math.PI * (d * value - s)) / p);
     }
 
     public static double EaseInOutElasticD(double start, double end, double value)
     {
         end -= start;
 
-        double d = 1f;
-        double p = d * .3f;
+        double d = 1d;
+        double p = d * .3d;
         double s;
         double a = 0;
 
@@ -733,14 +733,14 @@ public static class EasingFunction
         {
             value -= 1;
 
-            return -5f * NATURAL_LOG_OF_2 * a * Math.Pow(2f, 10f * value) * Math.Sin(2 * Math.PI * (d * value - 2f) / p) -
-                a * Math.PI * d * Math.Pow(2f, 10f * value) * Math.Cos(2 * Math.PI * (d * value - s) / p) / p;
+            return -5d * NATURAL_LOG_OF_2 * a * Math.Pow(2d, 10d * value) * Math.Sin(2 * Math.PI * (d * value - 2d) / p) -
+                a * Math.PI * d * Math.Pow(2d, 10d * value) * Math.Cos(2 * Math.PI * (d * value - s) / p) / p;
         }
 
         value -= 1;
 
-        return a * Math.PI * d * Math.Cos(2f * Math.PI * (d * value - s) / p) / (p * Math.Pow(2f, 10f * value)) -
-            5f * NATURAL_LOG_OF_2 * a * Math.Sin(2f * Math.PI * (d * value - s) / p) / (Math.Pow(2f, 10f * value));
+        return a * Math.PI * d * Math.Cos(2d * Math.PI * (d * value - s) / p) / (p * Math.Pow(2d, 10d * value)) -
+            5d * NATURAL_LOG_OF_2 * a * Math.Sin(2d * Math.PI * (d * value - s) / p) / (Math.Pow(2d, 10d * value));
     }
 
     public static double SpringD(double start, double end, double value)
@@ -750,12 +750,12 @@ public static class EasingFunction
 
         // Damn... Thanks http://www.derivative-calculator.net/
         // TODO: And it's a little bit wrong
-        return end * (6f * (1f - value) / 5f + 1f) * (-2.2f * Math.Pow(1f - value, 1.2f) *
-            Math.Sin(Math.PI * value * (2.5f * value * value * value + 0.2f)) + Math.Pow(1f - value, 2.2f) *
-            (Math.PI * (2.5f * value * value * value + 0.2f) + 7.5f * Math.PI * value * value * value) *
-            Math.Cos(Math.PI * value * (2.5f * value * value * value + 0.2f)) + 1f) -
-            6f * end * (Math.Pow(1 - value, 2.2f) * Math.Sin(Math.PI * value * (2.5f * value * value * value + 0.2f)) + value
-            / 5f);
+        return end * (6d * (1d - value) / 5d + 1d) * (-2.2 * Math.Pow(1d - value, 1.2) *
+            Math.Sin(Math.PI * value * (2.5 * value * value * value + 0.2)) + Math.Pow(1d - value, 2.2) *
+            (Math.PI * (2.5 * value * value * value + 0.2) + 7.5 * Math.PI * value * value * value) *
+            Math.Cos(Math.PI * value * (2.5 * value * value * value + 0.2)) + 1) -
+            6d * end * (Math.Pow(1 - value, 2.2) * Math.Sin(Math.PI * value * (2.5 * value * value * value + 0.2)) + value
+            / 5d);
 
     }
 
