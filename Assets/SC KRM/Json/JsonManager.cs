@@ -262,11 +262,7 @@ namespace SCKRM.Json
 
         }
 
-        public JColor(float value)
-        {
-            r = g = b = value;
-            a = 1;
-        }
+        public JColor(float value) => r = g = b = a = value;
 
         public JColor(float r, float g, float b) : this(r, g, b, 1)
         {
@@ -294,10 +290,10 @@ namespace SCKRM.Json
         public static implicit operator Rect(JColor value) => new Rect(value.r, value.g, value.b, value.a);
 
         public static implicit operator JColor(Color32 value) => new JColor(value);
-        public static implicit operator Color32(JColor value) => new Color() { r = value.r * 255, g = value.g * 255, b = value.b * 255, a = value.a * 255 };
+        public static implicit operator Color32(JColor value) => new Color(value.r * 255, value.g * 255, value.b * 255, value.a * 255);
 
         public static implicit operator JColor(Color value) => new JColor(value);
-        public static implicit operator Color(JColor value) => new Color() { r = value.r, g = value.g, b = value.b, a = value.a };
+        public static implicit operator Color(JColor value) => new Color(value.r, value.g, value.b, value.a);
 
         public override string ToString() => $"(r:{r}, g:{g}, b:{b}, a:{a})";
     }
@@ -327,13 +323,9 @@ namespace SCKRM.Json
 
         }
 
-        public JColor32(byte value)
-        {
-            r = g = b = value;
-            a = 1;
-        }
+        public JColor32(byte value) => r = g = b = a = value;
 
-        public JColor32(byte r, byte g, byte b) : this(r, g, b, 1)
+        public JColor32(byte r, byte g, byte b) : this(r, g, b, 255)
         {
 
         }
@@ -359,10 +351,10 @@ namespace SCKRM.Json
         public static implicit operator Rect(JColor32 value) => new Rect(value.r, value.g, value.b, value.a);
 
         public static implicit operator JColor32(Color32 value) => new JColor32(value);
-        public static implicit operator Color32(JColor32 value) => new Color32() { r = value.r, g = value.g, b = value.b, a = value.a };
+        public static implicit operator Color32(JColor32 value) => new Color32(value.r, value.g, value.b, value.a);
 
         public static implicit operator JColor32(Color value) => new JColor32(value);
-        public static implicit operator Color(JColor32 value) => new Color() { r = value.r / 255f, g = value.g / 255f, b = value.b / 255f, a = value.a / 255f };
+        public static implicit operator Color(JColor32 value) => new Color(value.r / 255f, value.g / 255f, value.b / 255f, value.a / 255f);
 
 
         public static implicit operator JColor32(JColor value) => new JColor32(value);
