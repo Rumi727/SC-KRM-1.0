@@ -20,12 +20,6 @@ namespace SCKRM.Editor
         {
             base.OnInspectorGUI();
 
-            DrawLine();
-
-            UseProperty("_mouseSensitivity", "마우스 감도");
-
-            DrawLine();
-
             editor.textPlaceHolderNameSpace = DrawNameSpace("플레이스홀더 네임스페이스", editor.textPlaceHolderNameSpace);
             UseProperty("_textPlaceHolderPath", "플레이스홀더 텍스트");
 

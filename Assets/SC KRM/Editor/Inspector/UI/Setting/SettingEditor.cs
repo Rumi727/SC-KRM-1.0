@@ -67,4 +67,18 @@ namespace SCKRM.Editor
                 EditorUtility.SetDirty(target);
         }
     }
+
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(SettingDrag))]
+    public class SettingDragEditor : SettingEditor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            DrawLine();
+
+            UseProperty("_mouseSensitivity", "마우스 감도");
+        }
+    }
 }
