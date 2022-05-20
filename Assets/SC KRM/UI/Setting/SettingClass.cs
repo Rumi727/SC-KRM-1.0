@@ -18,6 +18,8 @@ namespace SCKRM.UI.Setting
         [SerializeField] string _saveLoadClassName = ""; public string saveLoadClassName { get => _saveLoadClassName; set => _saveLoadClassName = value; }
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }
 
+        [SerializeField] int _roundingDigits = 2; public int roundingDigits { get => _roundingDigits; set => _roundingDigits = value; }
+
         [SerializeField] CanvasGroup _resetButton; public CanvasGroup resetButton { get => _resetButton; set => _resetButton = value; }
         [SerializeField] RectTransform _nameText; public RectTransform nameText { get => _nameText; set => _nameText = value; }
 
@@ -164,9 +166,27 @@ namespace SCKRM.UI.Setting
         public virtual object GetValue()
         {
             if (propertyInfo != null)
-                return propertyInfo.GetValue(type);
+            {
+                if (variableType == VariableType.Float)
+                    return ((float)propertyInfo.GetValue(type)).Round(roundingDigits);
+                else if (variableType == VariableType.Double)
+                    return ((double)propertyInfo.GetValue(type)).Round(roundingDigits);
+                else if (variableType == VariableType.Decimal)
+                    return ((decimal)propertyInfo.GetValue(type)).Round(roundingDigits);
+                else
+                    return propertyInfo.GetValue(type);
+            }
             else if (fieldInfo != null)
-                return fieldInfo.GetValue(type);
+            {
+                if (variableType == VariableType.Float)
+                    return ((float)fieldInfo.GetValue(type)).Round(roundingDigits);
+                else if (variableType == VariableType.Double)
+                    return ((double)fieldInfo.GetValue(type)).Round(roundingDigits);
+                else if (variableType == VariableType.Decimal)
+                    return ((decimal)fieldInfo.GetValue(type)).Round(roundingDigits);
+                else
+                    return fieldInfo.GetValue(type);
+            }
 
             return null;
         }
@@ -268,9 +288,9 @@ namespace SCKRM.UI.Setting
                 else if (variableType == VariableType.Float)
                     return (float)propertyInfo.GetValue(type);
                 else if (variableType == VariableType.Double)
-                    return (float)(double)propertyInfo.GetValue(type);
+                    return (float)((double)propertyInfo.GetValue(type)).Round(roundingDigits);
                 else if (variableType == VariableType.Decimal)
-                    return (float)(decimal)propertyInfo.GetValue(type);
+                    return (float)((decimal)propertyInfo.GetValue(type)).Round(roundingDigits);
             }
             else if (fieldInfo != null)
             {
@@ -299,9 +319,9 @@ namespace SCKRM.UI.Setting
                 else if (variableType == VariableType.Float)
                     return (float)fieldInfo.GetValue(type);
                 else if (variableType == VariableType.Double)
-                    return (float)(double)fieldInfo.GetValue(type);
+                    return (float)((double)fieldInfo.GetValue(type)).Round(roundingDigits);
                 else if (variableType == VariableType.Decimal)
-                    return (float)(decimal)fieldInfo.GetValue(type);
+                    return (float)((decimal)fieldInfo.GetValue(type)).Round(roundingDigits);
             }
 
             return 0;
@@ -310,13 +330,34 @@ namespace SCKRM.UI.Setting
         public virtual void SaveValue(object value)
         {
             if (propertyInfo != null)
-                propertyInfo.SetValue(type, value);
+            {
+                if (variableType == VariableType.Float)
+                    propertyInfo.SetValue(type, ((float)value).Round(roundingDigits));
+                else if (variableType == VariableType.Double)
+                    propertyInfo.SetValue(type, ((double)value).Round(roundingDigits));
+                else if (variableType == VariableType.Decimal)
+                    propertyInfo.SetValue(type, ((decimal)value).Round(roundingDigits));
+                else
+                    propertyInfo.SetValue(type, value);
+            }
             else if (fieldInfo != null)
-                fieldInfo.SetValue(type, value);
+            {
+                if (variableType == VariableType.Float)
+                    fieldInfo.SetValue(type, ((float)value).Round(roundingDigits));
+                else if (variableType == VariableType.Double)
+                    fieldInfo.SetValue(type, ((double)value).Round(roundingDigits));
+                else if (variableType == VariableType.Decimal)
+                    fieldInfo.SetValue(type, ((decimal)value).Round(roundingDigits));
+                else
+                    fieldInfo.SetValue(type, value);
+            }
         }
+
 
         public virtual void SaveValueFloat(float value)
         {
+            value = value.Round(roundingDigits);
+
             if (propertyInfo != null)
             {
                 if (variableType == VariableType.Char)
@@ -409,11 +450,11 @@ namespace SCKRM.UI.Setting
                     else if (variableType == VariableType.Ulong)
                         propertyInfo.SetValue(type, ulong.Parse(value));
                     else if (variableType == VariableType.Float)
-                        propertyInfo.SetValue(type, float.Parse(value));
+                        propertyInfo.SetValue(type, float.Parse(value).Round(roundingDigits));
                     else if (variableType == VariableType.Double)
-                        propertyInfo.SetValue(type, double.Parse(value));
+                        propertyInfo.SetValue(type, double.Parse(value).Round(roundingDigits));
                     else if (variableType == VariableType.Decimal)
-                        propertyInfo.SetValue(type, decimal.Parse(value));
+                        propertyInfo.SetValue(type, decimal.Parse(value).Round(roundingDigits));
                 }
                 else if (fieldInfo != null)
                 {
@@ -443,11 +484,11 @@ namespace SCKRM.UI.Setting
                     else if (variableType == VariableType.Ulong)
                         fieldInfo.SetValue(type, ulong.Parse(value));
                     else if (variableType == VariableType.Float)
-                        fieldInfo.SetValue(type, float.Parse(value));
+                        fieldInfo.SetValue(type, float.Parse(value).Round(roundingDigits));
                     else if (variableType == VariableType.Double)
-                        fieldInfo.SetValue(type, double.Parse(value));
+                        fieldInfo.SetValue(type, double.Parse(value).Round(roundingDigits));
                     else if (variableType == VariableType.Decimal)
-                        fieldInfo.SetValue(type, decimal.Parse(value));
+                        fieldInfo.SetValue(type, decimal.Parse(value).Round(roundingDigits));
                 }
             }
             catch (Exception e)
@@ -503,11 +544,11 @@ namespace SCKRM.UI.Setting
                 if (variableType == VariableType.Ulong)
                     propertyInfo.SetValue(type, (ulong)((ulong)value + mouseDelta));
                 if (variableType == VariableType.Float)
-                    propertyInfo.SetValue(type, (float)value + mouseDelta);
+                    propertyInfo.SetValue(type, ((float)value + mouseDelta).Round(roundingDigits));
                 if (variableType == VariableType.Double)
-                    propertyInfo.SetValue(type, (double)value + mouseDelta);
+                    propertyInfo.SetValue(type, ((double)value + mouseDelta).Round(roundingDigits));
                 if (variableType == VariableType.Decimal)
-                    propertyInfo.SetValue(type, (decimal)value + (decimal)mouseDelta);
+                    propertyInfo.SetValue(type, ((decimal)value + (decimal)mouseDelta).Round(roundingDigits));
             }
             else if (fieldInfo != null)
             {
@@ -530,11 +571,11 @@ namespace SCKRM.UI.Setting
                 if (variableType == VariableType.Ulong)
                     fieldInfo.SetValue(type, (ulong)((ulong)value2 + mouseDelta));
                 if (variableType == VariableType.Float)
-                    fieldInfo.SetValue(type, (float)value2 + mouseDelta);
+                    fieldInfo.SetValue(type, ((float)value2 + mouseDelta).Round(roundingDigits));
                 if (variableType == VariableType.Double)
-                    fieldInfo.SetValue(type, (double)value2 + mouseDelta);
+                    fieldInfo.SetValue(type, ((double)value2 + mouseDelta).Round(roundingDigits));
                 if (variableType == VariableType.Decimal)
-                    fieldInfo.SetValue(type, (decimal)value2 + (decimal)mouseDelta);
+                    fieldInfo.SetValue(type, ((decimal)value2 + (decimal)mouseDelta).Round(roundingDigits));
             }
         }
     }

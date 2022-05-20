@@ -55,6 +55,10 @@ namespace SCKRM.Editor
 
             DrawLine();
 
+            UseProperty("_roundingDigits", "반올림 자릿수");
+
+            DrawLine();
+
             UseProperty("_resetButton", "리셋 버튼");
             UseProperty("_nameText", "이름 텍스트");
 

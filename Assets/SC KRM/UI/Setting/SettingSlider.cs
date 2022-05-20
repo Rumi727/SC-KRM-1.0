@@ -39,7 +39,7 @@ namespace SCKRM.UI.Setting
         {
             base.Update();
 
-            if (InitialLoadManager.isInitialLoadEnd && isLoad && variableType != VariableType.String)
+            if (InitialLoadManager.isInitialLoadEnd && isLoad && !(variableType == VariableType.Char || variableType == VariableType.String))
             {
                 invokeLock = true;
                 slider.value = GetValueFloat();
