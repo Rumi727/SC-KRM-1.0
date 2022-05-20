@@ -1,4 +1,6 @@
 {
   "splashScreenPath": "Assets/SC KRM/Splash Screen",
-  "splashScreenName": "Splash Screen"
+  "splashScreenName": "Splash Screen",
+  "kernelObjectPath": "Assets/SC KRM",
+  "kernelObjectName": "Kernel"
 }
