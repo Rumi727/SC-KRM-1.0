@@ -767,6 +767,36 @@ namespace SCKRM
             float num6 = (float)Math.Sqrt(num5);
             return new Color(current.r + num / num6 * maxDistanceDelta, current.g + num2 / num6 * maxDistanceDelta, current.b + num3 / num6 * maxDistanceDelta, current.a + num4 / num6 * maxDistanceDelta);
         }
+
+
+
+        public static float Ceil(this float value) => (float)Math.Ceiling(value);
+        public static double Ceil(this double value) => Math.Ceiling(value);
+        public static decimal Ceil(this decimal value) => Math.Ceiling(value);
+
+        public static int CeilToInt(this float value) => (int)Math.Ceiling(value);
+        public static int CeilToInt(this double value) => (int)Math.Ceiling(value);
+        public static int CeilToInt(this decimal value) => (int)Math.Ceiling(value);
+
+        public static float Floor(this float value) => (float)Math.Floor(value);
+        public static double Floor(this double value) => Math.Floor(value);
+        public static decimal Floor(this decimal value) => Math.Floor(value);
+
+        public static int FloorToInt(this float value) => (int)Math.Floor(value);
+        public static int FloorToInt(this double value) => (int)Math.Floor(value);
+        public static int FloorToInt(this decimal value) => (int)Math.Floor(value);
+
+        public static float Round(this float value) => (float)Math.Round(value);
+        public static double Round(this double value) => Math.Round(value);
+        public static decimal Round(this decimal value) => Math.Round(value);
+
+        public static int RoundToInt(this float value) => (int)Math.Round(value);
+        public static int RoundToInt(this double value) => (int)Math.Round(value);
+        public static int RoundToInt(this decimal value) => (int)Math.Round(value);
+
+        public static float Round(this float value, int digits) => (float)Math.Round(value, digits);
+        public static double Round(this double value, int digits) => Math.Round(value, digits);
+        public static decimal Round(this decimal value, int digits) => Math.Round(value, digits);
     }
 
     public static class MathRefTool

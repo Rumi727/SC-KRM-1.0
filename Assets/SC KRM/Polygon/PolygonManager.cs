@@ -188,7 +188,7 @@ public static class PolygonManager
 
 
         const float tau = Mathf.PI * 2;
-        int sidesInt = Mathf.CeilToInt(sides);
+        int sidesInt = sides.CeilToInt();
 
         lineRenderer.positionCount = sidesInt;
         for (int i = 0; i < sidesInt; i++)

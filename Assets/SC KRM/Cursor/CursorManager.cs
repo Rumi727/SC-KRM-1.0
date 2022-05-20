@@ -72,7 +72,7 @@ namespace SCKRM
 #if UNITY_STANDALONE_WIN
                 if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
                 {
-                    setCursorPosition(Mathf.RoundToInt(IgnoreMouseAccelerationPos.x), Mathf.RoundToInt(IgnoreMouseAccelerationPos.y), 0, 0, true);
+                    setCursorPosition((IgnoreMouseAccelerationPos.x).RoundToInt(), (IgnoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
 
                     Vector2 delta = InputManager.GetMouseDelta(false, "all", "force");
                     delta.y = -delta.y;
@@ -167,7 +167,7 @@ namespace SCKRM
             if (!success)
                 return Vector2Int.zero;
 
-            return new Vector2Int(Mathf.RoundToInt(lpPoint.X - (Screen.currentResolution.width * xDatumPoint)), Mathf.RoundToInt(lpPoint.Y - (Screen.currentResolution.height * yDatumPoint)));
+            return new Vector2Int((lpPoint.X - (Screen.currentResolution.width * xDatumPoint)).RoundToInt(), (lpPoint.Y - (Screen.currentResolution.height * yDatumPoint)).RoundToInt());
 #else
             throw new NotImplementedException();
 #endif
@@ -186,8 +186,8 @@ namespace SCKRM
 
             Vector2Int clientSize = WindowManager.GetClientSize();
             Vector2 border = (Vector2)(WindowManager.GetWindowSize() - clientSize) * 0.5f;
-            Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int(Mathf.RoundToInt(border.x), Mathf.RoundToInt(border.y));
-            return new Vector2Int(Mathf.RoundToInt(lpPoint.X - (clientSize.x * xDatumPoint)) - offset.x, Mathf.RoundToInt(lpPoint.Y - offset.y - (clientSize.y * yDatumPoint)) - offset.y);
+            Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int((border.x).RoundToInt(), (border.y).RoundToInt());
+            return new Vector2Int(lpPoint.X - (clientSize.x * xDatumPoint).RoundToInt() - offset.x, (lpPoint.Y - offset.y - (clientSize.y * yDatumPoint)).RoundToInt() - offset.y);
 #else
             throw new NotImplementedException();
 #endif
@@ -203,7 +203,7 @@ namespace SCKRM
         {
 #if UNITY_STANDALONE_WIN
             if (!SaveData.IgnoreMouseAcceleration || force)
-                SetCursorPos(Mathf.RoundToInt(x + ((Screen.currentResolution.width - 1) * xDatumPoint)), Mathf.RoundToInt(y + ((Screen.currentResolution.height - 1) * yDatumPoint)));
+                SetCursorPos((x + ((Screen.currentResolution.width - 1) * xDatumPoint)).RoundToInt(), (y + ((Screen.currentResolution.height - 1) * yDatumPoint)).RoundToInt());
             else
                 IgnoreMouseAccelerationPos = new Vector2(x, y);
 #else
@@ -219,9 +219,9 @@ namespace SCKRM
 #if UNITY_STANDALONE_WIN
             Vector2Int clientSize = WindowManager.GetClientSize();
             Vector2 border = (Vector2)(WindowManager.GetWindowSize() - clientSize) * 0.5f;
-            Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int(Mathf.RoundToInt(border.x), Mathf.RoundToInt(border.y));
-            int x2 = Mathf.RoundToInt(x + ((clientSize.x - 1) * xDatumPoint)) - offset.x;
-            int y2 = Mathf.RoundToInt(y + ((clientSize.y - 1) * yDatumPoint)) - offset.y;
+            Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int((border.x).RoundToInt(), (border.y).RoundToInt());
+            int x2 = (x + ((clientSize.x - 1) * xDatumPoint)).RoundToInt() - offset.x;
+            int y2 = (y + ((clientSize.y - 1) * yDatumPoint)).RoundToInt() - offset.y;
 
             if (!SaveData.IgnoreMouseAcceleration || force)
                 SetCursorPos(x, y);
