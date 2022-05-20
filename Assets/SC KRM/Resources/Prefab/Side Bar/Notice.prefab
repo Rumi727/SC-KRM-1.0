@@ -301,8 +301,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 1}
@@ -373,6 +373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca6f8ee03a694f4cb7d941a55dc64b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
   _verticalLayout: {fileID: 0}
   _setSizeAsChildRectTransform: {fileID: 0}
   _removeButtonCanvasGroup: {fileID: 4096963356903654689}
@@ -391,7 +393,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45453fe11c3135f44852cc83f6128203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lerp: 1
+  _rectTransform: {fileID: 836050093905084075}
+  _graphic: {fileID: 2270588504110008360}
+  _lerp: 0
   _lerpValue: 0.2
   _spacing: 4
   _ignore:
@@ -414,7 +418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d646b6ab0b1b1bf4cacea338ffa57b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lerp: 1
+  _rectTransform: {fileID: 836050093905084075}
+  _graphic: {fileID: 2270588504110008360}
+  _lerp: 0
   _lerpValue: 0.2
   _spacing: 3
   _ignore:
