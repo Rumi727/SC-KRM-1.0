@@ -99,6 +99,13 @@ namespace SCKRM.UI
 
         //protected override void OnValidate() => update();
 
+        protected override void Awake()
+        {
+            onTransformParentChangedMethodLock = true;
+            Update();
+            onTransformParentChangedMethodLock = false;
+        }
+
         bool onTransformParentChangedMethodLock = false;
         protected override void OnTransformParentChanged()
         {
@@ -151,8 +158,12 @@ namespace SCKRM.UI
 
         protected virtual void Update()
         {
+            onRectTransformDimensionsChangeMethodLock = true;
+
             LayoutRefresh();
             SizeUpdate();
+
+            onRectTransformDimensionsChangeMethodLock = false;
         }
 
         protected virtual void LayoutRefresh()
