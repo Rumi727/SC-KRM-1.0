@@ -39,7 +39,7 @@ public class Postest : MonoBehaviour
         map.effect.dropPart.Add(new BeatValuePair<bool>(605, true));
         map.effect.dropPart.Add(new BeatValuePair<bool>(732, false));
 
-        bool temp = false;
+        /*bool temp = false;
         for (int i = 4; i < 1000; i += 4)
         {
             if (temp)
@@ -51,7 +51,7 @@ public class Postest : MonoBehaviour
             }
 
             temp = !temp;
-        }
+        }*/
 
         /*mapEffect.test.Add(new BeatValuePairAni<double>(-3, -2, 0, EasingFunction.Ease.Linear));
         mapEffect.test.Add(new BeatValuePairAni<double>(-3, -1, 1, EasingFunction.Ease.Linear));
