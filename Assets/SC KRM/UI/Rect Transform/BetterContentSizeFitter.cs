@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace SCKRM
 {
-    [ExecuteAlways, RequireComponent(typeof(TMP_Text))]
+    [ExecuteAlways, RequireComponent(typeof(RectTransform))]
     public class BetterContentSizeFitter : UI.UI, ILayoutSelfController
     {
         [SerializeField] bool _xSize = false; public bool xSize { get => _xSize; set => _xSize = value; }
