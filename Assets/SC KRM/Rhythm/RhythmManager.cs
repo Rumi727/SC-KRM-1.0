@@ -60,22 +60,16 @@ namespace SCKRM
                     Stop();
                 else
                 {
-                    void SetCurrentBeat() => currentBeat = (double)((time - map.info.offset - bpmOffsetTime) * (bpm / 60d)) + bpmOffsetBeat;
                     SetCurrentBeat();
 
                     {
                         bpm = map.effect.bpm.GetValue(currentBeat, out double beat, out bool isValueChanged);
-
-                        soundPlayer.timeChanged -= TimeChange;
-                        soundPlayer.timeChanged += TimeChange;
 
                         if (isValueChanged)
                         {
                             BPMChange(bpm, beat);
                             SetCurrentBeat();
                         }
-
-                        void TimeChange() => BPMChange(bpm, beat);
                     }
 
                     {
@@ -101,6 +95,8 @@ namespace SCKRM
                 }
             }
         }
+
+        static void SetCurrentBeat() => currentBeat = (double)((time - map.info.offset - bpmOffsetTime) * (bpm / 60d)) + bpmOffsetBeat;
 
         static void BPMChange(double bpm, double offsetBeat)
         {
@@ -136,6 +132,7 @@ namespace SCKRM
             RhythmManager.soundPlayer = soundPlayer;
             RhythmManager.map = map;
 
+            soundPlayer.timeChanged += SoundPlayerTimeChange;
             isPlaying = true;
         }
 
@@ -143,10 +140,37 @@ namespace SCKRM
         {
             currentBeat = 0;
 
+            if (soundPlayer != null)
+                soundPlayer.timeChanged -= SoundPlayerTimeChange;
+
             soundPlayer = null;
             map = null;
 
             isPlaying = false;
+        }
+
+        static void SoundPlayerTimeChange()
+        {
+            for (int i = 0; i < map.effect.bpm.Count; i++)
+            {
+                {
+                    BeatValuePair<double> bpm = map.effect.bpm[i];
+                    BPMChange(bpm.value, bpm.beat);
+                    SetCurrentBeat();
+                }
+
+                if (bpmOffsetTime >= time)
+                {
+                    if (i - 1 >= 0)
+                    {
+                        BeatValuePair<double> bpm = map.effect.bpm[i - 1];
+                        SetCurrentBeat();
+                        BPMChange(bpm.value, bpm.beat);
+                    }
+
+                    break;
+                }
+            }
         }
     }
 
@@ -184,8 +208,22 @@ namespace SCKRM
         public T GetValue(double currentBeat) => GetValue(currentBeat, out _, out _);
 
         T tempValue = default;
+        double tempBeat = 0;
+        double? tempCurrentBeat = null;
         public T GetValue(double currentBeat, out double beat, out bool isValueChanged)
         {
+            /*if (tempCurrentBeat != null && (double)tempCurrentBeat == currentBeat)
+            {
+                Debug.Log("asdf2");
+
+                beat = tempBeat;
+                isValueChanged = false;
+
+                return tempValue;
+            }
+
+            tempCurrentBeat = currentBeat;*/
+
             T value;
             if (Count <= 0)
             {
@@ -210,6 +248,7 @@ namespace SCKRM
 
             isValueChanged = !tempValue.Equals(value);
             tempValue = value;
+            tempBeat = beat;
 
             return value;
         }
