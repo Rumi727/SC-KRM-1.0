@@ -9,17 +9,7 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(Image))]
     public class CustomImageRenderer : CustomAllSpriteRenderer
     {
-        [SerializeField, HideInInspector] Image _image;
-        public Image image
-        {
-            get
-            {
-                if (_image == null)
-                    _image = GetComponent<Image>();
-
-                return _image;
-            }
-        }
+        [SerializeField, HideInInspector] Image _image; public Image image => _image = this.GetComponentFieldSave(_image);
 
         public override async void Refresh()
         {

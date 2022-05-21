@@ -37,20 +37,7 @@ namespace SCKRM
 
 
 
-        [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup
-        {
-            get
-            {
-                if (_canvasGroup == null)
-                {
-                    _canvasGroup = GetComponent<CanvasGroup>();
-                    if (_canvasGroup == null)
-                        return null;
-                }
-
-                return _canvasGroup;
-            }
-        }
+        [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup);
 
 
 

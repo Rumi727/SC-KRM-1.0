@@ -16,16 +16,7 @@ namespace SCKRM.UI.StatusBar
     public sealed class TimeText : UI
     {
         [SerializeField, HideInInspector] TMP_Text _text;
-        public TMP_Text text
-        {
-            get
-            {
-                if (_text == null)
-                    _text = GetComponent<TMP_Text>();
-
-                return _text;
-            }
-        }
+        public TMP_Text text => _text = this.GetComponentFieldSave(_text);
 
         static string am = "";
         static string pm = "";

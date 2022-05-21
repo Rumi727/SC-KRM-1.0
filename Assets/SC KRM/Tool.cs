@@ -3054,4 +3054,34 @@ namespace SCKRM
             return klc.ToDateTime(year, month, day, 0, 0, 0, 0);
         }
     }
+
+    public static class ComponentTool
+    {
+        public static T GetComponentFieldSave<T>(this Component component, T fieldToSave, GetComponentMode mode = GetComponentMode.addIfNull) where T : Component
+        {
+            if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
+            {
+                fieldToSave = component.GetComponent<T>();
+                if (fieldToSave == null)
+                {
+                    if (mode == GetComponentMode.addIfNull)
+                        return component.gameObject.AddComponent<T>();
+                    else if (mode == GetComponentMode.destroyIfNull)
+                    {
+                        UnityEngine.Object.DestroyImmediate(component);
+                        return null;
+                    }
+                }
+            }
+
+            return fieldToSave;
+        }
+
+        public enum GetComponentMode
+        {
+            none,
+            addIfNull,
+            destroyIfNull
+        }
+    }
 }

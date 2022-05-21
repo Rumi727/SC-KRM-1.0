@@ -9,17 +9,9 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(RequireComponent))]
     public sealed class CustomSelectableRenderer : CustomImageRenderer
     {
-        [SerializeField, HideInInspector] Selectable _selectable;
-        public Selectable selectable
-        {
-            get
-            {
-                if (_selectable == null)
-                    _selectable = GetComponent<Selectable>();
+        [SerializeField, HideInInspector] Selectable _selectable; public Selectable selectable => _selectable = this.GetComponentFieldSave(_selectable);
 
-                return _selectable;
-            }
-        }
+
 
         [SerializeField] SpriteStateData _highlightedSprite;
         [SerializeField] SpriteStateData _pressedSprite;

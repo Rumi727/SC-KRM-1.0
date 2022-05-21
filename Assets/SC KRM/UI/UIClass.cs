@@ -8,34 +8,8 @@ namespace SCKRM.UI
 {
     public class UI : UIBehaviour
     {
-        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                {
-                    _rectTransform = GetComponent<RectTransform>();
-                    if (_rectTransform == null)
-                        _rectTransform = gameObject.AddComponent<RectTransform>();
-                }
-
-                return _rectTransform;
-            }
-        }
-        [SerializeField] Graphic _graphic; public Graphic graphic
-        {
-            get
-            {
-                if (_graphic == null)
-                {
-                    _graphic = GetComponent<Graphic>();
-                    if (_graphic == null)
-                        return null;
-                }
-
-                return _graphic;
-            }
-        }
+        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform => _rectTransform = this.GetComponentFieldSave(_rectTransform);
+        [SerializeField] Graphic _graphic; public Graphic graphic => _graphic = this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
     }
 
     public class ManagerUI<T> : UIBehaviour where T : MonoBehaviour
@@ -55,34 +29,42 @@ namespace SCKRM.UI
             return (instance = manager) == manager;
         }
 
-        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                {
-                    _rectTransform = GetComponent<RectTransform>();
-                    if (_rectTransform == null)
-                        _rectTransform = gameObject.AddComponent<RectTransform>();
-                }
+        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform => this.GetComponentFieldSave(_rectTransform);
+        [NonSerialized] Graphic _graphic; public Graphic graphic => this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
+    }
 
-                return _rectTransform;
-            }
-        }
-        [NonSerialized] Graphic _graphic; public Graphic graphic
+    public abstract class UILayout : UI
+    {
+        protected override void Awake()
         {
-            get
-            {
-                if (_graphic == null)
-                {
-                    _graphic = GetComponent<Graphic>();
-                    if (_graphic == null)
-                        return null;
-                }
-
-                return _graphic;
-            }
+            onTransformParentChangedMethodLock = true;
+            LayoutUpdate();
+            onTransformParentChangedMethodLock = false;
         }
+
+        bool onTransformParentChangedMethodLock = false;
+        protected override void OnTransformParentChanged()
+        {
+            if (onTransformParentChangedMethodLock || !isActiveAndEnabled)
+                return;
+
+            onTransformParentChangedMethodLock = true;
+            LayoutUpdate();
+            onTransformParentChangedMethodLock = false;
+        }
+
+        bool onRectTransformDimensionsChangeMethodLock = false;
+        protected override void OnRectTransformDimensionsChange()
+        {
+            if (onRectTransformDimensionsChangeMethodLock || !isActiveAndEnabled)
+                return;
+
+            onRectTransformDimensionsChangeMethodLock = true;
+            LayoutUpdate();
+            onRectTransformDimensionsChangeMethodLock = false;
+        }
+
+        public abstract void LayoutUpdate();
     }
 
     public class UIAni : UI
@@ -176,34 +158,8 @@ namespace SCKRM.UI
 
     public class ObjectPoolingUI : ObjectPooling
     {
-        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform
-        {
-            get
-            {
-                if (_rectTransform == null)
-                {
-                    _rectTransform = GetComponent<RectTransform>();
-                    if (_rectTransform == null)
-                        _rectTransform = gameObject.AddComponent<RectTransform>();
-                }
-
-                return _rectTransform;
-            }
-        }
-        [SerializeField] Graphic _graphic; public Graphic graphic
-        {
-            get
-            {
-                if (_graphic == null)
-                {
-                    _graphic = GetComponent<Graphic>();
-                    if (_graphic == null)
-                        return null;
-                }
-
-                return _graphic;
-            }
-        }
+        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform => _rectTransform = this.GetComponentFieldSave(_rectTransform);
+        [SerializeField] Graphic _graphic; public Graphic graphic => _graphic = this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
 
         public override void Remove()
         {

@@ -43,16 +43,7 @@ namespace SCKRM.UI.StatusBar
         public static GameObject tabSelectGameObject { get; set; } = null;
         public static bool tabAllow { get; set; } = false;
 
-        [SerializeField, HideInInspector] Image _image; public Image image
-        {
-            get
-            {
-                if (_image == null)
-                    _image = GetComponent<Image>();
-
-                return _image;
-            }
-        }
+        [SerializeField, HideInInspector] Image _image; public Image image => _image = this.GetComponentFieldSave(_image);
 
         [SerializeField] Image _background; public Image background => _background;
         [SerializeField] GameObject _backButton; public GameObject backButton => _backButton;

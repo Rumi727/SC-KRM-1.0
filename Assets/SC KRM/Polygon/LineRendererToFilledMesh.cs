@@ -8,28 +8,10 @@ namespace SCKRM.Polygon
     public class LineRendererToFilledMesh : MonoBehaviour
     {
         LineRenderer _lineRenderer;
-        public LineRenderer lineRenderer
-        {
-            get
-            {
-                if (_lineRenderer == null)
-                    _lineRenderer = GetComponent<LineRenderer>();
-
-                return _lineRenderer;
-            }
-        }
+        public LineRenderer lineRenderer => _lineRenderer = this.GetComponentFieldSave(_lineRenderer);
 
         MeshFilter _meshFilter;
-        public MeshFilter meshFilter
-        {
-            get
-            {
-                if (_meshFilter == null)
-                    _meshFilter = GetComponent<MeshFilter>();
-
-                return _meshFilter;
-            }
-        }
+        public MeshFilter meshFilter => _meshFilter = this.GetComponentFieldSave(_meshFilter);
 
 
 

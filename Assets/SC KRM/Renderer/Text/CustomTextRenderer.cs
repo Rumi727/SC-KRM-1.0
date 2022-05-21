@@ -9,17 +9,7 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(Text))]
     public sealed class CustomTextRenderer : CustomAllTextRenderer
     {
-        [SerializeField, HideInInspector] Text _text;
-        public Text text
-        {
-            get
-            {
-                if (_text == null)
-                    _text = GetComponent<Text>();
-
-                return _text;
-            }
-        }
+        [SerializeField, HideInInspector] Text _text; public Text text => _text = this.GetComponentFieldSave(_text);
 
         public override void Refresh()
         {

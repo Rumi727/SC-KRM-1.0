@@ -11,28 +11,8 @@ namespace SCKRM.UI.SideBar
     [RequireComponent(typeof(VerticalLayout), typeof(SetSizeAsChildRectTransform))]
     public class Notice : ObjectPoolingUI, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField, HideInInspector] VerticalLayout _verticalLayout;
-        public VerticalLayout verticalLayout
-        {
-            get
-            {
-                if (_verticalLayout == null)
-                    _verticalLayout = GetComponent<VerticalLayout>();
-
-                return _verticalLayout;
-            }
-        }
-        [SerializeField, HideInInspector] SetSizeAsChildRectTransform _setSizeAsChildRectTransform;
-        public SetSizeAsChildRectTransform setSizeAsChildRectTransform
-        {
-            get
-            {
-                if (_setSizeAsChildRectTransform == null)
-                    _setSizeAsChildRectTransform = GetComponent<SetSizeAsChildRectTransform>();
-
-                return _setSizeAsChildRectTransform;
-            }
-        }
+        [SerializeField, HideInInspector] VerticalLayout _verticalLayout; public VerticalLayout verticalLayout => _verticalLayout = this.GetComponentFieldSave(_verticalLayout);
+        [SerializeField, HideInInspector] SetSizeAsChildRectTransform _setSizeAsChildRectTransform; public SetSizeAsChildRectTransform setSizeAsChildRectTransform => _setSizeAsChildRectTransform = this.GetComponentFieldSave(_setSizeAsChildRectTransform);
 
 
 

@@ -8,17 +8,7 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(TextMesh))]
     public sealed class CustomTextMeshRenderer : CustomAllTextRenderer
     {
-        [SerializeField, HideInInspector] TextMesh _text;
-        public TextMesh text
-        {
-            get
-            {
-                if (_text == null)
-                    _text = GetComponent<TextMesh>();
-
-                return _text;
-            }
-        }
+        [SerializeField, HideInInspector] TextMesh _textMesh; public TextMesh text => _textMesh = this.GetComponentFieldSave(_textMesh);
 
         public override void Refresh()
         {

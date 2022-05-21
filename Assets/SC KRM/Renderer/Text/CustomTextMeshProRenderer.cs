@@ -9,17 +9,7 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(TMP_Text))]
     public sealed class CustomTextMeshProRenderer : CustomAllTextRenderer
     {
-        [SerializeField, HideInInspector] TMP_Text _textMeshPro;
-        public TMP_Text textMeshPro
-        {
-            get
-            {
-                if (_textMeshPro == null)
-                    _textMeshPro = GetComponent<TMP_Text>();
-
-                return _textMeshPro;
-            }
-        }
+        [SerializeField, HideInInspector] TMP_Text _textMeshPro; public TMP_Text textMeshPro => _textMeshPro = this.GetComponentFieldSave(_textMeshPro);
 
         public override void Refresh()
         {

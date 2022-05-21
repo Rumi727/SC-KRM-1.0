@@ -17,20 +17,7 @@ namespace SCKRM.UI
         [SerializeField] bool _customGuiSize; public bool customGuiSize { get => _customGuiSize; set => _customGuiSize = value; }
         [SerializeField] bool _worldRenderMode; public bool worldRenderMode { get => _worldRenderMode; set => _worldRenderMode = value; }
 
-        [NonSerialized] Canvas _canvas; public Canvas canvas
-        {
-            get
-            {
-                if (_canvas == null)
-                {
-                    _canvas = GetComponent<Canvas>();
-                    if (_canvas == null)
-                        DestroyImmediate(this);
-                }
-
-                return _canvas;
-            }
-        }
+        [NonSerialized] Canvas _canvas; public Canvas canvas => _canvas = this.GetComponentFieldSave(_canvas, ComponentTool.GetComponentMode.destroyIfNull);
 
         [SerializeField, HideInInspector] RectTransform safeScreen;
         void Update()

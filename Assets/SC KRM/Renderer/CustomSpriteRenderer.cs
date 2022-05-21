@@ -8,17 +8,9 @@ namespace SCKRM.Renderer
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class CustomSpriteRenderer : CustomAllSpriteRenderer
     {
-        SpriteRenderer _spriteRenderer;
-        public SpriteRenderer spriteRenderer
-        {
-            get
-            {
-                if (_spriteRenderer == null)
-                    _spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer _spriteRenderer; public SpriteRenderer spriteRenderer => _spriteRenderer = this.GetComponentFieldSave(_spriteRenderer);
 
-                return _spriteRenderer;
-            }
-        }
+
 
         [SerializeField] Vector2 _size = Vector2.zero;
         public Vector2 size { get => _size; set => _size = value; }

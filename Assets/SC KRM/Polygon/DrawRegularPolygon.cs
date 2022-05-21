@@ -9,16 +9,7 @@ namespace SCKRM.Polygon
     public class DrawRegularPolygon : MonoBehaviour
     {
         LineRenderer _lineRenderer;
-        public LineRenderer lineRenderer
-        {
-            get
-            {
-                if (_lineRenderer == null)
-                    _lineRenderer = GetComponent<LineRenderer>();
-
-                return _lineRenderer;
-            }
-        }
+        public LineRenderer lineRenderer => _lineRenderer = this.GetComponentFieldSave(_lineRenderer);
 
 
 

@@ -9,28 +9,10 @@ namespace SCKRM.Polygon
     public class PolygonColliderToMesh : MonoBehaviour
     {
         PolygonCollider2D _polygonCollider;
-        public PolygonCollider2D polygonCollider
-        {
-            get
-            {
-                if (_polygonCollider == null)
-                    _polygonCollider = GetComponent<PolygonCollider2D>();
-
-                return _polygonCollider;
-            }
-        }
+        public PolygonCollider2D polygonCollider => _polygonCollider = this.GetComponentFieldSave(_polygonCollider);
 
         MeshFilter _meshFilter;
-        public MeshFilter meshFilter
-        {
-            get
-            {
-                if (_meshFilter == null)
-                    _meshFilter = GetComponent<MeshFilter>();
-
-                return _meshFilter;
-            }
-        }
+        public MeshFilter meshFilter => _meshFilter = this.GetComponentFieldSave(_meshFilter);
 
 
 

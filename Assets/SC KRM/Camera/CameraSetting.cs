@@ -12,20 +12,7 @@ namespace SCKRM.Camera
     [AddComponentMenu("커널/Camera/카메라 설정")]
     public sealed class CameraSetting : MonoBehaviour
     {
-        [NonSerialized] UnityEngine.Camera _camera; new public UnityEngine.Camera camera
-        {
-            get
-            {
-                if (_camera == null)
-                {
-                    _camera = GetComponent<UnityEngine.Camera>();
-                    if (_camera == null)
-                        DestroyImmediate(this);
-                }
-
-                return _camera;
-            }
-        }
+        [NonSerialized] UnityEngine.Camera _camera; new public UnityEngine.Camera camera => _camera = this.GetComponentFieldSave(_camera, ComponentTool.GetComponentMode.destroyIfNull);
 
         [SerializeField] bool _customSetting;
         public bool customSetting { get => _customSetting; set => _customSetting = value; }

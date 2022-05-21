@@ -5,29 +5,11 @@ using SCKRM.UI.MessageBox;
 namespace SCKRM.Sound
 {
     [AddComponentMenu("")]
-    [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(AudioSource)), RequireComponent(typeof(AudioLowPassFilter))]
     public sealed class SoundPlayer : SoundPlayerParent<SoundMetaData>
     {
-        [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource
-        {
-            get
-            {
-                if (_audioSource == null)
-                    _audioSource = GetComponent<AudioSource>();
-
-                return _audioSource;
-            }
-        }
-        [System.NonSerialized] AudioLowPassFilter _audioLowPassFilter; public AudioLowPassFilter audioLowPassFilter
-        {
-            get
-            {
-                if (_audioLowPassFilter == null)
-                    _audioLowPassFilter = GetComponent<AudioLowPassFilter>();
-
-                return _audioLowPassFilter;
-            }
-        }
+        [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource => _audioSource = this.GetComponentFieldSave(_audioSource);
+        [System.NonSerialized] AudioLowPassFilter _audioLowPassFilter; public AudioLowPassFilter audioLowPassFilter => _audioLowPassFilter = this.GetComponentFieldSave(_audioLowPassFilter);
 
 
 
