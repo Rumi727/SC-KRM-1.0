@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace SCKRM
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public class CursorManager : ManagerUI<CursorManager>
     {
         [GeneralSaveLoad]
@@ -37,7 +38,8 @@ namespace SCKRM
 
 
 
-        [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup);
+        [SerializeField, HideInInspector] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup);
+        [SerializeField, NotNull] RectTransform cursorImage;
 
 
 
@@ -92,17 +94,17 @@ namespace SCKRM
                     {
                         Vector3 dir = (Vector2)transform.position - dragStartMousePosition;
                         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + 67.5f)), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        cursorImage.rotation = Quaternion.Lerp(cursorImage.rotation, Quaternion.Euler(new Vector3(0, 0, angle + 67.5f)), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     }
                     else
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        cursorImage.rotation = Quaternion.Lerp(cursorImage.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
                 else
                 {
                     graphic.color = graphic.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     transform.localScale = transform.localScale.Lerp(Vector3.one * 0.25f, 0.3f * Kernel.fpsUnscaledDeltaTime);
 
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    cursorImage.rotation = Quaternion.Lerp(cursorImage.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
 
                 transform.position = InputManager.mousePosition;
