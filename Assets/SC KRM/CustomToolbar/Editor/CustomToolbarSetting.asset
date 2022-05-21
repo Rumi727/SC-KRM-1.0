@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cba83c97554327b25238d32fd85c62, type: 3}
+  m_Name: CustomToolbarSetting
+  m_EditorClassIdentifier: 
+  elements:
+  - rid: 570256677815189537
+  - rid: 570256677815189538
+  - rid: 570256677815189539
+  - rid: 570256677815189543
+  - rid: 570256677815189544
+  - rid: 570256677815189546
+  - rid: 570256677815189545
+  - rid: 570256677815189547
+  - rid: 570256677815189549
+  - rid: 570256677815189550
+  - rid: 570256677815189551
+  - rid: 570256677815189552
+  references:
+    version: 2
+    RefIds:
+    - rid: 570256677815189537
+      type: {class: ToolbarEnterPlayMode, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 110
+    - rid: 570256677815189538
+      type: {class: ToolbarSceneSelection, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 200
+        showSceneFolder: 0
+    - rid: 570256677815189539
+      type: {class: ToolbarSpace, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 10
+    - rid: 570256677815189543
+      type: {class: ToolbarReloadScene, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 100
+    - rid: 570256677815189544
+      type: {class: ToolbarStartFromFirstScene, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 100
+    - rid: 570256677815189545
+      type: {class: ToolbarSpace, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 274
+    - rid: 570256677815189546
+      type: {class: ToolbarSides, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 100
+    - rid: 570256677815189547
+      type: {class: ToolbarTimeslider, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 200
+        minTime: 0
+        maxTime: 10
+    - rid: 570256677815189549
+      type: {class: ToolbarSpace, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 10
+    - rid: 570256677815189550
+      type: {class: ToolbarRecompile, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 100
+    - rid: 570256677815189551
+      type: {class: ToolbarReserializeSelected, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 100
+    - rid: 570256677815189552
+      type: {class: ToolbarReserializeAll, ns: , asm: CustomToolbar.Editor}
+      data:
+        IsEnabled: 1
+        WidthInToolbar: 100
