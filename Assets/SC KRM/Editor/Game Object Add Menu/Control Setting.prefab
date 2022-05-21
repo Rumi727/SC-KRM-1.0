@@ -464,7 +464,7 @@ MonoBehaviour:
   _ySize: 0
   _offset: {x: 10, y: 0}
   _min: {x: 84, y: 0}
-  _max: {x: 0, y: 0}
+  _max: {x: 343, y: 0}
 --- !u!1 &4880271695983191983
 GameObject:
   m_ObjectHideFlags: 0
