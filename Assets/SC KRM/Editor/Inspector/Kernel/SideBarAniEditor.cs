@@ -22,6 +22,13 @@ namespace SCKRM.Editor
             UseProperty("_showEvent");
             UseProperty("_hideEvent");
             UseProperty("_backEvent");
+
+            Space();
+
+            UseProperty("_viewPort");
+            UseProperty("_content");
+            UseProperty("_scrollBarParentRectTransform");
+            UseProperty("_scrollBar");
         }
     }
 }
