@@ -29,9 +29,13 @@ namespace SCKRM.UI
         bool mouseDrag = false;
         Vector2 tempMousePos;
 
+        DrivenRectTransformTracker tracker;
+
 
         void Update()
         {
+            tracker.Add(this, colorPickerMask, DrivenTransformProperties.SizeDeltaX);
+
 #if UNITY_EDITOR
             if (Application.isPlaying)
 #endif
@@ -70,7 +74,12 @@ namespace SCKRM.UI
         }
 
         protected override void OnEnable() => Hide();
-        protected override void OnDisable() => Hide();
+
+        protected override void OnDisable()
+        {
+            tracker.Clear();
+            Hide();
+        }
 
         public void Toggle()
         {

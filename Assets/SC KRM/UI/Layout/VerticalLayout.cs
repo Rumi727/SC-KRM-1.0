@@ -12,10 +12,16 @@ namespace SCKRM.UI.Layout
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
+        DrivenRectTransformTracker tracker;
+
+        protected override void OnDisable() => tracker.Clear();
+
         protected override void SizeUpdate()
         {
             if (childRectTransforms == null)
                 return;
+
+            tracker.Clear();
 
             bool center = false;
             bool down = false;
@@ -27,8 +33,8 @@ namespace SCKRM.UI.Layout
                     continue;
                 else if (!childRectTransform.gameObject.activeSelf)
                     continue;
-                else if (childRectTransform.sizeDelta.y == 0)
-                    continue;
+
+                tracker.Add(this, childRectTransform, DrivenTransformProperties.AnchoredPosition3D | DrivenTransformProperties.SizeDeltaX | DrivenTransformProperties.Anchors | DrivenTransformProperties.Pivot);
 
                 VerticalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
                 if (taskBarLayoutSetting != null)

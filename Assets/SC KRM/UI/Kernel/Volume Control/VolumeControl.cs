@@ -24,8 +24,15 @@ namespace SCKRM.UI
         [SerializeField] TMP_Text valueText;
         bool isDrag = false;
 
+        DrivenRectTransformTracker tracker;
+
+        protected override void OnDisable() => tracker.Clear();
+
         void Update()
         {
+            tracker.Clear();
+            tracker.Add(this, sliderRectTransform, DrivenTransformProperties.SizeDelta);
+
             sliderRectTransform.offsetMin = new Vector2(nameText.rectTransform.sizeDelta.x + 6, sliderRectTransform.offsetMin.y);
             sliderRectTransform.offsetMax = new Vector2(-valueText.rectTransform.sizeDelta.x - 6, sliderRectTransform.offsetMax.y);
 

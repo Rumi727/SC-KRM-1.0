@@ -54,8 +54,16 @@ namespace SCKRM.UI
 
         List<DropdownItem> dropdownItems = new List<DropdownItem>();
 
+
+
+        DrivenRectTransformTracker tracker;
+
         void Update()
         {
+            tracker.Clear();
+            tracker.Add(this, listRectTransform, DrivenTransformProperties.SizeDeltaX);
+            tracker.Add(this, viewport, DrivenTransformProperties.SizeDeltaX);
+
             if (options.Length > 0)
             {
                 value = value.Clamp(0, options.Length - 1);
@@ -118,7 +126,12 @@ namespace SCKRM.UI
         }
 
         protected override void OnEnable() => Hide();
-        protected override void OnDisable() => Hide();
+
+        protected override void OnDisable()
+        {
+            tracker.Clear();
+            Hide();
+        }
 
         public void Toggle()
         {

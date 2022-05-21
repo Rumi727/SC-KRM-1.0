@@ -26,6 +26,16 @@ namespace SCKRM.UI
         [SerializeField, Min(0)] Vector2 _max = Vector2.zero;
         public Vector2 max { get => _max; set => _max = value; }
 
+
+
+        DrivenRectTransformTracker tracker;
+
+
+        //protected override void OnEnable() => tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDelta);
+        protected override void OnDisable() => tracker.Clear();
+
+
+
         protected override void LayoutRefresh()
         {
             if (targetRectTransform == null)
@@ -45,6 +55,13 @@ namespace SCKRM.UI
         Vector2 size;
         protected override void SizeUpdate()
         {
+            tracker.Clear();
+
+            if (xSize)
+                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
+            if (ySize)
+                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
 #else

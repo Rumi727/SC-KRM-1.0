@@ -20,6 +20,7 @@ namespace SCKRM.UI
         [NonSerialized] Canvas _canvas; public Canvas canvas => _canvas = this.GetComponentFieldSave(_canvas, ComponentTool.GetComponentMode.destroyIfNull);
 
         [SerializeField, HideInInspector] RectTransform safeScreen;
+        DrivenRectTransformTracker tracker;
         void Update()
         {
             if (canvas == null)
@@ -66,6 +67,8 @@ namespace SCKRM.UI
             }
         }
 
+        protected override void OnDisable() => tracker.Clear();
+
         void SafeScreenSetting()
         {
             if (safeScreen == null)
@@ -81,6 +84,9 @@ namespace SCKRM.UI
 
                 safeScreen.name = "Safe Screen";
             }
+
+            tracker.Clear();
+            tracker.Add(this, safeScreen, DrivenTransformProperties.All);
 
             if (safeScreen.parent != transform)
                 safeScreen.SetParent(transform);

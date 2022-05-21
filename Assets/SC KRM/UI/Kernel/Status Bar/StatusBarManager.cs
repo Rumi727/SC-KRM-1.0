@@ -49,6 +49,7 @@ namespace SCKRM.UI.StatusBar
         [SerializeField] GameObject _backButton; public GameObject backButton => _backButton;
         [SerializeField] GameObject _layout; public GameObject layout => _layout;
 
+        DrivenRectTransformTracker tracker;
 
         [SerializeField] Sprite bg;
         [SerializeField] Sprite bg2;
@@ -71,7 +72,7 @@ namespace SCKRM.UI.StatusBar
             }
         }
 
-
+        protected override void OnDisable() => tracker.Clear();
 
         static bool defaultTabAllow = false;
         static GameObject oldSelectedObject;
@@ -83,6 +84,9 @@ namespace SCKRM.UI.StatusBar
         static bool aniStop = false;
         void Update()
         {
+            tracker.Clear();
+            tracker.Add(this, rectTransform, DrivenTransformProperties.AnchoredPosition3D | DrivenTransformProperties.Anchors | DrivenTransformProperties.Pivot);
+
             if (InitialLoadManager.isInitialLoadEnd && !aniStop)
             {
                 {

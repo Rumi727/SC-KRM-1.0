@@ -13,7 +13,15 @@ namespace SCKRM.UI
         static float timer = 0;
         [SerializeField] GameObject hide;
 
-        protected override void OnEnable() => SingletonCheck(this);
+        DrivenRectTransformTracker tracker;
+
+        protected override void OnEnable()
+        {
+            if (SingletonCheck(this))
+                tracker.Add(this, rectTransform, DrivenTransformProperties.AnchoredPosition3D);
+        }
+
+        protected override void OnDisable() => tracker.Clear();
 
         void Update()
         {

@@ -28,8 +28,15 @@ namespace SCKRM.UI
         [System.NonSerialized] float tempMinX = 0;
         [System.NonSerialized] float tempMaxX = 0;
 
+        DrivenRectTransformTracker tracker;
+
+        protected override void OnDisable() => tracker.Clear();
+
         void Update()
         {
+            tracker.Clear();
+            tracker.Add(this, fillShow, DrivenTransformProperties.Anchors);
+
             if (tempTimer >= 1 && allowNoResponse && progress < maxProgress)
             {
                 if (slider.enabled)

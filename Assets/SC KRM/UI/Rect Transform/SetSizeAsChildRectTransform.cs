@@ -24,6 +24,14 @@ namespace SCKRM.UI.Layout
 
 
 
+        DrivenRectTransformTracker tracker;
+
+
+
+        protected override void OnDisable() => tracker.Clear();
+
+
+
         protected override void LayoutRefresh()
         {
             if (childRectTransforms == null)
@@ -50,24 +58,17 @@ namespace SCKRM.UI.Layout
                     spacingCancel();
                     continue;
                 }
-                else if ((mode == Mode.XSize && childRectTransform.sizeDelta.x == 0) || (mode == Mode.YSize && childRectTransform.sizeDelta.y == 0))
-                {
-                    spacingCancel();
-                    continue;
-                }
 
                 x += childRectTransform.sizeDelta.x + spacing;
                 y += childRectTransform.sizeDelta.y + spacing;
 
-                spacingCancel();
+                if (i == childRectTransforms.Count - 1)
+                    spacingCancel();
 
                 void spacingCancel()
                 {
-                    if (i == childRectTransforms.Count - 1)
-                    {
-                        x -= spacing;
-                        y -= spacing;
-                    }
+                    x -= spacing;
+                    y -= spacing;
                 }
             }
 
@@ -89,6 +90,12 @@ namespace SCKRM.UI.Layout
         Vector2 ySize;
         protected override void SizeUpdate()
         {
+            tracker.Clear();
+            if (mode == Mode.XSize)
+                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
+            else if (mode == Mode.YSize)
+                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+
 #if UNITY_EDITOR
             if (!lerp || !Application.isPlaying)
 #else
