@@ -66,7 +66,7 @@ namespace SCKRM
             }
         }
 
-        void Awake()
+        void Update()
         {
             //FPS Limit
             //앱이 포커스 상태이거나 에디터 상태라면 사용자가 지정한 프레임으로 고정시킵니다
