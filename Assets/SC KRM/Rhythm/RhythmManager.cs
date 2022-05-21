@@ -212,17 +212,15 @@ namespace SCKRM
         double? tempCurrentBeat = null;
         public T GetValue(double currentBeat, out double beat, out bool isValueChanged)
         {
-            /*if (tempCurrentBeat != null && (double)tempCurrentBeat == currentBeat)
+            if (tempCurrentBeat != null && (double)tempCurrentBeat == currentBeat)
             {
-                Debug.Log("asdf2");
-
                 beat = tempBeat;
                 isValueChanged = false;
 
                 return tempValue;
             }
 
-            tempCurrentBeat = currentBeat;*/
+            tempCurrentBeat = currentBeat;
 
             T value;
             if (Count <= 0)
