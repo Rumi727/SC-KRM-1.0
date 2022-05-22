@@ -148,12 +148,12 @@ namespace SCKRM.UI
             onRectTransformDimensionsChangeMethodLock = false;
         }
 
-        protected virtual void LayoutRefresh()
+        public virtual void LayoutRefresh()
         {
 
         }
 
-        protected abstract void SizeUpdate();
+        public abstract void SizeUpdate(bool useAni = true);
     }
 
     public class ObjectPoolingUI : ObjectPooling

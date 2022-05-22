@@ -16,7 +16,7 @@ namespace SCKRM.UI.Layout
 
         protected override void OnDisable() => tracker.Clear();
 
-        protected override void SizeUpdate()
+        public override void SizeUpdate(bool useAni = true)
         {
             if (childRectTransforms == null)
                 return;
@@ -75,9 +75,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(1, 1);
                     childRectTransform.pivot = new Vector2(1, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || !useAni)
 #else
-                    if (!lerp)
+                    if (!lerp || !useAni)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x - padding.right, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -91,9 +91,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(0.5f, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || !useAni)
 #else
-                    if (!lerp)
+                    if (!lerp || !useAni)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x, -(padding.top - padding.bottom) * 0.5f);
                     else
@@ -107,9 +107,9 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(0, 1);
                     childRectTransform.pivot = new Vector2(0, 0.5f);
 #if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp)
+                    if (!Application.isPlaying || !lerp || !useAni)
 #else
-                    if (!lerp)
+                    if (!lerp || !useAni)
 #endif
                         childRectTransform.anchoredPosition = new Vector2(x + padding.left, -(padding.top - padding.bottom) * 0.5f);
                     else

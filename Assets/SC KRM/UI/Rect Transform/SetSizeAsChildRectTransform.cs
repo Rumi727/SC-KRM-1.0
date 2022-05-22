@@ -32,7 +32,7 @@ namespace SCKRM.UI.Layout
 
 
 
-        protected override void LayoutRefresh()
+        public override void LayoutRefresh()
         {
             if (childRectTransforms == null)
                 return;
@@ -88,7 +88,7 @@ namespace SCKRM.UI.Layout
 
         Vector2 xSize;
         Vector2 ySize;
-        protected override void SizeUpdate()
+        public override void SizeUpdate(bool useAni = true)
         {
             tracker.Clear();
             if (mode == Mode.XSize)
@@ -97,9 +97,9 @@ namespace SCKRM.UI.Layout
                 tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
 
 #if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
+            if (!lerp || !Application.isPlaying || !useAni)
 #else
-            if (!lerp)
+            if (!lerp || !useAni)
 #endif
             {
                 if (mode == Mode.XSize)

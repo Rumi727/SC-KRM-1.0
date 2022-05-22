@@ -36,7 +36,7 @@ namespace SCKRM.UI
 
 
 
-        protected override void LayoutRefresh()
+        public override void LayoutRefresh()
         {
             if (targetRectTransform == null)
                 return;
@@ -53,7 +53,7 @@ namespace SCKRM.UI
         }
 
         Vector2 size;
-        protected override void SizeUpdate()
+        public override void SizeUpdate(bool useAni = true)
         {
             tracker.Clear();
 
@@ -63,9 +63,9 @@ namespace SCKRM.UI
                 tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
 
 #if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
+            if (!lerp || !useAni || !Application.isPlaying)
 #else
-            if (!lerp)
+            if (!lerp || !useAni)
 #endif
             {
                 if (xSize && !ySize)
