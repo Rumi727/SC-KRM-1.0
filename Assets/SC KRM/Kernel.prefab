@@ -2739,8 +2739,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolTip: {fileID: 8823851999204979361}
+  toolTipSetSizeAsTargetRectTransform: {fileID: 1173520720206409553}
   toolTipCanvasGroup: {fileID: 6935973973496157631}
   toolTipText: {fileID: 4630977121614653796}
+  toolTipTextBetterContentSizeFitter: {fileID: 7487588316582335897}
 --- !u!1 &3084024376894291370
 GameObject:
   m_ObjectHideFlags: 0
