@@ -34,9 +34,11 @@
 	
 	"options.theme.title": "테마",
 	"options.theme.systemColor": "시스템 색상",
+	"options.theme.systemColor.info": "시스템 색상을 변경합니다",
 	
 	"options.language.title": "언어",
 	"options.language.language": "언어",
+	"options.language.language.info": "전체적인 언어를 변경합니다\n(오역이 있을 수 있습니다)",
 	
 	"options.sound.title": "소리",
 	"options.sound.mainVolume": "메인",
@@ -46,25 +48,37 @@
 	
 	"options.video.title": "비디오",
 	"options.video.vSync": "수직 동기화",
+	"options.video.vSync.info": "그래픽 카드의 프레임 생성과 모니터의 프레임 출력 타이밍을 맞춥니다\n(편하게 모니터의 헤르츠로 프레임을 제한한다고 생각하시면 됩니다)",
 	"options.video.fpsLimit": "FPS 제한",
+	"options.video.fpsLimit.info": "FPS를 제한합니다",
 	"options.video.guiSize": "GUI 크기",
+	"options.video.guiSize.info": "전체적인 GUI 크기를 변경합니다",
 	"options.video.fixedGuiSizeEnable": "고정적인 GUI 크기 사용",
+	"options.video.fixedGuiSizeEnable.info": "GUI 크기를 해상도에 비례하지 않게 고정합니다",
 	
 	"options.statusbar.title": "상태 표시줄",
 	"options.statusbar.bottomMode": "하단에 표시",
+	"options.statusbar.bottomMode.info": "상태 표시줄을 하단에 표시합니다",
 	
 	"options.statusbar.time.title": "시간",
 	"options.statusbar.time.twentyFourHourSystem": "24시간제",
+	"options.statusbar.time.twentyFourHourSystem.info": "상태 표시줄에 표시되는 시간을 24시간제로 변경합니다",
 	"options.statusbar.time.toggleSeconds": "초 단위까지 표시",
+	"options.statusbar.time.toggleSeconds.info": "상태 표시줄에 표시되는 시간에 초 단위를 추가합니다",
 	
 	"options.input.title": "입력",
 	"options.input.highPrecisionMouse": "시스템 마우스 가속 무시",
+	"options.input.highPrecisionMouse.info": "시스템 마우스 가속을 무시합니다\nWindows에선 흔히 Raw Input이라 불립니다",
 	"options.input.highPrecisionMouse.warning": "시스템 마우스 가속 무시는 많이 불안정한 설정입니다\n그래도 켜시겠습니까?<size=10>\n\n</size><size=15>(Windows 마우스 감도 또는 하드웨어 마우스 감도를 게임 설정과 유사하게 설정하는 것을 권장합니다)</size>",
 	"options.input.mouseSensitivity": "마우스 감도",
+	"options.input.mouseSensitivity.info": "마우스의 감도를 변경합니다 (시스템 마우스 가속 무시 설정이 켜져 있다면, 마우스 포인터의 감도도 같이 변경됩니다)",
 	"options.input.controls": "조작 설정",
 	
 	"options.advanced.title": "고급",
-	"options.advanced.allowProgressBarShow.controls": "시작 화면에 항상 로딩 바 표시",
+	"options.advanced.allowProgressBarShow": "시작 화면에 항상 로딩 바 표시",
+	"options.advanced.allowProgressBarShow.info": "시작 화면에 로딩 바를 항상 표시합니다 (끄더라도, 로딩이 오래 걸리면 로딩 바가 나타납니다)",
+	
+	"options.set_default.info": "기본값으로 설정",
 	
 	
 	

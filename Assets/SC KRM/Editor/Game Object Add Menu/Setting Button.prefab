@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 2263885527561385594}
   - component: {fileID: 4205948363159493598}
   - component: {fileID: 431614904625121892}
+  - component: {fileID: 430976309024170095}
   - component: {fileID: 2287362589840602773}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -145,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -235,6 +236,20 @@ MonoBehaviour:
   _nameSpace: sc-krm
   _path: 
   _textMeshPro: {fileID: 4205948363159493598}
+--- !u!114 &430976309024170095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8505867542405620997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8527ec7ada8d9b479de63d11b184975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameSpace: sc-krm
+  _text: 
 --- !u!114 &2287362589840602773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba592989150be745953d1b3f4dca6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 4322184613533496135}
   _graphic: {fileID: 4205948363159493598}
   _lerp: 1
   _lerpValue: 0.2
@@ -360,6 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
+  _rectTransform: {fileID: 9165870227546675092}
+  _graphic: {fileID: 8350708535258979915}
   _offset: {r: 1, g: 1, b: 1, a: 1}

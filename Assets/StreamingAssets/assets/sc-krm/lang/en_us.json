@@ -34,9 +34,11 @@
 	
 	"options.theme.title": "Theme",
 	"options.theme.systemColor": "System Color",
+	"options.theme.systemColor.info": "Change system color",
 	
 	"options.language.title": "Language",
 	"options.language.language": "Language",
+	"options.language.language.info": "Change the overall language\n(there may be errors)",
 	
 	"options.sound.title": "Sound",
 	"options.sound.mainVolume": "Main",
@@ -46,25 +48,37 @@
 	
 	"options.video.title": "Video",
 	"options.video.vSync": "VSync",
+	"options.video.vSync.info": "Match the frame generation of the graphic card and the frame output timing of the monitor\n(You can think of it as limiting the frame rate to the monitor's hertz.)",
 	"options.video.fpsLimit": "FPS Limit",
+	"options.video.fpsLimit.info": "",
 	"options.video.guiSize": "GUI Size",
+	"options.video.guiSize.info": "Change the overall GUI size",
 	"options.video.fixedGuiSizeEnable": "Use a fixed GUI size",
+	"options.video.fixedGuiSizeEnable.info": "Fix GUI size not proportional to resolution",
 	
 	"options.statusbar.title": "Status Bar",
 	"options.statusbar.bottomMode": "Show at the bottom",
+	"options.statusbar.bottomMode.info": "Show the status bar at the bottom",
 	
 	"options.statusbar.time.title": "Time",
 	"options.statusbar.time.twentyFourHourSystem": "24-hour system",
+	"options.statusbar.time.twentyFourHourSystem.info": "Change the time displayed in the status bar to 24-hour clock",
 	"options.statusbar.time.toggleSeconds": "Toggle Seconds",
+	"options.statusbar.time.toggleSeconds.info": "Add seconds to the time displayed in the status bar",
 	
 	"options.input.title": "Input",
-	"options.input.highPrecisionMouse": "High Precision Mouse",
+	"options.input.highPrecisionMouse": "Ignore system mouse acceleration",
+	"options.input.highPrecisionMouse.info": "Ignore system mouse acceleration\nCommonly called Raw Input on Windows",
 	"options.input.highPrecisionMouse.warning": "Ignoring system mouse acceleration is a very unstable setting\nWould you still like to turn it on?<size=10>\n\n</size><size=15>(It is recommended to set the Windows mouse sensitivity or hardware mouse sensitivity similar to the game settings.)</size>",
 	"options.input.mouseSensitivity": "Mouse Sensitivity",
+	"options.input.mouseSensitivity.info": "Change the sensitivity of the mouse (if the Ignore system mouse acceleration setting is turned on, the sensitivity of the mouse pointer is also changed)",
 	"options.input.controls": "Control Settings",
 	
 	"options.advanced.title": "Advanced",
-	"options.advanced.allowProgressBarShow.controls": "Always show loading bar on splash screen",
+	"options.advanced.allowProgressBarShow": "Always show loading bar on splash screen",
+	"options.advanced.allowProgressBarShow.info": "Always show the loading bar on the start screen (even if you turn it off, the loading bar will appear if it takes a long time to load)",
+	
+	"options.set_default.info": "Set as default",
 	
 	
 	
