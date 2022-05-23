@@ -46,12 +46,20 @@ namespace SCKRM.Editor
 
 
 
-        public SerializedProperty UseProperty(string propertyName, string label = "")
+        public SerializedProperty UseProperty(string propertyName)
+        {
+            SerializedProperty tps = serializedObject.FindProperty(propertyName);
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(tps, true);
+            if (EditorGUI.EndChangeCheck())
+                serializedObject.ApplyModifiedProperties();
+
+            return tps;
+        }
+        public SerializedProperty UseProperty(string propertyName, string label)
         {
             GUIContent GUIContent = new GUIContent();
-
-            if (!string.IsNullOrEmpty(label))
-                GUIContent.text = label;
+            GUIContent.text = label;
 
             SerializedProperty tps = serializedObject.FindProperty(propertyName);
             EditorGUI.BeginChangeCheck();
@@ -72,8 +80,8 @@ namespace SCKRM.Editor
 
             EditorGUILayout.PrefixLabel(label);
 
-            SerializedProperty serializedProperty = UseProperty(propertyName);
-            bool usePropertyChanged = usePropertyChanged = GUI.changed;
+            SerializedProperty serializedProperty = UseProperty(propertyName, "");
+            bool usePropertyChanged = GUI.changed;
 
             int index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
 
