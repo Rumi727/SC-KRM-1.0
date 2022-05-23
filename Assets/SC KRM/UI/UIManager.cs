@@ -44,6 +44,10 @@ namespace SCKRM.UI
 
 
 
+        DrivenRectTransformTracker tracker;
+
+
+
         void Awake() => SingletonCheck(this);
 
         void Update()
@@ -66,6 +70,11 @@ namespace SCKRM.UI
                     homeEvent.Invoke();
             }
 
+
+
+            tracker.Clear();
+            tracker.Add(this, kernelCanvasUI, DrivenTransformProperties.SizeDelta);
+
             RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
             if (StatusBarManager.SaveData.bottomMode)
             {
@@ -78,6 +87,8 @@ namespace SCKRM.UI
                 kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, -(taskBarManager.rect.size.y - taskBarManager.anchoredPosition.y));
             }
         }
+
+        void OnDisable() => tracker.Clear();
 
         public static void BackEventInvoke()
         {
