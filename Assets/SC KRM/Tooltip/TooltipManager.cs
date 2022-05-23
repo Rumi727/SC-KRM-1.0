@@ -38,11 +38,15 @@ namespace SCKRM.Tooltip
             else
                 toolTipCanvasGroup.alpha -= 0.1f * Kernel.fpsDeltaTime;
 
-            Vector2 cursorScale = CursorManager.instance.rectTransform.localScale;
-            Vector2 cursorSize = CursorManager.instance.rectTransform.rect.size;
+            RectTransform cursorRectTransform = CursorManager.instance.rectTransform;
+            Vector2 cursorScale = cursorRectTransform.localScale;
+            Vector2 cursorSize = cursorRectTransform.rect.size;
+            float cursorZRotationRad = cursorRectTransform.localEulerAngles.z * Mathf.Deg2Rad;
+            float cursorZRotationSin = Mathf.Sin(cursorZRotationRad);
+            float cursorZRotationCos = Mathf.Cos(cursorZRotationRad);
 
             toolTipCanvasGroup.alpha = toolTipCanvasGroup.alpha.Clamp01();
-            toolTip.anchoredPosition = InputManager.mousePosition + (new Vector2(cursorSize.x, -cursorSize.y) * cursorScale);
+            toolTip.anchoredPosition = InputManager.mousePosition + ((new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x)) * cursorScale);
         }
 
         protected override void OnDisable() => tracker.Clear();
