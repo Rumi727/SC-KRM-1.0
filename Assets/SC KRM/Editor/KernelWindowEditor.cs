@@ -863,7 +863,7 @@ namespace SCKRM.Editor
 
                             {
                                 CustomInspectorEditor.DrawList(keyCodes, "키 코드", enumPopup, 1, 1, deleteSafety);
-                                void enumPopup(int index) => keyCodes[index] = (KeyCode)EditorGUILayout.EnumPopup(keyCodes[index]);
+                                KeyCode enumPopup(KeyCode value) => (KeyCode)EditorGUILayout.EnumPopup(value);
                             }
 
                             valueList.Add(keyCodes);

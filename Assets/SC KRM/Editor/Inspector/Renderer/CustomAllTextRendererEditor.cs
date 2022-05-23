@@ -20,13 +20,8 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            UseProperty("_nameSpace", "네임스페이스");
-            UseProperty("_path", "이름");
-
-            EditorGUILayout.Space();
-
-            editor.nameSpace = DrawNameSpace("네임스페이스", editor.nameSpace);
-            editor.path = DrawStringArray("이름", editor.path, ResourceManager.GetLanguageKeys(LanguageManager.SaveData.currentLanguage, editor.nameSpace));
+            editor.nameSpace = UsePropertyAndDrawNameSpace("_nameSpace", "네임스페이스", editor.nameSpace);
+            editor.path = UsePropertyAndDrawStringArray("_path", "이름", editor.path, ResourceManager.GetLanguageKeys(LanguageManager.SaveData.currentLanguage, editor.nameSpace));
 
             EditorGUILayout.Space();
 

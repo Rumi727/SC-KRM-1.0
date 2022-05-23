@@ -28,15 +28,11 @@ namespace SCKRM.Editor
                 DrawLine();
             }
 
-            UseProperty("_nameSpace", "네임스페이스");
-            UseProperty("_type", "타입");
-            UseProperty("_path", "이름");
-
             EditorGUILayout.Space();
 
-            editor.nameSpace = DrawNameSpace("네임스페이스", editor.nameSpace);
-            editor.type = DrawStringArray("타입", editor.type, ResourceManager.GetSpriteTypes(editor.nameSpace));
-            editor.path = DrawStringArray("이름", editor.path, ResourceManager.GetSpriteKeys(editor.type, editor.nameSpace));
+            editor.nameSpace = UsePropertyAndDrawNameSpace("_nameSpace", "네임스페이스", editor.nameSpace);
+            editor.type = UsePropertyAndDrawStringArray("_type", "타입", editor.type, ResourceManager.GetSpriteTypes(editor.nameSpace));
+            editor.path = UsePropertyAndDrawStringArray("_path", "이름", editor.path, ResourceManager.GetSpriteKeys(editor.type, editor.nameSpace));
 
             EditorGUILayout.Space();
 
