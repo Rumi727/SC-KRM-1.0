@@ -53,6 +53,8 @@ namespace SCKRM.Tooltip
             instance.toolTipText.text = ResourceManager.SearchLanguage(text, nameSpace);
             if (instance.toolTipText.text == "")
                 instance.toolTipText.text = text;
+            if (instance.toolTipText.text == "")
+                return;
 
             if (instance.toolTipCanvasGroup.alpha <= 0)
             {
