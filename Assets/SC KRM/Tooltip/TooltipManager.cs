@@ -49,7 +49,6 @@ namespace SCKRM.Tooltip
 
         public static void Show(string text, string nameSpace = "")
         {
-            isShow = true;
             instance.toolTipText.text = ResourceManager.SearchLanguage(text, nameSpace);
             if (instance.toolTipText.text == "")
                 instance.toolTipText.text = text;
@@ -64,6 +63,8 @@ namespace SCKRM.Tooltip
                 instance.toolTipSetSizeAsTargetRectTransform.LayoutRefresh();
                 instance.toolTipSetSizeAsTargetRectTransform.SizeUpdate(false);
             }
+
+            isShow = true;
         }
 
         public static void Hide() => isShow = false;
