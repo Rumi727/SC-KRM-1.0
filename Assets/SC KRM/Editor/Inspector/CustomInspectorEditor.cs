@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using SCKRM.Resource;
 using SCKRM.ProjectSetting;
+using System.Reflection;
 
 namespace SCKRM.Editor
 {
@@ -45,7 +46,7 @@ namespace SCKRM.Editor
 
 
 
-        public void UseProperty(string propertyName, string label = "")
+        public SerializedProperty UseProperty(string propertyName, string label = "")
         {
             GUIContent GUIContent = new GUIContent();
 
@@ -57,10 +58,11 @@ namespace SCKRM.Editor
             EditorGUILayout.PropertyField(tps, GUIContent, true);
             if (EditorGUI.EndChangeCheck())
                 serializedObject.ApplyModifiedProperties();
+
+            return tps;
         }
 
         public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => UsePropertyAndDrawStringArray(propertyName, "", value, array);
-
         public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array)
         {
             if (array == null)
@@ -69,15 +71,23 @@ namespace SCKRM.Editor
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.PrefixLabel(label);
-            UseProperty(propertyName);
+
+            SerializedProperty serializedProperty = UseProperty(propertyName);
+            bool usePropertyChanged = usePropertyChanged = GUI.changed;
+
             int index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
 
             EditorGUILayout.EndHorizontal();
 
-            if (index >= 0)
-                return array[index];
+            if (!usePropertyChanged)
+            {
+                if (index >= 0)
+                    return array[index];
+                else
+                    return value;
+            }
             else
-                return value;
+                return serializedProperty.stringValue;
         }
 
 
