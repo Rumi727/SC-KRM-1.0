@@ -38,6 +38,8 @@ namespace SCKRM.Tooltip
             else
                 toolTipCanvasGroup.alpha -= 0.1f * Kernel.fpsDeltaTime;
 
+            toolTipCanvasGroup.alpha = toolTipCanvasGroup.alpha.Clamp01();
+
             RectTransform cursorRectTransform = CursorManager.instance.rectTransform;
             Vector2 cursorScale = cursorRectTransform.localScale;
             Vector2 cursorSize = cursorRectTransform.rect.size;
@@ -45,8 +47,13 @@ namespace SCKRM.Tooltip
             float cursorZRotationSin = Mathf.Sin(cursorZRotationRad);
             float cursorZRotationCos = Mathf.Cos(cursorZRotationRad);
 
-            toolTipCanvasGroup.alpha = toolTipCanvasGroup.alpha.Clamp01();
-            toolTip.anchoredPosition = InputManager.mousePosition + ((new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x)) * cursorScale);
+            Vector2 offset = new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x);
+            Vector2 pos = InputManager.mousePosition + (offset * cursorScale);
+            pos.x.ClampRef(0, Screen.width - toolTip.rect.size.x);
+            pos.y.ClampRef(toolTip.rect.size.y, Screen.height);
+
+            toolTip.anchoredPosition = pos;
+            toolTipTextBetterContentSizeFitter.max = new Vector2(Screen.width, Screen.height) - toolTipSetSizeAsTargetRectTransform.offset;
         }
 
         protected override void OnDisable() => tracker.Clear();
