@@ -69,7 +69,11 @@ namespace SCKRM.UI
                 value = value.Clamp(0, options.Length - 1);
 
                 if (customLabel.Length > value)
+                {
                     label.text = customLabel[value];
+                    if (string.IsNullOrEmpty(label.text))
+                        label.text = options[value];
+                }
                 else
                     label.text = options[value];
             }
