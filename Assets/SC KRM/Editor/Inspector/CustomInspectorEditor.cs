@@ -46,24 +46,25 @@ namespace SCKRM.Editor
 
 
 
-        public SerializedProperty UseProperty(string propertyName)
+        public SerializedProperty UseProperty(string propertyName) => useProperty(propertyName, "", false);
+        public SerializedProperty UseProperty(string propertyName, string label) => useProperty(propertyName, label, true);
+        SerializedProperty useProperty(string propertyName, string label, bool labelShow)
         {
-            SerializedProperty tps = serializedObject.FindProperty(propertyName);
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(tps, true);
-            if (EditorGUI.EndChangeCheck())
-                serializedObject.ApplyModifiedProperties();
-
-            return tps;
-        }
-        public SerializedProperty UseProperty(string propertyName, string label)
-        {
-            GUIContent GUIContent = new GUIContent();
-            GUIContent.text = label;
+            GUIContent guiContent = null;
+            if (labelShow)
+            {
+                guiContent = new GUIContent();
+                guiContent.text = label;
+            }
 
             SerializedProperty tps = serializedObject.FindProperty(propertyName);
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(tps, GUIContent, true);
+
+            if (!labelShow)
+                EditorGUILayout.PropertyField(tps, true);
+            else
+                EditorGUILayout.PropertyField(tps, guiContent, true);
+
             if (EditorGUI.EndChangeCheck())
                 serializedObject.ApplyModifiedProperties();
 
