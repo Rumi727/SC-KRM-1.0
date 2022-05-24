@@ -37,10 +37,10 @@ namespace HSVPicker
             }
         }
 
-        private void OnEnable()
+        /*private void OnEnable()
         {
             SendChangedEvent();
-        }
+        }*/
 
         private void Start()
         {
@@ -54,7 +54,7 @@ namespace HSVPicker
             UpdateColorToggleText();
 
             RGBChanged();
-            SendChangedEvent();
+            //SendChangedEvent();
         }
 
         public float H

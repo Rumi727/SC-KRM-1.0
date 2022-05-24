@@ -24,7 +24,7 @@ namespace SCKRM.UI.Setting
                     SaveValue(dropdown.options[dropdown.value]);
             }
             else
-                SaveValue(dropdown.value);
+                SaveStringValue(dropdown.value.ToString());
 
             onValueChanged.Invoke();
         }
@@ -61,8 +61,7 @@ namespace SCKRM.UI.Setting
                 dropdown.value = value;
                 invokeLock = false;
 
-                if (variableType == VariableType.Bool)
-                    isDefault = defaultValue.ToString() == GetValue().ToString();
+                isDefault = defaultValue.ToString() == GetValue().ToString();
             }
         }
     }
