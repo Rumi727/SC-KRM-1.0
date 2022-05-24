@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Tooltip
 {
-    public class TooltipManager : ManagerUI<TooltipManager>
+    public class TooltipManager : Manager<TooltipManager>
     {
         public static bool isShow { get; private set; } = false;
 
@@ -26,7 +26,7 @@ namespace SCKRM.Tooltip
 
 
 
-        protected override void Awake() => SingletonCheck(this);
+        void Awake() => SingletonCheck(this);
 
         void LateUpdate()
         {
@@ -56,7 +56,7 @@ namespace SCKRM.Tooltip
             toolTipTextBetterContentSizeFitter.max = new Vector2(Screen.width, Screen.height) - toolTipSetSizeAsTargetRectTransform.offset;
         }
 
-        protected override void OnDisable() => tracker.Clear();
+        void OnDisable() => tracker.Clear();
 
         public static void Show(string text, string nameSpace = "")
         {
