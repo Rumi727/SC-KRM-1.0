@@ -70,15 +70,17 @@ namespace SCKRM.Editor
             return tps;
         }
 
-        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => UsePropertyAndDrawStringArray(propertyName, "", value, array);
-        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array)
+        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, "", value, array, false);
+        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, label, value, array, true);
+        string usePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, bool labelShow)
         {
             if (array == null)
                 return "";
 
             EditorGUILayout.BeginHorizontal();
 
-            EditorGUILayout.PrefixLabel(label);
+            if (labelShow)
+                EditorGUILayout.PrefixLabel(label);
 
             SerializedProperty serializedProperty = UseProperty(propertyName, "");
             bool usePropertyChanged = GUI.changed;
