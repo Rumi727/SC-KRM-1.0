@@ -35,7 +35,7 @@ namespace SCKRM.UI
                     canvas.scaleFactor = 1;
             }
 #else
-            canvas.scaleFactor = Kernel.guiSize;
+            canvas.scaleFactor = UIManager.currentGuiSize;
 #endif
 
             if (!customSetting)

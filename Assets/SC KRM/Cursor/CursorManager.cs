@@ -4,6 +4,7 @@ using SCKRM.Input;
 using SCKRM.SaveLoad;
 using SCKRM.UI;
 using SCKRM.UI.MessageBox;
+using SCKRM.UI.Setting;
 using SCKRM.Window;
 using System.Collections;
 using System.Collections.Generic;
@@ -112,13 +113,18 @@ namespace SCKRM
 
 
 
-        public static async void HighPrecisionMouseWarning()
+        public static async void HighPrecisionMouseWarning(SettingToggle setting)
         {
             if (InitialLoadManager.isInitialLoadEnd && SaveData.IgnoreMouseAcceleration)
             {
                 SaveData.IgnoreMouseAcceleration = false;
+                setting.ScriptOnValueChanged();
+
                 if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
+                {
                     SaveData.IgnoreMouseAcceleration = true;
+                    setting.ScriptOnValueChanged();
+                }
             }
         }
 
