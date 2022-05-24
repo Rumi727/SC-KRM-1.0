@@ -21,6 +21,8 @@
 	"gui.pm": "PM",
 	"gui.warning": "Warning",
 	"gui.error": "Error",
+	"gui.on": "On",
+	"gui.off": "Off",
 	
 	"gui.inputfield.enternumber": "Enter number...",
 	"gui.inputfield.entertext": "Enter text...",

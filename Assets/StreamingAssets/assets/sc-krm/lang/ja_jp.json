@@ -21,6 +21,8 @@
 	"gui.pm": "午後",
 	"gui.warning": "警告",
 	"gui.error": "エラー",
+	"gui.on": "点灯",
+	"gui.off": "オフ",
 	
 	"gui.inputfield.enternumber": "数値を入力...",
 	"gui.inputfield.entertext": "テキスト入力...",
