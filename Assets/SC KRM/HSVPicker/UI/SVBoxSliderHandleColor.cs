@@ -15,11 +15,11 @@ namespace HSVPicker
 
         protected override void OnEnable()
         {
-            colorPicker?.onValueChanged.AddListener(OnValueChanged);
+            colorPicker?.internalOnValueChanged.AddListener(OnValueChanged);
             OnValueChanged(colorPicker.CurrentColor);
         }
 
-        protected override void OnDisable() => colorPicker?.onValueChanged.RemoveListener(OnValueChanged);
+        protected override void OnDisable() => colorPicker?.internalOnValueChanged.RemoveListener(OnValueChanged);
 
         Color color = Color.white;
         public void OnValueChanged(Color color)

@@ -14,7 +14,7 @@ namespace HSVPickerExamples
 	    // Use this for initialization
 	    void Start () 
         {
-            picker.onValueChanged.AddListener(color =>
+            picker.internalOnValueChanged.AddListener(color =>
             {
                 renderer.material.color = color;
                 Color = color;

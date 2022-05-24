@@ -36,7 +36,7 @@ namespace HSVPicker
         {
             if (picker != null && Application.isPlaying)
             {
-                picker.onValueChanged.AddListener(ColorChanged);
+                picker.internalOnValueChanged.AddListener(ColorChanged);
                 picker.onHSVChanged.AddListener(HSVChanged);
             }
         }
@@ -45,7 +45,7 @@ namespace HSVPicker
         {
             if (picker != null)
             {
-                picker.onValueChanged.RemoveListener(ColorChanged);
+                picker.internalOnValueChanged.RemoveListener(ColorChanged);
                 picker.onHSVChanged.RemoveListener(HSVChanged);
             }
         }

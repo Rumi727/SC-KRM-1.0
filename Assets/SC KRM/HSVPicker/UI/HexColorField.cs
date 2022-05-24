@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 namespace HSVPicker
@@ -18,13 +18,13 @@ namespace HSVPicker
 
             // Add listeners to keep text (and color) up to date
             hexInputField.onEndEdit.AddListener(UpdateColor);
-            hsvpicker.onValueChanged.AddListener(UpdateHex);
+            hsvpicker.internalOnValueChanged.AddListener(UpdateHex);
         }
 
         private void OnDestroy()
         {
             hexInputField.onValueChanged.RemoveListener(UpdateColor);
-            hsvpicker.onValueChanged.RemoveListener(UpdateHex);
+            hsvpicker.internalOnValueChanged.RemoveListener(UpdateHex);
         }
 
         private void UpdateHex(Color newColor)

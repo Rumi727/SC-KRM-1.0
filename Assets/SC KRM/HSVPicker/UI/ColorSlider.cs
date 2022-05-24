@@ -27,14 +27,14 @@ namespace HSVPicker
         {
             slider = GetComponent<Slider>();
 
-            hsvpicker.onValueChanged.AddListener(ColorChanged);
+            hsvpicker.internalOnValueChanged.AddListener(ColorChanged);
             hsvpicker.onHSVChanged.AddListener(HSVChanged);
             slider.onValueChanged.AddListener(SliderChanged);
         }
 
         private void OnDestroy()
         {
-            hsvpicker.onValueChanged.RemoveListener(ColorChanged);
+            hsvpicker.internalOnValueChanged.RemoveListener(ColorChanged);
             hsvpicker.onHSVChanged.RemoveListener(HSVChanged);
             slider.onValueChanged.RemoveListener(SliderChanged);
         }

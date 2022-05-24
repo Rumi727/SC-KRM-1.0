@@ -16,7 +16,7 @@ namespace HSVPicker
 	    void Awake()
 	    {
     //		picker.onHSVChanged.AddListener(HSVChanged);
-		    picker.onValueChanged.AddListener(ColorChanged);
+		    picker.internalOnValueChanged.AddListener(ColorChanged);
 	    }
 
         void Start()
@@ -85,7 +85,7 @@ namespace HSVPicker
 
         private void OnDestroy()
         {
-            picker.onValueChanged.RemoveListener(ColorChanged);
+            picker.internalOnValueChanged.RemoveListener(ColorChanged);
             _colors.OnColorsUpdated -= OnColorsUpdate;
         }
     }

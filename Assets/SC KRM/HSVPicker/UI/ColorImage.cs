@@ -13,12 +13,12 @@ namespace HSVPicker
         private void Awake()
         {
             image = GetComponent<Image>();
-            picker.onValueChanged.AddListener(ColorChanged);
+            picker.internalOnValueChanged.AddListener(ColorChanged);
         }
 
         private void OnDestroy()
         {
-            picker.onValueChanged.RemoveListener(ColorChanged);
+            picker.internalOnValueChanged.RemoveListener(ColorChanged);
         }
 
         private void ColorChanged(Color newColor)

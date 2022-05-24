@@ -15,6 +15,7 @@ namespace HSVPicker
         public ColorPickerSetup Setup;
 
         [Header("Event")]
+        internal ColorChangedEvent internalOnValueChanged = new ColorChangedEvent();
         public ColorChangedEvent onValueChanged = new ColorChangedEvent();
         public HSVChangedEvent onHSVChanged = new HSVChangedEvent();
 
@@ -37,10 +38,10 @@ namespace HSVPicker
             }
         }
 
-        /*private void OnEnable()
+        private void OnEnable()
         {
-            SendChangedEvent();
-        }*/
+            InternalSendChangedEvent();
+        }
 
         private void Start()
         {
@@ -54,7 +55,7 @@ namespace HSVPicker
             UpdateColorToggleText();
 
             RGBChanged();
-            //SendChangedEvent();
+            InternalSendChangedEvent();
         }
 
         public float H
@@ -206,7 +207,13 @@ namespace HSVPicker
 
         private void SendChangedEvent()
         {
+            InternalSendChangedEvent();
             onValueChanged.Invoke(CurrentColor);
+        }
+
+        void InternalSendChangedEvent()
+        {
+            internalOnValueChanged.Invoke(CurrentColor);
             onHSVChanged.Invoke(_hue, _saturation, _brightness);
         }
 
