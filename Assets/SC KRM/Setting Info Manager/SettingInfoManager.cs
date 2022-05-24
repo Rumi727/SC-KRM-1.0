@@ -89,7 +89,7 @@ namespace SCKRM.UI
             string KeyCodeToString()
             {
                 if (hotkeys == null || hotkeys.Length <= 0)
-                    return ResourceManager.SearchLanguage("setting_info.no_hotkey");
+                    return ResourceManager.SearchLanguage("setting_info.no_hotkey", "sc-krm");
 
                 string text = "";
                 for (int i = 0; i < hotkeys.Length; i++)
@@ -104,8 +104,8 @@ namespace SCKRM.UI
                             text += hotkey;
                     }
 
-                    if (i < keyCodes.Length - 1)
-                        text += " / ";
+                    if (i < hotkeys.Length - 1)
+                        text += " | ";
                 }
 
                 return text;

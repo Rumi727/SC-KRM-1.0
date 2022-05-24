@@ -113,17 +113,30 @@ namespace SCKRM
 
 
 
+        static bool highPrecisionMouseWarningLock = false;
         public static async void HighPrecisionMouseWarning(SettingToggle setting)
         {
+            if (highPrecisionMouseWarningLock)
+                return;
+
             if (InitialLoadManager.isInitialLoadEnd && SaveData.IgnoreMouseAcceleration)
             {
-                SaveData.IgnoreMouseAcceleration = false;
-                setting.ScriptOnValueChanged();
+                highPrecisionMouseWarningLock = true;
 
-                if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
+                try
                 {
-                    SaveData.IgnoreMouseAcceleration = true;
+                    SaveData.IgnoreMouseAcceleration = false;
                     setting.ScriptOnValueChanged();
+
+                    if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
+                    {
+                        SaveData.IgnoreMouseAcceleration = true;
+                        setting.ScriptOnValueChanged();
+                    }
+                }
+                finally
+                {
+                    highPrecisionMouseWarningLock = false;
                 }
             }
         }
