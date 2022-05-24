@@ -58,8 +58,10 @@ MonoBehaviour:
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
+  _hotkeyToDisplay: 
   _resetButton: {fileID: 8588197764761789119}
   _nameText: {fileID: 639109138892667700}
+  _nameTextRenderer: {fileID: 2175903226505351713}
   _dropdown: {fileID: 7313869460922697289}
   _onValueChanged:
     m_PersistentCalls:

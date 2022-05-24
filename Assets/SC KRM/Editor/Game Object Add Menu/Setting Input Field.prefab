@@ -364,8 +364,10 @@ MonoBehaviour:
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
+  _hotkeyToDisplay: []
   _resetButton: {fileID: 4951253607330256326}
   _nameText: {fileID: 6062586528617558011}
+  _nameTextRenderer: {fileID: 8145220453371415631}
   _mouseSensitivity: 1
   _textPlaceHolderNameSpace: sc-krm
   _numberPlaceHolderNameSpace: sc-krm
@@ -569,6 +571,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3783897986454623060}
+        m_TargetAssemblyTypeName: SCKRM.UI.Setting.SettingInputField, SC KRM
+        m_MethodName: ScriptOnValueChanged
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &7691767713636167457
 GameObject:

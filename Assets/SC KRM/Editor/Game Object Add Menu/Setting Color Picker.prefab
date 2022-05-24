@@ -441,8 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc892b9548b3b040b5bdc87f0ca3e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
+  _rectTransform: {fileID: 7516238111572459608}
+  _graphic: {fileID: 3355056377983817332}
   _lerp: 1
   _lerpValue: 0.4
   colorPickerMask: {fileID: 7268723893568988090}
@@ -508,6 +508,7 @@ MonoBehaviour:
   _roundingDigits: 2
   _resetButton: {fileID: 7562514161232138133}
   _nameText: {fileID: 4149911187495102469}
+  _nameTextRenderer: {fileID: 3421535222054633744}
   _colorPicker: {fileID: 2325660304237473101}
   _onValueChanged:
     m_PersistentCalls:

@@ -978,6 +978,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6203627955292521566}
+        m_TargetAssemblyTypeName: SCKRM.UI.Setting.SettingSlider, SC KRM
+        m_MethodName: ScriptOnValueChanged
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &7747156267644858978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1754,8 +1766,10 @@ MonoBehaviour:
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
+  _hotkeyToDisplay: []
   _resetButton: {fileID: 6167845678910891430}
   _nameText: {fileID: 7104122106398558262}
+  _nameTextRenderer: {fileID: 1477358942574049235}
   _mouseSensitivity: 1
   _textPlaceHolderNameSpace: sc-krm
   _numberPlaceHolderNameSpace: sc-krm

@@ -51,11 +51,13 @@ namespace SCKRM.Editor
             DrawLine();
 
             UseProperty("_roundingDigits", "반올림 자릿수");
+            UseProperty("_hotkeyToDisplay", "표시할 단축키");
 
             DrawLine();
 
             UseProperty("_resetButton", "리셋 버튼");
             UseProperty("_nameText", "이름 텍스트");
+            UseProperty("_nameTextRenderer", "이름 텍스트 렌더러");
 
             if (editor.propertyInfo != null)
                 EditorGUILayout.LabelField(editor.type + " " + editor.propertyInfo.Name + " = " + editor.propertyInfo.GetValue(editor.type));

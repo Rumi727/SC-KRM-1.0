@@ -26,12 +26,42 @@ namespace SCKRM.UI.Setting
             else
                 SaveStringValue(dropdown.value.ToString());
 
-            onValueChanged.Invoke();
+            ScriptOnValueChanged();
         }
 
         public override void SetDefault()
         {
             base.SetDefault();
+            ScriptOnValueChanged();
+        }
+        
+        public void ScriptOnValueChanged(bool settingInfoInvoke = true)
+        {
+            Update();
+
+            if (settingInfoInvoke)
+            {
+                if (variableType == VariableType.String)
+                {
+                    if (dropdown.value >= 0 && dropdown.value < dropdown.options.Length)
+                    {
+                        string text;
+                        if (dropdown.value < dropdown.customLabel.Length)
+                        {
+                            text = dropdown.customLabel[dropdown.value];
+                            if (string.IsNullOrEmpty(text))
+                                text = dropdown.options[dropdown.value];
+                        }
+                        else
+                            text = dropdown.options[dropdown.value];
+
+                        SettingInfoInvoke(text);
+                    }
+                }
+                else
+                    SettingInfoInvoke(dropdown.value.ToString());
+            }
+
             onValueChanged.Invoke();
         }
 

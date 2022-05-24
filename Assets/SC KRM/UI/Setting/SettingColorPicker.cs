@@ -1,5 +1,6 @@
 using HSVPicker;
 using SCKRM.Json;
+using SCKRM.Renderer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,12 +25,27 @@ namespace SCKRM.UI.Setting
             else if (variableType == VariableType.JColor32)
                 SaveValue((JColor32)colorPicker.CurrentColor);
 
-            onValueChanged.Invoke();
+            ScriptOnValueChanged();
         }
 
         public override void SetDefault()
         {
             base.SetDefault();
+            ScriptOnValueChanged();
+        }
+
+        public virtual void ScriptOnValueChanged(bool settingInfoInvoke = true)
+        {
+            Update();
+
+            if (settingInfoInvoke)
+            {
+                if (colorPicker.Setup.ShowAlpha)
+                    SettingInfoInvoke(ColorUtility.ToHtmlStringRGBA(colorPicker.CurrentColor));
+                else
+                    SettingInfoInvoke(ColorUtility.ToHtmlStringRGB(colorPicker.CurrentColor));
+            }
+
             onValueChanged.Invoke();
         }
 

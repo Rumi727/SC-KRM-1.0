@@ -70,7 +70,7 @@ namespace SCKRM.UI.Setting
         public override void SetDefault()
         {
             base.SetDefault();
-            onEndEdit.Invoke();
+            ScriptOnValueChanged();
         }
 
         public virtual void OnEndEdit()
@@ -81,6 +81,16 @@ namespace SCKRM.UI.Setting
                 inputField.text = "0";
 
             SaveStringValue(inputField.text);
+            ScriptOnValueChanged();
+        }
+
+        public virtual void ScriptOnValueChanged(bool settingInfoInvoke = true)
+        {
+            Update();
+
+            if (settingInfoInvoke)
+                SettingInfoInvoke(inputField.text);
+
             onEndEdit.Invoke();
         }
 

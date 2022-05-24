@@ -25,12 +25,18 @@ namespace SCKRM.UI.Setting
                 return;
 
             SaveValueFloat(slider.value);
-            onValueChanged.Invoke();
+            ScriptOnValueChanged();
         }
 
         public override void SetDefault()
         {
             base.SetDefault();
+            ScriptOnValueChanged();
+        }
+
+        public override void ScriptOnValueChanged(bool settingInfoInvoke = true)
+        {
+            base.ScriptOnValueChanged();
             onValueChanged.Invoke();
         }
 

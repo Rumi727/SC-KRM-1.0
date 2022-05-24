@@ -1,3 +1,4 @@
+using SCKRM.Renderer;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,12 +20,27 @@ namespace SCKRM.UI.Setting
                 return;
 
             SaveValue(toggle.isOn);
-            onValueChanged.Invoke();
+            ScriptOnValueChanged();
         }
 
         public override void SetDefault()
         {
             base.SetDefault();
+            ScriptOnValueChanged();
+        }
+
+        public virtual void ScriptOnValueChanged(bool settingInfoInvoke = true)
+        {
+            Update();
+
+            if (settingInfoInvoke)
+            {
+                if (toggle.isOn)
+                    SettingInfoInvoke(new NameSpacePathPair("gui.on", "sc-krm"));
+                else
+                    SettingInfoInvoke(new NameSpacePathPair("gui.off", "sc-krm"));
+            }
+
             onValueChanged.Invoke();
         }
 

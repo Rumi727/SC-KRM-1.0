@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using SCKRM.Input;
 using SCKRM.Json;
 using SCKRM.Log;
+using SCKRM.Renderer;
 using SCKRM.SaveLoad;
 using SCKRM.UI.SideBar;
 using SCKRM.Window;
@@ -19,9 +20,11 @@ namespace SCKRM.UI.Setting
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }
 
         [SerializeField] int _roundingDigits = 2; public int roundingDigits { get => _roundingDigits; set => _roundingDigits = value; }
+        [SerializeField] string[] _hotkeyToDisplay = new string[0]; public string[] hotkeyToDisplays { get => _hotkeyToDisplay; set => _hotkeyToDisplay = value; }
 
         [SerializeField] CanvasGroup _resetButton; public CanvasGroup resetButton { get => _resetButton; set => _resetButton = value; }
         [SerializeField] RectTransform _nameText; public RectTransform nameText { get => _nameText; set => _nameText = value; }
+        [SerializeField] CustomAllTextRenderer _nameTextRenderer; public CustomAllTextRenderer nameTextRenderer { get => _nameTextRenderer; set => _nameTextRenderer = value; }
 
 
 
@@ -496,6 +499,8 @@ namespace SCKRM.UI.Setting
                 Debug.LogException(e);
             }
         }
+
+        public void SettingInfoInvoke(NameSpacePathPair value) => SettingInfoManager.Show(new NameSpacePathPair(nameTextRenderer.path, nameTextRenderer.nameSpace), value, hotkeyToDisplays);
     }
 
     public class SettingDrag : Setting
