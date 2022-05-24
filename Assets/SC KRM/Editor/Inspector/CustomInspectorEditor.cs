@@ -71,12 +71,17 @@ namespace SCKRM.Editor
             return tps;
         }
 
-        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, "", value, array, false);
-        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, label, value, array, true);
-        string usePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, bool labelShow)
+        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out _);
+        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out _);
+        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out index);
+        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out index);
+        string usePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, bool labelShow, out int index)
         {
             if (array == null)
-                return "";
+            {
+                index = 0;
+                return value;
+            }
 
             EditorGUILayout.BeginHorizontal();
 
@@ -85,8 +90,8 @@ namespace SCKRM.Editor
 
             SerializedProperty serializedProperty = UseProperty(propertyName, "");
             bool usePropertyChanged = GUI.changed;
-
-            int index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
+            
+            index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
 
             EditorGUILayout.EndHorizontal();
 
