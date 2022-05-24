@@ -50,6 +50,11 @@ namespace SCKRM.Editor
         public SerializedProperty UseProperty(string propertyName, string label) => useProperty(propertyName, label, true);
         SerializedProperty useProperty(string propertyName, string label, bool labelShow)
         {
+            if (propertyName == null)
+                propertyName = "";
+            if (label == null)
+                label = "";
+
             GUIContent guiContent = null;
             if (labelShow)
             {
@@ -77,11 +82,14 @@ namespace SCKRM.Editor
         public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out index);
         string usePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, bool labelShow, out int index)
         {
+            if (propertyName == null)
+                propertyName = "";
+            if (label == null)
+                label = "";
+            if (value == null)
+                value = "";
             if (array == null)
-            {
-                index = 0;
-                return value;
-            }
+                throw new NullReferenceException();
 
             EditorGUILayout.BeginHorizontal();
 
@@ -148,6 +156,9 @@ namespace SCKRM.Editor
         public static Vector2 DrawList<T>(List<T> list, string label, DrawListFunc<T> func, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, true, scrollViewPos, tab, tab2, deleteSafety);
         static Vector2 drawList<T>(List<T> list, string label, DrawListFunc<T> func, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
         {
+            if (label == null)
+                label = "";
+
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
@@ -256,14 +267,20 @@ namespace SCKRM.Editor
 
 
 
-        public static string DrawStringArray(string value, string[] array) => DrawStringArray("", value, array);
-        public static string DrawStringArray(string label, string value, string[] array)
+        public static string DrawStringArray(string value, string[] array) => drawStringArray("", value, array, false, out _);
+        public static string DrawStringArray(string label, string value, string[] array) => drawStringArray(label, value, array, true, out _);
+        public static string DrawStringArray(string value, string[] array, out int index) => drawStringArray("", value, array, false, out index);
+        public static string DrawStringArray(string label, string value, string[] array, out int index) => drawStringArray(label, value, array, true, out index);
+        static string drawStringArray(string label, string value, string[] array, bool labelShow, out int index)
         {
+            if (label == null)
+                label = "";
+            if (value == null)
+                value = "";
             if (array == null)
-                return "";
+                throw new NullReferenceException();
 
-            int index;
-            if (string.IsNullOrEmpty(label))
+            if (!labelShow)
                 index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
             else
                 index = EditorGUILayout.Popup(label, Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
