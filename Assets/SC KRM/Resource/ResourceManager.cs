@@ -1846,7 +1846,7 @@ namespace SCKRM.Resource
             else
             {
                 value = text;
-                return defaultNameSpace;
+                return "";
             }
         }
 
