@@ -69,13 +69,21 @@ namespace SCKRM.Renderer
             this.nameSpace = nameSpace;
         }
 
-        public static implicit operator string(NameSpaceTypePathPair value) => value.nameSpace + ":" + PathTool.Combine(value.type, value.path);
+        public static implicit operator string(NameSpaceTypePathPair value) => value.ToString();
 
         public static implicit operator NameSpaceTypePathPair(string value)
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
             int index = value.LastIndexOf('/');
             return new NameSpaceTypePathPair(value.Remove(index), value.Substring(index + 1), nameSpace);
+        }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(nameSpace))
+                return PathTool.Combine(type, path);
+            else
+                return nameSpace + ":" + PathTool.Combine(type, path);
         }
     }
 }

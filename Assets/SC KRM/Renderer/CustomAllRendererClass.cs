@@ -35,11 +35,20 @@ namespace SCKRM.Renderer
             this.nameSpace = nameSpace;
         }
 
-        public static implicit operator string(NameSpacePathPair value) => value.nameSpace + ":" +value.path;
+        public static implicit operator string(NameSpacePathPair value) => value.ToString();
+
         public static implicit operator NameSpacePathPair(string value)
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
             return new NameSpacePathPair(value, nameSpace);
+        }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(nameSpace))
+                return path;
+            else
+                return nameSpace + ":" + path;
         }
     }
 }
