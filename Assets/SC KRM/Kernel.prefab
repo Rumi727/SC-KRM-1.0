@@ -178,7 +178,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.7299957, y: 0}
+  m_AnchoredPosition: {x: 3.7299986, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8474851857294884457
@@ -9701,14 +9701,6 @@ PrefabInstance:
       propertyPath: _hotkeyToDisplay.Array.size
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
-      propertyPath: _hotkeyToDisplay.Array.data[0]
-      value: volume_control.minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
-      propertyPath: _hotkeyToDisplay.Array.data[1]
-      value: volume_control.plus
-      objectReference: {fileID: 0}
     - target: {fileID: 6961220906199775541, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: m_text
       value: BGM
@@ -10049,18 +10041,6 @@ PrefabInstance:
     - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: _saveLoadAttributeName
       value: SCKRM.Kernel+SaveData
-      objectReference: {fileID: 0}
-    - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
-      propertyPath: _hotkeyToDisplay.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
-      propertyPath: _hotkeyToDisplay.Array.data[0]
-      value: volume_control.minus
-      objectReference: {fileID: 0}
-    - target: {fileID: 6203627955292521566, guid: de8f7150def470d428ea15394d816456, type: 3}
-      propertyPath: _hotkeyToDisplay.Array.data[1]
-      value: volume_control.plus
       objectReference: {fileID: 0}
     - target: {fileID: 6961220906199775541, guid: de8f7150def470d428ea15394d816456, type: 3}
       propertyPath: m_text
