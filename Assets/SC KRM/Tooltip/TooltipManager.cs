@@ -40,20 +40,23 @@ namespace SCKRM.Tooltip
 
             toolTipCanvasGroup.alpha = toolTipCanvasGroup.alpha.Clamp01();
 
-            RectTransform cursorRectTransform = CursorManager.instance.rectTransform;
-            Vector2 cursorScale = cursorRectTransform.localScale;
-            Vector2 cursorSize = cursorRectTransform.rect.size;
-            float cursorZRotationRad = cursorRectTransform.localEulerAngles.z * Mathf.Deg2Rad;
-            float cursorZRotationSin = Mathf.Sin(cursorZRotationRad);
-            float cursorZRotationCos = Mathf.Cos(cursorZRotationRad);
+            if (toolTipCanvasGroup.alpha > 0)
+            {
+                RectTransform cursorRectTransform = CursorManager.instance.rectTransform;
+                Vector2 cursorScale = cursorRectTransform.localScale;
+                Vector2 cursorSize = cursorRectTransform.rect.size;
+                float cursorZRotationRad = cursorRectTransform.localEulerAngles.z * Mathf.Deg2Rad;
+                float cursorZRotationSin = Mathf.Sin(cursorZRotationRad);
+                float cursorZRotationCos = Mathf.Cos(cursorZRotationRad);
 
-            Vector2 offset = new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x);
-            Vector2 pos = InputManager.mousePosition + (offset * cursorScale);
-            pos.x.ClampRef(0, Screen.width - toolTip.rect.size.x);
-            pos.y.ClampRef(toolTip.rect.size.y, Screen.height);
+                Vector2 offset = new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x);
+                Vector2 pos = InputManager.mousePosition + (offset * cursorScale);
+                pos.x.ClampRef(0, Screen.width - toolTip.rect.size.x);
+                pos.y.ClampRef(toolTip.rect.size.y, Screen.height);
 
-            toolTip.anchoredPosition = pos;
-            toolTipTextBetterContentSizeFitter.max = new Vector2(Screen.width, Screen.height) - toolTipSetSizeAsTargetRectTransform.offset;
+                toolTip.anchoredPosition = pos;
+                toolTipTextBetterContentSizeFitter.max = new Vector2(Screen.width, Screen.height) - toolTipSetSizeAsTargetRectTransform.offset;
+            }
         }
 
         void OnDisable() => tracker.Clear();
