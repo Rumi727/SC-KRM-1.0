@@ -290,7 +290,7 @@ namespace SCKRM.Json
         public static implicit operator Rect(JColor value) => new Rect(value.r, value.g, value.b, value.a);
 
         public static implicit operator JColor(Color32 value) => new JColor(value);
-        public static implicit operator Color32(JColor value) => new Color(value.r * 255, value.g * 255, value.b * 255, value.a * 255);
+        public static implicit operator Color32(JColor value) => new Color32((byte)(value.r.Clamp01() * 255).Round(), (byte)(value.g.Clamp01() * 255).Round(), (byte)(value.b.Clamp01() * 255).Round(), (byte)(value.a.Clamp01() * 255).Round());
 
         public static implicit operator JColor(Color value) => new JColor(value);
         public static implicit operator Color(JColor value) => new Color(value.r, value.g, value.b, value.a);
@@ -308,12 +308,12 @@ namespace SCKRM.Json
         public static JColor32 zero { get; } = new JColor32();
         public static JColor32 one { get; } = new JColor32(1);
 
-        public JColor32(Color value) : this((byte)(value.r * 255), (byte)(value.g * 255), (byte)(value.b * 255), (byte)(value.a * 255))
+        public JColor32(Color value) : this((byte)(value.r.Clamp01() * 255).Round(), (byte)(value.g.Clamp01() * 255).Round(), (byte)(value.b.Clamp01() * 255).Round(), (byte)(value.a.Clamp01() * 255).Round())
         {
 
         }
 
-        public JColor32(JColor value) : this((byte)(value.r * 255), (byte)(value.g * 255), (byte)(value.b * 255), (byte)(value.a * 255))
+        public JColor32(JColor value) : this((byte)(value.r.Clamp01() * 255).Round(), (byte)(value.g.Clamp01() * 255).Round(), (byte)(value.b.Clamp01() * 255).Round(), (byte)(value.a.Clamp01() * 255).Round())
         {
 
         }
