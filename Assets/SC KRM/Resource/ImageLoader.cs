@@ -58,20 +58,8 @@ namespace SCKRM.Resource
                             pulledColors[i] = new Color32(red, green, blue, 255);
                         }
                     }
-                    else if (bitDepth == 8)
-                    {
-                        for (int i = 0; i < width * height; i++)
-                        {
-                            byte blue;
-                            byte green;
-                            byte red;
-                            blue = green = red = r.ReadByte();
-
-                            pulledColors[i] = new Color32(red, green, blue, 255);
-                        }
-                    }
                     else
-                        throw new Exception("TGA texture had non 32/24/8 bit depth.");
+                        throw new Exception("TGA texture had non 32/24 bit depth.");
                 }
                 else // Code that helped load the compressed TGA (actually it's just a copy paste) https://github.com/EricHaung/TGALoaderForUnity/blob/main/TGALoader.cs
                 {
@@ -123,43 +111,6 @@ namespace SCKRM.Resource
                             {
                                 pixelCount -= 127;
 
-                                byte blue;
-                                byte green;
-                                byte red;
-                                blue = green = red = r.ReadByte();
-
-                                for (int i = 0; i < pixelCount; i++)
-                                    pulledColors[index + i] = new Color32(red, green, blue, 255);
-                            }
-                            else
-                            {
-                                pixelCount++;
-
-                                for (int i = 0; i < pixelCount; i++)
-                                {
-                                    byte blue;
-                                    byte green;
-                                    byte red;
-                                    blue = green = red = r.ReadByte();
-
-                                    pulledColors[index + i] = new Color32(red, green, blue, 255);
-                                }
-                            }
-
-                            index += pixelCount;
-                        }
-                    }
-                    else if (bitDepth == 8)
-                    {
-                        int index = 0;
-                        while (index < width * height)
-                        {
-                            byte pixelCount = r.ReadByte();
-
-                            if (pixelCount >= 128)
-                            {
-                                pixelCount -= 127;
-
                                 byte blue = r.ReadByte();
                                 byte green = r.ReadByte();
                                 byte red = r.ReadByte();
@@ -185,7 +136,7 @@ namespace SCKRM.Resource
                         }
                     }
                     else
-                        throw new Exception("TGA texture had non 32/24/8 bit depth.");
+                        throw new Exception("TGA texture had non 32/24 bit depth.");
                 }
 
                 tex.SetPixels32(pulledColors);
