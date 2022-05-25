@@ -84,6 +84,8 @@
 	
 	"options.set_default.info": "Set as default",
 	
+	
+	
 	"setting_info.no_hotkey": "No hotkey",
 	
 	
@@ -106,6 +108,12 @@
 	"controls.volume_control.title": "Volume Control",
 	"volume_control.minus": "Reduce the volume",
 	"volume_control.plus": "Turn up the volume",
+	
+	
+	
+	"resource_pack.selected": "Selected resource pack",
+	"resource_pack.available": "Available resource packs",
+	"resource_pack.drag_info": "Drag is a great system, isn't it?",
 	
 	
 	

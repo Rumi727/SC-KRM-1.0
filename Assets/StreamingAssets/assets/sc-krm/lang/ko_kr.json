@@ -59,6 +59,7 @@
 	"options.video.guiSize.info": "전체적인 GUI 크기를 변경합니다",
 	"options.video.fixedGuiSizeEnable": "고정적인 GUI 크기 사용",
 	"options.video.fixedGuiSizeEnable.info": "GUI 크기를 해상도에 비례하지 않게 고정합니다",
+	"options.video.resource_pack_setting": "리소스 팩 설정",
 	
 	"options.statusbar.title": "상태 표시줄",
 	"options.statusbar.bottomMode": "하단에 표시",
@@ -84,6 +85,8 @@
 	
 	"options.set_default.info": "기본값으로 설정",
 	
+	
+	
 	"setting_info.no_hotkey": "단축키 없음",
 	
 	
@@ -106,6 +109,12 @@
 	"controls.volume_control.title": "볼륨 컨트롤",
 	"volume_control.minus": "볼륨 줄이기",
 	"volume_control.plus": "볼륨 올리기",
+	
+	
+	
+	"resource_pack.selected": "선택한 리소스 팩",
+	"resource_pack.available": "사용 가능한 리소스 팩",
+	"resource_pack.drag_info": "드래그란 참 좋은 시스템이에요, 그렇죠?",
 	
 	
 	

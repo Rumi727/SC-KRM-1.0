@@ -1,10 +1,10 @@
 {
   "prefabList": {
     "notice_manager.notice": "Prefab/Side Bar/Notice",
-    "controls_list.controls_button": "Prefab/Controls Button",
     "sound_manager.sound_object": "Prefab/Sound/Sound Object",
     "sound_manager.nbs_player": "Prefab/Sound/NBS Player",
     "running_task_list.running_task": "Prefab/Side Bar/Running Task",
-    "window_manager.message_box_button": "Prefab/Message Box/Button"
+    "window_manager.message_box_button": "Prefab/Message Box/Button",
+    "resource_pack_list.resource_pack": "Prefab/Resource Pack List/Resource Pack"
   }
 }
