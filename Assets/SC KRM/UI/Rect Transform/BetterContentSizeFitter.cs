@@ -4,10 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM
+namespace SCKRM.UI
 {
     [ExecuteAlways, RequireComponent(typeof(RectTransform))]
-    public class BetterContentSizeFitter : UI.UI, ILayoutSelfController
+    public class BetterContentSizeFitter : UI, ILayoutSelfController
     {
         [SerializeField] bool _xSize = false; public bool xSize { get => _xSize; set => _xSize = value; }
         [SerializeField] bool _ySize = false; public bool ySize { get => _ySize; set => _ySize = value; }
