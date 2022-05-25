@@ -1137,26 +1137,36 @@ namespace SCKRM.Editor
                        조건문으로 경고를 표시해주고
                        경로가 중첩되는 현상을 대비하기 위해 경로를 빈 문자열로 변경해줌
                      */
-                    string assetsPath = AssetDatabase.GetAssetPath(gameObject);
-                    if (assetsPath.Contains("Resources/"))
+                    if (deleteSafety && key != null && key != "")
+                        GUI.enabled = false;
+
+                    if (!GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
                     {
-                        keyList.Add(key);
+                        string assetsPath = AssetDatabase.GetAssetPath(gameObject);
+                        if (assetsPath.Contains("Resources/"))
+                        {
+                            keyList.Add(key);
 
-                        assetsPath = assetsPath.Substring(assetsPath.IndexOf("Resources/") + 10);
-                        assetsPath = assetsPath.Remove(assetsPath.LastIndexOf("."));
+                            assetsPath = assetsPath.Substring(assetsPath.IndexOf("Resources/") + 10);
+                            assetsPath = assetsPath.Remove(assetsPath.LastIndexOf("."));
 
-                        valueList.Add(assetsPath);
+                            valueList.Add(assetsPath);
 
-                        EditorGUILayout.EndHorizontal();
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        else
+                        {
+                            keyList.Add(key);
+                            valueList.Add("");
+
+                            EditorGUILayout.EndHorizontal();
+
+                            GUI.enabled = true;
+                            EditorGUILayout.HelpBox("'Resources' 폴더에 있는 오브젝트를 넣어주세요", MessageType.Info);
+                        }
                     }
-                    else
-                    {
-                        keyList.Add(key);
-                        valueList.Add("");
 
-                        EditorGUILayout.EndHorizontal();
-                        EditorGUILayout.HelpBox("'Resources' 폴더에 있는 오브젝트를 넣어주세요", MessageType.Info);
-                    }
+                    GUI.enabled = true;
                 }
 
                 EditorGUILayout.EndScrollView();
