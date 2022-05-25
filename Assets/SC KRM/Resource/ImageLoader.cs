@@ -79,14 +79,14 @@ namespace SCKRM.Resource
                                 byte red = r.ReadByte();
                                 byte alpha = r.ReadByte();
 
-                                for (int i = 0; i < pixelCount; i++)
+                                for (int i = 0; i < pixelCount && i < pulledColors.Length; i++)
                                     pulledColors[index + i] = new Color32(red, green, blue, alpha);
                             }
                             else
                             {
                                 pixelCount++;
 
-                                for (int i = 0; i < pixelCount; i++)
+                                for (int i = 0; i < pixelCount && i < pulledColors.Length; i++)
                                 {
                                     byte blue = r.ReadByte();
                                     byte green = r.ReadByte();
@@ -115,14 +115,14 @@ namespace SCKRM.Resource
                                 byte green = r.ReadByte();
                                 byte red = r.ReadByte();
 
-                                for (int i = 0; i < pixelCount; i++)
+                                for (int i = 0; i < pixelCount && i < pulledColors.Length; i++)
                                     pulledColors[index + i] = new Color32(red, green, blue, 255);
                             }
                             else
                             {
                                 pixelCount++;
 
-                                for (int i = 0; i < pixelCount; i++)
+                                for (int i = 0; i < pixelCount && i < pulledColors.Length; i++)
                                 {
                                     byte blue = r.ReadByte();
                                     byte green = r.ReadByte();
