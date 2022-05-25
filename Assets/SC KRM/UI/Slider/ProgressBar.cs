@@ -12,10 +12,10 @@ namespace SCKRM.UI
 
 
 
-        [SerializeField] Slider _slider;
+        [SerializeField, NotNull] Slider _slider;
         public Slider slider => _slider;
 
-        [SerializeField] RectTransform _fillShow;
+        [SerializeField, NotNull] RectTransform _fillShow;
         public RectTransform fillShow => _fillShow;
 
 

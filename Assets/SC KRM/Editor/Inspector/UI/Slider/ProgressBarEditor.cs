@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ProgressBar))]
-    public class ProgressBarEditor : UIAniEditor
+    public sealed class ProgressBarEditor : UIAniEditor
     {
         public override void OnInspectorGUI()
         {
@@ -15,6 +15,11 @@ namespace SCKRM.Editor
 
             UseProperty("_progress");
             UseProperty("_maxProgress", "최대 진행도");
+
+            DrawLine();
+
+            UseProperty("_slider");
+            UseProperty("_fillShow");
         }
     }
 }
