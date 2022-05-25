@@ -76,11 +76,13 @@ namespace SCKRM.Editor
             return tps;
         }
 
-        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out _);
-        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out _);
-        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out index);
-        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out index);
-        string usePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, bool labelShow, out int index)
+        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out _, out _);
+        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out _, out _);
+        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out index, out _);
+        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, out int index) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out index, out _);
+        public string UsePropertyAndDrawStringArray(string propertyName, string value, string[] array, out int index, out bool usePropertyChanged) => usePropertyAndDrawStringArray(propertyName, "", value, array, false, out index, out usePropertyChanged);
+        public string UsePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, out int index, out bool usePropertyChanged) => usePropertyAndDrawStringArray(propertyName, label, value, array, true, out index, out usePropertyChanged);
+        string usePropertyAndDrawStringArray(string propertyName, string label, string value, string[] array, bool labelShow, out int index, out bool usePropertyChanged)
         {
             if (propertyName == null)
                 propertyName = "";
@@ -97,7 +99,7 @@ namespace SCKRM.Editor
                 EditorGUILayout.PrefixLabel(label);
 
             SerializedProperty serializedProperty = UseProperty(propertyName, "");
-            bool usePropertyChanged = GUI.changed;
+            usePropertyChanged = GUI.changed;
             
             index = EditorGUILayout.Popup(Array.IndexOf(array, value), array, GUILayout.MinWidth(0));
 
