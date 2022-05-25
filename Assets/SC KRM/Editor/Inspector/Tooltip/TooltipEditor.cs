@@ -20,14 +20,11 @@ namespace SCKRM.Editor
         public override void OnInspectorGUI()
         {
             string[] languageKeys = ResourceManager.GetLanguageKeys(LanguageManager.SaveData.currentLanguage, editor.nameSpace);
-            string[] languageKeysReplace = new string[languageKeys.Length];
-            for (int i = 0; i < languageKeysReplace.Length; i++)
-                languageKeysReplace[i] = languageKeys[i].Replace(".", "/");
+            for (int i = 0; i < languageKeys.Length; i++)
+                languageKeys[i] = languageKeys[i].Replace(".", "/");
 
             editor.nameSpace = UsePropertyAndDrawNameSpace("_nameSpace", "네임스페이스", editor.nameSpace);
-            UsePropertyAndDrawStringArray("_text", "이름", editor.text.Replace(".", "/"), languageKeysReplace, out int index);
-            if (index >= 0)
-                editor.text = languageKeys[index];
+            editor.text = UsePropertyAndDrawStringArray("_text", "이름", editor.text.Replace(".", "/"), languageKeys).Replace("/", ".");
 
             EditorGUILayout.Space();
 
