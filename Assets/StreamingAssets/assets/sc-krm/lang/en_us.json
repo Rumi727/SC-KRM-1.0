@@ -47,6 +47,8 @@
 	"options.sound.bgmVolume": "BGM",
 	"options.sound.soundVolume": "Sound Effect",
 	"options.sound.noteBlockVolume": "Note Block",
+	"options.sound.audio_reset": "Audio reset",
+	"options.sound.audio_reset.info": "Reset Unity Audio (Only use when sound is choppy)",
 	
 	"options.video.title": "Video",
 	"options.video.vSync": "VSync",

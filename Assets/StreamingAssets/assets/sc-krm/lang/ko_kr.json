@@ -47,6 +47,8 @@
 	"options.sound.bgmVolume": "음악",
 	"options.sound.soundVolume": "효과음",
 	"options.sound.noteBlockVolume": "노트 블록",
+	"options.sound.audio_reset": "오디오 리셋",
+	"options.sound.audio_reset.info": "유니티 오디오를 리셋합니다 (소리가 끊길 때만 사용하세요)",
 	
 	"options.video.title": "비디오",
 	"options.video.vSync": "수직 동기화",

@@ -47,6 +47,8 @@
 	"options.sound.bgmVolume": "音楽",
 	"options.sound.soundVolume": "効果音",
 	"options.sound.noteBlockVolume": "ノートブロック",
+	"options.sound.audio_reset": "オーディオリセット",
+	"options.sound.audio_reset.info": "Unityオーディオをリセットします（音が途切れたときにのみ使用してください）",
 	
 	"options.video.title": "画面",
 	"options.video.vSync": "垂直同期",
