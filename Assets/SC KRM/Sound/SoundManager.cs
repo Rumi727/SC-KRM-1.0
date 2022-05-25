@@ -7,6 +7,7 @@ using SCKRM.ProjectSetting;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -87,6 +88,13 @@ namespace SCKRM.Sound
                 soundPlayer.Refresh();
             }
         }
+
+        /// <summary>
+        /// 이 메소드는 ResourceManager.AudioReset 메소드를 호출하며 유니티 이벤트를 위해 존재합니다. 스크립트에서 사용하지 말아 주세요
+        /// This method calls the ResourceManager.AudioReset method and exists for Unity events. Please don't use it in scripts
+        /// </summary>
+        [Obsolete("This method calls the ResourceManager.AudioReset method and exists for Unity events. Please don't use it in scripts", true)]
+        public static void AudioReset() => ResourceManager.AudioReset();
 
         /// <summary>
         /// 소리를 재생합니다
