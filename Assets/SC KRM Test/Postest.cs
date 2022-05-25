@@ -3,6 +3,7 @@ using SCKRM.Input;
 using SCKRM.Sound;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class Postest : MonoBehaviour
 
     SoundPlayer soundPlayer;
     Map map;
-    public Text text;
+    public TMP_Text text;
 
     public GameObject test;
 
