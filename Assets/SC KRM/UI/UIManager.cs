@@ -17,7 +17,7 @@ namespace SCKRM.UI
         [GeneralSaveLoad]
         public sealed class SaveData
         {
-            [JsonProperty] public static JColor32 systemColor { get; set; } = new JColor32(131, 26, 160);
+            [JsonProperty] public static JColor systemColor { get; set; } = new JColor32(131, 26, 160);
 
             static float _guiSize = 1; [JsonProperty] public static float guiSize { get => _guiSize.Clamp(0.5f, 4); set => _guiSize = value.Clamp(0.5f, 4); }
             static float _fixedGuiSize = 1; [JsonProperty] public static float fixedGuiSize
