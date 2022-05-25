@@ -213,10 +213,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeae3217b975e9143825ca8144e9a7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 5616702830817717175}
+  _graphic: {fileID: 7246006892573038874}
   _lerp: 1
   _lerpValue: 0.2
-  _showControlKey: controlbar.show
-  _inputLockName: controlbar
+  _showControlKey: 
+  _inputLockName: 
+  _showEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _hideEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _backEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _right: 0
   _viewPort: {fileID: 2084378971892428429}
   _content: {fileID: 925716286425922685}
