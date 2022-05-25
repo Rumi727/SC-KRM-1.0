@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Input.UI
 {
-    public class ControlSetting : SCKRM.UI.UI
+    public sealed class ControlSetting : SCKRM.UI.UI
     {
         readonly static List<KeyCode> emptyKeyCodeList = new List<KeyCode>();
 
