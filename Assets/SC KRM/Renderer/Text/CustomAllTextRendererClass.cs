@@ -10,7 +10,7 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public class CustomAllTextRenderer : CustomAllRenderer
     {
-        public ReplaceOldNewPair[] replace { get; set; }
+        public ReplaceOldNewPair[] replace { get; set; } = new ReplaceOldNewPair[0];
 
 
 
