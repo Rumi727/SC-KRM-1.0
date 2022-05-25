@@ -199,7 +199,14 @@ namespace SCKRM.SaveLoad
             }
             #endregion
 
-            JsonConvert.DeserializeObject(File.ReadAllText(path), saveLoadClass.type);
+            try
+            {
+                JsonConvert.DeserializeObject(File.ReadAllText(path), saveLoadClass.type);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
 
             #region json을 로드 했는데도 null이면 기본값으로 되돌리기
             for (int j = 0; j < saveLoadClass.propertyInfos.Length; j++)
