@@ -58,7 +58,7 @@ MonoBehaviour:
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
-  _hotkeyToDisplay: 
+  _hotkeyToDisplay: []
   _resetButton: {fileID: 8588197764761789119}
   _nameText: {fileID: 639109138892667700}
   _nameTextRenderer: {fileID: 2175903226505351713}
