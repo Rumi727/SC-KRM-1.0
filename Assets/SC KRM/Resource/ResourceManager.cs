@@ -839,6 +839,7 @@ namespace SCKRM.Resource
 
             SoundManager.SoundRefresh();
             GarbageRemoval();
+            GC.Collect();
 
             for (int i = 0; i < SoundManager.soundList.Count; i++)
                 SoundManager.soundList[i].time = playersTime[i];
