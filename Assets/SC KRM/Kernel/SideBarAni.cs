@@ -58,7 +58,7 @@ namespace SCKRM.UI.SideBar
 
 
         #region variable
-        [SerializeField] RectTransform _viewPort;
+        [SerializeField, NotNull] RectTransform _viewPort;
         public RectTransform viewPort => _viewPort;
 
         [SerializeField] RectTransform _content;
@@ -109,8 +109,10 @@ namespace SCKRM.UI.SideBar
                     if (!viewPort.gameObject.activeSelf)
                     {
                         viewPort.gameObject.SetActive(true);
-                        scrollBarParentRectTransform.gameObject.SetActive(true);
                         graphic.enabled = true;
+
+                        if (scrollBarParentRectTransform != null)
+                            scrollBarParentRectTransform.gameObject.SetActive(true);
                     }
                 }
                 else
@@ -122,8 +124,10 @@ namespace SCKRM.UI.SideBar
                             if (viewPort.gameObject.activeSelf)
                             {
                                 viewPort.gameObject.SetActive(false);
-                                scrollBarParentRectTransform.gameObject.SetActive(false);
                                 graphic.enabled = false;
+
+                                if (scrollBarParentRectTransform != null)
+                                    scrollBarParentRectTransform.gameObject.SetActive(false);
                             }
 
                             return;
@@ -136,8 +140,10 @@ namespace SCKRM.UI.SideBar
                             if (viewPort.gameObject.activeSelf)
                             {
                                 viewPort.gameObject.SetActive(false);
-                                scrollBarParentRectTransform.gameObject.SetActive(false);
                                 graphic.enabled = false;
+
+                                if (scrollBarParentRectTransform != null)
+                                    scrollBarParentRectTransform.gameObject.SetActive(false);
                             }
 
                             return;
@@ -162,25 +168,27 @@ namespace SCKRM.UI.SideBar
                         rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(right * rectTransform.rect.size.x, rectTransform.anchoredPosition.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
 
 
-
-                    if (content.rect.size.y > rectTransform.rect.size.y)
+                    if (scrollBarParentRectTransform != null && scrollBar != null)
                     {
-                        scrollBar.interactable = true;
+                        if (content.rect.size.y > rectTransform.rect.size.y)
+                        {
+                            scrollBar.interactable = true;
 
-                        scrollBarParentRectTransform.anchoredPosition = scrollBarParentRectTransform.anchoredPosition.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            scrollBarParentRectTransform.anchoredPosition = scrollBarParentRectTransform.anchoredPosition.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
 
-                        if (this.right)
-                            viewPort.offsetMax = viewPort.offsetMax.Lerp(new Vector2(-scrollBarParentRectTransform.rect.size.x, 0), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            if (this.right)
+                                viewPort.offsetMax = viewPort.offsetMax.Lerp(new Vector2(-scrollBarParentRectTransform.rect.size.x, 0), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            else
+                                viewPort.offsetMin = viewPort.offsetMin.Lerp(new Vector2(scrollBarParentRectTransform.rect.size.x, 1), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                        }
                         else
-                            viewPort.offsetMin = viewPort.offsetMin.Lerp(new Vector2(scrollBarParentRectTransform.rect.size.x, 1), lerpValue * Kernel.fpsUnscaledDeltaTime);
-                    }
-                    else
-                    {
-                        scrollBar.interactable = false;
+                        {
+                            scrollBar.interactable = false;
 
-                        scrollBarParentRectTransform.anchoredPosition = scrollBarParentRectTransform.anchoredPosition.Lerp(new Vector2(right * scrollBarParentRectTransform.rect.size.x, 0), 0.2f * Kernel.fpsUnscaledDeltaTime);
-                        viewPort.offsetMin = viewPort.offsetMin.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
-                        viewPort.offsetMax = viewPort.offsetMax.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            scrollBarParentRectTransform.anchoredPosition = scrollBarParentRectTransform.anchoredPosition.Lerp(new Vector2(right * scrollBarParentRectTransform.rect.size.x, 0), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                            viewPort.offsetMin = viewPort.offsetMin.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                            viewPort.offsetMax = viewPort.offsetMax.Lerp(Vector2.zero, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                        }
                     }
                 }
                 else
@@ -192,24 +200,27 @@ namespace SCKRM.UI.SideBar
 
 
 
-                    if (content.rect.size.y > rectTransform.rect.size.y)
+                    if (scrollBarParentRectTransform != null && scrollBar != null)
                     {
-                        scrollBar.interactable = true;
+                        if (content.rect.size.y > rectTransform.rect.size.y)
+                        {
+                            scrollBar.interactable = true;
 
-                        scrollBarParentRectTransform.anchoredPosition = Vector2.zero;
+                            scrollBarParentRectTransform.anchoredPosition = Vector2.zero;
 
-                        if (this.right)
-                            viewPort.offsetMax = new Vector2(-scrollBarParentRectTransform.rect.size.x, 0);
+                            if (this.right)
+                                viewPort.offsetMax = new Vector2(-scrollBarParentRectTransform.rect.size.x, 0);
+                            else
+                                viewPort.offsetMin = new Vector2(scrollBarParentRectTransform.rect.size.x, 1);
+                        }
                         else
-                            viewPort.offsetMin = new Vector2(scrollBarParentRectTransform.rect.size.x, 1);
-                    }
-                    else
-                    {
-                        scrollBar.interactable = false;
+                        {
+                            scrollBar.interactable = false;
 
-                        scrollBarParentRectTransform.anchoredPosition = new Vector2(right * scrollBarParentRectTransform.rect.size.x, 0);
-                        viewPort.offsetMin = Vector2.zero;
-                        viewPort.offsetMax = Vector2.zero;
+                            scrollBarParentRectTransform.anchoredPosition = new Vector2(right * scrollBarParentRectTransform.rect.size.x, 0);
+                            viewPort.offsetMin = Vector2.zero;
+                            viewPort.offsetMax = Vector2.zero;
+                        }
                     }
                 }
             }
