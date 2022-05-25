@@ -70,7 +70,7 @@ namespace SCKRM.UI
             }
         }
 
-        public static void Show(NameSpacePathPair label, NameSpacePathPair value, string[] hotkeys)
+        public static void Show(NameSpacePathPair label, NameSpacePathPair value, params string[] hotkeys)
         {
             int space = 0;
             SetText(ResourceManager.SearchLanguage(label.path, label.nameSpace), instance.labelText, label);
