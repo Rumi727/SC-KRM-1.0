@@ -31,7 +31,13 @@ namespace SCKRM.Editor
 
             UseProperty("_lerp", "애니메이션 사용");
             if (editor.lerp)
+            {
                 UseProperty("_lerpValue", "애니메이션 속도");
+
+                EditorGUILayout.Space();
+
+                UseProperty("_allLerp", "Y 좌표도 애니메이션 사용");
+            }
 
             EditorGUILayout.Space();
 

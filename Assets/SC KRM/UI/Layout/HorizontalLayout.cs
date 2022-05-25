@@ -9,6 +9,11 @@ namespace SCKRM.UI.Layout
     [AddComponentMenu("커널/UI/Layout/수평 레이아웃")]
     public sealed class HorizontalLayout : LayoutChildSetting<HorizontalLayoutSetting>
     {
+        [SerializeField] bool _allLerp = false;
+        public bool allLerp { get => _allLerp; set => _allLerp = value; }
+
+
+
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
 
@@ -118,8 +123,20 @@ namespace SCKRM.UI.Layout
                     x += childRectTransform.sizeDelta.x + spacing;
                 }
 
-                childRectTransform.offsetMin = new Vector2(childRectTransform.offsetMin.x, padding.bottom);
-                childRectTransform.offsetMax = new Vector2(childRectTransform.offsetMax.x, -padding.top);
+#if UNITY_EDITOR
+                if (!Application.isPlaying || !allLerp || !useAni)
+#else
+                if (!allLerp || !useAni)
+#endif
+                {
+                    childRectTransform.offsetMin = new Vector2(childRectTransform.offsetMin.x, padding.bottom);
+                    childRectTransform.offsetMax = new Vector2(childRectTransform.offsetMax.x, -padding.top);
+                }
+                else
+                {
+                    childRectTransform.offsetMin = childRectTransform.offsetMin.Lerp(new Vector2(childRectTransform.offsetMin.x, padding.bottom), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                    childRectTransform.offsetMax = childRectTransform.offsetMax.Lerp(new Vector2(childRectTransform.offsetMax.x, -padding.top), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                }
             }
         }
     }
