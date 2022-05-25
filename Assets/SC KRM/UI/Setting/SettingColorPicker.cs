@@ -41,9 +41,9 @@ namespace SCKRM.UI.Setting
             if (settingInfoInvoke)
             {
                 if (colorPicker.Setup.ShowAlpha)
-                    SettingInfoInvoke(ColorUtility.ToHtmlStringRGBA(colorPicker.CurrentColor));
+                    SettingInfoInvoke("#" + ColorUtility.ToHtmlStringRGBA(colorPicker.CurrentColor));
                 else
-                    SettingInfoInvoke(ColorUtility.ToHtmlStringRGB(colorPicker.CurrentColor));
+                    SettingInfoInvoke("#" + ColorUtility.ToHtmlStringRGB(colorPicker.CurrentColor));
             }
 
             onValueChanged.Invoke();
