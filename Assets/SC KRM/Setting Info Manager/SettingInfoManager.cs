@@ -88,27 +88,40 @@ namespace SCKRM.UI
 
             string KeyCodeToString()
             {
-                if (hotkeys == null || hotkeys.Length <= 0)
-                    return ResourceManager.SearchLanguage("setting_info.no_hotkey", "sc-krm");
-
-                string text = "";
-                for (int i = 0; i < hotkeys.Length; i++)
+                if (hotkeys != null)
                 {
-                    KeyCode[] keyCodes = InputManager.controlSettingList[hotkeys[i]].ToArray();
-                    for (int j = 0; j < keyCodes.Length; j++)
+                    string text = "";
+                    bool withHotKeys = false;
+                    for (int i = 0; i < hotkeys.Length; i++)
                     {
-                        string hotkey = keyCodes[j].KeyCodeToString();
-                        if (j < keyCodes.Length - 1)
-                            text += hotkey + " + ";
-                        else
-                            text += hotkey;
+                        KeyCode[] keyCodes = InputManager.controlSettingList[hotkeys[i]].ToArray();
+                        if (keyCodes.Length <= 0)
+                            continue;
+
+                        for (int j = 0; j < keyCodes.Length; j++)
+                        {
+                            KeyCode keyCode = keyCodes[j];
+                            if (keyCode != KeyCode.None)
+                                continue;
+
+                            string hotkey = keyCode.KeyCodeToString();
+                            if (j < keyCodes.Length - 1)
+                                text += hotkey + " + ";
+                            else
+                                text += hotkey;
+
+                            withHotKeys = true;
+                        }
+
+                        if (i < hotkeys.Length - 1)
+                            text += " | ";
                     }
 
-                    if (i < hotkeys.Length - 1)
-                        text += " | ";
+                    if (withHotKeys)
+                        return text;
                 }
 
-                return text;
+                return ResourceManager.SearchLanguage("setting_info.no_hotkey", "sc-krm");
             }
 
             if (space >= 3)
