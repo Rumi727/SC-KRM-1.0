@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 2263885527561385594}
   - component: {fileID: 4205948363159493598}
   - component: {fileID: 431614904625121892}
-  - component: {fileID: 430976309024170095}
   - component: {fileID: 2287362589840602773}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -236,20 +235,6 @@ MonoBehaviour:
   _nameSpace: sc-krm
   _path: 
   _textMeshPro: {fileID: 4205948363159493598}
---- !u!114 &430976309024170095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8505867542405620997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8527ec7ada8d9b479de63d11b184975, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _nameSpace: sc-krm
-  _text: 
 --- !u!114 &2287362589840602773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +265,7 @@ GameObject:
   - component: {fileID: 1143155284997355180}
   - component: {fileID: 8350708535258979915}
   - component: {fileID: 278079834122353308}
+  - component: {fileID: 4246405205496365249}
   - component: {fileID: 8504840758424710539}
   m_Layer: 5
   m_Name: Image
@@ -363,6 +349,20 @@ MonoBehaviour:
   _type: gui
   _index: 0
   _image: {fileID: 8350708535258979915}
+--- !u!114 &4246405205496365249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769101219243043486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8527ec7ada8d9b479de63d11b184975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameSpace: sc-krm
+  _text: 
 --- !u!114 &8504840758424710539
 MonoBehaviour:
   m_ObjectHideFlags: 0
