@@ -99,6 +99,21 @@ namespace SCKRM
             }
         }
 
+        static string _resourcePackPath = "";
+        /// <summary>
+        /// Kernel.persistentDataPath + "/Resource Pack"
+        /// </summary>
+        public static string resourcePackPath
+        {
+            get
+            {
+                if (_resourcePackPath != "")
+                    return _resourcePackPath;
+                else
+                    return _resourcePackPath = persistentDataPath + "/Resource Pack";
+            }
+        }
+
         /// <summary>
         /// Kernel.streamingAssetsPath + "/projectSettings"
         /// </summary>

@@ -95,6 +95,7 @@ namespace SCKRM
                     _ = Kernel.persistentDataPath;
                     _ = Kernel.temporaryCachePath;
                     _ = Kernel.saveDataPath;
+                    _ = Kernel.resourcePackPath;
 
                     _ = Kernel.companyName;
                     _ = Kernel.productName;
