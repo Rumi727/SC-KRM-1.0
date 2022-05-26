@@ -6,6 +6,7 @@ using SCKRM.UI;
 using SCKRM.UI.MessageBox;
 using SCKRM.UI.Setting;
 using SCKRM.Window;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -159,6 +160,11 @@ namespace SCKRM
 
         [DllImport("user32.dll")]
         static extern bool SetCursorPos(int x, int y);
+
+
+
+        [DllImport("user32.dll")]
+        static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
 #endif
 
 
@@ -238,5 +244,17 @@ namespace SCKRM
 #endif
         }
         #endregion
+
+
+
+        public Vector2Int ClientPosToScreenPos(Vector2Int pos) => ClientPosToScreenPos(pos.x, pos.y);
+
+        public Vector2Int ClientPosToScreenPos(int x, int y)
+        {
+            POINT point = new POINT() { X = x, Y = y };
+            ClientToScreen(WindowManager.currentHandle, ref point);
+
+            return new Vector2Int(point.X, point.Y);
+        }
     }
 }
