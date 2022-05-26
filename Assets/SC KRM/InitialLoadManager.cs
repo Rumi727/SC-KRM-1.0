@@ -60,6 +60,7 @@ namespace SCKRM
                 isInitialLoadStart = true;
                 initialLoadStart?.Invoke();
 
+                //UniTask를 초기화 합니다
                 PlayerLoopSystem loop = PlayerLoop.GetCurrentPlayerLoop();
                 PlayerLoopHelper.Initialize(ref loop);
 
