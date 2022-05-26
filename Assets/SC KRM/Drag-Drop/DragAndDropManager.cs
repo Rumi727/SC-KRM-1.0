@@ -1,20 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using B83.Win32;
-using SCKRM.Input;
-#if UNITY_EDITOR
+using System.Collections.Generic;
+#else
+using System;
+using System.Reflection;
 using UnityEditor;
 #endif
 
 namespace SCKRM
 {
-    public class DragAndDropManager : MonoBehaviour
+    public class DragAndDropManager : Manager<DragAndDropManager>
     {
         public event DragAndDropAction dragAndDropEvent;
-
         public delegate void DragAndDropAction(string[] paths, Vector2 mousePos);
 
+        void Awake()
+        {
+            if (SingletonCheck(this))
+                dragAndDropEvent += (string[] paths, Vector2 mousePos) =>
+                {
+                    Debug.LogWarning(paths[0]);
+                    Debug.LogWarning(mousePos);
+                };
+        }
+
+#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         void OnEnable()
         {
             UnityDragAndDropHook.InstallHook();
@@ -23,28 +34,40 @@ namespace SCKRM
             void OnFiles(List<string> aFiles, POINT aPos) => dragAndDropEvent?.Invoke(aFiles.ToArray(), new Vector2(aPos.x, Screen.height - aPos.y));
         }
 
+        void OnDisable() => UnityDragAndDropHook.UninstallHook();
+#endif
+
 
 
 #if UNITY_EDITOR
-        bool dragAndDropLock = false;
+        string[] tempDragAndDropPath = null;
+        bool drag = false;
+        Assembly assembly = typeof(EditorWindow).Assembly;
         void Update()
         {
-            string[] paths = DragAndDrop.paths;
-            if (paths != null && paths.Length > 0 && CursorManager.isFocused)
-            {
-                if (!dragAndDropLock)
-                {
-                    Debug.Log("asdf");
-                    dragAndDropEvent?.Invoke(paths, InputManager.mousePosition);
-                }
+            Type type = assembly.GetType("UnityEditor.GameView");
+            if (type == null)
+                return;
 
-                dragAndDropLock = true;
+            string[] paths = DragAndDrop.paths;
+            if (EditorWindow.mouseOverWindow != null && EditorWindow.mouseOverWindow.GetType() == type)
+            {
+                if ((paths == null || paths.Length <= 0) && tempDragAndDropPath != null && tempDragAndDropPath.Length > 0)
+                {
+                    if (drag)
+                    {
+                        drag = false;
+                        dragAndDropEvent?.Invoke(tempDragAndDropPath, UnityEngine.Input.mousePosition);
+                    }
+                    else
+                        drag = true;
+                }
             }
             else
-                dragAndDropLock = false;
+                drag = false;
+
+            tempDragAndDropPath = paths;
         }
 #endif
-
-        void OnDisable() => UnityDragAndDropHook.UninstallHook();
     }
 }
