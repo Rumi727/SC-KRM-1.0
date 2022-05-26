@@ -3,7 +3,7 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace SCKRM.Compress
 {
-    public class CompressFileManager
+    public static class CompressFileManager
     {
         public static void CompressFile(string sourceDirectoryPath, string targetFilePath)
         {
