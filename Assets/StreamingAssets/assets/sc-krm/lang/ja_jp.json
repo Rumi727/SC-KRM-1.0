@@ -73,7 +73,7 @@
 	"options.input.title": "入力",
 	"options.input.highPrecisionMouse": "システムマウスの加速を無視",
 	"options.input.highPrecisionMouse.info": "システムマウスのアクセラレーションを無視します\nWindowsでは、一般的にRaw Inputと呼ばれます",
-	"options.input.highPrecisionMouse.warning": "システムマウスのアクセラレーションを無視することは非常に不安定な設定です\nそれでもオンにしますか？<size=10>\n\n</size><size=15>(Windowsのマウス感度またはハードウェアのマウス感度をゲームの設定と同様に設定することをお勧めします。)</size>",
+	"options.input.highPrecisionMouse.warning": "システムマウスのアクセラレーションを無視することは非常に不安定な設定です\nそれでもオンにしますか？<size=10>\n\n</size><size=15>(Windowsのマウス感度またはハードウェアのマウス感度をゲームの設定と同様に設定することをお勧めします)</size>",
 	"options.input.mouseSensitivity": "マウス感度",
 	"options.input.mouseSensitivity.info": "マウスの感度を変更します（システムのマウスアクセラレータを無視する設定がオンの場合は、マウスポインタの感度も同様に変わります）",
 	"options.input.controls": "操作設定",
@@ -152,8 +152,8 @@
 	"notice.sakura_megumi.birthday.title": "めぐみお誕生日おめでとう",
 	"notice.sakura_megumi.birthday.description": "今日は「さくら めぐみ」の誕生日です'",
 	
-	"notice.marple.birthday.title": "Mined Apple (마인애플)さんお誕生日おめでとうございます",
-	"notice.marple.birthday.description": "今日はYouTubeのMinedApple (마인애플)の誕生日です",
+	"notice.marple.birthday.title": "Mined Apple （마인애플）さんお誕生日おめでとうございます",
+	"notice.marple.birthday.description": "今日はYouTubeのMinedApple （마인애플）の誕生日です",
 	
 	"notice.onell0.birthday.title": "SMP%value%周年",
 	"notice.onell0.birthday.description": "SMP%value%周年おめでとうございます！",

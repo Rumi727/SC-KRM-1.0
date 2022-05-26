@@ -73,7 +73,7 @@
 	"options.input.title": "Input",
 	"options.input.highPrecisionMouse": "Ignore system mouse acceleration",
 	"options.input.highPrecisionMouse.info": "Ignore system mouse acceleration\nCommonly called Raw Input on Windows",
-	"options.input.highPrecisionMouse.warning": "Ignoring system mouse acceleration is a very unstable setting\nWould you still like to turn it on?<size=10>\n\n</size><size=15>(It is recommended to set the Windows mouse sensitivity or hardware mouse sensitivity similar to the game settings.)</size>",
+	"options.input.highPrecisionMouse.warning": "Ignoring system mouse acceleration is a very unstable setting\nWould you still like to turn it on?<size=10>\n\n</size><size=15>(It is recommended to set the Windows mouse sensitivity or hardware mouse sensitivity similar to the game settings)</size>",
 	"options.input.mouseSensitivity": "Mouse Sensitivity",
 	"options.input.mouseSensitivity.info": "Change the sensitivity of the mouse (if the Ignore system mouse acceleration setting is turned on, the sensitivity of the mouse pointer is also changed)",
 	"options.input.controls": "Control Settings",
