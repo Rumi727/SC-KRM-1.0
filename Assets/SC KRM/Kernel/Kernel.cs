@@ -295,10 +295,13 @@ namespace SCKRM
 
             if (!ResourceManager.isResourceRefesh)
             {
-                await ResourceManager.ResourceRefresh();
+                await ResourceManager.ResourceRefresh(false);
                 RendererManager.AllRerender();
 
                 SoundManager.SoundRefresh();
+
+                ResourceManager.GarbageRemoval();
+                GC.Collect();
             }
 
             allRefreshEnd?.Invoke();

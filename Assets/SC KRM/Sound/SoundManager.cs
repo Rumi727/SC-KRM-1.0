@@ -94,7 +94,7 @@ namespace SCKRM.Sound
         /// This method calls the ResourceManager.AudioReset method and exists for Unity events. Please don't use it in scripts
         /// </summary>
         [Obsolete("This method calls the ResourceManager.AudioReset method and exists for Unity events. Please don't use it in scripts", true)]
-        public static void AudioReset() => ResourceManager.AudioReset();
+        public static void AudioReset() => ResourceManager.AudioReset().Forget();
 
         /// <summary>
         /// 소리를 재생합니다

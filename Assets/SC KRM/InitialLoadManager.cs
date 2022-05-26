@@ -137,7 +137,7 @@ namespace SCKRM
                 {
                     //리소스를 로딩합니다
                     Debug.Log("Kernel: Waiting for resource to load...");
-                    await ResourceManager.ResourceRefresh();
+                    await ResourceManager.ResourceRefresh(true);
 
 #if UNITY_EDITOR
                     if (!Application.isPlaying)

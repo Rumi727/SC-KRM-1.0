@@ -159,7 +159,7 @@ namespace SCKRM.Resource
         /// <returns></returns>
         /// <exception cref="NotMainThreadMethodException"></exception>
         /// <exception cref="NotPlayModeMethodException"></exception>
-        public static async UniTask ResourceRefresh()
+        public static async UniTask ResourceRefresh(bool garbageRemoval)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ResourceRefresh));
@@ -272,8 +272,11 @@ namespace SCKRM.Resource
             resourceRefreshAsyncTask.Remove(true);
             resourceRefreshAsyncTask = null;
 
-            GarbageRemoval();
-            GC.Collect();
+            if (garbageRemoval)
+            {
+                GarbageRemoval();
+                GC.Collect();
+            }
 
             isResourceRefesh = false;
         }
@@ -812,7 +815,7 @@ namespace SCKRM.Resource
             garbages.Clear();
         }
 
-        public static async void AudioReset()
+        public static async UniTaskVoid AudioReset()
         {
             if (isAudioReset)
                 return;
