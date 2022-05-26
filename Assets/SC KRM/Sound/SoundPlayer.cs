@@ -149,6 +149,7 @@ namespace SCKRM.Sound
                 }
             }
 
+            float backTime = time;
             {
                 metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
                 audioSource.clip = metaData.audioClip;
@@ -171,7 +172,7 @@ namespace SCKRM.Sound
                 if (audioSource.pitch < 0 && !metaData.stream && tempTime == 0)
                     audioSource.time = length - 0.001f;
                 else
-                    audioSource.time = Mathf.Min(time, length - 0.001f);
+                    audioSource.time = Mathf.Min(backTime, length - 0.001f);
 
                 tempTime = audioSource.time;
                 audioSource.Play();
