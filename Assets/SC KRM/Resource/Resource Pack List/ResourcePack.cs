@@ -14,7 +14,6 @@ namespace SCKRM.Resource.UI
     {
         public ResourcePackList resourcePackList { get; [Obsolete("It is managed by the ResourcePackList class. Please do not touch it.")] internal set; }
 
-        public int resourcePackIndex { get; set; } = 0;
         public string resourcePackPath { get; set; } = "";
         public bool selected = false;
 
@@ -50,12 +49,9 @@ namespace SCKRM.Resource.UI
         List<float> selectedChildYPosList = new List<float>();
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
-            //기본 리소스팩이거나 리소스팩이 새로고침 중이면 무시합니다
-            if ((selected && resourcePackIndex == ResourceManager.SaveData.resourcePacks.Count - 1) || ResourceManager.isResourceRefesh)
-            {
-                resourcePackList.Refresh();
+            //기본 리소스 팩 일 경우 무시
+            if (Kernel.streamingAssetsPath == resourcePackPath)
                 return;
-            }
 
             posOffset = eventData.position - rectTransform.anchoredPosition;
 
@@ -64,32 +60,34 @@ namespace SCKRM.Resource.UI
             selectedChildRectTransforms = new RectTransform[resourcePackList.selectedResourcePacksContent.childCount];
             for (int i = 0; i < selectedChildRectTransforms.Length; i++)
                 selectedChildRectTransforms[i] = (RectTransform)resourcePackList.selectedResourcePacksContent.GetChild(i);
+
+            if (selected)
+                resourcePackList.selectedResourcePacks.SetAsLastSibling();
+            else
+                resourcePackList.availableResourcePacks.SetAsLastSibling();
         }
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
-            //기본 리소스팩이거나 리소스팩이 새로고침 중이면 무시합니다
-            if ((selected && resourcePackIndex == ResourceManager.SaveData.resourcePacks.Count - 1) || ResourceManager.isResourceRefesh)
-            {
-                resourcePackList.Refresh();
+            //기본 리소스 팩 일 경우 무시
+            if (Kernel.streamingAssetsPath == resourcePackPath)
                 return;
-            }
 
             rectTransform.anchoredPosition = eventData.position - posOffset;
 
             selectedChildYPosList.Clear();
-
             for (int i = 0; i < selectedChildRectTransforms.Length; i++)
                 selectedChildYPosList.Add(selectedChildRectTransforms[i].anchoredPosition.y);
         }
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
-            //기본 리소스팩이거나 리소스팩이 새로고침 중이면 무시합니다
-            if ((selected && resourcePackIndex == ResourceManager.SaveData.resourcePacks.Count - 1) || ResourceManager.isResourceRefesh)
-            {
-                resourcePackList.Refresh();
+            //기본 리소스 팩 일 경우 무시
+            if (Kernel.streamingAssetsPath == resourcePackPath)
                 return;
-            }
+
+            int index = 0;
+            if (selected)
+                index = ResourceManager.SaveData.resourcePacks.IndexOf(resourcePackPath);
 
             //드래그 하는 오브젝트가 선택 할 수 있는 오브젝트일 경우
             if (!selected)
@@ -97,14 +95,13 @@ namespace SCKRM.Resource.UI
                 //오브젝트를 왼쪽으로 끌었을때
                 if (rectTransform.anchoredPosition.x <= -115)
                 {
+                    transform.SetParent(resourcePackList.selectedResourcePacksContent);
                     selected = true;
 
-                    resourcePackIndex = selectedChildYPosList.CloseValueIndex(rectTransform.anchoredPosition.y);
-                    ResourceManager.SaveData.resourcePacks.Insert(resourcePackIndex, resourcePackPath);
+                    index = selectedChildYPosList.CloseValueIndex(rectTransform.anchoredPosition.y);
+                    ResourceManager.SaveData.resourcePacks.Insert(index, resourcePackPath);
 
-                    Kernel.AllRefresh().Forget();
-
-                    transform.SetParent(resourcePackList.selectedResourcePacksContent);
+                    ResourcePackList.isResourcePackListChanged = true;
                 }
                 else
                     transform.SetParent(resourcePackList.availableResourcePacksContent);
@@ -116,27 +113,26 @@ namespace SCKRM.Resource.UI
                 //오브젝트를 오른쪽으로 끌었을때
                 if (rectTransform.anchoredPosition.x >= 110)
                 {
+                    transform.SetParent(resourcePackList.availableResourcePacksContent);
                     selected = false;
 
-                    ResourceManager.SaveData.resourcePacks.RemoveAt(resourcePackIndex);
-                    Kernel.AllRefresh().Forget();
-
-                    transform.SetParent(resourcePackList.availableResourcePacksContent);
+                    ResourceManager.SaveData.resourcePacks.Remove(resourcePackPath);
+                    ResourcePackList.isResourcePackListChanged = true;
                 }
                 else
                 {
-                    int oldIndex = resourcePackIndex;
-                    resourcePackIndex = selectedChildYPosList.CloseValueIndex(rectTransform.anchoredPosition.y);
-                    ResourceManager.SaveData.resourcePacks.Move(oldIndex, resourcePackIndex);
-
-                    if (oldIndex != resourcePackIndex)
-                        Kernel.AllRefresh().Forget();
-
                     transform.SetParent(resourcePackList.selectedResourcePacksContent);
+
+                    int oldIndex = index;
+                    index = selectedChildYPosList.CloseValueIndex(rectTransform.anchoredPosition.y);
+                    ResourceManager.SaveData.resourcePacks.Move(oldIndex, index);
+
+                    if (oldIndex != index)
+                        ResourcePackList.isResourcePackListChanged = true;
                 }
             }
 
-            transform.SetSiblingIndex(resourcePackIndex);
+            transform.SetSiblingIndex(index);
         }
     }
 }

@@ -13,8 +13,15 @@ namespace SCKRM.Resource.UI
 {
     public class ResourcePackList : MonoBehaviour
     {
+        public static bool isResourcePackListChanged = false;
+
+
         [SerializeField] VerticalLayout _selectedResourcePacksContentLayout; public VerticalLayout selectedResourcePacksContentLayout => _selectedResourcePacksContentLayout;
         [SerializeField] VerticalLayout _availableResourcePacksContentLayout; public VerticalLayout availableResourcePacksContentLayout => _availableResourcePacksContentLayout;
+
+        [SerializeField] RectTransform _selectedResourcePacks; public RectTransform selectedResourcePacks => _selectedResourcePacks;
+        [SerializeField] RectTransform _availableResourcePacks; public RectTransform availableResourcePacks => _availableResourcePacks;
+
         [SerializeField] RectTransform _selectedResourcePacksContent; public RectTransform selectedResourcePacksContent => _selectedResourcePacksContent;
         [SerializeField] RectTransform _availableResourcePacksContent; public RectTransform availableResourcePacksContent => _availableResourcePacksContent;
 
@@ -42,6 +49,11 @@ namespace SCKRM.Resource.UI
 
             ResourcePackLoad(ResourceManager.SaveData.resourcePacks.ToArray(), _selectedResourcePacksContent, false).Forget();
             ResourcePackLoad(Directory.GetDirectories(Kernel.resourcePackPath), _availableResourcePacksContent, true).Forget();
+
+            selectedResourcePacksContentLayout.LayoutRefresh();
+            availableResourcePacksContentLayout.LayoutRefresh();
+            selectedResourcePacksContentLayout.SizeUpdate(false);
+            availableResourcePacksContentLayout.SizeUpdate(false);
 
             async UniTaskVoid ResourcePackLoad(string[] resourcePackPaths, Transform transform, bool available)
             {
@@ -72,7 +84,6 @@ namespace SCKRM.Resource.UI
                                 resourcePack.descriptionText.text = resourcePackJson.description.ConstEnvironmentVariable();
 
                                 resourcePack.resourcePackPath = resourcePackPath;
-                                resourcePack.resourcePackIndex = i;
 
                                 resourcePack.selected = !available;
 
@@ -98,11 +109,15 @@ namespace SCKRM.Resource.UI
                     }
                 }
             }
+        }
 
-            _selectedResourcePacksContentLayout.LayoutRefresh();
-            _availableResourcePacksContentLayout.LayoutRefresh();
-            _selectedResourcePacksContentLayout.SizeUpdate(false);
-            _availableResourcePacksContentLayout.SizeUpdate(false);
+        public static void HideEvent()
+        {
+            if (isResourcePackListChanged)
+            {
+                Kernel.AllRefresh().Forget();
+                isResourcePackListChanged = false;
+            }
         }
 
         class ResourcePackJson
