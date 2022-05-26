@@ -18,46 +18,25 @@ namespace SCKRM.UI.Layout
 
         public List<RectTransform> childRectTransforms { get; } = new List<RectTransform>();
 
-        protected override void Update()
+        /// <summary>
+        /// Please put base.LayoutRefresh() when overriding
+        /// </summary>
+        public override void LayoutRefresh()
         {
-            base.Update();
+#if UNITY_EDITOR
+            if ((transform.childCount - ignore.Length) != childRectTransforms.Count || !Application.isPlaying)
+                SetChild();
+#else
+            if ((transform.childCount - ignore.Length) != childRectTransforms.Count)
+                SetChild();
+#endif
+            int childCount = transform.childCount;
+            for (int i = 0; i < (childCount - ignore.Length); i++)
             {
+                if (transform.GetChild(i) != childRectTransforms[i])
                 {
-                    bool update = true;
-#if UNITY_EDITOR
-                    if ((transform.childCount - ignore.Length) != childRectTransforms.Count || !Application.isPlaying)
-                        SetChild();
-                    else
-                        update = false;
-#else
-                    if (transform.childCount != childRectTransforms.Count)
-                        SetChild();
-                    else
-                        update = false;
-#endif
-                    bool update2 = false;
-                    int childCount = transform.childCount;
-                    for (int i = 0; i < (childCount - ignore.Length); i++)
-                    {
-                        if (transform.GetChild(i) != childRectTransforms[i])
-                        {
-                            SetChild();
-                            update = true;
-                            update2 = true;
-
-                            break;
-                        }
-                    }
-
-                    if (!update2)
-                        update = false;
-
-#if UNITY_EDITOR
-                    if (!update && !lerp && Application.isPlaying)
-#else
-                    if (!update && !lerp)
-#endif
-                        return;
+                    SetChild();
+                    break;
                 }
             }
         }

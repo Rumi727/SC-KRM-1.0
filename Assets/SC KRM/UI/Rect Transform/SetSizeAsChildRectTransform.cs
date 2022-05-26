@@ -34,6 +34,8 @@ namespace SCKRM.UI.Layout
 
         public override void LayoutRefresh()
         {
+            base.LayoutRefresh();
+
             if (childRectTransforms == null)
                 return;
 

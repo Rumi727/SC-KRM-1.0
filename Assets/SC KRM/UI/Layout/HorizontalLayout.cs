@@ -124,9 +124,9 @@ namespace SCKRM.UI.Layout
                 }
 
 #if UNITY_EDITOR
-                if (!Application.isPlaying || !allLerp || !useAni)
+                if (!Application.isPlaying || !lerp || !allLerp || !useAni)
 #else
-                if (!allLerp || !useAni)
+                if (!lerp || !allLerp || !useAni)
 #endif
                 {
                     childRectTransform.offsetMin = new Vector2(childRectTransform.offsetMin.x, padding.bottom);
