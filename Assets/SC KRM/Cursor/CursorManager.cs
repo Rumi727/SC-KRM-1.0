@@ -180,8 +180,7 @@ namespace SCKRM
         public static Vector2Int GetCursorPosition(float xDatumPoint, float yDatumPoint)
         {
 #if UNITY_STANDALONE_WIN
-            POINT lpPoint;
-            bool success = GetCursorPos(out lpPoint);
+            bool success = GetCursorPos(out POINT lpPoint);
             if (!success)
                 return Vector2Int.zero;
 
@@ -197,8 +196,7 @@ namespace SCKRM
         public static Vector2Int GetClientCursorPosition(float xDatumPoint, float yDatumPoint)
         {
 #if UNITY_STANDALONE_WIN
-            POINT lpPoint;
-            bool success = GetCursorPos(out lpPoint);
+            bool success = GetCursorPos(out POINT lpPoint);
             if (!success)
                 return Vector2Int.zero;
 
