@@ -46,7 +46,7 @@ namespace SCKRM
 
         protected override void OnEnable() => SingletonCheck(this);
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
         static Vector2 IgnoreMouseAccelerationPos = Vector2.zero;
         protected override void Awake() => IgnoreMouseAccelerationPos = GetCursorPosition(0, 0);
 #endif
@@ -60,7 +60,7 @@ namespace SCKRM
 
             if (InitialLoadManager.isInitialLoadEnd)
             {
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
                 if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
                 {
                     setCursorPosition((IgnoreMouseAccelerationPos.x).RoundToInt(), (IgnoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
@@ -151,7 +151,7 @@ namespace SCKRM
 
 
         #region Cursor Pos
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
         [StructLayout(LayoutKind.Sequential)]
         struct POINT
         {
@@ -179,7 +179,7 @@ namespace SCKRM
         public static Vector2Int GetCursorPosition(Vector2 datumPoint) => GetCursorPosition(datumPoint.x, datumPoint.y);
         public static Vector2Int GetCursorPosition(float xDatumPoint, float yDatumPoint)
         {
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             bool success = GetCursorPos(out POINT lpPoint);
             if (!success)
                 return Vector2Int.zero;
@@ -195,7 +195,7 @@ namespace SCKRM
         public static Vector2Int GetClientCursorPosition(Vector2 datumPoint) => GetClientCursorPosition(datumPoint.x, datumPoint.y);
         public static Vector2Int GetClientCursorPosition(float xDatumPoint, float yDatumPoint)
         {
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             bool success = GetCursorPos(out POINT lpPoint);
             if (!success)
                 return Vector2Int.zero;
@@ -217,7 +217,7 @@ namespace SCKRM
 
         static void setCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             if (!SaveData.IgnoreMouseAcceleration || force)
                 SetCursorPos((x + ((Screen.currentResolution.width - 1) * xDatumPoint)).RoundToInt(), (y + ((Screen.currentResolution.height - 1) * yDatumPoint)).RoundToInt());
             else
@@ -232,7 +232,7 @@ namespace SCKRM
         public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setClientCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
         public static void setClientCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             Vector2Int clientSize = WindowManager.GetClientSize();
             Vector2 border = (Vector2)(WindowManager.GetWindowSize() - clientSize) * 0.5f;
             Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int((border.x).RoundToInt(), (border.y).RoundToInt());
@@ -255,7 +255,7 @@ namespace SCKRM
 
         public Vector2Int ClientPosToScreenPos(int x, int y)
         {
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             POINT point = new POINT() { X = x, Y = y };
             ClientToScreen(WindowManager.currentHandle, ref point);
 
