@@ -24,7 +24,7 @@ namespace SCKRM.Log
         {
             if (InitialLoadManager.isInitialLoadEnd)
             {
-                if (logs.TryDequeue(out Log log))
+                while (logs.TryDequeue(out Log log))
                 {
                     if (log.stackTrace != "")
                         NoticeManager.Notice(log.name, log.info + "\n\n" + log.stackTrace, log.type);
