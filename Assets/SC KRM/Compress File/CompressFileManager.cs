@@ -1,95 +1,221 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using SCKRM.Threads;
+using UnityEngine;
 
 namespace SCKRM.Compress
 {
     public static class CompressFileManager
     {
-        public static void CompressZipFile(string sourceDirectoryPath, string targetFilePath)
+        public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null)
         {
-            DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(sourceDirectoryPath);
+            bool retVal = false;
 
-            FileStream targetFileStream = new FileStream(targetFilePath, FileMode.Create);
-
-            ZipOutputStream zipOutputStream = new ZipOutputStream(targetFileStream);
-
-            zipOutputStream.SetComment(sourceDirectoryPath);
-
-            zipOutputStream.SetLevel(9);
-
-            byte[] bufferByteArray = new byte[2048];
-
-            foreach (FileInfo sourceFileInfo in sourceDirectoryInfo.GetFiles("*.*", SearchOption.AllDirectories))
+            //폴더가 존재하는 경우에만 수행
+            if (Directory.Exists(sourceDirectory))
             {
-                string sourceFileName = sourceFileInfo.FullName.Substring(sourceDirectoryInfo.FullName.Length + 1);
+                //압축 대상 폴더의 파일 목록
+                List<string> fileList = GenerateFileList(sourceDirectory);
 
-                zipOutputStream.PutNextEntry(new ZipEntry(sourceFileName));
+                //압축 대상 폴더 경로의 길이 + 1
+                int TrimLength = (Directory.GetParent(sourceDirectory)).ToString().Length + 1;
 
-                using (FileStream sourceFileStream = sourceFileInfo.OpenRead())
+                //find number of chars to remove. from orginal file path. remove '\'
+                FileStream ostream;
+                byte[] obuffer;
+                string outPath = zipFilePath;
+
+                //ZIP 스트림 생성
+                using ZipOutputStream oZipStream = new ZipOutputStream(File.Create(outPath));
+
+                try
                 {
-                    while (true)
+                    //패스워드가 있는 경우 패스워드 지정
+                    if (password != null && password != string.Empty)
+                        oZipStream.Password = password;
+
+                    oZipStream.SetLevel(9); //암호화 레벨 (최대 압축)
+
+                    if (threadMetaData != null)
                     {
-                        int readCount = sourceFileStream.Read(bufferByteArray, 0, bufferByteArray.Length);
+                        threadMetaData.name = "compress_file_manager.compress";
+                        threadMetaData.info = "";
 
-                        if (readCount == 0)
-                            break;
-
-                        zipOutputStream.Write(bufferByteArray, 0, readCount);
+                        threadMetaData.progress = 0;
+                        threadMetaData.maxProgress = fileList.Count;
                     }
+
+                    ZipEntry oZipEntry;
+                    for (int i = 0; i < fileList.Count; i++)
+                    {
+                        string Fil = fileList[i];
+                        oZipEntry = new ZipEntry(Fil.Remove(0, TrimLength));
+                        oZipEntry.IsUnicodeText = true;
+
+                        oZipStream.PutNextEntry(oZipEntry);
+
+                        //파일인 경우
+                        if (!Fil.EndsWith(@"/"))
+                        {
+                            ostream = File.OpenRead(Fil);
+                            obuffer = new byte[ostream.Length];
+                            ostream.Read(obuffer, 0, obuffer.Length);
+                            oZipStream.Write(obuffer, 0, obuffer.Length);
+                        }
+
+                        if (threadMetaData != null)
+                        {
+                            threadMetaData.info = fileList[i];
+                            threadMetaData.progress = i + 1;
+                        }
+                    }
+
+                    retVal = true;
                 }
-                zipOutputStream.CloseEntry();
+                catch (Exception e)
+                {
+                    retVal = false;
+
+                    //오류가 난 경우 생성 했던 파일을 삭제
+                    if (File.Exists(outPath))
+                        File.Delete(outPath);
+
+                    Debug.LogException(e);
+                }
+                finally
+                {
+                    threadMetaData.info = "";
+
+                    //압축 종료
+                    oZipStream.Finish();
+                    oZipStream.Close();
+                }
             }
-
-            zipOutputStream.Finish();
-
-            zipOutputStream.Close();
+            return retVal;
         }
 
-        public static void DecompressZipFile(string sourceFilePath, string targetDirectoryPath)
+        private static List<string> GenerateFileList(string Dir)
         {
-            DirectoryInfo targetDirectoryInfo = new DirectoryInfo(targetDirectoryPath);
+            List<string> fils = new List<string>();
+            bool Empty = true;
 
-            if (!targetDirectoryInfo.Exists)
-                targetDirectoryInfo.Create();
-
-            FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open);
-
-            ZipInputStream zipInputStream = new ZipInputStream(sourceFileStream);
-
-            byte[] bufferByteArray = new byte[2048];
-
-            while (true)
+            //폴더 내의 파일 추가
+            string[] filePaths = Directory.GetFiles(Dir);
+            for (int i = 0; i < filePaths.Length; i++)
             {
-                ZipEntry zipEntry = zipInputStream.GetNextEntry();
+                string file = filePaths[i];
+                fils.Add(file);
+                Empty = false;
+            }
 
-                if (zipEntry == null)
-                    break;
+            //파일이 없고, 폴더도 없는 경우 자신의 폴더 추가
+            if (Empty && Directory.GetDirectories(Dir).Length == 0)
+                fils.Add(Dir + @"/");
 
-                if (zipEntry.Name.LastIndexOf('\\') > 0)
+            //폴더 내 폴더 목록.
+            string[] paths = Directory.GetDirectories(Dir);
+            for (int i = 0; i < paths.Length; i++)
+            {
+                string dirs = paths[i];
+                //해당 폴더로 다시 GenerateFileList 재귀 호출
+                List<string> generateFileList = GenerateFileList(dirs);
+                for (int i1 = 0; i1 < generateFileList.Count; i1++)
+                    //해당 폴더 내의 파일, 폴더 추가.
+                    fils.Add(generateFileList[i1]);
+            }
+
+            return fils;
+        }
+
+        public static bool DecompressZipFile(string zipFilePath, string targetDirectory, string password = "", ThreadMetaData threadMetaData = null)
+        {
+            bool retVal = false;
+
+            //ZIP 파일이 있는 경우만 수행
+            if (File.Exists(zipFilePath))
+            {
+                using (ZipFile zipFile = new ZipFile(File.OpenRead(zipFilePath)))
                 {
-                    string subdirectory = zipEntry.Name.Substring(0, zipEntry.Name.LastIndexOf('\\'));
+                    if (threadMetaData != null)
+                    {
+                        threadMetaData.name = "compress_file_manager.decompress";
+                        threadMetaData.info = "";
 
-                    if (!Directory.Exists(Path.Combine(targetDirectoryInfo.FullName, subdirectory)))
-                        targetDirectoryInfo.CreateSubdirectory(subdirectory);
+                        threadMetaData.progress = 0;
+                        threadMetaData.maxProgress = zipFile.Count;
+                    }
                 }
 
-                FileInfo targetFileInfo = new FileInfo(Path.Combine(targetDirectoryInfo.FullName, zipEntry.Name));
+                //ZIP 스트림 생성.
+                using ZipInputStream zipInputStream = new ZipInputStream(File.OpenRead(zipFilePath));
 
-                using (FileStream targetFileStream = targetFileInfo.Create())
+                //패스워드가 있는 경우 패스워드 지정
+                if (password != null && password != string.Empty)
+                    zipInputStream.Password = password;
+
+                try
                 {
-                    while (true)
+                    ZipEntry theEntry;
+                    //반복하며 파일을 가져옴.
+                    while ((theEntry = zipInputStream.GetNextEntry()) != null)
                     {
-                        int readCount = zipInputStream.Read(bufferByteArray, 0, bufferByteArray.Length);
+                        //폴더
+                        string directoryName = Path.GetDirectoryName(theEntry.Name);
+                        string fileName = Path.GetFileName(theEntry.Name); // 파일
 
-                        if (readCount == 0)
-                            break;
+                        //폴더 생성
+                        Directory.CreateDirectory(PathTool.Combine(targetDirectory, directoryName));
 
-                        targetFileStream.Write(bufferByteArray, 0, readCount);
+                        //파일 이름이 있는 경우
+                        if (fileName != string.Empty)
+                        {
+                            //파일 스트림 생성 (파일생성)
+                            using FileStream streamWriter = File.Create(PathTool.Combine(targetDirectory, theEntry.Name));
+
+                            int size = 2048;
+                            byte[] data = new byte[2048];
+
+                            //파일 복사
+                            while (true)
+                            {
+                                size = zipInputStream.Read(data, 0, data.Length);
+
+                                if (size > 0)
+                                    streamWriter.Write(data, 0, size);
+                                else
+                                    break;
+                            }
+
+                            //파일스트림 종료
+                            streamWriter.Close();
+
+                            if (threadMetaData != null)
+                            {
+                                threadMetaData.info = theEntry.Name;
+                                threadMetaData.progress++;
+                            }
+                        }
                     }
+
+                    retVal = true;
+                }
+                catch (Exception e)
+                {
+                    retVal = false;
+                    Debug.LogException(e);
+                }
+                finally
+                {
+                    threadMetaData.info = "";
+
+                    //ZIP 파일 스트림 종료
+                    zipInputStream.Close();
                 }
             }
 
-            zipInputStream.Close();
+            return retVal;
         }
     }
 }

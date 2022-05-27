@@ -49,17 +49,33 @@ namespace SCKRM.UI.SideBar
             {
                 nameText.text = ResourceManager.SearchLanguage(asyncTask.name);
                 infoText.text = ResourceManager.SearchLanguage(asyncTask.info);
+
+                if (string.IsNullOrEmpty(nameText.text))
+                    nameText.text = asyncTask.name;
+                if (string.IsNullOrEmpty(infoText.text))
+                    infoText.text = asyncTask.info;
             }
         }
 
+        [System.NonSerialized] string tempName = "";
+        [System.NonSerialized] string tempInfo = "";
         [System.NonSerialized] bool pointer = false;
         void Update()
         {
             if (asyncTask == null || asyncTaskIndex >= AsyncTaskManager.asyncTasks.Count)
             {
-                Remove();
+                progressBar.allowNoResponse = false;
+                progressBar.progress = 1;
+                progressBar.maxProgress = 1;
+
+                if (progressBar.fillShow.anchorMax.x >= 0.99f)
+                    Remove();
+
                 return;
             }
+
+            if (tempName != asyncTask.name || tempInfo != asyncTask.info)
+                InfoLoad();
 
             if (!asyncTask.cantCancel)
             {
@@ -80,9 +96,10 @@ namespace SCKRM.UI.SideBar
                     progressBar.gameObject.SetActive(true);
 
                 progressBar.progress = asyncTask.progress;
+                progressBar.maxProgress = asyncTask.maxProgress;
             }
             else if (progressBar.gameObject.activeSelf)
-                    progressBar.gameObject.SetActive(false);
+                progressBar.gameObject.SetActive(false);
         }
 
         public void Cancel() => asyncTask.Remove();
