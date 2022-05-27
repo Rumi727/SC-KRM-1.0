@@ -15,15 +15,7 @@ namespace SCKRM
         public static event DragAndDropAction dragAndDropEvent;
         public delegate void DragAndDropAction(string[] paths, Vector2 mousePos);
 
-        void Awake()
-        {
-            if (SingletonCheck(this))
-                dragAndDropEvent += (string[] paths, Vector2 mousePos) =>
-                {
-                    Debug.LogWarning(paths[0]);
-                    Debug.LogWarning(mousePos);
-                };
-        }
+
 
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         void OnEnable()
