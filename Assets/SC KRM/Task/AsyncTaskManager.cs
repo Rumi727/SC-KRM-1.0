@@ -62,10 +62,10 @@ namespace SCKRM
             AsyncTaskManager.AsyncTaskChangeEventInvoke();
         }
 
-        public string name { get; }
-        public string info { get; }
-        public bool loop { get; }
-        public bool cantCancel { get; }
+        public virtual string name { get; set; }
+        public virtual string info { get; set; }
+        public virtual bool loop { get; set; }
+        public virtual bool cantCancel { get; set; }
 
         public virtual float progress { get; set; }
         public virtual float maxProgress { get; set; }

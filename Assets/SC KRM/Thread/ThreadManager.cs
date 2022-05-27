@@ -395,6 +395,108 @@ namespace SCKRM.Threads
 
     public sealed class ThreadMetaData : AsyncTask
     {
+        object nameLockObject = new object();
+        string _name = "";
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override string name
+        {
+            get
+            {
+                string value;
+
+                Monitor.Enter(nameLockObject);
+                value = _name;
+                Monitor.Exit(nameLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(nameLockObject);
+                _name = value;
+                Monitor.Exit(nameLockObject);
+            }
+        }
+
+        object infoLockObject = new object();
+        string _info = "";
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override string info
+        {
+            get
+            {
+                string value;
+
+                Monitor.Enter(infoLockObject);
+                value = _info;
+                Monitor.Exit(infoLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(infoLockObject);
+                _info = value;
+                Monitor.Exit(infoLockObject);
+            }
+        }
+
+        object loopLockObject = new object();
+        bool _loop = false;
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override bool loop
+        {
+            get
+            {
+                bool value;
+
+                Monitor.Enter(loopLockObject);
+                value = _loop;
+                Monitor.Exit(loopLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(loopLockObject);
+                _loop = value;
+                Monitor.Exit(loopLockObject);
+            }
+        }
+
+        object cantCancelLockObject = new object();
+        bool _cantCancel = false;
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override bool cantCancel
+        {
+            get
+            {
+                bool value;
+
+                Monitor.Enter(cantCancelLockObject);
+                value = _cantCancel;
+                Monitor.Exit(cantCancelLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(cantCancelLockObject);
+                _cantCancel = value;
+                Monitor.Exit(cantCancelLockObject);
+            }
+        }
+
+
+
         object progressLockObject = new object();
         float _progress = 0;
         /// <summary>
@@ -444,6 +546,8 @@ namespace SCKRM.Threads
                 Monitor.Exit(maxProgressLockObject);
             }
         }
+
+
 
         public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false) : base(name, info, loop, cantCancel)
         {
