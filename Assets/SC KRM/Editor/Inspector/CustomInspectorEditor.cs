@@ -168,7 +168,7 @@ namespace SCKRM.Editor
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
-                        list.Add(default(T));
+                        list.Add(default);
                 }
 
                 {
@@ -190,7 +190,7 @@ namespace SCKRM.Editor
                     if (count > list.Count)
                     {
                         for (int i = list.Count; i < count; i++)
-                            list.Add(default(T));
+                            list.Add(default);
                     }
                     else if (count < list.Count)
                     {

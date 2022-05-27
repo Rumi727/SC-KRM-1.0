@@ -49,7 +49,7 @@ namespace SCKRM.Json
                     return dictionary[key];
             }
 
-            return default(TValue);
+            return default;
         }
 
         public static T JsonToObject<T>(string json) => JsonConvert.DeserializeObject<T>(json);
