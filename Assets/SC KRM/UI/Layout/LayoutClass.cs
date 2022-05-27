@@ -55,7 +55,7 @@ namespace SCKRM.UI.Layout
         }
     }
 
-    public abstract class LayoutChildSetting<ChildSettingComponent> : LayoutChild
+    public abstract class LayoutChildSetting<ChildSettingComponent> : LayoutChild where ChildSettingComponent : Component
     {
         public List<ChildSettingComponent> childSettingComponents { get; } = new List<ChildSettingComponent>();
 
