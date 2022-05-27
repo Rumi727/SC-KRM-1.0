@@ -515,9 +515,12 @@ namespace SCKRM.Threads
             }
             set
             {
-                Monitor.Enter(progressLockObject);
-                _progress = value;
-                Monitor.Exit(progressLockObject);
+                unchecked
+                {
+                    Monitor.Enter(progressLockObject);
+                    _progress = value;
+                    Monitor.Exit(progressLockObject);
+                }
             }
         }
 
@@ -540,9 +543,12 @@ namespace SCKRM.Threads
             }
             set
             {
-                Monitor.Enter(maxProgressLockObject);
-                _maxProgress = value;
-                Monitor.Exit(maxProgressLockObject);
+                unchecked
+                {
+                    Monitor.Enter(maxProgressLockObject);
+                    _maxProgress = value;
+                    Monitor.Exit(maxProgressLockObject);
+                }
             }
         }
 
