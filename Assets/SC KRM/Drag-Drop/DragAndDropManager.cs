@@ -33,7 +33,7 @@ namespace SCKRM
         /// 메소드가 파일 감지에 성공했을 경우 true를 반환해야 하며, 감지에 실패했으면 false를 반환해야 합니다
         /// The method should return true if the file was detected successfully, and false if the detection was unsuccessful.
         /// </returns>
-        public delegate bool DragAndDropFunc(string paths, bool isFolder, Vector2 mousePos);
+        public delegate bool DragAndDropFunc(string path, bool isFolder, Vector2 mousePos, ThreadMetaData threadMetaData);
         public static event DragAndDropFunc dragAndDropEvent;
 
 
@@ -89,8 +89,8 @@ namespace SCKRM
         static void DragAndDropEventInvoke(string[] paths, Vector2 mousePos)
         {
             Delegate[] delegates = dragAndDropEvent?.GetInvocationList();
-            /*if (delegates == null || delegates.Length <= 0)
-                return;*/
+            if (delegates == null || delegates.Length <= 0)
+                return;
 
             for (int i = 0; i < paths.Length; i++)
             {
@@ -124,7 +124,7 @@ namespace SCKRM
                     {
                         try
                         {
-                            if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos))
+                            if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos, threadMetaData))
                                 break;
                         }
                         catch (Exception e)
