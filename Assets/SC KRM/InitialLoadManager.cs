@@ -119,7 +119,7 @@ namespace SCKRM
                     if (await UniTask.RunOnThreadPool(() => SaveLoadManager.LoadAll(SaveLoadManager.generalSLCList, Kernel.saveDataPath), cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
 
-                    void Initialize()
+                    static void Initialize()
                     {
                         SaveLoadManager.InitializeAll<GeneralSaveLoadAttribute>(out SaveLoadClass[] saveLoadClass);
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.

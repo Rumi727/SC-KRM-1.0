@@ -641,7 +641,7 @@ namespace SCKRM.Editor
                 KernelSetAutoProjectSetting.SceneListChanged(false);
 
 
-            void ObjectField<T>(string label, string extension, ref string path, ref string name, out bool isChanged) where T : UnityEngine.Object
+            static void ObjectField<T>(string label, string extension, ref string path, ref string name, out bool isChanged) where T : UnityEngine.Object
             {
                 T oldAssets = AssetDatabase.LoadAssetAtPath<T>(PathTool.Combine(path, name) + extension);
                 T assets = (T)EditorGUILayout.ObjectField(label, oldAssets, typeof(T), false);
@@ -863,7 +863,7 @@ namespace SCKRM.Editor
 
                             {
                                 CustomInspectorEditor.DrawList(keyCodes, "키 코드", enumPopup, 1, 1, deleteSafety);
-                                KeyCode enumPopup(KeyCode value) => (KeyCode)EditorGUILayout.EnumPopup(value);
+                                static KeyCode enumPopup(KeyCode value) => (KeyCode)EditorGUILayout.EnumPopup(value);
                             }
 
                             valueList.Add(keyCodes);
