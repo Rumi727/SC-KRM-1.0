@@ -279,6 +279,31 @@ namespace SCKRM
             Time.fixedDeltaTime = fixedDeltaTime;
         }
 
+        void OnApplicationQuit()
+        {
+            Delegate[] delegates = shutdownEvent.GetInvocationList();
+            for (int i = 0; i < delegates.Length; i++)
+            {
+                try
+                {
+                    if (!((Func<bool>)delegates[i]).Invoke())
+#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                        Application.CancelQuit();
+#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+
+            AsyncTaskManager.AllAsyncTaskCancel(false);
+            ThreadManager.AllThreadRemove();
+
+            if (InitialLoadManager.isInitialLoadEnd)
+                SaveLoadManager.SaveAll(SaveLoadManager.generalSLCList, saveDataPath);
+        }
+
 
 
         public static event Action allRefreshStart;
@@ -307,30 +332,6 @@ namespace SCKRM
             allRefreshEnd?.Invoke();
         }
 
-        void OnApplicationQuit()
-        {
-            Delegate[] delegates = shutdownEvent.GetInvocationList();
-            for (int i = 0; i < delegates.Length; i++)
-            {
-                try
-                {
-                    if (!((Func<bool>)delegates[i]).Invoke())
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                        Application.CancelQuit();
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                }
-            }
-
-            AsyncTaskManager.AllAsyncTaskCancel(false);
-            ThreadManager.AllThreadRemove();
-
-            if (InitialLoadManager.isInitialLoadEnd)
-                SaveLoadManager.SaveAll(SaveLoadManager.generalSLCList, saveDataPath);
-        }
     }
 
 
