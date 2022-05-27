@@ -37,7 +37,7 @@ namespace SCKRM.Threads
                 throw new NotMainThreadMethodException(nameof(AllThreadRemove));
 
             for (int i = 0; i < runningThreads.Count; i++)
-                runningThreads[i]?.Remove();
+                runningThreads[i]?.Remove(true);
         }
 
         public static async UniTaskVoid ThreadAutoRemove()
@@ -51,12 +51,11 @@ namespace SCKRM.Threads
                 if (!Application.isPlaying)
                     return;
 #endif
-
                 for (int i = 0; i < runningThreads.Count; i++)
                 {
                     ThreadMetaData runningThread = runningThreads[i];
                     if (runningThread != null && !runningThread.autoRemoveDisable && (runningThread.thread == null || !runningThread.thread.IsAlive))
-                        runningThread.Remove();
+                        runningThread.Remove(true);
                 }
 
                 if (await UniTask.Delay(100, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
@@ -565,7 +564,7 @@ namespace SCKRM.Threads
         /// <exception cref="NotMainThreadMethodException"></exception>
         public override void Remove(bool force = false)
         {
-            base.Remove();
+            base.Remove(force);
 
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
