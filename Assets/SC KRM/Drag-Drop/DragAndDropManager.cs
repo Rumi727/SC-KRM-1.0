@@ -38,6 +38,10 @@ namespace SCKRM
 
 
 
+        void Awake() => SingletonCheck(this);
+
+
+
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         void OnEnable()
         {
