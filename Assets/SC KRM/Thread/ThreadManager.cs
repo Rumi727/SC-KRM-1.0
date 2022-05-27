@@ -395,6 +395,56 @@ namespace SCKRM.Threads
 
     public sealed class ThreadMetaData : AsyncTask
     {
+        object progressLockObject = new object();
+        float _progress = 0;
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override float progress
+        {
+            get
+            {
+                float value;
+
+                Monitor.Enter(progressLockObject);
+                value = _progress;
+                Monitor.Exit(progressLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(progressLockObject);
+                _progress = value;
+                Monitor.Exit(progressLockObject);
+            }
+        }
+
+        object maxProgressLockObject = new object();
+        float _maxProgress = 0;
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override float maxProgress
+        {
+            get
+            {
+                float value;
+
+                Monitor.Enter(maxProgressLockObject);
+                value = _maxProgress;
+                Monitor.Exit(maxProgressLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(maxProgressLockObject);
+                _maxProgress = value;
+                Monitor.Exit(maxProgressLockObject);
+            }
+        }
+
         public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false) : base(name, info, loop, cantCancel)
         {
             this.autoRemoveDisable = autoRemoveDisable;
