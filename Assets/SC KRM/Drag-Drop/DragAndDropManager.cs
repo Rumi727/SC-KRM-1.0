@@ -43,11 +43,14 @@ namespace SCKRM
         string[] tempDragAndDropPath = null;
         bool drag = false;
         Assembly assembly = typeof(EditorWindow).Assembly;
+        Type type;
         void Update()
         {
-            Type type = assembly.GetType("UnityEditor.GameView");
             if (type == null)
+            {
+                type = assembly.GetType("UnityEditor.GameView");
                 return;
+            }
 
             string[] paths = DragAndDrop.paths;
             if (EditorWindow.mouseOverWindow != null && EditorWindow.mouseOverWindow.GetType() == type)
