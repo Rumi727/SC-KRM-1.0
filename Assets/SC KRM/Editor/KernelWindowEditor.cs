@@ -260,7 +260,7 @@ namespace SCKRM.Editor
                     EditorGUILayout.Space();
 
                     if (GUILayout.Button("오디오 리셋", GUILayout.ExpandWidth(false)))
-                        ResourceManager.AudioReset();
+                        ResourceManager.AudioReset().Forget();
 
                     bool audioPlay = GUILayout.Button("오디오 재생", GUILayout.ExpandWidth(false));
                     if (GUILayout.Button("오디오 정지", GUILayout.ExpandWidth(false)))
