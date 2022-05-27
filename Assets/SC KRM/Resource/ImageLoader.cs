@@ -17,9 +17,7 @@ namespace SCKRM.Resource
                 // as the previous method in the workflow left it at the end.
                 r.BaseStream.Seek(2, SeekOrigin.Begin);
 
-                bool runLength = false;
-                if (r.ReadByte() == 10)
-                    runLength = true;
+                bool runLength = r.ReadByte() == 10;
 
                 r.BaseStream.Seek(9, SeekOrigin.Current);
 
