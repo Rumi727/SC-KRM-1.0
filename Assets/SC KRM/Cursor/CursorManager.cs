@@ -255,10 +255,14 @@ namespace SCKRM
 
         public Vector2Int ClientPosToScreenPos(int x, int y)
         {
+#if UNITY_STANDALONE_WIN
             POINT point = new POINT() { X = x, Y = y };
             ClientToScreen(WindowManager.currentHandle, ref point);
 
             return new Vector2Int(point.X, point.Y);
+#else
+            throw new NotImplementedException();
+#endif
         }
     }
 }
