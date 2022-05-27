@@ -332,6 +332,7 @@ namespace SCKRM
             allRefreshEnd?.Invoke();
         }
 
+        public static void RevealInFinder(string path) => Application.OpenURL("file:///" + path);
     }
 
 
