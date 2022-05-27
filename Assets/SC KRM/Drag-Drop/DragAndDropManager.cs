@@ -2,11 +2,11 @@ using UnityEngine;
 using System.IO;
 using SCKRM.Compress;
 using SCKRM.Threads;
+using System;
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using B83.Win32;
 using System.Collections.Generic;
 #else
-using System;
 using System.Reflection;
 using UnityEditor;
 #endif
@@ -44,7 +44,7 @@ namespace SCKRM
             UnityDragAndDropHook.InstallHook();
             UnityDragAndDropHook.OnDroppedFiles += OnFiles;
 
-            void OnFiles(List<string> aFiles, POINT aPos) => dragAndDropEvent?.Invoke(aFiles.ToArray(), new Vector2(aPos.x, Screen.height - aPos.y));
+            void OnFiles(List<string> aFiles, POINT aPos) => DragAndDropEventInvoke(aFiles.ToArray(), new Vector2(aPos.x, Screen.height - aPos.y));
         }
 
         void OnDisable() => UnityDragAndDropHook.UninstallHook();
@@ -89,7 +89,7 @@ namespace SCKRM
         static void DragAndDropEventInvoke(string[] paths, Vector2 mousePos)
         {
             Delegate[] delegates = dragAndDropEvent?.GetInvocationList();
-            /*if (delegates.Length <= 0)
+            /*if (delegates == null || delegates.Length <= 0)
                 return;*/
 
             for (int i = 0; i < paths.Length; i++)
