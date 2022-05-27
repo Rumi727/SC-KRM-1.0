@@ -52,8 +52,6 @@ namespace SCKRM.Compress
                     {
                         string Fil = fileList[i];
                         oZipEntry = new ZipEntry(Fil.Remove(0, TrimLength));
-                        oZipEntry.IsUnicodeText = true;
-
                         oZipStream.PutNextEntry(oZipEntry);
 
                         //파일인 경우
