@@ -136,6 +136,14 @@
 	
 	"notice.running_task.audio_refresh.name": "오디오 새로고침",
 	
+	"notice.running_task.drag_and_drop.file_load": "파일 로드 중...",
+	"notice.running_task.drag_and_drop.resource_pack_load": "리소스팩 로드 중...",
+	
+	
+	
+	"compress_file_manager.compress": "압축 중...",
+	"compress_file_manager.decompress": "압축 푸는 중...",
+	
 	
 	
 	"notice.school_live.birthday.title": "학교생활! %value%주년",

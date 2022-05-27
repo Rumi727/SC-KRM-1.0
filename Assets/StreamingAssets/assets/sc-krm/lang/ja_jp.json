@@ -137,6 +137,16 @@
 	
 	
 	
+	"notice.running_task.drag_and_drop.file_load": "ファイルを読み込んでいます...",
+	"notice.running_task.drag_and_drop.resource_pack_load": "リソースパックを読み込んでいます...",
+	
+	
+	
+	"compress_file_manager.compress": "圧縮中...",
+	"compress_file_manager.decompress": "解凍中...",
+	
+	
+	
 	"notice.school_live.birthday.title": "がっこうぐらし！%value%周年",
 	"notice.school_live.birthday.description": "がっこうぐらし！%value%周年おめでとうございます！",
 	"notice.school_live_ani.birthday.title": "がっこうぐらし！アニメ%value%周年",

@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.IO;
+using SCKRM.Compress;
+using SCKRM.Threads;
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using B83.Win32;
 using System.Collections.Generic;
@@ -12,8 +15,26 @@ namespace SCKRM
 {
     public class DragAndDropManager : Manager<DragAndDropManager>
     {
-        public static event DragAndDropAction dragAndDropEvent;
-        public delegate void DragAndDropAction(string[] paths, Vector2 mousePos);
+        /// <summary>
+        /// </summary>
+        /// <param name="paths">
+        /// 드롭 된 파일 또는 폴더의 경로들
+        /// Paths to dropped files or folders
+        /// </param>
+        /// <param name="isFolder">
+        /// 경로가 폴더인지 감지합니다
+        /// Detect if path is a folder
+        /// </param>
+        /// <param name="mousePos">
+        /// 드롭 됐을 때의 마우스 위치
+        /// mouse position when dropped
+        /// </param>
+        /// <returns>
+        /// 메소드가 파일 감지에 성공했을 경우 true를 반환해야 하며, 감지에 실패했으면 false를 반환해야 합니다
+        /// The method should return true if the file was detected successfully, and false if the detection was unsuccessful.
+        /// </returns>
+        public delegate bool DragAndDropFunc(string paths, bool isFolder, Vector2 mousePos);
+        public static event DragAndDropFunc dragAndDropEvent;
 
 
 
@@ -52,7 +73,7 @@ namespace SCKRM
                     if (drag)
                     {
                         drag = false;
-                        dragAndDropEvent?.Invoke(tempDragAndDropPath, UnityEngine.Input.mousePosition);
+                        DragAndDropEventInvoke(tempDragAndDropPath, UnityEngine.Input.mousePosition);
                     }
                     else
                         drag = true;
@@ -64,5 +85,58 @@ namespace SCKRM
             tempDragAndDropPath = paths;
         }
 #endif
+
+        static void DragAndDropEventInvoke(string[] paths, Vector2 mousePos)
+        {
+            Delegate[] delegates = dragAndDropEvent?.GetInvocationList();
+            /*if (delegates.Length <= 0)
+                return;*/
+
+            for (int i = 0; i < paths.Length; i++)
+            {
+                string path = paths[i];
+
+                ThreadManager.Create(DragAndDrop, "notice.running_task.drag_and_drop.file_load");
+
+                void DragAndDrop(ThreadMetaData threadMetaData)
+                {
+                    bool isFolder = Directory.Exists(path);
+                    bool isCompressedFile = false;
+                    if (!isFolder)
+                    {
+                        if (!File.Exists(path))
+                            return;
+                        else if (Path.GetExtension(path).ToLower().Equals(".zip"))
+                        {
+                            string uuid = Guid.NewGuid().ToString();
+                            string tempFilePath = PathTool.Combine(Kernel.temporaryCachePath, uuid);
+                            if (!CompressFileManager.DecompressZipFile(path, tempFilePath, "", threadMetaData))
+                                return;
+
+                            path = tempFilePath;
+                            isFolder = true;
+                            isCompressedFile = true;
+                        }
+                    }
+
+                    if (delegates != null)
+                    for (int j = 0; j < delegates.Length; j++)
+                    {
+                        try
+                        {
+                            if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos))
+                                break;
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogException(e);
+                        }
+                    }
+
+                    if (isCompressedFile && Directory.Exists(path))
+                        Directory.Delete(path, true);
+                }
+            }
+        }
     }
 }
