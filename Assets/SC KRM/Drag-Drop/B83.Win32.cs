@@ -30,6 +30,7 @@
  * SOFTWARE.
  * 
  * * * * */
+#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -351,7 +352,7 @@ namespace B83.Win32
     public delegate IntPtr HookProc(int code, IntPtr wParam, ref MSG lParam);
     public delegate bool EnumThreadDelegate(IntPtr Hwnd, IntPtr lParam);
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+
 
     public static class Window
     {
@@ -410,7 +411,7 @@ namespace B83.Win32
         [DllImport("shell32.dll")]
         public static extern void DragQueryPoint(IntPtr hDrop, out POINT pos);
     }
-#endif
+
 
 
     public static class UnityDragAndDropHook
@@ -418,7 +419,7 @@ namespace B83.Win32
         public delegate void DroppedFilesEvent(List<string> aPathNames, POINT aDropPoint);
         public static event DroppedFilesEvent OnDroppedFiles;
 
-#if UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN
+
 
         private static uint threadId;
         private static IntPtr mainWindow = IntPtr.Zero;
@@ -480,13 +481,6 @@ namespace B83.Win32
             }
             return WinAPI.CallNextHookEx(m_Hook, code, wParam, ref lParam);
         }
-#else
-        public static void InstallHook()
-        {
-        }
-        public static void UninstallHook()
-        {
-        }
-#endif
     }
 }
+#endif
