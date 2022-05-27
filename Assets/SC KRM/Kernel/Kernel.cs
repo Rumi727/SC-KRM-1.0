@@ -314,7 +314,7 @@ namespace SCKRM
             {
                 try
                 {
-                    if (!((Func<bool>)delegates[i])())
+                    if (!((Func<bool>)delegates[i]).Invoke())
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                         Application.CancelQuit();
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
