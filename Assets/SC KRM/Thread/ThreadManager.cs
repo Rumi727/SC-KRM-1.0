@@ -66,7 +66,7 @@ namespace SCKRM.Threads
 
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
         #region Thread Create Method
-        public static ThreadMetaData Create(Action method, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false)
+        public static ThreadMetaData Create(Action method, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -75,7 +75,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable);
+            ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method());
             threadMetaData.thread.Start();
 
@@ -85,7 +85,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create(Action<ThreadMetaData> method, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false)
+        public static ThreadMetaData Create(Action<ThreadMetaData> method, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -94,7 +94,7 @@ namespace SCKRM.Threads
                 throw new NotPlayModeThreadCreateException();
 #endif
 
-            ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable);
+            ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(threadMetaData));
             threadMetaData.thread.Start();
 
@@ -104,7 +104,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T>(Action<T, ThreadMetaData> method, T obj, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T>(Action<T, ThreadMetaData> method, T obj, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -123,7 +123,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2>(Action<T1, T2, ThreadMetaData> method, T1 arg1, T2 arg2, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2>(Action<T1, T2, ThreadMetaData> method, T1 arg1, T2 arg2, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -142,7 +142,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3>(Action<T1, T2, T3, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3>(Action<T1, T2, T3, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -161,7 +161,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4>(Action<T1, T2, T3, T4, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4>(Action<T1, T2, T3, T4, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -180,7 +180,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -199,7 +199,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -218,7 +218,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -237,7 +237,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -256,7 +256,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -275,7 +275,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -294,7 +294,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -313,7 +313,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -332,7 +332,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -351,7 +351,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -370,7 +370,7 @@ namespace SCKRM.Threads
 
             return threadMetaData;
         }
-        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false)
+        public static ThreadMetaData Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ThreadMetaData> method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true)
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
@@ -549,7 +549,7 @@ namespace SCKRM.Threads
 
 
 
-        public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = false) : base(name, info, loop, cantCancel)
+        public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true) : base(name, info, loop, cantCancel)
         {
             this.autoRemoveDisable = autoRemoveDisable;
             ThreadManager.runningThreads.Add(this);
