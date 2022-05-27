@@ -12,7 +12,7 @@ namespace SCKRM
 {
     public class DragAndDropManager : Manager<DragAndDropManager>
     {
-        public event DragAndDropAction dragAndDropEvent;
+        public static event DragAndDropAction dragAndDropEvent;
         public delegate void DragAndDropAction(string[] paths, Vector2 mousePos);
 
         void Awake()
