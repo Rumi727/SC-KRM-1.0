@@ -5,7 +5,7 @@ namespace SCKRM.Compress
 {
     public static class CompressFileManager
     {
-        public static void CompressFile(string sourceDirectoryPath, string targetFilePath)
+        public static void CompressZipFile(string sourceDirectoryPath, string targetFilePath)
         {
             DirectoryInfo sourceDirectoryInfo = new DirectoryInfo(sourceDirectoryPath);
 
@@ -45,7 +45,7 @@ namespace SCKRM.Compress
             zipOutputStream.Close();
         }
 
-        public static void DecompressFile(string sourceFilePath, string targetDirectoryPath)
+        public static void DecompressZipFile(string sourceFilePath, string targetDirectoryPath)
         {
             DirectoryInfo targetDirectoryInfo = new DirectoryInfo(targetDirectoryPath);
 
