@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -2867,58 +2868,7 @@ namespace SCKRM
         /// </summary>
         /// <param name="paths">경로</param>
         /// <returns></returns>
-        public static string Combine(params string[] paths)
-        {
-            if (paths == null || paths.Length < 0)
-                throw new NullReferenceException();
-
-            string path = "";
-            if (paths.Length == 1)
-                path = paths[0];
-            else
-            {
-                for (int i = 0; i < paths.Length - 1; i++)
-                {
-                    string tempPath = paths[i];
-                    string tempPath2 = paths[i + 1];
-                    if (tempPath == null || tempPath == "")
-                        continue;
-                    else if (tempPath2 == null || tempPath2 == "")
-                        continue;
-
-
-                    if (tempPath[tempPath.Length - 1] == '/' && tempPath2[0] == '/')
-                    {
-                        if (i == 0)
-                            path += tempPath;
-                        path += tempPath2.Substring(1, tempPath2.Length - 2);
-                    }
-                    else if (tempPath[tempPath.Length - 1] == '/' && tempPath2[0] != '/')
-                    {
-                        if (i == 0)
-                            path += tempPath;
-                        path += tempPath2;
-                    }
-                    else if (tempPath[tempPath.Length - 1] != '/' && tempPath2[0] == '/')
-                    {
-                        if (i == 0)
-                            path += tempPath;
-                        path += tempPath2;
-                    }
-                    else if (tempPath[tempPath.Length - 1] != '/' && tempPath2[0] != '/')
-                    {
-                        if (i == 0)
-                            path += tempPath;
-                        path += "/" + tempPath2;
-                    }
-                }
-            }
-
-            if (!(path == null || path == "") && path[path.Length - 1] == '/')
-                path = path.Substring(1, path.Length - 2);
-
-            return path;
-        }
+        public static string Combine(params string[] paths) => Path.Combine(paths).Replace("\\", "/");
     }
 
     public static class TimeTool
