@@ -53,7 +53,7 @@ namespace SCKRM
                     }
 
                     UnityEditor.EditorApplication.isPlaying = false;
-                    throw new Exception("SC KRM은 Disable Domain Reload를 지원 하지 않습니다\nSC KRM does not support Disable Domain Reload");
+                    throw new NotSupportedException("SC KRM은 Disable Domain Reload를 지원 하지 않습니다\nSC KRM does not support Disable Domain Reload");
                 }
 #endif
                 //초기로딩이 시작됬습니다
