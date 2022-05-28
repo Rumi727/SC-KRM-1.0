@@ -1176,6 +1176,18 @@ namespace SCKRM.Resource
         public static async UniTask<byte[]> GetFileBytes(string path, bool pathExtensionUse = false)
 #pragma warning restore CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
         {
+            if (path == null)
+                path = "";
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            using UnityWebRequest www = UnityWebRequest.Get(path);
+            await www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+                Debug.LogError(www.error);
+
+            return www.downloadHandler.data;
+#else
             bool exists;
             if (!pathExtensionUse)
                 exists = FileExtensionExists(path, out path, textureExtension);
@@ -1183,22 +1195,10 @@ namespace SCKRM.Resource
                 exists = File.Exists(path);
 
             if (exists)
-            {
-#if UNITY_ANDROID && !UNITY_EDITOR
-                using UnityWebRequest www = UnityWebRequest.Get(path);
-
-                await www.SendWebRequest();
-
-                if (www.result != UnityWebRequest.Result.Success)
-                    Debug.LogError(www.error);
-
-                return www.downloadHandler.data;
-#else
                 return File.ReadAllBytes(path);
-#endif
-            }
 
             return null;
+#endif
         }
 
         /// <summary>
@@ -1515,19 +1515,55 @@ namespace SCKRM.Resource
         /// <returns></returns>
         public static string GetText(string path, bool pathExtensionUse = false)
         {
-            if (path == null)
-                path = "";
-
             bool exists;
             if (!pathExtensionUse)
-                exists = FileExtensionExists(path, out path, textExtension);
+                exists = FileExtensionExists(path, out path, textureExtension);
             else
                 exists = File.Exists(path);
-            
+
             if (exists)
                 return File.ReadAllText(path);
-            
+
             return "";
+        }
+
+        /// <summary>
+        /// 텍스트 파일을 string 타입으로 가져옵니다 (Android에서는 UnityWebRequest를 사용합니다)
+        /// Import text file as string type
+        /// </summary>
+        /// <param name="path">
+        /// 파일의 경로
+        /// Path
+        /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// Use extension in path
+        /// </param>
+        /// <returns></returns>
+#pragma warning disable CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
+        public static async UniTask<string> GetTextWebRequest(string path, bool pathExtensionUse = false)
+#pragma warning restore CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            using UnityWebRequest www = UnityWebRequest.Get(path);
+            await www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+                Debug.LogError(www.error);
+
+            return www.downloadHandler.text;
+#else
+            bool exists;
+            if (!pathExtensionUse)
+                exists = FileExtensionExists(path, out path, textureExtension);
+            else
+                exists = File.Exists(path);
+
+            if (exists)
+                return File.ReadAllText(path);
+
+            return "";
+#endif
         }
 
         /// <summary>

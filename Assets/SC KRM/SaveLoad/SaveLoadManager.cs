@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SCKRM.Threads;
@@ -171,10 +172,10 @@ namespace SCKRM.SaveLoad
                 Directory.CreateDirectory(loadDataPath);
 
             for (int i = 0; i < saveLoadClassList.Length; i++)
-                Load(saveLoadClassList[i], loadDataPath, noExistsCheck);
+                Load(saveLoadClassList[i], loadDataPath, noExistsCheck).Forget();
         }
 
-        public static void Load(SaveLoadClass saveLoadClass, string loadDataPath, bool noExistsCheck = false)
+        public static async UniTaskVoid Load(SaveLoadClass saveLoadClass, string loadDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClass == null || loadDataPath == null || loadDataPath == "")
                 return;
@@ -199,13 +200,16 @@ namespace SCKRM.SaveLoad
             }
             #endregion
 
-            try
             {
-                JsonConvert.DeserializeObject(File.ReadAllText(path), saveLoadClass.type);
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
+                string json = await Resource.ResourceManager.GetTextWebRequest(path);
+                try
+                {
+                    JsonConvert.DeserializeObject(json, saveLoadClass.type);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
             }
 
             #region json을 로드 했는데도 null이면 기본값으로 되돌리기

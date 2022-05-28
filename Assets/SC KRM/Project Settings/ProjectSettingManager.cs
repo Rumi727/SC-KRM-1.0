@@ -21,12 +21,5 @@ namespace SCKRM.ProjectSetting
     public static class ProjectSettingManager
     {
         public static SaveLoadClass[] projectSettingSLCList { get; [Obsolete("It is managed by the Kernel class. Please do not touch it.", false)] internal set; } = new SaveLoadClass[0];
-
-        public static JObject Read(Type type)
-        {
-            string path = PathTool.Combine(Kernel.projectSettingPath, type.FullName) + ".json";
-            JObject jObject = JObject.Parse(ResourceManager.GetText(path, true));
-            return jObject;
-        }
     }
 }

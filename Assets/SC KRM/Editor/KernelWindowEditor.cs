@@ -610,7 +610,7 @@ namespace SCKRM.Editor
                 if (splashProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
                 
-                SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath).Forget();
             }
 
 
@@ -676,7 +676,7 @@ namespace SCKRM.Editor
                 if (videoProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(VideoManager.Data), out videoProjectSetting);
 
-                SaveLoadManager.Load(videoProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(videoProjectSetting, Kernel.projectSettingPath).Forget();
             }
 
 
@@ -709,7 +709,7 @@ namespace SCKRM.Editor
                 if (controlProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(InputManager.Data), out controlProjectSetting);
 
-                SaveLoadManager.Load(controlProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(controlProjectSetting, Kernel.projectSettingPath).Forget();
             }
 
             if (InputManager.Data.controlSettingList == null)
@@ -1019,7 +1019,7 @@ namespace SCKRM.Editor
                 if (objectPoolingProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(ObjectPoolingSystem.Data), out objectPoolingProjectSetting);
 
-                SaveLoadManager.Load(objectPoolingProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(objectPoolingProjectSetting, Kernel.projectSettingPath).Forget();
             }
 
             if (ObjectPoolingSystem.Data.prefabList == null)
@@ -1195,7 +1195,7 @@ namespace SCKRM.Editor
                 if (audioProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SoundManager.Data), out audioProjectSetting);
 
-                SaveLoadManager.Load(audioProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(audioProjectSetting, Kernel.projectSettingPath).Forget();
             }
 
             //GUI
@@ -1880,7 +1880,7 @@ namespace SCKRM.Editor
                 if (resourceProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(ResourceManager.Data), out resourceProjectSetting);
 
-                SaveLoadManager.Load(resourceProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(resourceProjectSetting, Kernel.projectSettingPath).Forget();
             }
 
             //GUI
