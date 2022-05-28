@@ -101,7 +101,7 @@ namespace SCKRM.UI
                         for (int j = 0; j < keyCodes.Length; j++)
                         {
                             KeyCode keyCode = keyCodes[j];
-                            if (keyCode != KeyCode.None)
+                            if (keyCode == KeyCode.None)
                                 continue;
 
                             string hotkey = keyCode.KeyCodeToString();
