@@ -105,12 +105,17 @@ namespace DiscordPresence
         // Singleton
         public virtual void Awake()
         {
+#if UNITY_STANDALONE || UNITY_EDITOR
             if (instance == null)
                 instance = this;
             else if (instance != this)
                 Destroy(gameObject);
 
             //DontDestroyOnLoad(gameObject);
+#else
+            enabled = false;
+            DestroyImmediate(gameObject);
+#endif
         }
 
         public virtual void Update() => DiscordRpc.RunCallbacks();
@@ -135,9 +140,9 @@ namespace DiscordPresence
             Debug.Log("Discord: shutdown");
             DiscordRpc.Shutdown();
         }
-        #endregion
+#endregion
 
-        #region Update Presence Method
+#region Update Presence Method
         public static void UpdatePresence(string detail, string state = null, long start = -1, long end = -1, string largeKey = null,string largeText = null, 
             string smallKey = null, string smallText = null, string partyId = null, int size = -1, int max = -1, string match = null, string join = null, 
             string spectate = null/*, bool instance*/)
@@ -184,6 +189,6 @@ namespace DiscordPresence
             ClearPresence();
             DiscordRpc.UpdatePresence(instance.presence);
         }
-        #endregion
+#endregion
     }
 }
