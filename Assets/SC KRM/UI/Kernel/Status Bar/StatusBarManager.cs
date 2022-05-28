@@ -51,8 +51,8 @@ namespace SCKRM.UI.StatusBar
 
         DrivenRectTransformTracker tracker;
 
-        [SerializeField] Sprite bg;
-        [SerializeField] Sprite bg2;
+        [SerializeField] Sprite downGradation;
+        [SerializeField] Sprite upGradation;
         protected override void OnEnable()
         {
             if (SingletonCheck(this))
@@ -205,7 +205,7 @@ namespace SCKRM.UI.StatusBar
                     if (tempCropTheScreen != cropTheScreen)
                     {
                         if (!cropTheScreen)
-                            tempTopMode = !SaveData.bottomMode;
+                            BottomMode();
                         else
                             image.sprite = null;
 
@@ -230,7 +230,7 @@ namespace SCKRM.UI.StatusBar
                 rectTransform.pivot = Vector2.up;
 
                 if (!cropTheScreen)
-                    image.sprite = bg;
+                    image.sprite = downGradation;
                 else
                     image.sprite = null;
 
@@ -244,7 +244,7 @@ namespace SCKRM.UI.StatusBar
                 rectTransform.pivot = Vector2.zero;
 
                 if (!cropTheScreen)
-                    image.sprite = bg2;
+                    image.sprite = upGradation;
                 else
                     image.sprite = null;
 
