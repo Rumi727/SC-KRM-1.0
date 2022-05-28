@@ -138,6 +138,7 @@
 	
 	"notice.running_task.drag_and_drop.file_load": "파일 로드 중...",
 	"notice.running_task.drag_and_drop.resource_pack_load": "리소스팩 로드 중...",
+	"notice.running_task.drag_and_drop.resource_pack_load.exists": "같은 이름의 리소스 팩이 이미 있습니다",
 	
 	
 	

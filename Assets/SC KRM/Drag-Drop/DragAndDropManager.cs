@@ -3,6 +3,8 @@ using System.IO;
 using SCKRM.Compress;
 using SCKRM.Threads;
 using System;
+using SCKRM.UI.SideBar;
+using K4.Threading;
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using B83.Win32;
 using System.Collections.Generic;
@@ -38,7 +40,43 @@ namespace SCKRM
 
 
 
-        void Awake() => SingletonCheck(this);
+        void Awake()
+        {
+            if (SingletonCheck(this))
+                dragAndDropEvent += ResourcePackDragAndDrop;
+        }
+
+        static bool ResourcePackDragAndDrop(string path, bool isFolder, Vector2 mousePos, ThreadMetaData threadMetaData)
+        {
+            if (!isFolder)
+                return false;
+
+            threadMetaData.name = "notice.running_task.drag_and_drop.resource_pack_load";
+            threadMetaData.info = "";
+
+            threadMetaData.progress = 0;
+            threadMetaData.maxProgress = 1;
+
+            string jsonPath = PathTool.Combine(path, "pack.json");
+            if (File.Exists(jsonPath))
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(path);
+                string destPath = PathTool.Combine(Kernel.resourcePackPath, directoryInfo.Name);
+
+                if (Directory.Exists(destPath))
+                {
+                    K4UnityThreadDispatcher.Execute(() => NoticeManager.Notice("notice.running_task.drag_and_drop.resource_pack_load.exists", "", NoticeManager.Type.warning));
+                    return true;
+                }
+
+                Directory.CreateDirectory(destPath);
+                DirectoryTool.Copy(path, destPath);
+
+                return true;
+            }
+
+            return false;
+        }
 
 
 
@@ -113,7 +151,7 @@ namespace SCKRM
                         else if (Path.GetExtension(path).ToLower().Equals(".zip"))
                         {
                             string uuid = Guid.NewGuid().ToString();
-                            string tempFilePath = PathTool.Combine(Kernel.temporaryCachePath, uuid);
+                            string tempFilePath = PathTool.Combine(Kernel.temporaryCachePath, uuid, Path.GetFileNameWithoutExtension(path));
                             if (!CompressFileManager.DecompressZipFile(path, tempFilePath, "", threadMetaData))
                                 return;
 

@@ -135,10 +135,9 @@
 	
 	"notice.running_task.audio_refresh.name": "オーディオリロード",
 	
-	
-	
 	"notice.running_task.drag_and_drop.file_load": "ファイルを読み込んでいます...",
 	"notice.running_task.drag_and_drop.resource_pack_load": "リソースパックを読み込んでいます...",
+	"notice.running_task.drag_and_drop.resource_pack_load.exists": "同じ名前のリソースパックがすでに存在しています",
 	
 	
 	
