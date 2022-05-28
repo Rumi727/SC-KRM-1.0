@@ -2871,6 +2871,32 @@ namespace SCKRM
         public static string Combine(params string[] paths) => Path.Combine(paths).Replace("\\", "/");
     }
 
+    public static class DirectoryTool
+    {
+        public static void Copy(string sourceFolder, string destFolder)
+        {
+            if (!Directory.Exists(destFolder))
+                Directory.CreateDirectory(destFolder);
+
+            string[] files = Directory.GetFiles(sourceFolder);
+            string[] folders = Directory.GetDirectories(sourceFolder);
+
+            foreach (string file in files)
+            {
+                string name = Path.GetFileName(file);
+                string dest = Path.Combine(destFolder, name);
+                File.Copy(file, dest);
+            }
+
+            foreach (string folder in folders)
+            {
+                string name = Path.GetFileName(folder);
+                string dest = Path.Combine(destFolder, name);
+                Copy(folder, dest);
+            }
+        }
+    }
+
     public static class TimeTool
     {
         /// <summary>
