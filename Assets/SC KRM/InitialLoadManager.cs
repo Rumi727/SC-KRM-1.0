@@ -60,6 +60,26 @@ namespace SCKRM
                 isInitialLoadStart = true;
                 initialLoadStart?.Invoke();
 
+#if UNITY_ANDROID
+                bool warningDisable = true;
+                if (warningDisable)
+                {
+#if UNITY_EDITOR
+                    GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
+                    int length = gameObjects.Length;
+                    for (int i = 0; i < length; i++)
+                    {
+                        GameObject gameObject = gameObjects[i];
+                        if (gameObject != null && UnityEditor.PrefabUtility.GetPrefabInstanceStatus(gameObject) == UnityEditor.PrefabInstanceStatus.NotAPrefab)
+                            UnityEngine.Object.DestroyImmediate(gameObject);
+                    }
+
+                    UnityEditor.EditorApplication.isPlaying = false;
+#endif
+                    throw new NotSupportedException("SC KRM은 <b>아직까진</b> 안드로이드를 지원하지 않습니다\nSC KRM does not support Android <b>yet</b>");
+                }
+#endif
+
                 //UniTask를 초기화 합니다
                 PlayerLoopSystem loop = PlayerLoop.GetCurrentPlayerLoop();
                 PlayerLoopHelper.Initialize(ref loop);
