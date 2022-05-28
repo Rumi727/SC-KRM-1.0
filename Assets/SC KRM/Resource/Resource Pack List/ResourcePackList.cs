@@ -47,15 +47,15 @@ namespace SCKRM.Resource.UI
         {
             ChildRemove();
 
-            ResourcePackLoad(ResourceManager.SaveData.resourcePacks.ToArray(), _selectedResourcePacksContent, false).Forget();
-            ResourcePackLoad(Directory.GetDirectories(Kernel.resourcePackPath), _availableResourcePacksContent, true).Forget();
+            ResourcePackLoad(ResourceManager.SaveData.resourcePacks.ToArray(), _selectedResourcePacksContent, false);
+            ResourcePackLoad(Directory.GetDirectories(Kernel.resourcePackPath), _availableResourcePacksContent, true);
 
             selectedResourcePacksContentLayout.LayoutRefresh();
             availableResourcePacksContentLayout.LayoutRefresh();
             selectedResourcePacksContentLayout.SizeUpdate(false);
             availableResourcePacksContentLayout.SizeUpdate(false);
 
-            async UniTaskVoid ResourcePackLoad(string[] resourcePackPaths, Transform transform, bool available)
+            void ResourcePackLoad(string[] resourcePackPaths, Transform transform, bool available)
             {
                 for (int i = 0; i < resourcePackPaths.Length; i++)
                 {
@@ -71,7 +71,7 @@ namespace SCKRM.Resource.UI
                             ResourcePackJson resourcePackJson = JsonConvert.DeserializeObject<ResourcePackJson>(File.ReadAllText(jsonPath));
                             if (resourcePackJson != null)
                             {
-                                Texture2D texture = await ResourceManager.GetTexture(PathTool.Combine(resourcePackPath, "pack"), false, new TextureMetaData() { filterMode = FilterMode.Bilinear });
+                                Texture2D texture = ResourceManager.GetTexture(PathTool.Combine(resourcePackPath, "pack"), false, new TextureMetaData() { filterMode = FilterMode.Bilinear });
                                 Sprite sprite = ResourceManager.GetSprite(texture);
                                 ResourcePack resourcePack = (ResourcePack)ObjectPoolingSystem.ObjectCreate("resource_pack_list.resource_pack", transform);
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.

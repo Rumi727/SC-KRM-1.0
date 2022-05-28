@@ -30,27 +30,6 @@ namespace SCKRM.Json
                 return default;
         }
 
-        public static async UniTask<T> JsonReadWebRequest<T>(string path, bool pathExtensionUse = false)
-        {
-            string json;
-            json = await ResourceManager.GetTextWebRequest(path, pathExtensionUse);
-
-            if (json != "")
-            {
-                try
-                {
-                    return JsonConvert.DeserializeObject<T>(json);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    return default;
-                }
-            }
-            else
-                return default;
-        }
-
         public static TValue JsonReadDictionary<TKey, TValue>(TKey key, string path, string nameSpace)
         {
             if (path == null)

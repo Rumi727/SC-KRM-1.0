@@ -48,7 +48,7 @@ namespace SCKRM.Editor
                         if (splashProjectSetting == null)
                             SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
 
-                        SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath).Forget();
+                        SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
                     }
 
                     sceneListChangedEnable = false;
@@ -115,7 +115,7 @@ namespace SCKRM.Editor
                         if (splashProjectSetting == null)
                             SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
 
-                        SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath).Forget();
+                        SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
                     }
 
                     Scene activeScene = SceneManager.GetActiveScene();

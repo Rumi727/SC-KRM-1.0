@@ -20,7 +20,7 @@ namespace SCKRM.Renderer
 
         public override async void Refresh()
         {
-            Sprite sprite = await SpriteReload(type, path, index, nameSpace);
+            Sprite sprite = SpriteReload(type, path, index, nameSpace);
             if (ThreadManager.isMainThread)
             {
                 spriteRenderer.sprite = sprite;

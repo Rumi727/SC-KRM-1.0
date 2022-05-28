@@ -31,9 +31,7 @@ namespace SCKRM.Renderer
             queue.Enqueue();
         }*/
 
-#pragma warning disable CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
-        public async UniTask<Sprite> SpriteReload(string type, string name, int index, string nameSpace = "")
-#pragma warning restore CS1998 // 이 비동기 메서드에는 'await' 연산자가 없으며 메서드가 동시에 실행됩니다.
+        public Sprite SpriteReload(string type, string name, int index, string nameSpace = "")
         {
 #if UNITY_EDITOR
             if (!ThreadManager.isMainThread || Application.isPlaying)
@@ -48,7 +46,7 @@ namespace SCKRM.Renderer
 #if UNITY_EDITOR
             else
             {
-                Sprite[] sprites = await ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
+                Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
                 if (sprites != null && index < sprites.Length)
                     return sprites[index];
                 else
