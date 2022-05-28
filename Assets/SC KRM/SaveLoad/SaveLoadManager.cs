@@ -164,7 +164,10 @@ namespace SCKRM.SaveLoad
             File.WriteAllText(PathTool.Combine(saveDataPath, saveLoadClass.name) + ".json", jObject.ToString());
         }
 
-        public static void LoadAll(SaveLoadClass[] saveLoadClassList, string loadDataPath, bool noExistsCheck = false)
+        /// <summary>
+        /// GetTextWebRequest를 사용하기 때문에 안드로이드에선 메인 스레드에서 실행해야 합니다
+        /// </summary>
+        public static async UniTask LoadAll(SaveLoadClass[] saveLoadClassList, string loadDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClassList == null || loadDataPath == null || loadDataPath == "")
                 return;
@@ -172,10 +175,13 @@ namespace SCKRM.SaveLoad
                 Directory.CreateDirectory(loadDataPath);
 
             for (int i = 0; i < saveLoadClassList.Length; i++)
-                Load(saveLoadClassList[i], loadDataPath, noExistsCheck).Forget();
+                await Load(saveLoadClassList[i], loadDataPath, noExistsCheck);
         }
 
-        public static async UniTaskVoid Load(SaveLoadClass saveLoadClass, string loadDataPath, bool noExistsCheck = false)
+        /// <summary>
+        /// GetTextWebRequest를 사용하기 때문에 안드로이드에선 메인 스레드에서 실행해야 합니다
+        /// </summary>
+        public static async UniTask Load(SaveLoadClass saveLoadClass, string loadDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClass == null || loadDataPath == null || loadDataPath == "")
                 return;
@@ -201,7 +207,7 @@ namespace SCKRM.SaveLoad
             #endregion
 
             {
-                string json = await Resource.ResourceManager.GetTextWebRequest(path);
+                string json = await Resource.ResourceManager.GetTextWebRequest(path, true);
                 try
                 {
                     JsonConvert.DeserializeObject(json, saveLoadClass.type);

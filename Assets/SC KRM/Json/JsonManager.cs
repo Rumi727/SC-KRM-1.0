@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Resource;
 using System;
@@ -12,6 +13,27 @@ namespace SCKRM.Json
         {
             string json;
             json = ResourceManager.GetText(path, pathExtensionUse);
+
+            if (json != "")
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    return default;
+                }
+            }
+            else
+                return default;
+        }
+
+        public static async UniTask<T> JsonReadWebRequest<T>(string path, bool pathExtensionUse = false)
+        {
+            string json;
+            json = await ResourceManager.GetTextWebRequest(path, pathExtensionUse);
 
             if (json != "")
             {

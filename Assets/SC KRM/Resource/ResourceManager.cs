@@ -215,11 +215,9 @@ namespace SCKRM.Resource
 
                 Debug.Log("ResourceManager: Waiting for language to set...");
 
-                ThreadMetaData threadMetaData2 = ThreadManager.Create(SetLanguage, "notice.running_taskresource_pack_refresh.set_language.name");
-                resourceRefreshDetailedAsyncTask = threadMetaData2;
+                resourceRefreshDetailedAsyncTask = new AsyncTask("notice.running_task.resource_pack_refresh.set_language.name", "", false, true);
 
-                if (await UniTask.WaitUntil(() => threadMetaData2.thread == null, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                    return;
+                await SetLanguage();
 
                 isInitialLoadLanguageEnd = true;
 
@@ -748,7 +746,7 @@ namespace SCKRM.Resource
         }
 
         /// <exception cref="NotPlayModeMethodException"></exception>
-        static void SetLanguage(ThreadMetaData threadMetaData)
+        static async UniTask SetLanguage()
         {
 #if UNITY_EDITOR
             if (ThreadManager.isMainThread && !Application.isPlaying)
@@ -757,7 +755,7 @@ namespace SCKRM.Resource
             allLanguages.Clear();
 
             LanguageManager.Language[] languages = LanguageManager.GetLanguages();
-            threadMetaData.maxProgress = SaveData.resourcePacks.Count * nameSpaces.Count * languages.Length;
+            resourceRefreshDetailedAsyncTask.maxProgress = SaveData.resourcePacks.Count * nameSpaces.Count * languages.Length;
 
             int l = 0;
             for (int i = 0; i < SaveData.resourcePacks.Count; i++)
@@ -768,12 +766,12 @@ namespace SCKRM.Resource
                     string nameSpace = nameSpaces[j];
                     for (int k = 0; k < languages.Length; k++)
                     {
-                        threadMetaData.progress = l;
+                        resourceRefreshDetailedAsyncTask.progress = l;
                         l++;
 
                         LanguageManager.Language language = languages[k];
 
-                        Dictionary<string, string> dictionary = JsonManager.JsonRead<Dictionary<string, string>>(PathTool.Combine(resourcePack, languagePath.Replace("%NameSpace%", nameSpace), language.language) + ".json", true);
+                        Dictionary<string, string> dictionary = await JsonManager.JsonReadWebRequest<Dictionary<string, string>>(PathTool.Combine(resourcePack, languagePath.Replace("%NameSpace%", nameSpace), language.language) + ".json", true);
                         if (dictionary == null)
                             continue;
 
@@ -793,6 +791,9 @@ namespace SCKRM.Resource
                             else if (!allLanguages[nameSpace][language.language].ContainsKey(languageDictionary.Key))
                                 allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
                         }
+
+                        if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
                     }
                 }
             }

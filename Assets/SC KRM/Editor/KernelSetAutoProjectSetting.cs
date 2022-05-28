@@ -13,6 +13,7 @@ using System.IO;
 using SCKRM.Splash;
 using SCKRM.SaveLoad;
 using SCKRM.ProjectSetting;
+using Cysharp.Threading.Tasks;
 
 namespace SCKRM.Editor
 {
