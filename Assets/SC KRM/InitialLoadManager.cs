@@ -112,7 +112,7 @@ namespace SCKRM
                         return;
 
                     //세이브 데이터를 다른 스레드에서 로딩합니다
-                    if (await UniTask.RunOnThreadPool(() => SaveLoadManager.LoadAll(ProjectSettingManager.projectSettingSLCList, Kernel.projectSettingPath), cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                    if (await UniTask.RunOnThreadPool(() => SaveLoadManager.LoadAll(ProjectSettingManager.projectSettingSLCList, Kernel.projectSettingPath, true), cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
 
                     //세이브 데이터를 다른 스레드에서 로딩합니다

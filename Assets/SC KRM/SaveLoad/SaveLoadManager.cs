@@ -129,22 +129,22 @@ namespace SCKRM.SaveLoad
             #endregion
         }
 
-        public static void SaveAll(SaveLoadClass[] saveLoadClassList, string saveDataPath)
+        public static void SaveAll(SaveLoadClass[] saveLoadClassList, string saveDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClassList == null || saveDataPath == null || saveDataPath == "")
                 return;
-            else if (!Directory.Exists(saveDataPath))
+            else if (!noExistsCheck && !Directory.Exists(saveDataPath))
                 Directory.CreateDirectory(saveDataPath);
 
             for (int i = 0; i < saveLoadClassList.Length; i++)
                 Save(saveLoadClassList[i], saveDataPath);
         }
 
-        public static void Save(SaveLoadClass saveLoadClass, string saveDataPath)
+        public static void Save(SaveLoadClass saveLoadClass, string saveDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClass == null || saveDataPath == null || saveDataPath == "")
                 return;
-            else if (!Directory.Exists(saveDataPath))
+            else if (!noExistsCheck && !Directory.Exists(saveDataPath))
                 Directory.CreateDirectory(saveDataPath);
 
             JObject jObject = new JObject();
@@ -163,26 +163,26 @@ namespace SCKRM.SaveLoad
             File.WriteAllText(PathTool.Combine(saveDataPath, saveLoadClass.name) + ".json", jObject.ToString());
         }
 
-        public static void LoadAll(SaveLoadClass[] saveLoadClassList, string loadDataPath)
+        public static void LoadAll(SaveLoadClass[] saveLoadClassList, string loadDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClassList == null || loadDataPath == null || loadDataPath == "")
                 return;
-            else if (!Directory.Exists(loadDataPath))
+            else if (!noExistsCheck && !Directory.Exists(loadDataPath))
                 Directory.CreateDirectory(loadDataPath);
 
             for (int i = 0; i < saveLoadClassList.Length; i++)
-                Load(saveLoadClassList[i], loadDataPath);
+                Load(saveLoadClassList[i], loadDataPath, noExistsCheck);
         }
 
-        public static void Load(SaveLoadClass saveLoadClass, string loadDataPath)
+        public static void Load(SaveLoadClass saveLoadClass, string loadDataPath, bool noExistsCheck = false)
         {
             if (saveLoadClass == null || loadDataPath == null || loadDataPath == "")
                 return;
-            else if (!Directory.Exists(loadDataPath))
+            else if (!noExistsCheck && !Directory.Exists(loadDataPath))
                 Directory.CreateDirectory(loadDataPath);
 
             string path = PathTool.Combine(loadDataPath, saveLoadClass.name) + ".json";
-            if (!File.Exists(path))
+            if (!noExistsCheck && !File.Exists(path))
                 return;
 
             #region null 설정
