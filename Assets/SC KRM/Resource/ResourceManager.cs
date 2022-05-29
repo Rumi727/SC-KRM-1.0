@@ -255,15 +255,7 @@ namespace SCKRM.Resource
                 Debug.LogError("ResourceManager: Resource refresh failed");
 
                 if (!InitialLoadManager.isInitialLoadEnd)
-                {
-                    if (await UniTask.WaitUntil(() => UIManager.instance != null, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                        return;
-
-                    UnityEngine.Object.Instantiate(UIManager.instance.exceptionText, UIManager.instance.kernelCanvas.transform).text = "Kernel: Initial loading failed\nResourceManager: Resource refresh failed\n\n" + e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5);
-
-                    if (await UniTask.Never(AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                        return;
-                }
+                    throw;
             }
 
             resourceRefreshAsyncTask.progress = resourceRefreshAsyncTask.maxProgress;
