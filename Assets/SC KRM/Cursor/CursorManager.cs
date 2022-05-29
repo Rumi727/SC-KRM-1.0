@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SCKRM
 {
@@ -90,7 +91,7 @@ namespace SCKRM
                     graphic.color = graphic.color.Lerp(UIManager.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     transform.localScale = transform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);
 
-                    if (!dragStart && Vector2.Distance(transform.position, dragStartMousePosition) >= 10)
+                    if (!dragStart && Vector2.Distance(transform.position, dragStartMousePosition) >= EventSystem.current.pixelDragThreshold)
                         dragStart = true;
                     else if (dragStart)
                     {
