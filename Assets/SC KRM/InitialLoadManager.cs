@@ -60,7 +60,7 @@ namespace SCKRM
                 isInitialLoadStart = true;
                 initialLoadStart?.Invoke();
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_WEBGL
                 bool warningDisable = true;
                 if (warningDisable)
                 {
@@ -76,7 +76,11 @@ namespace SCKRM
 
                     UnityEditor.EditorApplication.isPlaying = false;
 #endif
+#if UNITY_ANDROID
                     throw new NotSupportedException("SC KRM은 <b>아직까진</b> 안드로이드를 지원하지 않습니다\nSC KRM does not support Android <b>yet</b>");
+#elif UNITY_WEBGL
+                    throw new NotSupportedException("SC KRM은 WebGL을 지원하지 않습니다\nSC KRM does not support WebGL");
+#endif
                 }
 #endif
 
