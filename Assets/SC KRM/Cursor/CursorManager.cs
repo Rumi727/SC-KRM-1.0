@@ -186,7 +186,7 @@ namespace SCKRM
 
             return new Vector2Int((lpPoint.X - (Screen.currentResolution.width * xDatumPoint)).RoundToInt(), (lpPoint.Y - (Screen.currentResolution.height * yDatumPoint)).RoundToInt());
 #else
-            throw new NotImplementedException();
+            throw new NotSupportedException();
 #endif
         }
 
@@ -205,7 +205,7 @@ namespace SCKRM
             Vector2Int offset = WindowManager.GetWindowPos(Vector2.zero, Vector2.zero) + new Vector2Int((border.x).RoundToInt(), (border.y).RoundToInt());
             return new Vector2Int(lpPoint.X - (clientSize.x * xDatumPoint).RoundToInt() - offset.x, (lpPoint.Y - offset.y - (clientSize.y * yDatumPoint)).RoundToInt() - offset.y);
 #else
-            throw new NotImplementedException();
+            throw new NotSupportedException();
 #endif
         }
 
@@ -223,7 +223,7 @@ namespace SCKRM
             else
                 IgnoreMouseAccelerationPos = new Vector2(x, y);
 #else
-            throw new NotImplementedException();
+            throw new NotSupportedException();
 #endif
         }
 
@@ -244,7 +244,7 @@ namespace SCKRM
             else
                 IgnoreMouseAccelerationPos = new Vector2(x, y);
 #else
-            throw new NotImplementedException();
+            throw new NotSupportedException();
 #endif
         }
         #endregion
@@ -259,9 +259,9 @@ namespace SCKRM
             POINT point = new POINT() { X = x, Y = y };
             ClientToScreen(WindowManager.currentHandle, ref point);
 
-            return new Vector2Int(point.X, point.Y);
+            return new Vector2Int(point.X, point.Y); 
 #else
-            throw new NotImplementedException();
+            throw new NotSupportedException();
 #endif
         }
     }
