@@ -1438,6 +1438,7 @@ namespace SCKRM
             list[oldIndex] = temp;
         }
 
+        #region Close Value
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
@@ -1624,7 +1625,9 @@ namespace SCKRM
 
             return 0;
         }
+        #endregion
 
+        #region Close Value Index
         /// <summary>
         /// 가장 가까운 수를 찾고 인덱스를 반환합니다
         /// </summary>
@@ -1811,7 +1814,9 @@ namespace SCKRM
 
             return 0;
         }
+        #endregion
 
+        #region Close Value Index Binary Search
         /// <summary>
         /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
         /// </summary>
@@ -1998,6 +2003,7 @@ namespace SCKRM
 
             return 0;
         }
+        #endregion
 
         public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
         {
@@ -2032,6 +2038,7 @@ namespace SCKRM
 
     public static class ArrayTool
     {
+        #region Close Value
         /// <summary>
         /// 가장 가까운 수를 찾습니다
         /// </summary>
@@ -2284,6 +2291,7 @@ namespace SCKRM
 
             return 0;
         }
+        #endregion Close Value
     }
 
     public static class StringTool
@@ -2692,6 +2700,7 @@ namespace SCKRM
             return text;
         }
 
+        #region To Bar
         /// <summary>
         /// (value = 5, max = 10, length = 10) = "■■■■■□□□□□"
         /// </summary>
@@ -2742,6 +2751,7 @@ namespace SCKRM
             }
             return text;
         }
+        #endregion
     }
 
     public static class PathTool
@@ -2782,6 +2792,7 @@ namespace SCKRM
 
     public static class TimeTool
     {
+        #region To Time
         /// <summary>
         /// (second = 70) = "1:10"
         /// </summary>
@@ -2869,6 +2880,7 @@ namespace SCKRM
             }
             catch (Exception) { return "--:--"; }
         }
+        #endregion
 
         public static DateTime ToLunarDate(this DateTime dateTime)
         {
