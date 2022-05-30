@@ -554,6 +554,33 @@ namespace SCKRM.Threads
 
 
 
+        object isCanceledLockObject = new object();
+        bool _isCanceled = false;
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public override bool isCanceled
+        {
+            get
+            {
+                bool value;
+
+                Monitor.Enter(isCanceledLockObject);
+                value = _isCanceled;
+                Monitor.Exit(isCanceledLockObject);
+
+                return value;
+            }
+            set
+            {
+                Monitor.Enter(isCanceledLockObject);
+                _isCanceled = value;
+                Monitor.Exit(isCanceledLockObject);
+            }
+        }
+
+
+
         public ThreadMetaData(string name = "", string info = "", bool loop = false, bool autoRemoveDisable = false, bool cantCancel = true) : base(name, info, loop, cantCancel)
         {
             this.autoRemoveDisable = autoRemoveDisable;
@@ -568,14 +595,12 @@ namespace SCKRM.Threads
         /// This function can only be executed on the main thread
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public override void Remove(bool force = false)
+        public override bool Remove(bool force = false)
         {
-            base.Remove(force);
-
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
 
-            if (!cantCancel || force)
+            if (base.Remove(force))
             {
                 ThreadManager.runningThreads.Remove(this);
 
@@ -590,7 +615,11 @@ namespace SCKRM.Threads
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                     _thread.Join();
                 }
+
+                return true;
             }
+
+            return false;
         }
     }
 

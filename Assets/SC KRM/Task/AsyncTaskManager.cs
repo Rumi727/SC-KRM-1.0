@@ -72,6 +72,10 @@ namespace SCKRM
 
 
 
+        public virtual bool isCanceled { get; set; }
+
+
+
         object cancelEventLockObject = new object();
         event Action _cancelEvent;
         /// <summary>
@@ -105,14 +109,14 @@ namespace SCKRM
         /// This function can only be executed on the main thread
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public virtual void Remove(bool force = false)
+        public virtual bool Remove(bool force = false)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));
 
-            if (!cantCancel || force)
+            if (!isCanceled && (!cantCancel || force))
             {
-                cantCancel = true;
+                isCanceled = true;
 
                 Monitor.Enter(cancelEventLockObject);
                 _cancelEvent?.Invoke();
@@ -124,7 +128,11 @@ namespace SCKRM
                 AsyncTaskManager.AsyncTaskRemoveEventInvoke();
 
                 _cancel.Cancel();
+
+                return true;
             }
+
+            return false;
         }
     }
 }
