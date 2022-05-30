@@ -588,7 +588,7 @@ namespace SCKRM.Threads
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                     thread = null;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                    _thread.Abort();
+                    _thread.Join();
                 }
             }
         }
