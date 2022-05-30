@@ -421,6 +421,7 @@ MonoBehaviour:
   _lerpValue: 0.2
   _spacing: 6
   _ignore: []
+  _allLerp: 0
   _padding:
     m_Left: 20
     m_Right: 20
@@ -539,7 +540,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.5
+  m_PixelsPerUnitMultiplier: 20
 --- !u!114 &1400948449857884528
 MonoBehaviour:
   m_ObjectHideFlags: 0

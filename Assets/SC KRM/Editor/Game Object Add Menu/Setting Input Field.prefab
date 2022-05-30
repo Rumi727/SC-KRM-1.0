@@ -598,7 +598,6 @@ GameObject:
   - component: {fileID: 7659518556223335339}
   - component: {fileID: 1482219120415777069}
   - component: {fileID: 4772741202132473119}
-  - component: {fileID: 2589625528442728322}
   m_Layer: 5
   m_Name: Input Field
   m_TagString: Untagged
@@ -625,7 +624,7 @@ RectTransform:
   m_AnchorMin: {x: 0.3333333, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 1.5, y: 0}
-  m_SizeDelta: {x: -3, y: 2}
+  m_SizeDelta: {x: -3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &667547153537709898
 CanvasRenderer:
@@ -650,7 +649,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 1, y: 1, z: 1, w: 1}
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -664,7 +663,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 3
+  m_PixelsPerUnitMultiplier: 24
 --- !u!114 &7659518556223335339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,26 +807,6 @@ MonoBehaviour:
   _rectTransform: {fileID: 2854331197266034819}
   _graphic: {fileID: 7260335578112448451}
   _inputField: {fileID: 1482219120415777069}
---- !u!114 &2589625528442728322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691767713636167457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: 430
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &8517923719638727753
 GameObject:
   m_ObjectHideFlags: 0

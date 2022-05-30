@@ -58,7 +58,7 @@ MonoBehaviour:
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
-  _hotkeyToDisplay: 
+  _hotkeyToDisplay: []
   _resetButton: {fileID: 8413268587559635618}
   _nameText: {fileID: 330070363612817596}
   _nameTextRenderer: {fileID: 8855952369967304975}
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.315789
+  m_PixelsPerUnitMultiplier: 10.5
 --- !u!114 &9208971970543642751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,8 +339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
+  _rectTransform: {fileID: 8815262566469061515}
+  _graphic: {fileID: 1983648433373221627}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6368022071948269525
 GameObject:
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 2, y: 2, z: 2, w: 2}
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.3157895
+  m_PixelsPerUnitMultiplier: 10.5
 --- !u!114 &5652662923118441648
 MonoBehaviour:
   m_ObjectHideFlags: 0

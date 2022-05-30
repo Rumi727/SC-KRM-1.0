@@ -167,7 +167,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.25
+  m_PixelsPerUnitMultiplier: 10
 --- !u!114 &4258325279581025229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -830,8 +830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebe5f0841e1ffe49bb62655b57f20e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
+  _rectTransform: {fileID: 263270028374894328}
+  _graphic: {fileID: 263270028364908738}
   _lerp: 1
   _lerpValue: 0.2
   colorPicker: {fileID: 263270028365002820}
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.5
+  m_PixelsPerUnitMultiplier: 20
 --- !u!114 &263270028364938688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3125,7 +3125,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 16
 --- !u!114 &6132788681527260438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3603,8 +3603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebe5f0841e1ffe49bb62655b57f20e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
+  _rectTransform: {fileID: 263270028374956650}
+  _graphic: {fileID: 263270028364962106}
   _lerp: 1
   _lerpValue: 0.2
   colorPicker: {fileID: 263270028365002820}
@@ -8206,7 +8206,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.5
+  m_PixelsPerUnitMultiplier: 20
 --- !u!114 &6506422531512969731
 MonoBehaviour:
   m_ObjectHideFlags: 0
