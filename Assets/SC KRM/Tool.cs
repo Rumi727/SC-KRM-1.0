@@ -814,7 +814,7 @@ namespace SCKRM
         #endregion
 
         #region Min
-        public static sbyte Min(sbyte a, sbyte b)
+        public static sbyte Min(this sbyte a, sbyte b)
         {
             if (a < b)
                 return a;
@@ -822,7 +822,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static byte Min(byte a, byte b)
+        public static byte Min(this byte a, byte b)
         {
             if (a < b)
                 return a;
@@ -830,7 +830,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static short Min(short a, short b)
+        public static short Min(this short a, short b)
         {
             if (a < b)
                 return a;
@@ -838,7 +838,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static ushort Min(ushort a, ushort b)
+        public static ushort Min(this ushort a, ushort b)
         {
             if (a < b)
                 return a;
@@ -846,7 +846,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static int Min(int a, int b)
+        public static int Min(this int a, int b)
         {
             if (a < b)
                 return a;
@@ -854,7 +854,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static uint Min(uint a, uint b)
+        public static uint Min(this uint a, uint b)
         {
             if (a < b)
                 return a;
@@ -862,7 +862,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static long Min(long a, long b)
+        public static long Min(this long a, long b)
         {
             if (a < b)
                 return a;
@@ -870,7 +870,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static ulong Min(ulong a, ulong b)
+        public static ulong Min(this ulong a, ulong b)
         {
             if (a < b)
                 return a;
@@ -878,7 +878,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static float Min(float a, float b)
+        public static float Min(this float a, float b)
         {
             if (a < b)
                 return a;
@@ -886,7 +886,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static double Min(double a, double b)
+        public static double Min(this double a, double b)
         {
             if (a < b)
                 return a;
@@ -894,7 +894,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static decimal Min(decimal a, decimal b)
+        public static decimal Min(this decimal a, decimal b)
         {
             if (a < b)
                 return a;
@@ -1115,7 +1115,7 @@ namespace SCKRM
         #endregion
 
         #region Max
-        public static sbyte Max(sbyte a, sbyte b)
+        public static sbyte Max(this sbyte a, sbyte b)
         {
             if (a > b)
                 return a;
@@ -1123,7 +1123,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static byte Max(byte a, byte b)
+        public static byte Max(this byte a, byte b)
         {
             if (a > b)
                 return a;
@@ -1131,7 +1131,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static short Max(short a, short b)
+        public static short Max(this short a, short b)
         {
             if (a > b)
                 return a;
@@ -1139,7 +1139,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static ushort Max(ushort a, ushort b)
+        public static ushort Max(this ushort a, ushort b)
         {
             if (a > b)
                 return a;
@@ -1147,7 +1147,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static int Max(int a, int b)
+        public static int Max(this int a, int b)
         {
             if (a > b)
                 return a;
@@ -1155,7 +1155,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static uint Max(uint a, uint b)
+        public static uint Max(this uint a, uint b)
         {
             if (a > b)
                 return a;
@@ -1163,7 +1163,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static long Max(long a, long b)
+        public static long Max(this long a, long b)
         {
             if (a > b)
                 return a;
@@ -1171,7 +1171,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static ulong Max(ulong a, ulong b)
+        public static ulong Max(this ulong a, ulong b)
         {
             if (a > b)
                 return a;
@@ -1179,7 +1179,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static float Max(float a, float b)
+        public static float Max(this float a, float b)
         {
             if (a > b)
                 return a;
@@ -1187,7 +1187,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static double Max(double a, double b)
+        public static double Max(this double a, double b)
         {
             if (a > b)
                 return a;
@@ -1195,7 +1195,7 @@ namespace SCKRM
                 return b;
         }
 
-        public static decimal Max(decimal a, decimal b)
+        public static decimal Max(this decimal a, decimal b)
         {
             if (a > b)
                 return a;
