@@ -49,7 +49,7 @@ namespace SCKRM.UI.Setting
         /// <returns>is Cancel?</returns>
         new protected virtual async UniTask<bool> Awake()
         {
-            if (await UniTask.WaitUntil(() => InitialLoadManager.isSettingLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+            if (await UniTask.WaitUntil(() => InitialLoadManager.isInitialLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;
 
             foreach (var variableType in SaveLoadManager.generalSLCList)
