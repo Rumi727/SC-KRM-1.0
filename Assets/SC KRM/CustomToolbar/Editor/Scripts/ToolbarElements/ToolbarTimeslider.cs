@@ -45,6 +45,9 @@ internal class ToolbarTimeslider : BaseToolbarElement
 	protected override void OnDrawInToolbar()
 	{
 		GUILayout.Label("Game Speed", GUILayout.ExpandWidth(false));
+
+		GUI.enabled = Application.isPlaying;
 		Kernel.gameSpeed = EditorGUILayout.Slider("", Kernel.gameSpeed, minTime, maxTime, GUILayout.Width(WidthInToolbar - 30.0f));
+		GUI.enabled = true;
 	}
 }

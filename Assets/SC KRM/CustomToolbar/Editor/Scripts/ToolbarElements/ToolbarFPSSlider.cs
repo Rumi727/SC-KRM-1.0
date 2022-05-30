@@ -1,21 +1,17 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using SCKRM;
+using SCKRM.UI.Setting;
 
 [Serializable]
 internal class ToolbarFPSSlider : BaseToolbarElement {
 	[SerializeField] int minFPS = 1;
 	[SerializeField] int maxFPS = 120;
 
-	int selectedFramerate;
-
 	public override string NameInList => "[Slider] FPS";
-
-	public override void Init() {
-		selectedFramerate = 60;
-	}
 
 	public ToolbarFPSSlider(int minFPS = 1, int maxFPS = 120) : base(200) {
 		this.minFPS = minFPS;
@@ -39,10 +35,18 @@ internal class ToolbarFPSSlider : BaseToolbarElement {
 		maxFPS = Mathf.RoundToInt(EditorGUI.IntField(position, "", maxFPS));
 	}
 
-	protected override void OnDrawInToolbar() {
+	protected override void OnDrawInToolbar() 
+	{
 		EditorGUILayout.LabelField("FPS", GUILayout.Width(30));
-		selectedFramerate = EditorGUILayout.IntSlider("", selectedFramerate, minFPS, maxFPS, GUILayout.Width(WidthInToolbar - 30.0f));
-		if (EditorApplication.isPlaying && selectedFramerate != Application.targetFrameRate)
-			Application.targetFrameRate = selectedFramerate;
+
+		GUI.enabled = Application.isPlaying;
+		int fpsLimit = EditorGUILayout.IntSlider("", VideoManager.SaveData.fpsLimit, minFPS, maxFPS, GUILayout.Width(WidthInToolbar - 30.0f));
+		GUI.enabled = true;
+
+		if (GUI.changed && Setting.settingInstance.TryGetValue("SCKRM.VideoManager+SaveData.fpsLimit", out Setting value))
+		{
+			VideoManager.SaveData.fpsLimit = fpsLimit;
+			value.ScriptOnValueChanged();
+		}
 	}
 }
