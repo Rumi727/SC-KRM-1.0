@@ -1,7 +1,7 @@
 # SC KRM
 Simsimhan Chobo Kernel Manager
 
-## 사용된 패키지와 DLL
+## 사용된 패키지와 DLL, 오픈 소스
 - **Unity UI**
 - **Input System**
 - **TextMeshPro**
