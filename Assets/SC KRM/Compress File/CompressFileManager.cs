@@ -12,6 +12,7 @@ namespace SCKRM.Compress
     {
         public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null)
         {
+            int stopLoop = 0;
             bool retVal = false;
 
             //폴더가 존재하는 경우에만 수행
@@ -46,11 +47,21 @@ namespace SCKRM.Compress
 
                         threadMetaData.progress = 0;
                         threadMetaData.maxProgress = fileList.Count;
+
+                        threadMetaData.cancelEvent += CancelEvent;
+                        threadMetaData.cantCancel = false;
                     }
 
                     ZipEntry oZipEntry;
                     for (int i = 0; i < fileList.Count; i++)
                     {
+                        Interlocked.Decrement(ref stopLoop);
+                        if (Interlocked.Increment(ref stopLoop) > 0)
+                        {
+                            oZipStream.Close();
+                            return false;
+                        }
+
                         string Fil = fileList[i];
                         oZipEntry = new ZipEntry(Fil.Remove(0, TrimLength));
                         oZipStream.PutNextEntry(oZipEntry);
@@ -93,6 +104,16 @@ namespace SCKRM.Compress
                 }
             }
             return retVal;
+
+            void CancelEvent()
+            {
+                Interlocked.Increment(ref stopLoop);
+
+                threadMetaData.maxProgress = 1;
+                threadMetaData.progress = 1;
+
+                threadMetaData.cancelEvent -= CancelEvent;
+            }
         }
 
         private static List<string> GenerateFileList(string Dir)
