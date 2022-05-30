@@ -13,7 +13,6 @@ namespace SCKRM.Compress
         public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null)
         {
             int stopLoop = 0;
-            bool retVal = false;
 
             //폴더가 존재하는 경우에만 수행
             if (Directory.Exists(sourceDirectory))
@@ -82,17 +81,17 @@ namespace SCKRM.Compress
                         }
                     }
 
-                    retVal = true;
+                    return true;
                 }
                 catch (Exception e)
                 {
-                    retVal = false;
-
                     //오류가 난 경우 생성 했던 파일을 삭제
                     if (File.Exists(outPath))
                         File.Delete(outPath);
 
                     Debug.LogException(e);
+
+                    return false;
                 }
                 finally
                 {
@@ -103,7 +102,10 @@ namespace SCKRM.Compress
                     oZipStream.Close();
                 }
             }
-            return retVal;
+
+            return false;
+
+
 
             void CancelEvent()
             {
@@ -152,7 +154,6 @@ namespace SCKRM.Compress
         public static bool DecompressZipFile(string zipFilePath, string targetDirectory, string password = "", ThreadMetaData threadMetaData = null)
         {
             int stopLoop = 0;
-            bool retVal = false;
 
             //ZIP 파일이 있는 경우만 수행
             if (File.Exists(zipFilePath))
@@ -238,12 +239,12 @@ namespace SCKRM.Compress
                         }
                     }
 
-                    retVal = true;
+                    return true;
                 }
                 catch (Exception e)
                 {
-                    retVal = false;
                     Debug.LogException(e);
+                    return false;
                 }
                 finally
                 {
@@ -254,7 +255,9 @@ namespace SCKRM.Compress
                 }
             }
 
-            return retVal;
+            return false;
+
+
 
             void CancelEvent()
             {
