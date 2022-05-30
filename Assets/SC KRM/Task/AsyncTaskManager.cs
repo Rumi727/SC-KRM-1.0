@@ -70,8 +70,35 @@ namespace SCKRM
         public virtual float progress { get; set; }
         public virtual float maxProgress { get; set; }
 
+
+
+        object cancelEventLockObject = new object();
+        event Action _cancelEvent;
+        /// <summary>
+        /// Thread-Safe, cancelEvent += () => { cancelEvent += () => { }; }; Do not add more methods to this event from inside this event method like this. This causes deadlock
+        /// </summary>
+        public event Action cancelEvent
+        {
+            add
+            {
+                Monitor.Enter(cancelEventLockObject);
+                _cancelEvent += value;
+                Monitor.Exit(cancelEventLockObject);
+            }
+            remove
+            {
+                Monitor.Enter(cancelEventLockObject);
+                _cancelEvent -= value;
+                Monitor.Exit(cancelEventLockObject);
+            }
+        }
+
+
+
         readonly CancellationTokenSource _cancel = new CancellationTokenSource();
         public CancellationToken cancel => _cancel.Token;
+
+
 
         /// <summary>
         /// 이 함수는 메인 스레드에서만 실행할수 있습니다
@@ -85,6 +112,10 @@ namespace SCKRM
 
             if (!cantCancel || force)
             {
+                Monitor.Enter(cancelEventLockObject);
+                _cancelEvent?.Invoke();
+                Monitor.Exit(cancelEventLockObject);
+
                 AsyncTaskManager.asyncTasks.Remove(this);
 
                 AsyncTaskManager.AsyncTaskChangeEventInvoke();
