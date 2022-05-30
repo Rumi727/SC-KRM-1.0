@@ -202,21 +202,7 @@ namespace SCKRM.UI.StatusBar
                     if (allowStatusBarShow)
                         cropTheScreen = true;
 
-                    if (tempCropTheScreen != cropTheScreen)
-                    {
-                        if (!cropTheScreen)
-                            BottomMode();
-                        else
-                            image.sprite = null;
-
-                        tempCropTheScreen = cropTheScreen;
-                    }
-
-                    if (tempTopMode != SaveData.bottomMode)
-                    {
-                        BottomMode();
-                        tempTopMode = SaveData.bottomMode;
-                    }
+                    BottomMode();
                 }
             }
         }
