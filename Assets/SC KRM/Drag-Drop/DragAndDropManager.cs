@@ -51,15 +51,17 @@ namespace SCKRM
             if (!isFolder)
                 return false;
 
-            threadMetaData.name = "notice.running_task.drag_and_drop.resource_pack_load";
-            threadMetaData.info = "";
-
-            threadMetaData.progress = 0;
-            threadMetaData.maxProgress = 1;
-
             string jsonPath = PathTool.Combine(path, "pack.json");
             if (File.Exists(jsonPath))
             {
+                threadMetaData.name = "notice.running_task.drag_and_drop.resource_pack_load";
+                threadMetaData.info = "";
+
+                threadMetaData.progress = 0;
+                threadMetaData.maxProgress = 1;
+
+
+
                 DirectoryInfo directoryInfo = new DirectoryInfo(path);
                 string destPath = PathTool.Combine(Kernel.resourcePackPath, directoryInfo.Name);
 
@@ -144,6 +146,7 @@ namespace SCKRM
                 {
                     bool isFolder = Directory.Exists(path);
                     bool isCompressedFile = false;
+                    string tempFolderPath = "";
                     if (!isFolder)
                     {
                         if (!File.Exists(path))
@@ -151,11 +154,17 @@ namespace SCKRM
                         else if (Path.GetExtension(path).ToLower().Equals(".zip"))
                         {
                             string uuid = Guid.NewGuid().ToString();
-                            string tempFilePath = PathTool.Combine(Kernel.temporaryCachePath, uuid, Path.GetFileNameWithoutExtension(path));
-                            if (!CompressFileManager.DecompressZipFile(path, tempFilePath, "", threadMetaData))
-                                return;
+                            tempFolderPath = PathTool.Combine(Kernel.temporaryCachePath, uuid);
+                            string decompressFolerPath = Path.Combine(tempFolderPath, Path.GetFileNameWithoutExtension(path));
+                            if (!CompressFileManager.DecompressZipFile(path, decompressFolerPath, "", threadMetaData))
+                            {
+                                if (Directory.Exists(tempFolderPath))
+                                    Directory.Delete(tempFolderPath, true);
 
-                            path = tempFilePath;
+                                return;
+                            }
+
+                            path = decompressFolerPath;
                             isFolder = true;
                             isCompressedFile = true;
                         }
@@ -164,6 +173,8 @@ namespace SCKRM
                     if (delegates != null)
                     for (int j = 0; j < delegates.Length; j++)
                     {
+                        threadMetaData.cantCancel = true;
+
                         try
                         {
                             if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos, threadMetaData))
@@ -175,8 +186,8 @@ namespace SCKRM
                         }
                     }
 
-                    if (isCompressedFile && Directory.Exists(path))
-                        Directory.Delete(path, true);
+                    if (isCompressedFile && Directory.Exists(tempFolderPath))
+                        Directory.Delete(tempFolderPath, true);
                 }
             }
         }
