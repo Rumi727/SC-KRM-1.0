@@ -799,7 +799,7 @@ namespace SCKRM
         public static int FloorToInt(this decimal value) => (int)Math.Floor(value);
         #endregion
 
-        #region
+        #region Round
         public static float Round(this float value) => (float)Math.Round(value);
         public static double Round(this double value) => Math.Round(value);
         public static decimal Round(this decimal value) => Math.Round(value);
@@ -811,7 +811,7 @@ namespace SCKRM
         public static float Round(this float value, int digits) => (float)Math.Round(value, digits);
         public static double Round(this double value, int digits) => Math.Round(value, digits);
         public static decimal Round(this decimal value, int digits) => Math.Round(value, digits);
-        #endregion Round
+        #endregion
     }
 
     public static class ListTool
