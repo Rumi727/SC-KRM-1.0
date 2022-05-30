@@ -10,6 +10,7 @@ namespace SCKRM
 {
     public static class MathTool
     {
+        #region Abs
         public static sbyte Abs(this sbyte value)
         {
             if (value < 0)
@@ -65,173 +66,36 @@ namespace SCKRM
             else
                 return value;
         }
+        #endregion
 
-        public static int Sign(this sbyte value)
+        public static int Sign<T>(this T value) where T : IComparable
         {
-            if (value < 0)
+            if (value.CompareTo(0) < 0)
                 return -1;
             else
                 return 1;
         }
 
-        public static short Sign(this short value)
+        #region Clamp
+        public static T Clamp<T>(this T value, T min) where T : IComparable
         {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        public static int Sign(this int value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        public static long Sign(this long value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        public static int Sign(this float value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        public static int Sign(this double value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        public static int Sign(this decimal value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        public static byte Clamp(this byte value, byte min, byte max = byte.MaxValue)
-        {
-            if (value < min)
+            if (value.CompareTo(min) < 0)
                 return min;
-            else if (value > max)
+            else
+                return value;
+        }
+        public static T Clamp<T>(this T value, T min, T max) where T : IComparable
+        {
+            if (value.CompareTo(min) < 0)
+                return min;
+            else if (value.CompareTo(max) > 0)
                 return max;
             else
                 return value;
         }
+        #endregion
 
-        public static sbyte Clamp(this sbyte value, sbyte min, sbyte max = sbyte.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static short Clamp(this short value, short min, short max = short.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static ushort Clamp(this ushort value, ushort min, ushort max = ushort.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static int Clamp(this int value, int min, int max = int.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static uint Clamp(this uint value, uint min, uint max = uint.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static long Clamp(this long value, long min, long max = long.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static ulong Clamp(this ulong value, ulong min, ulong max = ulong.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static float Clamp(this float value, float min, float max = float.PositiveInfinity)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static double Clamp(this double value, double min, double max = double.PositiveInfinity)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
-        public static decimal Clamp(this decimal value, decimal min, decimal max = decimal.MaxValue)
-        {
-            if (value < min)
-                return min;
-            else if (value > max)
-                return max;
-            else
-                return value;
-        }
-
+        #region Clamp01
         public static byte Clamp01(this byte value)
         {
             if (value > 1)
@@ -333,7 +197,9 @@ namespace SCKRM
             else
                 return value;
         }
+        #endregion
 
+        #region Lerp
         public static byte Lerp(this byte current, byte target, byte t, bool unclamped = false)
         {
             if (!unclamped)
@@ -617,7 +483,9 @@ namespace SCKRM
             else
                 return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a);
         }
+        #endregion Lerp
 
+        #region MoveTowards
         public static byte MoveTowards(this byte current, byte target, byte maxDelta)
         {
             if ((target - current) <= maxDelta)
@@ -768,6 +636,7 @@ namespace SCKRM
             float num6 = (float)Math.Sqrt(num5);
             return new Color(current.r + num / num6 * maxDistanceDelta, current.g + num2 / num6 * maxDistanceDelta, current.b + num3 / num6 * maxDistanceDelta, current.a + num4 / num6 * maxDistanceDelta);
         }
+        #endregion
 
 
 
@@ -802,7 +671,8 @@ namespace SCKRM
 
     public static class MathRefTool
     {
-        public static void AbsRef(this ref sbyte value)
+        #region Abs
+        public static void AbsRef<T>(this ref sbyte value)
         {
             if (value < 0)
                 value = (sbyte)-value;
@@ -843,7 +713,9 @@ namespace SCKRM
             if (value < 0)
                 value = -value;
         }
+        #endregion
 
+        #region Sign
         public static void SignRef(this ref sbyte value)
         {
             if (value < 0)
@@ -899,95 +771,24 @@ namespace SCKRM
             else
                 value = 1;
         }
+        #endregion
 
-        public static void ClampRef(this ref byte value, byte min, byte max = byte.MaxValue)
+        #region Clamp
+        public static void ClampRef<T>(this ref T value, T min) where T : struct, IComparable
         {
-            if (value < min)
+            if (value.CompareTo(min) < 0)
                 value = min;
-            else if (value > max)
+        }
+        public static void ClampRef<T>(this ref T value, T min, T max) where T : struct, IComparable
+        {
+            if (value.CompareTo(min) < 0)
+                value = min;
+            else if (value.CompareTo(max) > 0)
                 value = max;
         }
+        #endregion
 
-        public static void ClampRef(this ref sbyte value, sbyte min, sbyte max = sbyte.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref short value, short min, short max = short.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref ushort value, ushort min, ushort max = ushort.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref int value, int min, int max = int.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref uint value, uint min, uint max = uint.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref long value, long min, long max = long.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref ulong value, ulong min, ulong max = ulong.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref float value, float min, float max = float.PositiveInfinity)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref double value, double min, double max = double.PositiveInfinity)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
-        public static void ClampRef(this ref decimal value, decimal min, decimal max = decimal.MaxValue)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-        }
-
+        #region Clamp01
         public static void Clamp01Ref(this ref byte value)
         {
             if (value > 1)
@@ -1067,7 +868,9 @@ namespace SCKRM
             else if (value > 1)
                 value = 1;
         }
+        #endregion
 
+        #region Lerp
         public static void LerpRef(this ref byte current, byte target, byte t, bool unclamped = false)
         {
             if (!unclamped)
@@ -1347,7 +1150,9 @@ namespace SCKRM
                 t.Clamp01Ref();
             current = new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);
         }
+        #endregion
 
+        #region MoveTowards
         public static void MoveTowardsRef(this ref byte current, byte target, byte maxDelta)
         {
             if ((target - current) <= maxDelta)
@@ -1531,6 +1336,7 @@ namespace SCKRM
             float num6 = (float)Math.Sqrt(num5);
             current = new Color(current.r + num / num6 * maxDistanceDelta, current.g + num2 / num6 * maxDistanceDelta, current.b + num3 / num6 * maxDistanceDelta, current.a + num4 / num6 * maxDistanceDelta);
         }
+        #endregion
     }
 
     public static class ListTool
@@ -2881,15 +2687,17 @@ namespace SCKRM
             string[] files = Directory.GetFiles(sourceFolder);
             string[] folders = Directory.GetDirectories(sourceFolder);
 
-            foreach (string file in files)
+            for (int i = 0; i < files.Length; i++)
             {
+                string file = files[i];
                 string name = Path.GetFileName(file);
                 string dest = Path.Combine(destFolder, name);
                 File.Copy(file, dest);
             }
 
-            foreach (string folder in folders)
+            for (int i = 0; i < folders.Length; i++)
             {
+                string folder = folders[i];
                 string name = Path.GetFileName(folder);
                 string dest = Path.Combine(destFolder, name);
                 Copy(folder, dest);
@@ -2925,7 +2733,7 @@ namespace SCKRM
                 else
                     return TimeSpan.FromSeconds(second).ToString(@"s");
             }
-            catch (Exception) { return "--:--"; }
+            catch { return "--:--"; }
         }
 
         /// <summary>
@@ -2984,7 +2792,7 @@ namespace SCKRM
                         return TimeSpan.FromSeconds(second).ToString(@"s");
                 }
             }
-            catch (Exception) { return "--:--"; }
+            catch { return "--:--"; }
         }
 
         public static DateTime ToLunarDate(this DateTime dateTime)
