@@ -42,15 +42,30 @@ namespace SCKRM.Renderer
 
         static void Rerender(CustomAllRenderer[] customRenderers, ThreadMetaData threadMetaData)
         {
+            int stopLoop = 0;
+
             threadMetaData.maxProgress = customRenderers.Length - 1;
+
+            threadMetaData.cancelEvent += CancelEvent;
+            threadMetaData.cantCancel = false;
 
             for (int i = 0; i < customRenderers.Length; i++)
             {
-                CustomAllRenderer customRenderer = customRenderers[i];
-                //customRenderer.Clear();
-                customRenderer.Refresh();
+                Interlocked.Decrement(ref stopLoop);
+                if (Interlocked.Increment(ref stopLoop) > 0)
+                    return;
+
+                customRenderers[i].Refresh();
 
                 threadMetaData.progress = i;
+            }
+
+            void CancelEvent()
+            {
+                Interlocked.Increment(ref stopLoop);
+
+                threadMetaData.maxProgress = 1;
+                threadMetaData.progress = 1;
             }
         }
     }
