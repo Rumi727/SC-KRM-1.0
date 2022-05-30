@@ -344,280 +344,280 @@ namespace SCKRM
         public static byte Lerp(this byte current, byte target, byte t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static byte Lerp(this byte current, byte target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static byte Lerp(this byte current, byte target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static byte Lerp(this byte current, byte target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (byte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, sbyte t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static sbyte Lerp(this sbyte current, sbyte target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, short t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static short Lerp(this short current, short target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (short)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, ushort t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static ushort Lerp(this ushort current, ushort target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, int t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static int Lerp(this int current, int target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (int)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, uint t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static uint Lerp(this uint current, uint target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (uint)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, long t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static long Lerp(this long current, long target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (long)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, ulong t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static ulong Lerp(this ulong current, ulong target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
         public static float Lerp(this float current, float target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return ((1 - t) * current) + (target * t);
         }
 
         public static double Lerp(this double current, double target, double t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return ((1 - t) * current) + (target * t);
         }
 
         public static decimal Lerp(this decimal current, decimal target, decimal t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return ((1 - t) * current) + (target * t);
         }
 
         public static Vector2 Lerp(this Vector2 current, Vector2 target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return new Vector2(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t);
         }
 
         public static Vector3 Lerp(this Vector3 current, Vector3 target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return new Vector3(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t);
         }
 
         public static Vector4 Lerp(this Vector4 current, Vector4 target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return new Vector4(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.z + (target.z - current.z) * t, current.w + (target.w - current.w) * t);
         }
 
         public static Rect Lerp(this Rect current, Rect target, float t, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
             return new Rect(current.x + (target.x - current.x) * t, current.y + (target.y - current.y) * t, current.width + (target.width - current.width) * t, current.height + (target.height - current.height) * t);
         }
 
         public static Color Lerp(this Color current, Color target, float t, bool alpha = true, bool unclamped = false)
         {
             if (!unclamped)
-                t.Clamp01Ref();
+                t = t.Clamp01();
 
             if (alpha)
                 return new Color(current.r + (target.r - current.r) * t, current.g + (target.g - current.g) * t, current.b + (target.b - current.b) * t, current.a + (target.a - current.a) * t);

@@ -132,8 +132,8 @@ namespace SCKRM.Window
             }
             else
             {
-                lerpX.LerpRef(rect.x, time);
-                lerpY.LerpRef(rect.y, time);
+                lerpX = lerpX.Lerp(rect.x, time);
+                lerpY = lerpY.Lerp(rect.y, time);
             }
 
             if (!Lerp)

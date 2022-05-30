@@ -52,8 +52,8 @@ namespace SCKRM.UI
 
                 loopValue += 0.0125f * Kernel.fpsUnscaledDeltaTime;
 
-                tempMinX.LerpRef(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
-                tempMaxX.LerpRef(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                tempMinX = tempMinX.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                tempMaxX = tempMaxX.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
 
                 fillShow.anchorMin = new Vector2((loopValue - 0.25f + tempMinX).Clamp01(), fillShow.anchorMin.y);
                 fillShow.anchorMax = new Vector2((loopValue + tempMaxX).Clamp01(), fillShow.anchorMax.y);

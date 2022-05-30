@@ -106,7 +106,7 @@ public static class EasingFunction
 
     public static double Spring(double start, double end, double value)
     {
-        value.Clamp01Ref();
+        value = value.Clamp01();
         value = (value * Math.PI * (0.2f + 2.5f * value * value * value) * Math.Pow(1f - value, 2.2f) + value) * (1f + (1.2f * (1f - value)));
         return start + (end - start) * value;
     }
@@ -745,7 +745,7 @@ public static class EasingFunction
 
     public static double SpringD(double start, double end, double value)
     {
-        value.Clamp01Ref();
+        value = value.Clamp01();
         end -= start;
 
         // Damn... Thanks http://www.derivative-calculator.net/

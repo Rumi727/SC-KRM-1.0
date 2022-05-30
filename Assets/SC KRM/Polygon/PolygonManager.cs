@@ -175,9 +175,9 @@ public static class PolygonManager
             throw new ArgumentNullException(nameof(lineRenderer));
 
 
-        sides.ClampRef(1);
-        radius.ClampRef(0);
-        width.ClampRef(0);
+        sides = sides.Clamp(1);
+        radius = radius.Clamp(0);
+        width = width.Clamp(0);
 
 
         lineRenderer.startWidth = width;

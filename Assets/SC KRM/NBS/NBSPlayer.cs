@@ -24,7 +24,7 @@ namespace SCKRM.NBS
             get => _index;
             set
             {
-                value.ClampRef(0, nbsFile.nbsNotes.Count - 1);
+                value = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
 
                 tickTimer = 0;
                 _index = value;
@@ -38,7 +38,7 @@ namespace SCKRM.NBS
             get => _tick;
             set
             {
-                value.ClampRef(0, (int)length);
+                value = value.Clamp(0, (int)length);
 
                 tickTimer = 0;
                 _tick = value;

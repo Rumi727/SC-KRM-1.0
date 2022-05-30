@@ -44,9 +44,9 @@ namespace SCKRM.UI
 
                 float size = LayoutUtility.GetPreferredSize(rectTransform, axis);
                 if (max.x <= 0)
-                    size.ClampRef(min.x);
+                    size = size.Clamp(min.x);
                 else
-                    size.ClampRef(min.x, max.x);
+                    size = size.Clamp(min.x, max.x);
 
                 rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, size + offset.x);
             }
@@ -59,9 +59,9 @@ namespace SCKRM.UI
 
                 float size = LayoutUtility.GetPreferredSize(rectTransform, axis);
                 if (max.y <= 0)
-                    size.ClampRef(min.y);
+                    size = size.Clamp(min.y);
                 else
-                    size.ClampRef(min.y, max.y);
+                    size = size.Clamp(min.y, max.y);
 
                 rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, size + offset.y);
             }

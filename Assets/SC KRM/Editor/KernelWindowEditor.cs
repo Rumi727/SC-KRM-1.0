@@ -1503,7 +1503,7 @@ namespace SCKRM.Editor
                                             tempo = EditorGUILayout.FloatField(tempo, GUILayout.Width(30));
 
                                             if (soundMetaData.stream)
-                                                tempo.ClampRef(0);
+                                                tempo = tempo.Clamp(0);
                                         }
                                         else
                                         {
@@ -1511,7 +1511,7 @@ namespace SCKRM.Editor
                                             pitch = EditorGUILayout.FloatField(pitch, GUILayout.Width(30));
 
                                             if (soundMetaData.stream)
-                                                pitch.ClampRef(0);
+                                                pitch = pitch.Clamp(0);
                                         }
 
                                         GUILayout.Label("루프 시작 시간", GUILayout.ExpandWidth(false));
