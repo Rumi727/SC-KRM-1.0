@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using ICSharpCode.SharpZipLib.Zip;
 using SCKRM.Threads;
 using UnityEngine;
@@ -129,6 +130,7 @@ namespace SCKRM.Compress
 
         public static bool DecompressZipFile(string zipFilePath, string targetDirectory, string password = "", ThreadMetaData threadMetaData = null)
         {
+            int stopLoop = 0;
             bool retVal = false;
 
             //ZIP 파일이 있는 경우만 수행
@@ -143,6 +145,9 @@ namespace SCKRM.Compress
 
                         threadMetaData.progress = 0;
                         threadMetaData.maxProgress = zipFile.Count;
+
+                        threadMetaData.cancelEvent += CancelEvent;
+                        threadMetaData.cantCancel = false;
                     }
                 }
 
@@ -159,6 +164,13 @@ namespace SCKRM.Compress
                     //반복하며 파일을 가져옴.
                     while ((theEntry = zipInputStream.GetNextEntry()) != null)
                     {
+                        Interlocked.Decrement(ref stopLoop);
+                        if (Interlocked.Increment(ref stopLoop) > 0)
+                        {
+                            zipInputStream.Close();
+                            return false;
+                        }
+
                         //폴더
                         string directoryName = Path.GetDirectoryName(theEntry.Name);
                         string fileName = Path.GetFileName(theEntry.Name); // 파일
@@ -178,6 +190,14 @@ namespace SCKRM.Compress
                             //파일 복사
                             while (true)
                             {
+                                Interlocked.Decrement(ref stopLoop);
+                                if (Interlocked.Increment(ref stopLoop) > 0)
+                                {
+                                    streamWriter.Close();
+                                    zipInputStream.Close();
+                                    return false;
+                                }
+
                                 size = zipInputStream.Read(data, 0, data.Length);
 
                                 if (size > 0)
@@ -214,6 +234,14 @@ namespace SCKRM.Compress
             }
 
             return retVal;
+
+            void CancelEvent()
+            {
+                Interlocked.Increment(ref stopLoop);
+
+                threadMetaData.maxProgress = 1;
+                threadMetaData.progress = 1;
+            }
         }
     }
 }
