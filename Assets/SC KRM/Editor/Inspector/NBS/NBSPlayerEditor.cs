@@ -50,15 +50,15 @@ namespace SCKRM.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
-                nbsPlayer.volume = EditorGUILayout.Slider(nbsPlayer.volume, 0, 1);
+                nbsPlayer.volume = EditorGUILayout.Slider(nbsPlayer.volume, 0, 1f.Max(nbsPlayer.volume));
                 GUILayout.Label("반복", GUILayout.ExpandWidth(false));
                 nbsPlayer.loop = EditorGUILayout.Toggle(nbsPlayer.loop, GUILayout.Width(15));
 
                 GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                nbsPlayer.pitch = EditorGUILayout.Slider(nbsPlayer.pitch, -3, 3);
+                nbsPlayer.pitch = EditorGUILayout.Slider(nbsPlayer.pitch, -3f.Min(nbsPlayer.pitch), 3f.Max(nbsPlayer.pitch));
 
                 GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                nbsPlayer.tempo = EditorGUILayout.Slider(nbsPlayer.tempo, -3, 3);
+                nbsPlayer.tempo = EditorGUILayout.Slider(nbsPlayer.tempo, -3f.Min(nbsPlayer.tempo), 3f.Max(nbsPlayer.tempo));
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -71,9 +71,9 @@ namespace SCKRM.Editor
                 if (nbsPlayer.spatial)
                 {
                     GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                    nbsPlayer.minDistance = EditorGUILayout.Slider(nbsPlayer.minDistance, 0, 64);
+                    nbsPlayer.minDistance = EditorGUILayout.Slider(nbsPlayer.minDistance, 0, 64f.Max(nbsPlayer.minDistance));
                     GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                    nbsPlayer.maxDistance = EditorGUILayout.Slider(nbsPlayer.maxDistance, 0, 64);
+                    nbsPlayer.maxDistance = EditorGUILayout.Slider(nbsPlayer.maxDistance, 0, 64f.Max(nbsPlayer.maxDistance));
 
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();

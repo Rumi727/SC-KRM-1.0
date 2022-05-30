@@ -41,11 +41,11 @@ namespace SCKRM.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 GUILayout.Label("볼륨", GUILayout.ExpandWidth(false));
-                soundObject.volume = EditorGUILayout.Slider(soundObject.volume, 0, 1);
+                soundObject.volume = EditorGUILayout.Slider(soundObject.volume, 0f.Min(soundObject.volume), 1f.Max(soundObject.volume));
                 GUILayout.Label("반복", GUILayout.ExpandWidth(false));
                 soundObject.loop = EditorGUILayout.Toggle(soundObject.loop, GUILayout.Width(15));
 
-                int minPitch = -3;
+                float minPitch = -3;
                 if (soundObject.metaData.stream)
                     minPitch = 0;
 
@@ -55,12 +55,13 @@ namespace SCKRM.Editor
                     soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, soundObject.tempo.Abs() * 0.5f, soundObject.tempo.Abs() * 2f);
 
                     GUILayout.Label("템포", GUILayout.ExpandWidth(false));
-                    soundObject.tempo = EditorGUILayout.Slider(soundObject.tempo, minPitch, 3);
+                    soundObject.tempo = EditorGUILayout.Slider(soundObject.tempo, minPitch.Min(soundObject.tempo), 3f.Max(soundObject.tempo));
                 }
                 else
                 {
                     GUILayout.Label("피치", GUILayout.ExpandWidth(false));
-                    soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, minPitch, 3);
+                    soundObject.pitch = EditorGUILayout.Slider(soundObject.pitch, minPitch.Min(soundObject.pitch), 3f.Max(soundObject.pitch));
+                    ;
                 }
 
                 EditorGUILayout.EndHorizontal();
@@ -74,9 +75,9 @@ namespace SCKRM.Editor
                 if (soundObject.spatial)
                 {
                     GUILayout.Label("최소 거리", GUILayout.ExpandWidth(false));
-                    soundObject.minDistance = EditorGUILayout.Slider(soundObject.minDistance, 0, 64);
+                    soundObject.minDistance = EditorGUILayout.Slider(soundObject.minDistance, 0, 64f.Max(soundObject.minDistance));
                     GUILayout.Label("최대 거리", GUILayout.ExpandWidth(false));
-                    soundObject.maxDistance = EditorGUILayout.Slider(soundObject.maxDistance, 0, 64);
+                    soundObject.maxDistance = EditorGUILayout.Slider(soundObject.maxDistance, 0, 64f.Max(soundObject.maxDistance));
 
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
