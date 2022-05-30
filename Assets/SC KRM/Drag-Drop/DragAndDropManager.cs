@@ -172,19 +172,21 @@ namespace SCKRM
                         }
                     }
 
-                    if (delegates != null)
-                    for (int j = 0; j < delegates.Length; j++)
-                    {
-                        threadMetaData.cantCancel = true;
+                    threadMetaData.cantCancel = true;
 
-                        try
+                    if (delegates != null)
+                    {
+                        for (int j = 0; j < delegates.Length; j++)
                         {
-                            if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos, threadMetaData))
-                                break;
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogException(e);
+                            try
+                            {
+                                if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos, threadMetaData))
+                                    break;
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                            }
                         }
                     }
 
