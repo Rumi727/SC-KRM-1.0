@@ -74,6 +74,8 @@ namespace SCKRM
                 Directory.CreateDirectory(destPath);
                 DirectoryTool.Copy(path, destPath);
 
+                threadMetaData.progress = 1;
+
                 return true;
             }
 
