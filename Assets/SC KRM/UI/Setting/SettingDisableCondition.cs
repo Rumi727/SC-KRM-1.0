@@ -12,28 +12,22 @@ using UnityEngine;
 namespace SCKRM.UI.Setting
 {
     [AddComponentMenu("커널/UI/비활성화 조건 (세이브 파일 연동)")]
-    public class SettingDisableCondition : Setting
+    public sealed class SettingDisableCondition : MonoBehaviour
     {
+        [SerializeField] Setting _setting; public Setting setting { get => _setting; set => _setting = value; }
         [SerializeField] GameObject _disableGameObject; public GameObject disableGameObject { get => _disableGameObject; set => _disableGameObject = value; }
-
         [SerializeField] bool _reversal = false; public bool reversal { get => _reversal; set => _reversal = value; }
 
-        protected override async UniTask<bool> Awake()
+
+
+        void Update()
         {
-            if (await base.Awake())
-                return true;
+            if (setting == null)
+                return;
 
-            if (type != typeof(bool))
-                enabled = false;
-
-            return false;
-        }
-
-        protected override void Update()
-        {
-            if (InitialLoadManager.isInitialLoadEnd && isLoad)
+            if (InitialLoadManager.isInitialLoadEnd && setting.isLoad && setting.variableType == Setting.VariableType.Bool)
             {
-                if ((bool)GetValue())
+                if ((bool)setting.GetValue())
                 {
                     if (reversal)
                     {

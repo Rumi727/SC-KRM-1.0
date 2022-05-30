@@ -19,39 +19,12 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            if (SettingEditor.saveLoadClassList == null)
-                SaveLoadManager.InitializeAll<GeneralSaveLoadAttribute>(out SettingEditor.saveLoadClassList);
-
+            UseProperty("_setting", "감지 할 설정");
             UseProperty("_disableGameObject", "비활성화 할 오브젝트");
 
             DrawLine();
 
-            SaveLoadClass selectedSaveLoadClass = null;
-
-            string[] fullNames = new string[SettingEditor.saveLoadClassList.Length];
-            for (int i = 0; i < SettingEditor.saveLoadClassList.Length; i++)
-            {
-                SaveLoadClass saveLoadClass = SettingEditor.saveLoadClassList[i];
-                string fullName = saveLoadClass.name;
-                fullNames[i] = fullName;
-
-                if (fullName == editor.saveLoadClassName)
-                    selectedSaveLoadClass = saveLoadClass;
-            }
-
-            editor.saveLoadClassName = UsePropertyAndDrawStringArray("_saveLoadClassName", "값을 변경 할 클래스", editor.saveLoadClassName, fullNames);
-
-            if (selectedSaveLoadClass != null)
-                editor.variableName = UsePropertyAndDrawStringArray("_variableName", "값을 변경 할 변수", editor.variableName, selectedSaveLoadClass.GetVariableNames());
-
-            DrawLine();
-
             UseProperty("_reversal", "반전");
-
-            if (editor.propertyInfo != null)
-                EditorGUILayout.LabelField(editor.type + " " + editor.propertyInfo.Name + " = " + editor.propertyInfo.GetValue(editor.type));
-            else if (editor.fieldInfo != null)
-                EditorGUILayout.LabelField(editor.type + " " + editor.fieldInfo.Name + " = " + editor.fieldInfo.GetValue(editor.type));
 
             if (GUI.changed)
                 EditorUtility.SetDirty(target);

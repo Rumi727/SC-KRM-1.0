@@ -14,8 +14,13 @@ using UnityEngine;
 
 namespace SCKRM.UI.Setting
 {
-    public class Setting : UI
+    public abstract class Setting : UI
     {
+        public static Dictionary<string, Setting> settingInstance { get; } = new Dictionary<string, Setting>();
+        public static Dictionary<string, List<Setting>> settingInstances { get; } = new Dictionary<string, List<Setting>>();
+
+
+
         [SerializeField] string _saveLoadClassName = ""; public string saveLoadClassName { get => _saveLoadClassName; set => _saveLoadClassName = value; }
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }
 
@@ -37,31 +42,14 @@ namespace SCKRM.UI.Setting
 
         public bool isDefault { get; protected set; } = true;
 
-        public enum VariableType
-        {
-            Char,
-            String,
-            Bool,
-            Byte,
-            Sbyte,
-            Short,
-            Int,
-            Long,
-            Ushort,
-            Uint,
-            Ulong,
-            Float,
-            Double,
-            Decimal,
-            JColor,
-            JColor32
-        }
+        public bool isLoad { get; private set; } = false;
+
+
 
         /// <returns>is Cancel?</returns>
-        protected bool isLoad { get; private set; } = false;
         new protected virtual async UniTask<bool> Awake()
         {
-            if (await UniTask.WaitUntil(() => InitialLoadManager.isInitialLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
+            if (await UniTask.WaitUntil(() => InitialLoadManager.isSettingLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;
 
             foreach (var variableType in SaveLoadManager.generalSLCList)
@@ -130,6 +118,17 @@ namespace SCKRM.UI.Setting
                 variableType = VariableType.JColor32;
 
             isLoad = true;
+
+            string key = saveLoadClassName + "." + variableName;
+            if (!settingInstances.ContainsKey(key))
+                settingInstances.Add(key, new List<Setting>() { this });
+            else
+                settingInstances[key].Add(this);
+
+            if (!settingInstance.ContainsKey(key))
+                settingInstance.Add(key, this);
+
+
             return false;
         }
 
@@ -501,9 +500,32 @@ namespace SCKRM.UI.Setting
         }
 
         public void SettingInfoInvoke(NameSpacePathPair value) => SettingInfoManager.Show(new NameSpacePathPair(nameTextRenderer.path, nameTextRenderer.nameSpace), value, hotkeyToDisplays);
+        public abstract void ScriptOnValueChanged(bool settingInfoInvoke = true);
+
+
+
+        public enum VariableType
+        {
+            Char,
+            String,
+            Bool,
+            Byte,
+            Sbyte,
+            Short,
+            Int,
+            Long,
+            Ushort,
+            Uint,
+            Ulong,
+            Float,
+            Double,
+            Decimal,
+            JColor,
+            JColor32
+        }
     }
 
-    public class SettingDrag : Setting
+    public abstract class SettingDrag : Setting
     {
         [SerializeField] float _mouseSensitivity = 1; public float mouseSensitivity { get => _mouseSensitivity; set => _mouseSensitivity = value; }
 

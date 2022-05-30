@@ -84,7 +84,7 @@ namespace SCKRM.UI.Setting
             ScriptOnValueChanged();
         }
 
-        public virtual void ScriptOnValueChanged(bool settingInfoInvoke = true)
+        public override void ScriptOnValueChanged(bool settingInfoInvoke = true)
         {
             Update();
 
