@@ -8,12 +8,12 @@ namespace SCKRM.Renderer
 {
     public static class RendererManager
     {
-        public static void AllRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread).Forget();
+        public static void AllRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread);
 
-        public static void AllTextRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread).Forget();
+        public static void AllTextRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread);
 
         static ThreadMetaData rerenderThread;
-        public static async UniTaskVoid Rerender(CustomAllRenderer[] customRenderers, bool thread = true)
+        public static void Rerender(CustomAllRenderer[] customRenderers, bool thread = true)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Rerender));
@@ -28,9 +28,6 @@ namespace SCKRM.Renderer
 
                 ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, customRenderers, "notice.running_task.rerender.name");
                 rerenderThread = threadMetaData;
-
-                if (await UniTask.WaitUntil(() => threadMetaData.thread == null, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                    return;
             }
             else
             {

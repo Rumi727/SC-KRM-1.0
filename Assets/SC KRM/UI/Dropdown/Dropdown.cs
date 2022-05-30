@@ -186,7 +186,7 @@ namespace SCKRM.UI
 
                 dropdownItem.toggle.interactable = true;
 
-                RendererManager.Rerender(dropdownItem.renderers, false).Forget();
+                RendererManager.Rerender(dropdownItem.renderers, false);
 
                 dropdownItems.Add(dropdownItem);
             }

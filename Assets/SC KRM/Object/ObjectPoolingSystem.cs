@@ -102,7 +102,7 @@ namespace SCKRM.Object
                     objectList.Object.RemoveAt(i);
                 }
 
-                RendererManager.Rerender(objectPooling.renderers, false).Forget();
+                RendererManager.Rerender(objectPooling.renderers, false);
 
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                 objectPooling._actived = true;
@@ -117,7 +117,7 @@ namespace SCKRM.Object
                 objectPooling.name = objectKey;
                 objectPooling.objectKey = objectKey;
 
-                RendererManager.Rerender(objectPooling.renderers, false).Forget();
+                RendererManager.Rerender(objectPooling.renderers, false);
 
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                 objectPooling._actived = true;
