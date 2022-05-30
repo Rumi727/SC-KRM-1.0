@@ -1,11 +1,6 @@
-using SCKRM.Input;
 using SCKRM.UI.StatusBar;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
@@ -16,12 +11,21 @@ namespace SCKRM.UI
         [SerializeField] bool _customSetting; public bool customSetting { get => _customSetting; set => _customSetting = value; }
         [SerializeField] bool _customGuiSize; public bool customGuiSize { get => _customGuiSize; set => _customGuiSize = value; }
         [SerializeField] bool _worldRenderMode; public bool worldRenderMode { get => _worldRenderMode; set => _worldRenderMode = value; }
+        [SerializeField] float _planeDistance; public float planeDistance { get => _planeDistance; set => _planeDistance = value; }
 
         [NonSerialized] Canvas _canvas; public Canvas canvas => _canvas = this.GetComponentFieldSave(_canvas, ComponentTool.GetComponentMode.destroyIfNull);
 
         [SerializeField, HideInInspector] RectTransform safeScreen;
         DrivenRectTransformTracker tracker;
-        void Update()
+
+        protected override void OnEnable() => Canvas.preWillRenderCanvases += Refresh;
+        protected override void OnDisable()
+        {
+            tracker.Clear();
+            Canvas.preWillRenderCanvases -= Refresh;
+        }
+
+        void Refresh()
         {
             if (canvas == null)
                 return;
@@ -42,7 +46,6 @@ namespace SCKRM.UI
             {
                 if (!worldRenderMode)
                 {
-                    SafeScreenSetting();
 #if UNITY_EDITOR
                     if (Application.isPlaying)
 #endif
@@ -55,19 +58,35 @@ namespace SCKRM.UI
 
                         if (StatusBarManager.cropTheScreen && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         {
+                            SafeScreenSetting();
+
                             if (StatusBarManager.SaveData.bottomMode)
                                 safeScreen.offsetMin = new Vector2(safeScreen.offsetMin.x, (taskBarManager.rect.size.y + taskBarManager.anchoredPosition.y) * guiSize);
                             else
                                 safeScreen.offsetMax = new Vector2(0, -(taskBarManager.rect.size.y - taskBarManager.anchoredPosition.y) * guiSize);
                         }
+                        else
+                            SafeScreenDestroy();
                     }
+#if UNITY_EDITOR
+                    else
+                    {
+                        tracker.Clear();
+
+                        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                            SafeScreenSetting();
+                        else
+                            SafeScreenDestroy();
+                    }
+#endif
                 }
                 else
+                {
+                    SafeScreenDestroy();
                     WorldRenderCamera();
+                }
             }
         }
-
-        protected override void OnDisable() => tracker.Clear();
 
         void SafeScreenSetting()
         {
@@ -75,12 +94,17 @@ namespace SCKRM.UI
             {
 #if UNITY_EDITOR
                 if (Application.isPlaying)
-                    safeScreen = Instantiate(Kernel.emptyRectTransform, transform.parent);
-                else
-                    safeScreen = new GameObject().AddComponent<RectTransform>();
-#else
-                safeScreen = Instantiate(Kernel.emptyRectTransform, transform.parent);
 #endif
+                {
+                    if (Kernel.emptyRectTransform == null)
+                        return;
+
+                    safeScreen = Instantiate(Kernel.emptyRectTransform, transform.parent);
+                }
+#if UNITY_EDITOR
+                else
+#endif
+                    safeScreen = new GameObject().AddComponent<RectTransform>();
 
                 safeScreen.name = "Safe Screen";
             }
@@ -116,85 +140,73 @@ namespace SCKRM.UI
             }
         }
 
+        void SafeScreenDestroy()
+        {
+            if (safeScreen == null)
+                return;
+
+            int childCount = safeScreen.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Transform childtransform = safeScreen.GetChild(i);
+                if (childtransform != safeScreen)
+                {
+                    childtransform.SetParent(transform);
+
+                    i--;
+                    childCount--;
+                }
+            }
+
+            DestroyImmediate(safeScreen.gameObject);
+        }
+
         void WorldRenderCamera()
         {
-            canvas.worldCamera = UnityEngine.Camera.main;
+            tracker.Clear();
+            tracker.Add(this, rectTransform, DrivenTransformProperties.All);
 
-            if (canvas.worldCamera == null)
+
+            UnityEngine.Camera camera = canvas.worldCamera;
+            if (camera == null)
             {
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
                 return;
             }
-
-#if UNITY_EDITOR
-            if (Application.isPlaying)
-            {
-                if (transform.parent != UnityEngine.Camera.main.transform)
-                    transform.SetParent(UnityEngine.Camera.main.transform);
-
+            else
                 canvas.renderMode = RenderMode.WorldSpace;
 
-                transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
-                transform.localEulerAngles = Vector3.zero;
-            }
-            else
-                canvas.renderMode = RenderMode.ScreenSpaceCamera;
-#else
-            if (transform.parent != UnityEngine.Camera.main.transform)
-                transform.SetParent(UnityEngine.Camera.main.transform);
 
-            canvas.renderMode = RenderMode.WorldSpace;
 
-            transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
-            transform.localEulerAngles = Vector3.zero;
-#endif
+            transform.rotation = camera.transform.rotation;
+            transform.position = camera.transform.position + (transform.forward * planeDistance);
+            
 
-            float width = Screen.width * (1 / UIManager.currentGuiSize);
-            float height;
-#if UNITY_EDITOR
-            if (Application.isPlaying && StatusBarManager.cropTheScreen)
-#else
-            if (StatusBarManager.cropTheScreen)
-#endif
-                height = Screen.height * (1 / UIManager.currentGuiSize) + (StatusBarManager.instance.rectTransform.anchoredPosition.y - StatusBarManager.instance.rectTransform.rect.size.y);
-            else
-                height = Screen.height * (1 / UIManager.currentGuiSize);
+
+            float width = camera.pixelWidth * (1 / UIManager.currentGuiSize);
+            float height = camera.pixelHeight * (1 / UIManager.currentGuiSize);
 
             rectTransform.sizeDelta = new Vector2(width, height);
-            rectTransform.pivot = new Vector2(0.5f, 0.5f);
-
-            UnityEngine.Camera camera;
-            if (canvas.worldCamera != null)
-                camera = canvas.worldCamera;
-            else
-                camera = UnityEngine.Camera.main;
+            rectTransform.pivot = Vector2.one * 0.5f;
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.zero;
 
 
 
-            float spriteX;
-            float spriteY;
-
-            float screenX;
-            float screenY;
+            float screenX, screenY;
 
             if (camera.orthographic)
             {
-                spriteX = rectTransform.sizeDelta.x;
-                spriteY = rectTransform.sizeDelta.y;
-
                 screenY = camera.orthographicSize * 2;
                 screenX = screenY / height * width;
             }
             else
             {
-                spriteX = rectTransform.sizeDelta.x;
-                spriteY = rectTransform.sizeDelta.y;
-
-                screenY = Mathf.Tan(camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * 2.0f * transform.localPosition.z;
+                screenY = Mathf.Tan(camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * 2.0f * planeDistance;
                 screenX = screenY / height * width;
             }
 
-            transform.localScale = new Vector3(screenX / spriteX, screenY / spriteY, screenX / spriteX);
+            transform.localScale = new Vector3(screenX / width, screenY / height, screenX / width);
         }
     }
 }

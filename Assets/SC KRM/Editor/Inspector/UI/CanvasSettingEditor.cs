@@ -24,7 +24,12 @@ namespace SCKRM.Editor
             UseProperty("_customSetting", "커스텀 설정");
 
             if (!editor.customSetting)
+            {
                 UseProperty("_worldRenderMode", "월드 렌더 모드");
+
+                if (editor.worldRenderMode)
+                    UseProperty("_planeDistance");
+            }
 
             if (!editor.customSetting || editor.canvas.renderMode != UnityEngine.RenderMode.WorldSpace)
             {
