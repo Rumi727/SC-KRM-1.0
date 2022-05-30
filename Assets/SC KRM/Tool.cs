@@ -812,6 +812,608 @@ namespace SCKRM
         public static double Round(this double value, int digits) => Math.Round(value, digits);
         public static decimal Round(this decimal value, int digits) => Math.Round(value, digits);
         #endregion
+
+        #region Min
+        public static sbyte Min(sbyte a, sbyte b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static byte Min(byte a, byte b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static short Min(short a, short b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static ushort Min(ushort a, ushort b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static int Min(int a, int b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static uint Min(uint a, uint b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static long Min(long a, long b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static ulong Min(ulong a, ulong b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static float Min(float a, float b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static double Min(double a, double b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static decimal Min(decimal a, decimal b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+        #endregion
+
+        #region Min Array
+        public static sbyte Min(params sbyte[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            sbyte num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static byte Min(params byte[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            byte num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static short Min(params short[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            short num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static ushort Min(params ushort[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            ushort num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static int Min(params int[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            int num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static uint Min(params uint[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            uint num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static long Min(params long[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            long num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static ulong Min(params ulong[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            ulong num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static float Min(params float[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            float num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static double Min(params double[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            double num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static decimal Min(params decimal[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            decimal num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+        #endregion
+
+        #region Max
+        public static sbyte Max(sbyte a, sbyte b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static byte Max(byte a, byte b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static short Max(short a, short b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static ushort Max(ushort a, ushort b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static int Max(int a, int b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static uint Max(uint a, uint b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static long Max(long a, long b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static ulong Max(ulong a, ulong b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static float Max(float a, float b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static double Max(double a, double b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static decimal Max(decimal a, decimal b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+        #endregion
+
+        #region Max Array
+        public static sbyte Max(params sbyte[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            sbyte num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static byte Max(params byte[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            byte num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static short Max(params short[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            short num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static ushort Max(params ushort[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            ushort num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static int Max(params int[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            int num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static uint Max(params uint[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            uint num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static long Max(params long[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            long num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static ulong Max(params ulong[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            ulong num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static float Max(params float[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            float num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static double Max(params double[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            double num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static decimal Max(params decimal[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            decimal num2 = values[0];
+            for (int i = 1; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+        #endregion
     }
 
     public static class ListTool
