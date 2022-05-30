@@ -112,6 +112,8 @@ namespace SCKRM
 
             if (!cantCancel || force)
             {
+                cantCancel = true;
+
                 Monitor.Enter(cancelEventLockObject);
                 _cancelEvent?.Invoke();
                 Monitor.Exit(cancelEventLockObject);
