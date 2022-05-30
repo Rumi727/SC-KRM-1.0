@@ -24,7 +24,7 @@ public class Postest : MonoBehaviour
 
     MapEffect mapEffect;
 
-    void Awake()
+    void Start()
     {
         soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
         map = new Map(new MapInfo(), new MapEffect());
