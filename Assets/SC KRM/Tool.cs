@@ -1,10 +1,15 @@
+using ExtendedNumerics;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
+using Vector4 = UnityEngine.Vector4;
 
 namespace SCKRM
 {
@@ -66,6 +71,22 @@ namespace SCKRM
             else
                 return value;
         }
+
+        public static BigInteger Abs(this BigInteger value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
+
+        public static BigDecimal Abs(this BigDecimal value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
+        }
         #endregion Abs
 
         #region Sign
@@ -120,6 +141,22 @@ namespace SCKRM
         public static int Sign(this decimal value)
         {
             if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static int Sign(this BigInteger value)
+        {
+            if (value < BigInteger.Zero)
+                return -1;
+            else
+                return 1;
+        }
+
+        public static int Sign(this BigDecimal value)
+        {
+            if (value < BigDecimal.Zero)
                 return -1;
             else
                 return 1;
@@ -236,6 +273,42 @@ namespace SCKRM
             else
                 return value;
         }
+
+        public static BigInteger Clamp(this BigInteger value, BigInteger min)
+        {
+            if (value < min)
+                return min;
+            else
+                return value;
+        }
+
+        public static BigInteger Clamp(this BigInteger value, BigInteger min, BigInteger max)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static BigDecimal Clamp(this BigDecimal value, BigDecimal min)
+        {
+            if (value < min)
+                return min;
+            else
+                return value;
+        }
+
+        public static BigDecimal Clamp(this BigDecimal value, BigDecimal min, BigDecimal max)
+        {
+            if (value < min)
+                return min;
+            else if (value > max)
+                return max;
+            else
+                return value;
+        }
         #endregion
 
         #region Clamp01
@@ -337,6 +410,26 @@ namespace SCKRM
                 return 0;
             else if (value > 1)
                 return 1;
+            else
+                return value;
+        }
+
+        public static BigInteger Clamp01(this BigInteger value)
+        {
+            if (value < 0)
+                return BigInteger.Zero;
+            else if (value > 1)
+                return BigInteger.One;
+            else
+                return value;
+        }
+
+        public static BigDecimal Clamp01(this BigDecimal value)
+        {
+            if (value < 0)
+                return BigDecimal.Zero;
+            else if (value > 1)
+                return BigDecimal.One;
             else
                 return value;
         }
@@ -588,6 +681,20 @@ namespace SCKRM
             return ((1 - t) * current) + (target * t);
         }
 
+        public static BigInteger Lerp(this BigInteger current, BigInteger target, BigInteger t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return ((1 - t) * current) + (target * t);
+        }
+
+        public static BigDecimal Lerp(this BigDecimal current, BigDecimal target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+            return ((1 - t) * current) + (target * t);
+        }
+
         public static Vector2 Lerp(this Vector2 current, Vector2 target, float t, bool unclamped = false)
         {
             if (!unclamped)
@@ -717,6 +824,22 @@ namespace SCKRM
             return current + (target - current).Sign() * maxDelta;
         }
 
+        public static BigInteger MoveTowards(this BigInteger current, BigInteger target, BigInteger maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+
+        public static BigDecimal MoveTowards(this BigDecimal current, BigDecimal target, BigDecimal maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + (target - current).Sign() * maxDelta;
+        }
+
         public static Vector2 MoveTowards(this Vector2 current, Vector2 target, float maxDistanceDelta)
         {
             float num = target.x - current.x;
@@ -785,30 +908,36 @@ namespace SCKRM
         public static float Ceil(this float value) => (float)Math.Ceiling(value);
         public static double Ceil(this double value) => Math.Ceiling(value);
         public static decimal Ceil(this decimal value) => Math.Ceiling(value);
+        public static BigDecimal Ceil(this BigDecimal value) => BigDecimal.Ceiling(value);
 
         public static int CeilToInt(this float value) => (int)Math.Ceiling(value);
         public static int CeilToInt(this double value) => (int)Math.Ceiling(value);
         public static int CeilToInt(this decimal value) => (int)Math.Ceiling(value);
+        public static BigInteger CeilToInt(this BigDecimal value) => (BigInteger)BigDecimal.Ceiling(value);
         #endregion
 
         #region Floor
         public static float Floor(this float value) => (float)Math.Floor(value);
         public static double Floor(this double value) => Math.Floor(value);
         public static decimal Floor(this decimal value) => Math.Floor(value);
+        public static BigDecimal Floor(this BigDecimal value) => BigDecimal.Floor(value);
 
         public static int FloorToInt(this float value) => (int)Math.Floor(value);
         public static int FloorToInt(this double value) => (int)Math.Floor(value);
         public static int FloorToInt(this decimal value) => (int)Math.Floor(value);
+        public static BigInteger FloorToInt(this BigDecimal value) => (BigInteger)BigDecimal.Floor(value);
         #endregion
 
         #region Round
         public static float Round(this float value) => (float)Math.Round(value);
         public static double Round(this double value) => Math.Round(value);
         public static decimal Round(this decimal value) => Math.Round(value);
+        public static BigDecimal Round(this BigDecimal value) => BigDecimal.Round(value);
 
         public static int RoundToInt(this float value) => (int)Math.Round(value);
         public static int RoundToInt(this double value) => (int)Math.Round(value);
         public static int RoundToInt(this decimal value) => (int)Math.Round(value);
+        public static BigInteger RoundToInt(this BigDecimal value) => BigDecimal.Round(value);
 
         public static float Round(this float value, int digits) => (float)Math.Round(value, digits);
         public static double Round(this double value, int digits) => Math.Round(value, digits);
@@ -903,10 +1032,26 @@ namespace SCKRM
             else
                 return b;
         }
+
+        public static BigInteger Min(this BigInteger a, BigInteger b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        public static BigDecimal Min(this BigDecimal a, BigDecimal b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
         #endregion
 
         #region Min Array
-        public static sbyte Min(params sbyte[] values)
+        public static sbyte Min(this sbyte value, params sbyte[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -915,8 +1060,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            sbyte num2 = values[0];
-            for (int i = 1; i < length; i++)
+            sbyte num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -925,7 +1070,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static byte Min(params byte[] values)
+        public static byte Min(this byte value, params byte[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -934,8 +1079,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            byte num2 = values[0];
-            for (int i = 1; i < length; i++)
+            byte num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -944,7 +1089,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static short Min(params short[] values)
+        public static short Min(this short value, params short[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -953,8 +1098,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            short num2 = values[0];
-            for (int i = 1; i < length; i++)
+            short num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -963,7 +1108,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static ushort Min(params ushort[] values)
+        public static ushort Min(this ushort value, params ushort[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -972,8 +1117,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            ushort num2 = values[0];
-            for (int i = 1; i < length; i++)
+            ushort num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -982,7 +1127,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static int Min(params int[] values)
+        public static int Min(this int value, params int[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -991,8 +1136,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            int num2 = values[0];
-            for (int i = 1; i < length; i++)
+            int num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1001,7 +1146,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static uint Min(params uint[] values)
+        public static uint Min(this uint value, params uint[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1010,8 +1155,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            uint num2 = values[0];
-            for (int i = 1; i < length; i++)
+            uint num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1020,7 +1165,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static long Min(params long[] values)
+        public static long Min(this long value, params long[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1029,8 +1174,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            long num2 = values[0];
-            for (int i = 1; i < length; i++)
+            long num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1039,7 +1184,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static ulong Min(params ulong[] values)
+        public static ulong Min(this ulong value, params ulong[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1048,8 +1193,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            ulong num2 = values[0];
-            for (int i = 1; i < length; i++)
+            ulong num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1058,7 +1203,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static float Min(params float[] values)
+        public static float Min(this float value, params float[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1067,8 +1212,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            float num2 = values[0];
-            for (int i = 1; i < length; i++)
+            float num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1077,7 +1222,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static double Min(params double[] values)
+        public static double Min(this double value, params double[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1086,8 +1231,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            double num2 = values[0];
-            for (int i = 1; i < length; i++)
+            double num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1096,7 +1241,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static decimal Min(params decimal[] values)
+        public static decimal Min(this decimal value, params decimal[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1105,8 +1250,46 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            decimal num2 = values[0];
-            for (int i = 1; i < length; i++)
+            decimal num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static BigInteger Min(this BigInteger value, params BigInteger[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            BigInteger num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static BigDecimal Min(this BigDecimal value, params BigDecimal[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            BigDecimal num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] < num2)
                     num2 = values[i];
@@ -1204,10 +1387,26 @@ namespace SCKRM
             else
                 return b;
         }
+
+        public static BigInteger Max(this BigInteger a, BigInteger b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
+
+        public static BigDecimal Max(this BigDecimal a, BigDecimal b)
+        {
+            if (a > b)
+                return a;
+            else
+                return b;
+        }
         #endregion
 
         #region Max Array
-        public static sbyte Max(params sbyte[] values)
+        public static sbyte Max(this sbyte value, params sbyte[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1216,8 +1415,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            sbyte num2 = values[0];
-            for (int i = 1; i < length; i++)
+            sbyte num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1226,7 +1425,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static byte Max(params byte[] values)
+        public static byte Max(this byte value, params byte[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1235,8 +1434,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            byte num2 = values[0];
-            for (int i = 1; i < length; i++)
+            byte num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1245,7 +1444,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static short Max(params short[] values)
+        public static short Max(this short value, params short[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1254,8 +1453,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            short num2 = values[0];
-            for (int i = 1; i < length; i++)
+            short num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1264,7 +1463,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static ushort Max(params ushort[] values)
+        public static ushort Max(this ushort value, params ushort[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1273,8 +1472,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            ushort num2 = values[0];
-            for (int i = 1; i < length; i++)
+            ushort num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1283,7 +1482,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static int Max(params int[] values)
+        public static int Max(this int value, params int[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1292,8 +1491,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            int num2 = values[0];
-            for (int i = 1; i < length; i++)
+            int num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1302,7 +1501,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static uint Max(params uint[] values)
+        public static uint Max(this uint value, params uint[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1311,8 +1510,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            uint num2 = values[0];
-            for (int i = 1; i < length; i++)
+            uint num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1321,7 +1520,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static long Max(params long[] values)
+        public static long Max(this long value, params long[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1330,8 +1529,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            long num2 = values[0];
-            for (int i = 1; i < length; i++)
+            long num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1340,7 +1539,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static ulong Max(params ulong[] values)
+        public static ulong Max(this ulong value, params ulong[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1349,8 +1548,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            ulong num2 = values[0];
-            for (int i = 1; i < length; i++)
+            ulong num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1359,7 +1558,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static float Max(params float[] values)
+        public static float Max(this float value, params float[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1368,8 +1567,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            float num2 = values[0];
-            for (int i = 1; i < length; i++)
+            float num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1378,7 +1577,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static double Max(params double[] values)
+        public static double Max(this double value, params double[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1387,8 +1586,8 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            double num2 = values[0];
-            for (int i = 1; i < length; i++)
+            double num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
@@ -1397,7 +1596,7 @@ namespace SCKRM
             return num2;
         }
 
-        public static decimal Max(params decimal[] values)
+        public static decimal Max(this decimal value, params decimal[] values)
         {
             if (values == null)
                 throw new ArgumentNullException();
@@ -1406,8 +1605,46 @@ namespace SCKRM
             if (length == 0)
                 return 0;
 
-            decimal num2 = values[0];
-            for (int i = 1; i < length; i++)
+            decimal num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static BigInteger Max(this BigInteger value, params BigInteger[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            BigInteger num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] > num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        public static BigDecimal Max(this BigDecimal value, params BigDecimal[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            BigDecimal num2 = value;
+            for (int i = 0; i < length; i++)
             {
                 if (values[i] > num2)
                     num2 = values[i];
