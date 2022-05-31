@@ -13,6 +13,7 @@ Simsimhan Chobo Kernel Manager
 - [K4UnityThreadDispatcher](https://gist.github.com/heshuimu/f63cd9126117afc4004be37b19fa1c09#file-k4unitythreaddispatcher-cs)
 - [UnityWindowsFileDrag&Drop](https://github.com/Bunny83/UnityWindowsFileDrag-Drop)
 - [FastString](https://github.com/snozbot/FastString)
+- [BigDecimal](https://github.com/AdamWhiteHat/BigDecimal)
 - [~~Unity Editor Toolbox~~](https://github.com/arimger/Unity-Editor-Toolbox)
 - [~~In-game Debug Console~~](https://github.com/yasirkula/UnityIngameDebugConsole)
 
