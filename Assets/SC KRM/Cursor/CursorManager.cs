@@ -38,10 +38,12 @@ namespace SCKRM
             }
         }
         public static bool isFocused { get; private set; } = false;
+        public static bool isDragged { get; private set; } = false;
 
 
 
         [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup);
+        DrivenRectTransformTracker tracker;
 
 
 
@@ -75,42 +77,54 @@ namespace SCKRM
 #endif
 
                 #region Pos Move
+                tracker.Clear();
+                tracker.Add(this, rectTransform, DrivenTransformProperties.AnchoredPosition3D | DrivenTransformProperties.Rotation | DrivenTransformProperties.Scale | DrivenTransformProperties.Anchors | DrivenTransformProperties.Pivot);
+
+                Vector2 pos = InputManager.mousePosition / UIManager.currentGuiSize;
+
                 if (graphic.enabled != visible)
                 {
                     graphic.enabled = visible;
-                    transform.position = Vector3.zero;
+                    rectTransform.anchoredPosition = Vector3.zero;
                 }
+
+                isDragged = false;
 
                 if (UnityEngine.Input.GetMouseButtonDown(0))
                 {
                     dragStart = false;
-                    dragStartMousePosition = InputManager.mousePosition;
+                    dragStartMousePosition = pos;
                 }
                 else if (UnityEngine.Input.GetMouseButton(0))
                 {
                     graphic.color = graphic.color.Lerp(UIManager.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
-                    transform.localScale = transform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);
+                    rectTransform.localScale = rectTransform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);
 
-                    if (!dragStart && Vector2.Distance(transform.position, dragStartMousePosition) >= EventSystem.current.pixelDragThreshold)
+                    if (!dragStart && Vector2.Distance(pos, dragStartMousePosition) >= EventSystem.current.pixelDragThreshold)
                         dragStart = true;
                     else if (dragStart)
                     {
-                        Vector3 dir = (Vector2)transform.position - dragStartMousePosition;
+                        Vector3 dir = pos - dragStartMousePosition;
                         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + 67.5f)), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        rectTransform.localRotation = Quaternion.Lerp(rectTransform.localRotation, Quaternion.Euler(new Vector3(0, 0, angle + 67.5f)), 0.2f * Kernel.fpsUnscaledDeltaTime);
+
+                        isDragged = true;
                     }
                     else
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        rectTransform.localRotation = Quaternion.Lerp(rectTransform.localRotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
                 else
                 {
                     graphic.color = graphic.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
-                    transform.localScale = transform.localScale.Lerp(Vector3.one * 0.25f, 0.3f * Kernel.fpsUnscaledDeltaTime);
 
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    rectTransform.localScale = transform.localScale.Lerp(Vector3.one * 0.25f, 0.3f * Kernel.fpsUnscaledDeltaTime);
+                    rectTransform.localRotation = Quaternion.Lerp(rectTransform.localRotation, Quaternion.Euler(Vector3.zero), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
 
-                transform.position = InputManager.mousePosition;
+                rectTransform.anchoredPosition3D = pos;
+                rectTransform.anchorMin = Vector2.zero;
+                rectTransform.anchorMax = Vector2.zero;
+                rectTransform.pivot = Vector2.up;
                 #endregion
             }
         }
