@@ -1,6 +1,7 @@
 using UnityEngine;
 using SCKRM.Resource;
 using SCKRM.UI.MessageBox;
+using System.Threading;
 
 namespace SCKRM.Sound
 {
@@ -63,7 +64,28 @@ namespace SCKRM.Sound
 
 
         public delegate void OnAudioFilterReadAction(float[] data, int channels);
-        public event OnAudioFilterReadAction onAudioFilterReadEvent;
+
+        object onAudioFilterReadEventLock = new object();
+        event OnAudioFilterReadAction _onAudioFilterReadEvent;
+
+        /// <summary>
+        /// Thread-Safe (onAudioFilterReadEvent += () => { onAudioFilterReadEvent += () => { }; }; Do not add more methods to this event from inside this event method like this. This causes deadlock)
+        /// </summary>
+        public event OnAudioFilterReadAction onAudioFilterReadEvent
+        { 
+            add
+            {
+                Monitor.Enter(onAudioFilterReadEventLock);
+                _onAudioFilterReadEvent += value;
+                Monitor.Exit(onAudioFilterReadEventLock);
+            }
+            remove
+            {
+                Monitor.Enter(onAudioFilterReadEventLock);
+                _onAudioFilterReadEvent -= value;
+                Monitor.Exit(onAudioFilterReadEventLock);
+            }
+        }
 
 
 
@@ -107,9 +129,11 @@ namespace SCKRM.Sound
 
 
 
-        void OnAudioFilterRead(float[] data, int channels) => onAudioFilterReadEvent?.Invoke(data, channels);
-
-
+        void OnAudioFilterRead(float[] data, int channels)
+        {
+            lock (onAudioFilterReadEventLock)
+                _onAudioFilterReadEvent?.Invoke(data, channels);
+        }
 
         public override void Refresh()
         {
