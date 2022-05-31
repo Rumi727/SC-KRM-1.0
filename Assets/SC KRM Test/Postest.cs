@@ -17,18 +17,10 @@ public class Postest : MonoBehaviour
 
     public GameObject test;
 
-    public class MapEffect : SCKRM.MapEffect
-    {
-        public BeatValuePairAniListDouble test = new BeatValuePairAniListDouble();
-    }
-
-    MapEffect mapEffect;
-
     void Start()
     {
         soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
-        map = new Map(new MapInfo(), new MapEffect());
-        mapEffect = (MapEffect)map.effect;
+        map = new Map();
 
         map.info.offset = 1.194;
         map.effect.bpm.Add(new BeatValuePair<double>(0, 171));
