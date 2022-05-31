@@ -112,7 +112,8 @@ namespace SCKRM
             }
 
             string[] paths = DragAndDrop.paths;
-            if (EditorWindow.mouseOverWindow != null && EditorWindow.mouseOverWindow.GetType() == type)
+            EditorWindow gameView = EditorWindow.mouseOverWindow;
+            if (gameView != null && gameView.GetType() == type)
             {
                 if ((paths == null || paths.Length <= 0) && tempDragAndDropPath != null && tempDragAndDropPath.Length > 0)
                 {
