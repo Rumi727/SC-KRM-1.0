@@ -185,7 +185,7 @@ namespace SCKRM
         /// 
         /// </summary>
 #if UNITY_EDITOR
-        public static bool isPlaying => ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
+        public static bool isPlaying => !ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
 #else
         public const bool isPlaying = true;
 #endif
