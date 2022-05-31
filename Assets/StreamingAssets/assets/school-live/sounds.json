@@ -299,13 +299,13 @@
     ]
   },
   "yummy_yappy_recipe_i": {
-    "subtitle": "subtitles.easter_egg_music_play_i",
+    "subtitle": "subtitles.easter_egg_music_play",
     "isBGM": true,
     "sounds": [
       {
         "stream": true,
         "loopStartTime": 0.0,
-        "path": "yummy_yappy_recipe",
+        "path": "yummy_yappy_recipe_i",
         "pitch": 1.0,
         "tempo": 1.0
       }
