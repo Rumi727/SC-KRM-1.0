@@ -47,10 +47,9 @@ namespace SCKRM.Threads
 
             while (true)
             {
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     return;
-#endif
+
                 for (int i = 0; i < runningThreads.Count; i++)
                 {
                     ThreadMetaData runningThread = runningThreads[i];
@@ -69,10 +68,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method());
@@ -88,10 +85,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(threadMetaData));
@@ -107,10 +102,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(obj, threadMetaData));
@@ -126,10 +119,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, threadMetaData));
@@ -145,10 +136,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, threadMetaData));
@@ -164,10 +153,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, threadMetaData));
@@ -183,10 +170,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, threadMetaData));
@@ -202,10 +187,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, threadMetaData));
@@ -221,10 +204,9 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, threadMetaData));
@@ -240,10 +222,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, threadMetaData));
@@ -259,10 +239,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, threadMetaData));
@@ -278,10 +256,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, threadMetaData));
@@ -297,10 +273,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, threadMetaData));
@@ -316,10 +290,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, threadMetaData));
@@ -335,10 +307,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, threadMetaData));
@@ -354,10 +324,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, threadMetaData));
@@ -373,10 +341,8 @@ namespace SCKRM.Threads
         {
             if (!isMainThread)
                 throw new NotMainThreadMethodException(nameof(Create));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeThreadCreateException();
-#endif
 
             ThreadMetaData threadMetaData = new ThreadMetaData(name, info, loop, autoRemoveDisable, cantCancel);
             threadMetaData.thread = new Thread(() => method(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, threadMetaData));

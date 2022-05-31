@@ -98,9 +98,7 @@ namespace SCKRM.UI
                 viewport.offsetMax = Vector2.zero;
             }
 
-#if UNITY_EDITOR
-            if (Application.isPlaying)
-#endif
+            if (Kernel.isPlaying)
             {
                 if (UnityEngine.Input.GetMouseButtonDown(0))
                     tempMousePos = InputManager.mousePosition;

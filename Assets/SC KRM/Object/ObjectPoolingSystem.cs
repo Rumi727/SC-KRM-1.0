@@ -44,10 +44,8 @@ namespace SCKRM.Object
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectAdvanceCreate));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectAdvanceCreate));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(ObjectAdvanceCreate));
             if (instance == null)
@@ -80,10 +78,8 @@ namespace SCKRM.Object
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectCreate));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectCreate));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
             if (instance == null)
@@ -139,10 +135,8 @@ namespace SCKRM.Object
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectRemove));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ObjectRemove));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
             if (instance == null)

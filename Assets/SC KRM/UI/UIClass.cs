@@ -113,7 +113,7 @@ namespace SCKRM.UI
         /*void update()
         {
 #if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
+            if (!lerp || !Kernel.isPlaying)
 #else
             if (!lerp)
 #endif
@@ -131,7 +131,7 @@ namespace SCKRM.UI
         protected virtual void Update()
         {
 #if UNITY_EDITOR
-            if (lerp && Application.isPlaying)
+            if (lerp && Kernel.isPlaying)
 #else
             if (lerp)
 #endif

@@ -1,3 +1,4 @@
+using SCKRM;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -33,7 +34,7 @@ namespace HSVPicker
         {
             slider = GetComponent<BoxSlider>();
             image = GetComponent<RawImage>();
-            if(Application.isPlaying)
+            if(Kernel.isPlaying)
             {
                 RegenerateSVTexture ();
             }
@@ -41,7 +42,7 @@ namespace HSVPicker
 
         private void OnEnable()
         {
-            if (Application.isPlaying && picker != null)
+            if (Kernel.isPlaying && picker != null)
             {
                 slider.onValueChanged.AddListener(SliderChanged);
                 picker.onHSVChanged.AddListener(HSVChanged);

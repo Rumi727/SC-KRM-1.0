@@ -72,10 +72,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SoundRefresh));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SoundRefresh));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SoundRefresh));
 
@@ -214,10 +212,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(PlaySound));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(PlaySound));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(PlaySound));
 
@@ -286,10 +282,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopSound));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSound));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSound));
 
@@ -323,10 +317,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopSoundAll));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSoundAll));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
@@ -346,10 +338,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopSoundAll));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopSoundAll));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
@@ -379,10 +369,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(PlayNBS));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(PlayNBS));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(PlayNBS));
 
@@ -432,10 +420,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopNBS));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopNBS));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopNBS));
 
@@ -471,10 +457,8 @@ namespace SCKRM.Sound
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopNBSAll));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(StopNBSAll));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopNBSAll));
 

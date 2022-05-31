@@ -13,10 +13,8 @@ namespace SCKRM.UI
 
         protected override void OnEnable()
         {
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 return;
-#endif
 
             inputField.caretColor = defaultCaretColor;
             RhythmManager.oneBeat += ColorChange;
@@ -26,10 +24,8 @@ namespace SCKRM.UI
 
         protected override void Awake()
         {
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 return;
-#endif
 
             if (inputField == null)
                 return;
@@ -47,10 +43,8 @@ namespace SCKRM.UI
 
             inputField.customCaretColor = true;
 
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 return;
-#endif
 
             if (RhythmManager.isPlaying)
             {

@@ -163,10 +163,8 @@ namespace SCKRM.Resource
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ResourceRefresh));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(ResourceRefresh));
-#endif
             if (isResourceRefesh)
                 return;
 
@@ -192,10 +190,8 @@ namespace SCKRM.Resource
                 resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     return;
-#endif
 
                 Debug.Log("ResourceManager: Waiting for sprite to set...");
 
@@ -208,10 +204,8 @@ namespace SCKRM.Resource
                 resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     return;
-#endif
 
                 Debug.Log("ResourceManager: Waiting for language to set...");
 
@@ -226,10 +220,8 @@ namespace SCKRM.Resource
                 resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     return;
-#endif
 
                 Debug.Log("ResourceManager: Waiting for audio to set...");
 
@@ -242,10 +234,8 @@ namespace SCKRM.Resource
                 resourceRefreshDetailedAsyncTask.Remove(true);
                 resourceRefreshDetailedAsyncTask = null;
 
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     return;
-#endif
 
                 Debug.Log("ResourceManager: Resource refresh finished!");
             }
@@ -282,10 +272,9 @@ namespace SCKRM.Resource
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetPackTextures));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetPackTextures));
-#endif
+
             foreach (var item in packTextures)
                 foreach (var item2 in item.Value)
                     garbages.Add(item2.Value);
@@ -367,10 +356,9 @@ namespace SCKRM.Resource
                         {
                             string path = paths[l].Replace("\\", "/");
                             Texture2D texture = GetTexture(path, true, textureMetaData);
-#if UNITY_EDITOR
-                            if (!Application.isPlaying)
+
+                            if (!Kernel.isPlaying)
                                 return;
-#endif
 
                             if (textureNames.Contains(texture.name))
                                 continue;
@@ -454,10 +442,9 @@ namespace SCKRM.Resource
                 /*allTextures*/ Dictionary<string, Texture2D> type_texture = new Dictionary<string, Texture2D>();
                 foreach (var type in nameSpace.Value)
                 {
-#if UNITY_EDITOR
-                    if (!Application.isPlaying)
+                    if (!Kernel.isPlaying)
                         return;
-#endif
+
                     Texture2D[] textures = type.Value;
                     Texture2D[] textures2 = new Texture2D[textures.Length];
                     string[] textureNames = new string[textures.Length];
@@ -533,10 +520,9 @@ namespace SCKRM.Resource
                 throw new NotInitialLoadEndMethodException(nameof(SetSprite));
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetSprite));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetSprite));
-#endif
+
             foreach (var item in allTextureSprites)
                 foreach (var item2 in item.Value)
                     foreach (var item3 in item2.Value)
@@ -555,10 +541,8 @@ namespace SCKRM.Resource
                 {
                     foreach (var fileName in type.Value)
                     {
-#if UNITY_EDITOR
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             return;
-#endif
 
                         Texture2D background = SearchPackTexture(type.Key, nameSpace.Key);
                         Rect rect = fileName.Value;
@@ -618,10 +602,8 @@ namespace SCKRM.Resource
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetAudio));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetAudio));
-#endif
 
             foreach (var item in allSounds)
             {
@@ -666,7 +648,7 @@ namespace SCKRM.Resource
                     {
                         string audioPath = PathTool.Combine(folderPath, soundMetaData.path);
                         AudioClip audioClip = await GetAudio(audioPath, soundMetaData.stream);
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             return null;
 
                         if (audioClip != null)
@@ -706,10 +688,9 @@ namespace SCKRM.Resource
                                     List<MetaData> soundMetaDatas = new List<MetaData>();
                                     for (int k = 0; k < soundData.Value.sounds.Length; k++)
                                     {
-#if UNITY_EDITOR
-                                        if (!Application.isPlaying)
+                                        if (!Kernel.isPlaying)
                                             return (false, true);
-#endif
+
                                         MetaData soundMetaData = soundData.Value.sounds[k];
                                         soundMetaData = await metaDataCreateFunc.Invoke(folderPath, soundMetaData);
                                         if (soundMetaData != null)
@@ -740,10 +721,9 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         static async UniTask SetLanguage()
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetLanguage));
-#endif
+
             allLanguages.Clear();
 
             LanguageManager.Language[] languages = LanguageManager.GetLanguages();
@@ -864,10 +844,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static string SearchTexturePath(string type, string name, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadPackTexturesEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchTexturePath));
 
@@ -904,10 +882,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static Texture2D SearchPackTexture(string type, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadPackTexturesEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchPackTexture));
 
@@ -946,10 +922,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static Rect SearchTextureRect(string type, string name, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadPackTexturesEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchTextureRect));
 
@@ -991,10 +965,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static Sprite[] SearchSprites(string type, string name, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadSpriteEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchSprites));
 
@@ -1036,10 +1008,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static string SearchLanguage(string key, string nameSpace = "", string language = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadLanguageEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchLanguage));
 
@@ -1084,10 +1054,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static SoundData<SoundMetaData> SearchSoundData(string key, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadAudioEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchSoundData));
 
@@ -1124,10 +1092,8 @@ namespace SCKRM.Resource
         /// <exception cref="NotPlayModeMethodException"></exception>
         public static SoundData<NBSMetaData> SearchNBSData(string key, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (ThreadManager.isMainThread && !Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeSearchMethodException();
-#endif
             if (!isInitialLoadAudioEnd)
                 throw new NotInitialLoadEndMethodException(nameof(SearchNBSData));
 

@@ -31,24 +31,18 @@ namespace SCKRM.UI
                 return;
 
             if (!customGuiSize)
-#if UNITY_EDITOR
             {
-                if (Application.isPlaying)
+                if (Kernel.isPlaying)
                     canvas.scaleFactor = UIManager.currentGuiSize;
                 else
                     canvas.scaleFactor = 1;
             }
-#else
-            canvas.scaleFactor = UIManager.currentGuiSize;
-#endif
 
             if (!customSetting)
             {
                 if (!worldRenderMode)
                 {
-#if UNITY_EDITOR
-                    if (Application.isPlaying)
-#endif
+                    if (Kernel.isPlaying)
                     {
                         RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
 
@@ -68,7 +62,6 @@ namespace SCKRM.UI
                         else
                             SafeScreenDestroy();
                     }
-#if UNITY_EDITOR
                     else
                     {
                         tracker.Clear();
@@ -78,7 +71,6 @@ namespace SCKRM.UI
                         else
                             SafeScreenDestroy();
                     }
-#endif
                 }
                 else
                 {
@@ -92,18 +84,14 @@ namespace SCKRM.UI
         {
             if (safeScreen == null)
             {
-#if UNITY_EDITOR
-                if (Application.isPlaying)
-#endif
+                if (Kernel.isPlaying)
                 {
                     if (Kernel.emptyRectTransform == null)
                         return;
 
                     safeScreen = Instantiate(Kernel.emptyRectTransform, transform.parent);
                 }
-#if UNITY_EDITOR
                 else
-#endif
                     safeScreen = new GameObject().AddComponent<RectTransform>();
 
                 safeScreen.name = "Safe Screen";

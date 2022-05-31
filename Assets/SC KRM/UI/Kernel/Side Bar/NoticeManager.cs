@@ -61,10 +61,8 @@ namespace SCKRM.UI.SideBar
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Notice));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(Notice));
-#endif
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 

@@ -181,12 +181,23 @@ namespace SCKRM
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+#if UNITY_EDITOR
+        public static bool isPlaying => ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
+#else
+        public const bool isPlaying = true;
+#endif
+
+
+
         static Transform _emptyTransform;
         public static Transform emptyTransform
         {
             get
             {
-                if (!Application.isPlaying)
+                if (!isPlaying)
                     throw new NotPlayModePropertyException(nameof(emptyTransform));
 
                 return _emptyTransform;
@@ -198,7 +209,7 @@ namespace SCKRM
         {
             get
             {
-                if (!Application.isPlaying)
+                if (!isPlaying)
                     throw new NotPlayModePropertyException(nameof(emptyTransform));
 
                 return _emptyRectTransform;
@@ -312,10 +323,10 @@ namespace SCKRM
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(AllRefresh));
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+
+            if (!isPlaying)
                 throw new NotPlayModeMethodException(nameof(AllRefresh));
-#endif
+
             allRefreshStart?.Invoke();
 
             if (!ResourceManager.isResourceRefesh)

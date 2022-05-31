@@ -39,7 +39,7 @@ internal class ToolbarFPSSlider : BaseToolbarElement {
 	{
 		EditorGUILayout.LabelField("FPS", GUILayout.Width(30));
 
-		GUI.enabled = Application.isPlaying;
+		GUI.enabled = Kernel.isPlaying;
 		int fpsLimit = EditorGUILayout.IntSlider("", VideoManager.SaveData.fpsLimit, minFPS, maxFPS, GUILayout.Width(WidthInToolbar - 30.0f));
 		GUI.enabled = true;
 

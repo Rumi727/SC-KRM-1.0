@@ -36,9 +36,7 @@ namespace SCKRM.UI
         {
             tracker.Add(this, colorPickerMask, DrivenTransformProperties.SizeDeltaX);
 
-#if UNITY_EDITOR
-            if (Application.isPlaying)
-#endif
+            if (Kernel.isPlaying)
             {
                 if (UnityEngine.Input.GetMouseButtonDown(0))
                     tempMousePos = InputManager.mousePosition;

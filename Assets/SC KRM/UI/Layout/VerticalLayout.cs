@@ -79,11 +79,8 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMin = new Vector2(0, 0);
                     childRectTransform.anchorMax = new Vector2(1, 0);
                     childRectTransform.pivot = new Vector2(0.5f, 0);
-#if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || !useAni)
-#else
-                    if (!lerp || !useAni)
-#endif
+
+                    if (!Kernel.isPlaying || !lerp || !useAni)
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom);
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom), lerpValue * Kernel.fpsUnscaledDeltaTime);
@@ -95,11 +92,8 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMin = new Vector2(0, 0.5f);
                     childRectTransform.anchorMax = new Vector2(1, 0.5f);
                     childRectTransform.pivot = new Vector2(0.5f, 0.5f);
-#if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || !useAni)
-#else
-                    if (!lerp || !useAni)
-#endif
+
+                    if (!Kernel.isPlaying || !lerp || !useAni)
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y);
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y), lerpValue * Kernel.fpsUnscaledDeltaTime);
@@ -112,11 +106,7 @@ namespace SCKRM.UI.Layout
                     childRectTransform.anchorMax = new Vector2(1, 1);
                     childRectTransform.pivot = new Vector2(0.5f, 1);
                     
-#if UNITY_EDITOR
-                    if (!Application.isPlaying || !lerp || !useAni)
-#else
-                    if (!lerp || !useAni)
-#endif
+                    if (!Kernel.isPlaying || !lerp || !useAni)
                         childRectTransform.anchoredPosition = new Vector2((padding.left - padding.right) * 0.5f, y - padding.top);
                     else
                         childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y - padding.top), lerpValue * Kernel.fpsUnscaledDeltaTime);
@@ -124,11 +114,7 @@ namespace SCKRM.UI.Layout
                     y -= childRectTransform.sizeDelta.y + spacing;
                 }
 
-#if UNITY_EDITOR
-                if (!Application.isPlaying || !lerp || !allLerp || !useAni)
-#else
-                if (!lerp || !allLerp || !useAni)
-#endif
+                if (!Kernel.isPlaying || !lerp || !allLerp || !useAni)
                 {
                     childRectTransform.offsetMin = new Vector2(padding.left, childRectTransform.offsetMin.y);
                     childRectTransform.offsetMax = new Vector2(-padding.right, childRectTransform.offsetMax.y);

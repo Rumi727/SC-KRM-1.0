@@ -62,11 +62,7 @@ namespace SCKRM.UI
             if (ySize)
                 tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
 
-#if UNITY_EDITOR
-            if (!lerp || !useAni || !Application.isPlaying)
-#else
-            if (!lerp || !useAni)
-#endif
+            if (!lerp || !useAni || !Kernel.isPlaying)
             {
                 if (xSize && !ySize)
                     rectTransform.sizeDelta = new Vector2(size.x, rectTransform.sizeDelta.y);

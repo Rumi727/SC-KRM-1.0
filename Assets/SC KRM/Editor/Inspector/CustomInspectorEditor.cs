@@ -18,7 +18,7 @@ namespace SCKRM.Editor
         /// </summary>
         protected virtual void OnEnable()
         {
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
             {
                 repaint = true;
                 Repainter();

@@ -17,7 +17,7 @@ namespace SCKRM.Renderer
         /*protected virtual void OnDrawGizmos()
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying && UnityEditor.Selection.activeObject != null)
+            if (!Kernel.isPlaying && UnityEditor.Selection.activeObject != null)
             {
                 if (UnityEditor.Selection.activeGameObject.GetComponentInParent<CustomAllRenderer>())
                     
@@ -33,9 +33,7 @@ namespace SCKRM.Renderer
 
         public Sprite SpriteReload(string type, string name, int index, string nameSpace = "")
         {
-#if UNITY_EDITOR
-            if (!ThreadManager.isMainThread || Application.isPlaying)
-#endif
+            if (Kernel.isPlaying)
             {
                 Sprite[] sprites = ResourceManager.SearchSprites(type, name, nameSpace);
                 if (sprites != null && index < sprites.Length)
@@ -43,7 +41,6 @@ namespace SCKRM.Renderer
 
                 return null;
             }
-#if UNITY_EDITOR
             else
             {
                 Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
@@ -52,7 +49,6 @@ namespace SCKRM.Renderer
                 else
                     return null;
             }
-#endif
         }
     }
 

@@ -22,11 +22,7 @@ namespace SCKRM.UI
             if (targetCanvasRenderer != null && targetGraphic != null && graphic != null && targetCanvasRenderer != graphic)
                 color = GetReadbilityColor(targetGraphic.color * targetCanvasRenderer.GetColor());
 
-#if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
-#else
-            if (!lerp)
-#endif
+            if (!lerp || !Kernel.isPlaying)
                 graphic.color = color;
             else
                 graphic.color = graphic.color.Lerp(color, lerpValue * Kernel.fpsUnscaledDeltaTime);

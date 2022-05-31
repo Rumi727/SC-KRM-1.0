@@ -21,9 +21,7 @@ namespace SCKRM.Camera
 
         void Update()
         {
-#if UNITY_EDITOR
-            if (Application.isPlaying)
-#endif
+            if (Kernel.isPlaying)
             {
                 if (camera == null)
                     return;

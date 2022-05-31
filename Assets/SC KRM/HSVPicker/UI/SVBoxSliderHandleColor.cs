@@ -39,11 +39,7 @@ namespace HSVPicker
 
         void Update()
         {
-#if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying)
-#else
-            if (!lerp)
-#endif
+            if (!lerp || !Kernel.isPlaying)
                 graphic.color = color;
             else
                 graphic.color = graphic.color.Lerp(color, lerpValue * Kernel.fpsUnscaledDeltaTime);

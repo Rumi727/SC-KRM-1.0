@@ -89,19 +89,19 @@ namespace SCKRM.Editor
 
         void OnInspectorUpdate()
         {
-            if (inspectorUpdate && Application.isPlaying)
+            if (inspectorUpdate && Kernel.isPlaying)
                 Repaint();
         }
 
         void Update()
         {
-            if (!inspectorUpdate && Application.isPlaying)
+            if (!inspectorUpdate && Kernel.isPlaying)
                 Repaint();
         }
 
         public static void Default()
         {
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
             {
                 EditorGUILayout.LabelField("델타 타임 - " + Kernel.deltaTime);
                 EditorGUILayout.LabelField("FPS 델타 타임 - " + Kernel.fpsDeltaTime);
@@ -186,7 +186,7 @@ namespace SCKRM.Editor
                         GUILayout.Label("오디오 클립", GUILayout.ExpandWidth(false));
                         audioClip = (AudioClip)EditorGUILayout.ObjectField(audioClip, typeof(AudioClip), true);
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = false;
 
                         GUI.enabled = true;
@@ -248,7 +248,7 @@ namespace SCKRM.Editor
 
                     GUILayout.Label($"{SoundManager.soundList.Count} / {SoundManager.maxSoundCount}", GUILayout.ExpandWidth(false));
 
-                    if (!Application.isPlaying)
+                    if (!Kernel.isPlaying)
                         GUI.enabled = false;
 
                     if (GUILayout.Button("모든 음악 정지", GUILayout.ExpandWidth(false)))
@@ -281,7 +281,7 @@ namespace SCKRM.Editor
                 }
             }
 
-            if (Application.isPlaying && InitialLoadManager.isInitialLoadEnd)
+            if (Kernel.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -333,7 +333,7 @@ namespace SCKRM.Editor
                         GUILayout.Label("NBS 키", GUILayout.ExpandWidth(false));
                         nbsKey = CustomInspectorEditor.DrawStringArray(nbsKey, ResourceManager.GetNBSDataKeys(nbsNameSpace));
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = false;
 
                         nbsPlay = GUILayout.Button("NBS 재생", GUILayout.ExpandWidth(false));
@@ -396,7 +396,7 @@ namespace SCKRM.Editor
                 }
             }
 
-            if (Application.isPlaying && InitialLoadManager.isInitialLoadEnd)
+            if (Kernel.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -427,7 +427,7 @@ namespace SCKRM.Editor
             {
                 GUILayout.BeginHorizontal();
 
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     GUI.enabled = false;
 
                 if (GUILayout.Button("텍스트 새로고침", GUILayout.ExpandWidth(false)))
@@ -441,7 +441,7 @@ namespace SCKRM.Editor
                 GUILayout.EndHorizontal();
             }
 
-            if (Application.isPlaying && InitialLoadManager.isInitialLoadEnd)
+            if (Kernel.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 CustomInspectorEditor.DrawLine(2);
 
@@ -606,7 +606,7 @@ namespace SCKRM.Editor
         public static SaveLoadClass splashProjectSetting = null;
         public void SplashSetting()
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 if (splashProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
@@ -665,14 +665,14 @@ namespace SCKRM.Editor
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
-            if (GUI.changed && !Application.isPlaying)
+            if (GUI.changed && !Kernel.isPlaying)
                 SaveLoadManager.Save(splashProjectSetting, Kernel.projectSettingPath);
         }
 
         public static SaveLoadClass videoProjectSetting = null;
         public void VideoSetting()
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 if (videoProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(VideoManager.Data), out videoProjectSetting);
@@ -696,7 +696,7 @@ namespace SCKRM.Editor
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
-            if (GUI.changed && !Application.isPlaying)
+            if (GUI.changed && !Kernel.isPlaying)
                 SaveLoadManager.Save(videoProjectSetting, Kernel.projectSettingPath);
         }
 
@@ -705,7 +705,7 @@ namespace SCKRM.Editor
         Vector2 controlLockSettingScrollPos = Vector2.zero;
         public void ControlSetting(int scrollYSize = 0)
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 if (controlProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(InputManager.Data), out controlProjectSetting);
@@ -792,7 +792,7 @@ namespace SCKRM.Editor
                 EditorGUILayout.Space();
 
 
-                if (Application.isPlaying)
+                if (Kernel.isPlaying)
                     EditorGUILayout.HelpBox("플레이 모드에서 바꾼 (인게임 설정에서 바꾼) 조작은 반영되지 않고, 저장되지 않습니다\n기본값만 저장되고 변경됩니다 (키를 초기화한 상태라면, 변경한 키는 인게임에도 적용됩니다)", MessageType.Warning);
 
                 {
@@ -1007,7 +1007,7 @@ namespace SCKRM.Editor
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
-            if (GUI.changed && !Application.isPlaying)
+            if (GUI.changed && !Kernel.isPlaying)
                 SaveLoadManager.Save(controlProjectSetting, Kernel.projectSettingPath);
         }
 
@@ -1015,7 +1015,7 @@ namespace SCKRM.Editor
         Vector2 objectPoolingSettingScrollPos = Vector2.zero;
         public void ObjectPoolingSetting(int scrollYSize = 0)
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 if (objectPoolingProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(ObjectPoolingSystem.Data), out objectPoolingProjectSetting);
@@ -1182,7 +1182,7 @@ namespace SCKRM.Editor
             }
 
             //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
-            if (GUI.changed && !Application.isPlaying)
+            if (GUI.changed && !Kernel.isPlaying)
                 SaveLoadManager.Save(objectPoolingProjectSetting, Kernel.projectSettingPath);
         }
 
@@ -1191,7 +1191,7 @@ namespace SCKRM.Editor
         Vector2 audioSettingScrollPos = Vector2.zero;
         public void AudioSetting(int scrollYSize = 0)
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 if (audioProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SoundManager.Data), out audioProjectSetting);
@@ -1204,7 +1204,7 @@ namespace SCKRM.Editor
                 EditorGUILayout.LabelField("오디오 설정", EditorStyles.boldLabel);
 
                 {
-                    if (Application.isPlaying)
+                    if (Kernel.isPlaying)
                         GUI.enabled = false;
 
                     SoundManager.Data.useTempo = EditorGUILayout.Toggle("템포 기능 사용", SoundManager.Data.useTempo);
@@ -1229,7 +1229,7 @@ namespace SCKRM.Editor
             string nameSpace = audioSettingNameSpace;
             string path = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", nameSpace));
 
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
                 GUI.enabled = false;
 
             if (!Directory.Exists(path))
@@ -1266,7 +1266,7 @@ namespace SCKRM.Editor
                             return;
                         }
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = true;
                     }
 
@@ -1292,7 +1292,7 @@ namespace SCKRM.Editor
                             return;
                         }
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = true;
                     }
 
@@ -1309,7 +1309,7 @@ namespace SCKRM.Editor
                             return;
                         }
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = true;
                     }
 
@@ -1326,7 +1326,7 @@ namespace SCKRM.Editor
                             if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
                                 soundDatas.Add("", new SoundData<SoundMetaData>("", false, new SoundMetaData[0]));
 
-                            if (!Application.isPlaying)
+                            if (!Kernel.isPlaying)
                                 GUI.enabled = true;
                         }
 
@@ -1343,7 +1343,7 @@ namespace SCKRM.Editor
                             if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && soundDatas.Count > 0)
                                 soundDatas.Remove(soundDatas.ToList()[soundDatas.Count - 1].Key);
 
-                            if (!Application.isPlaying)
+                            if (!Kernel.isPlaying)
                                 GUI.enabled = true;
                         }
 
@@ -1390,7 +1390,7 @@ namespace SCKRM.Editor
                             else
                                 audioSettingScrollPos = EditorGUILayout.BeginScrollView(audioSettingScrollPos);
 
-                            if (Application.isPlaying)
+                            if (Kernel.isPlaying)
                                 GUI.enabled = false;
                         }
 
@@ -1441,7 +1441,7 @@ namespace SCKRM.Editor
                                         if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && soundMetaDatas.Count > 0)
                                             soundMetaDatas.RemoveAt(soundMetaDatas.Count - 1);
 
-                                        if (!Application.isPlaying)
+                                        if (!Kernel.isPlaying)
                                             GUI.enabled = true;
                                     }
 
@@ -1543,12 +1543,12 @@ namespace SCKRM.Editor
                     }
 
                     //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
-                    if (GUI.changed && !Application.isPlaying)
+                    if (GUI.changed && !Kernel.isPlaying)
                         File.WriteAllText(jsonPath, JsonManager.ObjectToJson(soundDatas));
                 }
             }
 
-            if (GUI.changed && !Application.isPlaying)
+            if (GUI.changed && !Kernel.isPlaying)
                 SaveLoadManager.Save(audioProjectSetting, Kernel.projectSettingPath);
         }
 
@@ -1575,7 +1575,7 @@ namespace SCKRM.Editor
             string nameSpace = nbsSettingNameSpace;
             string path = PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.nbsPath.Replace("%NameSpace%", nameSpace));
 
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
                 GUI.enabled = false;
 
             if (!Directory.Exists(path))
@@ -1612,7 +1612,7 @@ namespace SCKRM.Editor
                             return;
                         }
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = true;
                     }
 
@@ -1638,7 +1638,7 @@ namespace SCKRM.Editor
                             return;
                         }
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = true;
                     }
 
@@ -1655,7 +1655,7 @@ namespace SCKRM.Editor
                             return;
                         }
 
-                        if (!Application.isPlaying)
+                        if (!Kernel.isPlaying)
                             GUI.enabled = true;
                     }
 
@@ -1672,7 +1672,7 @@ namespace SCKRM.Editor
                             if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
                                 soundDatas.Add("", new SoundData<NBSMetaData>("", false, new NBSMetaData[0]));
 
-                            if (!Application.isPlaying)
+                            if (!Kernel.isPlaying)
                                 GUI.enabled = true;
                         }
 
@@ -1689,7 +1689,7 @@ namespace SCKRM.Editor
                             if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && soundDatas.Count > 0)
                                 soundDatas.Remove(soundDatas.ToList()[soundDatas.Count - 1].Key);
 
-                            if (!Application.isPlaying)
+                            if (!Kernel.isPlaying)
                                 GUI.enabled = true;
                         }
 
@@ -1736,7 +1736,7 @@ namespace SCKRM.Editor
                             else
                                 nbsSettingScrollPos = EditorGUILayout.BeginScrollView(nbsSettingScrollPos);
 
-                            if (Application.isPlaying)
+                            if (Kernel.isPlaying)
                                 GUI.enabled = false;
                         }
 
@@ -1787,7 +1787,7 @@ namespace SCKRM.Editor
                                         if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && soundMetaDatas.Count > 0)
                                             soundMetaDatas.RemoveAt(soundMetaDatas.Count - 1);
 
-                                        if (!Application.isPlaying)
+                                        if (!Kernel.isPlaying)
                                             GUI.enabled = true;
                                     }
 
@@ -1867,7 +1867,7 @@ namespace SCKRM.Editor
                     }
 
                     //플레이 모드가 아니면 변경한 리스트의 데이터를 잃어버리지 않게 파일로 저장
-                    if (GUI.changed && !Application.isPlaying)
+                    if (GUI.changed && !Kernel.isPlaying)
                         File.WriteAllText(jsonPath, JsonManager.ObjectToJson(soundDatas));
                 }
             }
@@ -1876,7 +1876,7 @@ namespace SCKRM.Editor
         public static SaveLoadClass resourceProjectSetting;
         public void ResourceSetting()
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 if (resourceProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(ResourceManager.Data), out resourceProjectSetting);
@@ -1898,7 +1898,7 @@ namespace SCKRM.Editor
 
             CustomInspectorEditor.DrawList(ResourceManager.Data.nameSpaces, "네임스페이스", 0, 0, deleteSafety);
 
-            if (GUI.changed && !Application.isPlaying)
+            if (GUI.changed && !Kernel.isPlaying)
                 SaveLoadManager.Save(resourceProjectSetting, Kernel.projectSettingPath);
         }
     }

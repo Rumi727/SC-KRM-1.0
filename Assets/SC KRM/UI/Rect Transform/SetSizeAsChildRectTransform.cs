@@ -98,11 +98,7 @@ namespace SCKRM.UI.Layout
             else if (mode == Mode.YSize)
                 tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
 
-#if UNITY_EDITOR
-            if (!lerp || !Application.isPlaying || !useAni)
-#else
-            if (!lerp || !useAni)
-#endif
+            if (!lerp || !Kernel.isPlaying || !useAni)
             {
                 if (mode == Mode.XSize)
                     rectTransform.sizeDelta = xSize;

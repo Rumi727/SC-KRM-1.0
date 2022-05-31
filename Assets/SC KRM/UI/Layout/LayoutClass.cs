@@ -23,13 +23,9 @@ namespace SCKRM.UI.Layout
         /// </summary>
         public override void LayoutRefresh()
         {
-#if UNITY_EDITOR
-            if ((transform.childCount - ignore.Length) != childRectTransforms.Count || !Application.isPlaying)
+            if ((transform.childCount - ignore.Length) != childRectTransforms.Count || !Kernel.isPlaying)
                 SetChild();
-#else
-            if ((transform.childCount - ignore.Length) != childRectTransforms.Count)
-                SetChild();
-#endif
+
             int childCount = transform.childCount;
             for (int i = 0; i < (childCount - ignore.Length); i++)
             {

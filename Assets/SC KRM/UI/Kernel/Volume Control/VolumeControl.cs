@@ -36,7 +36,7 @@ namespace SCKRM.UI
             sliderRectTransform.offsetMin = new Vector2(nameText.rectTransform.sizeDelta.x + 6, sliderRectTransform.offsetMin.y);
             sliderRectTransform.offsetMax = new Vector2(-valueText.rectTransform.sizeDelta.x - 6, sliderRectTransform.offsetMax.y);
 
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 return;
 
             if (!isDrag)

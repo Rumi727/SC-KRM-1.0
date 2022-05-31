@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SCKRM;
 
 namespace HSVPicker
 {
@@ -29,7 +30,7 @@ namespace HSVPicker
 
         private void OnEnable()
         {
-            if (Application.isPlaying && picker != null)
+            if (Kernel.isPlaying && picker != null)
             {
                 picker.internalOnValueChanged.AddListener(ColorChanged);
                 picker.onHSVChanged.AddListener(HSVChanged);

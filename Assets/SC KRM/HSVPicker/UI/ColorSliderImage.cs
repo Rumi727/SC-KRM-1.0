@@ -1,3 +1,4 @@
+using SCKRM;
 using UnityEngine;
 using UnityEngine.UI;
 namespace HSVPicker
@@ -28,13 +29,13 @@ namespace HSVPicker
         {
             image = GetComponent<RawImage>();
 
-            if(Application.isPlaying)
+            if(Kernel.isPlaying)
                 RegenerateTexture();
         }
 
         private void OnEnable()
         {
-            if (picker != null && Application.isPlaying)
+            if (picker != null && Kernel.isPlaying)
             {
                 picker.internalOnValueChanged.AddListener(ColorChanged);
                 picker.onHSVChanged.AddListener(HSVChanged);

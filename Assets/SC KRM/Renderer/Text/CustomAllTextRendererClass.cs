@@ -18,7 +18,7 @@ namespace SCKRM.Renderer
         {
 #if UNITY_EDITOR
             string text;
-            if (!ThreadManager.isMainThread || Application.isPlaying)
+            if (!ThreadManager.isMainThread || Kernel.isPlaying)
                 text = ResourceManager.SearchLanguage(path, nameSpace);
             else
                 text = LanguageManager.LanguageLoad(path, nameSpace, "en_us");

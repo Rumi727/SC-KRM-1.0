@@ -36,11 +36,10 @@ namespace SCKRM
                 //이 함수는 어떠한 경우에도 메인스레드가 아닌 스레드에서 실행되면 안됩니다
                 if (!ThreadManager.isMainThread)
                     throw new NotMainThreadMethodException(nameof(InitialLoad));
-#if UNITY_EDITOR
                 //이 함수는 어떠한 경우에도 앱이 플레이중이 아닐때 실행되면 안됩니다
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     throw new NotPlayModeMethodException(nameof(InitialLoad));
-
+#if UNITY_EDITOR
                 if (UnityEditor.EditorSettings.enterPlayModeOptionsEnabled && UnityEditor.EditorSettings.enterPlayModeOptions.HasFlag(UnityEditor.EnterPlayModeOptions.DisableDomainReload))
                 {
                     GameObject[] gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>(true);
@@ -165,7 +164,7 @@ namespace SCKRM
                     await ResourceManager.ResourceRefresh(true);
 
 #if UNITY_EDITOR
-                    if (!Application.isPlaying)
+                    if (!Kernel.isPlaying)
                         return;
 #endif
                 }

@@ -17,7 +17,7 @@ namespace SCKRM.Editor
 
             UseProperty("_alpha");
 
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
                 GUI.enabled = false;
 
             UseProperty("_dropPartMode");

@@ -48,10 +48,8 @@ namespace SCKRM.Input
         {
             get
             {
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
+                if (!Kernel.isPlaying)
                     throw new NotPlayModeMethodException();
-#endif
 
                 if (_controlSettingList == null)
                     _controlSettingList = InputListMerge();
@@ -98,7 +96,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -132,7 +130,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -185,7 +183,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -232,7 +230,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -280,7 +278,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetKey));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetKey));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -323,7 +321,7 @@ namespace SCKRM.Input
                 throw new NotMainThreadMethodException(nameof(GetMouseDelta));
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseDelta));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -369,7 +367,7 @@ namespace SCKRM.Input
                 throw new NotMainThreadMethodException(nameof(GetMouseButton));
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseButton));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -412,7 +410,7 @@ namespace SCKRM.Input
                 throw new NotMainThreadMethodException(nameof(GetMouseScrollDelta));
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetMouseScrollDelta));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -447,7 +445,7 @@ namespace SCKRM.Input
                 throw new NotMainThreadMethodException(nameof(GetAnyKeyDown));
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetAnyKeyDown));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -477,7 +475,7 @@ namespace SCKRM.Input
                 throw new NotMainThreadMethodException(nameof(GetAnyKey));
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(GetAnyKey));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -507,7 +505,7 @@ namespace SCKRM.Input
                 throw new NotMainThreadMethodException(nameof(InputLockCheck));
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(InputLockCheck));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -553,7 +551,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetInputLock));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -582,7 +580,7 @@ namespace SCKRM.Input
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(SetInputLock));
 #if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException(nameof(SetInputLock));
 #endif
             if (!InitialLoadManager.isInitialLoadEnd)

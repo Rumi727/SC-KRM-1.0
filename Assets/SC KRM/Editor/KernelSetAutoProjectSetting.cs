@@ -35,7 +35,7 @@ namespace SCKRM.Editor
         public static SaveLoadClass splashProjectSetting = null;
         public static void SceneListChanged(bool autoLoad)
         {
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
                 return;
 
             string activeScenePath = SceneManager.GetActiveScene().path;
@@ -102,7 +102,7 @@ namespace SCKRM.Editor
 
         public static void HierarchyChanged(bool autoLoad)
         {
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
                 return;
 
             try

@@ -1,4 +1,5 @@
-﻿using System;
+using SCKRM;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -148,13 +149,13 @@ namespace HSVPicker
 
             #if UNITY_2018_3_OR_NEWER
 
-            if (!UnityEditor.PrefabUtility.IsPartOfPrefabAsset(this) && !Application.isPlaying)
+            if (!UnityEditor.PrefabUtility.IsPartOfPrefabAsset(this) && !Kernel.isPlaying)
                 CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
 
             #else
 
             var prefabType = UnityEditor.PrefabUtility.GetPrefabType(this);
-			if (prefabType != UnityEditor.PrefabType.Prefab && !Application.isPlaying)
+			if (prefabType != UnityEditor.PrefabType.Prefab && !Kernel.isPlaying)
 				CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
             #endif
 		}
@@ -290,7 +291,7 @@ namespace HSVPicker
 		private void UpdateVisuals()
 		{
 			#if UNITY_EDITOR
-			if (!Application.isPlaying)
+			if (!Kernel.isPlaying)
 				UpdateCachedReferences();
 			#endif
 			

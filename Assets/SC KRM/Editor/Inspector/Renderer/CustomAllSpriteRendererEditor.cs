@@ -22,7 +22,7 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            if (!Application.isPlaying)
+            if (!Kernel.isPlaying)
             {
                 EditorGUILayout.HelpBox("플레이 모드가 아닐경우, 씬의 용량을 줄이기 위해 이미지의 화질이 떨어질수 있습니다", MessageType.Warning);
                 DrawLine();
@@ -47,7 +47,7 @@ namespace SCKRM.Editor
             string typeAllPath = PathTool.Combine(Kernel.streamingAssetsPath, typePath);
             ResourceManager.FileExtensionExists(PathTool.Combine(Kernel.streamingAssetsPath, filePath), out string fileAllPath, ResourceManager.textureExtension);
 
-            if (Application.isPlaying)
+            if (Kernel.isPlaying)
                 GUI.enabled = false;
 
             if (Directory.Exists(typeAllPath) && editor.type != null && editor.type != "")
