@@ -124,7 +124,9 @@ namespace SCKRM
             else
                 return 1;
         }
+        #endregion
 
+        #region Clamp
         public static byte Clamp(this byte value, byte min, byte max = byte.MaxValue)
         {
             if (value < min)
