@@ -175,7 +175,7 @@ namespace SCKRM
         }
     }
 
-    public class Map
+    public sealed partial class Map
     {
         public MapInfo info { get; } = new MapInfo();
         public MapEffect effect { get; } = new MapEffect();
