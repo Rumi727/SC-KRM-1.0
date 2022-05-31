@@ -31,18 +31,10 @@ namespace SCKRM
                     _vSync = value;
 
                     if (ThreadManager.isMainThread)
-                        VSyncChange();
+                        FpsRefresh(Application.isFocused);
                     else
-                        K4UnityThreadDispatcher.Execute(VSyncChange);
+                        K4UnityThreadDispatcher.Execute(() => FpsRefresh(Application.isFocused));
 
-                    void VSyncChange()
-                    {
-                        //수직동기화
-                        if (value)
-                            QualitySettings.vSyncCount = 1;
-                        else
-                            QualitySettings.vSyncCount = 0;
-                    }
                 }
             }
 
@@ -56,24 +48,37 @@ namespace SCKRM
                     _fpsLimit = value;
 
                     if (ThreadManager.isMainThread)
-                        FpsLimitChange();
+                        FpsRefresh(Application.isFocused);
                     else
-                        K4UnityThreadDispatcher.Execute(FpsLimitChange);
-                        
-
-                    void FpsLimitChange() => Application.targetFrameRate = value.Clamp(1);
+                        K4UnityThreadDispatcher.Execute(() => FpsRefresh(Application.isFocused));
                 }
             }
         }
 
-        void Update()
+
+
+        void OnApplicationFocus(bool focus) => FpsRefresh(focus);
+
+        static void FpsRefresh(bool focus)
         {
             //FPS Limit
             //앱이 포커스 상태이거나 에디터 상태라면 사용자가 지정한 프레임으로 고정시킵니다
-            if (Application.isFocused || Application.isEditor)
-                Application.targetFrameRate = SaveData.fpsLimit;
+            if (focus || Application.isEditor)
+            {
+                //수직동기화
+                if (SaveData.vSync)
+                    QualitySettings.vSyncCount = 1;
+                else
+                {
+                    QualitySettings.vSyncCount = 0;
+                    Application.targetFrameRate = SaveData.fpsLimit;
+                }
+            }
             else //앱이 포커스 상태가 아니라면 프로젝트에서 설정한 포커스가 아닌 프레임으로 고정시킵니다
+            {
                 Application.targetFrameRate = Data.notFocusFpsLimit;
+                QualitySettings.vSyncCount = 0;
+            }
         }
     }
 }
