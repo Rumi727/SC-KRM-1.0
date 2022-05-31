@@ -263,11 +263,6 @@ namespace SCKRM.Sound
 
             soundObject.localPosition = new Vector3(x, y, z);
 
-            if (nameSpace == null || nameSpace == "")
-                soundObject.name = ResourceManager.defaultNameSpace + ":" + key;
-            else
-                soundObject.name = nameSpace + ":" + key;
-
             soundObject.Refresh();
             return soundObject;
         }

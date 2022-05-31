@@ -173,6 +173,11 @@ namespace SCKRM.Sound
                 }
             }
 
+            if (nameSpace == null || nameSpace == "")
+                name = ResourceManager.defaultNameSpace + ":" + key;
+            else
+                name = nameSpace + ":" + key;
+
             float backTime = time;
             {
                 metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
