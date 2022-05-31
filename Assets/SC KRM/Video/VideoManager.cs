@@ -71,9 +71,11 @@ namespace SCKRM
             FpsRefresh(Application.isFocused);
         }
 
-        void OnApplicationFocus(bool focus) => FpsRefresh(focus);
-
-
+        void OnApplicationFocus(bool focus)
+        {
+            if (InitialLoadManager.isInitialLoadEnd)
+                FpsRefresh(focus);
+        }
 
         static void FpsRefresh(bool focus)
         {
