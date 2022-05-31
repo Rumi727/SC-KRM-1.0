@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using K4.Threading;
 using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
@@ -57,7 +58,22 @@ namespace SCKRM
 
 
 
+        async UniTaskVoid Awake()
+        {
+            while (!InitialLoadManager.isInitialLoadEnd)
+            {
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = 0;
+
+                await UniTask.DelayFrame(1, PlayerLoopTiming.LastPostLateUpdate, this.GetCancellationTokenOnDestroy());
+            }
+
+            FpsRefresh(Application.isFocused);
+        }
+
         void OnApplicationFocus(bool focus) => FpsRefresh(focus);
+
+
 
         static void FpsRefresh(bool focus)
         {
