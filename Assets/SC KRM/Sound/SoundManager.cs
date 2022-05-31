@@ -81,10 +81,10 @@ namespace SCKRM.Sound
 
 
 
-            SoundPlayerVariable[] soundPlayers = FindObjectsOfType<SoundPlayerVariable>();
+            SoundPlayerParent[] soundPlayers = FindObjectsOfType<SoundPlayerParent>();
             for (int i = 0; i < soundPlayers.Length; i++)
             {
-                SoundPlayerVariable soundPlayer = soundPlayers[i];
+                SoundPlayerParent soundPlayer = soundPlayers[i];
                 soundPlayer.Refresh();
             }
         }

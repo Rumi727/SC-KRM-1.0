@@ -691,7 +691,7 @@ namespace SCKRM.Resource
                         return null;
                     }
 
-                    async UniTask<(bool success, bool cancel)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc) where MetaData : SoundMetaDataManager
+                    async UniTask<(bool success, bool cancel)> TryGetSoundData<MetaData>(string folderPath, Dictionary<string, Dictionary<string, SoundData<MetaData>>> allSounds, Func<string, MetaData, UniTask<MetaData>> metaDataCreateFunc) where MetaData : SoundMetaDataParent
                     {
                         if (Directory.Exists(folderPath))
                         {
@@ -2033,10 +2033,10 @@ namespace SCKRM.Resource
 
 
 
-        public static SoundData<MetaData> CreateSoundData<MetaData>(string subtitle, bool isBGM, MetaData sounds) where MetaData : SoundMetaDataManager
+        public static SoundData<MetaData> CreateSoundData<MetaData>(string subtitle, bool isBGM, MetaData sounds) where MetaData : SoundMetaDataParent
             => new SoundData<MetaData>(subtitle, isBGM, new MetaData[] { sounds });
 
-        public static SoundData<MetaData> CreateSoundData<MetaData>(string subtitle, bool isBGM, MetaData[] sounds) where MetaData : SoundMetaDataManager
+        public static SoundData<MetaData> CreateSoundData<MetaData>(string subtitle, bool isBGM, MetaData[] sounds) where MetaData : SoundMetaDataParent
             => new SoundData<MetaData>(subtitle, isBGM, sounds);
 
         public static SoundMetaData CreateSoundMetaData(float pitch, float tempo, float loopStartTime, AudioClip audioClip)
@@ -2118,7 +2118,7 @@ namespace SCKRM.Resource
 
 
 
-    public class SoundData<MetaData> where MetaData : SoundMetaDataManager
+    public class SoundData<MetaData> where MetaData : SoundMetaDataParent
     {
         public SoundData(string subtitle, bool isBGM, MetaData[] sounds)
         {
@@ -2132,9 +2132,9 @@ namespace SCKRM.Resource
         public MetaData[] sounds { get; } = new MetaData[0];
     }
 
-    public class SoundMetaDataManager
+    public class SoundMetaDataParent
     {
-        public SoundMetaDataManager(string path, float pitch, float tempo)
+        public SoundMetaDataParent(string path, float pitch, float tempo)
         {
             this.path = path;
             this.pitch = pitch;
@@ -2146,7 +2146,7 @@ namespace SCKRM.Resource
         public float tempo { get; } = 1;
     }
 
-    public class SoundMetaData : SoundMetaDataManager
+    public class SoundMetaData : SoundMetaDataParent
     {
         public SoundMetaData(string path, float pitch, float tempo, bool stream, float loopStartTime, AudioClip audioClip) : base(path, pitch, tempo)
         {
@@ -2162,7 +2162,7 @@ namespace SCKRM.Resource
         [JsonIgnore] public AudioClip audioClip { get; }
     }
 
-    public class NBSMetaData : SoundMetaDataManager
+    public class NBSMetaData : SoundMetaDataParent
     {
         public NBSMetaData(string path, float pitch, float tempo, NBSFile nbsFile) : base(path, pitch, tempo) => this.nbsFile = nbsFile;
 

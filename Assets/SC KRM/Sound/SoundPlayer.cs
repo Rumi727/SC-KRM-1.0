@@ -7,8 +7,13 @@ namespace SCKRM.Sound
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(AudioSource)), RequireComponent(typeof(AudioLowPassFilter))]
-    public sealed class SoundPlayer : SoundPlayerParent<SoundMetaData>
+    public sealed class SoundPlayer : SoundPlayerParent
     {
+        public SoundData<SoundMetaData> soundData { get; private set; }
+        public SoundData<SoundMetaData> customSoundData { get; set; }
+
+        public SoundMetaData metaData { get; private set; }
+
         [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource => _audioSource = this.GetComponentFieldSave(_audioSource);
         [System.NonSerialized] AudioLowPassFilter _audioLowPassFilter; public AudioLowPassFilter audioLowPassFilter => _audioLowPassFilter = this.GetComponentFieldSave(_audioLowPassFilter);
 
@@ -22,7 +27,7 @@ namespace SCKRM.Sound
                 audioSource.time = value;
                 tempTime = audioSource.time;
 
-                TimeChangedInvoke();
+                _timeChanged?.Invoke();
             }
         }
         public override float realTime { get => time / speed; set => time = value * speed; }
@@ -105,7 +110,7 @@ namespace SCKRM.Sound
                     if (audioSource.time > tempTime)
                     {
                         isLooped = true;
-                        LoopedInvoke();
+                        _looped?.Invoke();
                     }
                 }
                 else
@@ -116,7 +121,7 @@ namespace SCKRM.Sound
                             audioSource.time = metaData.loopStartTime;
 
                         isLooped = true;
-                        LoopedInvoke();
+                        _looped?.Invoke();
                     }
                 }
 

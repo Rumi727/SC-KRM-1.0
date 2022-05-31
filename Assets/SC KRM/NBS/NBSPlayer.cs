@@ -10,8 +10,13 @@ using UnityEngine;
 namespace SCKRM.NBS
 {
     [AddComponentMenu("")]
-    public sealed class NBSPlayer : SoundPlayerParent<NBSMetaData>
+    public sealed class NBSPlayer : SoundPlayerParent
     {
+        public SoundData<NBSMetaData> soundData { get; private set; }
+        public SoundData<NBSMetaData> customSoundData { get; set; }
+
+        public NBSMetaData metaData { get; private set; }
+
         public NBSFile nbsFile => metaData.nbsFile;
 
 
@@ -44,7 +49,7 @@ namespace SCKRM.NBS
                 _tick = value;
                 _index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
 
-                TimeChangedInvoke();
+                _timeChanged?.Invoke();
             }
         }
 
@@ -56,7 +61,7 @@ namespace SCKRM.NBS
                 tick = (int)(value * 20);
                 tickTimer = ((value * 20) - (int)(value * 20)) * 0.05f;
 
-                TimeChangedInvoke();
+                _timeChanged?.Invoke();
             }
         }
         public override float realTime { get => time / tempo; set => time = value * tempo; }
@@ -287,7 +292,7 @@ namespace SCKRM.NBS
                     }
 
                     isLooped = true;
-                    LoopedInvoke();
+                    _looped?.Invoke();
                 }
                 else
                     Remove();
