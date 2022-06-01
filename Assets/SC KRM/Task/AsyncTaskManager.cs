@@ -118,9 +118,8 @@ namespace SCKRM
             {
                 isCanceled = true;
 
-                Monitor.Enter(cancelEventLockObject);
-                _cancelEvent?.Invoke();
-                Monitor.Exit(cancelEventLockObject);
+                lock (cancelEventLockObject)
+                    _cancelEvent?.Invoke();
 
                 AsyncTaskManager.asyncTasks.Remove(this);
 
