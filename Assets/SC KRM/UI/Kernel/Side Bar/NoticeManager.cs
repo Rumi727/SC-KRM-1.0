@@ -50,14 +50,14 @@ namespace SCKRM.UI.SideBar
 
         public void AllAsyncTaskCancel() => AsyncTaskManager.AllAsyncTaskCancel();
 
-        public static void Notice(string name, string info) => notice(name, info, null, Type.none);
-        public static void Notice(string name, string info, Type type) => notice(name, info, null, type);
-        public static void Notice(string name, string info, ReplaceOldNewPair replace) => notice(name, info, new ReplaceOldNewPair[] { replace }, Type.none);
-        public static void Notice(string name, string info, ReplaceOldNewPair replace, Type type) => notice(name, info, new ReplaceOldNewPair[] { replace }, type);
-        public static void Notice(string name, string info, ReplaceOldNewPair[] replace) => notice(name, info, replace, Type.none);
-        public static void Notice(string name, string info, ReplaceOldNewPair[] replace, Type type) => notice(name, info, replace, type);
+        public static void Notice(NameSpacePathPair name, NameSpacePathPair info) => notice(name, info, null, Type.none);
+        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, Type type) => notice(name, info, null, type);
+        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair replace) => notice(name, info, new ReplaceOldNewPair[] { replace }, Type.none);
+        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair replace, Type type) => notice(name, info, new ReplaceOldNewPair[] { replace }, type);
+        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair[] replace) => notice(name, info, replace, Type.none);
+        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair[] replace, Type type) => notice(name, info, replace, type);
 
-        static void notice(string name, string info, ReplaceOldNewPair[] replace, Type type)
+        static void notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair[] replace, Type type)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Notice));
@@ -68,10 +68,8 @@ namespace SCKRM.UI.SideBar
 
             Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform);
             notice.transform.SetAsFirstSibling();
-            notice.nameText.nameSpace = "sc-krm";
-            notice.infoText.nameSpace = "sc-krm";
-            notice.nameText.path = name;
-            notice.infoText.path = info;
+            notice.nameText.nameSpacePathPair = name;
+            notice.infoText.nameSpacePathPair = info;
             notice.nameText.replace = replace;
             notice.infoText.replace = replace;
 

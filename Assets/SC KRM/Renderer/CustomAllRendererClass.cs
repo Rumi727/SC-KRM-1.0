@@ -8,6 +8,12 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public class CustomAllRenderer : MonoBehaviour
     {
+        [SerializeField] string _nameSpace = "";
+        public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
+
+        [SerializeField] string _path = "";
+        public string path { get => _path; set => _path = value; }
+
         public NameSpacePathPair nameSpacePathPair
         {
             get => new NameSpacePathPair(nameSpace, path);
@@ -17,12 +23,6 @@ namespace SCKRM.Renderer
                 path = value.path;
             }
         }
-
-        [SerializeField] string _nameSpace = "";
-        public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
-
-        [SerializeField] string _path = "";
-        public string path { get => _path; set => _path = value; }
 
         /// <summary>
         /// CustomRendererManager에서 다른 스레드가 호출 할 수 있는 함수입니다. 유니티 API를 사용해선 안됩니다. (플레이 모드가 아닐땐 제외)
@@ -39,10 +39,16 @@ namespace SCKRM.Renderer
         public string path;
         public string nameSpace;
 
-        public NameSpacePathPair(string path, string nameSpace = "")
+        public NameSpacePathPair(string path)
         {
+            nameSpace = "";
             this.path = path;
+        }
+
+        public NameSpacePathPair(string nameSpace, string path)
+        {
             this.nameSpace = nameSpace;
+            this.path = path;
         }
 
         public static implicit operator string(NameSpacePathPair value) => value.ToString();

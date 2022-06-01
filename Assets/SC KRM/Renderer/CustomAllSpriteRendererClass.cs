@@ -14,6 +14,19 @@ namespace SCKRM.Renderer
         [SerializeField, Min(0)] int _index = 0;
         public int index { get => _index; set => _index = value; }
 
+        public NameSpaceIndexTypePathPair nameSpaceIndexTypePathPair
+        {
+            get => new NameSpaceIndexTypePathPair(nameSpace, index, type, path);
+            set
+            {
+                nameSpace = value.nameSpace;
+                index = value.index;
+
+                type = value.type;
+                path = value.path;
+            }
+        }
+
         /*protected virtual void OnDrawGizmos()
         {
 #if UNITY_EDITOR
@@ -58,11 +71,20 @@ namespace SCKRM.Renderer
         public string path;
         public string nameSpace;
 
-        public NameSpaceTypePathPair(string type, string path, string nameSpace = "")
+        public NameSpaceTypePathPair(string type, string path)
         {
+            nameSpace = "";
+
             this.type = type;
             this.path = path;
+        }
+
+        public NameSpaceTypePathPair(string nameSpace, string type, string path)
+        {
             this.nameSpace = nameSpace;
+
+            this.type = type;
+            this.path = path;
         }
 
         public static implicit operator string(NameSpaceTypePathPair value) => value.ToString();
@@ -70,8 +92,9 @@ namespace SCKRM.Renderer
         public static implicit operator NameSpaceTypePathPair(string value)
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
-            int index = value.LastIndexOf('/');
-            return new NameSpaceTypePathPair(value.Remove(index), value.Substring(index + 1), nameSpace);
+            string type = ResourceManager.GetTextureType(value, out value);
+
+            return new NameSpaceTypePathPair(nameSpace, type, value);
         }
 
         public override string ToString()
@@ -80,6 +103,63 @@ namespace SCKRM.Renderer
                 return PathTool.Combine(type, path);
             else
                 return nameSpace + ":" + PathTool.Combine(type, path);
+        }
+    }
+
+    public struct NameSpaceIndexTypePathPair
+    {
+        public string type;
+        public string path;
+        public string nameSpace;
+
+        public int index;
+
+        public NameSpaceIndexTypePathPair(string type, string path)
+        {
+            nameSpace = "";
+            index = 0;
+
+            this.type = type;
+            this.path = path;
+        }
+
+        public NameSpaceIndexTypePathPair(string nameSpace, string type, string path)
+        {
+            this.nameSpace = nameSpace;
+            index = 0;
+
+            this.type = type;
+            this.path = path;
+        }
+
+        public NameSpaceIndexTypePathPair(string nameSpace, int index, string type, string path)
+        {
+            this.nameSpace = nameSpace;
+            this.index = index;
+
+            this.type = type;
+            this.path = path;
+        }
+
+        public static implicit operator string(NameSpaceIndexTypePathPair value) => value.ToString();
+
+        public static implicit operator NameSpaceIndexTypePathPair(string value)
+        {
+            string nameSpace = ResourceManager.GetNameSpace(value, out value);
+
+            if (!int.TryParse(ResourceManager.GetNameSpace(value, out value), out int spriteIndex))
+                spriteIndex = 0;
+
+            string type = ResourceManager.GetTextureType(value, out value);
+            return new NameSpaceIndexTypePathPair(nameSpace, spriteIndex, type, value);
+        }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(nameSpace))
+                return ResourceManager.defaultNameSpace + ":" + index + ":" + PathTool.Combine(type, path);
+            else
+                return nameSpace + ":" + index + ":" + PathTool.Combine(type, path);
         }
     }
 }

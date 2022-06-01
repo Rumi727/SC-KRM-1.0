@@ -1737,8 +1737,43 @@ namespace SCKRM.Resource
 
             if (text.Contains(":"))
             {
-                value = text.Remove(0, text.IndexOf(":") + 1);
-                return text.Substring(0, text.IndexOf(":"));
+                int index = text.IndexOf(":");
+                value = text.Substring(index + 1);
+                return text.Remove(index);
+            }
+            else
+            {
+                value = text;
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// 텍스트에서 텍스쳐 타입을 분리하고 타입을 반환합니다.
+        /// Detach a namespace from text and return the namespace.
+        /// </summary>
+        /// <param name="text">
+        /// 분리할 텍스트
+        /// text to split
+        /// </param>
+        /// <param name="value">
+        /// 분리되고 남은 텍스트
+        /// Remaining Text
+        /// </param>
+        /// <returns></returns>
+        public static string GetTextureType(string text, out string value)
+        {
+            if (text == null)
+            {
+                value = "";
+                return "";
+            }
+
+            if (text.Contains("/"))
+            {
+                int index = text.LastIndexOf("/");
+                value = text.Substring(index + 1);
+                return text.Remove(index);
             }
             else
             {
