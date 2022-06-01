@@ -37,7 +37,7 @@ namespace SCKRM.Object
         public static void ObjectAdvanceCreate(string objectKey)
         {
             MonoBehaviour monoBehaviour = Resources.Load<MonoBehaviour>(Data.prefabList[objectKey]);
-            IObjectPooling objectPooling = (IObjectPooling)monoBehaviour;
+            IObjectPooling objectPooling = monoBehaviour as IObjectPooling;
             if (objectPooling == null)
                 return;
 
@@ -121,7 +121,7 @@ namespace SCKRM.Object
             else if (Data.prefabList.ContainsKey(objectKey))
             {
                 MonoBehaviour monoBehaviour = Instantiate(Resources.Load<MonoBehaviour>(Data.prefabList[objectKey]), parent);
-                IObjectPooling objectPooling = (IObjectPooling)monoBehaviour;
+                IObjectPooling objectPooling = monoBehaviour as IObjectPooling;
                 if (objectPooling == null)
                     return (null, null);
 
