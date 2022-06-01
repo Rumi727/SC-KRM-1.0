@@ -1,6 +1,8 @@
+using K4.Threading;
 using SCKRM.Object;
 using SCKRM.Resource;
 using SCKRM.Sound;
+using SCKRM.Threads;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -109,8 +111,16 @@ namespace SCKRM.NBS
 
 
 
-        bool allLayerLock;
         public override void Refresh()
+        {
+            if (!ThreadManager.isMainThread)
+                K4UnityThreadDispatcher.Execute(refresh);
+            else
+                refresh();
+        }
+
+        bool allLayerLock;
+        void refresh()
         {
             {
                 if (!InitialLoadManager.isInitialLoadEnd)
@@ -301,9 +311,10 @@ namespace SCKRM.NBS
 
 
 
-        public override void Remove()
+        public override bool Remove()
         {
-            base.Remove();
+            if (!base.Remove())
+                return false;
 
             _index = 0;
             _tick = 0;
@@ -313,6 +324,8 @@ namespace SCKRM.NBS
             SoundPlayer[] soundObjects = GetComponentsInChildren<SoundPlayer>();
             for (int i = 0; i < soundObjects.Length; i++)
                 soundObjects[i].Remove();
+
+            return true;
         }
     }
 }

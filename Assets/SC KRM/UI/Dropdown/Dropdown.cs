@@ -162,11 +162,11 @@ namespace SCKRM.UI
 
                 DropdownItem dropdownItem;
                 if (ObjectPoolingSystem.ObjectContains(templateName))
-                    dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate("dropdown_" + GetInstanceID() + "_template", content);
+                    dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate(templateName, content).monoBehaviour;
                 else
                 {
-                    ObjectPoolingSystem.ObjectAdd(templateName, template);
-                    dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate("dropdown_" + GetInstanceID() + "_template", content);
+                    ObjectPoolingSystem.ObjectAdd(templateName, template, template);
+                    dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate(templateName, content).monoBehaviour;
                 }
                 
                 dropdownItem.gameObject.SetActive(true);
@@ -184,7 +184,7 @@ namespace SCKRM.UI
 
                 dropdownItem.toggle.interactable = true;
 
-                RendererManager.Rerender(dropdownItem.renderers, false);
+                RendererManager.Refresh(dropdownItem.refreshableObjects, false);
 
                 dropdownItems.Add(dropdownItem);
             }

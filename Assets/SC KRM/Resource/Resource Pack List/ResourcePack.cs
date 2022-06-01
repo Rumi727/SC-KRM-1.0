@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Resource.UI
 {
-    public class ResourcePack : ObjectPoolingUI, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class ResourcePack : UIObjectPooling, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public ResourcePackList resourcePackList { get; [Obsolete("It is managed by the ResourcePackList class. Please do not touch it.")] internal set; }
 
@@ -27,9 +27,10 @@ namespace SCKRM.Resource.UI
 
         [SerializeField] TMP_Text _descriptionText; public TMP_Text descriptionText => _descriptionText;
 
-        public override void Remove()
+        public override bool Remove()
         {
-            base.Remove();
+            if (!base.Remove())
+                return false;
 
             if (icon.gameObject.activeSelf)
             {
@@ -42,6 +43,8 @@ namespace SCKRM.Resource.UI
             descriptionText.text = "";
             setSizeAsChildRectTransform.min = 40;
             verticalLayout.padding.left = 10;
+
+            return true;
         }
 
         Vector2 posOffset = Vector2.zero;

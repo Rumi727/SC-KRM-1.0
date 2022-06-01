@@ -181,13 +181,12 @@ namespace SCKRM
 
 
 
-        /// <summary>
-        /// 
-        /// </summary>
 #if UNITY_EDITOR
-        public static bool isPlaying => !ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
+        public static bool isPlaying => !ThreadManager.isMainThread || Application.isPlaying;
+        public static bool isPlayingAndNotPaused => !ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
 #else
         public const bool isPlaying = true;
+        public const bool isPlayingAndNotPaused = true;
 #endif
 
 
@@ -332,9 +331,7 @@ namespace SCKRM
             if (!ResourceManager.isResourceRefesh)
             {
                 await ResourceManager.ResourceRefresh(false);
-                RendererManager.AllRerender();
-
-                SoundManager.SoundRefresh();
+                RendererManager.AllRefresh();
 
                 ResourceManager.GarbageRemoval();
                 GC.Collect();

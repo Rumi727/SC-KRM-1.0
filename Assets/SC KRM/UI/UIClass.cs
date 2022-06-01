@@ -12,7 +12,34 @@ namespace SCKRM.UI
         [SerializeField] Graphic _graphic; public Graphic graphic => _graphic = this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
     }
 
-    public class ManagerUI<T> : UIBehaviour where T : MonoBehaviour
+    public class UIObjectPooling : UI, IObjectPooling
+    {
+        public string objectKey { get; set; }
+
+        public bool isRemoved => !isActived;
+
+        public bool isActived { get; private set; }
+        bool IObjectPooling.isActived { get => isActived; set => isActived = value; }
+
+
+
+        IRefresh[] _refreshableObjects;
+        public IRefresh[] refreshableObjects => _refreshableObjects = this.GetComponentsInChildrenFieldSave(_refreshableObjects, true);
+
+
+
+        /// <summary>
+        /// Please put base.OnCreate() when overriding
+        /// </summary>
+        public virtual void OnCreate() => IObjectPooling.OnCreateDefault(transform, this);
+
+        /// <summary>
+        /// Please put base.Remove() when overriding
+        /// </summary>
+        public virtual bool Remove() => IObjectPooling.RemoveDefault(this, this);
+    }
+
+    public class ManagerUI<T> : UI where T : MonoBehaviour
     {
         public static T instance { get; private set; }
 
@@ -28,9 +55,6 @@ namespace SCKRM.UI
 
             return (instance = manager) == manager;
         }
-
-        [NonSerialized] RectTransform _rectTransform; public RectTransform rectTransform => this.GetComponentFieldSave(_rectTransform);
-        [NonSerialized] Graphic _graphic; public Graphic graphic => this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
     }
 
     public abstract class UILayout : UI
@@ -154,19 +178,5 @@ namespace SCKRM.UI
         }
 
         public abstract void SizeUpdate(bool useAni = true);
-    }
-
-    public class ObjectPoolingUI : ObjectPooling
-    {
-        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform => _rectTransform = this.GetComponentFieldSave(_rectTransform);
-        [SerializeField] Graphic _graphic; public Graphic graphic => _graphic = this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
-
-        public override void Remove()
-        {
-            base.Remove();
-
-            if (rectTransform != null)
-                rectTransform.anchoredPosition = Vector2.zero;
-        }
     }
 }

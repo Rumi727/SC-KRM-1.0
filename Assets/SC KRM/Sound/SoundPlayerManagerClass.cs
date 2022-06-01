@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerParent : ObjectPooling
+    public abstract class SoundPlayerParent : ObjectPooling, IRefresh
     {
         public string key { get; set; }
         public string nameSpace { get; set; }
@@ -59,9 +59,10 @@ namespace SCKRM.Sound
 
 
 
-        public override void Remove()
+        public override bool Remove()
         {
-            base.Remove();
+            if (!base.Remove())
+                return false;
 
             time = 0;
             realTime = 0;
@@ -81,6 +82,8 @@ namespace SCKRM.Sound
             minDistance = 0;
             maxDistance = 16;
             localPosition = Vector3.zero;
+
+            return true;
         }
     }
 }

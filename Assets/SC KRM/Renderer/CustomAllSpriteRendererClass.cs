@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SCKRM.Renderer
 {
     [AddComponentMenu("")]
-    public class CustomAllSpriteRenderer : CustomAllRenderer
+    public abstract class CustomAllSpriteRenderer : CustomAllRenderer
     {
         [SerializeField] string _type = "";
         public string type { get => _type; set => _type = value; }

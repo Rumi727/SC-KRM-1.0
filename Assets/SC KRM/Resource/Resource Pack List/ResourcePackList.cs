@@ -73,7 +73,7 @@ namespace SCKRM.Resource.UI
                             {
                                 Texture2D texture = ResourceManager.GetTexture(PathTool.Combine(resourcePackPath, "pack"), false, new TextureMetaData() { filterMode = FilterMode.Bilinear });
                                 Sprite sprite = ResourceManager.GetSprite(texture);
-                                ResourcePack resourcePack = (ResourcePack)ObjectPoolingSystem.ObjectCreate("resource_pack_list.resource_pack", transform);
+                                ResourcePack resourcePack = (ResourcePack)ObjectPoolingSystem.ObjectCreate("resource_pack_list.resource_pack", transform).monoBehaviour;
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                                 resourcePack.resourcePackList = this;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.

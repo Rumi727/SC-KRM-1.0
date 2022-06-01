@@ -9,7 +9,7 @@ namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(VerticalLayout), typeof(SetSizeAsChildRectTransform))]
-    public class Notice : ObjectPoolingUI, IPointerEnterHandler, IPointerExitHandler
+    public class Notice : UIObjectPooling, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField, HideInInspector] VerticalLayout _verticalLayout; public VerticalLayout verticalLayout => _verticalLayout = this.GetComponentFieldSave(_verticalLayout);
         [SerializeField, HideInInspector] SetSizeAsChildRectTransform _setSizeAsChildRectTransform; public SetSizeAsChildRectTransform setSizeAsChildRectTransform => _setSizeAsChildRectTransform = this.GetComponentFieldSave(_setSizeAsChildRectTransform);
@@ -39,9 +39,10 @@ namespace SCKRM.UI.SideBar
                 removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsDeltaTime);
         }
 
-        public override void Remove()
+        public override bool Remove()
         {
-            base.Remove();
+            if (base.Remove())
+                return false;
 
             if (icon.gameObject.activeSelf)
                 icon.gameObject.SetActive(false);
@@ -51,6 +52,8 @@ namespace SCKRM.UI.SideBar
             setSizeAsChildRectTransform.min = 40;
             verticalLayout.padding.left = 10;
             removeButtonCanvasGroup.alpha = 0;
+
+            return true;
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;

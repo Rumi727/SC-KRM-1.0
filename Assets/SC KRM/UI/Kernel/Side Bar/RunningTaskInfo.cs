@@ -14,7 +14,7 @@ namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class RunningTaskInfo : ObjectPoolingUI, IPointerEnterHandler, IPointerExitHandler
+    public sealed class RunningTaskInfo : UIObjectPooling, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] TMP_Text _nameText;
         public TMP_Text nameText => _nameText;
@@ -104,9 +104,10 @@ namespace SCKRM.UI.SideBar
 
         public void Cancel() => asyncTask.Remove();
 
-        public override void Remove()
+        public override bool Remove()
         {
-            base.Remove();
+            if (!base.Remove())
+                return false;
 
             rectTransform.sizeDelta = new Vector2(430, 19);
             asyncTask = null;
@@ -120,6 +121,8 @@ namespace SCKRM.UI.SideBar
 
             LanguageManager.currentLanguageChange -= InfoLoad;
             ThreadManager.threadChange -= InfoLoad;
+
+            return true;
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;

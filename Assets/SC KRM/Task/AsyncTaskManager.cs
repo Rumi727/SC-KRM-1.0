@@ -47,7 +47,7 @@ namespace SCKRM
         }
     }
 
-    public class AsyncTask
+    public class AsyncTask : IRemoveForce
     {
         public AsyncTask(string name = "", string info = "", bool loop = false, bool cantCancel = false)
         {
@@ -72,7 +72,8 @@ namespace SCKRM
 
 
 
-        public virtual bool isCanceled { get; set; }
+        public virtual bool isRemoved { get => isCanceled; }
+        public virtual bool isCanceled { get; protected set; }
 
 
 
@@ -109,7 +110,9 @@ namespace SCKRM
         /// This function can only be executed on the main thread
         /// </summary>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public virtual bool Remove(bool force = false)
+        public virtual bool Remove() => Remove(false);
+
+        public virtual bool Remove(bool force)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Remove));

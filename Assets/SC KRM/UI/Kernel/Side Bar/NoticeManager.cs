@@ -66,7 +66,7 @@ namespace SCKRM.UI.SideBar
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
-            Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform);
+            Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform).monoBehaviour;
             notice.transform.SetAsFirstSibling();
             notice.nameText.nameSpacePathPair = name;
             notice.infoText.nameSpacePathPair = info;

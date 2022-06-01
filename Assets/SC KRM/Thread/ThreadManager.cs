@@ -537,7 +537,7 @@ namespace SCKRM.Threads
 
                 return value;
             }
-            set
+            protected set
             {
                 Monitor.Enter(isCanceledLockObject);
                 _isCanceled = value;

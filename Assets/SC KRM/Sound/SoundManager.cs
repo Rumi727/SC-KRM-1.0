@@ -240,7 +240,7 @@ namespace SCKRM.Sound
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            SoundPlayer soundObject = (SoundPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent);
+            SoundPlayer soundObject = (SoundPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent, false).monoBehaviour;
             soundObject.key = key;
             soundObject.nameSpace = nameSpace;
             if (soundData != null)
@@ -387,7 +387,7 @@ namespace SCKRM.Sound
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            NBSPlayer nbsPlayer = (NBSPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.nbs_player", parent);
+            NBSPlayer nbsPlayer = (NBSPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.nbs_player", parent, false).monoBehaviour;
             nbsPlayer.key = key;
             nbsPlayer.nameSpace = nameSpace;
 

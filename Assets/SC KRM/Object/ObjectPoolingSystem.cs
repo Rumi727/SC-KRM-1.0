@@ -4,6 +4,7 @@ using SCKRM.Renderer;
 using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
+using UCompile;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -21,8 +22,8 @@ namespace SCKRM.Object
         static ObjectList objectList { get; } = new ObjectList();
         class ObjectList
         {
-            public List<string> ObjectKey = new List<string>();
-            public List<ObjectPooling> Object = new List<ObjectPooling>();
+            public List<string> objectKey = new List<string>();
+            public List<(MonoBehaviour monoBehaviour, IObjectPooling objectPooling)> objectPooling = new List<(MonoBehaviour, IObjectPooling)>();
         }
 
 
@@ -33,14 +34,22 @@ namespace SCKRM.Object
         /// 오브젝트를 미리 생성합니다
         /// </summary>
         /// <param name="objectKey">미리 생성할 오브젝트 키</param>
-        public static void ObjectAdvanceCreate(string objectKey) => ObjectAdd(objectKey, Resources.Load<ObjectPooling>(Data.prefabList[objectKey]));
+        public static void ObjectAdvanceCreate(string objectKey)
+        {
+            MonoBehaviour monoBehaviour = Resources.Load<MonoBehaviour>(Data.prefabList[objectKey]);
+            IObjectPooling objectPooling = (IObjectPooling)monoBehaviour;
+            if (objectPooling == null)
+                return;
+
+            ObjectAdd(objectKey, monoBehaviour, objectPooling);
+        }
 
         /// <summary>
         /// 오브젝트를 리스트에 추가합니다
         /// </summary>
         /// <param name="objectKey">추가할 오브젝트의 키</param>
-        /// <param name="gameObject">추가할 오브젝트</param>
-        public static void ObjectAdd(string objectKey, ObjectPooling gameObject)
+        /// <param name="monoBehaviour">추가할 오브젝트</param>
+        public static void ObjectAdd(string objectKey, MonoBehaviour monoBehaviour, IObjectPooling objectPooling)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectAdvanceCreate));
@@ -50,8 +59,12 @@ namespace SCKRM.Object
                 throw new NotInitialLoadEndMethodException(nameof(ObjectAdvanceCreate));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
+            if (monoBehaviour == null)
+                throw new NullReferenceException(nameof(monoBehaviour));
+            if (objectPooling == null)
+                throw new NullReferenceException(nameof(objectPooling));
 
-            ObjectRemove(objectKey, Instantiate(gameObject, instance.transform));
+            ObjectRemove(objectKey, Instantiate(monoBehaviour, instance.transform), objectPooling);
         }
 
         /// <summary>
@@ -59,14 +72,7 @@ namespace SCKRM.Object
         /// </summary>
         /// <param name="objectKey">감지할 오브젝트 키</param>
         /// <returns></returns>
-        public static bool ObjectContains(string objectKey) => objectList.ObjectKey.Contains(objectKey);
-
-        /// <summary>
-        /// 오브젝트를 생성합니다
-        /// </summary>
-        /// <param name="objectKey">생성할 오브젝트 키</param>
-        /// <returns></returns>
-        public static ObjectPooling ObjectCreate(string objectKey) => ObjectCreate(objectKey, null);
+        public static bool ObjectContains(string objectKey) => objectList.objectKey.Contains(objectKey);
 
         /// <summary>
         /// 오브젝트를 생성합니다
@@ -74,7 +80,7 @@ namespace SCKRM.Object
         /// <param name="objectKey">생성할 오브젝트 키</param>
         /// <param name="parent">생성할 오브젝트가 자식으로갈 오브젝트</param>
         /// <returns></returns>
-        public static ObjectPooling ObjectCreate(string objectKey, Transform parent)
+        public static (MonoBehaviour monoBehaviour, IObjectPooling objectPooling) ObjectCreate(string objectKey, Transform parent = null, bool autoRefresh = true)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectCreate));
@@ -85,45 +91,55 @@ namespace SCKRM.Object
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectCreate));
 
-            if (objectList.ObjectKey.Contains(objectKey))
+            if (objectList.objectKey.Contains(objectKey))
             {
-                ObjectPooling objectPooling = objectList.Object[objectList.ObjectKey.IndexOf(objectKey)];
-                objectPooling.transform.SetParent(parent, false);
-                objectPooling.gameObject.SetActive(true);
+                (MonoBehaviour monoBehaviour, IObjectPooling objectPooling) objectPoolingTuple = objectList.objectPooling[objectList.objectKey.IndexOf(objectKey)];
+
+                IObjectPooling objectPooling = objectPoolingTuple.objectPooling;
+                MonoBehaviour monoBehaviour = objectPoolingTuple.monoBehaviour;
+                monoBehaviour.transform.SetParent(parent, false);
+                monoBehaviour.gameObject.SetActive(true);
+
                 objectPooling.objectKey = objectKey;
                 
                 {
-                    int i = objectList.ObjectKey.IndexOf(objectKey);
-                    objectList.ObjectKey.RemoveAt(i);
-                    objectList.Object.RemoveAt(i);
+                    int i = objectList.objectKey.IndexOf(objectKey);
+                    objectList.objectKey.RemoveAt(i);
+                    objectList.objectPooling.RemoveAt(i);
                 }
 
-                RendererManager.Rerender(objectPooling.renderers, false);
-
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                objectPooling._actived = true;
+                objectPooling.isActived = true;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
+                if (autoRefresh)
+                    RendererManager.Refresh(objectPooling.refreshableObjects, false);
+
                 objectPooling.OnCreate();
-                return objectPooling;
+                return objectPoolingTuple;
             }
             else if (Data.prefabList.ContainsKey(objectKey))
             {
-                ObjectPooling objectPooling = Instantiate(Resources.Load<ObjectPooling>(Data.prefabList[objectKey]), parent);
-                objectPooling.name = objectKey;
+                MonoBehaviour monoBehaviour = Instantiate(Resources.Load<MonoBehaviour>(Data.prefabList[objectKey]), parent);
+                IObjectPooling objectPooling = (IObjectPooling)monoBehaviour;
+                if (objectPooling == null)
+                    return (null, null);
+
+                monoBehaviour.name = objectKey;
                 objectPooling.objectKey = objectKey;
 
-                RendererManager.Rerender(objectPooling.renderers, false);
-
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                objectPooling._actived = true;
+                objectPooling.isActived = true;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
+                if (autoRefresh)
+                    RendererManager.Refresh(objectPooling.refreshableObjects, false);
+
                 objectPooling.OnCreate();
-                return objectPooling;
+                return (monoBehaviour, objectPooling);
             }
 
-            return null;
+            return (null, null);
         }
 
         /// <summary>
@@ -131,7 +147,7 @@ namespace SCKRM.Object
         /// </summary>
         /// <param name="objectKey">지울 오브젝트 키</param>
         /// <param name="objectPooling">지울 오브젝트</param>
-        public static void ObjectRemove(string objectKey, ObjectPooling objectPooling)
+        public static bool ObjectRemove(string objectKey, MonoBehaviour monoBehaviour, IObjectPooling objectPooling)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectRemove));
@@ -141,71 +157,49 @@ namespace SCKRM.Object
                 throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
             if (instance == null)
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
+            if (monoBehaviour == null)
+                throw new NullReferenceException(nameof(monoBehaviour));
+            if (objectPooling == null)
+                throw new NullReferenceException(nameof(objectPooling));
 
-            objectPooling.gameObject.SetActive(false);
-            objectPooling.transform.SetParent(instance.transform);
+            monoBehaviour.gameObject.SetActive(false);
+            monoBehaviour.transform.SetParent(instance.transform);
 
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-            objectPooling._actived = false;
+            objectPooling.isActived = false;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
-            objectList.ObjectKey.Add(objectKey);
-            objectList.Object.Add(objectPooling);
+            objectList.objectKey.Add(objectKey);
+            objectList.objectPooling.Add((monoBehaviour, objectPooling));
+
+            return true;
         }
     }
 
-    public class ObjectPooling : MonoBehaviour
+    public class ObjectPooling : MonoBehaviour, IObjectPooling
     {
-        public string objectKey { get; set; } = "";
+        public string objectKey { get; set; }
 
-        [Obsolete("It is managed by the ObjectPoolingSystem class. Please do not touch it.", false)]
-        internal bool _actived;
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-        public bool actived => _actived;
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+        public bool isRemoved => !isActived;
 
-        [NonSerialized] CustomAllRenderer[] _renderers;
-        public CustomAllRenderer[] renderers
-        {
-            get
-            {
-                if (_renderers == null)
-                    _renderers = GetComponentsInChildren<CustomAllRenderer>(true);
+        public bool isActived { get; private set; }
+        bool IObjectPooling.isActived { get => isActived; set => isActived = value; }
 
-                return _renderers;
-            }
-        }
+
+
+        IRefresh[] _refreshableObjects;
+        public IRefresh[] refreshableObjects => _refreshableObjects = this.GetComponentsInChildrenFieldSave(_refreshableObjects, true);
+
+
 
         /// <summary>
         /// Please put base.OnCreate() when overriding
         /// </summary>
-        public virtual void OnCreate()
-        {
-            gameObject.name = objectKey;
-
-            transform.localPosition = Vector3.zero;
-
-            transform.localEulerAngles = Vector3.zero;
-            transform.localScale = Vector3.one;
-        }
+        public virtual void OnCreate() => IObjectPooling.OnCreateDefault(transform, this);
 
         /// <summary>
         /// Please put base.Remove() when overriding
         /// </summary>
-        public virtual void Remove()
-        {
-            if (!actived)
-                return;
-
-            ObjectPoolingSystem.ObjectRemove(objectKey, this);
-            gameObject.name = objectKey;
-
-            transform.localPosition = Vector3.zero;
-
-            transform.localEulerAngles = Vector3.zero;
-            transform.localScale = Vector3.one;
-
-            StopAllCoroutines();
-        }
+        public virtual bool Remove() => IObjectPooling.RemoveDefault(this, this);
     }
 }

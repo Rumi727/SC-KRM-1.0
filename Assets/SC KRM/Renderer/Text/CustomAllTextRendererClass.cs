@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SCKRM.Renderer
 {
     [AddComponentMenu("")]
-    public class CustomAllTextRenderer : CustomAllRenderer
+    public abstract class CustomAllTextRenderer : CustomAllRenderer
     {
         public ReplaceOldNewPair[] replace { get; set; } = new ReplaceOldNewPair[0];
 

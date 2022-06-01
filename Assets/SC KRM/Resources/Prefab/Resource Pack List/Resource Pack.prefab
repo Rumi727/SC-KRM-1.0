@@ -159,12 +159,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 570521442752873981}
+  - component: {fileID: 2250496116285478646}
   - component: {fileID: 4329623227210807489}
   - component: {fileID: 1437238912739423102}
   - component: {fileID: 3902866909797427087}
   - component: {fileID: 6406183811211014382}
   - component: {fileID: 721748106083115530}
-  - component: {fileID: 2250496116285478646}
   m_Layer: 0
   m_Name: Resource Pack
   m_TagString: Untagged
@@ -195,6 +195,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &2250496116285478646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748353516012179500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366c35e11d55d7d468ad990f1ddf0fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
+  selected: 0
+  _verticalLayout: {fileID: 0}
+  _setSizeAsChildRectTransform: {fileID: 0}
+  _icon: {fileID: 8818949854222124973}
+  _nameText: {fileID: 1524431748461453268}
+  _descriptionText: {fileID: 3038178716134116539}
 --- !u!222 &4329623227210807489
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -300,26 +320,6 @@ MonoBehaviour:
   _offset: {x: 0, y: 11}
   _min: 40
   _max: 0
---- !u!114 &2250496116285478646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2748353516012179500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366c35e11d55d7d468ad990f1ddf0fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
-  selected: 0
-  _verticalLayout: {fileID: 0}
-  _setSizeAsChildRectTransform: {fileID: 0}
-  _icon: {fileID: 8818949854222124973}
-  _nameText: {fileID: 1524431748461453268}
-  _descriptionText: {fileID: 3038178716134116539}
 --- !u!1 &7442160392270376197
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,8 @@ using UnityEngine;
 using SCKRM.Resource;
 using SCKRM.UI.MessageBox;
 using System.Threading;
+using K4.Threading;
+using SCKRM.Threads;
 
 namespace SCKRM.Sound
 {
@@ -140,7 +142,17 @@ namespace SCKRM.Sound
                 _onAudioFilterReadEvent?.Invoke(data, channels);
         }
 
+
+
         public override void Refresh()
+        {
+            if (!ThreadManager.isMainThread)
+                K4UnityThreadDispatcher.Execute(refresh);
+            else
+                refresh();
+        }
+
+        void refresh()
         {
             {
                 if (!InitialLoadManager.isInitialLoadEnd)
@@ -278,9 +290,10 @@ namespace SCKRM.Sound
 
 
 
-        public override void Remove()
+        public override bool Remove()
         {
-            base.Remove();
+            if (!base.Remove())
+                return false;
 
             tempTime = 0;
 
@@ -299,6 +312,8 @@ namespace SCKRM.Sound
             audioSource.Stop();
 
             SoundManager.soundList.Remove(this);
+
+            return true;
         }
     }
 }

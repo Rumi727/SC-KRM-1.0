@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Threads;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -8,12 +9,14 @@ namespace SCKRM.Renderer
 {
     public static class RendererManager
     {
-        public static void AllRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread);
+        public static void AllRefresh(bool thread = true) => Refresh((IRefresh[])UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRefresh>(), thread);
 
-        public static void AllTextRerender(bool thread = true) => Rerender(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread);
+        public static void AllRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread);
+
+        public static void AllTextRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread);
 
         static ThreadMetaData rerenderThread;
-        public static void Rerender(CustomAllRenderer[] customRenderers, bool thread = true)
+        public static void Refresh(IRefresh[] refreshableObjects, bool thread = true)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Rerender));
@@ -25,36 +28,32 @@ namespace SCKRM.Renderer
                 if (rerenderThread != null)
                     rerenderThread.Remove();
 
-                ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, customRenderers, "notice.running_task.rerender.name");
+                ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, refreshableObjects, "notice.running_task.rerender.name");
                 rerenderThread = threadMetaData;
             }
             else
             {
-                for (int i = 0; i < customRenderers.Length; i++)
-                {
-                    CustomAllRenderer customRenderer = customRenderers[i];
-                    customRenderer.Refresh();
-                    //customRenderer.Rerender();
-                }
+                for (int i = 0; i < refreshableObjects.Length; i++)
+                    refreshableObjects[i].Refresh();
             }
         }
 
-        static void Rerender(CustomAllRenderer[] customRenderers, ThreadMetaData threadMetaData)
+        static void Rerender(IRefresh[] refreshableObjects, ThreadMetaData threadMetaData)
         {
             int stopLoop = 0;
 
-            threadMetaData.maxProgress = customRenderers.Length - 1;
+            threadMetaData.maxProgress = refreshableObjects.Length - 1;
 
             threadMetaData.cancelEvent += CancelEvent;
             threadMetaData.cantCancel = false;
 
-            for (int i = 0; i < customRenderers.Length; i++)
+            for (int i = 0; i < refreshableObjects.Length; i++)
             {
                 Interlocked.Decrement(ref stopLoop);
                 if (Interlocked.Increment(ref stopLoop) > 0)
                     return;
 
-                customRenderers[i].Refresh();
+                refreshableObjects[i].Refresh();
 
                 threadMetaData.progress = i;
             }

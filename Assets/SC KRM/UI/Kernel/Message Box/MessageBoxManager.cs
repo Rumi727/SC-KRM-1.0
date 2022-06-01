@@ -75,12 +75,12 @@ namespace SCKRM.UI.MessageBox
 
             #region Button Object Create
             for (int i = 0; i < createdMessageBoxButton.Length; i++)
-                ObjectPoolingSystem.ObjectRemove("window_manager.message_box_button", createdMessageBoxButton[i]);
+                createdMessageBoxButton[i].Remove();
 
             createdMessageBoxButton = new MessageBoxButton[buttons.Length];
             for (int i = 0; i < buttons.Length; i++)
             {
-                MessageBoxButton button = (MessageBoxButton)ObjectPoolingSystem.ObjectCreate("window_manager.message_box_button", instance.messageBoxButtons);
+                MessageBoxButton button = (MessageBoxButton)ObjectPoolingSystem.ObjectCreate("window_manager.message_box_button", instance.messageBoxButtons).monoBehaviour;
                 createdMessageBoxButton[i] = button;
 
                 button.index = i;
