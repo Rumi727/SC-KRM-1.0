@@ -3187,10 +3187,31 @@ namespace SCKRM
             return fieldToSave;
         }
 
+        public static T[] GetComponentsInChildrenFieldSave<T>(this Component component, T[] fieldToSave, bool includeInactive = false, GetComponentMode mode = GetComponentMode.addIfNull) where T : Component
+        {
+            if (fieldToSave == null)
+            {
+                fieldToSave = component.GetComponentsInChildren<T>(includeInactive);
+                if (fieldToSave == null && mode == GetComponentMode.destroyIfNull)
+                {
+                    UnityEngine.Object.DestroyImmediate(component);
+                    return null;
+                }
+            }
+
+            return fieldToSave;
+        }
+
         public enum GetComponentMode
         {
             none,
             addIfNull,
+            destroyIfNull
+        }
+
+        public enum GetComponentsInChildrenMode
+        {
+            none,
             destroyIfNull
         }
     }
