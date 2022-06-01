@@ -8,6 +8,16 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public class CustomAllRenderer : MonoBehaviour
     {
+        public NameSpacePathPair nameSpacePathPair
+        {
+            get => new NameSpacePathPair(nameSpace, path);
+            set
+            {
+                nameSpace = value.nameSpace;
+                path = value.path;
+            }
+        }
+
         [SerializeField] string _nameSpace = "";
         public string nameSpace { get => _nameSpace; set => _nameSpace = value; }
 
