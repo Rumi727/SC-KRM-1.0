@@ -240,31 +240,27 @@ namespace SCKRM.Sound
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
-            SoundPlayer soundPlayer = (SoundPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent, false).monoBehaviour;
-            soundPlayer.key = key;
-            soundPlayer.nameSpace = nameSpace;
+            SoundPlayer soundObject = (SoundPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.sound_object", parent, false).monoBehaviour;
+            soundObject.key = key;
+            soundObject.nameSpace = nameSpace;
             if (soundData != null)
-                soundPlayer.customSoundData = soundData;
+                soundObject.customSoundData = soundData;
 
-            soundPlayer.Refresh();
+            soundObject.volume = volume;
+            soundObject.loop = loop;
+            soundObject.pitch = pitch;
+            soundObject.tempo = tempo;
 
-            if (soundPlayer.soundData != null)
-            {
-                soundPlayer.volume = volume;
-                soundPlayer.loop = loop;
-                soundPlayer.pitch = pitch;
-                soundPlayer.tempo = tempo;
+            soundObject.panStereo = panStereo;
+            soundObject.spatial = spatial;
 
-                soundPlayer.panStereo = panStereo;
-                soundPlayer.spatial = spatial;
+            soundObject.minDistance = minDistance;
+            soundObject.maxDistance = maxDistance;
 
-                soundPlayer.minDistance = minDistance;
-                soundPlayer.maxDistance = maxDistance;
+            soundObject.localPosition = new Vector3(x, y, z);
 
-                soundPlayer.localPosition = new Vector3(x, y, z);
-            }
-
-            return soundPlayer;
+            soundObject.Refresh();
+            return soundObject;
         }
 
         /// <summary>
@@ -395,24 +391,25 @@ namespace SCKRM.Sound
             nbsPlayer.key = key;
             nbsPlayer.nameSpace = nameSpace;
 
+            nbsPlayer.volume = volume;
+            nbsPlayer.loop = loop;
+            nbsPlayer.pitch = pitch;
+            nbsPlayer.tempo = tempo;
+
+            nbsPlayer.panStereo = panStereo;
+            nbsPlayer.spatial = spatial;
+
+            nbsPlayer.minDistance = minDistance;
+            nbsPlayer.maxDistance = maxDistance;
+
+            nbsPlayer.localPosition = new Vector3(x, y, z);
+
+            if (nameSpace == null || nameSpace == "")
+                nbsPlayer.name = ResourceManager.defaultNameSpace + ":" + key;
+            else
+                nbsPlayer.name = nameSpace + ":" + key;
+
             nbsPlayer.Refresh();
-
-            if (nbsPlayer.nbsData != null)
-            {
-                nbsPlayer.volume = volume;
-                nbsPlayer.loop = loop;
-                nbsPlayer.pitch = pitch;
-                nbsPlayer.tempo = tempo;
-
-                nbsPlayer.panStereo = panStereo;
-                nbsPlayer.spatial = spatial;
-
-                nbsPlayer.minDistance = minDistance;
-                nbsPlayer.maxDistance = maxDistance;
-
-                nbsPlayer.localPosition = new Vector3(x, y, z);
-            }
-
             return nbsPlayer;
         }
 
