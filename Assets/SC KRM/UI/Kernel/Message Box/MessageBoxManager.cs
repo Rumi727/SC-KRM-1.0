@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
+using SCKRM.Threads;
 using SCKRM.UI.StatusBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -52,6 +53,13 @@ namespace SCKRM.UI.MessageBox
 
         static async UniTask<int> show(NameSpacePathReplacePair[] buttons, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon)
         {
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException();
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException();
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeMethodException();
+
             await UniTask.WaitUntil(() => instance != null);
 
             if (isMessageBoxShow)
