@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using UnityEngine;
 using SCKRM.UI.SideBar;
 using System;
+using SCKRM.Renderer;
 
 namespace SCKRM.Log
 {
@@ -27,9 +28,9 @@ namespace SCKRM.Log
                 while (logs.TryDequeue(out Log log))
                 {
                     if (log.stackTrace != "")
-                        NoticeManager.Notice(log.name, log.info + "\n\n" + log.stackTrace, log.type);
+                        NoticeManager.Notice(new NameSpacePathReplacePair(log.name), new NameSpacePathReplacePair(log.info + "\n\n" + log.stackTrace), log.type);
                     else
-                        NoticeManager.Notice(log.name, log.info, log.type);
+                        NoticeManager.Notice(new NameSpacePathReplacePair(log.name), new NameSpacePathReplacePair(log.info), log.type);
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace SCKRM.Log
             {
                 if (condition.Contains(":"))
                 {
-                    name = condition.Substring(0, condition.IndexOf(':'));
+                    name = condition.Remove(condition.IndexOf(':'));
                     info = condition.Substring(condition.IndexOf(':') + 2);
                 }
 
