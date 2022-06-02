@@ -132,7 +132,7 @@ namespace SCKRM
 
 
         static bool highPrecisionMouseWarningLock = false;
-        public static async void HighPrecisionMouseWarning(SettingToggle setting)
+        public static async void HighPrecisionMouseWarning(Setting setting)
         {
             if (highPrecisionMouseWarningLock)
                 return;
