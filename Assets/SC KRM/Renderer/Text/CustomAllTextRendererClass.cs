@@ -86,7 +86,7 @@ namespace SCKRM.Renderer
         public static implicit operator NameSpacePathReplacePair(string value)
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
-            return new NameSpacePathReplacePair(value, nameSpace);
+            return new NameSpacePathReplacePair(nameSpace, value);
         }
 
         public override string ToString()

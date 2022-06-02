@@ -49,7 +49,7 @@ namespace SCKRM.Renderer
         public static implicit operator NameSpacePathPair(string value)
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
-            return new NameSpacePathPair(value, nameSpace);
+            return new NameSpacePathPair(nameSpace, value);
         }
 
         public override string ToString()
