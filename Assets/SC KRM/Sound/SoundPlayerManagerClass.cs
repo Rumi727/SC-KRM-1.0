@@ -9,8 +9,8 @@ namespace SCKRM.Sound
 {
     public abstract class SoundPlayerParent : ObjectPooling, IRefresh
     {
-        public string key { get; set; }
-        public string nameSpace { get; set; }
+        public string key { get; set; } = "";
+        public string nameSpace { get; set; } = "";
 
 
 
@@ -20,7 +20,9 @@ namespace SCKRM.Sound
         public abstract float length { get; }
         public abstract float realLength { get; }
 
-        public bool loop { get; set; }
+        public virtual bool loop { get; set; } = false;
+
+
 
         protected Action _timeChanged;
         protected Action _looped;
@@ -34,24 +36,24 @@ namespace SCKRM.Sound
 
 
 
-        public float pitch { get; set; }
-        public float tempo { get; set; }
+        public virtual float pitch { get; set; } = 1;
+        public virtual float tempo { get; set; } = 1;
 
         public abstract float speed { get; set; }
-        
-
-
-        public float volume { get; set; }
-
-        public float minDistance { get; set; }
-        public float maxDistance { get; set; }
-
-        public float panStereo { get; set; }
 
 
 
-        public bool spatial { get; set; }
-        public Vector3 localPosition { get; set; }
+        public virtual float volume { get; set; } = 1;
+
+        public virtual float minDistance { get; set; } = 0;
+        public virtual float maxDistance { get; set; } = 16;
+
+        public virtual float panStereo { get; set; } = 0;
+
+
+
+        public virtual bool spatial { get; set; } = false;
+        public virtual Vector3 localPosition { get; set; } = Vector3.zero;
 
 
 
@@ -64,23 +66,34 @@ namespace SCKRM.Sound
             if (!base.Remove())
                 return false;
 
+            key = "";
+            nameSpace = "";
+
+
             time = 0;
             realTime = 0;
+
+            loop = false;
+
 
             isLooped = false;
             isPaused = false;
 
-            key = "";
-            nameSpace = "";
-
-            volume = 1;
-            loop = false;
+            
             pitch = 1;
             tempo = 1;
-            spatial = false;
-            panStereo = 0;
+
+            speed = 1;
+
+
+            volume = 1;
+
             minDistance = 0;
             maxDistance = 16;
+
+            panStereo = 0;
+
+            spatial = false;
             localPosition = Vector3.zero;
 
             return true;

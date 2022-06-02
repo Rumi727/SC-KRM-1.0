@@ -14,7 +14,7 @@ namespace SCKRM.NBS
     [AddComponentMenu("")]
     public sealed class NBSPlayer : SoundPlayerParent
     {
-        public SoundData<NBSMetaData> soundData { get; private set; }
+        public SoundData<NBSMetaData> nbsData { get; private set; }
         public SoundData<NBSMetaData> customSoundData { get; set; }
 
         public NBSMetaData metaData { get; private set; }
@@ -31,6 +31,15 @@ namespace SCKRM.NBS
             get => _index;
             set
             {
+                if (metaData == null || nbsFile == null || nbsFile.nbsNotes == null)
+                {
+                    tickTimer = 0;
+                    _tick = 0;
+                    _index = 0;
+
+                    return;
+                }
+
                 value = value.Clamp(0, nbsFile.nbsNotes.Count - 1);
 
                 tickTimer = 0;
@@ -45,6 +54,15 @@ namespace SCKRM.NBS
             get => _tick;
             set
             {
+                if (metaData == null || nbsFile == null || nbsFile.nbsNotes == null)
+                {
+                    tickTimer = 0;
+                    _tick = 0;
+                    _index = 0;
+
+                    return;
+                }
+
                 value = value.Clamp(0, (int)length);
 
                 tickTimer = 0;
@@ -68,7 +86,17 @@ namespace SCKRM.NBS
         }
         public override float realTime { get => time / tempo; set => time = value * tempo; }
 
-        public override float length => (float)(metaData?.nbsFile.songLength);
+        public override float length
+        {
+            get
+            {
+                if (metaData == null)
+                    return 0;
+
+                return (float)(nbsFile?.songLength);
+            }
+        }
+
         public override float realLength { get => length / tempo; }
 
         public override bool isLooped { get; protected set; } = false;
@@ -132,28 +160,32 @@ namespace SCKRM.NBS
 
 
                 if (customSoundData == null)
-                    soundData = ResourceManager.SearchNBSData(key, nameSpace);
+                    nbsData = ResourceManager.SearchNBSData(key, nameSpace);
                 else
-                    soundData = customSoundData;
+                    nbsData = customSoundData;
 
-                if (soundData == null)
+                if (nbsData == null)
                 {
                     Remove();
                     return;
                 }
-                else if (soundData.sounds == null || soundData.sounds.Length <= 0)
-                {
-                    Remove();
-                    return;
-                }
-                else if (pitch == 0)
+                else if (nbsData.sounds == null || nbsData.sounds.Length <= 0)
                 {
                     Remove();
                     return;
                 }
 
-                metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
+                metaData = nbsData.sounds[Random.Range(0, nbsData.sounds.Length)];
             }
+
+
+
+            if (nameSpace == null || nameSpace == "")
+                name = ResourceManager.defaultNameSpace + ":" + key;
+            else
+                name = nameSpace + ":" + key;
+
+
 
             if (!SoundManager.nbsList.Contains(this))
                 SoundManager.nbsList.Add(this);
