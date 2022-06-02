@@ -37,15 +37,13 @@ namespace SCKRM.Sound
         public override float length => (float)(audioSource.clip != null ? audioSource.clip.length : 0);
         public override float realLength => length / speed;
 
-        public override float speed
+        public override bool loop
         {
-            get => (soundData != null && soundData.isBGM && SoundManager.Data.useTempo) ? tempo : pitch;
+            get => base.loop;
             set
             {
-                if (soundData != null && soundData.isBGM && SoundManager.Data.useTempo)
-                    tempo = value;
-                else
-                    pitch = value;
+                base.loop = value;
+                audioSource.loop = value;
             }
         }
 
@@ -65,6 +63,116 @@ namespace SCKRM.Sound
                     audioSource.UnPause();
 
                 _isPaused = value;
+            }
+        }
+
+
+
+        public override float pitch
+        {
+            get => base.pitch;
+            set
+            {
+                base.pitch = value;
+
+                SetTempoAndPitch();
+                SetVolume();
+            }
+        }
+        public override float tempo
+        {
+            get => base.tempo;
+            set
+            {
+                base.tempo = value;
+
+                SetTempoAndPitch();
+                SetVolume();
+            }
+        }
+
+        public override float speed
+        {
+            get
+            {
+                if (soundData != null && soundData.isBGM && SoundManager.Data.useTempo)
+                    return tempo;
+                else
+                    return pitch;
+            }
+            set
+            {
+                if (soundData != null && soundData.isBGM && SoundManager.Data.useTempo)
+                    tempo = value;
+                else
+                    pitch = value;
+            }
+        }
+
+
+
+        public override float volume
+        {
+            get => base.volume;
+            set
+            {
+                base.volume = value;
+                SetVolume();
+            }
+        }
+
+
+        public override float minDistance
+        {
+            get => base.minDistance;
+            set
+            {
+                base.minDistance = value;
+                audioSource.minDistance = value;
+            }
+        }
+        public override float maxDistance
+        {
+            get => base.maxDistance;
+            set
+            {
+                base.maxDistance = value;
+                audioSource.maxDistance = value;
+            }
+        }
+
+        public override float panStereo
+        {
+            get => base.panStereo;
+            set
+            {
+                base.panStereo = value;
+                audioSource.panStereo = value;
+            }
+        }
+
+
+
+        public override bool spatial
+        {
+            get => base.spatial;
+            set
+            {
+                base.spatial = value;
+
+                if (value)
+                    audioSource.spatialBlend = 1;
+                else
+                    audioSource.spatialBlend = 0;
+            }
+        }
+        public override Vector3 localPosition
+        {
+            get => base.localPosition;
+            set
+            {
+                base.localPosition = value;
+                transform.localPosition = value;
             }
         }
 
@@ -99,7 +207,10 @@ namespace SCKRM.Sound
         float tempTime = 0;
         void Update()
         {
-            SetVariable();
+            if (MessageBoxManager.isMessageBoxShow)
+                audioLowPassFilter.cutoffFrequency = 687.5f;
+            else
+                audioLowPassFilter.cutoffFrequency = 22000f;
 
             if (audioSource.loop)
             {
@@ -183,11 +294,6 @@ namespace SCKRM.Sound
                     Remove();
                     return;
                 }
-                else if (pitch == 0)
-                {
-                    Remove();
-                    return;
-                }
             }
 
             if (nameSpace == null || nameSpace == "")
@@ -210,8 +316,6 @@ namespace SCKRM.Sound
                 SoundManager.soundList.Add(this);
 
             {
-                SetVariable();
-
                 if (isPaused)
                     isPaused = false;
 
@@ -225,42 +329,23 @@ namespace SCKRM.Sound
             }
         }
 
-
-
-        void SetVariable()
-        {
-            SetTempoAndPitch();
-            SetVolume();
-
-            if (MessageBoxManager.isMessageBoxShow)
-                audioLowPassFilter.cutoffFrequency = 687.5f;
-            else
-                audioLowPassFilter.cutoffFrequency = 22000f;
-
-            if (spatial)
-                audioSource.spatialBlend = 1;
-            else
-                audioSource.spatialBlend = 0;
-
-            audioSource.loop = loop;
-            audioSource.panStereo = panStereo;
-            audioSource.minDistance = minDistance;
-            audioSource.maxDistance = maxDistance;
-
-            transform.localPosition = localPosition;
-        }
-
         void SetTempoAndPitch()
         {
-            if (soundData.isBGM && SoundManager.Data.useTempo)
+            if (soundData == null || metaData == null)
+            {
+                audioSource.pitch = 1;
+                return;
+            }
+
+            if (soundData == null || soundData.isBGM && SoundManager.Data.useTempo)
             {
                 if (metaData.stream)
-                    tempo = tempo.Clamp(0);
+                    base.tempo = base.tempo.Clamp(0);
 
-                float allPitch = pitch * metaData.pitch;
-                float allTempo = tempo * metaData.tempo;
+                float allPitch = base.pitch * metaData.pitch;
+                float allTempo = base.tempo * metaData.tempo;
 
-                pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / metaData.pitch;
+                //base.pitch = allPitch.Clamp(allTempo.Abs() * 0.5f, allTempo.Abs() * 2f) / metaData.pitch;
 
                 allTempo *= Kernel.gameSpeed;
                 audioSource.pitch = allTempo;
@@ -269,22 +354,22 @@ namespace SCKRM.Sound
             else
             {
                 if (metaData.stream)
-                    pitch = pitch.Clamp(0);
+                    base.pitch = base.pitch.Clamp(0);
 
-                audioSource.pitch = pitch * metaData.pitch * Kernel.gameSpeed;
+                audioSource.pitch = base.pitch * metaData.pitch * Kernel.gameSpeed;
             }
         }
 
         void SetVolume()
         {
-            if (audioSource.pitch == 0)
+            if (speed == 0)
                 audioSource.volume = 0;
             else
             {
                 if (soundData.isBGM)
-                    audioSource.volume = volume * (SoundManager.SaveData.bgmVolume * 0.01f);
+                    audioSource.volume = base.volume * (SoundManager.SaveData.bgmVolume * 0.01f);
                 else
-                    audioSource.volume = volume * (SoundManager.SaveData.soundVolume * 0.01f);
+                    audioSource.volume = base.volume * (SoundManager.SaveData.soundVolume * 0.01f);
             }
         }
 
@@ -298,14 +383,6 @@ namespace SCKRM.Sound
             tempTime = 0;
 
             audioSource.clip = null;
-            audioSource.pitch = 1;
-            audioSource.loop = false;
-            audioSource.volume = 1;
-            audioSource.panStereo = 0;
-            audioSource.spatialBlend = 0;
-            audioSource.minDistance = 0;
-            audioSource.maxDistance = 10;
-
             audioSource.outputAudioMixerGroup = null;
 
             audioSource.time = 0;
