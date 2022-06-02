@@ -499,7 +499,7 @@ namespace SCKRM.UI.Setting
             }
         }
 
-        public void SettingInfoInvoke(NameSpacePathPair value) => SettingInfoManager.Show(new NameSpacePathPair(nameTextRenderer.path, nameTextRenderer.nameSpace), value, hotkeyToDisplays);
+        public void SettingInfoInvoke(NameSpacePathPair value) => SettingInfoManager.Show(new NameSpacePathPair(nameTextRenderer.nameSpace, nameTextRenderer.path), value, hotkeyToDisplays);
         public abstract void ScriptOnValueChanged(bool settingInfoInvoke = true);
 
 
