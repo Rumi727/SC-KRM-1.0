@@ -147,7 +147,7 @@ namespace SCKRM
                     setting.ScriptOnValueChanged();
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-                    if (await MessageBoxManager.Show(new Renderer.NameSpacePathPair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
+                    if (await MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark") == 0)
                     {
                         SaveData.IgnoreMouseAcceleration = true;
                         setting.ScriptOnValueChanged();

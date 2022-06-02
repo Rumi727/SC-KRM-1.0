@@ -26,9 +26,27 @@ namespace SCKRM
                 DateTime dateTimeLunar = dateTime.ToLunarDate();
 
                 if (dateTime.Month == 7 && dateTime.Day == 1) //7월이라면...
-                    NoticeManager.Notice("notice.school_live.birthday.title", "notice.school_live.birthday.description", new ReplaceOldNewPair("%value%", (dateTime.Year - 2012).ToString()));
+                {
+                    NameSpacePathReplacePair title = "sc-krm:notice.school_live.birthday.title";
+                    NameSpacePathReplacePair description = "sc-krm:notice.school_live.birthday.description";
+                    ReplaceOldNewPair replace = new ReplaceOldNewPair("%value%", (dateTime.Year - 2012).ToString());
+
+                    title.replace = new ReplaceOldNewPair[] { replace };
+                    description.replace = new ReplaceOldNewPair[] { replace };
+
+                    NoticeManager.Notice(title, description);
+                }
                 else if (dateTime.Month == 7 && dateTime.Day == 9) //7월 9일이라면...
-                    NoticeManager.Notice("notice.school_live_ani.birthday.title", "notice.school_live_ani.birthday.description", new ReplaceOldNewPair("%value%", (dateTime.Year - 2015).ToString()));
+                {
+                    NameSpacePathReplacePair title = "sc-krm:notice.school_live_ani.birthday.title";
+                    NameSpacePathReplacePair description = "sc-krm:notice.school_live_ani.birthday.description";
+                    ReplaceOldNewPair replace = new ReplaceOldNewPair("%value%", (dateTime.Year - 2015).ToString());
+
+                    title.replace = new ReplaceOldNewPair[] { replace };
+                    description.replace = new ReplaceOldNewPair[] { replace };
+
+                    NoticeManager.Notice(title, description);
+                }
                 else if (dateTime.Month == 8 && dateTime.Day == 7) //8월 7일이라면...
                     NoticeManager.Notice("notice.ebisuzawa_kurumi_chan.birthday.title", "notice.ebisuzawa_kurumi_chan.birthday.description");
                 else if (dateTime.Month == 4 && dateTime.Day == 5) //4월 5일이라면...
@@ -40,7 +58,16 @@ namespace SCKRM
                 else if (dateTime.Month == 3 && dateTime.Day == 10) //3월 10일이라면...
                     NoticeManager.Notice("notice.sakura_megumi.birthday.title", "notice.sakura_megumi.birthday.description");
                 else if (dateTime.Month == 2 && dateTime.Day == 9) //2월 9일이라면...
-                    NoticeManager.Notice("notice.onell0.birthday.title", "notice.onell0.birthday.description", new ReplaceOldNewPair("%value%", (dateTime.Year - 2010).ToString()));
+                {
+                    NameSpacePathReplacePair title = "sc-krm:notice.onell0.birthday.title";
+                    NameSpacePathReplacePair description = "sc-krm:notice.onell0.birthday.description";
+                    ReplaceOldNewPair replace = new ReplaceOldNewPair("%value%", (dateTime.Year - 2010).ToString());
+
+                    title.replace = new ReplaceOldNewPair[] { replace };
+                    description.replace = new ReplaceOldNewPair[] { replace };
+
+                    NoticeManager.Notice(title, description);
+                }
                 else if (dateTimeLunar.Month == 1 && dateTimeLunar.Day == 1) //음력으로 1월 1일이라면...
                     NoticeManager.Notice("notice.korean_new_year.title", "notice.korean_new_year.description");
                 else if (dateTime.Month == 4 && dateTimeLunar.Day == 1) //4월 1일이라면...

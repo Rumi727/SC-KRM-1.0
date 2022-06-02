@@ -10,6 +10,18 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public abstract class CustomAllTextRenderer : CustomAllRenderer
     {
+        public NameSpacePathReplacePair nameSpacePathReplacePair
+        {
+            get => new NameSpacePathReplacePair(nameSpace, path, replace);
+            set
+            {
+                nameSpace = value.nameSpace;
+                path = value.path;
+
+                replace = value.replace;
+            }
+        }
+
         public ReplaceOldNewPair[] replace { get; set; } = new ReplaceOldNewPair[0];
 
 
@@ -35,6 +47,54 @@ namespace SCKRM.Renderer
                 return text;
             else
                 return path;
+        }
+    }
+
+    public struct NameSpacePathReplacePair
+    {
+        public string path;
+        public string nameSpace;
+
+        public ReplaceOldNewPair[] replace;
+
+        public NameSpacePathReplacePair(string path)
+        {
+            nameSpace = "";
+            this.path = path;
+
+            replace = new ReplaceOldNewPair[0];
+        }
+
+        public NameSpacePathReplacePair(string nameSpace, string path)
+        {
+            this.nameSpace = nameSpace;
+            this.path = path;
+
+            replace = new ReplaceOldNewPair[0];
+        }
+
+        public NameSpacePathReplacePair(string nameSpace, string path, params ReplaceOldNewPair[] replace)
+        {
+            this.nameSpace = nameSpace;
+            this.path = path;
+
+            this.replace = replace;
+        }
+
+        public static implicit operator string(NameSpacePathReplacePair value) => value.ToString();
+
+        public static implicit operator NameSpacePathReplacePair(string value)
+        {
+            string nameSpace = ResourceManager.GetNameSpace(value, out value);
+            return new NameSpacePathReplacePair(value, nameSpace);
+        }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(nameSpace))
+                return path;
+            else
+                return nameSpace + ":" + path;
         }
     }
 

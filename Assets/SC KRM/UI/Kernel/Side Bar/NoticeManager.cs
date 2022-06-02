@@ -50,14 +50,10 @@ namespace SCKRM.UI.SideBar
 
         public void AllAsyncTaskCancel() => AsyncTaskManager.AllAsyncTaskCancel();
 
-        public static void Notice(NameSpacePathPair name, NameSpacePathPair info) => notice(name, info, null, Type.none);
-        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, Type type) => notice(name, info, null, type);
-        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair replace) => notice(name, info, new ReplaceOldNewPair[] { replace }, Type.none);
-        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair replace, Type type) => notice(name, info, new ReplaceOldNewPair[] { replace }, type);
-        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair[] replace) => notice(name, info, replace, Type.none);
-        public static void Notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair[] replace, Type type) => notice(name, info, replace, type);
+        public static void Notice(NameSpacePathReplacePair name, NameSpacePathReplacePair info) => notice(name, info, Type.none);
+        public static void Notice(NameSpacePathReplacePair name, NameSpacePathReplacePair info, Type type) => notice(name, info, type);
 
-        static void notice(NameSpacePathPair name, NameSpacePathPair info, ReplaceOldNewPair[] replace, Type type)
+        static void notice(NameSpacePathReplacePair name, NameSpacePathReplacePair info, Type type)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Notice));
@@ -68,10 +64,8 @@ namespace SCKRM.UI.SideBar
 
             Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform).monoBehaviour;
             notice.transform.SetAsFirstSibling();
-            notice.nameText.nameSpacePathPair = name;
-            notice.infoText.nameSpacePathPair = info;
-            notice.nameText.replace = replace;
-            notice.infoText.replace = replace;
+            notice.nameText.nameSpacePathReplacePair = name;
+            notice.infoText.nameSpacePathReplacePair = info;
 
             notice.nameText.Refresh();
             notice.infoText.Refresh();
