@@ -62,6 +62,12 @@ namespace SCKRM.UI.SideBar
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
+            if (noticeList.Count >= 10)
+            {
+                noticeList[noticeList.Count - 1].Remove();
+                noticeList.RemoveAt(noticeList.Count - 1);
+            }
+
             Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform).monoBehaviour;
             notice.transform.SetAsFirstSibling();
             notice.nameText.nameSpacePathReplacePair = name;
@@ -76,9 +82,7 @@ namespace SCKRM.UI.SideBar
             {
                 notice.icon.gameObject.SetActive(true);
 
-                notice.icon.nameSpace = "sc-krm";
-                notice.icon.type = "gui";
-                notice.icon.path = "notice_icon_" + type;
+                notice.icon.nameSpaceIndexTypePathPair = "sc-krm:0:gui/notice_icon_" + type;
                 notice.icon.Refresh();
 
                 notice.setSizeAsChildRectTransform.min = 70;
