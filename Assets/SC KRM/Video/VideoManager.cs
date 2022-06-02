@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
+using SCKRM.UI.MessageBox;
+using SCKRM.UI.Setting;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -96,6 +98,32 @@ namespace SCKRM
                 Application.targetFrameRate = Data.notFocusFpsLimit;
                 QualitySettings.vSyncCount = 0;
             }
+        }
+
+        static bool vSyncWarningLock = false;
+        public static void VSyncWarning(Setting setting)
+        {
+#if UNITY_EDITOR
+            if (vSyncWarningLock)
+                return;
+
+            if (InitialLoadManager.isInitialLoadEnd && SaveData.vSync)
+            {
+                vSyncWarningLock = true;
+
+                try
+                {
+                    SaveData.vSync = false;
+                    setting.ScriptOnValueChanged();
+
+                    MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark").Forget();
+                }
+                finally
+                {
+                    vSyncWarningLock = false;
+                }
+            }
+#endif
         }
     }
 }
