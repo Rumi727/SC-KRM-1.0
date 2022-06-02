@@ -39,10 +39,22 @@ namespace SCKRM.UI.SideBar
             }
         }
 
+        public static void FirstRemove()
+        {
+            if (noticeList.Count >= 0)
+            {
+                noticeList[0].Remove();
+                noticeList.RemoveAt(0);
+            }
+        }
+
         public static void LastRemove()
         {
-            noticeList[noticeList.Count - 1].Remove();
-            noticeList.RemoveAt(noticeList.Count - 1);
+            if (noticeList.Count > 0)
+            {
+                noticeList[noticeList.Count - 1].Remove();
+                noticeList.RemoveAt(noticeList.Count - 1);
+            }
         }
 
         public static void Clear()
@@ -68,7 +80,7 @@ namespace SCKRM.UI.SideBar
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
             if (noticeList.Count >= 10)
-                LastRemove();
+                FirstRemove();
 
             Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform).monoBehaviour;
             notice.transform.SetAsFirstSibling();
