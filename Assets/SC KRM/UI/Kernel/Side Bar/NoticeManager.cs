@@ -32,20 +32,25 @@ namespace SCKRM.UI.SideBar
             if (InitialLoadManager.isInitialLoadEnd)
             {
                 if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
-                {
-                    noticeList[noticeList.Count - 1].Remove();
-                    noticeList.RemoveAt(noticeList.Count - 1);
-                }
+                    LastRemove();
 
                 if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_clear_all", InputType.Down, "all"))
                     Clear();
             }
         }
 
-        public void Clear()
+        public static void LastRemove()
+        {
+            noticeList[noticeList.Count - 1].Remove();
+            noticeList.RemoveAt(noticeList.Count - 1);
+        }
+
+        public static void Clear()
         {
             for (int i = 0; i < noticeList.Count; i++)
                 noticeList[i].Remove();
+
+            noticeList.Clear();
         }
 
         public void AllAsyncTaskCancel() => AsyncTaskManager.AllAsyncTaskCancel();
@@ -63,10 +68,7 @@ namespace SCKRM.UI.SideBar
                 throw new NotInitialLoadEndMethodException(nameof(Notice));
 
             if (noticeList.Count >= 10)
-            {
-                noticeList[noticeList.Count - 1].Remove();
-                noticeList.RemoveAt(noticeList.Count - 1);
-            }
+                LastRemove();
 
             Notice notice = (Notice)ObjectPoolingSystem.ObjectCreate("notice_manager.notice", instance.noticeListTransform).monoBehaviour;
             notice.transform.SetAsFirstSibling();
