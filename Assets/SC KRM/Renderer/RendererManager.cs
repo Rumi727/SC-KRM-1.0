@@ -9,7 +9,7 @@ namespace SCKRM.Renderer
 {
     public static class RendererManager
     {
-        public static void AllRefresh(bool thread = true) => Refresh((IRefresh[])UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRefresh>(), thread);
+        public static void AllRefresh(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRefresh>().ToArray(), thread);
 
         public static void AllRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread);
 
