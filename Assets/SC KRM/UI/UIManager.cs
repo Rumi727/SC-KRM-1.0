@@ -73,19 +73,10 @@ namespace SCKRM.UI
 
 
             tracker.Clear();
-            tracker.Add(this, kernelCanvasUI, DrivenTransformProperties.SizeDelta);
+            tracker.Add(this, kernelCanvasUI, DrivenTransformProperties.AnchoredPosition | DrivenTransformProperties.SizeDelta);
 
-            RectTransform taskBarManager = StatusBarManager.instance.rectTransform;
-            if (StatusBarManager.SaveData.bottomMode)
-            {
-                kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, taskBarManager.rect.size.y + taskBarManager.anchoredPosition.y);
-                kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, 0);
-            }
-            else
-            {
-                kernelCanvasUI.offsetMin = new Vector2(kernelCanvasUI.offsetMin.x, 0);
-                kernelCanvasUI.offsetMax = new Vector2(kernelCanvasUI.offsetMax.x, -(taskBarManager.rect.size.y - taskBarManager.anchoredPosition.y));
-            }
+            kernelCanvasUI.offsetMin = StatusBarManager.cropedRect.min;
+            kernelCanvasUI.offsetMax = StatusBarManager.cropedRect.max;
         }
 
         void OnDisable() => tracker.Clear();

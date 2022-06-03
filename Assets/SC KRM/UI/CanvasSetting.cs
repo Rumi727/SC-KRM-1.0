@@ -48,16 +48,14 @@ namespace SCKRM.UI
 
                         float guiSize = 1;
                         if (customGuiSize)
-                            guiSize = UIManager.currentGuiSize / canvas.scaleFactor;
+                            guiSize = UIManager.currentGuiSize / canvas.scaleFactor;    
 
                         if (StatusBarManager.cropTheScreen && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         {
                             SafeScreenSetting();
 
-                            if (StatusBarManager.SaveData.bottomMode)
-                                safeScreen.offsetMin = new Vector2(safeScreen.offsetMin.x, (taskBarManager.rect.size.y + taskBarManager.anchoredPosition.y) * guiSize);
-                            else
-                                safeScreen.offsetMax = new Vector2(0, -(taskBarManager.rect.size.y - taskBarManager.anchoredPosition.y) * guiSize);
+                            safeScreen.offsetMin = StatusBarManager.cropedRect.min * guiSize;
+                            safeScreen.offsetMax = StatusBarManager.cropedRect.max * guiSize;
                         }
                         else
                             SafeScreenDestroy();

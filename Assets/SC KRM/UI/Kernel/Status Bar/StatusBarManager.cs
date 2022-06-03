@@ -39,9 +39,12 @@ namespace SCKRM.UI.StatusBar
                 _cropTheScreen = value;
             }
         }
+        public static Rect cropedRect { get; private set; } = Rect.zero;
 
         public static GameObject tabSelectGameObject { get; set; } = null;
         public static bool tabAllow { get; set; } = false;
+
+
 
         [SerializeField, HideInInspector] Image _image; public Image image => _image = this.GetComponentFieldSave(_image);
 
@@ -76,8 +79,6 @@ namespace SCKRM.UI.StatusBar
 
         static bool defaultTabAllow = false;
         static GameObject oldSelectedObject;
-        static bool tempTopMode;
-        static bool tempCropTheScreen;
         static bool tempSelectedStatusBar;
         static bool pointer = false;
         static float timer = 0;
@@ -203,6 +204,23 @@ namespace SCKRM.UI.StatusBar
                         cropTheScreen = true;
 
                     BottomMode();
+                }
+
+                {
+                    Rect rect = cropedRect;
+
+                    if (SaveData.bottomMode)
+                    {
+                        rect.min = new Vector2(0, rectTransform.rect.size.y + rectTransform.anchoredPosition.y);
+                        rect.max = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        rect.min = new Vector2(0, 0);
+                        rect.max = new Vector2(0, -(rectTransform.rect.size.y - rectTransform.anchoredPosition.y));
+                    }
+
+                    cropedRect = rect;
                 }
             }
         }
