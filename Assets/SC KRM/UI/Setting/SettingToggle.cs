@@ -36,9 +36,9 @@ namespace SCKRM.UI.Setting
             if (settingInfoInvoke)
             {
                 if (toggle.isOn)
-                    SettingInfoInvoke(new NameSpacePathPair("gui.on", "sc-krm"));
+                    SettingInfoInvoke(new NameSpacePathPair("sc-krm", "gui.on"));
                 else
-                    SettingInfoInvoke(new NameSpacePathPair("gui.off", "sc-krm"));
+                    SettingInfoInvoke(new NameSpacePathPair("sc-krm", "gui.off"));
             }
 
             onValueChanged.Invoke();
