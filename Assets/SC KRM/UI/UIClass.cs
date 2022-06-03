@@ -6,7 +6,13 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
-    public class UI : UIBehaviour
+    public interface IUI
+    {
+        public RectTransform rectTransform { get; }
+        public Graphic graphic { get; }
+    }
+
+    public class UI : UIBehaviour, IUI
     {
         [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform => _rectTransform = this.GetComponentFieldSave(_rectTransform);
         [SerializeField] Graphic _graphic; public Graphic graphic => _graphic = this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
