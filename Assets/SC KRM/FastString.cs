@@ -174,10 +174,22 @@ namespace SCKRM.Text
             return this;
         }
 
-        ///<summary>Append a float without memory allocation.</summary>
-        public FastString Append(float valueF)
+        public FastString Append(float value) => Append((double)value);
+
+        ///<summary>Append a double without memory allocation.</summary>
+        public FastString Append(double value)
         {
-            double value = valueF;
+            if (double.IsInfinity(value))
+            {
+                Append("Infinity");
+                return this;
+            }
+            else if (double.IsNaN(value))
+            {
+                Append("NaN");
+                return this;
+            }
+
             m_isStringGenerated = false;
             ReallocateIFN(32); // Check we have enough buffer allocated to handle any float number
 
