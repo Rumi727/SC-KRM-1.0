@@ -2,6 +2,7 @@ using SCKRM;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions.ColorPicker;
 
 namespace HSVPicker
 {

@@ -1,6 +1,8 @@
 using SCKRM;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions.ColorPicker;
+
 namespace HSVPicker
 {
     [RequireComponent(typeof(RawImage)), ExecuteInEditMode()]

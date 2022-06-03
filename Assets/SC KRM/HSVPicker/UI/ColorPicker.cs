@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI.Extensions.ColorPicker;
+
 namespace HSVPicker
 {
     public class ColorPicker : MonoBehaviour
@@ -193,9 +195,9 @@ namespace HSVPicker
         {
             HsvColor color = HSVUtil.ConvertRgbToHsv(CurrentColor);
 
-            _hue = color.normalizedH;
-            _saturation = color.normalizedS;
-            _brightness = color.normalizedV;
+            _hue = color.NormalizedH;
+            _saturation = color.NormalizedS;
+            _brightness = color.NormalizedV;
         }
 
         private void HSVChanged()
