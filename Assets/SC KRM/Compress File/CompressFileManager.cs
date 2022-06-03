@@ -265,8 +265,6 @@ namespace SCKRM.Compress
 
                 threadMetaData.maxProgress = 1;
                 threadMetaData.progress = 1;
-
-                threadMetaData.cancelEvent -= CancelEvent;
             }
         }
     }

@@ -64,8 +64,6 @@ namespace SCKRM.Renderer
 
                 threadMetaData.maxProgress = 1;
                 threadMetaData.progress = 1;
-
-                threadMetaData.cancelEvent -= CancelEvent;
             }
         }
     }
