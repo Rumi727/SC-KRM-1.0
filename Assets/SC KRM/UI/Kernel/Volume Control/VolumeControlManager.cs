@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.UI
 {
-    public sealed class VolumeControlManager : ManagerUI<VolumeControlManager>, IPointerEnterHandler, IPointerExitHandler
+    public sealed class VolumeControlManager : UIManager<VolumeControlManager>, IPointerEnterHandler, IPointerExitHandler
     {
         static bool isPointer;
         static bool isDrag;

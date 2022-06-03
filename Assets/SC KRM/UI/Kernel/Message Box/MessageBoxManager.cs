@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.MessageBox
 {
-    public class MessageBoxManager : ManagerUI<MessageBoxManager>
+    public class MessageBoxManager : UIManager<MessageBoxManager>
     {
         [SerializeField] CanvasGroup messageBoxCanvasGroup;
         [SerializeField] Transform messageBoxButtons;

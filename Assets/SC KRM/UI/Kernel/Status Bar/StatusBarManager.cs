@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI.StatusBar
 {
     [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
-    public sealed class StatusBarManager : ManagerUI<StatusBarManager>, IPointerEnterHandler, IPointerExitHandler
+    public sealed class StatusBarManager : UIManager<StatusBarManager>, IPointerEnterHandler, IPointerExitHandler
     {
         [GeneralSaveLoad]
         public sealed class SaveData

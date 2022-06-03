@@ -12,7 +12,7 @@ using UnityEngine.Events;
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
-    public sealed class NoticeManager : ManagerUI<NoticeManager>
+    public sealed class NoticeManager : UIManager<NoticeManager>
     {
         [SerializeField] Transform _noticeListTransform; public Transform noticeListTransform => _noticeListTransform;
         [SerializeField] SideBarAni noticeBar;

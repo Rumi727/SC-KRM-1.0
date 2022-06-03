@@ -15,7 +15,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM
 {
-    public class CursorManager : ManagerUI<CursorManager>
+    public class CursorManager : UIManager<CursorManager>
     {
         [GeneralSaveLoad]
         public sealed class SaveData

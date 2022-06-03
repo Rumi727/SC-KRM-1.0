@@ -45,7 +45,7 @@ namespace SCKRM.UI
         public virtual bool Remove() => IObjectPooling.RemoveDefault(this, this);
     }
 
-    public class ManagerUI<T> : UI where T : MonoBehaviour
+    public class UIManager<T> : UI where T : MonoBehaviour
     {
         public static T instance { get; private set; }
 
