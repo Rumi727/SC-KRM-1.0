@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Resource;
 using SCKRM.Threads;
+using System.Threading;
 using UnityEngine;
 
 namespace SCKRM.Renderer
@@ -8,11 +9,55 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public abstract class CustomAllSpriteRenderer : CustomAllRenderer
     {
+        int typeLock = 0;
         [SerializeField] string _type = "";
-        public string type { get => _type; set => _type = value; }
+        public string type
+        {
+            get
+            {
+                while (Interlocked.CompareExchange(ref typeLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
+                string type = _type;
+
+                Interlocked.Decrement(ref typeLock);
+                return type;
+            }
+            set
+            {
+                while (Interlocked.CompareExchange(ref typeLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _type = value;
+
+                Interlocked.Decrement(ref typeLock);
+            }
+        }
+
+        int indexLock = 0;
         [SerializeField, Min(0)] int _index = 0;
-        public int index { get => _index; set => _index = value; }
+        public int index
+        {
+            get
+            {
+                while (Interlocked.CompareExchange(ref indexLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                int index = _index;
+
+                Interlocked.Decrement(ref indexLock);
+                return index;
+            }
+            set
+            {
+                while (Interlocked.CompareExchange(ref indexLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _index = value;
+
+                Interlocked.Decrement(ref indexLock);
+            }
+        }
 
         public NameSpaceIndexTypePathPair nameSpaceIndexTypePathPair
         {

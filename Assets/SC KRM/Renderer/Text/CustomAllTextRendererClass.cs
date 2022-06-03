@@ -3,6 +3,7 @@ using SCKRM.Language;
 using SCKRM.Resource;
 using SCKRM.Threads;
 using System;
+using System.Threading;
 using UnityEngine;
 
 namespace SCKRM.Renderer
@@ -22,8 +23,30 @@ namespace SCKRM.Renderer
             }
         }
 
-        public ReplaceOldNewPair[] replace { get; set; } = new ReplaceOldNewPair[0];
+        int replaceLock = 0;
+        [SerializeField] ReplaceOldNewPair[] _replace = new ReplaceOldNewPair[0];
+        public ReplaceOldNewPair[] replace
+        {
+            get
+            {
+                while (Interlocked.CompareExchange(ref replaceLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
+                ReplaceOldNewPair[] replace = _replace;
+
+                Interlocked.Decrement(ref replaceLock);
+                return replace;
+            }
+            set
+            {
+                while (Interlocked.CompareExchange(ref replaceLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _replace = value;
+
+                Interlocked.Decrement(ref replaceLock);
+            }
+        }
 
 
         public string GetText()
