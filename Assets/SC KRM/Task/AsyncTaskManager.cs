@@ -77,7 +77,7 @@ namespace SCKRM
 
 
 
-        object cancelEventLockObject = new object();
+        int cancelEventLock = 0;
         event Action _cancelEvent;
         /// <summary>
         /// Thread-Safe, cancelEvent += () => { cancelEvent += () => { }; }; Do not add more methods to this event from inside this event method like this. This causes deadlock
@@ -86,15 +86,21 @@ namespace SCKRM
         {
             add
             {
-                Monitor.Enter(cancelEventLockObject);
+                while (Interlocked.CompareExchange(ref cancelEventLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _cancelEvent += value;
-                Monitor.Exit(cancelEventLockObject);
+                
+                Interlocked.Decrement(ref cancelEventLock);
             }
             remove
             {
-                Monitor.Enter(cancelEventLockObject);
+                while (Interlocked.CompareExchange(ref cancelEventLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _cancelEvent -= value;
-                Monitor.Exit(cancelEventLockObject);
+
+                Interlocked.Decrement(ref cancelEventLock);
             }
         }
 
@@ -121,8 +127,19 @@ namespace SCKRM
             {
                 isCanceled = true;
 
-                lock (cancelEventLockObject)
+                while (Interlocked.CompareExchange(ref cancelEventLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                try
+                {
                     _cancelEvent?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+
+                Interlocked.Decrement(ref cancelEventLock);
 
                 AsyncTaskManager.asyncTasks.Remove(this);
 

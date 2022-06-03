@@ -360,7 +360,7 @@ namespace SCKRM.Threads
 
     public sealed class ThreadMetaData : AsyncTask
     {
-        object nameLockObject = new object();
+        int nameLock = 0;
         string _name = "";
         /// <summary>
         /// Thread-Safe
@@ -369,23 +369,25 @@ namespace SCKRM.Threads
         {
             get
             {
-                string value;
+                while (Interlocked.CompareExchange(ref nameLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
-                Monitor.Enter(nameLockObject);
-                value = _name;
-                Monitor.Exit(nameLockObject);
+                string value = _name;
 
+                Interlocked.Decrement(ref nameLock);
                 return value;
             }
             set
             {
-                Monitor.Enter(nameLockObject);
+                while (Interlocked.CompareExchange(ref nameLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _name = value;
-                Monitor.Exit(nameLockObject);
+                Interlocked.Decrement(ref nameLock);
             }
         }
 
-        object infoLockObject = new object();
+        int infoLock = 0;
         string _info = "";
         /// <summary>
         /// Thread-Safe
@@ -394,23 +396,25 @@ namespace SCKRM.Threads
         {
             get
             {
-                string value;
+                while (Interlocked.CompareExchange(ref infoLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
-                Monitor.Enter(infoLockObject);
-                value = _info;
-                Monitor.Exit(infoLockObject);
+                string value = _info;
 
+                Interlocked.Decrement(ref infoLock);
                 return value;
             }
             set
             {
-                Monitor.Enter(infoLockObject);
+                while (Interlocked.CompareExchange(ref infoLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _info = value;
-                Monitor.Exit(infoLockObject);
+                Interlocked.Decrement(ref infoLock);
             }
         }
 
-        object loopLockObject = new object();
+        int loopLock = 0;
         bool _loop = false;
         /// <summary>
         /// Thread-Safe
@@ -419,23 +423,25 @@ namespace SCKRM.Threads
         {
             get
             {
-                bool value;
+                while (Interlocked.CompareExchange(ref loopLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
-                Monitor.Enter(loopLockObject);
-                value = _loop;
-                Monitor.Exit(loopLockObject);
+                bool value = _loop;
 
+                Interlocked.Decrement(ref loopLock);
                 return value;
             }
             set
             {
-                Monitor.Enter(loopLockObject);
+                while (Interlocked.CompareExchange(ref loopLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _loop = value;
-                Monitor.Exit(loopLockObject);
+                Interlocked.Decrement(ref loopLock);
             }
         }
 
-        object cantCancelLockObject = new object();
+        int cantCancelLock = 0;
         bool _cantCancel = false;
         /// <summary>
         /// Thread-Safe
@@ -444,25 +450,27 @@ namespace SCKRM.Threads
         {
             get
             {
-                bool value;
+                while (Interlocked.CompareExchange(ref cantCancelLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
-                Monitor.Enter(cantCancelLockObject);
-                value = _cantCancel;
-                Monitor.Exit(cantCancelLockObject);
+                bool value = _cantCancel;
 
+                Interlocked.Decrement(ref cantCancelLock);
                 return value;
             }
             set
             {
-                Monitor.Enter(cantCancelLockObject);
+                while (Interlocked.CompareExchange(ref cantCancelLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _cantCancel = value;
-                Monitor.Exit(cantCancelLockObject);
+                Interlocked.Decrement(ref cantCancelLock);
             }
         }
 
 
 
-        object progressLockObject = new object();
+        int progressLock = 0;
         float _progress = 0;
         /// <summary>
         /// Thread-Safe
@@ -471,26 +479,31 @@ namespace SCKRM.Threads
         {
             get
             {
-                float value;
+                while (Interlocked.CompareExchange(ref progressLock, 1, 0) != 0)
+                {
+                    Debug.Log("asdf");
+                    Thread.Sleep(1);
+                }
 
-                Monitor.Enter(progressLockObject);
-                value = _progress;
-                Monitor.Exit(progressLockObject);
+                float value = _progress;
 
+                Interlocked.Decrement(ref progressLock);
                 return value;
             }
             set
             {
-                unchecked
+                while (Interlocked.CompareExchange(ref progressLock, 1, 0) != 0)
                 {
-                    Monitor.Enter(progressLockObject);
-                    _progress = value;
-                    Monitor.Exit(progressLockObject);
+                    Debug.Log("asdf");
+                    Thread.Sleep(1);
                 }
+
+                _progress = value;
+                Interlocked.Decrement(ref progressLock);
             }
         }
 
-        object maxProgressLockObject = new object();
+        int maxProgressLock = 0;
         float _maxProgress = 0;
         /// <summary>
         /// Thread-Safe
@@ -499,28 +512,27 @@ namespace SCKRM.Threads
         {
             get
             {
-                float value;
+                while (Interlocked.CompareExchange(ref maxProgressLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
-                Monitor.Enter(maxProgressLockObject);
-                value = _maxProgress;
-                Monitor.Exit(maxProgressLockObject);
+                float value = _maxProgress;
 
+                Interlocked.Decrement(ref maxProgressLock);
                 return value;
             }
             set
             {
-                unchecked
-                {
-                    Monitor.Enter(maxProgressLockObject);
-                    _maxProgress = value;
-                    Monitor.Exit(maxProgressLockObject);
-                }
+                while (Interlocked.CompareExchange(ref maxProgressLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _maxProgress = value;
+                Interlocked.Decrement(ref maxProgressLock);
             }
         }
 
 
 
-        object isCanceledLockObject = new object();
+        int isCanceledLock = 0;
         bool _isCanceled = false;
         /// <summary>
         /// Thread-Safe
@@ -529,19 +541,22 @@ namespace SCKRM.Threads
         {
             get
             {
-                bool value;
+                while (Interlocked.CompareExchange(ref isCanceledLock, 1, 0) != 0)
+                    Thread.Sleep(1);
 
-                Monitor.Enter(isCanceledLockObject);
-                value = _isCanceled;
-                Monitor.Exit(isCanceledLockObject);
+                bool value = _isCanceled;
 
+                Interlocked.Decrement(ref isCanceledLock);
                 return value;
             }
             protected set
             {
-                Monitor.Enter(isCanceledLockObject);
+                while (Interlocked.CompareExchange(ref isCanceledLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
                 _isCanceled = value;
-                Monitor.Exit(isCanceledLockObject);
+
+                Interlocked.Decrement(ref isCanceledLock);
             }
         }
 
