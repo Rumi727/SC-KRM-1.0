@@ -7,8 +7,6 @@ using UnityEngine.UI.Extensions.EasingCore;
 
 namespace UnityEngine.UI.Extensions
 {
-    using EasingFunction = EasingCore.EasingFunction;
-
     /// <summary>
     /// スクロール位置の制御を行うコンポーネント.
     /// </summary>
