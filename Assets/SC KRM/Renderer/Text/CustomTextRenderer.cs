@@ -6,10 +6,10 @@ using UnityEngine.UI;
 namespace SCKRM.Renderer
 {
     [AddComponentMenu("커널/Renderer/Text/Text")]
-    [RequireComponent(typeof(Text))]
+    [RequireComponent(typeof(UnityEngine.UI.Text))]
     public sealed class CustomTextRenderer : CustomAllTextRenderer
     {
-        [SerializeField, HideInInspector] Text _text; public Text text => _text = this.GetComponentFieldSave(_text);
+        [SerializeField, HideInInspector] UnityEngine.UI.Text _text; public UnityEngine.UI.Text text => _text = this.GetComponentFieldSave(_text);
 
         public override void Refresh()
         {
