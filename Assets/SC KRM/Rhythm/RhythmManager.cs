@@ -1,3 +1,4 @@
+using SCKRM.Easing;
 using SCKRM.Json;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;

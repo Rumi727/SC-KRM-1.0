@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 #if UNITY_EDITOR
-namespace SCKRM.Editor
+namespace SCKRM.CustomProperty
 {
     using UnityEditor;
     
