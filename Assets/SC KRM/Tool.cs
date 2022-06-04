@@ -2273,6 +2273,88 @@ namespace SCKRM
                 return min;
             }
         }
+
+        #region Deduplicate
+        public static void Deduplicate(this List<float> values, float delta)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                float value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values.RemoveAt(i);
+                    else
+                        i++;
+                }
+
+                index++;
+            }
+        }
+
+        public static void Deduplicate(this List<float> values, float delta, float setValue)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                float value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values[i] = setValue;
+
+                    i++;
+                }
+
+                index++;
+            }
+        }
+
+        public static void Deduplicate(this List<double> values, double delta)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                double value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values.RemoveAt(i);
+                    else
+                        i++;
+                }
+
+                index++;
+            }
+        }
+
+        public static void Deduplicate(this List<double> values, double delta, double setValue)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                double value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values[i] = setValue;
+
+                    i++;
+                }
+
+                index++;
+            }
+        }
+        #endregion
     }
 
     public static class ArrayTool
