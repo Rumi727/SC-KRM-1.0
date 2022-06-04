@@ -83,6 +83,14 @@
 	"options.advanced.allowProgressBarShow": "スタート画面に常にロードバーを表示",
 	"options.advanced.allowProgressBarShow.info": "スタート画面にロードバーを常に表示します(オフにしても、ロードに時間がかかるとロードバーが表示されます)",
 	
+	"options.debug.title": "デバッグ",
+	"options.debug.textShow": "テキスト表示",
+	"options.debug.textShow.info": "デバッグ画面にテキストを表示する",
+	"options.debug.graphShow": "グラフ表示",
+	"options.debug.graphShow.info": "デバッグ画面にグラフを表示する",
+	"options.debug.graphSpeed": "グラフ速度",
+	"options.debug.graphSpeed.info": "グラフの速度を調整します",
+	
 	"options.set_default.info": "デフォルトに設定",
 	
 	

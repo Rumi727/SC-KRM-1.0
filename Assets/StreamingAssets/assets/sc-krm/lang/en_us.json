@@ -83,6 +83,14 @@
 	"options.advanced.allowProgressBarShow": "Always show loading bar on splash screen",
 	"options.advanced.allowProgressBarShow.info": "Always show the loading bar on the start screen (even if you turn it off, the loading bar will appear if it takes a long time to load)",
 	
+	"options.debug.title": "Debug",
+	"options.debug.textShow": "Text show",
+	"options.debug.textShow.info": "Display text on the debug screen",
+	"options.debug.graphShow": "Graph show",
+	"options.debug.graphShow.info": "Display the graph in the debug screen",
+	"options.debug.graphSpeed": "Graph speed",
+	"options.debug.graphSpeed.info": "Adjusts the speed of the graph",
+	
 	"options.set_default.info": "Set as default",
 	
 	

@@ -36,6 +36,9 @@
     ],
     "volume_control.plus": [
       61
+    ],
+    "debug_manager.toggle": [
+      284
     ]
   },
   "inputLockList": {

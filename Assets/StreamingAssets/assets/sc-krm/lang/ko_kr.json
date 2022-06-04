@@ -84,6 +84,14 @@
 	"options.advanced.allowProgressBarShow": "시작 화면에 항상 로딩 바 표시",
 	"options.advanced.allowProgressBarShow.info": "시작 화면에 로딩 바를 항상 표시합니다 (끄더라도, 로딩이 오래 걸리면 로딩 바가 나타납니다)",
 	
+	"options.debug.title": "디버그",
+	"options.debug.textShow": "텍스트 표시",
+	"options.debug.textShow.info": "디버그 화면에 텍스트를 표시합니다",
+	"options.debug.graphShow": "그래프 표시",
+	"options.debug.graphShow.info": "디버그 화면에 그래프를 표시합니다",
+	"options.debug.graphSpeed": "그래프 속도",
+	"options.debug.graphSpeed.info": "그래프의 속도를 조절합니다",
+	
 	"options.set_default.info": "기본값으로 설정",
 	
 	
