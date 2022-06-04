@@ -46,11 +46,11 @@ namespace SCKRM.Tooltip
 
                 Vector2 offset = new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x);
                 Vector2 pos = (InputManager.mousePosition / UIManager.currentGuiSize) + (offset * cursorScale);
-                pos.x = pos.x.Clamp(0, Screen.width - toolTip.rect.size.x);
-                pos.y = pos.y.Clamp(toolTip.rect.size.y, Screen.height);
+                pos.x = pos.x.Clamp(0, ScreenManager.width - toolTip.rect.size.x);
+                pos.y = pos.y.Clamp(toolTip.rect.size.y, ScreenManager.height);
 
                 toolTip.anchoredPosition = pos;
-                toolTipTextBetterContentSizeFitter.max = new Vector2(Screen.width, Screen.height) - toolTipSetSizeAsTargetRectTransform.offset;
+                toolTipTextBetterContentSizeFitter.max = new Vector2(ScreenManager.width, ScreenManager.height) - toolTipSetSizeAsTargetRectTransform.offset;
             }
         }
 

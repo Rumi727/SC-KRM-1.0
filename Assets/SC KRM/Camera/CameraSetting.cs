@@ -32,10 +32,10 @@ namespace SCKRM.Camera
                 if (StatusBarManager.cropTheScreen)
                 {
                     if (!StatusBarManager.SaveData.bottomMode)
-                        camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.rect.size.y - taskBar.anchoredPosition.y) * UIManager.currentGuiSize / Screen.height));
+                        camera.rect = new Rect(0, 0, 1, 1 - ((taskBar.rect.size.y - taskBar.anchoredPosition.y) * UIManager.currentGuiSize / ScreenManager.height));
                     else
                     {
-                        float y = (taskBar.rect.size.y + taskBar.anchoredPosition.y) * UIManager.currentGuiSize / Screen.height;
+                        float y = (taskBar.rect.size.y + taskBar.anchoredPosition.y) * UIManager.currentGuiSize / ScreenManager.height;
                         camera.rect = new Rect(0, y, 1, 1 - y);
                     }
                 }

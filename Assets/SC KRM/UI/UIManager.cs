@@ -49,7 +49,7 @@ namespace SCKRM.UI
         void Update()
         {
             //현제 해상도의 가로랑 1920을 나눠서 모든 해상도에도 가로 픽셀 크기는 똑같이 유지되게 함
-            scaleAccordingToScreenSize = Screen.width / 1920f;
+            scaleAccordingToScreenSize = ScreenManager.width / 1920f;
 
             //GUI 크기 설정
             //고정 GUI 크기가 꺼져있다면 화면 크기에 따라 유동적으로 GUI 크기가 변경됩니다

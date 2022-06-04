@@ -534,13 +534,13 @@ namespace SCKRM.UI.Setting
 #if UNITY_STANDALONE_WIN
             Vector2Int mousePos = CursorManager.GetCursorPosition();
             if (mousePos.x < 10)
-                CursorManager.SetCursorPosition(Screen.currentResolution.width - 10, mousePos.y);
-            else if (mousePos.x > Screen.currentResolution.width - 10)
+                CursorManager.SetCursorPosition(ScreenManager.currentResolution.width - 10, mousePos.y);
+            else if (mousePos.x > ScreenManager.currentResolution.width - 10)
                 CursorManager.SetCursorPosition(10, mousePos.y);
 
             if (mousePos.y < 10)
-                CursorManager.SetCursorPosition(mousePos.x, Screen.currentResolution.height - 10);
-            else if (mousePos.y > Screen.currentResolution.height - 10)
+                CursorManager.SetCursorPosition(mousePos.x, ScreenManager.currentResolution.height - 10);
+            else if (mousePos.y > ScreenManager.currentResolution.height - 10)
                 CursorManager.SetCursorPosition(mousePos.x, 10);
 #endif
 

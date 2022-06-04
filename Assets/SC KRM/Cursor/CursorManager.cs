@@ -57,13 +57,13 @@ namespace SCKRM
         bool dragStart = false;
         void LateUpdate()
         {
-            isFocused = InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height;
+            isFocused = InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height;
             Cursor.visible = !isFocused;
 
             if (InitialLoadManager.isInitialLoadEnd)
             {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-                if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= Screen.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= Screen.height)
+                if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height)
                 {
                     setCursorPosition((IgnoreMouseAccelerationPos.x).RoundToInt(), (IgnoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
 
@@ -195,7 +195,7 @@ namespace SCKRM
             if (!success)
                 return Vector2Int.zero;
 
-            return new Vector2Int((lpPoint.X - (Screen.currentResolution.width * xDatumPoint)).RoundToInt(), (lpPoint.Y - (Screen.currentResolution.height * yDatumPoint)).RoundToInt());
+            return new Vector2Int((lpPoint.X - (ScreenManager.currentResolution.width * xDatumPoint)).RoundToInt(), (lpPoint.Y - (ScreenManager.currentResolution.height * yDatumPoint)).RoundToInt());
 #else
             throw new NotSupportedException();
 #endif
@@ -230,7 +230,7 @@ namespace SCKRM
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             if (!SaveData.IgnoreMouseAcceleration || force)
-                SetCursorPos((x + ((Screen.currentResolution.width - 1) * xDatumPoint)).RoundToInt(), (y + ((Screen.currentResolution.height - 1) * yDatumPoint)).RoundToInt());
+                SetCursorPos((x + ((ScreenManager.currentResolution.width - 1) * xDatumPoint)).RoundToInt(), (y + ((ScreenManager.currentResolution.height - 1) * yDatumPoint)).RoundToInt());
             else
                 IgnoreMouseAccelerationPos = new Vector2(x, y);
 #else

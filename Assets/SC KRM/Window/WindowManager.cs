@@ -74,7 +74,7 @@ namespace SCKRM.Window
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             GetWindowRect(currentHandle, out RECT rect);
-            return new Vector2Int((rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (Screen.currentResolution.width * screenDatumPoint.x)).RoundToInt(), (rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (Screen.currentResolution.height * screenDatumPoint.y)).RoundToInt());
+            return new Vector2Int((rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (ScreenManager.currentResolution.width * screenDatumPoint.x)).RoundToInt(), (rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (ScreenManager.currentResolution.height * screenDatumPoint.y)).RoundToInt());
 #else
             throw new NotSupportedException();
 #endif
@@ -108,7 +108,7 @@ namespace SCKRM.Window
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             if (Screen.fullScreen)
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
+                Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, false);
             
             Vector2 border = GetWindowSize() - GetClientSize();
 
@@ -122,8 +122,8 @@ namespace SCKRM.Window
             rect.x -= size.x * windowDatumPoint.x;
             rect.y -= size.y * windowDatumPoint.y;
 
-            rect.x += Screen.currentResolution.width * screenDatumPoint.x;
-            rect.y += Screen.currentResolution.height * screenDatumPoint.y;
+            rect.x += ScreenManager.currentResolution.width * screenDatumPoint.x;
+            rect.y += ScreenManager.currentResolution.height * screenDatumPoint.y;
 
             if (!Lerp)
             {

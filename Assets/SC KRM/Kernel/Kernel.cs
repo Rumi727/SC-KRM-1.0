@@ -252,10 +252,10 @@ namespace SCKRM
                 if (InitialLoadManager.isInitialLoadEnd && InputManager.GetKey("kernel.full_screen", InputType.Down, "all"))
                 {
                     if (Screen.fullScreen)
-                        Screen.SetResolution((int)(Screen.currentResolution.width / 1.5f), (int)(Screen.currentResolution.height / 1.5f), false);
+                        Screen.SetResolution((int)(ScreenManager.currentResolution.width / 1.5f), (int)(ScreenManager.currentResolution.height / 1.5f), false);
                     else
                     {
-                        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
+                        Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, false);
 
                         for (int i = 0; i < 4; i++)
                         {
@@ -263,7 +263,7 @@ namespace SCKRM
                                 return;
                         }
                         
-                        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                        Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, true);
                     }
                 }
 

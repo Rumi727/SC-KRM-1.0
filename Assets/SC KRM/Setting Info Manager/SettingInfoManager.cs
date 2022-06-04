@@ -62,7 +62,7 @@ namespace SCKRM.UI
                 }
 
                 {
-                    Vector2 max = new Vector2(Screen.width - settingInfoSetSizeAsTargetRectTransformX.offset.x, Screen.height - settingInfoSetSizeAsTargetRectTransformY.offset.y);
+                    Vector2 max = new Vector2(ScreenManager.width - settingInfoSetSizeAsTargetRectTransformX.offset.x, ScreenManager.height - settingInfoSetSizeAsTargetRectTransformY.offset.y);
                     labelTextBetterContentSizeFitter.max = max;
                     valueTextBetterContentSizeFitter.max = max;
                     shortcutKeysTextBetterContentSizeFitter.max = max;

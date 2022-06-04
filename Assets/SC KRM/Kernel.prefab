@@ -1409,8 +1409,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.7299986, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 3.7299957, y: 0}
+  m_SizeDelta: {x: -65.08, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8474851857294884457
 MonoBehaviour:
@@ -6097,7 +6097,7 @@ RectTransform:
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 3.8599997, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -65.34, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8090327983561563659
 MonoBehaviour:
@@ -7858,7 +7858,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1934084512807456401}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99968874
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13173,7 +13173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.09070243}
+  m_AnchoredPosition: {x: 0, y: 0.00038828346}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6411237787069789279
@@ -16338,7 +16338,7 @@ RectTransform:
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 29.115002, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -115.85, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &439764319526420391
 MonoBehaviour:
@@ -16851,7 +16851,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.09070243}
+  m_AnchoredPosition: {x: 0, y: 0.00038828346}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2929005380522566110
@@ -17236,6 +17236,7 @@ Transform:
   - {fileID: 8489633848798965982}
   - {fileID: 6024076286523888361}
   - {fileID: 3930929973013341725}
+  - {fileID: 6204649909452973946}
   m_Father: {fileID: 3858346028857447725}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18927,6 +18928,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!1 &6088194896850477260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6204649909452973946}
+  - component: {fileID: 5335879974960115102}
+  m_Layer: 0
+  m_Name: Screen Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6204649909452973946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6088194896850477260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2964736941529011238}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5335879974960115102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6088194896850477260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93ecfff341934a47ba7a1057ecb11f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6119089893744379264
 GameObject:
   m_ObjectHideFlags: 0
@@ -22955,7 +23000,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 75}
-  m_SizeDelta: {x: 0, y: 80}
+  m_SizeDelta: {x: 128, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6664269560148216310
 CanvasRenderer:
@@ -24575,7 +24620,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7068123700396693113}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99968874
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
