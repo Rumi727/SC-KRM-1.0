@@ -21,8 +21,8 @@ namespace SCKRM.DebugUI
         readonly List<long> memoryList = new List<long>();
         readonly List<float> yList = new List<float>();
 
-        float deltaTimeHeight = 0;
-        float memoryHeight = 0;
+        float deltaTimeHeight = 0.0001f;
+        float memoryHeight = 104857600f;
 
         void Update()
         {
@@ -41,8 +41,8 @@ namespace SCKRM.DebugUI
             deltaTimeList.Clear();
             memoryList.Clear();
 
-            deltaTimeHeight = 0;
-            memoryHeight = 0;
+            deltaTimeHeight = 0.0001f;
+            memoryHeight = 104857600;
         }
 
         void DeltaTimeRefresh()
@@ -67,7 +67,7 @@ namespace SCKRM.DebugUI
                 deltaTime.Points = new Vector2[deltaTimeList.Count];
 
             for (int i = deltaTimeList.Count - 1; i >= 0; i--)
-                deltaTime.Points[i] = new Vector2(i / xSize, deltaTimeList[i] / deltaTimeHeight);
+                deltaTime.Points[i] = new Vector2(i / xSize, (deltaTimeList[i] / deltaTimeHeight));
 
             deltaTime.SetAllDirty();
         }

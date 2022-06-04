@@ -246,9 +246,12 @@ namespace SCKRM
 
         public static float Clamp(this float value, float min, float max = float.PositiveInfinity)
         {
-            if (value < min)
+            if (float.IsNaN(value))
+                return 0;
+
+            if (value < min || float.IsNegativeInfinity(value))
                 return min;
-            else if (value > max)
+            else if (value > max || float.IsPositiveInfinity(value))
                 return max;
             else
                 return value;
@@ -256,9 +259,12 @@ namespace SCKRM
 
         public static double Clamp(this double value, double min, double max = double.PositiveInfinity)
         {
-            if (value < min)
+            if (double.IsNaN(value))
+                return 0;
+
+            if (value < min || double.IsNegativeInfinity(value))
                 return min;
-            else if (value > max)
+            else if (value > max || double.IsPositiveInfinity(value))
                 return max;
             else
                 return value;
