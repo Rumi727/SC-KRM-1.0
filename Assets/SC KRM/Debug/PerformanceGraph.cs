@@ -24,12 +24,8 @@ namespace SCKRM.DebugUI
         float deltaTimeHeight = 0;
         float memoryHeight = 0;
 
-        DrivenRectTransformTracker tracker;
-
         void Update()
         {
-            tracker.Clear();
-
             DeltaTimeRefresh();
             DeltaTimeFpsLineRefresh();
 
@@ -47,8 +43,6 @@ namespace SCKRM.DebugUI
 
             deltaTimeHeight = 0;
             memoryHeight = 0;
-
-            tracker.Clear();
         }
 
         void DeltaTimeRefresh()
@@ -102,8 +96,6 @@ namespace SCKRM.DebugUI
 
                 fpsLine.rectTransform.anchorMin = new Vector2(0, y);
                 fpsLine.rectTransform.anchorMax = new Vector2(1, y);
-
-                tracker.Add(this, fpsLine.rectTransform, DrivenTransformProperties.Anchors);
             }
         }
 
@@ -158,8 +150,6 @@ namespace SCKRM.DebugUI
 
                 memoryLine.rectTransform.anchorMin = new Vector2(0, y);
                 memoryLine.rectTransform.anchorMax = new Vector2(1, y);
-
-                tracker.Add(this, memoryLine.rectTransform, DrivenTransformProperties.Anchors);
             }
         }
 

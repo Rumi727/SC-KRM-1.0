@@ -29,7 +29,9 @@ namespace SCKRM.UI
 
         protected override void OnDisable()
         {
-            tracker.Clear();
+            if (!Kernel.isPlaying)
+                tracker.Clear();
+
             LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
         }
 
@@ -40,7 +42,8 @@ namespace SCKRM.UI
                 if (!xSize)
                     return;
 
-                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
+                if (!Kernel.isPlaying)
+                    tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
 
                 float size = LayoutUtility.GetPreferredSize(rectTransform, axis);
                 if (max.x <= 0)
@@ -55,7 +58,8 @@ namespace SCKRM.UI
                 if (!ySize)
                     return;
 
-                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+                if (!Kernel.isPlaying)
+                    tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
 
                 float size = LayoutUtility.GetPreferredSize(rectTransform, axis);
                 if (max.y <= 0)

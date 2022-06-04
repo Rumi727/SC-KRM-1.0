@@ -60,9 +60,12 @@ namespace SCKRM.UI
 
         void Update()
         {
-            tracker.Clear();
-            tracker.Add(this, listRectTransform, DrivenTransformProperties.SizeDeltaX);
-            tracker.Add(this, viewport, DrivenTransformProperties.SizeDeltaX);
+            if (!Kernel.isPlaying)
+            {
+                tracker.Clear();
+                tracker.Add(this, listRectTransform, DrivenTransformProperties.SizeDeltaX);
+                tracker.Add(this, viewport, DrivenTransformProperties.SizeDeltaX);
+            }
 
             if (options.Length > 0)
             {
@@ -131,7 +134,9 @@ namespace SCKRM.UI
 
         protected override void OnDisable()
         {
-            tracker.Clear();
+            if (!Kernel.isPlaying)
+                tracker.Clear();
+
             Hide();
         }
 

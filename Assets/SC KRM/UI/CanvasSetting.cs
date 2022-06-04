@@ -16,12 +16,15 @@ namespace SCKRM.UI
         [NonSerialized] Canvas _canvas; public Canvas canvas => _canvas = this.GetComponentFieldSave(_canvas, ComponentTool.GetComponentMode.destroyIfNull);
 
         [SerializeField, HideInInspector] RectTransform safeScreen;
+
         DrivenRectTransformTracker tracker;
 
         protected override void OnEnable() => Canvas.preWillRenderCanvases += Refresh;
         protected override void OnDisable()
         {
-            tracker.Clear();
+            if (!Kernel.isPlaying)
+                tracker.Clear();
+
             Canvas.preWillRenderCanvases -= Refresh;
         }
 
@@ -95,8 +98,11 @@ namespace SCKRM.UI
                 safeScreen.name = "Safe Screen";
             }
 
-            tracker.Clear();
-            tracker.Add(this, safeScreen, DrivenTransformProperties.All);
+            if (!Kernel.isPlaying)
+            {
+                tracker.Clear();
+                tracker.Add(this, safeScreen, DrivenTransformProperties.All);
+            }
 
             if (safeScreen.parent != transform)
                 safeScreen.SetParent(transform);
@@ -149,8 +155,11 @@ namespace SCKRM.UI
 
         void WorldRenderCamera()
         {
-            tracker.Clear();
-            tracker.Add(this, rectTransform, DrivenTransformProperties.All);
+            if (!Kernel.isPlaying)
+            {
+                tracker.Clear();
+                tracker.Add(this, rectTransform, DrivenTransformProperties.All);
+            }
 
 
             UnityEngine.Camera camera = canvas.worldCamera;

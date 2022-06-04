@@ -32,9 +32,11 @@ namespace SCKRM.UI
 
 
         //protected override void OnEnable() => tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDelta);
-        protected override void OnDisable() => tracker.Clear();
-
-
+        protected override void OnDisable()
+        {
+            if (!Kernel.isPlaying)
+                tracker.Clear();
+        }
 
         public override void LayoutRefresh()
         {
@@ -55,12 +57,15 @@ namespace SCKRM.UI
         Vector2 size;
         public override void SizeUpdate(bool useAni = true)
         {
-            tracker.Clear();
+            if (!Kernel.isPlaying)
+            {
+                tracker.Clear();
 
-            if (xSize)
-                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
-            if (ySize)
-                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+                if (xSize)
+                    tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
+                if (ySize)
+                    tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+            }
 
             if (!lerp || !useAni || !Kernel.isPlaying)
             {

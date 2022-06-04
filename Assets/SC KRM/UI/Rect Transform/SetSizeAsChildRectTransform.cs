@@ -28,9 +28,11 @@ namespace SCKRM.UI.Layout
 
 
 
-        protected override void OnDisable() => tracker.Clear();
-
-
+        protected override void OnDisable()
+        {
+            if (!Kernel.isPlaying)
+                tracker.Clear();
+        }
 
         public override void LayoutRefresh()
         {
@@ -92,11 +94,15 @@ namespace SCKRM.UI.Layout
         Vector2 ySize;
         public override void SizeUpdate(bool useAni = true)
         {
-            tracker.Clear();
-            if (mode == Mode.XSize)
-                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
-            else if (mode == Mode.YSize)
-                tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+            if (!Kernel.isPlaying)
+            {
+                tracker.Clear();
+
+                if (mode == Mode.XSize)
+                    tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaX);
+                else if (mode == Mode.YSize)
+                    tracker.Add(this, rectTransform, DrivenTransformProperties.SizeDeltaY);
+            }
 
             if (!lerp || !Kernel.isPlaying || !useAni)
             {

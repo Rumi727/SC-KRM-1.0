@@ -19,14 +19,19 @@ namespace SCKRM.UI.Layout
 
         DrivenRectTransformTracker tracker;
 
-        protected override void OnDisable() => tracker.Clear();
+        protected override void OnDisable()
+        {
+            if (!Kernel.isPlaying)
+                tracker.Clear();
+        }
 
         public override void SizeUpdate(bool useAni = true)
         {
             if (childRectTransforms == null)
                 return;
 
-            tracker.Clear();
+            if (!Kernel.isPlaying)
+                tracker.Clear();
 
             bool center = false;
             bool right = false;
@@ -39,7 +44,8 @@ namespace SCKRM.UI.Layout
                 else if (!childRectTransform.gameObject.activeSelf)
                     continue;
 
-                tracker.Add(this, childRectTransform, DrivenTransformProperties.AnchoredPosition3D | DrivenTransformProperties.SizeDeltaY | DrivenTransformProperties.Anchors | DrivenTransformProperties.Pivot);
+                if (!Kernel.isPlaying)
+                    tracker.Add(this, childRectTransform, DrivenTransformProperties.AnchoredPosition3D | DrivenTransformProperties.SizeDeltaY | DrivenTransformProperties.Anchors | DrivenTransformProperties.Pivot);
 
                 HorizontalLayoutSetting taskBarLayoutSetting = childSettingComponents[i];
                 if (taskBarLayoutSetting != null)

@@ -44,10 +44,6 @@ namespace SCKRM.UI
 
 
 
-        DrivenRectTransformTracker tracker;
-
-
-
         void Awake() => SingletonCheck(this);
 
         void Update()
@@ -72,14 +68,9 @@ namespace SCKRM.UI
 
 
 
-            tracker.Clear();
-            tracker.Add(this, kernelCanvasUI, DrivenTransformProperties.AnchoredPosition | DrivenTransformProperties.SizeDelta);
-
             kernelCanvasUI.offsetMin = StatusBarManager.cropedRect.min;
             kernelCanvasUI.offsetMax = StatusBarManager.cropedRect.max;
         }
-
-        void OnDisable() => tracker.Clear();
 
         public static void BackEventInvoke()
         {

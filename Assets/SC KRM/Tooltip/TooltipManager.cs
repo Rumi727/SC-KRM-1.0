@@ -22,17 +22,12 @@ namespace SCKRM.Tooltip
         [SerializeField, NotNull] TMP_Text toolTipText;
         [SerializeField, NotNull] BetterContentSizeFitter toolTipTextBetterContentSizeFitter;
 
-        DrivenRectTransformTracker tracker;
-
 
 
         void Awake() => SingletonCheck(this);
 
         void LateUpdate()
         {
-            tracker.Clear();
-            tracker.Add(this, toolTip, DrivenTransformProperties.AnchoredPosition3D);
-
             if (isShow)
                 toolTipCanvasGroup.alpha += 0.1f * Kernel.fpsDeltaTime;
             else
@@ -58,8 +53,6 @@ namespace SCKRM.Tooltip
                 toolTipTextBetterContentSizeFitter.max = new Vector2(Screen.width, Screen.height) - toolTipSetSizeAsTargetRectTransform.offset;
             }
         }
-
-        void OnDisable() => tracker.Clear();
 
         public static void Show(string text, string nameSpace = "")
         {

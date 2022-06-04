@@ -43,7 +43,6 @@ namespace SCKRM
 
 
         [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup);
-        DrivenRectTransformTracker tracker;
 
 
 
@@ -77,9 +76,6 @@ namespace SCKRM
 #endif
 
                 #region Pos Move
-                tracker.Clear();
-                tracker.Add(this, rectTransform, DrivenTransformProperties.AnchoredPosition3D | DrivenTransformProperties.Rotation | DrivenTransformProperties.Scale | DrivenTransformProperties.Anchors | DrivenTransformProperties.Pivot);
-
                 Vector2 pos = InputManager.mousePosition / UIManager.currentGuiSize;
 
                 if (graphic.enabled != visible)
