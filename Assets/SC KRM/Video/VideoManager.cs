@@ -87,43 +87,21 @@ namespace SCKRM
             {
                 //수직동기화
                 if (SaveData.vSync)
+                {
                     QualitySettings.vSyncCount = 1;
+                    Application.targetFrameRate = ScreenManager.currentResolution.refreshRate;
+                }
                 else
+                {
                     QualitySettings.vSyncCount = 0;
-
-                Application.targetFrameRate = SaveData.fpsLimit;
+                    Application.targetFrameRate = SaveData.fpsLimit;
+                }
             }
             else //앱이 포커스 상태가 아니라면 프로젝트에서 설정한 포커스가 아닌 프레임으로 고정시킵니다
             {
                 Application.targetFrameRate = Data.notFocusFpsLimit;
                 QualitySettings.vSyncCount = 0;
             }
-        }
-
-        static bool vSyncWarningLock = false;
-        public static void VSyncWarning(Setting setting)
-        {
-#if UNITY_EDITOR
-            if (vSyncWarningLock)
-                return;
-
-            if (InitialLoadManager.isInitialLoadEnd && SaveData.vSync)
-            {
-                vSyncWarningLock = true;
-
-                try
-                {
-                    SaveData.vSync = false;
-                    setting.ScriptOnValueChanged();
-
-                    MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/exclamation_mark").Forget();
-                }
-                finally
-                {
-                    vSyncWarningLock = false;
-                }
-            }
-#endif
         }
     }
 }
