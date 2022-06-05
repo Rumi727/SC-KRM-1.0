@@ -1151,7 +1151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: arrow
+  _path: dropdown_arrow
   _type: gui
   _index: 0
   _image: {fileID: 4022708251547395710}
