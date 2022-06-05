@@ -8,13 +8,43 @@ namespace SCKRM.UI
 {
     public interface IUI
     {
+        public RectTransform parentRectTransform { get; }
         public RectTransform rectTransform { get; }
+
         public Graphic graphic { get; }
     }
 
     public class UI : UIBehaviour, IUI
     {
-        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform => _rectTransform = this.GetComponentFieldSave(_rectTransform);
+        [SerializeField] RectTransform _parentRectTransform; public RectTransform parentRectTransform
+        {
+            get
+            {
+                if (_parentRectTransform == null)
+                {
+                    RectTransform rectTransform = transform.parent as RectTransform;
+                    if (rectTransform == null)
+                        _parentRectTransform = transform.parent.gameObject.AddComponent<RectTransform>();
+                }
+
+                return _parentRectTransform;
+            }
+        }
+        [SerializeField] RectTransform _rectTransform; public RectTransform rectTransform
+        {
+            get
+            {
+                if (_rectTransform == null)
+                {
+                    RectTransform rectTransform = transform as RectTransform;
+                    if (rectTransform == null)
+                        _rectTransform = gameObject.AddComponent<RectTransform>();
+                }
+
+                return _rectTransform;
+            }
+        }
+
         [SerializeField] Graphic _graphic; public Graphic graphic => _graphic = this.GetComponentFieldSave(_graphic, ComponentTool.GetComponentMode.none);
     }
 
