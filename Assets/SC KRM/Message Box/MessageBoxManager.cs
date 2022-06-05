@@ -122,22 +122,7 @@ namespace SCKRM.UI.MessageBox
             //Back 버튼을 눌렀을때, UI를 닫기 위해 이벤트에 clickedIndex를 defaultIndex로 변경하는 BackEvent 메소드를 추가합니다
             UIManager.BackEventAdd(backEvent, true);
 
-            GameObject oldSelectedGameObject = null;
-            while (clickedIndex < 0)
-            {
-                /*
-                 * BackEvent 함수가 호출되거나, 버튼이 눌려서 clickedIndex가 0 이상이 되거나
-                 * select 함수가 호출되서 함수가 리턴 될 때까지 대기합니다
-                 */
-
-                if (EventSystem.current.currentSelectedGameObject == null)
-                    EventSystem.current.SetSelectedGameObject(oldSelectedGameObject);
-                else
-                    oldSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-
-                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                    return 0;
-            }
+            await UniTask.WaitUntil(() => clickedIndex >= 0);
 
             return select(clickedIndex);
 
