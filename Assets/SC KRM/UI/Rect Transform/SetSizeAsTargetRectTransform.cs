@@ -77,7 +77,7 @@ namespace SCKRM.UI
             if (!lerp || !useAni || !Kernel.isPlaying)
             {
                 Rect rect = rectTransform.rect;
-                Vector2 size = Vector2.zero;
+                Vector2 size = rect.size;
                 if (xSize && !ySize)
                     size = new Vector2(this.size.x, rect.size.y);
                 else if (!xSize && ySize)
@@ -91,7 +91,7 @@ namespace SCKRM.UI
             else
             {
                 Rect rect = rectTransform.rect;
-                Vector2 size = Vector2.zero;
+                Vector2 size = rect.size;
                 if (xSize && !ySize)
                     size = rect.size.Lerp(new Vector2(this.size.x, rect.size.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (!xSize && ySize)
