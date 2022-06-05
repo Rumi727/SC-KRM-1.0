@@ -32,8 +32,8 @@ namespace SCKRM.UI
             {
                 if (_rectTransform == null || _rectTransform.gameObject != gameObject)
                 {
-                    RectTransform rectTransform = transform as RectTransform;
-                    if (rectTransform == null)
+                    _rectTransform = transform as RectTransform;
+                    if (_rectTransform == null)
                         _rectTransform = gameObject.AddComponent<RectTransform>();
                 }
 
