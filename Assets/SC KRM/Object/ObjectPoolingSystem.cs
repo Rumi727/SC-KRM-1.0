@@ -41,7 +41,7 @@ namespace SCKRM.Object
             if (objectPooling == null)
                 return;
 
-            ObjectAdd(objectKey, monoBehaviour, objectPooling);
+            ObjectAdd(objectKey, monoBehaviour);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace SCKRM.Object
         /// </summary>
         /// <param name="objectKey">추가할 오브젝트의 키</param>
         /// <param name="monoBehaviour">추가할 오브젝트</param>
-        public static void ObjectAdd(string objectKey, MonoBehaviour monoBehaviour, IObjectPooling objectPooling)
+        public static void ObjectAdd(string objectKey, MonoBehaviour monoBehaviour)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(ObjectAdvanceCreate));
@@ -61,10 +61,14 @@ namespace SCKRM.Object
                 throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
             if (monoBehaviour == null)
                 throw new NullReferenceException(nameof(monoBehaviour));
-            if (objectPooling == null)
-                throw new NullReferenceException(nameof(objectPooling));
 
-            ObjectRemove(objectKey, Instantiate(monoBehaviour, instance.transform), objectPooling);
+            MonoBehaviour instantiate = Instantiate(monoBehaviour, instance.transform);
+            IObjectPooling objectPooling = instantiate as IObjectPooling;
+            if (objectPooling == null)
+                return;
+
+            objectPooling.objectKey = objectKey;
+            ObjectRemove(objectKey, instantiate, objectPooling);
         }
 
         /// <summary>

@@ -117,6 +117,7 @@ namespace SCKRM.UI
                         for (int i = 0; i < dropdownItems.Count; i++)
                             dropdownItems[i].Remove();
 
+                        dropdownItems.Clear();
                         listRectTransform.gameObject.SetActive(false);
                     }
                 }
@@ -170,7 +171,7 @@ namespace SCKRM.UI
                     dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate(templateName, content).monoBehaviour;
                 else
                 {
-                    ObjectPoolingSystem.ObjectAdd(templateName, template, template);
+                    ObjectPoolingSystem.ObjectAdd(templateName, template);
                     dropdownItem = (DropdownItem)ObjectPoolingSystem.ObjectCreate(templateName, content).monoBehaviour;
                 }
                 
