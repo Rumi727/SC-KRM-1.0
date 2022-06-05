@@ -14,6 +14,7 @@ Simsimhan Chobo Kernel Manager
 - [UnityWindowsFileDrag&Drop](https://github.com/Bunny83/UnityWindowsFileDrag-Drop)
 - [FastString](https://github.com/snozbot/FastString)
 - [BigDecimal](https://github.com/AdamWhiteHat/BigDecimal)
+- [KnownFolders](https://gitlab.com/Syroot/KnownFolders/-/blob/master/src/Syroot.KnownFolders/KnownFolderType.cs) (SCKRM.KnowFolder.KnownFolderType, SCKRM.KnowFolder.KnownFolderTypeExtensions, SCKRM.KnowFolder.KnownFolderGuidAttribute 클래스에서 코드 일부분이 사용됨)
 - [~~Unity Editor Toolbox~~](https://github.com/arimger/Unity-Editor-Toolbox)
 - [~~In-game Debug Console~~](https://github.com/yasirkula/UnityIngameDebugConsole)
 
