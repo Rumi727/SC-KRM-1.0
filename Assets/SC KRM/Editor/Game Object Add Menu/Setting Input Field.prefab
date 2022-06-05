@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
-  _path: gui.inputfield.entertext
+  _path: gui.inputfield.enter_text
   _textMeshPro: {fileID: 3689624540802103853}
 --- !u!114 &88433267099743362
 MonoBehaviour:
@@ -372,8 +372,8 @@ MonoBehaviour:
   _mouseSensitivity: 1
   _textPlaceHolderNameSpace: sc-krm
   _numberPlaceHolderNameSpace: sc-krm
-  _textPlaceHolderPath: gui.inputfield.entertext
-  _numberPlaceHolderPath: gui.inputfield.enternumber
+  _textPlaceHolderPath: gui.inputfield.enter_text
+  _numberPlaceHolderPath: gui.inputfield.enter_number
   _inputField: {fileID: 1482219120415777069}
   _placeholder: {fileID: 522856139973699868}
   _onEndEdit:

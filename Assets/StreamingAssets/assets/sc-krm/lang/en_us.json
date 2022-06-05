@@ -26,8 +26,8 @@
 	"gui.save": "Save",
 	"gui.open": "Open",
 	
-	"gui.inputfield.enternumber": "Enter number...",
-	"gui.inputfield.entertext": "Enter text...",
+	"gui.inputfield.enter_number": "Enter number...",
+	"gui.inputfield.enter_text": "Enter text...",
 	
 	
 	

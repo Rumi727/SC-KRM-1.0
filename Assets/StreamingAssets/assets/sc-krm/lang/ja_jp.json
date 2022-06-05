@@ -26,8 +26,8 @@
 	"gui.save": "保存",
 	"gui.open": "開く",
 	
-	"gui.inputfield.enternumber": "数値を入力...",
-	"gui.inputfield.entertext": "テキスト入力...",
+	"gui.inputfield.enter_number": "数値を入力...",
+	"gui.inputfield.enter_text": "テキスト入力...",
 	
 	
 	
