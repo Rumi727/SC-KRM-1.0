@@ -36,7 +36,7 @@ namespace SCKRM.DebugUI
             DeltaTimeRefresh();
             MemoryRefresh();
 
-            if (timer >= 1f)
+            if (timer >= DebugManager.SaveData.graphRefreshDelay)
             {
                 DeltaTimeRender();
                 MemoryRender();
