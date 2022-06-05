@@ -51,6 +51,9 @@ namespace SCKRM.Editor
             DrawLine();
 
             UseProperty("_roundingDigits", "반올림 자릿수");
+
+            DrawLine();
+
             UseProperty("_hotkeyToDisplay", "표시할 단축키");
 
             DrawLine();
