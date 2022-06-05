@@ -204,10 +204,7 @@ namespace SCKRM.UI
             onRectTransformDimensionsChangeMethodLock = false;
         }
 
-        public virtual void LayoutRefresh()
-        {
-
-        }
+        public abstract void LayoutRefresh();
 
         public abstract void SizeUpdate(bool useAni = true);
     }
