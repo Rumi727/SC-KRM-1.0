@@ -1620,6 +1620,9 @@ namespace SCKRM.Resource
             {
                 string typePath = PathTool.Combine(Kernel.streamingAssetsPath, texturePath.Replace("%NameSpace%", nameSpace), type);
 
+                if (!Directory.Exists(typePath))
+                    return null;
+
                 List<string> keys = new List<string>();
                 for (int i = 0; i < textureExtension.Length; i++)
                 {
