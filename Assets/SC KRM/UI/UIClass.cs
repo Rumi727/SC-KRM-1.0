@@ -21,11 +21,7 @@ namespace SCKRM.UI
             get
             {
                 if (_parentRectTransform == null)
-                {
-                    RectTransform rectTransform = transform.parent as RectTransform;
-                    if (rectTransform == null)
-                        _parentRectTransform = transform.parent.gameObject.AddComponent<RectTransform>();
-                }
+                    _parentRectTransform = transform.parent as RectTransform;
 
                 return _parentRectTransform;
             }
