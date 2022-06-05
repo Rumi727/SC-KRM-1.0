@@ -176,18 +176,26 @@ namespace SCKRM
         }
     }
 
-    public sealed partial class Map
+    public class Map
     {
         public MapInfo info { get; } = new MapInfo();
         public MapEffect effect { get; } = new MapEffect();
+
+        public Map() { }
+
+        public Map(MapInfo info, MapEffect effect)
+        {
+            this.info = info;
+            this.effect = effect;
+        }
     }
 
-    public sealed partial class MapInfo
+    public class MapInfo
     {
         public double offset = 0;
     }
 
-    public sealed partial class MapEffect
+    public class MapEffect
     {
         public BeatValuePairList<double> bpm = new BeatValuePairList<double>();
         public BeatValuePairList<bool> dropPart = new BeatValuePairList<bool>();
