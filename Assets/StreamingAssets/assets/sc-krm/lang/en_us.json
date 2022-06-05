@@ -23,6 +23,8 @@
 	"gui.error": "Error",
 	"gui.on": "On",
 	"gui.off": "Off",
+	"gui.save": "Save",
+	"gui.open": "Open",
 	
 	"gui.inputfield.enternumber": "Enter number...",
 	"gui.inputfield.entertext": "Enter text...",

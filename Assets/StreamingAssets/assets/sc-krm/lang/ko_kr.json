@@ -23,6 +23,8 @@
 	"gui.error": "오류",
 	"gui.on": "켜짐",
 	"gui.off": "꺼짐",
+	"gui.save": "저장",
+	"gui.open": "열기",
 	
 	"gui.inputfield.enternumber": "숫자 입력...",
 	"gui.inputfield.entertext": "텍스트 입력...",
