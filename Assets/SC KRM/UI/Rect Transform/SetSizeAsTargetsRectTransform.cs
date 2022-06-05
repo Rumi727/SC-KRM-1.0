@@ -54,7 +54,8 @@ namespace SCKRM.UI
                 if (targetRectTransform == null)
                     continue;
 
-                size += new Vector2(targetRectTransform.sizeDelta.x * targetRectTransform.localScale.x, targetRectTransform.sizeDelta.y * targetRectTransform.localScale.y) + offset;
+                Vector2 targetSize = targetRectTransform.rect.size;
+                size += new Vector2(targetSize.x * targetRectTransform.localScale.x, targetSize.y * targetRectTransform.localScale.y) + offset;
             }
 
             if (max.x <= 0)
