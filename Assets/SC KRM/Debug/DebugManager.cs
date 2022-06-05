@@ -47,7 +47,6 @@ namespace SCKRM.DebugUI
 
 
 
-        float timer = 0;
         void Update()
         {
             rectTransform.offsetMin = StatusBarManager.cropedRect.min;
