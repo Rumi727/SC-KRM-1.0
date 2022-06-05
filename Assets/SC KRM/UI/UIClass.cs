@@ -20,7 +20,7 @@ namespace SCKRM.UI
         {
             get
             {
-                if (_parentRectTransform == null)
+                if (_parentRectTransform == null || _parentRectTransform.gameObject != transform.parent.gameObject)
                     _parentRectTransform = transform.parent as RectTransform;
 
                 return _parentRectTransform;
@@ -30,7 +30,7 @@ namespace SCKRM.UI
         {
             get
             {
-                if (_rectTransform == null)
+                if (_rectTransform == null || _rectTransform.gameObject != gameObject)
                 {
                     RectTransform rectTransform = transform as RectTransform;
                     if (rectTransform == null)
