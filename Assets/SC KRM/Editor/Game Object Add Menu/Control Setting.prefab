@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2691143720221606184}
   _graphic: {fileID: 0}
   _lerp: 1
@@ -277,6 +278,7 @@ MonoBehaviour:
   _offset: {x: 10, y: 0}
   _min: {x: 84, y: 0}
   _max: {x: 343, y: 0}
+  _reversal: 0
 --- !u!1 &4880271695983191983
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff1397019dfb0f43a92b64d14b8432a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5019118220717391376}
   _graphic: {fileID: 0}
   _targetKey: 
@@ -665,6 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba592989150be745953d1b3f4dca6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2067618578239510777}
   _graphic: {fileID: 2095391971666669664}
   _lerp: 1
@@ -708,7 +712,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2, y: 2}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8534831338058632582
 CanvasRenderer:
@@ -883,6 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6098675448043973475}
   _graphic: {fileID: 0}
   _lerp: 1
@@ -893,6 +898,7 @@ MonoBehaviour:
   _offset: {x: 10, y: 0}
   _min: {x: 84, y: 0}
   _max: {x: 0, y: 0}
+  _reversal: 0
 --- !u!1 &6843447493846974752
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +938,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2, y: 2}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2924975297306877202
 CanvasRenderer:
