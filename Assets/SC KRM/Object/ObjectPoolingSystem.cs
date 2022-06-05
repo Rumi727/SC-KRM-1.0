@@ -93,10 +93,8 @@ namespace SCKRM.Object
 
             if (objectList.objectKey.Contains(objectKey))
             {
-                (MonoBehaviour monoBehaviour, IObjectPooling objectPooling) objectPoolingTuple = objectList.objectPooling[objectList.objectKey.IndexOf(objectKey)];
+                (MonoBehaviour monoBehaviour, IObjectPooling objectPooling) = objectList.objectPooling[objectList.objectKey.IndexOf(objectKey)];
 
-                IObjectPooling objectPooling = objectPoolingTuple.objectPooling;
-                MonoBehaviour monoBehaviour = objectPoolingTuple.monoBehaviour;
                 monoBehaviour.transform.SetParent(parent, false);
                 monoBehaviour.gameObject.SetActive(true);
 
@@ -116,7 +114,7 @@ namespace SCKRM.Object
                     RendererManager.Refresh(objectPooling.refreshableObjects, false);
 
                 objectPooling.OnCreate();
-                return objectPoolingTuple;
+                return (monoBehaviour, objectPooling);
             }
             else if (Data.prefabList.ContainsKey(objectKey))
             {
