@@ -30,7 +30,7 @@ namespace SCKRM.Json
                 return default;
         }
 
-        public static TValue JsonReadDictionary<TKey, TValue>(TKey key, string path, string nameSpace)
+        public static TValue JsonReadDictionary<TKey, TValue>(TKey key, string path, string nameSpace, bool pathExtensionUse = false)
         {
             if (path == null)
                 path = "";
@@ -45,7 +45,7 @@ namespace SCKRM.Json
             for (int i = 0; i < ResourceManager.SaveData.resourcePacks.Count; i++)
             {
                 string resourcePack = ResourceManager.SaveData.resourcePacks[i];
-                Dictionary<TKey, TValue> dictionary = JsonRead<Dictionary<TKey, TValue>>(PathTool.Combine(resourcePack, path));
+                Dictionary<TKey, TValue> dictionary = JsonRead<Dictionary<TKey, TValue>>(PathTool.Combine(resourcePack, path), pathExtensionUse);
                 if (dictionary != null && dictionary.ContainsKey(key))
                     return dictionary[key];
             }
