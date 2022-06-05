@@ -170,7 +170,7 @@ MonoBehaviour:
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_parseCtrlCharacters: 1
+  m_parseCtrlCharacters: 0
   m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
@@ -465,6 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45453fe11c3135f44852cc83f6128203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 9136122546172431983}
   _graphic: {fileID: 0}
   _lerp: 0
@@ -489,6 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d646b6ab0b1b1bf4cacea338ffa57b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 9136122546172431983}
   _graphic: {fileID: 0}
   _lerp: 0
@@ -639,6 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7483910627107449271}
   _graphic: {fileID: 3974184429263772120}
   _lerp: 1
@@ -649,6 +652,7 @@ MonoBehaviour:
   _offset: {x: 0, y: 0}
   _min: {x: 0, y: 0}
   _max: {x: 0, y: 196}
+  _reversal: 0
 --- !u!1 &5403342609076353350
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +771,7 @@ MonoBehaviour:
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_parseCtrlCharacters: 1
+  m_parseCtrlCharacters: 0
   m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
@@ -1045,6 +1049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97c0bfdfb714904aa7f3009ba72b7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3529910232851428065}
   _graphic: {fileID: 8519761445641381069}
   _options: []
@@ -1325,6 +1330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5143f73d72653f945b8b82614418d80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8744925354983199937}
   _graphic: {fileID: 8233439561937546649}
   _label: {fileID: 8514155857276962832}

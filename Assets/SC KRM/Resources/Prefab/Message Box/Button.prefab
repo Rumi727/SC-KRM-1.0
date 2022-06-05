@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91d45d24dde2fbf488fcd51f0212097b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
   _graphic: {fileID: 0}
   _button: {fileID: 242430723591994269}
@@ -259,7 +260,7 @@ MonoBehaviour:
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_parseCtrlCharacters: 1
+  m_parseCtrlCharacters: 0
   m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0

@@ -121,7 +121,7 @@ MonoBehaviour:
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_parseCtrlCharacters: 1
+  m_parseCtrlCharacters: 0
   m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
@@ -441,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc892b9548b3b040b5bdc87f0ca3e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7516238111572459608}
   _graphic: {fileID: 3355056377983817332}
   _lerp: 1
@@ -501,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1045c5602d3f02e44a55b78fb741e0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1261287160559756371}
   _graphic: {fileID: 0}
   _saveLoadClassName: 
@@ -526,6 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1261287160559756371}
   _graphic: {fileID: 0}
   _lerp: 0
@@ -536,6 +539,7 @@ MonoBehaviour:
   _offset: {x: 0, y: 55}
   _min: {x: 0, y: 55}
   _max: {x: 0, y: 0}
+  _reversal: 0
 --- !u!1 &7958992704451372645
 GameObject:
   m_ObjectHideFlags: 0
