@@ -1413,7 +1413,7 @@ namespace SCKRM.Resource
         {
             bool exists;
             if (!pathExtensionUse)
-                exists = FileExtensionExists(path, out path, textureExtension);
+                exists = FileExtensionExists(path, out path, textExtension);
             else
                 exists = File.Exists(path);
 
