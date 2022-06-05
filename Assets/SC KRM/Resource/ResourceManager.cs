@@ -92,6 +92,7 @@ namespace SCKRM.Resource
         public static string[] textureExtension { get; } = new string[] { "tga", "dds", "png", "jpg" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
         public static string[] audioExtension { get; } = new string[] { "ogg", "mp3", "mp2", "wav", "aif", "xm", "mod", "it", "vag", "xma", "s3m" };
+        public static string[] videoExtension { get; } = new string[] { "asf", "avi", "dv", "m4v", "mov", "mp4", "mpg", "mpeg", "ogv", "vp8", "webm", "wmv" };
 
 
 
