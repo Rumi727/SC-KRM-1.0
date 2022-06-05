@@ -26,6 +26,9 @@ namespace SCKRM.UI
         [SerializeField, Min(0)] Vector2 _max = Vector2.zero;
         public Vector2 max { get => _max; set => _max = value; }
 
+        [SerializeField] bool _reversal = false;
+        public bool reversal { get => _reversal; set => _reversal = value; }
+
 
 
         DrivenRectTransformTracker tracker;
@@ -52,6 +55,9 @@ namespace SCKRM.UI
                 size.y = size.y.Clamp(min.y);
             else
                 size.y = size.y.Clamp(min.y, max.y);
+
+            if (reversal)
+                size = parentRectTransform.rect.size - size;
         }
 
         Vector2 size;

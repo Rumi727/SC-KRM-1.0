@@ -22,18 +22,22 @@ namespace SCKRM.Editor
 
             UseProperty("_targetRectTransforms", "대상");
 
-            EditorGUILayout.Space();
+            Space();
 
             UseProperty("_xSize", "X 크기 변경");
             UseProperty("_ySize", "Y 크기 변경");
 
-            EditorGUILayout.Space();
+            Space();
 
             UseProperty("_offset");
             UseProperty("_min");
             UseProperty("_max");
 
-            EditorGUILayout.Space();
+            Space();
+
+            UseProperty("_reversal", "반전");
+
+            Space();
 
             UseProperty("_lerp", "애니메이션 사용");
             if (editor.lerp)
