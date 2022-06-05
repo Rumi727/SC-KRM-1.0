@@ -20,7 +20,7 @@ namespace SCKRM.Editor
 
             DrawLine();
 
-            UseProperty("_targetsRectTransform", "대상");
+            UseProperty("_targetRectTransforms", "대상");
 
             EditorGUILayout.Space();
 
