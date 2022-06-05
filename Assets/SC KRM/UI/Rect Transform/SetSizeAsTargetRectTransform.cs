@@ -76,21 +76,31 @@ namespace SCKRM.UI
 
             if (!lerp || !useAni || !Kernel.isPlaying)
             {
+                Rect rect = rectTransform.rect;
+                Vector2 size = Vector2.zero;
                 if (xSize && !ySize)
-                    rectTransform.sizeDelta = new Vector2(size.x, rectTransform.sizeDelta.y);
+                    size = new Vector2(this.size.x, rect.size.y);
                 else if (!xSize && ySize)
-                    rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, size.y);
+                    size = new Vector2(rect.size.x, this.size.y);
                 else if (xSize && ySize)
-                    rectTransform.sizeDelta = size;
+                    size = this.size;
+
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
             }
             else
             {
+                Rect rect = rectTransform.rect;
+                Vector2 size = Vector2.zero;
                 if (xSize && !ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(size.x, rectTransform.sizeDelta.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                    size = rect.size.Lerp(new Vector2(this.size.x, rect.size.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (!xSize && ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(new Vector2(rectTransform.sizeDelta.x, size.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                    size = rect.size.Lerp(new Vector2(rect.size.x, this.size.y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                 else if (xSize && ySize)
-                    rectTransform.sizeDelta = rectTransform.sizeDelta.Lerp(size, lerpValue * Kernel.fpsUnscaledDeltaTime);
+                    size = rect.size.Lerp(this.size, lerpValue * Kernel.fpsUnscaledDeltaTime);
+
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
             }
         }
     }
