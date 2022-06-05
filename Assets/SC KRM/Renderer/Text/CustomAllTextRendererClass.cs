@@ -51,21 +51,18 @@ namespace SCKRM.Renderer
 
         public string GetText()
         {
-#if UNITY_EDITOR
             string text;
-            if (!ThreadManager.isMainThread || Kernel.isPlaying)
+            if (Kernel.isPlaying)
                 text = ResourceManager.SearchLanguage(path, nameSpace);
             else
                 text = LanguageManager.LanguageLoad(path, nameSpace, "en_us");
-#else
-            string text = ResourceManager.SearchLanguage(path, nameSpace);
-#endif
+
             if (replace != null)
             {
                 for (int i = 0; i < replace.Length; i++)
                     text = text.Replace(replace[i].replaceOld, replace[i].replaceNew);
             }
-
+            
             if (text != "")
                 return text;
             else
