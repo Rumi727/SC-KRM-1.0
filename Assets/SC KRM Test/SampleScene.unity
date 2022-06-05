@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 542794889}
   _graphic: {fileID: 0}
   _customSetting: 1
@@ -888,6 +889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 913368625}
   _graphic: {fileID: 0}
   _customSetting: 0
@@ -1905,6 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1800996217}
   _graphic: {fileID: 0}
   _customSetting: 0

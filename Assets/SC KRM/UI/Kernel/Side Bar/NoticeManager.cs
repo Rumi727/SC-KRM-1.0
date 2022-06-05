@@ -96,7 +96,7 @@ namespace SCKRM.UI.SideBar
             {
                 notice.icon.gameObject.SetActive(true);
 
-                notice.icon.nameSpaceIndexTypePathPair = "sc-krm:0:gui/notice_icon_" + type;
+                notice.icon.nameSpaceIndexTypePathPair = "sc-krm:0:gui/notice_icon/" + type;
                 notice.icon.Refresh();
 
                 notice.setSizeAsChildRectTransform.min = 70;

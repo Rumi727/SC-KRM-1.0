@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
   _path: dropdown_arrow
-  _type: gui
+  _type: gui/icon
   _index: 0
   _image: {fileID: 4022708251547395710}
 --- !u!1 &8907526416505936162
