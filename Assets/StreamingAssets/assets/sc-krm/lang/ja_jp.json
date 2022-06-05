@@ -88,6 +88,10 @@
 	"options.debug.textShow.info": "デバッグ画面にテキストを表示する",
 	"options.debug.graphShow": "グラフ表示",
 	"options.debug.graphShow.info": "デバッグ画面にグラフを表示する",
+	"options.debug.textRefreshDelay": "テキストリロードディレイ",
+	"options.debug.textRefreshDelay.info": "テキストが更新されるディレイを調整します",
+	"options.debug.graphRefreshDelay": "グラフリフレッシュディレイ",
+	"options.debug.graphRefreshDelay.info": "グラフが更新されるディレイを調整します",
 	"options.debug.graphSpeed": "グラフ速度",
 	"options.debug.graphSpeed.info": "グラフの速度を調整します",
 	

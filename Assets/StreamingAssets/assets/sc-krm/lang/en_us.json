@@ -88,6 +88,10 @@
 	"options.debug.textShow.info": "Display text on the debug screen",
 	"options.debug.graphShow": "Graph show",
 	"options.debug.graphShow.info": "Display the graph in the debug screen",
+	"options.debug.textRefreshDelay": "Text refresh delay",
+	"options.debug.textRefreshDelay.info": "Adjusts the delay at which text is refreshed",
+	"options.debug.graphRefreshDelay": "Graph refresh delay",
+	"options.debug.graphRefreshDelay.info": "Adjusts the delay at which the graph refreshes",
 	"options.debug.graphSpeed": "Graph speed",
 	"options.debug.graphSpeed.info": "Adjusts the speed of the graph",
 	

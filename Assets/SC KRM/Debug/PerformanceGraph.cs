@@ -24,13 +24,24 @@ namespace SCKRM.DebugUI
         float deltaTimeHeight = 0.0001f;
         float memoryHeight = 104857600f;
 
+        float timer = 0;
+        float deltaTimeXSize = 0;
+        float memoryXSize = 0;
         void Update()
         {
-            DeltaTimeRefresh();
-            DeltaTimeFpsLineRefresh();
+            deltaTimeXSize = deltaTime.rectTransform.rect.size.x / DebugManager.SaveData.graphSpeed;
+            memoryXSize = memory.rectTransform.rect.size.x / DebugManager.SaveData.graphSpeed;
+            timer += Kernel.unscaledDeltaTime;
 
+            DeltaTimeRefresh();
             MemoryRefresh();
-            MemoryLineRefresh();
+
+            if (timer >= 1f)
+            {
+                DeltaTimeRender();
+                MemoryRender();
+                timer = 0;
+            }
         }
 
         protected override void OnDisable()
@@ -43,15 +54,15 @@ namespace SCKRM.DebugUI
 
             deltaTimeHeight = 0.0001f;
             memoryHeight = 104857600;
+
+            timer = 0;
         }
 
         void DeltaTimeRefresh()
         {
-            float xSize = deltaTime.rectTransform.rect.size.x / DebugManager.SaveData.graphSpeed;
-            int length = xSize.CeilToInt();
-
             deltaTimeList.Add(Kernel.unscaledDeltaTime);
 
+            int length = deltaTimeXSize.CeilToInt();
             while (deltaTimeList.Count > length)
                 deltaTimeList.RemoveAt(0);
 
@@ -62,14 +73,18 @@ namespace SCKRM.DebugUI
                 deltaTimeHeight = max;
             else
                 deltaTimeHeight = deltaTimeHeight.Lerp(max, lerpValue * Kernel.fpsUnscaledDeltaTime);
+        }
 
+        void DeltaTimeRender()
+        {
             if (deltaTime.Points.Length != deltaTimeList.Count)
                 deltaTime.Points = new Vector2[deltaTimeList.Count];
 
             for (int i = deltaTimeList.Count - 1; i >= 0; i--)
-                deltaTime.Points[i] = new Vector2(i / xSize, (deltaTimeList[i] / deltaTimeHeight));
+                deltaTime.Points[i] = new Vector2(i / deltaTimeXSize, deltaTimeList[i] / deltaTimeHeight);
 
             deltaTime.SetAllDirty();
+            DeltaTimeFpsLineRefresh();
         }
 
         void DeltaTimeFpsLineRefresh()
@@ -99,10 +114,11 @@ namespace SCKRM.DebugUI
             }
         }
 
+
+
         void MemoryRefresh()
         {
-            float xSize = memory.rectTransform.rect.size.x / DebugManager.SaveData.graphSpeed;
-            int length = xSize.CeilToInt();
+            int length = memoryXSize.CeilToInt();
 
             memoryList.Add(Profiler.GetTotalAllocatedMemoryLong());
 
@@ -116,14 +132,18 @@ namespace SCKRM.DebugUI
                 memoryHeight = max;
             else
                 memoryHeight = memoryHeight.Lerp(max, lerpValue * Kernel.fpsUnscaledDeltaTime);
+        }
 
+        void MemoryRender()
+        {
             if (memory.Points.Length != memoryList.Count)
                 memory.Points = new Vector2[memoryList.Count];
 
             for (int i = memoryList.Count - 1; i >= 0; i--)
-                memory.Points[i] = new Vector2(i / xSize, memoryList[i] / memoryHeight);
+                memory.Points[i] = new Vector2(i / memoryXSize, memoryList[i] / memoryHeight);
 
             memory.SetAllDirty();
+            MemoryLineRefresh();
         }
 
         void MemoryLineRefresh()

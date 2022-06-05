@@ -89,6 +89,10 @@
 	"options.debug.textShow.info": "디버그 화면에 텍스트를 표시합니다",
 	"options.debug.graphShow": "그래프 표시",
 	"options.debug.graphShow.info": "디버그 화면에 그래프를 표시합니다",
+	"options.debug.textRefreshDelay": "텍스트 새로고침 딜레이",
+	"options.debug.textRefreshDelay.info": "텍스트가 새로고침 되는 딜레이를 조절합니다",
+	"options.debug.graphRefreshDelay": "그래프 새로 고침 딜레이",
+	"options.debug.graphRefreshDelay.info": "그래프가 새로 고침 되는 딜레이를 조절합니다",
 	"options.debug.graphSpeed": "그래프 속도",
 	"options.debug.graphSpeed.info": "그래프의 속도를 조절합니다",
 	
