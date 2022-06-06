@@ -9,6 +9,12 @@ namespace SCKRM.UI.Layout
     [AddComponentMenu("커널/UI/Layout/수평 레이아웃")]
     public sealed class HorizontalLayout : LayoutChildSetting<HorizontalLayoutSetting>
     {
+        public float lastXPos { get; private set; } = 0;
+        public float centerLastXPos { get; private set; } = 0;
+        public float rightLastXPos { get; private set; } = 0;
+
+
+
         [SerializeField] bool _allLerp = false;
         public bool allLerp { get => _allLerp; set => _allLerp = value; }
 
@@ -19,6 +25,8 @@ namespace SCKRM.UI.Layout
 
         [SerializeField] RectOffset _padding = new RectOffset();
         public RectOffset padding { get => _padding; set => _padding = value; }
+
+
 
         DrivenRectTransformTracker tracker;
 
@@ -120,6 +128,7 @@ namespace SCKRM.UI.Layout
                     }
 
                     x -= childRectTransform.rect.size.x + spacing;
+                    rightLastXPos = x;
                 }
                 else if (center)
                 {
@@ -152,6 +161,7 @@ namespace SCKRM.UI.Layout
                     }
 
                     x += childRectTransform.rect.size.x + spacing;
+                    centerLastXPos = x;
                 }
                 else
                 {
@@ -184,6 +194,7 @@ namespace SCKRM.UI.Layout
                     }
 
                     x += childRectTransform.rect.size.x + spacing;
+                    lastXPos = x;
                 }
 
                 if (!onlyPos)
