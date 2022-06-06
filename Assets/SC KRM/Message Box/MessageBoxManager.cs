@@ -13,6 +13,7 @@ namespace SCKRM.UI.MessageBox
     public class MessageBoxManager : UIManager<MessageBoxManager>
     {
         [SerializeField] CanvasGroup messageBoxCanvasGroup;
+        [SerializeField] GameObject messabeBoxBG;
         [SerializeField] Transform messageBoxButtons;
         [SerializeField] CustomAllTextRenderer messageBoxInfo;
         [SerializeField] CustomAllSpriteRenderer messageBoxIcon;
@@ -34,6 +35,9 @@ namespace SCKRM.UI.MessageBox
 
                 messageBoxCanvasGroup.interactable = true;
                 messageBoxCanvasGroup.blocksRaycasts = true;
+
+                if (!messabeBoxBG.activeSelf)
+                    messabeBoxBG.SetActive(true);
             }
             else
             {
@@ -43,6 +47,9 @@ namespace SCKRM.UI.MessageBox
 
                 messageBoxCanvasGroup.interactable = false;
                 messageBoxCanvasGroup.blocksRaycasts = false;
+
+                if (messabeBoxBG.activeSelf)
+                    messabeBoxBG.SetActive(false);
             }
         }
 
