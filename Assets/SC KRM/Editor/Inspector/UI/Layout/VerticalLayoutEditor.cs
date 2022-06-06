@@ -29,6 +29,7 @@ namespace SCKRM.Editor
 
             EditorGUILayout.Space();
 
+            UseProperty("_onlyPos", "좌표만 변경");
             UseProperty("_lerp", "애니메이션 사용");
             if (editor.lerp)
             {
