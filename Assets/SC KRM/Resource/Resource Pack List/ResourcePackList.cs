@@ -92,12 +92,12 @@ namespace SCKRM.Resource.UI
                                     resourcePack.icon.gameObject.SetActive(true);
                                     resourcePack.icon.sprite = sprite;
 
-                                    resourcePack.setSizeAsChildRectTransform.min = 70;
+                                    resourcePack.childSizeFitter.min = 70;
                                     resourcePack.verticalLayout.padding.left = 70;
                                 }
                                 else
                                 {
-                                    resourcePack.setSizeAsChildRectTransform.min = 40;
+                                    resourcePack.childSizeFitter.min = 40;
                                     resourcePack.verticalLayout.padding.left = 10;
                                 }
                             }

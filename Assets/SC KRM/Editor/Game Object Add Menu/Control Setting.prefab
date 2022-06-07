@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 2691143720221606184}
   - component: {fileID: 6950207721314441366}
   - component: {fileID: 7251926066971795539}
-  - component: {fileID: 1402590128902671955}
+  - component: {fileID: 3987545447598425636}
   m_Layer: 5
   m_Name: Control Setting Button
   m_TagString: Untagged
@@ -255,7 +255,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1402590128902671955
+--- !u!114 &3987545447598425636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4729500031220389062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a7581e4168deb419433c6a8240d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
@@ -272,7 +272,8 @@ MonoBehaviour:
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
-  _targetRectTransform: {fileID: 2067618578239510777}
+  _targetRectTransforms:
+  - {fileID: 2067618578239510777}
   _xSize: 1
   _ySize: 0
   _offset: {x: 10, y: 0}
@@ -780,7 +781,7 @@ GameObject:
   - component: {fileID: 6098675448043973475}
   - component: {fileID: 7484368282086511925}
   - component: {fileID: 7123701573769063191}
-  - component: {fileID: 4771808654896094389}
+  - component: {fileID: 1281867996761900038}
   m_Layer: 5
   m_Name: Emptying
   m_TagString: Untagged
@@ -875,7 +876,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4771808654896094389
+--- !u!114 &1281867996761900038
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -884,7 +885,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6479925328942072257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a7581e4168deb419433c6a8240d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
@@ -892,7 +893,8 @@ MonoBehaviour:
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
-  _targetRectTransform: {fileID: 2269941058451651165}
+  _targetRectTransforms:
+  - {fileID: 2269941058451651165}
   _xSize: 1
   _ySize: 0
   _offset: {x: 10, y: 0}

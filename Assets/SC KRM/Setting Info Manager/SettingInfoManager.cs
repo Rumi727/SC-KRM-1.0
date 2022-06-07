@@ -17,8 +17,8 @@ namespace SCKRM.UI
 
 
         [SerializeField, NotNull] CanvasGroup settingInfo;
-        [SerializeField, NotNull] SetSizeAsTargetRectTransform settingInfoSetSizeAsTargetRectTransformX;
-        [SerializeField, NotNull] SetSizeAsTargetRectTransform settingInfoSetSizeAsTargetRectTransformY;
+        [SerializeField, NotNull] TargetSizeFitter targetSizeFitterX;
+        [SerializeField, NotNull] TargetSizeFitter targetSizeFitterY;
         [SerializeField, NotNull] TMP_Text labelText;
         [SerializeField, NotNull] TMP_Text valueText;
         [SerializeField, NotNull] TMP_Text shortcutKeysText;
@@ -52,17 +52,17 @@ namespace SCKRM.UI
                     float shortcutKeysTextX = shortcutKeysText.rectTransform.rect.size.x;
                     float max = Max(labelTextX, valueTextX, shortcutKeysTextX);
                     if (max == labelTextX)
-                        settingInfoSetSizeAsTargetRectTransformX.targetRectTransform = labelText.rectTransform;
+                        targetSizeFitterX.targetRectTransforms[0] = labelText.rectTransform;
                     else if (max == valueTextX)
-                        settingInfoSetSizeAsTargetRectTransformX.targetRectTransform = valueText.rectTransform;
+                        targetSizeFitterX.targetRectTransforms[0] = valueText.rectTransform;
                     else if (max == shortcutKeysTextX)
-                        settingInfoSetSizeAsTargetRectTransformX.targetRectTransform = shortcutKeysText.rectTransform;
+                        targetSizeFitterX.targetRectTransforms[0] = shortcutKeysText.rectTransform;
 
                     static float Max(params float[] values) => values.Max();
                 }
 
                 {
-                    Vector2 max = new Vector2(ScreenManager.width - settingInfoSetSizeAsTargetRectTransformX.offset.x, ScreenManager.height - settingInfoSetSizeAsTargetRectTransformY.offset.y);
+                    Vector2 max = new Vector2(ScreenManager.width - targetSizeFitterX.offset.x, ScreenManager.height - targetSizeFitterY.offset.y);
                     labelTextBetterContentSizeFitter.max = max;
                     valueTextBetterContentSizeFitter.max = max;
                     shortcutKeysTextBetterContentSizeFitter.max = max;
@@ -144,13 +144,13 @@ namespace SCKRM.UI
 
                 instance.LateUpdate();
 
-                SetSize(instance.settingInfoSetSizeAsTargetRectTransformX);
-                SetSize(instance.settingInfoSetSizeAsTargetRectTransformY);
+                SetSize(instance.targetSizeFitterX);
+                SetSize(instance.targetSizeFitterY);
 
-                void SetSize(SetSizeAsTargetRectTransform setSizeAsTargetRectTransform)
+                void SetSize(TargetSizeFitter targetSizeFitter)
                 {
-                    setSizeAsTargetRectTransform.LayoutRefresh();
-                    setSizeAsTargetRectTransform.SizeUpdate(false);
+                    targetSizeFitter.LayoutRefresh();
+                    targetSizeFitter.SizeUpdate(false);
                 }
             }
         }

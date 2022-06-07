@@ -1,17 +1,20 @@
 using SCKRM.UI.Layout;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/UI/선택한 Rect Transform들의 크기 따라가기")]
+    [AddComponentMenu("커널/UI/Old Target Size Fitter")]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class SetSizeAsTargetsRectTransform : UIAniLayout
+    [Obsolete("Use TargetSizeFitter")]
+    public sealed class OldTargetSizeFitter : UIAniLayout
     {
-        [SerializeField] RectTransform[] _targetRectTransforms;
-        public RectTransform[] targetRectTransforms { get => _targetRectTransforms; set => _targetRectTransforms = value; }
+        [SerializeField] RectTransform _targetRectTransform;
+        public RectTransform targetRectTransform { get => _targetRectTransform; set => _targetRectTransform = value; }
 
         [SerializeField] bool _xSize = false;
         public bool xSize { get => _xSize; set => _xSize = value; }
@@ -43,21 +46,11 @@ namespace SCKRM.UI
 
         public override void LayoutRefresh()
         {
-            if (targetRectTransforms == null)
+            if (targetRectTransform == null)
                 return;
 
-            size = Vector2.zero;
-
-            for (int i = 0; i < targetRectTransforms.Length; i++)
-            {
-                RectTransform targetRectTransform = targetRectTransforms[i];
-                if (targetRectTransform == null)
-                    continue;
-
-                Vector2 targetSize = targetRectTransform.rect.size;
-                size += new Vector2(targetSize.x * targetRectTransform.localScale.x, targetSize.y * targetRectTransform.localScale.y) + offset;
-            }
-
+            Vector2 targetSize = targetRectTransform.rect.size;
+            size = new Vector2(targetSize.x * targetRectTransform.localScale.x, targetSize.y * targetRectTransform.localScale.y) + offset;
             if (max.x <= 0)
                 size.x = size.x.Clamp(min.x);
             else

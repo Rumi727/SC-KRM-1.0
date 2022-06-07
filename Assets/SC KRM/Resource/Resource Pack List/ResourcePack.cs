@@ -18,7 +18,7 @@ namespace SCKRM.Resource.UI
         public bool selected = false;
 
         [SerializeField, HideInInspector] VerticalLayout _verticalLayout; public VerticalLayout verticalLayout => _verticalLayout = this.GetComponentFieldSave(_verticalLayout);
-        [SerializeField, HideInInspector] SetSizeAsChildRectTransform _setSizeAsChildRectTransform; public SetSizeAsChildRectTransform setSizeAsChildRectTransform => _setSizeAsChildRectTransform = this.GetComponentFieldSave(_setSizeAsChildRectTransform);
+        [SerializeField, HideInInspector] ChildSizeFitter _childSizeFitter; public ChildSizeFitter childSizeFitter => _childSizeFitter = this.GetComponentFieldSave(_childSizeFitter);
 
 
 
@@ -41,7 +41,7 @@ namespace SCKRM.Resource.UI
 
             nameText.text = "";
             descriptionText.text = "";
-            setSizeAsChildRectTransform.min = 40;
+            childSizeFitter.min = 40;
             verticalLayout.padding.left = 10;
 
             return true;

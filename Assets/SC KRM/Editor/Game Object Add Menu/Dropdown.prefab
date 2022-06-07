@@ -408,7 +408,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2061819884190181774}
   m_HandleRect: {fileID: 4099116499519752443}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 1.000001
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -498,7 +498,8 @@ MonoBehaviour:
   _lerpValue: 0.2
   _spacing: 1
   _ignore: []
-  _mode: 2
+  _xSize: 0
+  _ySize: 1
   _offset: {x: 0, y: 8}
   _min: 0
   _max: 0
@@ -515,7 +516,7 @@ GameObject:
   - component: {fileID: 3974184429263772120}
   - component: {fileID: 4080123985462393428}
   - component: {fileID: 8623213433188354585}
-  - component: {fileID: 8269321394618290258}
+  - component: {fileID: 3553523302367346960}
   m_Layer: 5
   m_Name: List
   m_TagString: Untagged
@@ -630,7 +631,7 @@ MonoBehaviour:
   _type: gui
   _index: 0
   _image: {fileID: 3974184429263772120}
---- !u!114 &8269321394618290258
+--- !u!114 &3553523302367346960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -639,7 +640,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5018507817970355077}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a7581e4168deb419433c6a8240d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
@@ -647,7 +648,8 @@ MonoBehaviour:
   _graphic: {fileID: 3974184429263772120}
   _lerp: 1
   _lerpValue: 0.4
-  _targetRectTransform: {fileID: 9136122546172431983}
+  _targetRectTransforms:
+  - {fileID: 9136122546172431983}
   _xSize: 0
   _ySize: 1
   _offset: {x: 0, y: 0}
@@ -1061,7 +1063,7 @@ MonoBehaviour:
       m_Calls: []
   label: {fileID: 3258014339495046896}
   listRectTransform: {fileID: 7483910627107449271}
-  listSetSizeAsTargetRectTransform: {fileID: 8269321394618290258}
+  listTargetSizeFitter: {fileID: 3553523302367346960}
   template: {fileID: 4757210123086782359}
   viewport: {fileID: 3784135345141700134}
   content: {fileID: 9136122546172431983}

@@ -17,7 +17,7 @@ namespace SCKRM.Tooltip
 
 
         [SerializeField, NotNull] RectTransform toolTip;
-        [SerializeField, NotNull] SetSizeAsTargetRectTransform toolTipSetSizeAsTargetRectTransform;
+        [SerializeField, NotNull] TargetSizeFitter toolTipTargetSizeFitter;
         [SerializeField, NotNull] CanvasGroup toolTipCanvasGroup;
         [SerializeField, NotNull] TMP_Text toolTipText;
         [SerializeField, NotNull] BetterContentSizeFitter toolTipTextBetterContentSizeFitter;
@@ -50,7 +50,7 @@ namespace SCKRM.Tooltip
                 pos.y = pos.y.Clamp(toolTip.rect.size.y, ScreenManager.height);
 
                 toolTip.anchoredPosition = pos;
-                toolTipTextBetterContentSizeFitter.max = new Vector2(ScreenManager.width, ScreenManager.height) - toolTipSetSizeAsTargetRectTransform.offset;
+                toolTipTextBetterContentSizeFitter.max = new Vector2(ScreenManager.width, ScreenManager.height) - toolTipTargetSizeFitter.offset;
             }
         }
 
@@ -67,8 +67,8 @@ namespace SCKRM.Tooltip
                 instance.toolTipTextBetterContentSizeFitter.SetLayoutHorizontal();
                 instance.toolTipTextBetterContentSizeFitter.SetLayoutVertical();
 
-                instance.toolTipSetSizeAsTargetRectTransform.LayoutRefresh();
-                instance.toolTipSetSizeAsTargetRectTransform.SizeUpdate(false);
+                instance.toolTipTargetSizeFitter.LayoutRefresh();
+                instance.toolTipTargetSizeFitter.SizeUpdate(false);
             }
 
             isShow = true;

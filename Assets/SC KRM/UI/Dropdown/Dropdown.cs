@@ -40,7 +40,7 @@ namespace SCKRM.UI
 
         [SerializeField, NotNull] TMP_Text label;
         [SerializeField, NotNull] RectTransform listRectTransform;
-        [SerializeField, NotNull] SetSizeAsTargetRectTransform listSetSizeAsTargetRectTransform;
+        [SerializeField, NotNull] TargetSizeFitter listTargetSizeFitter;
         [SerializeField, NotNull] DropdownItem template;
         [SerializeField, NotNull] RectTransform viewport;
         [SerializeField, NotNull] Transform content;
@@ -110,7 +110,7 @@ namespace SCKRM.UI
 
                 if (!isShow)
                 {
-                    listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, listRectTransform.anchoredPosition.y), listSetSizeAsTargetRectTransform.lerpValue * Kernel.fpsUnscaledDeltaTime);
+                    listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, listRectTransform.anchoredPosition.y), listTargetSizeFitter.lerpValue * Kernel.fpsUnscaledDeltaTime);
 
                     if (listRectTransform.gameObject.activeSelf && listRectTransform.sizeDelta.y < listRectTransform.anchoredPosition.y + 0.01f)
                     {
@@ -152,7 +152,7 @@ namespace SCKRM.UI
             UIManager.BackEventAdd(Hide, true);
             UIManager.homeEvent += Hide;
 
-            listSetSizeAsTargetRectTransform.enabled = true;
+            listTargetSizeFitter.enabled = true;
 
             invokeLock = true;
 
@@ -210,7 +210,7 @@ namespace SCKRM.UI
             mouseDrag = false;
 
             _isShow = false;
-            listSetSizeAsTargetRectTransform.enabled = false;
+            listTargetSizeFitter.enabled = false;
 
             for (int i = 0; i < dropdownItems.Count; i++)
                 dropdownItems[i].toggle.interactable = false;

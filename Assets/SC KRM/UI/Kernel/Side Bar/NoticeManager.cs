@@ -99,7 +99,7 @@ namespace SCKRM.UI.SideBar
                 notice.icon.nameSpaceIndexTypePathPair = "sc-krm:0:gui/notice_icon/" + type;
                 notice.icon.Refresh();
 
-                notice.setSizeAsChildRectTransform.min = 70;
+                notice.childSizeFitter.min = 70;
                 notice.verticalLayout.padding.left = 70;
             }
 

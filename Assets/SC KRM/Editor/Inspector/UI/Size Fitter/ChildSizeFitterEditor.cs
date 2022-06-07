@@ -5,14 +5,14 @@ using UnityEditor;
 namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(SetSizeAsChildRectTransform))]
-    public sealed class SetSizeAsChildRectTransformEditor : UIEditor
+    [CustomEditor(typeof(ChildSizeFitter))]
+    public sealed class ChildSizeFitterEditor : UIEditor
     {
-        [System.NonSerialized] SetSizeAsChildRectTransform editor;
+        [System.NonSerialized] ChildSizeFitter editor;
         protected override void OnEnable()
         {
             base.OnEnable();
-            editor = (SetSizeAsChildRectTransform)target;
+            editor = (ChildSizeFitter)target;
         }
 
         public override void OnInspectorGUI()
@@ -21,7 +21,8 @@ namespace SCKRM.Editor
 
             DrawLine();
 
-            UseProperty("_mode");
+            UseProperty("_xSize", "X 크기 변경");
+            UseProperty("_ySize", "Y 크기 변경");
 
             EditorGUILayout.Space();
 

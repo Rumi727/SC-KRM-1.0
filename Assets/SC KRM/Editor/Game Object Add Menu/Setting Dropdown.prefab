@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2362452059621128034}
   - component: {fileID: 7170476850409186395}
-  - component: {fileID: 4618149182129309364}
+  - component: {fileID: 269223957488089155}
   m_Layer: 5
   m_Name: Setting Dropdown
   m_TagString: Untagged
@@ -67,7 +67,7 @@ MonoBehaviour:
   _onValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4618149182129309364
+--- !u!114 &269223957488089155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 820863342446365194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a7581e4168deb419433c6a8240d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
@@ -84,7 +84,8 @@ MonoBehaviour:
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
-  _targetRectTransform: {fileID: 1019530223916582975}
+  _targetRectTransforms:
+  - {fileID: 1019530223916582975}
   _xSize: 0
   _ySize: 1
   _offset: {x: 0, y: 60}

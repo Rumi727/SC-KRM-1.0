@@ -29,7 +29,7 @@ namespace SCKRM.Editor
 
             UseProperty("label");
             UseProperty("listRectTransform");
-            UseProperty("listSetSizeAsTargetRectTransform");
+            UseProperty("listTargetSizeFitter");
             UseProperty("template");
             UseProperty("viewport");
             UseProperty("content");

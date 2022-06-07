@@ -8,11 +8,11 @@ using UnityEngine.EventSystems;
 namespace SCKRM.UI.SideBar
 {
     [AddComponentMenu("")]
-    [RequireComponent(typeof(VerticalLayout), typeof(SetSizeAsChildRectTransform))]
+    [RequireComponent(typeof(VerticalLayout), typeof(ChildSizeFitter))]
     public class Notice : UIObjectPooling, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField, HideInInspector] VerticalLayout _verticalLayout; public VerticalLayout verticalLayout => _verticalLayout = this.GetComponentFieldSave(_verticalLayout);
-        [SerializeField, HideInInspector] SetSizeAsChildRectTransform _setSizeAsChildRectTransform; public SetSizeAsChildRectTransform setSizeAsChildRectTransform => _setSizeAsChildRectTransform = this.GetComponentFieldSave(_setSizeAsChildRectTransform);
+        [SerializeField, HideInInspector] ChildSizeFitter _childSizeFitter; public ChildSizeFitter childSizeFitter => _childSizeFitter = this.GetComponentFieldSave(_childSizeFitter);
 
 
 
@@ -49,7 +49,7 @@ namespace SCKRM.UI.SideBar
 
             nameText.path = "";
             infoText.path = "";
-            setSizeAsChildRectTransform.min = 40;
+            childSizeFitter.min = 40;
             verticalLayout.padding.left = 10;
             removeButtonCanvasGroup.alpha = 0;
 
