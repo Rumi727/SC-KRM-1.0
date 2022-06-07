@@ -1,4 +1,4 @@
-﻿//MIT License
+//MIT License
 //Copyright (c) 2020 Mohammed Iqubal Hussain
 //Website : Polyandcode.com 
 

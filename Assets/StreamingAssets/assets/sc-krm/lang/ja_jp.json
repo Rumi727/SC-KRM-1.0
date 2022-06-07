@@ -25,9 +25,13 @@
 	"gui.off": "オフ",
 	"gui.save": "保存",
 	"gui.open": "開く",
+	"gui.folder_select": "フォルダの選択",
 	
 	"gui.inputfield.enter_number": "数値を入力...",
 	"gui.inputfield.enter_text": "テキスト入力...",
+	"gui.inputfield.search": "検索...",
+	"gui.inputfield.enter_file_name": "ファイル名入力...",
+	"gui.inputfield.enter_folder_name": "フォルダ名入力...",
 	
 	
 	
@@ -157,6 +161,22 @@
 	
 	"compress_file_manager.compress": "圧縮中...",
 	"compress_file_manager.decompress": "解凍中...",
+	
+	
+	
+	"file_dialog.drive": "%value%ドライブ",
+	
+	"file_dialog.3d_objects": "3Dオブジェクト",
+	"file_dialog.downloads": "ダウンロード",
+	"file_dialog.videos": "ビデオ",
+	"file_dialog.documents": "ドキュメント",
+	"file_dialog.desktop": "デスクトップ",
+	"file_dialog.pictures": "ピクチャー",
+	"file_dialog.music": "音楽",
+	
+	"file_dialog.all_file": "すべてのファイル",
+	
+	"file_dialog.capacity_display": "%all%のうち%value%が利用可能",
 	
 	
 	

@@ -25,9 +25,13 @@
 	"gui.off": "꺼짐",
 	"gui.save": "저장",
 	"gui.open": "열기",
+	"gui.folder_select": "폴더 선택",
 	
 	"gui.inputfield.enter_number": "숫자 입력...",
 	"gui.inputfield.enter_text": "텍스트 입력...",
+	"gui.inputfield.search": "검색...",
+	"gui.inputfield.enter_file_name": "파일 이름 입력...",
+	"gui.inputfield.enter_folder_name": "폴더 이름 입력...",
 	
 	
 	
@@ -158,6 +162,30 @@
 	
 	"compress_file_manager.compress": "압축 중...",
 	"compress_file_manager.decompress": "압축 푸는 중...",
+	
+	
+	
+	"file_dialog.drive": "%value% 드라이브",
+	
+	"file_dialog.3d_objects": "3D 개체",
+	"file_dialog.downloads": "다운로드",
+	"file_dialog.videos": "동영상",
+	"file_dialog.documents": "문서",
+	"file_dialog.desktop": "바탕화면",
+	"file_dialog.pictures": "사진",
+	"file_dialog.music": "음악",
+	
+	"file_dialog.file.all": "모든 파일",
+	"file_dialog.file.video": "동영상 파일",
+	"file_dialog.file.text": "텍스트 파일",
+	"file_dialog.file.picture": "사진 파일",
+	"file_dialog.file.music": "음악 파일",
+	"file_dialog.file.compress": "압축 파일",
+	"file_dialog.file.code": "코드 파일",
+	
+	"file_dialog.capacity_display": "%all% 중 %value% 사용 가능",
+	
+	"file_dialog.file_save_warning": "%value%이(가) 이미 있습니다\n바꾸시겠습니까?",
 	
 	
 	

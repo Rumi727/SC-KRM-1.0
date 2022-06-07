@@ -25,9 +25,13 @@
 	"gui.off": "Off",
 	"gui.save": "Save",
 	"gui.open": "Open",
+	"gui.folder_select": "Folder select",
 	
 	"gui.inputfield.enter_number": "Enter number...",
 	"gui.inputfield.enter_text": "Enter text...",
+	"gui.inputfield.search": "Serarch...",
+	"gui.inputfield.enter_file_name": "Enter file name...",
+	"gui.inputfield.enter_folder_name": "Enter folder name...",
 	
 	
 	
@@ -157,6 +161,22 @@
 	
 	"compress_file_manager.compress": "Compressing...",
 	"compress_file_manager.decompress": "Decompressing...",
+	
+	
+	
+	"file_dialog.drive": "%value% Drive",
+	
+	"file_dialog.3d_objects": "3D Objects",
+	"file_dialog.downloads": "Downloads",
+	"file_dialog.videos": "Videos",
+	"file_dialog.documents": "Documents",
+	"file_dialog.desktop": "Desktop",
+	"file_dialog.pictures": "Pictures",
+	"file_dialog.music": "Music",
+	
+	"file_dialog.all_file": "All files",
+	
+	"file_dialog.capacity_display": "%value% of %all% available",
 	
 	
 	
