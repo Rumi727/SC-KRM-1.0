@@ -3189,6 +3189,16 @@ namespace SCKRM
                 Copy(folder, dest);
             }
         }
+
+        public static string[] GetFiles(string path, params string[] searchPatterns) => GetFiles(path, searchPatterns, SearchOption.TopDirectoryOnly);
+        public static string[] GetFiles(string path, string[] searchPatterns, SearchOption searchOption)
+        {
+            List<string> paths = new List<string>();
+            foreach (string searchPattern in searchPatterns)
+                paths.AddRange(Directory.GetFiles(path, searchPattern, searchOption));
+
+            return paths.ToArray();
+        }
     }
 
     public static class TimeTool
