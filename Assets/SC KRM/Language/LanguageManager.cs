@@ -11,7 +11,7 @@ namespace SCKRM.Language
 {
     public static class LanguageManager
     {
-        public class Language
+        public struct Language
         {
             public Language(string language, string languageName, string languageRegion)
             {
@@ -20,10 +20,10 @@ namespace SCKRM.Language
                 this.languageRegion = languageRegion;
             }
 
-            public string language { get; } = "";
+            public string language { get; }
 
-            public string languageName { get; } = "";
-            public string languageRegion { get; } = "";
+            public string languageName { get; }
+            public string languageRegion { get; }
         }
 
         [GeneralSaveLoad]
