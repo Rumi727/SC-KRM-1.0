@@ -20,7 +20,7 @@ namespace SCKRM.Window
         public static Process currentProcess { get; } = Process.GetCurrentProcess();
         public static IntPtr currentHandle { get; } = currentProcess.MainWindowHandle;
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
         static float lerpX = 0;
         static float lerpY = 0;
 
@@ -62,7 +62,7 @@ namespace SCKRM.Window
         [Obsolete("You can now get the main window handle from the process class. Use only when you can't bring it")]
         public static IntPtr GetWindowHandle()
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             return GetActiveWindow();
 #else
             throw new NotSupportedException();
@@ -72,7 +72,7 @@ namespace SCKRM.Window
         public static Vector2Int GetWindowPos() => GetWindowPos(Vector2.zero, Vector2.zero);
         public static Vector2Int GetWindowPos(Vector2 windowDatumPoint, Vector2 screenDatumPoint)
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             GetWindowRect(currentHandle, out RECT rect);
             return new Vector2Int((rect.Left + ((rect.Right - rect.Left) * windowDatumPoint.x) - (ScreenManager.currentResolution.width * screenDatumPoint.x)).RoundToInt(), (rect.Top + ((rect.Bottom - rect.Top) * windowDatumPoint.y) - (ScreenManager.currentResolution.height * screenDatumPoint.y)).RoundToInt());
 #else
@@ -82,7 +82,7 @@ namespace SCKRM.Window
 
         public static Vector2Int GetWindowSize()
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             GetWindowRect(currentHandle, out RECT rect);
             return new Vector2Int(rect.Right - rect.Left, rect.Bottom - rect.Top);
 #else
@@ -92,7 +92,7 @@ namespace SCKRM.Window
 
         public static Vector2Int GetClientSize()
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             GetClientRect(currentHandle, out RECT rect);
             return new Vector2Int(rect.Right, rect.Bottom);
 #else
@@ -106,7 +106,7 @@ namespace SCKRM.Window
         /// </summary>
         public static void SetWindowRect(Rect rect, Vector2 windowDatumPoint, Vector2 screenDatumPoint, bool clientDatum = true, bool Lerp = false, float time = 0.05f)
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             if (Screen.fullScreen)
                 Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, false);
             

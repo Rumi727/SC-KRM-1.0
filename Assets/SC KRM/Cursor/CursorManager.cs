@@ -48,7 +48,7 @@ namespace SCKRM
 
         protected override void OnEnable() => SingletonCheck(this);
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
         static Vector2 IgnoreMouseAccelerationPos = Vector2.zero;
         protected override void Awake() => IgnoreMouseAccelerationPos = GetCursorPosition(0, 0);
 #endif
@@ -62,7 +62,7 @@ namespace SCKRM
 
             if (InitialLoadManager.isInitialLoadEnd)
             {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
                 if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height)
                 {
                     setCursorPosition((IgnoreMouseAccelerationPos.x).RoundToInt(), (IgnoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
@@ -142,7 +142,7 @@ namespace SCKRM
                     SaveData.IgnoreMouseAcceleration = false;
                     setting.ScriptOnValueChanged();
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
                     if (await MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/icon/exclamation_mark") == 0)
                     {
                         SaveData.IgnoreMouseAcceleration = true;
@@ -162,7 +162,7 @@ namespace SCKRM
 
 
         #region Cursor Pos
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
         [StructLayout(LayoutKind.Sequential)]
         struct POINT
         {
@@ -266,7 +266,7 @@ namespace SCKRM
 
         public Vector2Int ClientPosToScreenPos(int x, int y)
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             POINT point = new POINT() { X = x, Y = y };
             ClientToScreen(WindowManager.currentHandle, ref point);
 
