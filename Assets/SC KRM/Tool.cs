@@ -3157,6 +3157,12 @@ namespace SCKRM
         /// <param name="paths">경로</param>
         /// <returns></returns>
         public static string Combine(params string[] paths) => Path.Combine(paths).Replace("\\", "/");
+
+        public static string RemoveInvalidPathChars(string filename) => string.Concat(filename.Split(Path.GetInvalidPathChars()));
+        public static string ReplaceInvalidPathChars(string filename) => string.Join("_", filename.Split(Path.GetInvalidPathChars()));
+
+        public static string RemoveInvalidFileNameChars(string filename) => string.Concat(filename.Split(Path.GetInvalidFileNameChars()));
+        public static string ReplaceInvalidFileNameChars(string filename) => string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
     }
 
     public static class DirectoryTool
