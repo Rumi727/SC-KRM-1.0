@@ -46,7 +46,7 @@ namespace SCKRM.UI.Layout
             {
                 Transform childTransform = transform.GetChild(i);
                 if (childTransform != ignore.Contains(childTransform))
-                    childRectTransforms.Add(childTransform.GetComponent<RectTransform>());
+                    childRectTransforms.Add(childTransform as RectTransform);
             }
         }
     }
