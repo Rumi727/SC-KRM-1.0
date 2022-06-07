@@ -129,7 +129,7 @@ namespace SCKRM.UI.MessageBox
             //Back 버튼을 눌렀을때, UI를 닫기 위해 이벤트에 clickedIndex를 defaultIndex로 변경하는 BackEvent 메소드를 추가합니다
             UIManager.BackEventAdd(backEvent, true);
 
-            await UniTask.WaitUntil(() => clickedIndex >= 0);
+            await UniTask.WaitUntil(() => clickedIndex >= 0, PlayerLoopTiming.Initialization, instance.GetCancellationTokenOnDestroy());
 
             return select(clickedIndex);
 
