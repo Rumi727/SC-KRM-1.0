@@ -7,7 +7,7 @@ using System.Threading;
 namespace SCKRM.Renderer
 {
     [AddComponentMenu("")]
-    public abstract class CustomAllRenderer : MonoBehaviour, IRefresh
+    public abstract class CustomAllRenderer : MonoBehaviour, IRefreshable
     {
         int nameSpaceLock = 0;
         [SerializeField] string _nameSpace = "";

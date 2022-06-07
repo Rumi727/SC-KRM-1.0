@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerParent : ObjectPooling, IRefresh
+    public abstract class SoundPlayerParent : ObjectPooling, IRefreshable
     {
         public string key { get; set; } = "";
         public string nameSpace { get; set; } = "";

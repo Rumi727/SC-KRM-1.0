@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace SCKRM.Object
 {
-    public interface IObjectPooling : IRemove
+    public interface IObjectPooling : IRemoveable
     {
         string objectKey { get; set; }
         bool isActived { get; [Obsolete("It is managed by the ObjectPoolingSystem class. Please do not touch it.")] internal set; }
 
-        IRefresh[] refreshableObjects { get; }
+        IRefreshable[] refreshableObjects { get; }
 
         void OnCreate();
 

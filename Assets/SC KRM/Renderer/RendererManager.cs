@@ -9,14 +9,14 @@ namespace SCKRM.Renderer
 {
     public static class RendererManager
     {
-        public static void AllRefresh(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRefresh>().ToArray(), thread);
+        public static void AllRefresh(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRefreshable>().ToArray(), thread);
 
         public static void AllRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread);
 
         public static void AllTextRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread);
 
         static ThreadMetaData rerenderThread;
-        public static void Refresh(IRefresh[] refreshableObjects, bool thread = true)
+        public static void Refresh(IRefreshable[] refreshableObjects, bool thread = true)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Rerender));
@@ -38,7 +38,7 @@ namespace SCKRM.Renderer
             }
         }
 
-        static void Rerender(IRefresh[] refreshableObjects, ThreadMetaData threadMetaData)
+        static void Rerender(IRefreshable[] refreshableObjects, ThreadMetaData threadMetaData)
         {
             int stopLoop = 0;
 

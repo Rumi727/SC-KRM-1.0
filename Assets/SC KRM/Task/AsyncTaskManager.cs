@@ -47,7 +47,7 @@ namespace SCKRM
         }
     }
 
-    public class AsyncTask : IRemoveForce
+    public class AsyncTask : IRemoveableForce
     {
         public AsyncTask(string name = "", string info = "", bool loop = false, bool cantCancel = false)
         {

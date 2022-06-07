@@ -15,8 +15,8 @@ namespace SCKRM.Object
 
 
 
-        IRefresh[] _refreshableObjects;
-        public IRefresh[] refreshableObjects => _refreshableObjects = this.GetComponentsInChildrenFieldSave(_refreshableObjects, true);
+        IRefreshable[] _refreshableObjects;
+        public IRefreshable[] refreshableObjects => _refreshableObjects = this.GetComponentsInChildrenFieldSave(_refreshableObjects, true);
 
 
 

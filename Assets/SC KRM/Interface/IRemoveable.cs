@@ -1,6 +1,6 @@
 namespace SCKRM
 {
-    public interface IRemove
+    public interface IRemoveable
     {
         public bool isRemoved { get; }
 
@@ -11,7 +11,7 @@ namespace SCKRM
         bool Remove();
     }
 
-    public interface IRemoveForce : IRemove
+    public interface IRemoveableForce : IRemoveable
     {
         /// <summary>
         /// Object Remove
