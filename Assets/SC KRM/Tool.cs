@@ -3175,15 +3175,17 @@ namespace SCKRM
             string[] files = Directory.GetFiles(sourceFolder);
             string[] folders = Directory.GetDirectories(sourceFolder);
 
-            foreach (string file in files)
+            for (int i = 0; i < files.Length; i++)
             {
+                string file = files[i];
                 string name = Path.GetFileName(file);
                 string dest = Path.Combine(destFolder, name);
                 File.Copy(file, dest);
             }
 
-            foreach (string folder in folders)
+            for (int i = 0; i < folders.Length; i++)
             {
+                string folder = folders[i];
                 string name = Path.GetFileName(folder);
                 string dest = Path.Combine(destFolder, name);
                 Copy(folder, dest);
@@ -3194,8 +3196,11 @@ namespace SCKRM
         public static string[] GetFiles(string path, string[] searchPatterns, SearchOption searchOption)
         {
             List<string> paths = new List<string>();
-            foreach (string searchPattern in searchPatterns)
+            for (int i = 0; i < searchPatterns.Length; i++)
+            {
+                string searchPattern = searchPatterns[i];
                 paths.AddRange(Directory.GetFiles(path, searchPattern, searchOption));
+            }
 
             return paths.ToArray();
         }
