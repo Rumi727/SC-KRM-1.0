@@ -35,8 +35,8 @@ namespace SCKRM.UI
         [SerializeField, Min(0)] int _value = 0;
         public int value { get => _value; set => _value = value; }
 
-        [SerializeField] UnityEvent _onValueChanged = new UnityEvent();
-        public UnityEvent onValueChanged { get => _onValueChanged; }
+        [SerializeField] UnityEvent<int> _onValueChanged = new UnityEvent<int>();
+        public UnityEvent<int> onValueChanged { get => _onValueChanged; }
 
         [SerializeField, NotNull] TMP_Text label;
         [SerializeField, NotNull] RectTransform listRectTransform;
@@ -226,7 +226,7 @@ namespace SCKRM.UI
                     label.text = dropdownItem.label.text;
                 }
 
-                onValueChanged.Invoke();
+                onValueChanged.Invoke(value);
                 Hide();
             }
         }
