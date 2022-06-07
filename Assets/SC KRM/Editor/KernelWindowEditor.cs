@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,6 +26,24 @@ namespace SCKRM.Editor
 
         [MenuItem("커널/커널 설정")]
         public static void ShowWindow() => GetWindow<KernelWindowEditor>(false, "커널");
+
+        [MenuItem("커널/모든 렌더러 렌더링")]
+        public static void AllRenderer()
+        {
+            PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+            CustomAllRenderer[] customAllRenderers;
+
+            if (prefabStage == null)
+                customAllRenderers = FindObjectsOfType<CustomAllRenderer>();
+            else
+                customAllRenderers = prefabStage.FindComponentsOfType<CustomAllRenderer>();
+
+            for (int i = 0; i < customAllRenderers.Length; i++)
+            {
+                CustomAllRenderer customAllRenderer = customAllRenderers[i];
+                customAllRenderer.Refresh();
+            }
+        }
 
         void OnEnable()
         {
