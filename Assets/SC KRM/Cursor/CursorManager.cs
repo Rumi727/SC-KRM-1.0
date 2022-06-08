@@ -49,8 +49,8 @@ namespace SCKRM
         protected override void OnEnable() => SingletonCheck(this);
 
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
-        static Vector2 IgnoreMouseAccelerationPos = Vector2.zero;
-        protected override void Awake() => IgnoreMouseAccelerationPos = GetCursorPosition(0, 0);
+        static Vector2 ignoreMouseAccelerationPos = Vector2.zero;
+        protected override void Awake() => ignoreMouseAccelerationPos = GetCursorPosition(0, 0);
 #endif
 
         Vector2 dragStartMousePosition = Vector2.zero;
@@ -65,14 +65,14 @@ namespace SCKRM
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
                 if (SaveData.ignoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height)
                 {
-                    setCursorPosition((IgnoreMouseAccelerationPos.x).RoundToInt(), (IgnoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
+                    setCursorPosition((ignoreMouseAccelerationPos.x).RoundToInt(), (ignoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
 
                     Vector2 delta = InputManager.GetMouseDelta(false, "all", "force");
                     delta.y = -delta.y;
-                    IgnoreMouseAccelerationPos += delta;
+                    ignoreMouseAccelerationPos += delta;
                 }
                 else
-                    IgnoreMouseAccelerationPos = GetCursorPosition(0, 0);
+                    ignoreMouseAccelerationPos = GetCursorPosition(0, 0);
 #endif
 
                 #region Pos Move
@@ -232,7 +232,7 @@ namespace SCKRM
             if (!SaveData.ignoreMouseAcceleration || force)
                 SetCursorPos((x + ((ScreenManager.currentResolution.width - 1) * xDatumPoint)).RoundToInt(), (y + ((ScreenManager.currentResolution.height - 1) * yDatumPoint)).RoundToInt());
             else
-                IgnoreMouseAccelerationPos = new Vector2(x, y);
+                ignoreMouseAccelerationPos = new Vector2(x, y);
 #else
             throw new NotSupportedException();
 #endif
@@ -253,7 +253,7 @@ namespace SCKRM
             if (!SaveData.ignoreMouseAcceleration || force)
                 SetCursorPos(x, y);
             else
-                IgnoreMouseAccelerationPos = new Vector2(x, y);
+                ignoreMouseAccelerationPos = new Vector2(x, y);
 #else
             throw new NotSupportedException();
 #endif
