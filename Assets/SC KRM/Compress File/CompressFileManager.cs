@@ -10,6 +10,24 @@ namespace SCKRM.Compress
 {
     public static class CompressFileManager
     {
+        /// <summary>
+        /// 파일을 압축합니다
+        /// </summary>
+        /// <param name="sourceDirectory">
+        /// 압축 할 파일의 경로 입니다
+        /// </param>
+        /// <param name="zipFilePath">
+        /// 압축 된 파일을 저장 할 경로 입니다
+        /// </param>
+        /// <param name="password">
+        /// 압축 파일의 암호를 결정합니다
+        /// </param>
+        /// <param name="threadMetaData">
+        /// 스레드에서 실행했을때를 대비한 인자입니다 (즉, 이 메소드는 스레드에 안전합니다 아마도요)
+        /// </param>
+        /// <returns>
+        /// 압축이 성공했는가의 여부입니다
+        /// </returns>
         public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null)
         {
             int stopLoop = 0;
@@ -118,7 +136,7 @@ namespace SCKRM.Compress
             }
         }
 
-        private static List<string> GenerateFileList(string Dir)
+        static List<string> GenerateFileList(string Dir)
         {
             List<string> fils = new List<string>();
             bool Empty = true;
@@ -151,6 +169,22 @@ namespace SCKRM.Compress
             return fils;
         }
 
+        /// <summary>
+        /// 압축을 해제합니다
+        /// </summary>
+        /// <param name="zipFilePath">
+        /// 압축을 해제할 파일의 경로입니다
+        /// </param>
+        /// <param name="targetDirectory">
+        /// 압축을 해제하고 결과를 저장할 경로입니다
+        /// </param>
+        /// <param name="password">
+        /// 압축 파일의 암호를 결정합니다
+        /// </param>
+        /// <param name="threadMetaData">
+        /// 스레드에서 실행했을때를 대비한 인자입니다 (즉, 이 메소드는 스레드에 안전합니다 아마도요)
+        /// </param>
+        /// <returns></returns>
         public static bool DecompressZipFile(string zipFilePath, string targetDirectory, string password = "", ThreadMetaData threadMetaData = null)
         {
             int stopLoop = 0;

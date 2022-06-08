@@ -24,7 +24,10 @@ namespace SCKRM
             [JsonProperty] public static float mouseSensitivity { get; set; } = 1;
         }
 
-        static bool _visible = true; public static bool visible
+        /// <summary>
+        /// 마우스 포인터를 화면에 표시하고 있는지에 대한 여부입니다
+        /// </summary>
+        public static bool visible
         {
             get => _visible;
             set
@@ -37,12 +40,20 @@ namespace SCKRM
                 _visible = value;
             }
         }
+        static bool _visible = true;
+
+        /// <summary>
+        /// 현재 마우스 포인터가 창 안에 있으며 이 프로그램을 포커스하고 있는지에 대한 여부입니다
+        /// </summary>
         public static bool isFocused { get; private set; } = false;
+        /// <summary>
+        /// 드래그 하고 있는지에 대한 여부입니다
+        /// </summary>
         public static bool isDragged { get; private set; } = false;
 
 
 
-        [SerializeField, NotNull] CanvasGroup _canvasGroup; public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup);
+        public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup); [SerializeField, NotNull] CanvasGroup _canvasGroup;
 
 
 

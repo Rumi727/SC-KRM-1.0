@@ -9,8 +9,9 @@ namespace SCKRM.Renderer
     [AddComponentMenu("")]
     public abstract class CustomAllRenderer : MonoBehaviour, IRefreshable
     {
-        int nameSpaceLock = 0;
-        [SerializeField] string _nameSpace = "";
+        /// <summary>
+        /// 렌더링 할 파일의 네임스페이스
+        /// </summary>
         public string nameSpace
         {
             get
@@ -32,9 +33,12 @@ namespace SCKRM.Renderer
                 Interlocked.Decrement(ref nameSpaceLock);
             }
         }
+        int nameSpaceLock = 0;
+        [SerializeField] string _nameSpace = "";
 
-        int pathLock = 0;
-        [SerializeField] string _path = "";
+        /// <summary>
+        /// 렌더링 할 파일의 경로
+        /// </summary>
         public string path
         {
             get
@@ -57,7 +61,12 @@ namespace SCKRM.Renderer
                 Interlocked.Decrement(ref pathLock);
             }
         }
+        int pathLock = 0;
+        [SerializeField] string _path = "";
 
+        /// <summary>
+        /// 네임스페이스랑 경로랑 동시에 설정할 수 있습니다
+        /// </summary>
         public NameSpacePathPair nameSpacePathPair
         {
             get => new NameSpacePathPair(nameSpace, path);
@@ -68,6 +77,9 @@ namespace SCKRM.Renderer
             }
         }
 
+        /// <summary>
+        /// 렌더러를 새로 고칩니다
+        /// </summary>
         public abstract void Refresh();
     }
 

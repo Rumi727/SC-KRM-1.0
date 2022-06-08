@@ -26,12 +26,24 @@ namespace SCKRM.FileDialog
 {
     public sealed class FileDialogManager : Manager<FileDialogManager>
     {
+        /// <summary>
+        /// 파일 선택 창이 열려있는지의 대한 여부입니다
+        /// </summary>
         public static bool isFileDialogShow { get; private set; }
 
 
 
+        /// <summary>
+        /// 현재 선택된 파일의 경로들
+        /// </summary>
         public static List<string> selectedFilePath { get; set; } = new List<string>();
+        /// <summary>
+        /// 현재 화면에 보이고 있는 경로
+        /// </summary>
         public static string currentPath { get; private set; } = "";
+        /// <summary>
+        /// 마지막으로 화면에 보였던 경로
+        /// </summary>
         public static string savedPath { get; private set; } = "";
 
 
@@ -424,6 +436,13 @@ namespace SCKRM.FileDialog
             void ClickEvent() => clickEventInvoke = true;
         }
 
+        /// <summary>
+        /// 파일을 저장하면 저장된 파일의 경로가 어떤 경로가 될지를 예상한 다음 반환합니다
+        /// </summary>
+        /// <param name="path">
+        /// 예상 할 경로
+        /// </param>
+        /// <returns></returns>
         public static string GetSaveFilePath(string path)
         {
             if (!isFileSaveMode)
@@ -436,6 +455,12 @@ namespace SCKRM.FileDialog
                 return PathTool.Combine(path, fileName);
         }
 
+        /// <summary>
+        /// 현재 화면에 보이는 곳에서 파일과 폴더를 검색하고 화면에 결과를 보여줍니다
+        /// </summary>
+        /// <param name="value">
+        /// 검색 할 문자열
+        /// </param>
         public static void Search(string value)
         {
             value = PathTool.ReplaceInvalidFileNameChars(value);
@@ -446,6 +471,12 @@ namespace SCKRM.FileDialog
             ScreenRefresh(false);
         }
 
+        /// <summary>
+        /// 파일의 확장자 필터를 정합니다
+        /// </summary>
+        /// <param name="index">
+        /// 필터의 인덱스
+        /// </param>
         public static void SetFilter(int index)
         {
             currentFilter = allExtensionFilter[index];
@@ -454,6 +485,12 @@ namespace SCKRM.FileDialog
             ScreenRefresh(false);
         }
 
+        /// <summary>
+        /// 파일이 저장 될 이름을 정합니다
+        /// </summary>
+        /// <param name="value">
+        /// 파일의 이름
+        /// </param>
         public static void SetFileName(string value)
         {
             value = PathTool.ReplaceInvalidFileNameChars(value);
@@ -462,6 +499,12 @@ namespace SCKRM.FileDialog
             instance.fileDialogFileName.text = value;
         }
 
+        /// <summary>
+        /// 강제로 선택 화면을 종료합니다
+        /// </summary>
+        /// <param name="isSuccess">
+        /// 성공했는가의 여부를 결정합니다
+        /// </param>
         public static void HideForce(bool isSuccess)
         {
             cancelButIsSuccess = isSuccess;
