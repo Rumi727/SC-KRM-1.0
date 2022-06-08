@@ -391,6 +391,8 @@ namespace SCKRM.FileDialog
                     clickEventInvoke = false;
             }
 
+            savedPath = currentPath;
+
             //이벤트를 삭제합니다
             instance.fileDialogSaveOpenButton.onClick.RemoveListener(ClickEvent);
 
