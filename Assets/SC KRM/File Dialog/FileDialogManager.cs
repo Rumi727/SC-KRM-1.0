@@ -78,6 +78,7 @@ namespace SCKRM.FileDialog
         [SerializeField] TMP_InputField fileDialogSearch;
         [SerializeField] TMP_InputField fileDialogFileName;
         [SerializeField] TMP_InputField fileDialogPath;
+        [SerializeField] TMP_InputField fileDialogTitle;
         [SerializeField] UI.Dropdown fileDialogFilter;
         [SerializeField] CustomAllTextRenderer fileDialogSaveOpenButtonText;
         [SerializeField] Button fileDialogSaveOpenButton;
@@ -213,7 +214,7 @@ namespace SCKRM.FileDialog
         /// 단일 폴더
         /// </param>
         /// <returns></returns>
-        public static UniTask<(bool isSuccess, string[] selectedPath)> ShowFolderOpen(bool single = false)
+        public static UniTask<(bool isSuccess, string[] selectedPath)> ShowFolderOpen(string title, bool single = false)
         {
             isFolderOpenMode = true;
             isFileSaveMode = false;
@@ -224,7 +225,7 @@ namespace SCKRM.FileDialog
             instance.fileDialogSaveOpenButtonText.nameSpacePathPair = "sc-krm:gui.folder_select";
             instance.fileDialogSaveOpenButtonText.Refresh();
 
-            return show(single);
+            return show(title, single);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace SCKRM.FileDialog
         /// 확장자 필터
         /// </param>
         /// <returns></returns>
-        public static async UniTask<(bool isSuccess, string[] selectedPath)> ShowFileOpen(bool single = false, params ExtensionFilter[] extensionFilters)
+        public static async UniTask<(bool isSuccess, string[] selectedPath)> ShowFileOpen(string title, bool single = false, params ExtensionFilter[] extensionFilters)
         {
             isFolderOpenMode = false;
             isFileSaveMode = false;
@@ -248,7 +249,7 @@ namespace SCKRM.FileDialog
             instance.fileDialogSaveOpenButtonText.nameSpacePathPair = "sc-krm:gui.open";
             instance.fileDialogSaveOpenButtonText.Refresh();
 
-            return await show(single, extensionFilters);
+            return await show(title, single, extensionFilters);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace SCKRM.FileDialog
         /// 확장자 필터
         /// </param>
         /// <returns></returns>
-        public static async UniTask<(bool isSuccess, string selectedPath)> ShowFileSave(params ExtensionFilter[] extensionFilters)
+        public static async UniTask<(bool isSuccess, string selectedPath)> ShowFileSave(string title, params ExtensionFilter[] extensionFilters)
         {
             isFolderOpenMode = false;
             isFileSaveMode = true;
@@ -270,7 +271,7 @@ namespace SCKRM.FileDialog
             instance.fileDialogSaveOpenButtonText.nameSpacePathPair = "sc-krm:gui.save";
             instance.fileDialogSaveOpenButtonText.Refresh();
 
-            (bool isSuccess, _) = await show(true, extensionFilters);
+            (bool isSuccess, _) = await show(title, true, extensionFilters);
             if (isSuccess)
                 return (true, GetSaveFilePath(currentPath));
             else
@@ -280,8 +281,9 @@ namespace SCKRM.FileDialog
 
 
 
-        static async UniTask<(bool isSuccess, string[] selectedPath)> show(bool single, params ExtensionFilter[] extensionFilters)
+        static async UniTask<(bool isSuccess, string[] selectedPath)> show(string title, bool single, params ExtensionFilter[] extensionFilters)
         {
+            instance.fileDialogTitle.text = title;
             isSingle = single;
 
             isFileDialogShow = true;
