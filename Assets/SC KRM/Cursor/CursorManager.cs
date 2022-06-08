@@ -20,7 +20,7 @@ namespace SCKRM
         [GeneralSaveLoad]
         public sealed class SaveData
         {
-            [JsonProperty] public static bool IgnoreMouseAcceleration { get; set; } = false;
+            [JsonProperty] public static bool ignoreMouseAcceleration { get; set; } = false;
             [JsonProperty] public static float mouseSensitivity { get; set; } = 1;
         }
 
@@ -63,7 +63,7 @@ namespace SCKRM
             if (InitialLoadManager.isInitialLoadEnd)
             {
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
-                if (SaveData.IgnoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height)
+                if (SaveData.ignoreMouseAcceleration && Application.isFocused && InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height)
                 {
                     setCursorPosition((IgnoreMouseAccelerationPos.x).RoundToInt(), (IgnoreMouseAccelerationPos.y).RoundToInt(), 0, 0, true);
 
@@ -133,19 +133,19 @@ namespace SCKRM
             if (highPrecisionMouseWarningLock)
                 return;
 
-            if (InitialLoadManager.isInitialLoadEnd && SaveData.IgnoreMouseAcceleration)
+            if (InitialLoadManager.isInitialLoadEnd && SaveData.ignoreMouseAcceleration)
             {
                 highPrecisionMouseWarningLock = true;
 
                 try
                 {
-                    SaveData.IgnoreMouseAcceleration = false;
+                    SaveData.ignoreMouseAcceleration = false;
                     setting.ScriptOnValueChanged();
 
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
                     if (await MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/icon/exclamation_mark") == 0)
                     {
-                        SaveData.IgnoreMouseAcceleration = true;
+                        SaveData.ignoreMouseAcceleration = true;
                         setting.ScriptOnValueChanged();
                     }
 #else
@@ -229,7 +229,7 @@ namespace SCKRM
         static void setCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-            if (!SaveData.IgnoreMouseAcceleration || force)
+            if (!SaveData.ignoreMouseAcceleration || force)
                 SetCursorPos((x + ((ScreenManager.currentResolution.width - 1) * xDatumPoint)).RoundToInt(), (y + ((ScreenManager.currentResolution.height - 1) * yDatumPoint)).RoundToInt());
             else
                 IgnoreMouseAccelerationPos = new Vector2(x, y);
@@ -250,7 +250,7 @@ namespace SCKRM
             int x2 = (x + ((clientSize.x - 1) * xDatumPoint)).RoundToInt() - offset.x;
             int y2 = (y + ((clientSize.y - 1) * yDatumPoint)).RoundToInt() - offset.y;
 
-            if (!SaveData.IgnoreMouseAcceleration || force)
+            if (!SaveData.ignoreMouseAcceleration || force)
                 SetCursorPos(x, y);
             else
                 IgnoreMouseAccelerationPos = new Vector2(x, y);
