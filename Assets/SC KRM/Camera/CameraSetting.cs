@@ -9,7 +9,7 @@ using UnityEngine.Rendering.PostProcessing;
 namespace SCKRM.Camera
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/Camera/카메라 설정")]
+    [AddComponentMenu("SC KRM/Camera/Camera Setting")]
     public sealed class CameraSetting : MonoBehaviour
     {
 #pragma warning disable CS0108 // 멤버가 상속된 멤버를 숨깁니다. new 키워드가 없습니다.

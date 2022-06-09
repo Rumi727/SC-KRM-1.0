@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.FileDialog.MyPC
 {
+    [AddComponentMenu("SC KRM/File Dialog/UI/Object Pooling/File Dialog My PC Button")]
     public class FileDialogMyPCButton : UIObjectPooling
     {
         [SerializeField, NotNull] Button _button; public Button button { get => _button; }

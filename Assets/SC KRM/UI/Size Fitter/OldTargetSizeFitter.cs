@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/UI/Old Target Size Fitter")]
+    [AddComponentMenu("SC KRM/UI/Size Fitter/Old Target Size Fitter")]
     [RequireComponent(typeof(RectTransform))]
     [Obsolete("Use TargetSizeFitter instead")]
     public sealed class OldTargetSizeFitter : UIAniLayout

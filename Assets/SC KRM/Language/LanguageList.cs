@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SCKRM.Language.UI
 {
-    [AddComponentMenu("언어 리스트")]
+    [AddComponentMenu("SC KRM/Language/UI/Language List")]
     public class LanguageList : SCKRM.UI.UI
     {
         [SerializeField] Dropdown dropdown;

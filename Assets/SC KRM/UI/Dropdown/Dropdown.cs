@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/UI/드롭다운")]
+    [AddComponentMenu("SC KRM/UI/Dropdown/Dropdown")]
     public class Dropdown : UI, IPointerEnterHandler, IPointerExitHandler
     {
         bool _isShow = false;

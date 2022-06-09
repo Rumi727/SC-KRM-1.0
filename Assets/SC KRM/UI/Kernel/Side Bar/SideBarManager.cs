@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.SideBar
 {
-    [AddComponentMenu(""), RequireComponent(typeof(RectTransform))]
+    [RequireComponent(typeof(RectTransform))]
     public static class SideBarManager
     {
         public static List<SideBarAni> showedSideBars { get; } = new List<SideBarAni>();

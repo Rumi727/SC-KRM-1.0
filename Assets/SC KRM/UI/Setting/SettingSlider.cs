@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.Setting
 {
-    [AddComponentMenu("커널/UI/슬라이더 (세이브 파일 연동)")]
+    [AddComponentMenu("SC KRM/UI/Setting/Slider (Save file linkage)")]
     public class SettingSlider : SettingInputField
     {
         [SerializeField] Slider _slider; public Slider slider { get => _slider; set => _slider = value; }

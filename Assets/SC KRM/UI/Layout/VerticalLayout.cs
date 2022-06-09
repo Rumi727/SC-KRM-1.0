@@ -6,7 +6,7 @@ namespace SCKRM.UI.Layout
 {
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
-    [AddComponentMenu("커널/UI/Layout/수직 레이아웃")]
+    [AddComponentMenu("SC KRM/UI/Layout/Vertical Layout")]
     public sealed class VerticalLayout : LayoutChildSetting<VerticalLayoutSetting>
     {
         public float lastYPos { get; private set; } = 0;

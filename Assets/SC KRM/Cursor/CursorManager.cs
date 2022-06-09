@@ -13,8 +13,9 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SCKRM
+namespace SCKRM.Cursor
 {
+    [AddComponentMenu("SC KRM/Cursor/UI/Cursor Manager")]
     public class CursorManager : UIManager<CursorManager>
     {
         [GeneralSaveLoad]
@@ -69,7 +70,7 @@ namespace SCKRM
         void LateUpdate()
         {
             isFocused = InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height;
-            Cursor.visible = !isFocused;
+            UnityEngine.Cursor.visible = !isFocused;
 
             if (InitialLoadManager.isInitialLoadEnd)
             {

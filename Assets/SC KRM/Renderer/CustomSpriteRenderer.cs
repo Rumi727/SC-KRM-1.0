@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("커널/Renderer/Sprite Renderer")]
+    [AddComponentMenu("SC KRM/Renderer/Sprite Renderer")]
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class CustomSpriteRenderer : CustomAllSpriteRenderer
     {

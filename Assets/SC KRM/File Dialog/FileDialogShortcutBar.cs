@@ -11,6 +11,7 @@ using SCKRM.FileDialog.Drive;
 
 namespace SCKRM.FileDialog.ShortcurBar
 {
+    [AddComponentMenu("SC KRM/File Dialog/UI/File Dialog Shortcur Bar")]
     public sealed class FileDialogShortcutBar : UI.UI
     {
         List<IObjectPooling> buttons = new List<IObjectPooling>();

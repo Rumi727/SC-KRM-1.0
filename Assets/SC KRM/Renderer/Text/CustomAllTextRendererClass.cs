@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("")]
     public abstract class CustomAllTextRenderer : CustomAllRenderer
     {
         public NameSpacePathReplacePair nameSpacePathReplacePair

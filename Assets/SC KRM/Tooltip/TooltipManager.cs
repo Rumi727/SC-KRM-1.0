@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using SCKRM.Cursor;
 using SCKRM.Input;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
@@ -10,7 +11,8 @@ using UnityEngine.UI;
 
 namespace SCKRM.Tooltip
 {
-    public class TooltipManager : Manager<TooltipManager>
+    [AddComponentMenu("SC KRM/Tooltip/Tooltip Manager", 0)]
+    public sealed class TooltipManager : Manager<TooltipManager>
     {
         public static bool isShow { get; private set; } = false;
 

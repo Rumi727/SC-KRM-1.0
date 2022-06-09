@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/UI/색상 가독성 향상"), RequireComponent(typeof(Graphic))]
+    [AddComponentMenu("SC KRM/UI/Color/Color Readability"), RequireComponent(typeof(Graphic))]
     public class ColorReadability : UIAni
     {
         [SerializeField] CanvasRenderer _targetCanvasRenderer; public CanvasRenderer targetCanvasRenderer => _targetCanvasRenderer;

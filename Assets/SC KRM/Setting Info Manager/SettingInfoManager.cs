@@ -10,7 +10,8 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
-    public class SettingInfoManager : Manager<SettingInfoManager>
+    [AddComponentMenu("SC KRM/Setting Info Manager/Setting Info Manager")]
+    public sealed class SettingInfoManager : Manager<SettingInfoManager>
     {
         public static bool isShow { get; private set; } = false;
 

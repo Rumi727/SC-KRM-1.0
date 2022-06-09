@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("커널/Renderer/UI/Image")]
+    [AddComponentMenu("SC KRM/Renderer/UI/Image")]
     [RequireComponent(typeof(Image))]
     public class CustomImageRenderer : CustomAllSpriteRenderer
     {

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
+    [AddComponentMenu("SC KRM/UI/Kerenl/Volume Control/Volume Control")]
     public sealed class VolumeControl : UIAni, IPointerDownHandler, IEndDragHandler
     {
         enum Type

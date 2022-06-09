@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace SCKRM.NBS
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/NBS/NBS Player")]
     public sealed class NBSPlayer : SoundPlayerParent
     {
         public SoundData<NBSMetaData> nbsData { get; private set; }

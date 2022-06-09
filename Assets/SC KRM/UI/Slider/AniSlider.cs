@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
-    [AddComponentMenu("커널/UI/애니메이션 슬라이더")]
+    [AddComponentMenu("SC KRM/UI/Slider/Ani Slider")]
     public class AniSlider : MonoBehaviour
     {
         // Start is called before the first frame update

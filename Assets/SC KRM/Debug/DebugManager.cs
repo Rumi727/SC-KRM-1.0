@@ -17,6 +17,7 @@ using UnityEngine.Profiling;
 
 namespace SCKRM.DebugUI
 {
+    [AddComponentMenu("SC KRM/Debug/UI/Debug Manager")]
     public sealed class DebugManager : UIManager<DebugManager>
     {
         [GeneralSaveLoad]

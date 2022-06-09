@@ -19,7 +19,7 @@ using SCKRM.UI;
 
 namespace SCKRM
 {
-    [AddComponentMenu("커널/커널")]
+    [AddComponentMenu("SC KRM/Kernel/Kernel")]
     public sealed class Kernel : Manager<Kernel>
     {
         public static float fps { get; private set; } = 60;

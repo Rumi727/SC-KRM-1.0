@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.Object
 {
-    [AddComponentMenu("커널/Object/오브젝트 풀링 시스템", 0)]
+    [AddComponentMenu("SC KRM/Object/Object Pooling System", 0)]
     public sealed class ObjectPoolingSystem : Manager<ObjectPoolingSystem>
     {
         [ProjectSettingSaveLoad]

@@ -5,7 +5,8 @@ using UnityEngine;
 namespace SCKRM
 {
     [ExecuteAlways]
-    public class CanvasRenderingCameraAsMainCamera : MonoBehaviour
+    [AddComponentMenu("SC KRM/Canvas Rendering Camera As Main Camera")]
+    public sealed class CanvasRenderingCameraAsMainCamera : MonoBehaviour
     {
         Canvas _canvas; public Canvas canvas => _canvas = this.GetComponentFieldSave(_canvas);
 

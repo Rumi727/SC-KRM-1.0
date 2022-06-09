@@ -10,7 +10,8 @@ using UnityEngine.UI;
 
 namespace SCKRM.Resource.UI
 {
-    public class ResourcePack : UIObjectPooling, IBeginDragHandler, IDragHandler, IEndDragHandler
+    [AddComponentMenu("SC KRM/Resource/Resource Pack List/Resource Pack")]
+    public sealed class ResourcePack : UIObjectPooling, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public ResourcePackList resourcePackList { get; [Obsolete("It is managed by the ResourcePackList class. Please do not touch it.")] internal set; }
 

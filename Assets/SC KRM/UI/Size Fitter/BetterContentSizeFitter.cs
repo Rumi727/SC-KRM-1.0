@@ -8,7 +8,7 @@ namespace SCKRM.UI
 {
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
-    [AddComponentMenu("커널/UI/Better Content Size Fitter")]
+    [AddComponentMenu("SC KRM/UI/Size Fitter/Better Content Size Fitter")]
     public class BetterContentSizeFitter : UI, ILayoutSelfController
     {
         [SerializeField] bool _xSize = false; public bool xSize { get => _xSize; set => _xSize = value; }

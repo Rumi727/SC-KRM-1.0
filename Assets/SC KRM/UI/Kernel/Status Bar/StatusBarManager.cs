@@ -10,7 +10,8 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.StatusBar
 {
-    [AddComponentMenu(""), RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
+    [AddComponentMenu("SC KRM/UI/Kerenl/Status Bar/Status Bar Manager")]
+    [RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Image))]
     public sealed class StatusBarManager : UIManager<StatusBarManager>, IPointerEnterHandler, IPointerExitHandler
     {
         [GeneralSaveLoad]

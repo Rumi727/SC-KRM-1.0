@@ -7,7 +7,7 @@ using SCKRM.Threads;
 
 namespace SCKRM.Sound
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/Sound/Sound Player", 0)]
     [RequireComponent(typeof(AudioSource)), RequireComponent(typeof(AudioLowPassFilter))]
     public sealed class SoundPlayer : SoundPlayerParent
     {

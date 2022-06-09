@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using SCKRM.Cursor;
 using SCKRM.Input;
 using SCKRM.Json;
 using SCKRM.Log;

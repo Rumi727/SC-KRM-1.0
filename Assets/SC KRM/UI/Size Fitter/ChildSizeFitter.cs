@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI.Layout
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/UI/Child Size Fitter")]
+    [AddComponentMenu("SC KRM/UI/Size Fitter/Child Size Fitter")]
     [RequireComponent(typeof(RectTransform))]
     public sealed class ChildSizeFitter : LayoutChild
     {

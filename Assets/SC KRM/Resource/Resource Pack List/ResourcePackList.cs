@@ -11,7 +11,8 @@ using UnityEngine;
 
 namespace SCKRM.Resource.UI
 {
-    public class ResourcePackList : MonoBehaviour
+    [AddComponentMenu("SC KRM/Resource/Resource Pack List/Resource Pack List")]
+    public sealed class ResourcePackList : MonoBehaviour
     {
         public static bool isResourcePackListChanged = false;
 

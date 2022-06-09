@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.SideBar
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/UI/Kerenl/Side Bar/Running Task Info")]
     [RequireComponent(typeof(RectTransform))]
     public sealed class RunningTaskInfo : UIObjectPooling, IPointerEnterHandler, IPointerExitHandler
     {

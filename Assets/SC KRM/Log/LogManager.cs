@@ -8,7 +8,7 @@ using SCKRM.Renderer;
 
 namespace SCKRM.Log
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/Log/Log Manager")]
     public sealed class LogManager : Manager<LogManager>
     {
         ConcurrentQueue<Log> logs = new ConcurrentQueue<Log>();

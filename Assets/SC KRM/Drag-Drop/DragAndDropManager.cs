@@ -13,8 +13,9 @@ using System.Reflection;
 using UnityEditor;
 #endif
 
-namespace SCKRM
+namespace SCKRM.DragAndDrop
 {
+    [AddComponentMenu("SC KRM/Drag And Drop/Manager/Drag And Drop Manager")]
     public class DragAndDropManager : Manager<DragAndDropManager>
     {
         /// <summary>
@@ -111,7 +112,7 @@ namespace SCKRM
                 return;
             }
 
-            string[] paths = DragAndDrop.paths;
+            string[] paths = UnityEditor.DragAndDrop.paths;
             EditorWindow gameView = EditorWindow.mouseOverWindow;
             if (gameView != null && gameView.GetType() == type)
             {

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
+    [AddComponentMenu("SC KRM/UI/Slider/Progress Bar")]
     public class ProgressBar : UIAni
     {
         [SerializeField, Min(0)] float _progress; public float progress { get => _progress; set => _progress = value.Clamp(0); }

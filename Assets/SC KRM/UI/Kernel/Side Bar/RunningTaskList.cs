@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.SideBar
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/UI/Kerenl/Side Bar/Running Task List")]
     public sealed class RunningTaskList : UI
     {
         [System.NonSerialized] List<AsyncTask> tempList = new List<AsyncTask>();

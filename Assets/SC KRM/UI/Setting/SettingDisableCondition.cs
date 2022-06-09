@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace SCKRM.UI.Setting
 {
-    [AddComponentMenu("커널/UI/비활성화 조건 (세이브 파일 연동)")]
+    [AddComponentMenu("SC KRM/UI/Setting/Disable Condition (Save file linkage)")]
     public sealed class SettingDisableCondition : MonoBehaviour
     {
         [SerializeField] Setting _setting; public Setting setting { get => _setting; set => _setting = value; }

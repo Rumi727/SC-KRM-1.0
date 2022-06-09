@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI
 {
-    [AddComponentMenu("커널/UI/시스템 컬러 적용")]
+    [AddComponentMenu("SC KRM/UI/System Color Apply")]
     public class SystemColorApply : UI
     {
         [SerializeField] Color _offset = Color.white; public Color offset { get => _offset; set => _offset = value; }

@@ -14,7 +14,7 @@ using UnityEngine.Audio;
 
 namespace SCKRM.Sound
 {
-    [AddComponentMenu("커널/Audio/오디오 매니저", 0)]
+    [AddComponentMenu("SC KRM/Sound/Sound Manager", 0)]
     public sealed class SoundManager : Manager<SoundManager>
     {
         [ProjectSettingSaveLoad]

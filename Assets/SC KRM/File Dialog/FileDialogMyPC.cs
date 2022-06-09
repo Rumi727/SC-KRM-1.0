@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace SCKRM.FileDialog.MyPC
 {
+    [AddComponentMenu("SC KRM/File Dialog/UI/File Dialog My PC")]
     public class FileDialogMyPC : UI.UI
     {
         List<IObjectPooling> buttons = new List<IObjectPooling>();

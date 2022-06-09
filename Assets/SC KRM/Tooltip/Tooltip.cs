@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.Tooltip
 {
+    [AddComponentMenu("SC KRM/Tooltip/Tooltip", 0)]
     public sealed class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] string _nameSpace = ""; public string nameSpace { get => _nameSpace; set => _nameSpace = value; }

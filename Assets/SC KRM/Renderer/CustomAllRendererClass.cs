@@ -6,7 +6,6 @@ using System.Threading;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("")]
     public abstract class CustomAllRenderer : MonoBehaviour, IRefreshable
     {
         /// <summary>

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("커널/Renderer/UI/Selectable")]
+    [AddComponentMenu("SC KRM/Renderer/UI/Selectable")]
     [RequireComponent(typeof(RequireComponent))]
     public sealed class CustomSelectableRenderer : CustomImageRenderer
     {

@@ -12,7 +12,7 @@ using UnityEngine.Events;
 
 namespace SCKRM.UI.Setting
 {
-    [AddComponentMenu("커널/UI/인풋 필드 (세이브 파일 연동)")]
+    [AddComponentMenu("SC KRM/UI/Setting/Input Field (Save file linkage)")]
     public class SettingInputField : SettingDrag
     {
         [SerializeField] string _textPlaceHolderNameSpace = ""; public string textPlaceHolderNameSpace { get => _textPlaceHolderNameSpace; set => _textPlaceHolderNameSpace = value; }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace SCKRM
 {
-    public class ScreenManager : Manager<ScreenManager>
+    [AddComponentMenu("SC KRM/Screen/Screen Manager")]
+    public sealed class ScreenManager : Manager<ScreenManager>
     {
         public static int width { get; private set; }
         public static int height { get; private set; }

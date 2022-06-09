@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
-    [AddComponentMenu("커널/UI/캔버스 설정")]
+    [AddComponentMenu("SC KRM/UI/Canvas Setting")]
     public sealed class CanvasSetting : UI
     {
         [SerializeField] bool _customSetting; public bool customSetting { get => _customSetting; set => _customSetting = value; }

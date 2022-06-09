@@ -24,6 +24,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.FileDialog
 {
+    [AddComponentMenu("SC KRM/File Dialog/File Dialog Manager")]
     public sealed class FileDialogManager : Manager<FileDialogManager>
     {
         /// <summary>

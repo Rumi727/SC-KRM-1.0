@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("")]
     public abstract class CustomAllSpriteRenderer : CustomAllRenderer
     {
         int typeLock = 0;

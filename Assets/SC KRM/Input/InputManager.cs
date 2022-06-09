@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using SCKRM.Cursor;
 using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
@@ -12,7 +13,7 @@ using UnityEngine.InputSystem;
 
 namespace SCKRM.Input
 {
-    [AddComponentMenu("커널/Input/조작 매니저", 0)]
+    [AddComponentMenu("SC KRM/Input/Input Manager", 0)]
     public sealed class InputManager : MonoBehaviour
     {
         [ProjectSettingSaveLoad]

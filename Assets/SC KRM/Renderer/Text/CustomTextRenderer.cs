@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("커널/Renderer/Text/Text")]
+    [AddComponentMenu("SC KRM/Renderer/Text/Text")]
     [RequireComponent(typeof(UnityEngine.UI.Text))]
     public sealed class CustomTextRenderer : CustomAllTextRenderer
     {

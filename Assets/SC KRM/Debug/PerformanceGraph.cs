@@ -9,6 +9,7 @@ using UnityEngine.UI.Extensions;
 
 namespace SCKRM.DebugUI
 {
+    [AddComponentMenu("SC KRM/Debug/UI/Performance Graph")]
     public sealed class PerformanceGraph : UIAni
     {
         [SerializeField] UILineRenderer deltaTime;

@@ -9,6 +9,7 @@ using UnityEngine.Profiling;
 
 namespace SCKRM.DebugUI
 {
+    [AddComponentMenu("SC KRM/Debug/UI/Debug Text")]
     public sealed class DebugText : UI.UI
     {
         public delegate void DebugTextAction(FastString fastString);

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.FileDialog.ShortcurBar
 {
+    [AddComponentMenu("SC KRM/File Dialog/UI/Object Pooling/Shortcur Bar Button")]
     public sealed class FileDialogShortcutBarButton : UIObjectPooling
     {
         [SerializeField, NotNull] Button _button; public Button button { get => _button; }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.Object
 {
+    [AddComponentMenu("SC KRM/Object/Object Pooling")]
     public class ObjectPooling : MonoBehaviour, IObjectPooling
     {
         public string objectKey { get; set; }

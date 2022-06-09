@@ -12,7 +12,8 @@ using UnityEngine;
 
 namespace SCKRM
 {
-    public class VideoManager : Manager<VideoManager>
+    [AddComponentMenu("SC KRM/Video/Video Manager")]
+    public sealed class VideoManager : Manager<VideoManager>
     {
         [ProjectSettingSaveLoad]
         public sealed class Data

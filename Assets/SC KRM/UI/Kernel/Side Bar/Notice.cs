@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.UI.SideBar
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/UI/Kerenl/Side Bar/Notice")]
     [RequireComponent(typeof(VerticalLayout), typeof(ChildSizeFitter))]
     public class Notice : UIObjectPooling, IPointerEnterHandler, IPointerExitHandler
     {

@@ -13,6 +13,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.FileDialog.Screen
 {
+    [AddComponentMenu("SC KRM/File Dialog/UI/File Dialog Screen Button")]
     public sealed class FileDialogScreenButton : UI.UI, ICell, IPointerClickHandler
     {
         [SerializeField, NotNull] Toggle _toggle; public Toggle toggle { get => _toggle; }

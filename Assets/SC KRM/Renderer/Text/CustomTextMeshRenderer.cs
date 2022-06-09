@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
-    [AddComponentMenu("커널/Renderer/Text/Text Mesh")]
+    [AddComponentMenu("SC KRM/Renderer/Text/Text Mesh")]
     [RequireComponent(typeof(TextMesh))]
     public sealed class CustomTextMeshRenderer : CustomAllTextRenderer
     {

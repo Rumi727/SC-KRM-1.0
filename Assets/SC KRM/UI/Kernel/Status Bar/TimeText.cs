@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.StatusBar
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/UI/Kerenl/Status Bar/Time Text")]
     [RequireComponent(typeof(TMP_Text))]
     public sealed class TimeText : UI
     {

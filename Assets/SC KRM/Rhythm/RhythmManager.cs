@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace SCKRM
 {
+    [AddComponentMenu("SC KRM/Rhythm/Rhythm Manager")]
     public class RhythmManager : Manager<RhythmManager>
     {
         [GeneralSaveLoad]

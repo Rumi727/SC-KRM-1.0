@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
-    [AddComponentMenu("커널/UI/Layout/수평 레이아웃 설정")]
+    [AddComponentMenu("SC KRM/UI/Layout/Horizontal Layout Setting")]
     public sealed class HorizontalLayoutSetting : UI
     {
         [SerializeField] Mode _mode = Mode.none;

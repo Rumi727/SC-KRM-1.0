@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.SideBar
 {
+    [AddComponentMenu("SC KRM/Kernel/UI/Side Bar Ani")]
     public class SideBarAni : UIAni
     {
         [SerializeField] string _showControlKey; public string showControlKey => _showControlKey;

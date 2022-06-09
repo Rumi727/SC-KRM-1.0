@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace SCKRM
 {
+    [AddComponentMenu("SC KRM/Kernel/Splash Screen Background")]
     public class SplashScreenBackground : MonoBehaviour
     {
         [SerializeField] Graphic graphic;

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("SC KRM/UI/UI Manager")]
     public sealed class UIManager : Manager<UIManager>
     {
         [GeneralSaveLoad]

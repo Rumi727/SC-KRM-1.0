@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.UI.Setting
 {
-    [AddComponentMenu("커널/UI/텍스트 드래그")]
+    [AddComponentMenu("SC KRM/UI/Setting/Name Drag (Save file linkage)")]
     public class SettingNameDrag : MonoBehaviour, IDragHandler
     {
         [SerializeField] UnityEvent _onDrag = new UnityEvent();

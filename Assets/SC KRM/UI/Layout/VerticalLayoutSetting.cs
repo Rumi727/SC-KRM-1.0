@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.UI
 {
-    [AddComponentMenu("커널/UI/Layout/수직 레이아웃 설정")]
+    [AddComponentMenu("SC KRM/UI/Layout/Vertical Layout Setting")]
     public sealed class VerticalLayoutSetting : UI
     {
         [SerializeField] Mode _mode = Mode.none;

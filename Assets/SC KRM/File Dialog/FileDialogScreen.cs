@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.FileDialog.Screen
 {
+    [AddComponentMenu("SC KRM/File Dialog/UI/File Dialog Screen")]
     public sealed class FileDialogScreen : UI.UI, IRecyclableScrollRectDataSource
     {
         [SerializeField] ToggleGroup toggleGroup;

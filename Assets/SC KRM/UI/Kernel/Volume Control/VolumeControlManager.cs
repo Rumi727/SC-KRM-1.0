@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.UI
 {
+    [AddComponentMenu("SC KRM/UI/Kerenl/Volume Control/Volume Control Manager")]
     public sealed class VolumeControlManager : UIManager<VolumeControlManager>, IPointerEnterHandler, IPointerExitHandler
     {
         static bool isPointer;

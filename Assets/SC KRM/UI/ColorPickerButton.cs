@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.UI
 {
-    [AddComponentMenu("커널/UI/컬러 피커 버튼")]
+    [AddComponentMenu("SC KRM/UI/Color Picker Button")]
     public class ColorPickerButton : UIAni, IPointerEnterHandler, IPointerExitHandler
     {
         bool _isShow = false;
