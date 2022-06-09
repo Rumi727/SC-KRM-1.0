@@ -15,7 +15,7 @@ using UnityEditor;
 
 namespace SCKRM.DragAndDrop
 {
-    [AddComponentMenu("SC KRM/Drag And Drop/Manager/Drag And Drop Manager")]
+    [AddComponentMenu("SC KRM/Drag And Drop/Drag And Drop Manager")]
     public class DragAndDropManager : Manager<DragAndDropManager>
     {
         /// <summary>
