@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SCKRM.Easing;
 using SCKRM.Json;
 using SCKRM.SaveLoad;
@@ -15,8 +16,8 @@ namespace SCKRM
         [GeneralSaveLoad]
         public class SaveData
         {
-            public double screenOffset { get; set; } = 0;
-            public double soundOffset { get; set; } = 0;
+            [JsonProperty] public static double screenOffset { get; set; } = 0;
+            [JsonProperty] public static double soundOffset { get; set; } = 0;
         }
 
         public static Map map { get; private set; }
@@ -40,13 +41,17 @@ namespace SCKRM
 
         public static float time => (float)(soundPlayer?.time);
         public static double currentBeat { get; private set; }
+        public static double currentBeatSound { get; private set; }
+        public static double currentBeatScreen { get; private set; }
+        public static double currentBeat1Beat { get; private set; }
+
         static double bpmOffsetBeat;
         static double bpmOffsetTime;
 
 
 
-        public static event Action oneBeat = () => { };
-        public static event Action oneBeatDropPart = () => { };
+        [Obsolete("Use currentBeat1Beat instead")] public static event Action oneBeat;
+        [Obsolete("Use currentBeat1Beat instead")] public static event Action oneBeatDropPart;
 
 
 
@@ -99,7 +104,20 @@ namespace SCKRM
             }
         }
 
-        static void SetCurrentBeat() => currentBeat = (double)((time - map.info.offset - bpmOffsetTime) * (bpm / 60d)) + bpmOffsetBeat;
+        static void SetCurrentBeat()
+        {
+            double soundTime = (double)time - map.info.offset - bpmOffsetTime;
+            double bpmDivide60 = bpm / 60d;
+
+            currentBeat = (soundTime * bpmDivide60) + bpmOffsetBeat;
+            currentBeatSound = ((soundTime - SaveData.soundOffset) * bpmDivide60) + bpmOffsetBeat;
+            currentBeatScreen = ((soundTime - SaveData.screenOffset) * bpmDivide60) + bpmOffsetBeat;
+
+            if (currentBeat >= 0)
+                currentBeat1Beat = currentBeat - (int)currentBeat;
+            else
+                currentBeat1Beat = 1 - ((int)currentBeat - currentBeat);
+        }
 
         static void BPMChange(double bpm, double offsetBeat)
         {

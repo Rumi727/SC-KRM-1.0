@@ -7,20 +7,18 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
+    [AddComponentMenu("SC KRM/UI/Color/Input Field Caret Color", 0)]
     public sealed class InputFieldCaretColor : UI
     {
         [SerializeField, NotNull] TMP_InputField _inputField; public TMP_InputField inputField => _inputField;
 
-        protected override void OnEnable()
+        /*protected override void OnEnable()
         {
             if (!Kernel.isPlaying)
                 return;
 
             inputField.caretColor = defaultCaretColor;
-            RhythmManager.oneBeat += ColorChange;
-        }
-
-        protected override void OnDisable() => RhythmManager.oneBeat -= ColorChange;
+        }*/
 
         protected override void Awake()
         {
@@ -49,7 +47,7 @@ namespace SCKRM.UI
             if (RhythmManager.isPlaying)
             {
                 inputField.caretBlinkRate = 0;
-                inputField.caretColor = new Color(inputField.caretColor.r, inputField.caretColor.g, inputField.caretColor.b, inputField.caretColor.a - 0.0125f * RhythmManager.bpmFpsDeltaTime);
+                inputField.caretColor = defaultCaretColor.Lerp(new Color(defaultCaretColor.r, defaultCaretColor.g, defaultCaretColor.b, 0.3f), (float)RhythmManager.currentBeat1Beat);
             }
             else
             {
@@ -57,7 +55,5 @@ namespace SCKRM.UI
                 inputField.caretColor = inputField.caretColor.MoveTowards(defaultCaretColor, 0.025f * Kernel.fpsUnscaledDeltaTime);
             }
         }
-
-        void ColorChange() => inputField.caretColor = defaultCaretColor;
     }
 }
