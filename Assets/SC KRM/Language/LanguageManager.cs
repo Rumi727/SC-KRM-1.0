@@ -63,7 +63,7 @@ namespace SCKRM.Language
             if (language == "")
                 language = SaveData.currentLanguage;
 
-            string value = JsonManager.JsonReadDictionary<string, string>(key, PathTool.Combine(ResourceManager.languagePath, language) + ".json", nameSpace, true).ConstEnvironmentVariable();
+            string value = JsonManager.JsonReadDictionary<string, string>(key, PathTool.Combine(ResourceManager.languagePath, language) + ".json", nameSpace).ConstEnvironmentVariable();
             if (value == default)
                 return key;
 
