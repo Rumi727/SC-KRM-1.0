@@ -302,12 +302,9 @@ namespace SCKRM
                     {
                         Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, false);
 
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (await UniTask.WaitForEndOfFrame(AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                                return;
-                        }
-                        
+                        if (await UniTask.DelayFrame(4, PlayerLoopTiming.LastPostLateUpdate, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                            return;
+
                         Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, true);
                     }
                 }
