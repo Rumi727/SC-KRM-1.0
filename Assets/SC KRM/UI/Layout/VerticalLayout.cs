@@ -122,9 +122,9 @@ namespace SCKRM.UI.Layout
                     else
                     {
                         if (!onlyPos)
-                            childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(childRectTransform.anchoredPosition.x, y + padding.bottom), lerpValue * Kernel.fpsUnscaledDeltaTime);
-                        else
                             childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y + padding.bottom), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                        else
+                            childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(childRectTransform.anchoredPosition.x, y + padding.bottom), lerpValue * Kernel.fpsUnscaledDeltaTime);
                     }
 
                     y += childRectTransform.rect.size.y + spacing;
@@ -155,9 +155,9 @@ namespace SCKRM.UI.Layout
                     else
                     {
                         if (!onlyPos)
-                            childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(childRectTransform.anchoredPosition.x, y), lerpValue * Kernel.fpsUnscaledDeltaTime);
-                        else
                             childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                        else
+                            childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(childRectTransform.anchoredPosition.x, y), lerpValue * Kernel.fpsUnscaledDeltaTime);
                     }
 
                     y += childRectTransform.rect.size.y + spacing;
@@ -188,9 +188,9 @@ namespace SCKRM.UI.Layout
                     else
                     {
                         if (!onlyPos)
-                            childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(childRectTransform.anchoredPosition.x, y - padding.top), lerpValue * Kernel.fpsUnscaledDeltaTime);
-                        else
                             childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2((padding.left - padding.right) * 0.5f, y - padding.top), lerpValue * Kernel.fpsUnscaledDeltaTime);
+                        else
+                            childRectTransform.anchoredPosition = childRectTransform.anchoredPosition.Lerp(new Vector2(childRectTransform.anchoredPosition.x, y - padding.top), lerpValue * Kernel.fpsUnscaledDeltaTime);
                     }
 
                     y -= childRectTransform.rect.size.y + spacing;

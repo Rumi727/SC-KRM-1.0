@@ -17,7 +17,7 @@ namespace SCKRM.UI
 
         void Update()
         {
-            if (RhythmManager.isPlaying)
+            if (RhythmManager.isPlaying && ((RhythmManager.dropPart && dropPartMode) || !dropPartMode))
                 graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha.Lerp(0f, (float)RhythmManager.currentBeat1Beat));
             else
                 graphic.color = graphic.color.MoveTowards(new Color(graphic.color.r, graphic.color.g, graphic.color.b, 0), 0.025f * Kernel.fpsUnscaledDeltaTime);
