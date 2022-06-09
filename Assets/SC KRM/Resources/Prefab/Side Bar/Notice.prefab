@@ -234,7 +234,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameSpace: sc-krm
   _path: x
-  _type: gui
+  _type: gui/icon
   _index: 0
   _image: {fileID: 2735866167427548146}
 --- !u!1 &3050280473071299450
