@@ -33,6 +33,10 @@ namespace SCKRM
 
             try
             {
+                //초기로딩이 시작됬습니다
+                isInitialLoadStart = true;
+                initialLoadStart?.Invoke();
+
                 //이 함수는 어떠한 경우에도 메인스레드가 아닌 스레드에서 실행되면 안됩니다
                 if (!ThreadManager.isMainThread)
                     throw new NotMainThreadMethodException(nameof(InitialLoad));
@@ -55,9 +59,6 @@ namespace SCKRM
                     throw new NotSupportedException("SC KRM은 Disable Domain Reload를 지원 하지 않습니다\nSC KRM does not support Disable Domain Reload");
                 }
 #endif
-                //초기로딩이 시작됬습니다
-                isInitialLoadStart = true;
-                initialLoadStart?.Invoke();
 
 #if UNITY_ANDROID || UNITY_WEBGL
                 bool warningDisable = true;
