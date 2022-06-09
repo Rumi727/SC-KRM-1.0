@@ -54,8 +54,8 @@ namespace SCKRM.Json
         }
 
         public static T JsonToObject<T>(string json) => JsonConvert.DeserializeObject<T>(json);
-        public static string ObjectToJson(object value) => JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings() { });
-        public static string ObjectToJson(params object[] value) => JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings() { });
+        public static string ObjectToJson(object value) => JsonConvert.SerializeObject(value, Formatting.Indented);
+        public static string ObjectToJson(params object[] value) => JsonConvert.SerializeObject(value, Formatting.Indented);
     }
 
     public struct JVector2
