@@ -43,27 +43,42 @@ namespace SCKRM.UI.Layout
             if (childRectTransforms == null)
                 return;
 
-            float minX = 0, maxX = 0, minY = 0, maxY = 0;
+            float x = 0;
+            float y = 0;
+
             for (int i = 0; i < childRectTransforms.Count; i++)
             {
                 RectTransform childRectTransform = childRectTransforms[i];
                 if (childRectTransform == null)
+                {
+                    spacingCancel();
                     continue;
+                }
                 else if (ignore.Contains(childRectTransform))
+                {
+                    spacingCancel();
                     continue;
+                }
                 else if (!childRectTransform.gameObject.activeSelf)
+                {
+                    spacingCancel();
                     continue;
+                }
 
-                Vector2 scale = childRectTransform.rect.size;
-                minX = minX.Min(childRectTransform.anchoredPosition.x - (scale.x * 0.5f));
-                maxX = maxX.Max(childRectTransform.anchoredPosition.x + (scale.x * 0.5f));
+                x += childRectTransform.sizeDelta.x + spacing;
+                y += childRectTransform.sizeDelta.y + spacing;
 
-                minY = minY.Min(childRectTransform.anchoredPosition.y - (scale.y * 0.5f));
-                maxY = maxY.Max(childRectTransform.anchoredPosition.y + (scale.y * 0.5f));
+                if (i == childRectTransforms.Count - 1)
+                    spacingCancel();
+
+                void spacingCancel()
+                {
+                    x -= spacing;
+                    y -= spacing;
+                }
             }
 
-            targetSize = new Vector2(maxX - minX + offset.x, rectTransform.rect.height);
-            targetSize = new Vector2(rectTransform.rect.width, maxY - minY + offset.y);
+            targetSize = new Vector2(x + offset.x, y + offset.y);
             if (max <= 0)
             {
                 targetSize.x = targetSize.x.Clamp(min);
