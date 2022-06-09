@@ -6,6 +6,15 @@ namespace SCKRM.NBS
 {
     public static class NBSManager
     {
+        /// <summary>
+        /// NBS 파일을 불러옵니다
+        /// </summary>
+        /// <param name="path">
+        /// NBS 파일의 경로
+        /// </param>
+        /// <returns>
+        /// 불러온 NBS 파일 클래스
+        /// </returns>
         public static NBSFile ReadNBSFile(string path)
         {
             using FileStream fileStream = File.OpenRead(path);

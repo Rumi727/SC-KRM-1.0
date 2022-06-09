@@ -21,7 +21,9 @@ namespace SCKRM.UI.SideBar
 
 
 
-        bool _isShow;
+        /// <summary>
+        /// 현제 사이드바가 활성화 되어있는가의 여부
+        /// </summary>
         public bool isShow
         {
             get => _isShow;
@@ -51,38 +53,44 @@ namespace SCKRM.UI.SideBar
                 }
             }
         }
+        bool _isShow;
 
-        [SerializeField] bool _right = false;
-        public bool right { get => _right; set => _right = value; } 
+        /// <summary>
+        /// 사이드바가 오른쪽에 표시되는지에 대한 여부
+        /// </summary>
+        public bool right { get => _right; set => _right = value; } [SerializeField] bool _right = false;
 
 
 
         #region variable
-        [SerializeField, NotNull] RectTransform _viewPort;
-        public RectTransform viewPort => _viewPort;
+        public RectTransform viewPort => _viewPort; [SerializeField, NotNull] RectTransform _viewPort;
+        public RectTransform content => _content; [SerializeField] RectTransform _content;
 
-        [SerializeField] RectTransform _content;
-        public RectTransform content => _content;
-
-        [SerializeField] RectTransform _scrollBarParentRectTransform;
-        public RectTransform scrollBarParentRectTransform => _scrollBarParentRectTransform;
-
-        [SerializeField] Scrollbar _scrollBar;
-        public Scrollbar scrollBar => _scrollBar;
+        public RectTransform scrollBarParentRectTransform => _scrollBarParentRectTransform; [SerializeField] RectTransform _scrollBarParentRectTransform;
+        public Scrollbar scrollBar => _scrollBar; [SerializeField] Scrollbar _scrollBar;
         #endregion
 
+        /// <summary>
+        /// 사이드 바를 활성화 합니다
+        /// </summary>
         public void Show()
         {
             isShow = true;
             showEvent.Invoke();
         }
 
+        /// <summary>
+        /// 사이드 바를 비활성화 합니다
+        /// </summary>
         public void Hide()
         {
             isShow = false;
             hideEvent.Invoke();
         }
 
+        /// <summary>
+        /// 사이드 바를 활성화/비활성화 합니다
+        /// </summary>
         public void Toggle()
         {
             if (isShow)
@@ -91,6 +99,9 @@ namespace SCKRM.UI.SideBar
                 Show();
         }
 
+        /// <summary>
+        /// 사이드 바를 뒤로 가는 이벤트로 비활성화 합니다
+        /// </summary>
         public void Back()
         {
             Hide();

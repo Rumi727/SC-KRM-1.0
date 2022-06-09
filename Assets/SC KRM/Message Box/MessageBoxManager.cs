@@ -55,7 +55,43 @@ namespace SCKRM.UI.MessageBox
 
 
 
+        /// <summary>
+        /// 메시지 박스를 활성화 합니다
+        /// </summary>
+        /// <param name="button">
+        /// 표시할 버튼
+        /// </param>
+        /// <param name="defaultIndex">
+        /// 기본으로 선택 할 인덱스
+        /// </param>
+        /// <param name="info">
+        /// 설명
+        /// </param>
+        /// <param name="icon">
+        /// 아이콘
+        /// </param>
+        /// <returns>
+        /// 선택한 인덱스
+        /// </returns>
         public static async UniTask<int> Show(NameSpacePathReplacePair button, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon) => await show(new NameSpacePathReplacePair[] { button }, defaultIndex, info, icon);
+        /// <summary>
+        /// 메시지 박스를 활성화 합니다
+        /// </summary>
+        /// <param name="button">
+        /// 표시할 버튼
+        /// </param>
+        /// <param name="defaultIndex">
+        /// 기본으로 선택 할 인덱스
+        /// </param>
+        /// <param name="info">
+        /// 설명
+        /// </param>
+        /// <param name="icon">
+        /// 아이콘
+        /// </param>
+        /// <returns>
+        /// 선택한 인덱스
+        /// </returns>
         public static async UniTask<int> Show(NameSpacePathReplacePair[] buttons, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon) => await show(buttons, defaultIndex, info, icon);
 
         static async UniTask<int> show(NameSpacePathReplacePair[] buttons, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon)

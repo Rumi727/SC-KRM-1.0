@@ -9,6 +9,17 @@ namespace SCKRM.Json
 {
     public static class JsonManager
     {
+        /// <summary>
+        /// 텍스트 파일에서 Json을 읽고 반환합니다
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">
+        /// 텍스트 파일 경로
+        /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// </param>
+        /// <returns></returns>
         public static T JsonRead<T>(string path, bool pathExtensionUse = false)
         {
             string json;
@@ -30,6 +41,21 @@ namespace SCKRM.Json
                 return default;
         }
 
+        /// <summary>
+        /// 리소스팩에서 딕셔너리로 된 Json을 찾고 반환합니다
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="key">
+        /// 키
+        /// </param>
+        /// <param name="path">
+        /// 텍스트 파일의 경로
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// </param>
+        /// <returns></returns>
         public static TValue JsonReadDictionary<TKey, TValue>(TKey key, string path, string nameSpace)
         {
             if (path == null)

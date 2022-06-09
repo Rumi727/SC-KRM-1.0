@@ -34,7 +34,6 @@ namespace SCKRM
         
 
 
-        static string _dataPath = "";
         /// <summary>
         /// Application.dataPath
         /// </summary>
@@ -48,13 +47,13 @@ namespace SCKRM
                     return _dataPath = Application.dataPath;
             }
         }
+        static string _dataPath = "";
 
         /// <summary>
         /// Application.streamingAssetsPath
         /// </summary>
         public static string streamingAssetsPath { get; } = Application.streamingAssetsPath;
 
-        static string _persistentDataPath = "";
         /// <summary>
         /// Application.persistentDataPath
         /// </summary>
@@ -68,8 +67,8 @@ namespace SCKRM
                     return _persistentDataPath = Application.persistentDataPath;
             }
         }
+        static string _persistentDataPath = "";
 
-        static string _temporaryCachePath = "";
         /// <summary>
         /// Application.temporaryCachePath
         /// </summary>
@@ -83,8 +82,8 @@ namespace SCKRM
                     return _temporaryCachePath = Application.temporaryCachePath;
             }
         }
+        static string _temporaryCachePath = "";
 
-        static string _saveDataPath = "";
         /// <summary>
         /// Kernel.persistentDataPath + "/Save Data"
         /// </summary>
@@ -98,8 +97,8 @@ namespace SCKRM
                     return _saveDataPath = persistentDataPath + "/Save Data";
             }
         }
+        static string _saveDataPath = "";
 
-        static string _resourcePackPath = "";
         /// <summary>
         /// Kernel.persistentDataPath + "/Resource Pack"
         /// </summary>
@@ -113,6 +112,7 @@ namespace SCKRM
                     return _resourcePackPath = persistentDataPath + "/Resource Pack";
             }
         }
+        static string _resourcePackPath = "";
 
         /// <summary>
         /// Kernel.streamingAssetsPath + "/projectSettings"
@@ -121,7 +121,9 @@ namespace SCKRM
 
 
 
-        static string _companyName = "";
+        /// <summary>
+        /// Application.companyName
+        /// </summary>
         public static string companyName
         {
             get
@@ -132,8 +134,11 @@ namespace SCKRM
                     return _companyName = Application.companyName;
             }
         }
+        static string _companyName = "";
 
-        static string _productName = "";
+        /// <summary>
+        /// Application.productName
+        /// </summary>
         public static string productName
         {
             get
@@ -144,8 +149,11 @@ namespace SCKRM
                     return _productName = Application.productName;
             }
         }
+        static string _productName = "";
 
-        static string _version = "";
+        /// <summary>
+        /// Application.version
+        /// </summary>
         public static string version
         {
             get
@@ -156,10 +164,13 @@ namespace SCKRM
                     return _version = Application.version;
             }
         }
+        static string _version = "";
 
 
 
-        static string _unityVersion = "";
+        /// <summary>
+        /// Application.unityVersion
+        /// </summary>
         public static string unityVersion
         {
             get
@@ -170,28 +181,56 @@ namespace SCKRM
                     return _unityVersion = Application.unityVersion;
             }
         }
+        static string _unityVersion = "";
 
 
 
+        /// <summary>
+        /// Application.platform
+        /// </summary>
         public static RuntimePlatform platform { get; } = Application.platform;
 
 
 
+        /// <summary>
+        /// 게임의 전체 속도를 결정 합니다
+        /// </summary>
         public static float gameSpeed { get; set; } = 1;
 
 
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// Editor: ThreadManager.isMainThread && Application.isEditor
+        /// /
+        /// Build: const false
+        /// </summary>
+        public static bool isEditor => ThreadManager.isMainThread && Application.isEditor;
+
+        /// <summary>
+        /// Editor: !ThreadManager.isMainThread || Application.isPlaying
+        /// /
+        /// Build: const true
+        /// </summary>
         public static bool isPlaying => !ThreadManager.isMainThread || Application.isPlaying;
+
+        /// <summary>
+        /// Editor: !ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused)
+        /// /
+        /// Build: const true
+        /// </summary>
         public static bool isPlayingAndNotPaused => !ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
 #else
+        public const bool isEditor = false;
         public const bool isPlaying = true;
         public const bool isPlayingAndNotPaused = true;
 #endif
 
 
 
-        static Transform _emptyTransform;
+        /// <summary>
+        /// 빈 게임 오브젝트
+        /// </summary>
         public static Transform emptyTransform
         {
             get
@@ -202,8 +241,11 @@ namespace SCKRM
                 return _emptyTransform;
             }
         }
+        static Transform _emptyTransform;
 
-        static RectTransform _emptyRectTransform;
+        /// <summary>
+        /// 사각 트랜스폼이 추가된 빈 게임 오브젝트
+        /// </summary>
         public static RectTransform emptyRectTransform
         {
             get
@@ -214,10 +256,14 @@ namespace SCKRM
                 return _emptyRectTransform;
             }
         }
+        static RectTransform _emptyRectTransform;
 
 
 
-        public static event Func<bool> shutdownEvent = () => true;
+        /// <summary>
+        /// 프로그램 종료 이벤트
+        /// </summary>
+        public static event Func<bool> shutdownEvent;
 
 
 
@@ -243,10 +289,9 @@ namespace SCKRM
 
         async UniTaskVoid Start()
         {
-#if UNITY_EDITOR
-            if (Application.isEditor)
+            if (isEditor)
                 return;
-#endif
+
             while (true)
             {
                 if (InitialLoadManager.isInitialLoadEnd && InputManager.GetKey("kernel.full_screen", InputType.Down, "all"))
@@ -291,19 +336,22 @@ namespace SCKRM
 
         void OnApplicationQuit()
         {
-            Delegate[] delegates = shutdownEvent.GetInvocationList();
-            for (int i = 0; i < delegates.Length; i++)
+            if (shutdownEvent != null)
             {
-                try
+                Delegate[] delegates = shutdownEvent.GetInvocationList();
+                for (int i = 0; i < delegates.Length; i++)
                 {
-                    if (!((Func<bool>)delegates[i]).Invoke())
+                    try
+                    {
+                        if (!((Func<bool>)delegates[i]).Invoke())
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                        Application.CancelQuit();
+                            Application.CancelQuit();
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
                 }
             }
 
