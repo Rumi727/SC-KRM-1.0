@@ -457,6 +457,7 @@ MonoBehaviour:
   - {fileID: 699772947850157817}
   - {fileID: 7869714349382662689}
   _allLerp: 0
+  _onlyPos: 0
   _padding:
     m_Left: 10
     m_Right: 10
@@ -482,7 +483,8 @@ MonoBehaviour:
   _spacing: 2
   _ignore:
   - {fileID: 7869714349382662689}
-  _mode: 2
+  _xSize: 0
+  _ySize: 1
   _offset: {x: 0, y: 12}
   _min: 40
   _max: 0
