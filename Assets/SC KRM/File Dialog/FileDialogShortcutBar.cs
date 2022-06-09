@@ -33,6 +33,7 @@ namespace SCKRM.FileDialog.ShortcurBar
                 ShortcutBarCreate(FileDialogIcon.GetIcon(driveInfo), new NameSpacePathReplacePair(FileDialogDrive.GetDriveFullName(driveInfo)), driveInfo.RootDirectory.ToString(), driveInfo.IsReady);
             }
 
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             LineCreate();
             
             ShortcutBarCreate("sc-krm:0:gui/icon/3d", "sc-krm:file_dialog.3d_objects", KnownFolders.GetPath(KnownFolderType.Objects3D), true);
@@ -42,6 +43,7 @@ namespace SCKRM.FileDialog.ShortcurBar
             ShortcutBarCreate("sc-krm:0:gui/icon/desktop", "sc-krm:file_dialog.desktop", KnownFolders.GetPath(KnownFolderType.Desktop), true);
             ShortcutBarCreate("sc-krm:0:gui/icon/picture", "sc-krm:file_dialog.pictures", KnownFolders.GetPath(KnownFolderType.Pictures), true);
             ShortcutBarCreate("sc-krm:0:gui/icon/music", "sc-krm:file_dialog.music", KnownFolders.GetPath(KnownFolderType.Music), true);
+#endif
         }
 
         void ShortcutBarCreate(NameSpaceIndexTypePathPair icon, NameSpacePathReplacePair text, string path, bool isReady)

@@ -8,17 +8,28 @@ namespace SCKRM.KnownFolder
 {
     public static class KnownFolders
     {
+        /// <summary>
+        /// 특수 폴더를 가져옵니다
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string GetPath(KnownFolderType type)
         {
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
             SHGetKnownFolderPath(type.GetGuid(), 0x00004000, new IntPtr(0), out var PathPointer);
             var Result = Marshal.PtrToStringUni(PathPointer);
             Marshal.FreeCoTaskMem(PathPointer);
 
             return Result;
+#else
+            throw new NotSupportedException();
+#endif
         }
 
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
         [DllImport("Shell32.dll")]
         static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out IntPtr ppszPath);
+#endif
     }
 
     //https://gitlab.com/Syroot/KnownFolders/-/blob/master/src/Syroot.KnownFolders/KnownFolderType.cs
@@ -234,8 +245,9 @@ namespace SCKRM.KnownFolder
         Windows
     }
 
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
     //https://gitlab.com/Syroot/KnownFolders/-/blob/master/src/Syroot.KnownFolders/KnownFolderType.cs
-    internal static class KnownFolderTypeExtensions
+    static class KnownFolderTypeExtensions
     {
         internal static Guid GetGuid(this KnownFolderType value)
         {
@@ -246,10 +258,11 @@ namespace SCKRM.KnownFolder
 
     //https://gitlab.com/Syroot/KnownFolders/-/blob/master/src/Syroot.KnownFolders/KnownFolderType.cs
     [AttributeUsage(AttributeTargets.Field, Inherited = false)]
-    internal class KnownFolderGuidAttribute : Attribute
+    class KnownFolderGuidAttribute : Attribute
     {
         internal Guid Guid { get; }
 
         internal KnownFolderGuidAttribute(string guid) => Guid = new Guid(guid);
     }
+#endif
 }
