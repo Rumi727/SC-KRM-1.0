@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SettingSlider))]
-    public sealed class SettingSliderEditor : SettingInputFieldEditor
+    public class SettingSliderEditor : SettingInputFieldEditor
     {
         public override void OnInspectorGUI()
         {

@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(DropdownItem))]
-    public sealed class DropdownItemEditor : ObjectPoolingUIEditor
+    public class DropdownItemEditor : ObjectPoolingUIEditor
     {
         public override void OnInspectorGUI()
         {

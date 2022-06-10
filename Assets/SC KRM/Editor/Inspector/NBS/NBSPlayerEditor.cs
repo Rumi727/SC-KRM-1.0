@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NBSPlayer))]
-    public sealed class NBSPlayerEditor : CustomInspectorEditor
+    public class NBSPlayerEditor : CustomInspectorEditor
     {
         NBSPlayer editor;
 

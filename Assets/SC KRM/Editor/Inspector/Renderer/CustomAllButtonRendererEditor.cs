@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(CustomSelectableRenderer), true)]
-    public sealed class CustomAllButtonRendererEditor : CustomAllSpriteRendererEditor
+    public class CustomAllButtonRendererEditor : CustomAllSpriteRendererEditor
     {
         public override void OnInspectorGUI()
         {

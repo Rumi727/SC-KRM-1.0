@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SideBarAni))]
-    public sealed class SideBarAniEditor : UIAniEditor
+    public class SideBarAniEditor : UIAniEditor
     {
         public override void OnInspectorGUI()
         {

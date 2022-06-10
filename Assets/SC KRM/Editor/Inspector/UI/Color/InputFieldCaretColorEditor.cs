@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(InputFieldCaretColor))]
-    public sealed class InputFieldCaretColorEditor : UIEditor
+    public class InputFieldCaretColorEditor : UIEditor
     {
         public override void OnInspectorGUI()
         {

@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ChildSizeFitter))]
-    public sealed class ChildSizeFitterEditor : UIEditor
+    public class ChildSizeFitterEditor : UIEditor
     {
         [System.NonSerialized] ChildSizeFitter editor;
         protected override void OnEnable()

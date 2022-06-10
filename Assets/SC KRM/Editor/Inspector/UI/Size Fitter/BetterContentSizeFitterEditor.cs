@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(BetterContentSizeFitter))]
-    public sealed class BetterContentSizeFitterEditor : UIEditor
+    public class BetterContentSizeFitterEditor : UIEditor
     {
         public override void OnInspectorGUI()
         {

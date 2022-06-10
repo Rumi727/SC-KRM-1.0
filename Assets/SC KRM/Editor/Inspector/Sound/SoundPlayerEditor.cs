@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SoundPlayer))]
-    public sealed class SoundObjectEditor : CustomInspectorEditor
+    public class SoundObjectEditor : CustomInspectorEditor
     {
         SoundPlayer editor;
 

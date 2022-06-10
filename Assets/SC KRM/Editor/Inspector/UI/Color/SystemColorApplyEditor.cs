@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SystemColorApply))]
-    public sealed class SystemColorApplyEditor : UIEditor
+    public class SystemColorApplyEditor : UIEditor
     {
         public override void OnInspectorGUI()
         {

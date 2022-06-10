@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Dropdown))]
-    public sealed class DropdownEditor : UIEditor
+    public class DropdownEditor : UIEditor
     {
         public override void OnInspectorGUI()
         {

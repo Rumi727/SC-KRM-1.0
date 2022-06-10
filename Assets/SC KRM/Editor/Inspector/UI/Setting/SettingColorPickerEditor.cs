@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SettingColorPicker))]
-    public sealed class SettingColorPickerEditor : SettingEditor
+    public class SettingColorPickerEditor : SettingEditor
     {
         [System.NonSerialized] SettingColorPicker editor;
 

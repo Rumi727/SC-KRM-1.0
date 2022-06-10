@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ColorPickerButton))]
-    public sealed class ColorPickerButtonEditor : UIAniEditor
+    public class ColorPickerButtonEditor : UIAniEditor
     {
         public override void OnInspectorGUI()
         {

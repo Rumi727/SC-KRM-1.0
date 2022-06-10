@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(HorizontalLayout))]
-    public sealed class HorizontalLayoutEditor : UIEditor
+    public class HorizontalLayoutEditor : UIEditor
     {
         [System.NonSerialized] HorizontalLayout editor;
         protected override void OnEnable()

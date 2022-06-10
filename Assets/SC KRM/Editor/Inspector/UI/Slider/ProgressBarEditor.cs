@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ProgressBar))]
-    public sealed class ProgressBarEditor : UIAniEditor
+    public class ProgressBarEditor : UIAniEditor
     {
         public override void OnInspectorGUI()
         {

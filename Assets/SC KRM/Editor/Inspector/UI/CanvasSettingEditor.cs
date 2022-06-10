@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(CanvasSetting))]
-    public sealed class CanvasSettingEditor : UIEditor
+    public class CanvasSettingEditor : UIEditor
     {
         [System.NonSerialized] CanvasSetting editor;
 

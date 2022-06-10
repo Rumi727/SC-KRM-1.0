@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SettingDisableCondition))]
-    public sealed class SettingDisableConditionEditor : CustomInspectorEditor
+    public class SettingDisableConditionEditor : CustomInspectorEditor
     {
         [System.NonSerialized] SettingDisableCondition editor;
 

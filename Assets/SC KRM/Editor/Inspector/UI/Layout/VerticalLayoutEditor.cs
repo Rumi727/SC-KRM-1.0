@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(VerticalLayout))]
-    public sealed class VerticalLayoutEditor : UIEditor
+    public class VerticalLayoutEditor : UIEditor
     {
         [System.NonSerialized] VerticalLayout editor;
         protected override void OnEnable()

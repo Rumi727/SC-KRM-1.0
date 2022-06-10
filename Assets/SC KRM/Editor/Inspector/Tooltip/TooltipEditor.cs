@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Tooltip.Tooltip), true)]
-    public sealed class TooltipEditor : CustomInspectorEditor
+    public class TooltipEditor : CustomInspectorEditor
     {
         Tooltip.Tooltip editor;
 

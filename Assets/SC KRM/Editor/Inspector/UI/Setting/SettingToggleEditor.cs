@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SettingToggle))]
-    public sealed class SettingToggleEditor : SettingEditor
+    public class SettingToggleEditor : SettingEditor
     {
         [System.NonSerialized] SettingToggle editor;
 

@@ -6,7 +6,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ColorReadability))]
-    public sealed class ColorReadabilityEditor : UIAniEditor
+    public class ColorReadabilityEditor : UIAniEditor
     {
         public override void OnInspectorGUI()
         {

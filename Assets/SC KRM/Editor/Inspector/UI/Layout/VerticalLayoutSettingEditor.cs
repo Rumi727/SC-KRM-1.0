@@ -5,7 +5,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(VerticalLayoutSetting))]
-    public sealed class VerticalLayoutSettingEditor : CustomInspectorEditor
+    public class VerticalLayoutSettingEditor : CustomInspectorEditor
     {
         [System.NonSerialized] VerticalLayoutSetting editor;
 

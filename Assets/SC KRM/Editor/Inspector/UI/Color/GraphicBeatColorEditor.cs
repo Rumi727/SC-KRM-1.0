@@ -7,7 +7,7 @@ namespace SCKRM.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(GraphicBeatColor))]
-    public sealed class GraphicBeatColorEditor : UIEditor
+    public class GraphicBeatColorEditor : UIEditor
     {
         public override void OnInspectorGUI()
         {
