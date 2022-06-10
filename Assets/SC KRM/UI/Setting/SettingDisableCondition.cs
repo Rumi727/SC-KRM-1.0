@@ -1,12 +1,3 @@
-using Cysharp.Threading.Tasks;
-using SCKRM.Input;
-using SCKRM.Renderer;
-using SCKRM.SaveLoad;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using TMPro;
 using UnityEngine;
 
 namespace SCKRM.UI.Setting

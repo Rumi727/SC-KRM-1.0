@@ -1,11 +1,7 @@
 using K4.Threading;
-using SCKRM.Object;
 using SCKRM.Resource;
 using SCKRM.Sound;
 using SCKRM.Threads;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 

@@ -1,7 +1,5 @@
-using SCKRM.Object;
 using SCKRM.Renderer;
 using SCKRM.UI.Layout;
-using SCKRM.UI.StatusBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,21 +1,11 @@
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
-using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
 using SCKRM.Resource;
 using SCKRM.SaveLoad;
-using SCKRM.Sound;
-using SCKRM.Splash;
 using SCKRM.Threads;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using SCKRM.UI.SideBar;
-using SCKRM.UI.StatusBar;
-using SCKRM.Json;
 using SCKRM.Input;
-using UnityEngine.LowLevel;
-using SCKRM.UI;
 
 namespace SCKRM
 {

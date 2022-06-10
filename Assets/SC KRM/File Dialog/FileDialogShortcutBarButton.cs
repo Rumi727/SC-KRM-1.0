@@ -1,7 +1,5 @@
 using SCKRM.Renderer;
 using SCKRM.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

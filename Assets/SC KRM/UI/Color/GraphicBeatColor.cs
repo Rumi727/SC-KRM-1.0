@@ -1,7 +1,3 @@
-using Cysharp.Threading.Tasks.Triggers;
-using SCKRM.Easing;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SCKRM.UI

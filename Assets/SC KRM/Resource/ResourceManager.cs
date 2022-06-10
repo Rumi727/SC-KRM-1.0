@@ -7,14 +7,10 @@ using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using SCKRM.Threads;
-using SCKRM.UI;
-using SCKRM.Window;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 

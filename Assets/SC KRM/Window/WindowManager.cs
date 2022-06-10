@@ -1,17 +1,7 @@
-using Cysharp.Threading.Tasks;
-using SCKRM.Input;
-using SCKRM.Object;
-using SCKRM.Renderer;
-using SCKRM.Resource;
-using SCKRM.UI;
-using SCKRM.UI.StatusBar;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace SCKRM.Window
 {

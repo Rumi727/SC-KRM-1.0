@@ -55,7 +55,6 @@
  * double derivativeValue = derivativeFunc(0, 10, 0.67f);
  */
 
-using SCKRM;
 using System;
 
 namespace SCKRM.Easing

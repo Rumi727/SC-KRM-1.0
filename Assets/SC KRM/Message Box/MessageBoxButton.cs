@@ -1,9 +1,8 @@
-using SCKRM.Object;
 using SCKRM.Renderer;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SCKRM.UI.MessageBox
+namespace SCKRM.UI.Overlay.MessageBox
 {
     [AddComponentMenu("SC KRM/Message Box/UI/Object Pooling/Message Box Button")]
     public sealed class MessageBoxButton : UIObjectPooling

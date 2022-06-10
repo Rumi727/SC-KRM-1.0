@@ -1,5 +1,4 @@
 using SCKRM.Cursor;
-using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
 using System.Collections.Generic;

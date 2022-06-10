@@ -1,6 +1,4 @@
-using Cysharp.Threading.Tasks;
 using SCKRM.Resource;
-using SCKRM.Threads;
 using System.Threading;
 using UnityEngine;
 

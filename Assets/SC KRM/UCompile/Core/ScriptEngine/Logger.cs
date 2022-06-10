@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-namespace UCompile
+﻿namespace UCompile
 {
     /// <summary>
     /// Console logger

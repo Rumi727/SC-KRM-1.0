@@ -8,10 +8,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace SCKRM.UI.MessageBox
+namespace SCKRM.UI.Overlay.MessageBox
 {
     [AddComponentMenu("SC KRM/Message Box/UI/Message Box Manager")]
-    public sealed class MessageBoxManager : UIManager<MessageBoxManager>
+    public sealed class MessageBoxManager : UIManager<MessageBoxManager>, IUIOverlay
     {
         [SerializeField] CanvasGroup messageBoxCanvasGroup;
         [SerializeField] GameObject messabeBoxBG;
@@ -104,14 +104,15 @@ namespace SCKRM.UI.MessageBox
             if (!Kernel.isPlaying)
                 throw new NotPlayModeMethodException();
 
-            await UniTask.WaitUntil(() => instance != null);
-
             if (isMessageBoxShow)
                 return defaultIndex;
             else if (defaultIndex < 0 || buttons.Length < defaultIndex)
                 return defaultIndex;
 
+            await UniTask.WaitUntil(() => instance != null);
+
             isMessageBoxShow = true;
+            UIOverlayManager.showedOverlays.Add(instance);
 
             instance.messageBoxIcon.nameSpaceIndexTypePathPair = icon;
             instance.messageBoxIcon.Refresh();
@@ -177,6 +178,7 @@ namespace SCKRM.UI.MessageBox
             int select(int index)
             {
                 isMessageBoxShow = false;
+                UIOverlayManager.showedOverlays.Remove(instance);
 
                 StatusBarManager.tabSelectGameObject = previousTabSelectGameObject;
                 EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);

@@ -1,8 +1,6 @@
-using Cysharp.Threading.Tasks.Triggers;
 using SCKRM.FileDialog.Drive;
 using SCKRM.Object;
 using SCKRM.Renderer;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;

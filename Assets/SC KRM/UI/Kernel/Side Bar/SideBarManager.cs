@@ -1,11 +1,5 @@
-using Cysharp.Threading.Tasks;
-using SCKRM.Input;
-using SCKRM.Threads;
-using SCKRM.UI.StatusBar;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SCKRM.UI.SideBar
 {

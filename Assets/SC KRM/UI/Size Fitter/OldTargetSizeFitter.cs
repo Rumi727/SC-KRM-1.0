@@ -1,9 +1,5 @@
-using SCKRM.UI.Layout;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SCKRM.UI
 {

@@ -1,10 +1,6 @@
 using PolyAndCode.UI;
-using SCKRM.Input;
 using SCKRM.Renderer;
-using SCKRM.UI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;

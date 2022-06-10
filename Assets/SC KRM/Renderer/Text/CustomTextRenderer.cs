@@ -1,7 +1,6 @@
 using K4.Threading;
 using SCKRM.Threads;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {

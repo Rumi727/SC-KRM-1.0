@@ -1,4 +1,3 @@
-using UnityEngine;
 using SCKRM.SaveLoad;
 using Newtonsoft.Json;
 using SCKRM.ProjectSetting;

@@ -1,8 +1,6 @@
-using Cysharp.Threading.Tasks;
 using SCKRM.Threads;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SCKRM.Renderer

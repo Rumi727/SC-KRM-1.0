@@ -1,9 +1,9 @@
 using UnityEngine;
 using SCKRM.Resource;
-using SCKRM.UI.MessageBox;
 using System.Threading;
 using K4.Threading;
 using SCKRM.Threads;
+using SCKRM.UI.Overlay;
 
 namespace SCKRM.Sound
 {
@@ -207,7 +207,7 @@ namespace SCKRM.Sound
         float tempTime = 0;
         void Update()
         {
-            if (MessageBoxManager.isMessageBoxShow)
+            if (UIOverlayManager.isOverlayShow)
                 audioLowPassFilter.cutoffFrequency = 687.5f;
             else
                 audioLowPassFilter.cutoffFrequency = 22000f;

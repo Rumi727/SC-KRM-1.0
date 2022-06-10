@@ -1,10 +1,8 @@
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Cursor;
 using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
-using SCKRM.UI.StatusBar;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,8 +1,5 @@
-using SCKRM.Json;
 using SCKRM.Language;
 using SCKRM.Resource;
-using SCKRM.Threads;
-using System;
 using System.Threading;
 using UnityEngine;
 

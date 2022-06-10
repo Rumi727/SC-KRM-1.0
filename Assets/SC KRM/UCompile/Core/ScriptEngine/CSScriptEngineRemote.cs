@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.IO;
 
 namespace UCompile
 {

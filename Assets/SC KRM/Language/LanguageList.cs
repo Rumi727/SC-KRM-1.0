@@ -1,8 +1,5 @@
-using Cysharp.Threading.Tasks;
 using SCKRM.Renderer;
-using SCKRM.Resource;
 using SCKRM.UI;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

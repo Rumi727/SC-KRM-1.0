@@ -1,13 +1,9 @@
-using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 using SCKRM.Cursor;
 using SCKRM.Input;
 using SCKRM.Resource;
-using SCKRM.SaveLoad;
 using SCKRM.UI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SCKRM.Tooltip
 {

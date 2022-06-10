@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Resource;
 using System;

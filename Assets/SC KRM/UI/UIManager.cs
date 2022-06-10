@@ -4,7 +4,6 @@ using SCKRM.Json;
 using SCKRM.SaveLoad;
 using SCKRM.UI.StatusBar;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;

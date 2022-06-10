@@ -4,9 +4,7 @@ using SCKRM.Renderer;
 using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
-using UCompile;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace SCKRM.Object
 {

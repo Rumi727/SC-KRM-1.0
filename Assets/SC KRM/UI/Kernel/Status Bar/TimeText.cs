@@ -1,13 +1,9 @@
-using Cysharp.Threading.Tasks;
 using SCKRM.Language;
 using SCKRM.Resource;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SCKRM.UI.StatusBar
 {

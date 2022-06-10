@@ -1,8 +1,6 @@
 using SCKRM.Renderer;
 using SCKRM.UI.SideBar;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SCKRM

@@ -1,12 +1,9 @@
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SCKRM.Object;
 using SCKRM.UI.Layout;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
 namespace SCKRM.Resource.UI

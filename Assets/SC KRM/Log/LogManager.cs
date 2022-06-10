@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 using UnityEngine;
 using SCKRM.UI.SideBar;
-using System;
 using SCKRM.Renderer;
 
 namespace SCKRM.Log

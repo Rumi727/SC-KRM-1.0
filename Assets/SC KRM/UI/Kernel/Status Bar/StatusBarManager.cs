@@ -5,7 +5,6 @@ using SCKRM.SaveLoad;
 using SCKRM.UI.SideBar;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SCKRM.UI.StatusBar

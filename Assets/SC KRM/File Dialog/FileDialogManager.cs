@@ -1,6 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Mono.CSharp;
-using SCKRM.FileDialog.Drive;
 using SCKRM.FileDialog.MyPC;
 using SCKRM.FileDialog.Screen;
 using SCKRM.FileDialog.ShortcurBar;
@@ -9,11 +7,9 @@ using SCKRM.Language;
 using SCKRM.Renderer;
 using SCKRM.Resource;
 using SCKRM.UI;
-using SCKRM.UI.MessageBox;
+using SCKRM.UI.Overlay;
+using SCKRM.UI.Overlay.MessageBox;
 using SCKRM.UI.StatusBar;
-using SFB;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -25,7 +21,7 @@ using UnityEngine.UI;
 namespace SCKRM.FileDialog
 {
     [AddComponentMenu("SC KRM/File Dialog/File Dialog Manager")]
-    public sealed class FileDialogManager : Manager<FileDialogManager>
+    public sealed class FileDialogManager : Manager<FileDialogManager>, IUIOverlay
     {
         /// <summary>
         /// 파일 선택 창이 열려있는지의 대한 여부입니다
@@ -227,8 +223,10 @@ namespace SCKRM.FileDialog
         /// 단일 폴더
         /// </param>
         /// <returns></returns>
-        public static UniTask<(bool isSuccess, string[] selectedPath)> ShowFolderOpen(string title, bool single = false)
+        public static async UniTask<(bool isSuccess, string[] selectedPath)> ShowFolderOpen(string title, bool single = false)
         {
+            await UniTask.WaitUntil(() => instance != null);
+
             isFolderOpenMode = true;
             isFileSaveMode = false;
 
@@ -238,7 +236,7 @@ namespace SCKRM.FileDialog
             instance.fileDialogSaveOpenButtonText.nameSpacePathPair = "sc-krm:gui.folder_select";
             instance.fileDialogSaveOpenButtonText.Refresh();
 
-            return show(title, single);
+            return await show(title, single);
         }
 
         /// <summary>
@@ -253,6 +251,8 @@ namespace SCKRM.FileDialog
         /// <returns></returns>
         public static async UniTask<(bool isSuccess, string[] selectedPath)> ShowFileOpen(string title, bool single = false, params ExtensionFilter[] extensionFilters)
         {
+            await UniTask.WaitUntil(() => instance != null);
+
             isFolderOpenMode = false;
             isFileSaveMode = false;
 
@@ -274,6 +274,8 @@ namespace SCKRM.FileDialog
         /// <returns></returns>
         public static async UniTask<(bool isSuccess, string selectedPath)> ShowFileSave(string title, params ExtensionFilter[] extensionFilters)
         {
+            await UniTask.WaitUntil(() => instance != null);
+
             isFolderOpenMode = false;
             isFileSaveMode = true;
 
@@ -296,10 +298,12 @@ namespace SCKRM.FileDialog
 
         static async UniTask<(bool isSuccess, string[] selectedPath)> show(string title, bool single, params ExtensionFilter[] extensionFilters)
         {
+            isFileDialogShow = true;
+            UIOverlayManager.showedOverlays.Add(instance);
+
             instance.fileDialogTitle.text = title;
             isSingle = single;
 
-            isFileDialogShow = true;
             selectedFilePath.Clear();
             currentPath = savedPath;
 
@@ -410,6 +414,7 @@ namespace SCKRM.FileDialog
             instance.fileDialogSaveOpenButton.onClick.RemoveListener(ClickEvent);
 
             isFileDialogShow = false;
+            UIOverlayManager.showedOverlays.Remove(instance);
 
             StatusBarManager.tabSelectGameObject = previousTabSelectGameObject;
             EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);

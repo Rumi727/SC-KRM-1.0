@@ -4,7 +4,6 @@ using SCKRM.Json;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

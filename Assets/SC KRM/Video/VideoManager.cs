@@ -4,10 +4,6 @@ using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
 using SCKRM.SaveLoad;
 using SCKRM.Threads;
-using SCKRM.UI.MessageBox;
-using SCKRM.UI.Setting;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SCKRM
