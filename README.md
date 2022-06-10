@@ -1,5 +1,6 @@
 # SC KRM
-Simsimhan Chobo Kernel Manager
+Simsimhan Chobo Kernel Manager   
+~~School Live! Kurumi (Gakkou Gurashi)~~
 
 ## 사용된 패키지와 DLL, 오픈 소스
 - **Unity UI**
@@ -16,12 +17,15 @@ Simsimhan Chobo Kernel Manager
 - [KnownFolders](https://gitlab.com/Syroot/KnownFolders/-/blob/master/src/Syroot.KnownFolders/KnownFolderType.cs) (SCKRM.KnowFolder.KnownFolderType, SCKRM.KnowFolder.KnownFolderTypeExtensions, SCKRM.KnowFolder.KnownFolderGuidAttribute 클래스에서 코드 일부분이 사용됨)
 - [Recyclable Scroll Rect](https://github.com/MdIqubal/Recyclable-Scroll-Rect)
 
-볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (링크가 없는것은 유니티 레지스트리에 있습니다)
-
+볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (링크가 없는것은 유니티 레지스트리에 있습니다)   
 안그러면, 컴파일 에러가 나고 관련 참조가 끊어질수 있습니다
 
 ## 사용한 아이콘
 - 제가 직접 만들었거나, [여기](https://www.iconfinder.com/search?q=&price=free&family=bootstrap)에서 가져왔습니다
+
+***
+**(나중에 위키 만들 예정이고, 이 밑은 업데이트 안되어있음)**
+***
 
 ## 주의
 - 이 프로젝트는 처음 프로젝트를 만들때 사용해야 나중에 안 귀찮아집니다
@@ -63,8 +67,6 @@ Simsimhan Chobo Kernel Manager
 
 
 ## 기능
-- (나중에 위키 만들 예정이고, 이 밑은 설명이 안되어있음)
-
 - Minecraft에 있는 리소스팩 기능이 포함되어있습니다 ~~(리소스팩을 바꿀수 있는 GUI 포함됨)~~ (GUI 미완성, 직접 리소스팩 경로를 넣어줘야 작동)
   즉 유니티에 있는 기본 리소스 관리 시스템이 사용되지 않습니다
   사용 할 수 있기는 하지만, 웬만하면 추천하지 않습니다
