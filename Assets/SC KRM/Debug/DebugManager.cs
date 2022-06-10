@@ -23,8 +23,8 @@ namespace SCKRM.DebugUI
         [GeneralSaveLoad]
         public class SaveData
         {
-            static float _textRefreshDelay = 0.1f; [JsonProperty] public static float textRefreshDelay { get => _textRefreshDelay.Clamp(0, 1); set => _textRefreshDelay = value.Clamp(0, 1); }
-            static float _graphRefreshDelay = 0.5f; [JsonProperty] public static float graphRefreshDelay { get => _graphRefreshDelay.Clamp(0, 1); set => _graphRefreshDelay = value.Clamp(0, 1); }
+            static float _textRefreshDelay = 0.1f; [JsonProperty] public static float textRefreshDelay { get => _textRefreshDelay.Clamp(0); set => _textRefreshDelay = value.Clamp(0); }
+            static float _graphRefreshDelay = 0.5f; [JsonProperty] public static float graphRefreshDelay { get => _graphRefreshDelay.Clamp(0); set => _graphRefreshDelay = value.Clamp(0); }
 
 
 
