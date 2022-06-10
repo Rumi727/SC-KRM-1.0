@@ -18,7 +18,7 @@ using Cysharp.Threading.Tasks;
 namespace SCKRM.Editor
 {
     [InitializeOnLoad]
-    public class KernelSetAutoProjectSetting
+    public static class KernelSetAutoProjectSetting
     {
         static bool sceneListChangedEnable = true;
         static bool hierarchyChangedEnable = true;
