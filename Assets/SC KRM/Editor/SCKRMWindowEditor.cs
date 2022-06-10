@@ -20,12 +20,12 @@ using UnityEngine.SceneManagement;
 
 namespace SCKRM.Editor
 {
-    public class KernelWindowEditor : EditorWindow
+    public class SCKRMWindowEditor : EditorWindow
     {
-        public static KernelWindowEditor instance { get; private set; }
+        public static SCKRMWindowEditor instance { get; private set; }
 
         [MenuItem("SC KRM/Show control panel")]
-        public static void ShowWindow() => GetWindow<KernelWindowEditor>(false, "커널");
+        public static void ShowWindow() => GetWindow<SCKRMWindowEditor>(false, "커널");
 
         [MenuItem("SC KRM/All Rerender")]
         public static void AllRerender()
@@ -647,7 +647,7 @@ namespace SCKRM.Editor
             SplashScreen.Data.splashScreenName = name;
 
             if (isChanged)
-                KernelSetAutoProjectSetting.SceneListChanged(false);
+                SCKRMSetting.SceneListChanged(false);
 
             EditorGUILayout.Space();
 
@@ -658,7 +658,7 @@ namespace SCKRM.Editor
             SplashScreen.Data.kernelObjectName = name;
 
             if (isChanged)
-                KernelSetAutoProjectSetting.SceneListChanged(false);
+                SCKRMSetting.SceneListChanged(false);
 
 
             static void ObjectField<T>(string label, string extension, ref string path, ref string name, out bool isChanged) where T : UnityEngine.Object

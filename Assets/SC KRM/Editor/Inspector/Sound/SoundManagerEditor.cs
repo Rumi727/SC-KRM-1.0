@@ -17,9 +17,9 @@ namespace SCKRM.Editor
 
         public override void OnInspectorGUI()
         {
-            if (KernelWindowEditor.instance != null)
+            if (SCKRMWindowEditor.instance != null)
             {
-                KernelWindowEditor.instance.Audio(300);
+                SCKRMWindowEditor.instance.Audio(300);
                 DrawLine();
             }
 

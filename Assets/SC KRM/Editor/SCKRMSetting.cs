@@ -18,12 +18,12 @@ using Cysharp.Threading.Tasks;
 namespace SCKRM.Editor
 {
     [InitializeOnLoad]
-    public static class KernelSetAutoProjectSetting
+    public static class SCKRMSetting
     {
         static bool sceneListChangedEnable = true;
         static bool hierarchyChangedEnable = true;
 
-        static KernelSetAutoProjectSetting()
+        static SCKRMSetting()
         {
             PlayerSettings.allowFullscreenSwitch = false;
             AudioListener.volume = 0.5f;
