@@ -24,26 +24,7 @@ namespace SCKRM.Editor
     {
         public static SCKRMWindowEditor instance { get; private set; }
 
-        [MenuItem("SC KRM/Show control panel")]
-        public static void ShowWindow() => GetWindow<SCKRMWindowEditor>(false, "커널");
 
-        [MenuItem("SC KRM/All Rerender")]
-        public static void AllRerender()
-        {
-            PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
-            CustomAllRenderer[] customAllRenderers;
-
-            if (prefabStage == null)
-                customAllRenderers = FindObjectsOfType<CustomAllRenderer>();
-            else
-                customAllRenderers = prefabStage.FindComponentsOfType<CustomAllRenderer>();
-
-            for (int i = 0; i < customAllRenderers.Length; i++)
-            {
-                CustomAllRenderer customAllRenderer = customAllRenderers[i];
-                customAllRenderer.Refresh();
-            }
-        }
 
         void OnEnable()
         {

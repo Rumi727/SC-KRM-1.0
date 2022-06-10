@@ -14,15 +14,13 @@ using SCKRM.Splash;
 using SCKRM.SaveLoad;
 using SCKRM.ProjectSetting;
 using Cysharp.Threading.Tasks;
+using SCKRM.Renderer;
 
 namespace SCKRM.Editor
 {
     [InitializeOnLoad]
     public static class SCKRMSetting
     {
-        static bool sceneListChangedEnable = true;
-        static bool hierarchyChangedEnable = true;
-
         static SCKRMSetting()
         {
             PlayerSettings.allowFullscreenSwitch = false;
@@ -32,7 +30,33 @@ namespace SCKRM.Editor
             EditorApplication.hierarchyChanged += () => { HierarchyChanged(true); };
         }
 
-        public static SaveLoadClass splashProjectSetting = null;
+
+
+        [MenuItem("SC KRM/Show control panel")]
+        public static void ShowWindow() => EditorWindow.GetWindow<SCKRMWindowEditor>(false, "SC KRM");
+
+        [MenuItem("SC KRM/All Rerender")]
+        public static void AllRerender()
+        {
+            PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+            CustomAllRenderer[] customAllRenderers;
+
+            if (prefabStage == null)
+                customAllRenderers = UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>();
+            else
+                customAllRenderers = prefabStage.FindComponentsOfType<CustomAllRenderer>();
+
+            for (int i = 0; i < customAllRenderers.Length; i++)
+            {
+                CustomAllRenderer customAllRenderer = customAllRenderers[i];
+                customAllRenderer.Refresh();
+            }
+        }
+
+
+
+        static bool sceneListChangedEnable = true;
+        static SaveLoadClass splashProjectSetting = null;
         public static void SceneListChanged(bool autoLoad)
         {
             if (Kernel.isPlaying)
@@ -88,18 +112,17 @@ namespace SCKRM.Editor
             }
             catch (ArgumentException e)
             {
-                sceneListChangedEnable = true;
                 Debug.LogException(e);
                 Debug.LogWarning($"{SplashScreen.Data.splashScreenName} 씬이 없는것같습니다 씬을 추가해주세요");
             }
-            catch (Exception e)
+            finally
             {
-                sceneListChangedEnable = true;
                 EditorSceneManager.OpenScene(activeScenePath);
-                Debug.LogException(e);
+                sceneListChangedEnable = true;
             }
         }
 
+        static bool hierarchyChangedEnable = true;
         public static void HierarchyChanged(bool autoLoad)
         {
             if (Kernel.isPlaying)
@@ -211,14 +234,11 @@ namespace SCKRM.Editor
 
                     if (sceneDirty)
                         EditorSceneManager.MarkSceneDirty(activeScene);
-
-                    hierarchyChangedEnable = true;
                 }
             }
-            catch (Exception e)
+            finally
             {
                 hierarchyChangedEnable = true;
-                Debug.LogException(e);
             }
         }
     }
