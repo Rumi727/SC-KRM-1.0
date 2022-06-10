@@ -1,4 +1,5 @@
 using HSVPicker;
+using SCKRM.Cursor;
 using SCKRM.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,8 +27,6 @@ namespace SCKRM.UI
         [SerializeField, NotNull] ColorPicker colorPicker;
 
         bool pointer;
-        bool mouseDrag = false;
-        Vector2 tempMousePos;
 
 
 
@@ -35,11 +34,6 @@ namespace SCKRM.UI
         {
             if (Kernel.isPlaying)
             {
-                if (UnityEngine.Input.GetMouseButtonDown(0))
-                    tempMousePos = InputManager.mousePosition;
-                else if (!mouseDrag)
-                    mouseDrag = UnityEngine.Input.GetMouseButton(0) && Vector2.Distance(InputManager.mousePosition, tempMousePos) >= 10;
-
                 if (!isShow)
                 {
                     if (lerp)
@@ -50,10 +44,8 @@ namespace SCKRM.UI
                     if (colorPickerMask.gameObject.activeSelf && colorPickerMask.sizeDelta.y < colorPickerMask.anchoredPosition.y + 0.01f)
                         colorPickerMask.gameObject.SetActive(false);
                 }
-                else if (!pointer && !mouseDrag && UnityEngine.Input.GetMouseButtonUp(0))
+                else if (!pointer && !CursorManager.isDragged && UnityEngine.Input.GetMouseButtonUp(0))
                     Hide();
-                else if (UnityEngine.Input.GetMouseButtonUp(0))
-                    mouseDrag = false;
 
                 if (isShow)
                 {
@@ -96,8 +88,6 @@ namespace SCKRM.UI
 
             UIManager.BackEventRemove(Hide, true);
             UIManager.homeEvent -= Hide;
-
-            mouseDrag = false;
 
             _isShow = false;
 

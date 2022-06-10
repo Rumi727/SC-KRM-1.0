@@ -1,3 +1,4 @@
+using SCKRM.Cursor;
 using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Renderer;
@@ -48,8 +49,6 @@ namespace SCKRM.UI
         [SerializeField, NotNull] GameObject scrollbarHandle;
 
         bool pointer;
-        bool mouseDrag = false;
-        Vector2 tempMousePos;
         bool invokeLock = false;
 
         List<DropdownItem> dropdownItems = new List<DropdownItem>();
@@ -103,11 +102,6 @@ namespace SCKRM.UI
 
             if (Kernel.isPlaying)
             {
-                if (UnityEngine.Input.GetMouseButtonDown(0))
-                    tempMousePos = InputManager.mousePosition;
-                else if (!mouseDrag)
-                    mouseDrag = UnityEngine.Input.GetMouseButton(0) && Vector2.Distance(InputManager.mousePosition, tempMousePos) >= 10;
-
                 if (!isShow)
                 {
                     listRectTransform.sizeDelta = listRectTransform.sizeDelta.Lerp(new Vector2(listRectTransform.sizeDelta.x, listRectTransform.anchoredPosition.y), listTargetSizeFitter.lerpValue * Kernel.fpsUnscaledDeltaTime);
@@ -121,10 +115,8 @@ namespace SCKRM.UI
                         listRectTransform.gameObject.SetActive(false);
                     }
                 }
-                else if (!pointer && !mouseDrag && UnityEngine.Input.GetMouseButtonUp(0))
+                else if (!pointer && !CursorManager.isDragged && UnityEngine.Input.GetMouseButtonUp(0))
                     Hide();
-                else if (UnityEngine.Input.GetMouseButtonUp(0))
-                    mouseDrag = false;
 
                 if (isShow && !listRectTransform.gameObject.activeSelf)
                     listRectTransform.gameObject.SetActive(true);
@@ -206,8 +198,6 @@ namespace SCKRM.UI
 
             UIManager.BackEventRemove(Hide, true);
             UIManager.homeEvent -= Hide;
-
-            mouseDrag = false;
 
             _isShow = false;
             listTargetSizeFitter.enabled = false;

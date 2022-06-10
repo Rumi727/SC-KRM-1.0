@@ -108,7 +108,7 @@ namespace SCKRM.Cursor
                     graphic.color = graphic.color.Lerp(UIManager.SaveData.systemColor * new Color(1, 1, 1, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
                     rectTransform.localScale = rectTransform.localScale.Lerp(Vector3.one * 0.2f, 0.075f * Kernel.fpsUnscaledDeltaTime);
 
-                    if (!dragStart && Vector2.Distance(pos, dragStartMousePosition) >= EventSystem.current.pixelDragThreshold)
+                    if (!dragStart && Vector2.Distance(pos, dragStartMousePosition) >= EventSystem.current.pixelDragThreshold / UIManager.currentGuiSize)
                         dragStart = true;
                     else if (dragStart)
                     {
