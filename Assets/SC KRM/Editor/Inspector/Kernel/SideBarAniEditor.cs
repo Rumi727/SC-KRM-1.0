@@ -1,4 +1,3 @@
-using SCKRM.NBS;
 using SCKRM.UI.SideBar;
 using UnityEditor;
 

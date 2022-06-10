@@ -8,12 +8,9 @@ using SCKRM.UI;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.IO;
 using SCKRM.Splash;
 using SCKRM.SaveLoad;
 using SCKRM.ProjectSetting;
-using Cysharp.Threading.Tasks;
 using SCKRM.Renderer;
 
 namespace SCKRM.Editor

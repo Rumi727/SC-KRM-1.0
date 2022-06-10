@@ -1,7 +1,5 @@
-using Cysharp.Threading.Tasks;
 using SCKRM.Input;
 using SCKRM.Json;
-using SCKRM.NBS;
 using SCKRM.Object;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
@@ -9,14 +7,11 @@ using SCKRM.Resource;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using SCKRM.Splash;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace SCKRM.Editor
 {

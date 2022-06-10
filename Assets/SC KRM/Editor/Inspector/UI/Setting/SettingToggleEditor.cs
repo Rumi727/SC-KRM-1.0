@@ -1,6 +1,5 @@
 using SCKRM.UI.Setting;
 using UnityEditor;
-using UnityEngine;
 
 namespace SCKRM.Editor
 {

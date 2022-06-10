@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using SCKRM.Resource;
-using SCKRM.ProjectSetting;
-using System.Reflection;
 
 namespace SCKRM.Editor
 {

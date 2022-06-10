@@ -1,4 +1,3 @@
-using SCKRM.Sound;
 using UnityEditor;
 
 namespace SCKRM.Editor
