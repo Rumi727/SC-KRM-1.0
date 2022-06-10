@@ -65,6 +65,7 @@
 	"options.video.guiSize.info": "全体のGUIサイズを変更します",
 	"options.video.fixedGuiSizeEnable": "固定GUIサイズの使用",
 	"options.video.fixedGuiSizeEnable.info": "GUIサイズを解像度に比例しないように固定します",
+	"options.video.resource_pack_setting": "リソースパックの設定",
 	
 	"options.statusbar.title": "ステータスバー",
 	"options.statusbar.bottomMode": "下部に表示",

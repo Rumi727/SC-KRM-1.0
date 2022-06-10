@@ -65,6 +65,7 @@
 	"options.video.guiSize.info": "Change the overall GUI size",
 	"options.video.fixedGuiSizeEnable": "Use a fixed GUI size",
 	"options.video.fixedGuiSizeEnable.info": "Fix GUI size not proportional to resolution",
+	"options.video.resource_pack_setting": "Resource Pack Settings",
 	
 	"options.statusbar.title": "Status Bar",
 	"options.statusbar.bottomMode": "Show at the bottom",
