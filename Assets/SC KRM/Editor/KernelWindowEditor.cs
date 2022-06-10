@@ -24,11 +24,11 @@ namespace SCKRM.Editor
     {
         public static KernelWindowEditor instance { get; private set; }
 
-        [MenuItem("커널/커널 설정")]
+        [MenuItem("SC KRM/Show control panel")]
         public static void ShowWindow() => GetWindow<KernelWindowEditor>(false, "커널");
 
-        [MenuItem("커널/모든 렌더러 렌더링")]
-        public static void AllRenderer()
+        [MenuItem("SC KRM/All Rerender")]
+        public static void AllRerender()
         {
             PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
             CustomAllRenderer[] customAllRenderers;
