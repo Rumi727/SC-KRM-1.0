@@ -57,7 +57,7 @@ namespace SCKRM.Resource.UI
             if (Kernel.streamingAssetsPath == resourcePackPath)
                 return;
 
-            posOffset = eventData.position - rectTransform.anchoredPosition;
+            posOffset = (eventData.position / UIManager.currentGuiSize) - rectTransform.anchoredPosition;
 
             transform.SetParent(transform.parent.parent);
 
@@ -76,7 +76,7 @@ namespace SCKRM.Resource.UI
             if (Kernel.streamingAssetsPath == resourcePackPath)
                 return;
 
-            rectTransform.anchoredPosition = eventData.position - posOffset;
+            rectTransform.anchoredPosition = (eventData.position / UIManager.currentGuiSize) - posOffset;
 
             selectedChildYPosList.Clear();
             for (int i = 0; i < selectedChildRectTransforms.Length; i++)
