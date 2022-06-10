@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SCKRM.Editor
 {
-    public class GameObjectAddMenu
+    public sealed class GameObjectAddMenu
     {
         static void PrefabInstantiate(string name, MenuCommand menuCommand)
         {
