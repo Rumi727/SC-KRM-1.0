@@ -7,7 +7,7 @@ namespace SCKRM.Text
     /// Similar use than StringBuilder, but avoid a lot of allocations done by StringBuilder (conversion of int and float to string, frequent capacity change, etc.)
     /// Author: Nicolas Gadenne contact@gaddygames.com
     ///</summary>
-    public class FastString
+    public sealed class FastString
     {
         ///<summary>Immutable string. Generated at last moment, only if needed</summary>
         private string m_stringGenerated = "";

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SCKRM
 {
     [AddComponentMenu("SC KRM/Anniversary/Anniversary Manager")]
-    public class AnniversaryManager : Manager<AnniversaryManager>
+    public sealed class AnniversaryManager : Manager<AnniversaryManager>
     {
         void Awake() => SingletonCheck(this);
 

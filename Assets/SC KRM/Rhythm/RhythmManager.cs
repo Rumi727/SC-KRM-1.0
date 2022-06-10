@@ -11,10 +11,10 @@ using UnityEngine;
 namespace SCKRM
 {
     [AddComponentMenu("SC KRM/Rhythm/Rhythm Manager")]
-    public class RhythmManager : Manager<RhythmManager>
+    public sealed class RhythmManager : Manager<RhythmManager>
     {
         [GeneralSaveLoad]
-        public class SaveData
+        public sealed class SaveData
         {
             [JsonProperty] public static double screenOffset { get; set; } = 0;
             [JsonProperty] public static double soundOffset { get; set; } = 0;

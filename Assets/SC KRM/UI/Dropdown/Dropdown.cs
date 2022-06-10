@@ -11,7 +11,7 @@ namespace SCKRM.UI
 {
     [ExecuteAlways]
     [AddComponentMenu("SC KRM/UI/Dropdown/Dropdown")]
-    public class Dropdown : UI, IPointerEnterHandler, IPointerExitHandler
+    public sealed class Dropdown : UI, IPointerEnterHandler, IPointerExitHandler
     {
         bool _isShow = false;
         public bool isShow

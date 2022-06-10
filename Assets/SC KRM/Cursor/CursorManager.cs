@@ -16,7 +16,7 @@ using UnityEngine.EventSystems;
 namespace SCKRM.Cursor
 {
     [AddComponentMenu("SC KRM/Cursor/UI/Cursor Manager")]
-    public class CursorManager : UIManager<CursorManager>
+    public sealed class CursorManager : UIManager<CursorManager>
     {
         [GeneralSaveLoad]
         public sealed class SaveData

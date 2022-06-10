@@ -7,7 +7,7 @@ namespace SCKRM.Polygon
     [ExecuteAlways]
     [RequireComponent(typeof(LineRenderer))]
     [AddComponentMenu("SC KRM/Polygon/Draw Regular Polygon")]
-    public class DrawRegularPolygon : MonoBehaviour
+    public sealed class DrawRegularPolygon : MonoBehaviour
     {
         LineRenderer _lineRenderer;
         public LineRenderer lineRenderer => _lineRenderer = this.GetComponentFieldSave(_lineRenderer);

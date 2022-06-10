@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace SCKRM
 {
     [AddComponentMenu("SC KRM/Kernel/Splash Screen Background")]
-    public class SplashScreenBackground : MonoBehaviour
+    public sealed class SplashScreenBackground : MonoBehaviour
     {
         [SerializeField] Graphic graphic;
         void OnEnable() => InitialLoadManager.initialLoadEndSceneMove += PadeOut;

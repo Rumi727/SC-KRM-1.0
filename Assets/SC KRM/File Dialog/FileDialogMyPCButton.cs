@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace SCKRM.FileDialog.MyPC
 {
     [AddComponentMenu("SC KRM/File Dialog/UI/Object Pooling/File Dialog My PC Button")]
-    public class FileDialogMyPCButton : UIObjectPooling
+    public sealed class FileDialogMyPCButton : UIObjectPooling
     {
         [SerializeField, NotNull] Button _button; public Button button { get => _button; }
         [SerializeField, NotNull] Slider _capacitySlider; public Slider capacitySlider { get => _capacitySlider; }

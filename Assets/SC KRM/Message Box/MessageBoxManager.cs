@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI.MessageBox
 {
     [AddComponentMenu("SC KRM/Message Box/UI/Message Box Manager")]
-    public class MessageBoxManager : UIManager<MessageBoxManager>
+    public sealed class MessageBoxManager : UIManager<MessageBoxManager>
     {
         [SerializeField] CanvasGroup messageBoxCanvasGroup;
         [SerializeField] GameObject messabeBoxBG;

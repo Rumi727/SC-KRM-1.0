@@ -7,7 +7,7 @@ namespace SCKRM.Polygon
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(PolygonCollider2D))]
     [AddComponentMenu("SC KRM/Polygon/Polygon Collider To Mesh")]
-    public class PolygonColliderToMesh : MonoBehaviour
+    public sealed class PolygonColliderToMesh : MonoBehaviour
     {
         PolygonCollider2D _polygonCollider;
         public PolygonCollider2D polygonCollider => _polygonCollider = this.GetComponentFieldSave(_polygonCollider);
