@@ -29,10 +29,10 @@ namespace SCKRM.UI.SideBar
         {
             if (InitialLoadManager.isInitialLoadEnd)
             {
-                if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, "all"))
+                if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_remove", InputType.Down, InputManager.inputLockDenyAll))
                     LastRemove();
 
-                if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_clear_all", InputType.Down, "all"))
+                if (noticeBar.isShow && noticeList.Count > 0 && InputManager.GetKey("notice_manager.notice_clear_all", InputType.Down, InputManager.inputLockDenyAll))
                     Clear();
             }
         }

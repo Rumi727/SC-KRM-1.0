@@ -43,7 +43,7 @@ namespace SCKRM.DebugUI
             rectTransform.offsetMin = StatusBarManager.cropedRect.min;
             rectTransform.offsetMax = StatusBarManager.cropedRect.max;
 
-            if (InitialLoadManager.isInitialLoadEnd && InputManager.GetKey("debug_manager.toggle", InputType.Down, "all", "force"))
+            if (InitialLoadManager.isInitialLoadEnd && InputManager.GetKey("debug_manager.toggle", InputType.Down, InputManager.inputLockDenyAllForce))
                 isShow = !isShow;
 
             if (textLayout.activeSelf != (isShow && SaveData.textShow))

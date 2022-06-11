@@ -59,9 +59,9 @@ namespace SCKRM.UI
 
             if (InitialLoadManager.isInitialLoadEnd)
             {
-                if (InputManager.GetKey("gui.back", InputType.Down, "all", "force"))
+                if (InputManager.GetKey("gui.back", InputType.Down, InputManager.inputLockDenyAllForce))
                     BackEventInvoke();
-                else if (InputManager.GetKey("gui.home", InputType.Down, "all"))
+                else if (InputManager.GetKey("gui.home", InputType.Down, InputManager.inputLockDenyAll))
                     homeEvent.Invoke();
             }
 

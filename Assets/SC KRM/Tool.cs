@@ -3154,7 +3154,31 @@ namespace SCKRM
         /// <summary>
         /// (paths = ("asdf", "asdf")) = "asdf/asdf" (Path.Combine is "asdf\asdf")
         /// </summary>
-        /// <param name="paths">경로</param>
+        /// <param name="path1">첫번째 경로</param>
+        /// <param name="path2">두번째 경로</param>
+        /// <returns></returns>
+        public static string Combine(string path1, string path2) => Path.Combine(path1, path2).Replace("\\", "/");
+        /// <summary>
+        /// (paths = ("asdf", "asdf")) = "asdf/asdf" (Path.Combine is "asdf\asdf")
+        /// </summary>
+        /// <param name="path1">첫번째 경로</param>
+        /// <param name="path2">두번째 경로</param>
+        /// <param name="path3">세번째 경로</param>
+        /// <returns></returns>
+        public static string Combine(string path1, string path2, string path3) => Path.Combine(path1, path2, path3).Replace("\\", "/");
+        /// <summary>
+        /// (paths = ("asdf", "asdf")) = "asdf/asdf" (Path.Combine is "asdf\asdf")
+        /// </summary>
+        /// <param name="path1">첫번째 경로</param>
+        /// <param name="path2">두번째 경로</param>
+        /// <param name="path3">세번째 경로</param>
+        /// <param name="path4">네번째 경로</param>
+        /// <returns></returns>
+        public static string Combine(string path1, string path2, string path3, string path4) => Path.Combine(path1, path2, path3, path4).Replace("\\", "/");
+        /// <summary>
+        /// (paths = ("asdf", "asdf")) = "asdf/asdf" (Path.Combine is "asdf\asdf")
+        /// </summary>
+        /// <param name="paths">경로들</param>
         /// <returns></returns>
         public static string Combine(params string[] paths) => Path.Combine(paths).Replace("\\", "/");
 

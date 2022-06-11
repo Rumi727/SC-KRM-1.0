@@ -77,6 +77,13 @@ namespace SCKRM.Input
 
 
 
+        public static string[] inputLockDenyEmpty { get; } = new string[0];
+        public static string[] inputLockDenyAll { get; } = new string[] { "all" };
+        public static string[] inputLockDenyForce { get; } = new string[] { "force" };
+        public static string[] inputLockDenyAllForce { get; } = new string[] { "all", "force" };
+
+
+
         public static event Action controlSaveDataResetEvent;
 
 
@@ -90,6 +97,12 @@ namespace SCKRM.Input
 
 
         #region Input Check
+        static readonly Func<KeyCode, bool> down = UnityEngine.Input.GetKeyDown;
+        static readonly Func<KeyCode, bool> alway = UnityEngine.Input.GetKey;
+        static readonly Func<KeyCode, bool> up = UnityEngine.Input.GetKeyUp;
+
+
+
         static bool TryInputCheck(string key, Func<KeyCode, bool> func)
         {
             if (!ThreadManager.isMainThread)
@@ -155,6 +168,24 @@ namespace SCKRM.Input
             return true;
         }
 
+        /// <summary>
+        /// 사용자가 키 KeyCode 열거형 매개변수로 식별되는 키를 누르고 있는 동안 true를 반환합니다
+        /// Returns true while the user holds down the key identified by the key KeyCode enum parameter
+        /// </summary>
+        /// <param name="keyCode">
+        /// 키 코드
+        /// Key Code
+        /// </param>
+        /// <param name="inputType">
+        /// 인풋 타입
+        /// Input Type
+        /// </param>
+        /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="KeyNotFoundException"></exception>
+        public static bool GetKey(KeyCode keyCode, InputType inputType = InputType.Down) => GetKey(keyCode, inputType, inputLockDenyEmpty);
 
         /// <summary>
         /// 사용자가 키 KeyCode 열거형 매개변수로 식별되는 키를 누르고 있는 동안 true를 반환합니다
@@ -204,6 +235,8 @@ namespace SCKRM.Input
             return false;
         }
 
+        public static bool TryGetKey(string key, InputType inputType = InputType.Down) => TryGetKey(key, inputType, inputLockDenyEmpty);
+
         /// <summary>
         /// 사용자가 딕셔너리로 식별된 키를 누르고 있는 동안 true를 반환합니다.
         /// Returns true while the user is holding down the key identified by the dictionary.
@@ -215,10 +248,6 @@ namespace SCKRM.Input
         /// <param name="inputType">
         /// 인풋 타입
         /// Input Type
-        /// </param>
-        /// <param name="inputLockDeny">
-        /// 무시할 인풋 락
-        /// input lock to ignore
         /// </param>
         /// <returns></returns>
         /// <exception cref="NotMainThreadMethodException"></exception>
@@ -240,16 +269,35 @@ namespace SCKRM.Input
 
             if (!InputLockCheck(inputLockDeny))
             {
-                if (inputType == InputType.Down && TryInputCheck(key, UnityEngine.Input.GetKeyDown))
+                if (inputType == InputType.Down && TryInputCheck(key, down))
                     return true;
-                else if (inputType == InputType.Alway && TryInputCheck(key, UnityEngine.Input.GetKey))
+                else if (inputType == InputType.Alway && TryInputCheck(key, alway))
                     return true;
-                else if (inputType == InputType.Up && TryInputCheck(key, UnityEngine.Input.GetKeyUp))
+                else if (inputType == InputType.Up && TryInputCheck(key, up))
                     return true;
             }
 
             return false;
         }
+
+        /// <summary>
+        /// 사용자가 딕셔너리로 식별된 키를 누르고 있는 동안 true를 반환합니다.
+        /// Returns true while the user is holding down the key identified by the dictionary.
+        /// </summary>
+        /// <param name="key">
+        /// 키
+        /// Key
+        /// </param>
+        /// <param name="inputType">
+        /// 인풋 타입
+        /// Input Type
+        /// </param>
+        /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        /// <exception cref="KeyNotFoundException"></exception>
+        public static bool GetKey(string key, InputType inputType = InputType.Down) => GetKey(key, inputType, inputLockDenyEmpty);
 
         /// <summary>
         /// 사용자가 딕셔너리로 식별된 키를 누르고 있는 동안 true를 반환합니다.
@@ -288,11 +336,11 @@ namespace SCKRM.Input
 
             if (!InputLockCheck(inputLockDeny))
             {
-                if (inputType == InputType.Down && InputCheck(key, UnityEngine.Input.GetKeyDown))
+                if (inputType == InputType.Down && InputCheck(key, down))
                     return true;
-                else if (inputType == InputType.Alway && InputCheck(key, UnityEngine.Input.GetKey))
+                else if (inputType == InputType.Alway && InputCheck(key, alway))
                     return true;
-                else if (inputType == InputType.Up && InputCheck(key, UnityEngine.Input.GetKeyUp))
+                else if (inputType == InputType.Up && InputCheck(key, up))
                     return true;
             }
 
@@ -302,6 +350,17 @@ namespace SCKRM.Input
 
         #region Mouse Input Check
         static Vector2 mouseDelta = Vector2.zero;
+
+        /// <summary>
+        /// 현재 마우스 델타
+        /// The current mouse delta
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        public static Vector2 GetMouseDelta(bool ignoreMouseSensitivity = false) => GetMouseDelta(ignoreMouseSensitivity, inputLockDenyEmpty);
+
         /// <summary>
         /// 현재 마우스 델타
         /// The current mouse delta
@@ -314,7 +373,7 @@ namespace SCKRM.Input
         /// <exception cref="NotMainThreadMethodException"></exception>
         /// <exception cref="NotPlayModeMethodException"></exception>
         /// <exception cref="NotInitialLoadEndMethodException"></exception>
-        public static Vector2 GetMouseDelta(bool IgnoreMouseSensitivity = false, params string[] inputLockDeny)
+        public static Vector2 GetMouseDelta(bool ignoreMouseSensitivity = false, params string[] inputLockDeny)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetMouseDelta));
@@ -331,7 +390,7 @@ namespace SCKRM.Input
 
             if (!InputLockCheck(inputLockDeny))
             {
-                if (!IgnoreMouseSensitivity)
+                if (!ignoreMouseSensitivity)
                     return mouseDelta * CursorManager.SaveData.mouseSensitivity;
                 else
                     return mouseDelta;
@@ -339,6 +398,24 @@ namespace SCKRM.Input
             else
                 return Vector2.zero;
         }
+
+        /// <summary>
+        /// 주어진 마우스 버튼을 누르고 있는지 여부를 반환합니다
+        /// Returns whether the given mouse button is held down
+        /// </summary>
+        /// <param name="button">
+        /// 버튼
+        /// Button
+        /// </param>
+        /// <param name="inputType">
+        /// 인풋 타입
+        /// Input Type
+        /// </param>
+        /// <returns></returns>
+        /// <exception cref="NotMainThreadMethodException"></exception>
+        /// <exception cref="NotPlayModeMethodException"></exception>
+        /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        public static bool GetMouseButton(int button, InputType inputType = InputType.Down) => GetMouseButton(button, inputType, inputLockDenyEmpty);
 
         /// <summary>
         /// 주어진 마우스 버튼을 누르고 있는지 여부를 반환합니다

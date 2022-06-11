@@ -60,14 +60,14 @@ namespace SCKRM.UI
                     }
                 }
 
-                if (InputManager.GetKey("volume_control.minus", InputType.Down, "all"))
+                if (InputManager.GetKey("volume_control.minus", InputType.Down, InputManager.inputLockDenyAllForce))
                 {
                     if (isPointer || isDrag || timer >= 0)
                         SoundManager.SaveData.mainVolume -= 10;
 
                     timer = 1;
                 }
-                else if (InputManager.GetKey("volume_control.plus", InputType.Down, "all"))
+                else if (InputManager.GetKey("volume_control.plus", InputType.Down, InputManager.inputLockDenyAllForce))
                 {
                     if (isPointer || isDrag || timer >= 0)
                         SoundManager.SaveData.mainVolume += 10;

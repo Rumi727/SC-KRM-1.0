@@ -109,7 +109,7 @@ namespace SCKRM.UI.SideBar
         {
             if (InitialLoadManager.isInitialLoadEnd)
             {
-                if (!(showControlKey == null || showControlKey == "") && InputManager.GetKey(showControlKey, InputType.Down, "all"))
+                if (!(showControlKey == null || showControlKey == "") && InputManager.GetKey(showControlKey, InputType.Down, InputManager.inputLockDenyAll))
                     Toggle();
 
                 if (isShow)
