@@ -12,6 +12,10 @@ namespace SCKRM
     [AddComponentMenu("SC KRM/Kernel/Kernel")]
     public sealed class Kernel : Manager<Kernel>
     {
+        public const string sckrmVersion = "0.0.0";
+
+
+
         public static float fps { get; private set; } = 60;
 
         public static float deltaTime { get; private set; } = fps60second;

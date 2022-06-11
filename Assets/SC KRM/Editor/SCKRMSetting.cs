@@ -12,6 +12,7 @@ using SCKRM.Splash;
 using SCKRM.SaveLoad;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
+using System.IO;
 
 namespace SCKRM.Editor
 {
@@ -25,6 +26,18 @@ namespace SCKRM.Editor
 
             EditorBuildSettings.sceneListChanged += () => { SceneListChanged(true); };
             EditorApplication.hierarchyChanged += () => { HierarchyChanged(true); };
+
+            EditorApplication.update += Update;
+        }
+
+        static string bundleVersion = "";
+        static void Update()
+        {
+            if (bundleVersion != Kernel.sckrmVersion)
+            {
+                File.WriteAllText(PathTool.Combine(Directory.GetCurrentDirectory(), "SC-KRM-Version"), Kernel.sckrmVersion);
+                bundleVersion = Kernel.sckrmVersion;
+            }
         }
 
 
