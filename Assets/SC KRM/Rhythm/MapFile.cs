@@ -7,14 +7,14 @@ namespace SCKRM.Rhythm
     public class Map
     {
         public MapInfo info { get; } = new MapInfo();
-        public MapEffect effect { get; } = new MapEffect();
+        public MapEffect globalEffect { get; } = new MapEffect();
 
         public Map() { }
 
         public Map(MapInfo info, MapEffect effect)
         {
             this.info = info;
-            this.effect = effect;
+            this.globalEffect = effect;
         }
     }
 

@@ -70,7 +70,7 @@ namespace SCKRM.Rhythm
                     SetCurrentBeat();
 
                     {
-                        bpm = map.effect.bpm.GetValue(currentBeat, out double beat, out bool isValueChanged);
+                        bpm = map.globalEffect.bpm.GetValue(currentBeat, out double beat, out bool isValueChanged);
 
                         if (isValueChanged)
                         {
@@ -84,7 +84,7 @@ namespace SCKRM.Rhythm
                         bpmUnscaledFpsDeltaTime = (float)(bpm * 0.01f * Kernel.fpsUnscaledDeltaTime * soundPlayer.speed);
                     }
 
-                    dropPart = map.effect.dropPart.GetValue();
+                    dropPart = map.globalEffect.dropPart.GetValue();
 
                     if (tempCurrentBeat != (int)currentBeat && currentBeat >= 0)
                     {
@@ -124,21 +124,21 @@ namespace SCKRM.Rhythm
 
             bpmOffsetTime = 0;
             double tempBeat = 0;
-            for (int i = 0; i < map.effect.bpm.Count; i++)
+            for (int i = 0; i < map.globalEffect.bpm.Count; i++)
             {
-                if (map.effect.bpm[0].beat >= offsetBeat)
+                if (map.globalEffect.bpm[0].beat >= offsetBeat)
                     break;
 
                 double tempBPM;
                 if (i - 1 < 0)
-                    tempBPM = map.effect.bpm[0].value;
+                    tempBPM = map.globalEffect.bpm[0].value;
                 else
-                    tempBPM = map.effect.bpm[i - 1].value;
+                    tempBPM = map.globalEffect.bpm[i - 1].value;
 
-                bpmOffsetTime += (map.effect.bpm[i].beat - tempBeat) * (60d / tempBPM);
-                tempBeat = map.effect.bpm[i].beat;
+                bpmOffsetTime += (map.globalEffect.bpm[i].beat - tempBeat) * (60d / tempBPM);
+                tempBeat = map.globalEffect.bpm[i].beat;
 
-                if (map.effect.bpm[i].beat >= offsetBeat)
+                if (map.globalEffect.bpm[i].beat >= offsetBeat)
                     break;
             }
 
@@ -171,10 +171,10 @@ namespace SCKRM.Rhythm
 
         static void SoundPlayerTimeChange()
         {
-            for (int i = 0; i < map.effect.bpm.Count; i++)
+            for (int i = 0; i < map.globalEffect.bpm.Count; i++)
             {
                 {
-                    BeatValuePair<double> bpm = map.effect.bpm[i];
+                    BeatValuePair<double> bpm = map.globalEffect.bpm[i];
                     BPMChange(bpm.value, bpm.beat);
                     SetCurrentBeat();
                 }
@@ -183,7 +183,7 @@ namespace SCKRM.Rhythm
                 {
                     if (i - 1 >= 0)
                     {
-                        BeatValuePair<double> bpm = map.effect.bpm[i - 1];
+                        BeatValuePair<double> bpm = map.globalEffect.bpm[i - 1];
                         SetCurrentBeat();
                         BPMChange(bpm.value, bpm.beat);
                     }

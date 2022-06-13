@@ -24,14 +24,14 @@ public class Postest : MonoBehaviour
         map = new Map();
 
         map.info.offset = 1.194;
-        map.effect.bpm.Add(new BeatValuePair<double>(0, 171));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(0, false));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(161, true));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(288, false));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(429, true));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(556, false));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(605, true));
-        map.effect.dropPart.Add(new BeatValuePair<bool>(732, false));
+        map.globalEffect.bpm.Add(new BeatValuePair<double>(0, 171));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(0, false));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(161, true));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(288, false));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(429, true));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(556, false));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(605, true));
+        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(732, false));
 
         /*bool temp = false;
         for (int i = 4; i < 1000; i += 4)
