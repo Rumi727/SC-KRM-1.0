@@ -30,9 +30,18 @@ namespace SCKRM.Editor
             EditorApplication.update += Update;
         }
 
+        static bool initializeOnLoad = false;
         static string bundleVersion = "";
         static void Update()
         {
+            if (!initializeOnLoad)
+            {
+                SceneListChanged(true);
+                HierarchyChanged(false);
+
+                initializeOnLoad = true;
+            }
+
             if (bundleVersion != Kernel.sckrmVersion)
             {
                 File.WriteAllText(PathTool.Combine(Directory.GetCurrentDirectory(), "SC-KRM-Version"), Kernel.sckrmVersion);
@@ -95,19 +104,23 @@ namespace SCKRM.Editor
 
                     bool exists = false;
                     List<EditorBuildSettingsScene> buildScenes = EditorBuildSettings.scenes.ToList();
-                    if (!EditorBuildSettings.scenes[0].enabled)
-                        buildScenes.RemoveAt(0);
 
-                    for (int i = 0; i < buildScenes.Count; i++)
+                    if (buildScenes.Count > 0)
                     {
-                        EditorBuildSettingsScene scene = EditorBuildSettings.scenes[i];
-                        if (splashScenePath == scene.path)
-                        {
-                            if (i != 0)
-                                buildScenes.Move(i, 0);
+                        if (!buildScenes[0].enabled)
+                            buildScenes.RemoveAt(0);
 
-                            exists = true;
-                            break;
+                        for (int i = 0; i < buildScenes.Count; i++)
+                        {
+                            EditorBuildSettingsScene scene = buildScenes[i];
+                            if (splashScenePath == scene.path)
+                            {
+                                if (i != 0)
+                                    buildScenes.Move(i, 0);
+
+                                exists = true;
+                                break;
+                            }
                         }
                     }
 
@@ -153,7 +166,7 @@ namespace SCKRM.Editor
 
                     Scene activeScene = SceneManager.GetActiveScene();
                     hierarchyChangedEnable = false;
-                    
+
                     if (activeScene.path == $"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity")
                     {
                         Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
