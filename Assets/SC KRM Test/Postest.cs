@@ -1,5 +1,6 @@
 using SCKRM;
 using SCKRM.Input;
+using SCKRM.Rhythm;
 using SCKRM.Sound;
 using System.Collections;
 using System.Collections.Generic;

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SCKRM
+namespace SCKRM.Rhythm
 {
     [AddComponentMenu("SC KRM/Rhythm/Rhythm Manager")]
     public sealed class RhythmManager : Manager<RhythmManager>
