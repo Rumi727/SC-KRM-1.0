@@ -97,8 +97,8 @@ namespace SCKRM
 
 
 
-        public static implicit operator string(Version value) => value.ToString();
-        public static implicit operator Version(string value) => new Version(value);
+        public static explicit operator string(Version value) => value.ToString();
+        public static explicit operator Version(string value) => new Version(value);
 
 
 

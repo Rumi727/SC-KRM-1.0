@@ -42,10 +42,11 @@ namespace SCKRM.Editor
                 initializeOnLoad = true;
             }
 
-            if (bundleVersion != Kernel.sckrmVersion)
+            string sckrmVersion = Kernel.sckrmVersion.ToString();
+            if (bundleVersion != sckrmVersion)
             {
-                File.WriteAllText(PathTool.Combine(Directory.GetCurrentDirectory(), "SC-KRM-Version"), Kernel.sckrmVersion);
-                bundleVersion = Kernel.sckrmVersion;
+                File.WriteAllText(PathTool.Combine(Directory.GetCurrentDirectory(), "SC-KRM-Version"), sckrmVersion);
+                bundleVersion = sckrmVersion;
             }
         }
 
