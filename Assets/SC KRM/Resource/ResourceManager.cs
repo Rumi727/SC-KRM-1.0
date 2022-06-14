@@ -2121,7 +2121,7 @@ namespace SCKRM.Resource
 
     public class SoundData<MetaData> where MetaData : SoundMetaDataParent
     {
-        public SoundData(string subtitle, bool isBGM, MetaData[] sounds)
+        public SoundData(string subtitle, bool isBGM, params MetaData[] sounds)
         {
             this.subtitle = subtitle;
             this.isBGM = isBGM;
