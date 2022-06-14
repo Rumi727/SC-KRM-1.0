@@ -13,7 +13,7 @@ public class Postest : MonoBehaviour
     Vector2 rotation = Vector2.zero;
 
     SoundPlayer soundPlayer;
-    Map map;
+    RhythmMap rhythmMap;
     public TMP_Text text;
 
     public GameObject test;
@@ -21,17 +21,17 @@ public class Postest : MonoBehaviour
     void Start()
     {
         soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
-        map = new Map();
+        rhythmMap = new RhythmMap();
 
-        map.info.offset = 1.194;
-        map.globalEffect.bpm.Add(new BeatValuePair<double>(0, 171));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(0, false));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(161, true));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(288, false));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(429, true));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(556, false));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(605, true));
-        map.globalEffect.dropPart.Add(new BeatValuePair<bool>(732, false));
+        rhythmMap.info.offset = 1.194;
+        rhythmMap.globalEffect.bpm.Add(new BeatValuePair<double>(0, 171));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(0, false));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(161, true));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(288, false));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(429, true));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(556, false));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(605, true));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(732, false));
 
         /*bool temp = false;
         for (int i = 4; i < 1000; i += 4)
@@ -66,7 +66,7 @@ public class Postest : MonoBehaviour
     void Update()
     {
         if (!RhythmManager.isPlaying)
-            RhythmManager.Play(soundPlayer, map);
+            RhythmManager.Play(soundPlayer, rhythmMap);
 
         float speed;
         if (InputManager.GetKey(KeyCode.LeftControl, InputType.Alway))

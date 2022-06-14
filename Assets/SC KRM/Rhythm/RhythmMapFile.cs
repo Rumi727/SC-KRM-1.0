@@ -4,29 +4,29 @@ using System.Collections.Generic;
 
 namespace SCKRM.Rhythm
 {
-    public class Map
+    public class RhythmMap
     {
-        public MapInfo info { get; } = new MapInfo();
-        public MapEffect globalEffect { get; } = new MapEffect();
+        public IRhythmMapInfo info { get; }
+        public IRhythmMapEffect globalEffect { get; }
 
-        public Map() { }
+        public RhythmMap() { }
 
-        public Map(MapInfo info, MapEffect effect)
+        public RhythmMap(IRhythmMapInfo info, IRhythmMapEffect globalEffect)
         {
             this.info = info;
-            this.globalEffect = effect;
+            this.globalEffect = globalEffect;
         }
     }
 
-    public class MapInfo
+    public interface IRhythmMapInfo
     {
-        public double offset = 0;
+        public double offset { get; set; }
     }
 
-    public class MapEffect
+    public interface IRhythmMapEffect
     {
-        public BeatValuePairList<double> bpm = new BeatValuePairList<double>();
-        public BeatValuePairList<bool> dropPart = new BeatValuePairList<bool>();
+        public BeatValuePairList<double> bpm { get; }
+        public BeatValuePairList<bool> dropPart { get; }
     }
 
     #region Beat Value Pair List
