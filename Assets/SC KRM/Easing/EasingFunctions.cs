@@ -63,7 +63,9 @@ namespace SCKRM.Easing
     {
         public enum Ease
         {
-            EaseInQuad = 0,
+            Linear = 0,
+            Spring,
+            EaseInQuad,
             EaseOutQuad,
             EaseInOutQuad,
             EaseInCubic,
@@ -84,8 +86,6 @@ namespace SCKRM.Easing
             EaseInCirc,
             EaseOutCirc,
             EaseInOutCirc,
-            Linear,
-            Spring,
             EaseInBounce,
             EaseOutBounce,
             EaseInOutBounce,
