@@ -186,6 +186,30 @@ namespace SCKRM.Sound
         /// <param name="panStereo">
         /// 스테레오
         /// </param>
+        /// <returns></returns>
+        public static SoundPlayer PlaySound(SoundData<SoundMetaData> soundData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", soundData, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+
+        /// <summary>
+        /// 소리를 재생합니다
+        /// </summary>
+        /// <param name="soundData">
+        /// 사운드 데이터
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
         /// <param name="minDistance">
         /// 최소 거리
         /// </param>
