@@ -12,7 +12,7 @@ namespace SCKRM
     [AddComponentMenu("SC KRM/Kernel/Kernel")]
     public sealed class Kernel : Manager<Kernel>
     {
-        public static Version sckrmVersion { get; } = new Version(0, 2, 1);
+        public static Version sckrmVersion { get; } = new Version(0, 2, 2);
 
 
 
