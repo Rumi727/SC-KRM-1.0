@@ -146,6 +146,10 @@ namespace SCKRM.Resource
 
 
 
+        public static event Action audioResetEnd;
+
+
+
         public static AsyncTask resourceRefreshAsyncTask = null;
         public static AsyncTask resourceRefreshDetailedAsyncTask = null;
 
@@ -809,6 +813,7 @@ namespace SCKRM.Resource
             resourceRefreshDetailedAsyncTask = null;
 
             isAudioReset = false;
+            audioResetEnd?.Invoke();
 
             SoundManager.SoundRefresh();
             GarbageRemoval();
