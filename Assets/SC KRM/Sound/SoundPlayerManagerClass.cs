@@ -73,6 +73,9 @@ namespace SCKRM.Sound
             loop = false;
 
 
+            _looped = null;
+            _timeChanged = null;
+
             isLooped = false;
             isPaused = false;
 
