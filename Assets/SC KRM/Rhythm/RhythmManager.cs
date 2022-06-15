@@ -148,6 +148,8 @@ namespace SCKRM.Rhythm
         public static void Play(SoundPlayerParent soundPlayer, RhythmMap rhythmMap)
         {
             currentBeat = 0;
+            bpmOffsetBeat = 0;
+            bpmOffsetTime = 0;
 
             RhythmManager.soundPlayer = soundPlayer;
             RhythmManager.rhythmMap = rhythmMap;
@@ -159,6 +161,8 @@ namespace SCKRM.Rhythm
         public static void Stop()
         {
             currentBeat = 0;
+            bpmOffsetBeat = 0;
+            bpmOffsetTime = 0;
 
             if (soundPlayer != null)
                 soundPlayer.timeChanged -= SoundPlayerTimeChange;
