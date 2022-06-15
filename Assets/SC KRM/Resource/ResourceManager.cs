@@ -627,23 +627,14 @@ namespace SCKRM.Resource
                     string nbsFolderPath = PathTool.Combine(resourcePack, nbsPath.Replace("%NameSpace%", nameSpace));
                     
                     (bool success, bool cancel) = await TryGetSoundData(soundFolderPath, allSounds, soundMetaDataCreateFunc);
-                    if (!success && !cancel)
-                    {
-                        resourceRefreshDetailedAsyncTask.progress++;
-                        continue;
-                    }
-                    else if (cancel)
-                        return;
-                    
-                    (success, cancel) = await TryGetSoundData(nbsFolderPath, allNBS, nbsMetaDataCreateFunc);
-                    if (!success && !cancel)
-                    {
-                        resourceRefreshDetailedAsyncTask.progress++;
-                        continue;
-                    }
-                    else if (cancel)
+                    if (cancel)
                         return;
 
+                    (success, cancel) = await TryGetSoundData(nbsFolderPath, allNBS, nbsMetaDataCreateFunc);
+                    if (cancel)
+                        return;
+
+                    resourceRefreshDetailedAsyncTask.progress++;
 
                     async UniTask<SoundMetaData> soundMetaDataCreateFunc(string folderPath, SoundMetaData soundMetaData)
                     {
@@ -663,7 +654,7 @@ namespace SCKRM.Resource
                         string soundPath = PathTool.Combine(nbsFolderPath, nbsMetaData.path);
                         if (!File.Exists(soundPath + ".nbs"))
                             return null;
-
+                        
                         NBSFile nbsFile = NBSManager.ReadNBSFile(soundPath + ".nbs");
                         if (nbsFile != null)
                         {
