@@ -10,7 +10,7 @@ namespace SCKRM.NBS
     [AddComponentMenu("SC KRM/NBS/NBS Player")]
     public sealed class NBSPlayer : SoundPlayerParent
     {
-        public SoundData<NBSMetaData> nbsData { get; private set; }
+        public SoundData<NBSMetaData> soundData { get; private set; }
         public SoundData<NBSMetaData> customSoundData { get; set; }
 
         public NBSMetaData metaData { get; private set; }
@@ -156,22 +156,22 @@ namespace SCKRM.NBS
 
 
                 if (customSoundData == null)
-                    nbsData = ResourceManager.SearchNBSData(key, nameSpace);
+                    soundData = ResourceManager.SearchNBSData(key, nameSpace);
                 else
-                    nbsData = customSoundData;
+                    soundData = customSoundData;
 
-                if (nbsData == null)
+                if (soundData == null)
                 {
                     Remove();
                     return;
                 }
-                else if (nbsData.sounds == null || nbsData.sounds.Length <= 0)
+                else if (soundData.sounds == null || soundData.sounds.Length <= 0)
                 {
                     Remove();
                     return;
                 }
 
-                metaData = nbsData.sounds[Random.Range(0, nbsData.sounds.Length)];
+                metaData = soundData.sounds[Random.Range(0, soundData.sounds.Length)];
             }
 
 
@@ -344,7 +344,7 @@ namespace SCKRM.NBS
             if (!base.Remove())
                 return false;
 
-            nbsData = null;
+            soundData = null;
             customSoundData = null;
 
             _index = 0;

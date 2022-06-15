@@ -21,7 +21,7 @@ namespace SCKRM.Editor
 
         public static void GUI(NBSPlayer nbsPlayer)
         {
-            if (!Kernel.isPlaying || !InitialLoadManager.isInitialLoadEnd || nbsPlayer == null || nbsPlayer.nbsData == null || nbsPlayer.metaData == null || nbsPlayer.nbsFile == null)
+            if (!Kernel.isPlaying || !InitialLoadManager.isInitialLoadEnd || nbsPlayer == null || nbsPlayer.soundData == null || nbsPlayer.metaData == null || nbsPlayer.nbsFile == null)
                 return;
 
             bool refesh;
@@ -97,7 +97,7 @@ namespace SCKRM.Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                if (nbsPlayer.nbsData == null)
+                if (nbsPlayer.soundData == null)
                 {
                     GUILayout.Label("--:-- / --:--", GUILayout.ExpandWidth(false));
                     GUILayout.HorizontalSlider(0, 0, 1);

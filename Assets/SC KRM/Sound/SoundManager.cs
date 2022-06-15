@@ -540,7 +540,7 @@ namespace SCKRM.Sound
                 for (int i = 0; i < nbsList.Count; i++)
                 {
                     NBSPlayer nbsObject2 = nbsList[i];
-                    if (!nbsObject2.nbsData.isBGM)
+                    if (!nbsObject2.soundData.isBGM)
                     {
                         nbsList[i].Remove();
                         break;
@@ -566,7 +566,7 @@ namespace SCKRM.Sound
 
             nbsPlayer.Refresh();
 
-            if (nbsPlayer.nbsData != null)
+            if (nbsPlayer.soundData != null)
             {
                 nbsPlayer.volume = volume;
                 nbsPlayer.loop = loop;
