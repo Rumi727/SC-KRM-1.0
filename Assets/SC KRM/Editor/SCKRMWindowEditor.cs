@@ -387,7 +387,12 @@ namespace SCKRM.Editor
                     }
 
                     if (nbsPlay)
-                        SoundManager.PlayNBS(nbsKey, nbsNameSpace, nbsVolume, nbsLoop, nbsPitch, nbsTempo, nbsPanStereo, nbsSpatial, nbsMinDistance, nbsMaxDistance);
+                    {
+                        if (nbsSpatial)
+                            SoundManager.PlayNBS(nbsKey, nbsNameSpace, nbsVolume, nbsLoop, nbsPitch, nbsTempo, nbsPanStereo, nbsMinDistance, nbsMaxDistance, null, nbsLocalPosition.x, nbsLocalPosition.y, nbsLocalPosition.z);
+                        else
+                            SoundManager.PlayNBS(nbsKey, nbsNameSpace, nbsVolume, nbsLoop, nbsPitch, nbsTempo, nbsPanStereo);
+                    }
                 }
             }
 

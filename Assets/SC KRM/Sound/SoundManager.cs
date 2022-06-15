@@ -389,10 +389,144 @@ namespace SCKRM.Sound
 
 
         /// <summary>
-        /// NBS 재생
-        /// NBS Play
+        /// 소리를 재생합니다
         /// </summary>
-        public static NBSPlayer PlayNBS(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0, bool spatial = false, float minDistance = 0, float maxDistance = 48, Transform parent = null, float x = 0, float y = 0, float z = 0)
+        /// <param name="key">
+        /// 오디오 키
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <returns></returns>
+        public static NBSPlayer PlayNBS(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playNBS(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+
+        /// <summary>
+        /// 소리를 재생합니다
+        /// </summary>
+        /// <param name="key">
+        /// 오디오 키
+        /// </param>
+        /// <param name="nameSpace">
+        /// 네임스페이스
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <param name="minDistance">
+        /// 최소 거리
+        /// </param>
+        /// <param name="maxDistance">
+        /// 최대 거리
+        /// </param>
+        /// <param name="parent">
+        /// 부모
+        /// </param>
+        /// <param name="x">
+        /// X 좌표
+        /// </param>
+        /// <param name="y">
+        /// Y 좌표
+        /// </param>
+        /// <param name="z">
+        /// Z 좌표
+        /// </param>
+        /// <returns></returns>
+        public static NBSPlayer PlayNBS(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playNBS(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+
+        /// <summary>
+        /// 소리를 재생합니다
+        /// </summary>
+        /// <param name="nbsData">
+        /// 사운드 데이터
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <returns></returns>
+        public static NBSPlayer PlayNBS(SoundData<NBSMetaData> nbsData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playNBS("", "", nbsData, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+
+        /// <summary>
+        /// 소리를 재생합니다
+        /// </summary>
+        /// <param name="nbsData">
+        /// 사운드 데이터
+        /// </param>
+        /// <param name="volume">
+        /// 볼륨
+        /// </param>
+        /// <param name="loop">
+        /// 반복
+        /// </param>
+        /// <param name="pitch">
+        /// 피치
+        /// </param>
+        /// <param name="tempo">
+        /// 템포
+        /// </param>
+        /// <param name="panStereo">
+        /// 스테레오
+        /// </param>
+        /// <param name="minDistance">
+        /// 최소 거리
+        /// </param>
+        /// <param name="maxDistance">
+        /// 최대 거리
+        /// </param>
+        /// <param name="parent">
+        /// 부모
+        /// </param>
+        /// <param name="x">
+        /// X 좌표
+        /// </param>
+        /// <param name="y">
+        /// Y 좌표
+        /// </param>
+        /// <param name="z">
+        /// Z 좌표
+        /// </param>
+        /// <returns></returns>
+        public static NBSPlayer PlayNBS(SoundData<NBSMetaData> nbsData, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playNBS("", "", nbsData, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+
+        static NBSPlayer playNBS(string key, string nameSpace, SoundData<NBSMetaData> nbsData, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(PlayNBS));
@@ -402,7 +536,17 @@ namespace SCKRM.Sound
                 throw new NotInitialLoadEndMethodException(nameof(PlayNBS));
 
             if (nbsList.Count >= maxNBSCount)
-                nbsList[0].Remove();
+            {
+                for (int i = 0; i < nbsList.Count; i++)
+                {
+                    NBSPlayer nbsObject2 = nbsList[i];
+                    if (!nbsObject2.nbsData.isBGM)
+                    {
+                        nbsList[i].Remove();
+                        break;
+                    }
+                }
+            }
 
             if (key == null)
                 key = "";
@@ -417,6 +561,8 @@ namespace SCKRM.Sound
             NBSPlayer nbsPlayer = (NBSPlayer)ObjectPoolingSystem.ObjectCreate("sound_manager.nbs_player", parent, false).monoBehaviour;
             nbsPlayer.key = key;
             nbsPlayer.nameSpace = nameSpace;
+            if (nbsData != null)
+                nbsPlayer.customSoundData = nbsData;
 
             nbsPlayer.Refresh();
 
