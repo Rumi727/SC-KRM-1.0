@@ -388,6 +388,9 @@ namespace SCKRM.Sound
             audioSource.time = 0;
             audioSource.Stop();
 
+            soundData = null;
+            customSoundData = null;
+
             SoundManager.soundList.Remove(this);
 
             return true;

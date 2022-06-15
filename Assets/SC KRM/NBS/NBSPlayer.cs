@@ -344,6 +344,9 @@ namespace SCKRM.NBS
             if (!base.Remove())
                 return false;
 
+            nbsData = null;
+            customSoundData = null;
+
             _index = 0;
             _tick = 0;
             tickTimer = 0;
