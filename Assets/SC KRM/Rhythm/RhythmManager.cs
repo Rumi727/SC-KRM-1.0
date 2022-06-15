@@ -38,7 +38,7 @@ namespace SCKRM.Rhythm
 
 
 
-        public static float time => (float)(soundPlayer?.time);
+        public static float time => soundPlayer != null ? soundPlayer.time : 0;
         public static double currentBeat { get; private set; }
         public static double currentBeatSound { get; private set; }
         public static double currentBeatScreen { get; private set; }
