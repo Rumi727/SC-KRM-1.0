@@ -124,7 +124,7 @@ namespace SCKRM.Rhythm
                     TPair previousBeatValuePair = this[index - 1];
                     double t = ((currentBeat - beatValuePair.beat) / beatValuePair.length).Clamp01();
 
-                    value = func.Invoke(currentBeat, t, EasingFunction.GetEasingFunction(beatValuePair.easingFuncion), previousBeatValuePair, beatValuePair);
+                    value = func.Invoke(currentBeat, t, EasingFunction.GetEasingFunction(beatValuePair.easingFunction), previousBeatValuePair, beatValuePair);
                 }
             }
 
@@ -250,7 +250,7 @@ namespace SCKRM.Rhythm
     public interface IBeatValuePairAni<TValue> : IBeatValuePair<TValue>
     {
         public double length { get; set; }
-        public EasingFunction.Ease easingFuncion { get; set; }
+        public EasingFunction.Ease easingFunction { get; set; }
     }
 
 
@@ -273,15 +273,15 @@ namespace SCKRM.Rhythm
         public TValue value { get; set; }
 
         public double length { get; set; }
-        public EasingFunction.Ease easingFuncion { get; set; }
+        public EasingFunction.Ease easingFunction { get; set; }
 
-        public BeatValuePairAni(double beat, TValue value, double length, EasingFunction.Ease easingFuncion)
+        public BeatValuePairAni(double beat, TValue value, double length, EasingFunction.Ease easingFunction)
         {
             this.beat = beat;
             this.value = value;
 
             this.length = length;
-            this.easingFuncion = easingFuncion;
+            this.easingFunction = easingFunction;
         }
     }
     #endregion
