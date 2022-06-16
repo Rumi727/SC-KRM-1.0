@@ -474,7 +474,7 @@ namespace SCKRM.Resource
                     Texture2D background = new Texture2D(width, height);
                     Dictionary<string, Rect> fileName_rect = new Dictionary<string, Rect>();
                     
-                    Rect[] rects = background.PackTextures(textures2, 10);
+                    Rect[] rects = background.PackTextures(textures2, 10, int.MaxValue);
                     background.filterMode = textureMetaData.filterMode;
 
                     if (textureMetaData.compressionType == TextureMetaData.CompressionType.normal)

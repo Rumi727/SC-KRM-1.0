@@ -13,14 +13,13 @@ public class Postest : MonoBehaviour
     Vector2 rotation = Vector2.zero;
 
     SoundPlayer soundPlayer;
-    RhythmMap rhythmMap;
     public TMP_Text text;
 
     public GameObject test;
 
     void Start()
     {
-        soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
+        /*soundPlayer = SoundManager.PlaySound("grateful_friends", "school-live", 0.25f, true, 1, 1, 0);
         rhythmMap = new RhythmMap();
 
         rhythmMap.info.offset = 1.194;
@@ -31,7 +30,7 @@ public class Postest : MonoBehaviour
         rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(429, true));
         rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(556, false));
         rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(605, true));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(732, false));
+        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(732, false));*/
 
         /*bool temp = false;
         for (int i = 4; i < 1000; i += 4)
@@ -65,8 +64,8 @@ public class Postest : MonoBehaviour
 
     void Update()
     {
-        if (!RhythmManager.isPlaying)
-            RhythmManager.Play(soundPlayer, rhythmMap);
+        /*if (!RhythmManager.isPlaying)
+            RhythmManager.Play(soundPlayer, rhythmMap);*/
 
         float speed;
         if (InputManager.GetKey(KeyCode.LeftControl, InputType.Alway))

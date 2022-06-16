@@ -4,10 +4,10 @@ using System.Threading;
 
 namespace SCKRM.Renderer
 {
-    public abstract class CustomAllRenderer : MonoBehaviour, IRefreshable
+    public abstract class CustomAllRenderer : MonoBehaviour, IRefreshable, INameSpaceKey
     {
         /// <summary>
-        /// 렌더링 할 파일의 네임스페이스
+        /// 렌더링 할 파일의 네임스페이스 (Thread-safe)
         /// </summary>
         public string nameSpace
         {
@@ -34,7 +34,7 @@ namespace SCKRM.Renderer
         [SerializeField] string _nameSpace = "";
 
         /// <summary>
-        /// 렌더링 할 파일의 경로
+        /// 렌더링 할 파일의 경로 (Thread-safe)
         /// </summary>
         public string path
         {
@@ -60,9 +60,10 @@ namespace SCKRM.Renderer
         }
         int pathLock = 0;
         [SerializeField] string _path = "";
+        string INameSpaceKey.key { get => path; set => path = value; }
 
         /// <summary>
-        /// 네임스페이스랑 경로랑 동시에 설정할 수 있습니다
+        /// 네임스페이스랑 경로랑 동시에 설정할 수 있습니다 (Thread-safe)
         /// </summary>
         public NameSpacePathPair nameSpacePathPair
         {

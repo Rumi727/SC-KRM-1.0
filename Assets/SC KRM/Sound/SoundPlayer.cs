@@ -9,13 +9,8 @@ namespace SCKRM.Sound
 {
     [AddComponentMenu("SC KRM/Sound/Sound Player", 0)]
     [RequireComponent(typeof(AudioSource)), RequireComponent(typeof(AudioLowPassFilter))]
-    public sealed class SoundPlayer : SoundPlayerParent
+    public sealed class SoundPlayer : SoundPlayerParent<SoundMetaData>
     {
-        public SoundData<SoundMetaData> soundData { get; private set; }
-        public SoundData<SoundMetaData> customSoundData { get; set; }
-
-        public SoundMetaData metaData { get; private set; }
-
         [System.NonSerialized] AudioSource _audioSource; public AudioSource audioSource => _audioSource = this.GetComponentFieldSave(_audioSource);
         [System.NonSerialized] AudioLowPassFilter _audioLowPassFilter; public AudioLowPassFilter audioLowPassFilter => _audioLowPassFilter = this.GetComponentFieldSave(_audioLowPassFilter);
 

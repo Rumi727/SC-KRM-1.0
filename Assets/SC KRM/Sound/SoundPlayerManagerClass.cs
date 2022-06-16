@@ -1,11 +1,91 @@
 using SCKRM.Object;
+using SCKRM.Resource;
 using System;
 using UnityEngine;
 
 namespace SCKRM.Sound
 {
-    public abstract class SoundPlayerParent : ObjectPooling, IRefreshable
+    public interface INameSpaceKey
     {
+        string nameSpace { get; set; }
+        string key { get; set; }
+    }
+
+    public interface ITime
+    {
+        float time { get; set; }
+        float realTime { get; set; }
+
+        event Action timeChanged;
+
+
+
+        bool isPaused { get; set; }
+    }
+
+    public interface ILength
+    {
+        float time { get; set; }
+        float realTime { get; set; }
+
+        event Action timeChanged;
+    }
+
+    public interface ISpeed
+    {
+        float pitch { get; set; }
+        float tempo { get; set; }
+
+        float speed { get; set; }
+    }
+
+    public interface ILoop
+    {
+        event Action looped;
+        bool isLooped { get; }
+    }
+
+    public interface IVolume
+    {
+        float volume { get; set; }
+    }
+
+    public interface ISpatial
+    {
+        float minDistance { get; set; }
+        float maxDistance { get; set; }
+
+        float panStereo { get; set; }
+
+
+
+        bool spatial { get; set; }
+        Vector3 localPosition { get; set; }
+    }
+
+    public interface ISoundPlayerRefresh : IRefreshable
+    {
+
+    }
+
+    public interface ISoundPlayer<MetaData> : IObjectPooling, INameSpaceKey, ITime, ILength, ISpeed, ILoop, IVolume, ISpatial, ISoundPlayerRefresh where MetaData : SoundMetaDataParent
+    {
+        public SoundData<MetaData> soundData { get; }
+        public SoundData<MetaData> customSoundData { get; set; }
+
+        public MetaData metaData { get; }
+    }
+
+    public abstract class SoundPlayerParent<MetaData> : ObjectPooling, ISoundPlayer<MetaData> where MetaData : SoundMetaDataParent
+    {
+        SoundData<MetaData> ISoundPlayer<MetaData>.soundData { get => soundData; }
+        public SoundData<MetaData> soundData { get; protected set; }
+        public SoundData<MetaData> customSoundData { get; set; }
+
+        public MetaData metaData { get; protected set; }
+
+
+
         public string key { get; set; } = "";
         public string nameSpace { get; set; } = "";
 
@@ -28,6 +108,7 @@ namespace SCKRM.Sound
 
 
 
+        bool ILoop.isLooped { get => isLooped; }
         public abstract bool isLooped { get; protected set; }
         public abstract bool isPaused { get; set; }
 

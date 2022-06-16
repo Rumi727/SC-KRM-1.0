@@ -8,6 +8,7 @@ using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -78,12 +79,9 @@ namespace SCKRM.Sound
 
 
 
-            SoundPlayerParent[] soundPlayers = FindObjectsOfType<SoundPlayerParent>();
-            for (int i = 0; i < soundPlayers.Length; i++)
-            {
-                SoundPlayerParent soundPlayer = soundPlayers[i];
-                soundPlayer.Refresh();
-            }
+            ISoundPlayerRefresh[] iSoundPlayerRefresh = FindObjectsOfType<MonoBehaviour>().OfType<ISoundPlayerRefresh>().ToArray();
+            for (int i = 0; i < iSoundPlayerRefresh.Length; i++)
+                iSoundPlayerRefresh[i].Refresh();
         }
 
         /// <summary>
