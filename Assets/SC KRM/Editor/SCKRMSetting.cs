@@ -241,7 +241,7 @@ namespace SCKRM.Editor
                             }
                         }
 
-                        if (canvasSetting != null && !canvasSetting.customSetting)
+                        if (canvasSetting != null && !canvasSetting.customSetting && !canvasSetting.customGuiSize)
                         {
                             CanvasScaler[] canvasScalers = canvas.GetComponents<CanvasScaler>();
                             for (int j = 0; j < canvasScalers.Length; j++)
