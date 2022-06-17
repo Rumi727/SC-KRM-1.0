@@ -92,8 +92,8 @@ namespace SCKRM
                 {
                     _saveDataPath = persistentDataPath + "/Save Data";
 
-                    if (!Directory.Exists(_resourcePackPath))
-                        Directory.CreateDirectory(_resourcePackPath);
+                    if (!Directory.Exists(_saveDataPath))
+                        Directory.CreateDirectory(_saveDataPath);
 
                     return _saveDataPath;
                 }
