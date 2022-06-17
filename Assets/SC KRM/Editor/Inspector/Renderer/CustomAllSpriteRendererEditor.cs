@@ -137,6 +137,8 @@ namespace SCKRM.Editor
                     if (editor.enabled)
                         editor.Refresh();
                 }
+
+                DestroyImmediate(texture);
             }
             else if (GUI.changed)
             {
