@@ -1,10 +1,13 @@
 using SCKRM.Object;
 using SCKRM.Resource;
 using System;
+using System.Threading;
 using UnityEngine;
 
 namespace SCKRM.Sound
 {
+    public delegate void OnAudioFilterReadAction(float[] data, int channels);
+
     public interface ISoundPlayerData<MetaData> where MetaData : SoundMetaDataParent
     {
         SoundData<MetaData> soundData { get; }
@@ -57,6 +60,10 @@ namespace SCKRM.Sound
 
         bool spatial { get; set; }
         Vector3 localPosition { get; set; }
+
+
+
+        event OnAudioFilterReadAction onAudioFilterReadEvent;
     }
 
     public abstract class SoundPlayerParent<MetaData> : ObjectPooling, ISoundPlayer, ISoundPlayerData<MetaData> where MetaData : SoundMetaDataParent
@@ -115,6 +122,55 @@ namespace SCKRM.Sound
 
         public virtual bool spatial { get; set; } = false;
         public virtual Vector3 localPosition { get; set; } = Vector3.zero;
+
+
+
+        int onAudioFilterReadEventLock = 0;
+        event OnAudioFilterReadAction _onAudioFilterReadEvent;
+
+        /// <summary>
+        /// Thread-Safe (onAudioFilterReadEvent += () => { onAudioFilterReadEvent += () => { }; }; Do not add more methods to this event from inside this event method like this. This causes deadlock)
+        /// </summary>
+        public event OnAudioFilterReadAction onAudioFilterReadEvent
+        {
+            add
+            {
+                while (Interlocked.CompareExchange(ref onAudioFilterReadEventLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _onAudioFilterReadEvent += value;
+
+                Interlocked.Decrement(ref onAudioFilterReadEventLock);
+            }
+            remove
+            {
+                while (Interlocked.CompareExchange(ref onAudioFilterReadEventLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _onAudioFilterReadEvent -= value;
+
+                Interlocked.Decrement(ref onAudioFilterReadEventLock);
+            }
+        }
+
+        protected void OnAudioFilterReadInvoke(float[] data, int channels)
+        {
+            while (Interlocked.CompareExchange(ref onAudioFilterReadEventLock, 1, 0) != 0)
+                Thread.Sleep(1);
+
+            try
+            {
+                _onAudioFilterReadEvent?.Invoke(data, channels);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+            finally
+            {
+                Interlocked.Decrement(ref onAudioFilterReadEventLock);
+            }
+        }
 
 
 
