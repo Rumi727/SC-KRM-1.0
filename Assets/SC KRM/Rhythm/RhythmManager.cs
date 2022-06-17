@@ -115,10 +115,7 @@ namespace SCKRM.Rhythm
             currentBeatSound = ((soundTime - SaveData.soundOffset) * bpmDivide60) + bpmOffsetBeat;
             currentBeatScreen = ((soundTime - SaveData.screenOffset) * bpmDivide60) + bpmOffsetBeat;
 
-            if (currentBeat >= 0)
-                currentBeat1Beat = currentBeat - (int)currentBeat;
-            else
-                currentBeat1Beat = 1 - ((int)currentBeat - currentBeat);
+            currentBeat1Beat = currentBeat1Beat.Reapeat(1);
         }
 
         static void BPMChange(double bpm, double offsetBeat)
