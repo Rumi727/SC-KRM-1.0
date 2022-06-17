@@ -27,9 +27,9 @@ namespace SCKRM.Tooltip
         void LateUpdate()
         {
             if (isShow)
-                toolTipCanvasGroup.alpha += 0.1f * Kernel.unscaledDeltaTime;
+                toolTipCanvasGroup.alpha += 0.1f * Kernel.fpsUnscaledDeltaTime;
             else
-                toolTipCanvasGroup.alpha -= 0.1f * Kernel.unscaledDeltaTime;
+                toolTipCanvasGroup.alpha -= 0.1f * Kernel.fpsUnscaledDeltaTime;
 
             toolTipCanvasGroup.alpha = toolTipCanvasGroup.alpha.Clamp01();
 
