@@ -39,8 +39,8 @@ namespace SCKRM.Tooltip
                 Vector2 cursorScale = cursorRectTransform.localScale;
                 Vector2 cursorSize = cursorRectTransform.rect.size;
                 float cursorZRotationRad = cursorRectTransform.localEulerAngles.z * Mathf.Deg2Rad;
-                float cursorZRotationSin = Mathf.Sin(cursorZRotationRad);
-                float cursorZRotationCos = Mathf.Cos(cursorZRotationRad);
+                float cursorZRotationSin = cursorZRotationRad.Sin();
+                float cursorZRotationCos = cursorZRotationRad.Cos();
 
                 Vector2 offset = new Vector2(cursorZRotationSin * cursorSize.x, cursorZRotationCos * -cursorSize.y) + new Vector2(cursorZRotationCos * cursorSize.x, cursorZRotationSin * cursorSize.x);
                 Vector2 pos = (InputManager.mousePosition / UIManager.currentGuiSize) + (offset * cursorScale);

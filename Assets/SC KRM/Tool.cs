@@ -15,6 +15,32 @@ namespace SCKRM
 {
     public static class MathTool
     {
+        #region Trigonometric functions
+        public static float Sin(this float value) => (float)Math.Sin(value);
+        public static double Sin(this double value) => Math.Sin(value);
+        public static decimal Sin(this decimal value) => (decimal)Math.Sin((double)value);
+
+        public static float Asin(this float value) => (float)Math.Asin(value);
+        public static double Asin(this double value) => Math.Asin(value);
+        public static decimal Asin(this decimal value) => (decimal)Math.Asin((double)value);
+
+        public static float Cos(this float value) => (float)Math.Cos(value);
+        public static double Cos(this double value) => Math.Cos(value);
+        public static decimal Cos(this decimal value) => (decimal)Math.Cos((double)value);
+
+        public static float Acos(this float value) => (float)Math.Acos(value);
+        public static double Acos(this double value) => Math.Acos(value);
+        public static decimal Acos(this decimal value) => (decimal)Math.Acos((double)value);
+
+        public static float Tan(this float value) => (float)Math.Tan(value);
+        public static double Tan(this double value) => Math.Tan(value);
+        public static decimal Tan(this decimal value) => (decimal)Math.Tan((double)value);
+
+        public static float Atan(this float value) => (float)Math.Atan(value);
+        public static double Atan(this double value) => Math.Atan(value);
+        public static decimal Atan(this decimal value) => (decimal)Math.Atan((double)value);
+        #endregion
+
         #region Abs
         public static sbyte Abs(this sbyte value)
         {
@@ -439,6 +465,21 @@ namespace SCKRM
             else
                 return value;
         }
+        #endregion
+
+        #region Reapeat
+        public static sbyte Reapeat(this sbyte t, sbyte length) => (sbyte)(t - (t / length) * length).Clamp(0, length);
+        public static byte Reapeat(this byte t, byte length) => (byte)(t - (t / length) * length).Clamp(0, length);
+        public static short Reapeat(this short t, short length) => (short)(t - (t / length) * length).Clamp(0, length);
+        public static ushort Reapeat(this ushort t, ushort length) => (ushort)(t - (t / length) * length).Clamp(0, length);
+        public static int Reapeat(this int t, int length) => (t - (t / length) * length).Clamp(0, length);
+        public static uint Reapeat(this uint t, uint length) => (t - (t / length) * length).Clamp(0, length);
+        public static long Reapeat(this long t, long length) => (t - (t / length) * length).Clamp(0, length);
+        public static ulong Reapeat(this ulong t, ulong length) => (t - (t / length) * length).Clamp(0, length);
+        public static float Reapeat(this float t, float length) => (t - (t / length).Floor() * length).Clamp(0, length);
+        public static double Reapeat(this double t, double length) => (t - (t / length).Floor() * length).Clamp(0, length);
+        public static BigInteger Reapeat(this BigInteger t, BigInteger length) => (t - (t / length) * length).Clamp(0, length);
+        public static BigDecimal Reapeat(this BigDecimal t, BigDecimal length) => (t - (t / length).Floor() * length).Clamp(0, length);
         #endregion
 
         #region Lerp
@@ -948,6 +989,18 @@ namespace SCKRM
         public static float Round(this float value, int digits) => (float)Math.Round(value, digits);
         public static double Round(this double value, int digits) => Math.Round(value, digits);
         public static decimal Round(this decimal value, int digits) => Math.Round(value, digits);
+        #endregion
+
+        #region Pow
+        public static float Pow(this float x, float y) => (float)Math.Pow(x, y);
+        public static double Pow(this double x, double y) => Math.Pow(x, y);
+        public static decimal Pow(this decimal x, decimal y) => (decimal)Math.Pow((double)x, (double)y);
+        #endregion
+
+        #region Sqrt
+        public static float Sqrt(this float value) => (float)Math.Sqrt(value);
+        public static double Sqrt(this double value) => Math.Sqrt(value);
+        public static decimal Sqrt(this decimal value) => (decimal)Math.Sqrt((double)value);
         #endregion
 
         #region Min

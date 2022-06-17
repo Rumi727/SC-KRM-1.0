@@ -195,8 +195,8 @@ namespace SCKRM.Polygon
             for (int i = 0; i < sidesInt; i++)
             {
                 float radian = i / sides * tau;
-                float x = Mathf.Sin(radian) * radius;
-                float y = Mathf.Cos(radian) * radius;
+                float x = radian.Sin() * radius;
+                float y = radian.Cos() * radius;
 
                 lineRenderer.SetPosition(i, new Vector3(x, y));
             }
