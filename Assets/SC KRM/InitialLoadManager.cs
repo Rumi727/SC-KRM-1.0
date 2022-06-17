@@ -189,12 +189,12 @@ namespace SCKRM
                 {
                     //씬 애니메이션이 끝날때까지 기다립니다
                     Debug.Log("Kernel: Waiting for scene animation...");
-                    if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlayed, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
+                    if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlaying, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
                 }
 #if UNITY_EDITOR
                 else
-                    SplashScreen.isAniPlayed = false;
+                    SplashScreen.isAniPlaying = false;
 #endif
 
                 StatusBarManager.allowStatusBarShow = true;

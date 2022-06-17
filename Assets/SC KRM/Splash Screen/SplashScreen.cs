@@ -22,6 +22,6 @@ namespace SCKRM.Splash
             [JsonProperty] public static bool allowProgressBarShow { get; set; } = false;
         }
 
-        public static bool isAniPlayed { get; set; } = true;
+        public static bool isAniPlaying { get; set; } = true;
     }
 }

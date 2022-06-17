@@ -32,7 +32,7 @@ namespace SCKRM.Splash
         {
             if (SingletonCheck(this))
             {
-                SplashScreen.isAniPlayed = true;
+                SplashScreen.isAniPlaying = true;
 
                 canvasGroup.alpha = 0;
                 progressBarCanvasGroup.alpha = 0;
@@ -43,7 +43,7 @@ namespace SCKRM.Splash
 
                 if (await UniTask.DelayFrame(10, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
-                else if (!SplashScreen.isAniPlayed)
+                else if (!SplashScreen.isAniPlaying)
                     return;
 
                 if (Random.Range(0, 2) == 1)
@@ -72,13 +72,13 @@ namespace SCKRM.Splash
                     canvasGroup.alpha += 0.05f * Kernel.fpsUnscaledDeltaTime;
                     if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
-                    else if (!SplashScreen.isAniPlayed)
+                    else if (!SplashScreen.isAniPlaying)
                         return;
                 }
 
                 if (await UniTask.WaitUntil(() => InitialLoadManager.isSettingLoadEnd, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                     return;
-                else if (!SplashScreen.isAniPlayed)
+                else if (!SplashScreen.isAniPlaying)
                     return;
 
                 canvasGroup.alpha = 1;
@@ -96,7 +96,7 @@ namespace SCKRM.Splash
 
                     if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                         return;
-                    else if (!SplashScreen.isAniPlayed)
+                    else if (!SplashScreen.isAniPlaying)
                         return;
                 }
 
@@ -132,12 +132,12 @@ namespace SCKRM.Splash
 
                         if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
-                        else if (!SplashScreen.isAniPlayed)
+                        else if (!SplashScreen.isAniPlaying)
                             return;
                     }
                 }
 
-                SplashScreen.isAniPlayed = false;
+                SplashScreen.isAniPlaying = false;
             }
         }
 
