@@ -108,7 +108,7 @@ namespace SCKRM.Easing
         public static double Spring(double start, double end, double value)
         {
             value = value.Clamp01();
-            value = (value * Math.PI * (0.2f + 2.5f * value * value * value) * Math.Pow(1f - value, 2.2f) + value) * (1f + (1.2f * (1f - value)));
+            value = (value * Math.PI * (0.2 + 2.5 * value * value * value) * (1 - value).Pow(2.2) + value) * (1 + (1.2 * (1 - value)));
             return start + (end - start) * value;
         }
 
@@ -126,12 +126,12 @@ namespace SCKRM.Easing
 
         public static double EaseInOutQuad(double start, double end, double value)
         {
-            value /= .5f;
+            value /= .5;
             end -= start;
             if (value < 1)
-                return end * 0.5f * value * value + start;
+                return end * 0.5 * value * value + start;
             value--;
-            return -end * 0.5f * (value * (value - 2) - 1) + start;
+            return -end * 0.5 * (value * (value - 2) - 1) + start;
         }
 
         public static double EaseInCubic(double start, double end, double value)
@@ -149,12 +149,12 @@ namespace SCKRM.Easing
 
         public static double EaseInOutCubic(double start, double end, double value)
         {
-            value /= .5f;
+            value /= .5;
             end -= start;
             if (value < 1)
-                return end * 0.5f * value * value * value + start;
+                return end * 0.5 * value * value * value + start;
             value -= 2;
-            return end * 0.5f * (value * value * value + 2) + start;
+            return end * 0.5 * (value * value * value + 2) + start;
         }
 
         public static double EaseInQuart(double start, double end, double value)
@@ -172,12 +172,12 @@ namespace SCKRM.Easing
 
         public static double EaseInOutQuart(double start, double end, double value)
         {
-            value /= .5f;
+            value /= .5;
             end -= start;
             if (value < 1)
-                return end * 0.5f * value * value * value * value + start;
+                return end * 0.5 * value * value * value * value + start;
             value -= 2;
-            return -end * 0.5f * (value * value * value * value - 2) + start;
+            return -end * 0.5 * (value * value * value * value - 2) + start;
         }
 
         public static double EaseInQuint(double start, double end, double value)
@@ -195,75 +195,75 @@ namespace SCKRM.Easing
 
         public static double EaseInOutQuint(double start, double end, double value)
         {
-            value /= .5f;
+            value /= .5;
             end -= start;
             if (value < 1)
-                return end * 0.5f * value * value * value * value * value + start;
+                return end * 0.5 * value * value * value * value * value + start;
             value -= 2;
-            return end * 0.5f * (value * value * value * value * value + 2) + start;
+            return end * 0.5 * (value * value * value * value * value + 2) + start;
         }
 
         public static double EaseInSine(double start, double end, double value)
         {
             end -= start;
-            return -end * Math.Cos(value * (Math.PI * 0.5f)) + end + start;
+            return -end * (value * (Math.PI * 0.5)).Cos() + end + start;
         }
 
         public static double EaseOutSine(double start, double end, double value)
         {
             end -= start;
-            return end * Math.Sin(value * (Math.PI * 0.5f)) + start;
+            return end * (value * (Math.PI * 0.5)).Sin() + start;
         }
 
         public static double EaseInOutSine(double start, double end, double value)
         {
             end -= start;
-            return -end * 0.5f * (Math.Cos(Math.PI * value) - 1) + start;
+            return -end * 0.5 * ((Math.PI * value).Cos() - 1) + start;
         }
 
         public static double EaseInExpo(double start, double end, double value)
         {
             end -= start;
-            return end * Math.Pow(2, 10 * (value - 1)) + start;
+            return end * 2d.Pow(10 * (value - 1)) + start;
         }
 
         public static double EaseOutExpo(double start, double end, double value)
         {
             end -= start;
-            return end * (-Math.Pow(2, -10 * value) + 1) + start;
+            return end * (-(2d.Pow(-10 * value)) + 1) + start;
         }
 
         public static double EaseInOutExpo(double start, double end, double value)
         {
-            value /= .5f;
+            value /= .5;
             end -= start;
             if (value < 1)
-                return end * 0.5f * Math.Pow(2, 10 * (value - 1)) + start;
+                return end * 0.5 * 2d.Pow(10 * (value - 1)) + start;
             value--;
-            return end * 0.5f * (-Math.Pow(2, -10 * value) + 2) + start;
+            return end * 0.5 * (-(2d.Pow(- 10 * value)) + 2) + start;
         }
 
         public static double EaseInCirc(double start, double end, double value)
         {
             end -= start;
-            return -end * (Math.Sqrt(1 - value * value) - 1) + start;
+            return -end * ((1 - value * value).Sqrt() - 1) + start;
         }
 
         public static double EaseOutCirc(double start, double end, double value)
         {
             value--;
             end -= start;
-            return end * Math.Sqrt(1 - value * value) + start;
+            return end * (1 - value * value).Sqrt() + start;
         }
 
         public static double EaseInOutCirc(double start, double end, double value)
         {
-            value /= .5f;
+            value /= .5;
             end -= start;
             if (value < 1)
-                return -end * 0.5f * (Math.Sqrt(1 - value * value) - 1) + start;
+                return -end * 0.5 * ((1 - value * value).Sqrt() - 1) + start;
             value -= 2;
-            return end * 0.5f * (Math.Sqrt(1 - value * value) + 1) + start;
+            return end * 0.5 * ((1 - value * value).Sqrt() + 1) + start;
         }
 
         public static double EaseInBounce(double start, double end, double value)
@@ -275,50 +275,50 @@ namespace SCKRM.Easing
 
         public static double EaseOutBounce(double start, double end, double value)
         {
-            value /= 1f;
+            value /= 1;
             end -= start;
-            if (value < (1 / 2.75f))
+            if (value < (1 / 2.75))
             {
-                return end * (7.5625f * value * value) + start;
+                return end * (7.5625 * value * value) + start;
             }
-            else if (value < (2 / 2.75f))
+            else if (value < (2 / 2.75))
             {
-                value -= (1.5f / 2.75f);
-                return end * (7.5625f * (value) * value + .75f) + start;
+                value -= (1.5 / 2.75);
+                return end * (7.5625 * (value) * value + .75) + start;
             }
             else if (value < (2.5 / 2.75))
             {
-                value -= (2.25f / 2.75f);
-                return end * (7.5625f * (value) * value + .9375f) + start;
+                value -= (2.25 / 2.75);
+                return end * (7.5625 * (value) * value + .9375) + start;
             }
             else
             {
-                value -= (2.625f / 2.75f);
-                return end * (7.5625f * (value) * value + .984375f) + start;
+                value -= (2.625 / 2.75);
+                return end * (7.5625 * (value) * value + .984375) + start;
             }
         }
 
         public static double EaseInOutBounce(double start, double end, double value)
         {
             end -= start;
-            double d = 1f;
-            if (value < d * 0.5f)
-                return EaseInBounce(0, end, value * 2) * 0.5f + start;
+            double d = 1;
+            if (value < d * 0.5)
+                return EaseInBounce(0, end, value * 2) * 0.5 + start;
             else
-                return EaseOutBounce(0, end, value * 2 - d) * 0.5f + end * 0.5f + start;
+                return EaseOutBounce(0, end, value * 2 - d) * 0.5 + end * 0.5 + start;
         }
 
         public static double EaseInBack(double start, double end, double value)
         {
             end -= start;
             value /= 1;
-            double s = 1.70158f;
+            double s = 1.70158;
             return end * (value) * value * ((s + 1) * value - s) + start;
         }
 
         public static double EaseOutBack(double start, double end, double value)
         {
-            double s = 1.70158f;
+            double s = 1.70158;
             end -= start;
             value = (value) - 1;
             return end * ((value) * value * ((s + 1) * value + s) + 1) + start;
@@ -326,25 +326,25 @@ namespace SCKRM.Easing
 
         public static double EaseInOutBack(double start, double end, double value)
         {
-            double s = 1.70158f;
+            double s = 1.70158;
             end -= start;
-            value /= .5f;
+            value /= .5;
             if ((value) < 1)
             {
-                s *= (1.525f);
-                return end * 0.5f * (value * value * (((s) + 1) * value - s)) + start;
+                s *= (1.525);
+                return end * 0.5 * (value * value * (((s) + 1) * value - s)) + start;
             }
             value -= 2;
-            s *= (1.525f);
-            return end * 0.5f * ((value) * value * (((s) + 1) * value + s) + 2) + start;
+            s *= (1.525);
+            return end * 0.5 * ((value) * value * (((s) + 1) * value + s) + 2) + start;
         }
 
         public static double EaseInElastic(double start, double end, double value)
         {
             end -= start;
 
-            double d = 1f;
-            double p = d * .3f;
+            double d = 1;
+            double p = d * .3;
             double s;
             double a = 0;
 
@@ -354,25 +354,25 @@ namespace SCKRM.Easing
             if ((value /= d) == 1)
                 return start + end;
 
-            if (a == 0f || a < Math.Abs(end))
+            if (a == 0 || a < end.Abs())
             {
                 a = end;
                 s = p / 4;
             }
             else
             {
-                s = p / (2 * Math.PI) * Math.Asin(end / a);
+                s = p / (2 * Math.PI) * (end / a).Asin();
             }
 
-            return -(a * Math.Pow(2, 10 * (value -= 1)) * Math.Sin((value * d - s) * (2 * Math.PI) / p)) + start;
+            return -(a * 2d.Pow(10 * (value -= 1)) * ((value * d - s) * (2 * Math.PI) / p).Sin()) + start;
         }
 
         public static double EaseOutElastic(double start, double end, double value)
         {
             end -= start;
 
-            double d = 1f;
-            double p = d * .3f;
+            double d = 1;
+            double p = d * .3;
             double s;
             double a = 0;
 
@@ -382,17 +382,17 @@ namespace SCKRM.Easing
             if ((value /= d) == 1)
                 return start + end;
 
-            if (a == 0f || a < Math.Abs(end))
+            if (a == 0 || a < end.Abs())
             {
                 a = end;
-                s = p * 0.25f;
+                s = p * 0.25;
             }
             else
             {
-                s = p / (2 * Math.PI) * Math.Asin(end / a);
+                s = p / (2 * Math.PI) * (end / a).Asin();
             }
 
-            return (a * Math.Pow(2, -10 * value) * Math.Sin((value * d - s) * (2 * Math.PI) / p) + end + start);
+            return (a * 2d.Pow(-10 * value) * ((value * d - s) * (2 * Math.PI) / p).Sin() + end + start);
         }
 
         public static double EaseInOutElastic(double start, double end, double value)
@@ -407,22 +407,22 @@ namespace SCKRM.Easing
             if (value == 0)
                 return start;
 
-            if ((value /= d * 0.5f) == 2)
+            if ((value /= d * 0.5d) == 2)
                 return start + end;
 
-            if (a == 0f || a < Math.Abs(end))
+            if (a == 0f || a < end.Abs())
             {
                 a = end;
                 s = p / 4;
             }
             else
             {
-                s = p / (2 * Math.PI) * Math.Asin(end / a);
+                s = p / (2 * Math.PI) * (end / a).Asin();
             }
 
             if (value < 1)
-                return -0.5f * (a * Math.Pow(2, 10 * (value -= 1)) * Math.Sin((value * d - s) * (2 * Math.PI) / p)) + start;
-            return a * Math.Pow(2, -10 * (value -= 1)) * Math.Sin((value * d - s) * (2 * Math.PI) / p) * 0.5f + end + start;
+                return -0.5 * (a * 2d.Pow(10 * (value -= 1)) * ((value * d - s) * (2 * Math.PI) / p).Sin()) + start;
+            return a * 2d.Pow(-10 * (value -= 1)) * ((value * d - s) * (2 * Math.PI) / p).Sin() * 0.5 + end + start;
         }
 
         //
@@ -434,15 +434,9 @@ namespace SCKRM.Easing
         // TODO: These functions have not had the testing they deserve. If there is odd behavior around
         //       dash speeds then this would be the first place I'd look.
 
-        public static double LinearD(double start, double end, double value)
-        {
-            return end - start;
-        }
+        public static double LinearD(double start, double end, double value) => end - start;
 
-        public static double EaseInQuadD(double start, double end, double value)
-        {
-            return 2d * (end - start) * value;
-        }
+        public static double EaseInQuadD(double start, double end, double value) => 2 * (end - start) * value;
 
         public static double EaseOutQuadD(double start, double end, double value)
         {
@@ -456,25 +450,20 @@ namespace SCKRM.Easing
             end -= start;
 
             if (value < 1)
-            {
                 return end * value;
-            }
 
             value--;
 
             return end * (1 - value);
         }
 
-        public static double EaseInCubicD(double start, double end, double value)
-        {
-            return 3d * (end - start) * value * value;
-        }
+        public static double EaseInCubicD(double start, double end, double value) => 3d * (end - start) * value * value;
 
         public static double EaseOutCubicD(double start, double end, double value)
         {
             value--;
             end -= start;
-            return 3d * end * value * value;
+            return 3 * end * value * value;
         }
 
         public static double EaseInOutCubicD(double start, double end, double value)
@@ -494,14 +483,14 @@ namespace SCKRM.Easing
 
         public static double EaseInQuartD(double start, double end, double value)
         {
-            return 4d * (end - start) * value * value * value;
+            return 4 * (end - start) * value * value * value;
         }
 
         public static double EaseOutQuartD(double start, double end, double value)
         {
             value--;
             end -= start;
-            return -4d * end * value * value * value;
+            return -4 * end * value * value * value;
         }
 
         public static double EaseInOutQuartD(double start, double end, double value)
@@ -511,24 +500,24 @@ namespace SCKRM.Easing
 
             if (value < 1)
             {
-                return 2d * end * value * value * value;
+                return 2 * end * value * value * value;
             }
 
             value -= 2;
 
-            return -2d * end * value * value * value;
+            return -2 * end * value * value * value;
         }
 
         public static double EaseInQuintD(double start, double end, double value)
         {
-            return 5d * (end - start) * value * value * value * value;
+            return 5 * (end - start) * value * value * value * value;
         }
 
         public static double EaseOutQuintD(double start, double end, double value)
         {
             value--;
             end -= start;
-            return 5d * end * value * value * value * value;
+            return 5 * end * value * value * value * value;
         }
 
         public static double EaseInOutQuintD(double start, double end, double value)
@@ -546,31 +535,25 @@ namespace SCKRM.Easing
             return (5d / 2d) * end * value * value * value * value;
         }
 
-        public static double EaseInSineD(double start, double end, double value)
-        {
-            return (end - start) * 0.5d * Math.PI * Math.Sin(0.5d * Math.PI * value);
-        }
+        public static double EaseInSineD(double start, double end, double value) => (end - start) * 0.5 * Math.PI * (0.5 * Math.PI * value).Sin();
 
         public static double EaseOutSineD(double start, double end, double value)
         {
             end -= start;
-            return (Math.PI * 0.5d) * end * Math.Cos(value * (Math.PI * 0.5d));
+            return (Math.PI * 0.5) * end * (value * (Math.PI * 0.5)).Cos();
         }
 
         public static double EaseInOutSineD(double start, double end, double value)
         {
             end -= start;
-            return end * 0.5d * Math.PI * Math.Sin(Math.PI * value);
+            return end * 0.5 * Math.PI * (Math.PI * value).Sin();
         }
-        public static double EaseInExpoD(double start, double end, double value)
-        {
-            return (10d * NATURAL_LOG_OF_2 * (end - start) * Math.Pow(2d, 10d * (value - 1)));
-        }
+        public static double EaseInExpoD(double start, double end, double value) => (10 * NATURAL_LOG_OF_2 * (end - start) * 2d.Pow(10d * (value - 1)));
 
         public static double EaseOutExpoD(double start, double end, double value)
         {
             end -= start;
-            return 5d * NATURAL_LOG_OF_2 * end * Math.Pow(2d, 1d - 10d * value);
+            return 5 * NATURAL_LOG_OF_2 * end * 2d.Pow(1 - 10 * value);
         }
 
         public static double EaseInOutExpoD(double start, double end, double value)
@@ -579,25 +562,20 @@ namespace SCKRM.Easing
             end -= start;
 
             if (value < 1)
-            {
-                return 5d * NATURAL_LOG_OF_2 * end * Math.Pow(2d, 10d * (value - 1));
-            }
+                return 5 * NATURAL_LOG_OF_2 * end * 2d.Pow(10d * (value - 1));
 
             value--;
 
-            return (5d * NATURAL_LOG_OF_2 * end) / (Math.Pow(2d, 10d * value));
+            return (5 * NATURAL_LOG_OF_2 * end) / (2d.Pow(10d * value));
         }
 
-        public static double EaseInCircD(double start, double end, double value)
-        {
-            return ((end - start) * value) / Math.Sqrt(1d - value * value);
-        }
+        public static double EaseInCircD(double start, double end, double value) => ((end - start) * value) / (1d - value * value).Sqrt();
 
         public static double EaseOutCircD(double start, double end, double value)
         {
             value--;
             end -= start;
-            return (-end * value) / Math.Sqrt(1d - value * value);
+            return (-end * value) / (1 - value * value).Sqrt();
         }
 
         public static double EaseInOutCircD(double start, double end, double value)
@@ -607,77 +585,70 @@ namespace SCKRM.Easing
 
             if (value < 1)
             {
-                return (end * value) / (2d * Math.Sqrt(1d - value * value));
+                return (end * value) / (2 * (1 - value * value).Sqrt());
             }
 
-            value -= 2d;
+            value -= 2;
 
-            return (-end * value) / (2d * Math.Sqrt(1d - value * value));
+            return (-end * value) / (2 * (1 - value * value).Sqrt());
         }
 
         public static double EaseInBounceD(double start, double end, double value)
         {
             end -= start;
-            double d = 1d;
+            const double d = 1;
 
             return EaseOutBounceD(0, end, d - value);
         }
 
         public static double EaseOutBounceD(double start, double end, double value)
         {
-            value /= 1d;
+            value /= 1;
             end -= start;
 
-            if (value < (1d / 2.75))
-            {
-                return 2d * end * 7.5625 * value;
-            }
+            if (value < (1 / 2.75))
+                return 2 * end * 7.5625 * value;
             else if (value < (2 / 2.75))
             {
                 value -= (1.5 / 2.75);
-                return 2d * end * 7.5625 * value;
+                return 2 * end * 7.5625 * value;
             }
             else if (value < (2.5 / 2.75))
             {
                 value -= (2.25 / 2.75);
-                return 2d * end * 7.5625 * value;
+                return 2 * end * 7.5625 * value;
             }
             else
             {
                 value -= (2.625 / 2.75);
-                return 2d * end * 7.5625 * value;
+                return 2 * end * 7.5625 * value;
             }
         }
 
         public static double EaseInOutBounceD(double start, double end, double value)
         {
             end -= start;
-            double d = 1d;
+            const double d = 1;
 
             if (value < d * 0.5)
-            {
-                return EaseInBounceD(0, end, value * 2d) * 0.5;
-            }
+                return EaseInBounceD(0, end, value * 2) * 0.5;
             else
-            {
-                return EaseOutBounceD(0, end, value * 2d - d) * 0.5;
-            }
+                return EaseOutBounceD(0, end, value * 2 - d) * 0.5;
         }
 
         public static double EaseInBackD(double start, double end, double value)
         {
-            double s = 1.70158;
-
-            return 3d * (s + 1d) * (end - start) * value * value - 2d * s * (end - start) * value;
+            const double s = 1.70158;
+            return 3d * (s + 1) * (end - start) * value * value - 2 * s * (end - start) * value;
         }
 
         public static double EaseOutBackD(double start, double end, double value)
         {
-            double s = 1.70158;
+            const double s = 1.70158;
             end -= start;
             value = (value) - 1;
 
-            return end * ((s + 1d) * value * value + 2d * value * ((s + 1d) * value + s));
+            return end * ((s + 1) * value * value + 2 * value * ((s + 1) * value + s));
         }
 
         public static double EaseInOutBackD(double start, double end, double value)
@@ -689,74 +660,67 @@ namespace SCKRM.Easing
             if ((value) < 1)
             {
                 s *= (1.525);
-                return 0.5 * end * (s + 1) * value * value + end * value * ((s + 1d) * value - s);
+                return 0.5 * end * (s + 1) * value * value + end * value * ((s + 1) * value - s);
             }
 
             value -= 2;
             s *= (1.525);
-            return 0.5 * end * ((s + 1) * value * value + 2f * value * ((s + 1f) * value + s));
+            return 0.5 * end * ((s + 1) * value * value + 2 * value * ((s + 1f) * value + s));
         }
 
-        public static double EaseInElasticD(double start, double end, double value)
-        {
-            return EaseOutElasticD(start, end, 1d - value);
-        }
+        public static double EaseInElasticD(double start, double end, double value) => EaseOutElasticD(start, end, 1d - value);
 
         public static double EaseOutElasticD(double start, double end, double value)
         {
             end -= start;
 
-            double d = 1d;
-            double p = d * .3d;
+            double d = 1;
+            double p = d * .3;
             double s;
             double a = 0;
 
-            if (a == 0d || a < Math.Abs(end))
+            if (a == 0d || a < end.Abs())
             {
                 a = end;
-                s = p * 0.25d;
+                s = p * 0.25;
             }
             else
-            {
-                s = p / (2 * Math.PI) * Math.Asin(end / a);
-            }
+                s = p / (2 * Math.PI) * (end / a).Asin();
 
-            return (a * Math.PI * d * Math.Pow(2d, 1d - 10d * value) *
-                Math.Cos((2d * Math.PI * (d * value - s)) / p)) / p - 5d * NATURAL_LOG_OF_2 * a *
-                Math.Pow(2d, 1d - 10d * value) * Math.Sin((2d * Math.PI * (d * value - s)) / p);
+            return (a * Math.PI * d * 2d.Pow(1 - 10 * value) *
+                ((2 * Math.PI * (d * value - s)) / p).Cos()) / p - 5 * NATURAL_LOG_OF_2 * a *
+                2d.Pow(1 - 10 * value) * ((2 * Math.PI * (d * value - s)) / p).Sin();
         }
 
         public static double EaseInOutElasticD(double start, double end, double value)
         {
             end -= start;
 
-            double d = 1d;
-            double p = d * .3d;
+            double d = 1;
+            double p = d * .3;
             double s;
             double a = 0;
 
-            if (a == 0f || a < Math.Abs(end))
+            if (a == 0f || a < end.Abs())
             {
                 a = end;
                 s = p / 4;
             }
             else
-            {
-                s = p / (2 * Math.PI) * Math.Asin(end / a);
-            }
+                s = p / (2 * Math.PI) * (end / a).Asin();
 
             if (value < 1)
             {
                 value -= 1;
 
-                return -5d * NATURAL_LOG_OF_2 * a * Math.Pow(2d, 10d * value) * Math.Sin(2 * Math.PI * (d * value - 2d) / p) -
-                    a * Math.PI * d * Math.Pow(2d, 10d * value) * Math.Cos(2 * Math.PI * (d * value - s) / p) / p;
+                return -5 * NATURAL_LOG_OF_2 * a * 2d.Pow(10 * value) * (2 * Math.PI * (d * value - 2d) / p).Sin() -
+                    a * Math.PI * d * 2d.Pow(10d * value) * (2 * Math.PI * (d * value - s) / p).Cos() / p;
             }
 
             value -= 1;
 
-            return a * Math.PI * d * Math.Cos(2d * Math.PI * (d * value - s) / p) / (p * Math.Pow(2d, 10d * value)) -
-                5d * NATURAL_LOG_OF_2 * a * Math.Sin(2d * Math.PI * (d * value - s) / p) / (Math.Pow(2d, 10d * value));
+            return a * Math.PI * d * (2 * Math.PI * (d * value - s) / p).Cos() / (p * 2d.Pow(10 * value)) -
+                5 * NATURAL_LOG_OF_2 * a * (2 * Math.PI * (d * value - s) / p).Sin() / (2d.Pow(10 * value));
         }
 
         public static double SpringD(double start, double end, double value)
@@ -766,12 +730,12 @@ namespace SCKRM.Easing
 
             // Damn... Thanks http://www.derivative-calculator.net/
             // TODO: And it's a little bit wrong
-            return end * (6d * (1d - value) / 5d + 1d) * (-2.2 * Math.Pow(1d - value, 1.2) *
-                Math.Sin(Math.PI * value * (2.5 * value * value * value + 0.2)) + Math.Pow(1d - value, 2.2) *
+            return end * (6 * (1 - value) / 5 + 1) * (-2.2 * (1 - value).Pow(1.2) *
+                (Math.PI * value * (2.5 * value * value * value + 0.2)).Sin() + (1 - value).Pow(2.2) *
                 (Math.PI * (2.5 * value * value * value + 0.2) + 7.5 * Math.PI * value * value * value) *
-                Math.Cos(Math.PI * value * (2.5 * value * value * value + 0.2)) + 1) -
-                6d * end * (Math.Pow(1 - value, 2.2) * Math.Sin(Math.PI * value * (2.5 * value * value * value + 0.2)) + value
-                / 5d);
+                (Math.PI * value * (2.5 * value * value * value + 0.2)).Cos() + 1) -
+                6 * end * ((1 - value).Pow(2.2) * (Math.PI * value * (2.5 * value * value * value + 0.2)).Sin() + value
+                / 5);
 
         }
 
@@ -785,167 +749,42 @@ namespace SCKRM.Easing
         /// <returns>The easing function</returns>
         public static Function GetEasingFunction(Ease easingFunction)
         {
-            if (easingFunction == Ease.EaseInQuad)
+            return easingFunction switch
             {
-                return EaseInQuad;
-            }
-
-            if (easingFunction == Ease.EaseOutQuad)
-            {
-                return EaseOutQuad;
-            }
-
-            if (easingFunction == Ease.EaseInOutQuad)
-            {
-                return EaseInOutQuad;
-            }
-
-            if (easingFunction == Ease.EaseInCubic)
-            {
-                return EaseInCubic;
-            }
-
-            if (easingFunction == Ease.EaseOutCubic)
-            {
-                return EaseOutCubic;
-            }
-
-            if (easingFunction == Ease.EaseInOutCubic)
-            {
-                return EaseInOutCubic;
-            }
-
-            if (easingFunction == Ease.EaseInQuart)
-            {
-                return EaseInQuart;
-            }
-
-            if (easingFunction == Ease.EaseOutQuart)
-            {
-                return EaseOutQuart;
-            }
-
-            if (easingFunction == Ease.EaseInOutQuart)
-            {
-                return EaseInOutQuart;
-            }
-
-            if (easingFunction == Ease.EaseInQuint)
-            {
-                return EaseInQuint;
-            }
-
-            if (easingFunction == Ease.EaseOutQuint)
-            {
-                return EaseOutQuint;
-            }
-
-            if (easingFunction == Ease.EaseInOutQuint)
-            {
-                return EaseInOutQuint;
-            }
-
-            if (easingFunction == Ease.EaseInSine)
-            {
-                return EaseInSine;
-            }
-
-            if (easingFunction == Ease.EaseOutSine)
-            {
-                return EaseOutSine;
-            }
-
-            if (easingFunction == Ease.EaseInOutSine)
-            {
-                return EaseInOutSine;
-            }
-
-            if (easingFunction == Ease.EaseInExpo)
-            {
-                return EaseInExpo;
-            }
-
-            if (easingFunction == Ease.EaseOutExpo)
-            {
-                return EaseOutExpo;
-            }
-
-            if (easingFunction == Ease.EaseInOutExpo)
-            {
-                return EaseInOutExpo;
-            }
-
-            if (easingFunction == Ease.EaseInCirc)
-            {
-                return EaseInCirc;
-            }
-
-            if (easingFunction == Ease.EaseOutCirc)
-            {
-                return EaseOutCirc;
-            }
-
-            if (easingFunction == Ease.EaseInOutCirc)
-            {
-                return EaseInOutCirc;
-            }
-
-            if (easingFunction == Ease.Linear)
-            {
-                return Linear;
-            }
-
-            if (easingFunction == Ease.Spring)
-            {
-                return Spring;
-            }
-
-            if (easingFunction == Ease.EaseInBounce)
-            {
-                return EaseInBounce;
-            }
-
-            if (easingFunction == Ease.EaseOutBounce)
-            {
-                return EaseOutBounce;
-            }
-
-            if (easingFunction == Ease.EaseInOutBounce)
-            {
-                return EaseInOutBounce;
-            }
-
-            if (easingFunction == Ease.EaseInBack)
-            {
-                return EaseInBack;
-            }
-
-            if (easingFunction == Ease.EaseOutBack)
-            {
-                return EaseOutBack;
-            }
-
-            if (easingFunction == Ease.EaseInOutBack)
-            {
-                return EaseInOutBack;
-            }
-
-            if (easingFunction == Ease.EaseInElastic)
-            {
-                return EaseInElastic;
-            }
-
-            if (easingFunction == Ease.EaseOutElastic)
-            {
-                return EaseOutElastic;
-            }
-
-            if (easingFunction == Ease.EaseInOutElastic)
-            {
-                return EaseInOutElastic;
-            }
-
-            return null;
+                Ease.EaseInQuad => EaseInQuad,
+                Ease.EaseOutQuad => EaseOutQuad,
+                Ease.EaseInOutQuad => EaseInOutQuad,
+                Ease.EaseInCubic => EaseInCubic,
+                Ease.EaseOutCubic => EaseOutCubic,
+                Ease.EaseInOutCubic => EaseInOutCubic,
+                Ease.EaseInQuart => EaseInQuart,
+                Ease.EaseOutQuart => EaseOutQuart,
+                Ease.EaseInOutQuart => EaseInOutQuart,
+                Ease.EaseInQuint => EaseInQuint,
+                Ease.EaseOutQuint => EaseOutQuint,
+                Ease.EaseInOutQuint => EaseInOutQuint,
+                Ease.EaseInSine => EaseInSine,
+                Ease.EaseOutSine => EaseOutSine,
+                Ease.EaseInOutSine => EaseInOutSine,
+                Ease.EaseInExpo => EaseInExpo,
+                Ease.EaseOutExpo => EaseOutExpo,
+                Ease.EaseInOutExpo => EaseInOutExpo,
+                Ease.EaseInCirc => EaseInCirc,
+                Ease.EaseOutCirc => EaseOutCirc,
+                Ease.EaseInOutCirc => EaseInOutCirc,
+                Ease.Linear => Linear,
+                Ease.Spring => Spring,
+                Ease.EaseInBounce => EaseInBounce,
+                Ease.EaseOutBounce => EaseOutBounce,
+                Ease.EaseInOutBounce => EaseInOutBounce,
+                Ease.EaseInBack => EaseInBack,
+                Ease.EaseOutBack => EaseOutBack,
+                Ease.EaseInOutBack => EaseInOutBack,
+                Ease.EaseInElastic => EaseInElastic,
+                Ease.EaseOutElastic => EaseOutElastic,
+                Ease.EaseInOutElastic => EaseInOutElastic,
+                _ => null
+            };
         }
 
         /// <summary>
@@ -956,167 +795,42 @@ namespace SCKRM.Easing
         /// <returns>The derivative function</returns>
         public static Function GetEasingFunctionDerivative(Ease easingFunction)
         {
-            if (easingFunction == Ease.EaseInQuad)
+            return easingFunction switch
             {
-                return EaseInQuadD;
-            }
-
-            if (easingFunction == Ease.EaseOutQuad)
-            {
-                return EaseOutQuadD;
-            }
-
-            if (easingFunction == Ease.EaseInOutQuad)
-            {
-                return EaseInOutQuadD;
-            }
-
-            if (easingFunction == Ease.EaseInCubic)
-            {
-                return EaseInCubicD;
-            }
-
-            if (easingFunction == Ease.EaseOutCubic)
-            {
-                return EaseOutCubicD;
-            }
-
-            if (easingFunction == Ease.EaseInOutCubic)
-            {
-                return EaseInOutCubicD;
-            }
-
-            if (easingFunction == Ease.EaseInQuart)
-            {
-                return EaseInQuartD;
-            }
-
-            if (easingFunction == Ease.EaseOutQuart)
-            {
-                return EaseOutQuartD;
-            }
-
-            if (easingFunction == Ease.EaseInOutQuart)
-            {
-                return EaseInOutQuartD;
-            }
-
-            if (easingFunction == Ease.EaseInQuint)
-            {
-                return EaseInQuintD;
-            }
-
-            if (easingFunction == Ease.EaseOutQuint)
-            {
-                return EaseOutQuintD;
-            }
-
-            if (easingFunction == Ease.EaseInOutQuint)
-            {
-                return EaseInOutQuintD;
-            }
-
-            if (easingFunction == Ease.EaseInSine)
-            {
-                return EaseInSineD;
-            }
-
-            if (easingFunction == Ease.EaseOutSine)
-            {
-                return EaseOutSineD;
-            }
-
-            if (easingFunction == Ease.EaseInOutSine)
-            {
-                return EaseInOutSineD;
-            }
-
-            if (easingFunction == Ease.EaseInExpo)
-            {
-                return EaseInExpoD;
-            }
-
-            if (easingFunction == Ease.EaseOutExpo)
-            {
-                return EaseOutExpoD;
-            }
-
-            if (easingFunction == Ease.EaseInOutExpo)
-            {
-                return EaseInOutExpoD;
-            }
-
-            if (easingFunction == Ease.EaseInCirc)
-            {
-                return EaseInCircD;
-            }
-
-            if (easingFunction == Ease.EaseOutCirc)
-            {
-                return EaseOutCircD;
-            }
-
-            if (easingFunction == Ease.EaseInOutCirc)
-            {
-                return EaseInOutCircD;
-            }
-
-            if (easingFunction == Ease.Linear)
-            {
-                return LinearD;
-            }
-
-            if (easingFunction == Ease.Spring)
-            {
-                return SpringD;
-            }
-
-            if (easingFunction == Ease.EaseInBounce)
-            {
-                return EaseInBounceD;
-            }
-
-            if (easingFunction == Ease.EaseOutBounce)
-            {
-                return EaseOutBounceD;
-            }
-
-            if (easingFunction == Ease.EaseInOutBounce)
-            {
-                return EaseInOutBounceD;
-            }
-
-            if (easingFunction == Ease.EaseInBack)
-            {
-                return EaseInBackD;
-            }
-
-            if (easingFunction == Ease.EaseOutBack)
-            {
-                return EaseOutBackD;
-            }
-
-            if (easingFunction == Ease.EaseInOutBack)
-            {
-                return EaseInOutBackD;
-            }
-
-            if (easingFunction == Ease.EaseInElastic)
-            {
-                return EaseInElasticD;
-            }
-
-            if (easingFunction == Ease.EaseOutElastic)
-            {
-                return EaseOutElasticD;
-            }
-
-            if (easingFunction == Ease.EaseInOutElastic)
-            {
-                return EaseInOutElasticD;
-            }
-
-            return null;
+                Ease.EaseInQuad => EaseInQuadD,
+                Ease.EaseOutQuad => EaseOutQuadD,
+                Ease.EaseInOutQuad => EaseInOutQuadD,
+                Ease.EaseInCubic => EaseInCubicD,
+                Ease.EaseOutCubic => EaseOutCubicD,
+                Ease.EaseInOutCubic => EaseInOutCubicD,
+                Ease.EaseInQuart => EaseInQuartD,
+                Ease.EaseOutQuart => EaseOutQuartD,
+                Ease.EaseInOutQuart => EaseInOutQuartD,
+                Ease.EaseInQuint => EaseInQuintD,
+                Ease.EaseOutQuint => EaseOutQuintD,
+                Ease.EaseInOutQuint => EaseInOutQuintD,
+                Ease.EaseInSine => EaseInSineD,
+                Ease.EaseOutSine => EaseOutSineD,
+                Ease.EaseInOutSine => EaseInOutSineD,
+                Ease.EaseInExpo => EaseInExpoD,
+                Ease.EaseOutExpo => EaseOutExpoD,
+                Ease.EaseInOutExpo => EaseInOutExpoD,
+                Ease.EaseInCirc => EaseInCircD,
+                Ease.EaseOutCirc => EaseOutCircD,
+                Ease.EaseInOutCirc => EaseInOutCircD,
+                Ease.Linear => LinearD,
+                Ease.Spring => SpringD,
+                Ease.EaseInBounce => EaseInBounceD,
+                Ease.EaseOutBounce => EaseOutBounceD,
+                Ease.EaseInOutBounce => EaseInOutBounceD,
+                Ease.EaseInBack => EaseInBackD,
+                Ease.EaseOutBack => EaseOutBackD,
+                Ease.EaseInOutBack => EaseInOutBackD,
+                Ease.EaseInElastic => EaseInElasticD,
+                Ease.EaseOutElastic => EaseOutElasticD,
+                Ease.EaseInOutElastic => EaseInOutElasticD,
+                _ => null
+            };
         }
     }
 }
