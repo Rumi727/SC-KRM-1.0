@@ -32,9 +32,9 @@ namespace SCKRM.UI.SideBar
         void Update()
         {
             if (pointer || removeButtonCanvasGroup.gameObject == EventSystem.current.currentSelectedGameObject)
-                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.fpsDeltaTime);
+                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.unscaledDeltaTime);
             else
-                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsDeltaTime);
+                removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.unscaledDeltaTime);
         }
 
         public override bool Remove()

@@ -45,9 +45,9 @@ namespace SCKRM.Input.UI
                 return;
 
             if (isSelected)
-                controlButtonImage.color = controlButtonImage.color.Lerp(UIManager.SaveData.systemColor, 0.2f * Kernel.fpsDeltaTime);
+                controlButtonImage.color = controlButtonImage.color.Lerp(UIManager.SaveData.systemColor, 0.2f * Kernel.unscaledDeltaTime);
             else
-                controlButtonImage.color = controlButtonImage.color.Lerp(new Color(0.05098039f, 0.05098039f, 0.05098039f), 0.2f * Kernel.fpsDeltaTime);
+                controlButtonImage.color = controlButtonImage.color.Lerp(new Color(0.05098039f, 0.05098039f, 0.05098039f), 0.2f * Kernel.unscaledDeltaTime);
 
             nameRectTransform.offsetMax = new Vector2(-(controlButtonImage.rectTransform.rect.size.x + 96), nameRectTransform.offsetMax.y);
 
