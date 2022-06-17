@@ -31,7 +31,7 @@ namespace SCKRM.UI
         public static float scaleAccordingToScreenSize { get; private set; } = 1;
 
         [SerializeField] Canvas _kernelCanvas; public Canvas kernelCanvas => _kernelCanvas;
-        [SerializeField] RectTransform _kernelCanvasUI; public RectTransform kernelCanvasUI => _kernelCanvasUI;
+        [SerializeField] RectTransform _kernelSideBarRectTransform; public RectTransform kernelCanvasUI => _kernelSideBarRectTransform;
         [SerializeField] TMP_Text _exceptionText; public TMP_Text exceptionText => _exceptionText;
 
 

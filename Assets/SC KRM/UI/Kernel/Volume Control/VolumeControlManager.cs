@@ -33,31 +33,20 @@ namespace SCKRM.UI
                         graphic.enabled = true;
                     }
 
-                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, -15), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    if (StatusBarManager.SaveData.bottomMode)
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, -15), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                    else
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, -15 + StatusBarManager.cropedRect.max.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
                 else
                 {
-                    if (StatusBarManager.SaveData.bottomMode)
+                    if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.rect.size.y - 0.01f)
                     {
-                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.rect.size.y - 0.01f)
-                        {
-                            hide.SetActive(false);
-                            graphic.enabled = false;
-                        }
-
-                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.rect.size.y + 1), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        hide.SetActive(false);
+                        graphic.enabled = false;
                     }
-                    else
-                    {
-                        float statusBarSizeDeltaY = StatusBarManager.instance.rectTransform.rect.size.y;
-                        if (hide.activeSelf && rectTransform.anchoredPosition.y >= rectTransform.rect.size.y + statusBarSizeDeltaY - 0.01f)
-                        {
-                            hide.SetActive(false);
-                            graphic.enabled = false;
-                        }
 
-                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.rect.size.y + 1 + statusBarSizeDeltaY), 0.2f * Kernel.fpsUnscaledDeltaTime);
-                    }
+                    rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(rectTransform.anchoredPosition.x, rectTransform.rect.size.y + 1), 0.2f * Kernel.fpsUnscaledDeltaTime);
                 }
 
                 if (InputManager.GetKey("volume_control.minus", InputType.Down, InputManager.inputLockDenyAllForce))
