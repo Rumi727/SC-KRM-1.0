@@ -2,6 +2,8 @@
 Simsimhan Chobo Kernel Manager   
 ~~School Live! Kurumi (Gakkou Gurashi)~~
 
+UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
+
 ## 사용된 패키지와 DLL, 오픈 소스
 - **Unity UI**
 - **Input System**
