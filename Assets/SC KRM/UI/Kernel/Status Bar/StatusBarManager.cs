@@ -81,6 +81,8 @@ namespace SCKRM.UI.StatusBar
         static bool pointer = false;
         static float timer = 0;
         static bool aniStop = false;
+        static bool tempBottomMode = false;
+        static bool tempCropTheScreen = true;
         void Update()
         {
             if (InitialLoadManager.isInitialLoadEnd && !aniStop)
@@ -192,27 +194,43 @@ namespace SCKRM.UI.StatusBar
                         backButton.SetActive(false);
                 }
 
-
-
                 {
-                    if (allowStatusBarShow)
-                        cropTheScreen = true;
+                    if (tempBottomMode != SaveData.bottomMode)
+                    {
+                        BottomMode();
+                        tempBottomMode = SaveData.bottomMode;
+                    }
 
-                    BottomMode();
+                    if (tempCropTheScreen != cropTheScreen)
+                    {
+                        if (!SaveData.bottomMode)
+                        {
+                            if (!cropTheScreen && !allowStatusBarShow)
+                                image.sprite = downGradation;
+                            else
+                                image.sprite = null;
+                        }
+                        else
+                        {
+                            if (!cropTheScreen && !allowStatusBarShow)
+                                image.sprite = upGradation;
+                            else
+                                image.sprite = null;
+                        }
+
+                        tempCropTheScreen = cropTheScreen;
+                    }
                 }
 
                 {
-                    Rect rect = cropedRect;
+                    Rect rect = Rect.zero;
 
-                    if (SaveData.bottomMode)
+                    if (cropTheScreen)
                     {
-                        rect.min = new Vector2(0, rectTransform.rect.size.y + rectTransform.anchoredPosition.y);
-                        rect.max = new Vector2(0, 0);
-                    }
-                    else
-                    {
-                        rect.min = new Vector2(0, 0);
-                        rect.max = new Vector2(0, -(rectTransform.rect.size.y - rectTransform.anchoredPosition.y));
+                        if (SaveData.bottomMode)
+                            rect.min = new Vector2(0, rectTransform.rect.size.y + rectTransform.anchoredPosition.y);
+                        else
+                            rect.max = new Vector2(0, -(rectTransform.rect.size.y - rectTransform.anchoredPosition.y));
                     }
 
                     cropedRect = rect;
@@ -228,13 +246,10 @@ namespace SCKRM.UI.StatusBar
                 rectTransform.anchorMax = Vector2.one;
                 rectTransform.pivot = Vector2.up;
 
-                if (!cropTheScreen)
-                    image.sprite = downGradation;
-                else
-                    image.sprite = null;
-
                 if (!isStatusBarShow)
                     rectTransform.anchoredPosition = new Vector2(0, rectTransform.rect.size.y);
+                else
+                    rectTransform.anchoredPosition = new Vector2(0, 0);
             }
             else
             {
@@ -242,13 +257,10 @@ namespace SCKRM.UI.StatusBar
                 rectTransform.anchorMax = Vector2.right;
                 rectTransform.pivot = Vector2.zero;
 
-                if (!cropTheScreen)
-                    image.sprite = upGradation;
-                else
-                    image.sprite = null;
-
                 if (!isStatusBarShow)
                     rectTransform.anchoredPosition = new Vector2(0, -rectTransform.rect.size.y);
+                else
+                    rectTransform.anchoredPosition = new Vector2(0, 0);
             }
         }
 

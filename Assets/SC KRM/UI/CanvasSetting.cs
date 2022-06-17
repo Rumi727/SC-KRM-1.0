@@ -51,9 +51,9 @@ namespace SCKRM.UI
 
                         float guiSize = 1;
                         if (customGuiSize)
-                            guiSize = UIManager.currentGuiSize / canvas.scaleFactor;    
+                            guiSize = UIManager.currentGuiSize / canvas.scaleFactor;
 
-                        if (StatusBarManager.cropTheScreen && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         {
                             SafeScreenSetting();
 
