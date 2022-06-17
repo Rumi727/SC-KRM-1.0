@@ -19,6 +19,7 @@ namespace SCKRM
         public static bool isInitialLoadStart { get; private set; } = false;
         public static bool isSettingLoadEnd { get; private set; } = false;
         public static bool isInitialLoadEnd { get; private set; } = false;
+        public static bool isSceneMoveEnd { get; private set; } = false;
 
         public static event Action initialLoadStart;
         public static event Action initialLoadEnd;
@@ -30,6 +31,7 @@ namespace SCKRM
             isInitialLoadStart = false;
             isSettingLoadEnd = false;
             isInitialLoadEnd = false;
+            isSceneMoveEnd = false;
 
             try
             {
@@ -214,6 +216,7 @@ namespace SCKRM
 #endif
 
                 //씬을 이동했으면 이벤트를 호출합니다
+                isSceneMoveEnd = true;
                 initialLoadEndSceneMove?.Invoke();
             }
             catch (Exception e)
