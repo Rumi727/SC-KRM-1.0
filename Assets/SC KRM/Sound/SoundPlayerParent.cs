@@ -216,6 +216,7 @@ namespace SCKRM.Sound
             spatial = false;
             localPosition = Vector3.zero;
 
+            _onAudioFilterReadEvent = null;
             return true;
         }
     }
