@@ -14,7 +14,7 @@ namespace SCKRM.NBS
 
 
 
-        float tickTimer = 0;
+        float tickTimer = 0.05f;
 
         int _index = 0;
         public int index
@@ -66,13 +66,13 @@ namespace SCKRM.NBS
 
         public override float time
         {
-            get => ((_tick * 0.05f) + tickTimer) / (nbsFile.tickTempo * 0.0005f);
+            get => ((_tick * 0.05f) + tickTimer - 0.05f) / (nbsFile.tickTempo * 0.0005f);
             set
             {
-                float value20 = value * 20 * (nbsFile.tickTempo * 0.0005f);
+                float value20 = (value * (nbsFile.tickTempo * 0.0005f)) * 20;
 
                 tick = (int)value20;
-                tickTimer = (value20 - (int)value20) * 0.05f;
+                tickTimer = ((value20 - (int)value20) * 0.05f) + 0.05f;
 
                 _timeChanged?.Invoke();
             }
@@ -346,7 +346,7 @@ namespace SCKRM.NBS
 
             _index = 0;
             _tick = 0;
-            tickTimer = 0;
+            tickTimer = 0.05f;
 
             SoundManager.nbsList.Remove(this);
             SoundPlayer[] soundObjects = GetComponentsInChildren<SoundPlayer>();
