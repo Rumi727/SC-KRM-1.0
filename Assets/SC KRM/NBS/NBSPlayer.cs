@@ -66,11 +66,13 @@ namespace SCKRM.NBS
 
         public override float time
         {
-            get => (_tick * 0.05f) + tickTimer;
+            get => ((_tick * 0.05f) + tickTimer) / (nbsFile.tickTempo * 0.0005f);
             set
             {
-                tick = (int)(value * 20);
-                tickTimer = ((value * 20) - (int)(value * 20)) * 0.05f;
+                float value20 = value * 20 * (nbsFile.tickTempo * 0.0005f);
+
+                tick = (int)value20;
+                tickTimer = (value20 - (int)value20) * 0.05f;
 
                 _timeChanged?.Invoke();
             }
