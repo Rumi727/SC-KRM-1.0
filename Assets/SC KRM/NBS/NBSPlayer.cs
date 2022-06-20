@@ -101,11 +101,14 @@ namespace SCKRM.NBS
 
         void Update()
         {
-            if (!isPaused)
+            time = 0;
+
+            float speed = tempo * metaData.tempo;
+            if (!isPaused && speed != 0)
             {
                 if (tempo * metaData.tempo < 0)
                 {
-                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * tempo.Abs() * metaData.tempo;
+                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * speed.Abs();
                     while (tickTimer <= 0)
                     {
                         _tick--;
@@ -116,7 +119,7 @@ namespace SCKRM.NBS
                 }
                 else
                 {
-                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * (tempo * metaData.tempo).Abs();
+                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * speed.Abs();
                     while (tickTimer >= 0.05f)
                     {
                         _tick++;
