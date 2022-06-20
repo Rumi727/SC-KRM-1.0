@@ -307,7 +307,7 @@ namespace SCKRM.Sound
         {
             if (soundData == null || metaData == null)
             {
-                audioSource.pitch = 1;
+                audioSource.pitch = 0;
                 return;
             }
 
