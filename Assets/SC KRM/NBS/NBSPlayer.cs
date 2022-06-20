@@ -96,19 +96,26 @@ namespace SCKRM.NBS
         public override bool isPaused { get; set; } = false;
 
         public override float speed { get => tempo; set => tempo = value; }
+        public override float realSpeed
+        {
+            get
+            {
+                if (nbsFile == null)
+                    return 0;
 
-
+                return tempo * nbsFile.tickTempo;
+            }
+        }
 
         void Update()
         {
             time = 0;
 
-            float speed = tempo * metaData.tempo;
             if (!isPaused && speed != 0)
             {
-                if (tempo * metaData.tempo < 0)
+                if (realSpeed < 0)
                 {
-                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * speed.Abs();
+                    tickTimer -= Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * realSpeed.Abs();
                     while (tickTimer <= 0)
                     {
                         _tick--;
@@ -119,7 +126,7 @@ namespace SCKRM.NBS
                 }
                 else
                 {
-                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * speed.Abs();
+                    tickTimer += Kernel.deltaTime * (nbsFile.tickTempo * 0.0005f) * realSpeed.Abs();
                     while (tickTimer >= 0.05f)
                     {
                         _tick++;
@@ -288,7 +295,7 @@ namespace SCKRM.NBS
 
         void SetIndex()
         {
-            if (tempo < 0)
+            if (realSpeed < 0)
             {
                 while (index > 0 && index < nbsFile.nbsNotes.Count && nbsFile.nbsNotes[index].delayTick >= tick)
                     _index--;
