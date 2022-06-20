@@ -83,14 +83,14 @@ namespace SCKRM.NBS
         {
             get
             {
-                if (metaData == null)
+                if (nbsFile == null)
                     return 0;
 
-                return (float)(nbsFile?.songLength);
+                return nbsFile.songLength;
             }
         }
 
-        public override float realLength { get => length / tempo; }
+        public override float realLength => length / tempo;
 
         public override bool isLooped { get; protected set; } = false;
         public override bool isPaused { get; set; } = false;
