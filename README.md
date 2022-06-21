@@ -11,6 +11,7 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
 - **Post Processing**
 - **Input System**
 - [**Newtonsoft.Json for Unity**](https://github.com/jilleJr/Newtonsoft.Json-for-Unity/wiki/Install-official-via-UPM)
+- [**Unity Asynchronous Image Loader**](https://github.com/Looooong/UnityAsyncImageLoader)
 - [UniTask](https://github.com/Cysharp/UniTask)
 - [HSV-Color-Picker-Unity](https://github.com/judah4/HSV-Color-Picker-Unity)
 - [K4UnityThreadDispatcher](https://gist.github.com/heshuimu/f63cd9126117afc4004be37b19fa1c09#file-k4unitythreaddispatcher-cs)
