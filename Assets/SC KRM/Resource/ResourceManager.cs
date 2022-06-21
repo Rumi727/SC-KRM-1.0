@@ -85,9 +85,7 @@ namespace SCKRM.Resource
         public static List<string> nameSpaces => _nameSpaces;
 #endif
 
-        public static string[] textureExtension { get; } = new string[] { "tga", "dds", "png", "jpg" };
-        public static string[] unityTextureExtension { get; } = new string[] { "tga", "png", "jpg", "bmp", "exr", "gif", "hdr", "iff", "pict", "tiff", "psd" };
-        public static string[] freeImageTextureExtension { get; } = new string[] { "tga", "targa", "dds", "png", "jpg", "jif", "jpeg", "jpe", "bmp", "exr", "gif", "hdr", "iff", "pict", "tif", "tiff", "psd", "ico", "jng", "koa", "lbm", "mng", "pbm", "pcd", "pcx", "pgm", "ppm", "ras", "wbpm", "cut", "xbm", "xpm", "g3", "sgi", "j2k", "j2c", "jp2", "pfm", "webp", "jxr" };
+        public static string[] textureExtension { get; } = new string[] { "tga", "targa", "dds", "png", "jpg", "jif", "jpeg", "jpe", "bmp", "exr", "gif", "hdr", "iff", "pict", "tif", "tiff", "psd", "ico", "jng", "koa", "lbm", "mng", "pbm", "pcd", "pcx", "pgm", "ppm", "ras", "wbpm", "cut", "xbm", "xpm", "g3", "sgi", "j2k", "j2c", "jp2", "pfm", "webp", "jxr" };
         public static string[] textExtension { get; } = new string[] { "txt", "html", "htm", "xml", "bytes", "json", "csv", "yaml", "fnt" };
         public static string[] audioExtension { get; } = new string[] { "ogg", "mp3", "mp2", "wav", "aif", "xm", "mod", "it", "vag", "xma", "s3m" };
         public static string[] videoExtension { get; } = new string[] { "asf", "avi", "dv", "m4v", "mov", "mp4", "mpg", "mpeg", "ogv", "vp8", "webm", "wmv" };
@@ -358,7 +356,7 @@ namespace SCKRM.Resource
                         for (int l = 0; l < paths.Count; l++)
                         {
                             string path = paths[l].Replace("\\", "/");
-                            Texture2D texture = GetTexture(path, true, textureMetaData);
+                            Texture2D texture = await GetTextureAsync(path, true, textureMetaData);
 
                             if (!Kernel.isPlaying)
                                 return;
@@ -1127,18 +1125,21 @@ namespace SCKRM.Resource
         /// Use extension in path
         /// </param>
         /// <param name="textureFormat">
-        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// 텍스쳐 포맷
         /// </param>
         /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
+            if (!pathExtensionUse)
+                FileExtensionExists(path, out path, textureExtension);
+
             TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(path + ".json", true);
             if (textureMetaData == null)
             {
                 textureMetaData = new TextureMetaData();
-                return GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
+                return GetTexture(path, true, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
             }
-            return GetTexture(path, pathExtensionUse, FilterMode.Point, true, TextureMetaData.CompressionType.none, textureFormat);
+            return GetTexture(path, true, FilterMode.Point, true, TextureMetaData.CompressionType.none, textureFormat);
         }
 
         /// <summary>
@@ -1154,7 +1155,7 @@ namespace SCKRM.Resource
         /// Use extension in path
         /// </param>
         /// <param name="textureFormat">
-        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// 텍스쳐 포맷
         /// </param>
         /// <returns></returns>
         public static Texture2D GetTexture(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTexture(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
@@ -1188,53 +1189,134 @@ namespace SCKRM.Resource
             
             if (exists)
             {
-                string pathExtension = Path.GetExtension(path).ToLower();
-                if (pathExtension == ".tga")
-                {
-                    string tempFilePath = path;
+                Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
+                texture.filterMode = filterMode;
+                texture.name = Path.GetFileName(path);
 
-                    Texture2D texture = ImageLoader.LoadTGA(tempFilePath, mipmapUse);
-                    texture.name = Path.GetFileNameWithoutExtension(path);
-                    texture.filterMode = filterMode;
+                AsyncImageLoader.LoaderSettings loaderSettings = AsyncImageLoader.LoaderSettings.Default;
+                loaderSettings.generateMipmap = mipmapUse;
+                loaderSettings.logException = true;
 
-                    if (compressionType == TextureMetaData.CompressionType.normal)
-                        texture.Compress(false);
-                    else if (compressionType == TextureMetaData.CompressionType.highQuality)
-                        texture.Compress(true);
+                if (!AsyncImageLoader.LoadImage(texture, File.ReadAllBytes(path), loaderSettings))
+                    return null;
 
-                    return texture;
-                }
-                else if (pathExtension == ".dds")
-                {
-                    string tempFilePath = path;
+                if (compressionType == TextureMetaData.CompressionType.normal)
+                    texture.Compress(false);
+                else if (compressionType == TextureMetaData.CompressionType.highQuality)
+                    texture.Compress(true);
 
-                    Texture2D texture = ImageLoader.LoadDDS(tempFilePath);
-                    texture.name = Path.GetFileNameWithoutExtension(path);
-                    texture.filterMode = filterMode;
+                return texture;
+            }
 
-                    if (compressionType == TextureMetaData.CompressionType.normal)
-                        texture.Compress(false);
-                    else if (compressionType == TextureMetaData.CompressionType.highQuality)
-                        texture.Compress(true);
+            return null;
+        }
+        #endregion
 
-                    return texture;
-                }
-                else
-                {
-                    Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
-                    if (texture.LoadImage(File.ReadAllBytes(path)))
-                    {
-                        texture.name = Path.GetFileNameWithoutExtension(path);
-                        texture.filterMode = filterMode;
+        #region Get Texture Async
+        /// <summary>
+        /// 이미지 파일을 Texture2D 타입으로 가져옵니다
+        /// Import image files as Texture2D type
+        /// </summary>
+        /// <param name="path">
+        /// 파일의 경로
+        /// Path
+        /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// Use extension in path
+        /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷 (png, jpg 파일에서만 작동)
+        /// </param>
+        /// <returns></returns>
+        public static UniTask<Texture2D> GetTextureAsync(string path, bool pathExtensionUse = false, TextureFormat textureFormat = TextureFormat.RGBA32)
+        {
+            if (!pathExtensionUse)
+                FileExtensionExists(path, out path, textureExtension);
 
-                        if (compressionType == TextureMetaData.CompressionType.normal)
-                            texture.Compress(false);
-                        else if (compressionType == TextureMetaData.CompressionType.highQuality)
-                            texture.Compress(true);
+            TextureMetaData textureMetaData = JsonManager.JsonRead<TextureMetaData>(path + ".json", true);
+            if (textureMetaData == null)
+            {
+                textureMetaData = new TextureMetaData();
+                return GetTextureAsync(path, true, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
+            }
+            return GetTextureAsync(path, true, FilterMode.Point, true, TextureMetaData.CompressionType.none, textureFormat);
+        }
 
-                        return texture;
-                    }
-                }
+        /// <summary>
+        /// 이미지 파일을 Texture2D 타입으로 비동기로 가져옵니다
+        /// 다양한 포맷을 지원하며 이중엔 SC KRM이 지원하는 포맷과 유니티가 지원하는 포맷도 있습니다
+        /// Asynchronously import an image file as a Texture2D type.
+        /// Various formats are supported. Among them, there are formats supported by SC KRM and formats supported by Unity.
+        /// </summary>
+        /// <param name="path">
+        /// 파일의 경로
+        /// Path
+        /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// Use extension in path
+        /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷
+        /// </param>
+        /// <returns></returns>
+        public static UniTask<Texture2D> GetTextureAsync(string path, bool pathExtensionUse, TextureMetaData textureMetaData, TextureFormat textureFormat = TextureFormat.RGBA32) => GetTextureAsync(path, pathExtensionUse, textureMetaData.filterMode, textureMetaData.mipmapUse, textureMetaData.compressionType, textureFormat);
+
+        /// <summary>
+        /// 이미지 파일을 Texture2D 타입으로 비동기로 가져옵니다
+        /// 다양한 포맷을 지원하며 이중엔 SC KRM이 지원하는 포맷과 유니티가 지원하는 포맷도 있습니다
+        /// Asynchronously import an image file as a Texture2D type.
+        /// Various formats are supported. Among them, there are formats supported by SC KRM and formats supported by Unity.
+        /// </summary>
+        /// <param name="path">
+        /// 파일의 경로
+        /// Path
+        /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// Use extension in path
+        /// </param>
+        /// <param name="textureFormat">
+        /// 텍스쳐 포맷
+        /// </param>
+        /// <returns></returns>
+        public static async UniTask<Texture2D> GetTextureAsync(string path, bool pathExtensionUse, FilterMode filterMode, bool mipmapUse, TextureMetaData.CompressionType compressionType, TextureFormat textureFormat = TextureFormat.RGBA32)
+        {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(GetAudio));
+
+            if (path == null)
+                path = "";
+
+            if (pathExtensionUse)
+                path = PathTool.GetPathWithExtension(path);
+
+            if (FileExtensionExists(path, out string outPath, textureExtension))
+            {
+                using UnityWebRequest www = UnityWebRequest.Get(outPath);
+                await www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                    Debug.LogError(www.error);
+
+                Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
+                texture.filterMode = filterMode;
+                texture.name = Path.GetFileName(path);
+
+                AsyncImageLoader.LoaderSettings loaderSettings = AsyncImageLoader.LoaderSettings.Default;
+                loaderSettings.generateMipmap = mipmapUse;
+                loaderSettings.logException = true;
+
+                if (!await AsyncImageLoader.LoadImageAsync(texture, www.downloadHandler.data, loaderSettings))
+                    return null;
+
+                if (compressionType == TextureMetaData.CompressionType.normal)
+                    texture.Compress(false);
+                else if (compressionType == TextureMetaData.CompressionType.highQuality)
+                    texture.Compress(true);
+
+                return texture;
             }
 
             return null;
