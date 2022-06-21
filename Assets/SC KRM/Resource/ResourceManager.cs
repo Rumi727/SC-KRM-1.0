@@ -1430,6 +1430,10 @@ namespace SCKRM.Resource
         /// 경로
         /// Path
         /// </param>
+        /// <param name="pathExtensionUse">
+        /// 경로에 확장자 사용
+        /// Use extension in path
+        /// </param>
         /// <param name="stream">
         /// 스트림
         /// Stream
