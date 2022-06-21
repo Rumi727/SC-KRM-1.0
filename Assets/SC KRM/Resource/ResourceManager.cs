@@ -640,7 +640,7 @@ namespace SCKRM.Resource
                     async UniTask<SoundMetaData> soundMetaDataCreateFunc(string folderPath, SoundMetaData soundMetaData)
                     {
                         string audioPath = PathTool.Combine(folderPath, soundMetaData.path);
-                        AudioClip audioClip = await GetAudio(audioPath, soundMetaData.stream);
+                        AudioClip audioClip = await GetAudio(audioPath, false, soundMetaData.stream);
                         if (!Kernel.isPlaying)
                             return null;
 
@@ -1436,13 +1436,17 @@ namespace SCKRM.Resource
         /// </param>
         /// <returns></returns>
         /// <exception cref="NotMainThreadMethodException"></exception>
-        public static async UniTask<AudioClip> GetAudio(string path, bool stream = false)
+        public static async UniTask<AudioClip> GetAudio(string path, bool pathExtensionUse = false, bool stream = false)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(GetAudio));
 
             if (path == null)
                 path = "";
+
+            if (pathExtensionUse)
+                path = PathTool.GetPathWithExtension(path);
+                
             
             AudioClip audioClip = await getSound(".ogg", AudioType.OGGVORBIS);
             if (audioClip == null) audioClip = await getSound(".mp3", AudioType.MPEG);
