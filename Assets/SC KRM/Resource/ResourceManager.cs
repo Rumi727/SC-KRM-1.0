@@ -1110,6 +1110,8 @@ namespace SCKRM.Resource
 
 
         #region Get Resource Method
+
+        #region Get Texture
         /// <summary>
         /// 이미지 파일을 Texture2D 타입으로 가져옵니다
         /// Import image files as Texture2D type
@@ -1236,7 +1238,9 @@ namespace SCKRM.Resource
 
             return null;
         }
+        #endregion
 
+        #region Get Sprite
         /// <summary>
         /// 텍스쳐를 스프라이트로 변환합니다 (Unity API를 사용하기 때문에 메인 스레드에서 실행해야 합니다)
         /// Convert texture to sprite (Since the Unity API is used, we need to run it on the main thread)
@@ -1386,6 +1390,7 @@ namespace SCKRM.Resource
             }
             return sprites;
         }
+        #endregion
 
 
 
