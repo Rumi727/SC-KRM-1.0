@@ -50,7 +50,7 @@ namespace SCKRM.UI.Layout
                 RectTransform childRectTransform = childRectTransforms[i];
                 if (childRectTransform == null)
                     continue;
-                else if (!childRectTransform.gameObject.activeSelf)
+                else if (!childRectTransform.gameObject.activeInHierarchy)
                     continue;
 
                 if (!Kernel.isPlaying)
@@ -81,7 +81,7 @@ namespace SCKRM.UI.Layout
                             Vector2 size = rectTransform2.rect.size;
                             if (rectTransform2 == null)
                                 continue;
-                            else if (!rectTransform2.gameObject.activeSelf)
+                            else if (!rectTransform2.gameObject.activeInHierarchy)
                                 continue;
 
                             HorizontalLayoutSetting taskBarLayoutSetting2 = childSettingComponents[j];
@@ -139,7 +139,7 @@ namespace SCKRM.UI.Layout
                         RectTransform backChildRectTransform = childRectTransforms[j];
                         if (backChildRectTransform == null)
                             continue;
-                        else if (!backChildRectTransform.gameObject.activeSelf)
+                        else if (!backChildRectTransform.gameObject.activeInHierarchy)
                             continue;
 
                         offset = backChildRectTransform.rect.width;
