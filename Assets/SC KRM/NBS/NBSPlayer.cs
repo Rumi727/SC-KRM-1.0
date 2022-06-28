@@ -123,6 +123,8 @@ namespace SCKRM.NBS
 
         void Update()
         {
+            transform.localPosition = localPosition;
+
             if (!isPaused && realSpeed != 0)
             {
                 if (realSpeed < 0)
