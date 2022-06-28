@@ -287,6 +287,11 @@ namespace SCKRM.Sound
                     audioSource.outputAudioMixerGroup = SoundManager.instance.audioMixerGroup;
                 else
                     audioSource.outputAudioMixerGroup = null;
+
+                SetTempoAndPitch();
+                SetVolume();
+
+                audioSource.Play();
             }
 
             if (!SoundManager.soundList.Contains(this))
