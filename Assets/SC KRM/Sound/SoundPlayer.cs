@@ -20,10 +20,12 @@ namespace SCKRM.Sound
             get => audioSource.time;
             set
             {
+                float lastTime = audioSource.time;
                 audioSource.time = value;
                 tempTime = audioSource.time;
 
-                _timeChanged?.Invoke();
+                if (lastTime != value)
+                    _timeChanged?.Invoke();
             }
         }
         public override float realTime { get => time / speed; set => time = value * speed; }

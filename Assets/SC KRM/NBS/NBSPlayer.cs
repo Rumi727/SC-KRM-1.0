@@ -56,11 +56,14 @@ namespace SCKRM.NBS
 
                 value = value.Clamp(0, (int)length);
 
+                int lastTick = _tick;
+
                 tickTimer = 0;
                 _tick = value;
                 _index = nbsFile.nbsNotes.Select((d, i) => new { d.delayTick, index = i }).MinBy(x => (x.delayTick - value).Abs()).index;
 
-                _timeChanged?.Invoke();
+                if (lastTick != value)
+                    _timeChanged?.Invoke();
             }
         }
 
