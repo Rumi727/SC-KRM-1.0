@@ -3342,6 +3342,7 @@ namespace SCKRM
             return newText.ToString();
         }
 
+        #region KeyCode to String
         /// <summary>
         /// (keyCode = KeyCode.RightArrow) = "→"
         /// </summary>
@@ -3704,6 +3705,7 @@ namespace SCKRM
 
             return text;
         }
+        #endregion
 
         #region To Bar
         /// <summary>
