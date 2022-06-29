@@ -2178,6 +2178,40 @@ namespace SCKRM
         /// <param name="list">리스트</param>
         /// <param name="target">기준</param>
         /// <returns></returns>
+        public static BigInteger CloseValue(this List<BigInteger> list, BigInteger target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
+        public static BigDecimal CloseValue(this List<BigDecimal> list, BigDecimal target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="list">리스트</param>
+        /// <param name="target">기준</param>
+        /// <returns></returns>
         public static nint CloseValue(this List<nint> list, nint target)
         {
             if (list == null)
@@ -2385,6 +2419,40 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         public static int CloseValueIndex(this List<decimal> list, decimal target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<BigInteger> list, BigInteger target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndex(this List<BigDecimal> list, BigDecimal target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2624,6 +2692,40 @@ namespace SCKRM
         /// <param name="list"></param>
         /// <param name="target"></param>
         /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<BigInteger> list, BigInteger target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CloseValueIndexBinarySearch(this List<BigDecimal> list, BigDecimal target)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            if (list.Count > 0)
+                return list.IndexOf(list.CloseValue(target));
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾고 이진 검색으로 인덱스를 반환합니다
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static int CloseValueIndexBinarySearch(this List<nint> list, nint target)
         {
             if (list == null)
@@ -2790,6 +2892,46 @@ namespace SCKRM
             while (index < values.Count)
             {
                 decimal value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values[i] = setValue;
+
+                    i++;
+                }
+
+                index++;
+            }
+        }
+
+        public static void Deduplicate(this List<BigDecimal> values, BigDecimal delta)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                BigDecimal value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values.RemoveAt(i);
+                    else
+                        i++;
+                }
+
+                index++;
+            }
+        }
+
+        public static void Deduplicate(this List<BigDecimal> values, BigDecimal delta, BigDecimal setValue)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                BigDecimal value = values[index];
 
                 int i = index + 1;
                 while (i < values.Count)
@@ -3052,6 +3194,52 @@ namespace SCKRM
         /// double
         /// </returns>
         public static decimal CloseValue(this decimal[] array, decimal target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// double
+        /// </returns>
+        public static BigInteger CloseValue(this BigInteger[] array, BigInteger target)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (array.Length > 0)
+                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 가장 가까운 수를 찾습니다
+        /// </summary>
+        /// <param name="array">
+        /// 리스트
+        /// </param>
+        /// <param name="target">
+        /// 기준
+        /// </param>
+        /// <returns>
+        /// double
+        /// </returns>
+        public static BigDecimal CloseValue(this BigDecimal[] array, BigDecimal target)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
