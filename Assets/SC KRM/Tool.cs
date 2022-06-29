@@ -558,6 +558,7 @@ namespace SCKRM
         public static ulong Reapeat(this ulong t, ulong length) => (t - (t / length) * length).Clamp(0, length);
         public static float Reapeat(this float t, float length) => (t - (t / length).Floor() * length).Clamp(0, length);
         public static double Reapeat(this double t, double length) => (t - (t / length).Floor() * length).Clamp(0, length);
+        public static decimal Reapeat(this decimal t, decimal length) => (t - (t / length).Floor() * length).Clamp(0, length);
         public static BigInteger Reapeat(this BigInteger t, BigInteger length) => (t - (t / length) * length).Clamp(0, length);
         public static BigDecimal Reapeat(this BigDecimal t, BigDecimal length) => (t - (t / length).Floor() * length).Clamp(0, length);
         public static nint Reapeat(this nint t, nint length) => (t - (t / length) * length).Clamp(0, length);
