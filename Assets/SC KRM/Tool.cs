@@ -2413,6 +2413,46 @@ namespace SCKRM
                 index++;
             }
         }
+
+        public static void Deduplicate(this List<decimal> values, decimal delta)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                decimal value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values.RemoveAt(i);
+                    else
+                        i++;
+                }
+
+                index++;
+            }
+        }
+
+        public static void Deduplicate(this List<decimal> values, decimal delta, decimal setValue)
+        {
+            int index = 0;
+            while (index < values.Count)
+            {
+                decimal value = values[index];
+
+                int i = index + 1;
+                while (i < values.Count)
+                {
+                    if ((value - values[i]).Abs() < delta)
+                        values[i] = setValue;
+
+                    i++;
+                }
+
+                index++;
+            }
+        }
         #endregion
     }
 
