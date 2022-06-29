@@ -3314,7 +3314,11 @@ namespace SCKRM
                 else
                     return TimeSpan.FromSeconds(second).ToString(@"s");
             }
-            catch (Exception) { return "--:--"; }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                return "--:--";
+            }
         }
 
         /// <summary>
@@ -3373,7 +3377,11 @@ namespace SCKRM
                         return TimeSpan.FromSeconds(second).ToString(@"s");
                 }
             }
-            catch (Exception) { return "--:--"; }
+            catch (Exception e) 
+            {
+                Debug.LogException(e);
+                return "--:--";
+            }
         }
         #endregion
 
