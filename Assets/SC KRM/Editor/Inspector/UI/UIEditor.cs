@@ -1,5 +1,6 @@
 using SCKRM.UI;
 using UnityEditor;
+using UnityEngine;
 
 namespace SCKRM.Editor
 {
@@ -7,12 +8,14 @@ namespace SCKRM.Editor
     [CustomEditor(typeof(UI.UI))]
     public class UIEditor : CustomInspectorEditor
     {
-        [System.NonSerialized] UI.UI editor;
+        [System.NonSerialized] IUI editor;
+        [System.NonSerialized] GameObject editorGameObject;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            editor = (UI.UI)target;
+            editorGameObject = ((Component)target).gameObject;
+            editor = (IUI)target;
         }
 
         /// <summary>
@@ -20,13 +23,13 @@ namespace SCKRM.Editor
         /// </summary>
         public override void OnInspectorGUI()
         {
-            if (editor.rectTransform.gameObject != editor.gameObject)
+            if (editor.rectTransform.gameObject != editorGameObject)
             {
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 RectTramsform 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_rectTransform");
             }
 
-            if (editor.graphic != null && editor.graphic.gameObject != editor.gameObject)
+            if (editor.graphic != null && editor.graphic.gameObject != editorGameObject)
             {
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 그래픽 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_graphic");
