@@ -15,7 +15,7 @@ namespace SCKRM.Editor
         {
             base.OnEnable();
             editorGameObject = ((Component)target).gameObject;
-            editor = (IUI)target;
+            editor = target as IUI;
         }
 
         /// <summary>
@@ -23,29 +23,34 @@ namespace SCKRM.Editor
         /// </summary>
         public override void OnInspectorGUI()
         {
+            bool lineShow = false;
+
+            if (editor == null)
+            {
+                EditorGUILayout.HelpBox("컴포넌트가 IUI 인터페이스를 상속하지 않지만\n커스텀 인스펙터 에디터 스크립트는 UIEditor 클래스를 상속합니다", MessageType.Warning);
+                DrawLine();
+
+                return;
+            }
+
             if (editor.rectTransform.gameObject != editorGameObject)
             {
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 RectTramsform 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_rectTransform");
+
+                lineShow = true;
             }
 
             if (editor.graphic != null && editor.graphic.gameObject != editorGameObject)
             {
                 EditorGUILayout.HelpBox("이 게임 오브젝트에 있는 그래픽 컴포넌트를 넣어야합니다!", MessageType.Error);
                 UseProperty("_graphic");
+
+                lineShow = true;
             }
 
-            EditorGUILayout.LabelField("Anchored Position: " + editor.rectTransform.anchoredPosition);
-            EditorGUILayout.LabelField("Size Delta: " + editor.rectTransform.sizeDelta);
-
-            Space();
-
-            EditorGUILayout.LabelField("Offset Min: " + editor.rectTransform.offsetMin);
-            EditorGUILayout.LabelField("Offset Max: " + editor.rectTransform.offsetMax);
-
-            Space();
-
-            EditorGUILayout.LabelField("Rect: " + editor.rectTransform.rect);
+            if (lineShow)
+                DrawLine();
         }
     }
 
