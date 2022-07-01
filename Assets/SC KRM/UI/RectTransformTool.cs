@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -52,44 +53,78 @@ namespace SCKRM.UI
         /// 상위 트랜스폼이 변경되기 전에 호출됩니다
         /// </summary>
         public event RectTransformEvent onBeforeTransformParentChanged;
+        //[SerializeField] UnityEvent onBeforeTransformParentChangedUnityEvent = new UnityEvent();
         /// <summary>
         /// 상위 트랜스폼이 변경되면 호출됩니다
         /// </summary>
         public event RectTransformEvent onTransformParentChanged;
+        //[SerializeField] UnityEvent onTransformParentChangedUnityEvent = new UnityEvent();
 
         /// <summary>
         /// RectTransform의 월드 값이 변경되면 호출됩니다
         /// </summary>
         public event RectTransformEvent onRectTransformDimensionsChange;
+        //[SerializeField] UnityEvent onRectTransformDimensionsChangeUnityEvent = new UnityEvent();
         /// <summary>
         /// 애니메이션으로 인해 속성이 변경된 경우를 위한 콜백입니다
         /// </summary>
         public event RectTransformEvent onDidApplyAnimationProperties;
+        //[SerializeField] UnityEvent onDidApplyAnimationPropertiesUnityEvent = new UnityEvent();
 
         /// <summary>
         /// 부모 캔버스의 상태가 변경되면 호출됩니다
         /// </summary>
         public event RectTransformEvent onCanvasHierarchyChanged;
+        //[SerializeField] UnityEvent onCanvasHierarchyChangedUnityEvent = new UnityEvent();
         /// <summary>
         /// 캔버스 그룹의 상태가 변경되면 호출됩니다
         /// </summary>
         public event RectTransformEvent onCanvasGroupChanged;
+        //[SerializeField] UnityEvent onCanvasGroupChangedUnityEvent = new UnityEvent();
 
         protected override void Awake() => SetRectCorners();
 
-        protected override void OnBeforeTransformParentChanged() => onBeforeTransformParentChanged?.Invoke(rectTransform);
-        protected override void OnTransformParentChanged() => onTransformParentChanged?.Invoke(rectTransform);
+        protected override void OnBeforeTransformParentChanged()
+        {
+            onBeforeTransformParentChanged?.Invoke(rectTransform);
+            /*if (onBeforeTransformParentChangedUnityEvent.GetPersistentEventCount() > 0)
+                onBeforeTransformParentChangedUnityEvent.Invoke();*/
+        }
+        protected override void OnTransformParentChanged()
+        {
+            onTransformParentChanged?.Invoke(rectTransform);
+            /*if (onTransformParentChangedUnityEvent.GetPersistentEventCount() > 0)
+                onTransformParentChangedUnityEvent.Invoke();*/
+        }
 
         Vector3[] worldCornersArray = new Vector3[4];
         protected override void OnRectTransformDimensionsChange()
         {
             SetRectCorners();
-            onRectTransformDimensionsChange?.Invoke(rectTransform);
-        }
-        protected override void OnDidApplyAnimationProperties() => onDidApplyAnimationProperties?.Invoke(rectTransform);
 
-        protected override void OnCanvasHierarchyChanged() => onCanvasHierarchyChanged?.Invoke(rectTransform);
-        protected override void OnCanvasGroupChanged() => onCanvasGroupChanged?.Invoke(rectTransform);
+            onRectTransformDimensionsChange?.Invoke(rectTransform);
+            /*if (onRectTransformDimensionsChangeUnityEvent.GetPersistentEventCount() > 0)
+                onRectTransformDimensionsChangeUnityEvent.Invoke();*/
+        }
+        protected override void OnDidApplyAnimationProperties()
+        {
+            onDidApplyAnimationProperties?.Invoke(rectTransform);
+            /*if (onDidApplyAnimationPropertiesUnityEvent.GetPersistentEventCount() > 0)
+                onDidApplyAnimationPropertiesUnityEvent.Invoke();*/
+        }
+
+        protected override void OnCanvasHierarchyChanged()
+        {
+            onCanvasHierarchyChanged?.Invoke(rectTransform);
+            /*if (onCanvasHierarchyChangedUnityEvent.GetPersistentEventCount() > 0)
+                onCanvasHierarchyChangedUnityEvent.Invoke();*/
+        }
+        protected override void OnCanvasGroupChanged()
+        {
+            onCanvasGroupChanged?.Invoke(rectTransform);
+            /*if (onCanvasGroupChangedUnityEvent.GetPersistentEventCount() > 0)
+                onCanvasGroupChangedUnityEvent.Invoke();*/
+        }
 
         void SetRectCorners()
         {
