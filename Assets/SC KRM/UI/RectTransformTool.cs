@@ -38,6 +38,7 @@ namespace SCKRM.UI
 
 
 
+        public RectCorner localCorners { get; private set; }
         public RectCorner worldCorners { get; private set; }
 
 
