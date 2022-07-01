@@ -7,6 +7,7 @@ using UnityEngine.UI;
 namespace SCKRM.UI
 {
     [ExecuteAlways]
+    [DisallowMultipleComponent]
     public sealed class RectTransformTool : UIBehaviour, IUI
     {
         [SerializeField] RectTransform _parentRectTransform; public RectTransform parentRectTransform
