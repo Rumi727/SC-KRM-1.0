@@ -13,6 +13,7 @@ using SCKRM.SaveLoad;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
 using System.IO;
+using UnityEditorInternal;
 
 namespace SCKRM.Editor
 {
@@ -159,6 +160,7 @@ namespace SCKRM.Editor
                     }
 
                     Scene activeScene = SceneManager.GetActiveScene();
+                    PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
                     hierarchyChangedEnable = false;
 
                     if (activeScene.path == $"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity")
@@ -248,6 +250,77 @@ namespace SCKRM.Editor
                             }
                         }
                     }
+                    #region Rect Transform Tool
+                    Transform[] transforms;
+                    if (prefabStage != null)
+                        transforms = prefabStage.FindComponentsOfType<Transform>();
+                    else
+                        transforms = UnityEngine.Object.FindObjectsOfType<Transform>(true);
+
+                    for (int i = 0; i < transforms.Length; i++)
+                    {
+                        Transform transform = transforms[i];
+                        RectTransform rectTransform = transform.gameObject.GetComponent<RectTransform>();
+                        RectTransformTool rectTransformTool = transform.GetComponent<RectTransformTool>();
+
+                        if (rectTransform != null)
+                        {
+                            if (rectTransformTool == null)
+                            {
+                                PrefabAssetType prefabAssetType = PrefabUtility.GetPrefabAssetType(rectTransform.gameObject);
+                                if (prefabAssetType == PrefabAssetType.NotAPrefab)
+                                {
+                                    RectTransformTool addedRectTransformTool = rectTransform.gameObject.AddComponent<RectTransformTool>();
+
+                                    int length = rectTransform.GetComponents<Component>().Length;
+                                    for (int j = 0; j < length - 2; j++)
+                                        ComponentUtility.MoveComponentUp(addedRectTransformTool);
+
+                                    sceneDirty = true;
+                                }
+                                else if (prefabAssetType != PrefabAssetType.MissingAsset)
+                                {
+                                    List<RemovedComponent> removedComponents = PrefabUtility.GetRemovedComponents(rectTransform.gameObject);
+                                    bool revert = false;
+                                    for (int j = 0; j < removedComponents.Count; j++)
+                                    {
+                                        RemovedComponent removedComponent = removedComponents[j];
+                                        if (removedComponent.assetComponent.GetType() == typeof(RectTransformTool))
+                                        {
+                                            removedComponent.Revert();
+                                            revert = true;
+                                        }
+                                    }
+
+                                    if (!revert)
+                                    {
+                                        RectTransform original = PrefabUtility.GetCorrespondingObjectFromOriginalSource(rectTransform);
+                                        RectTransformTool addedRectTransformTool = original.gameObject.AddComponent<RectTransformTool>();
+
+                                        int length = original.GetComponents<Component>().Length;
+                                        for (int j = 0; j < length - 2; j++)
+                                            ComponentUtility.MoveComponentUp(addedRectTransformTool);
+
+                                        EditorUtility.SetDirty(rectTransform.gameObject);
+                                        EditorUtility.SetDirty(addedRectTransformTool);
+                                    }
+
+                                    sceneDirty = true;
+                                }
+                            }
+                            else if (!rectTransformTool.enabled)
+                            {
+                                UnityEngine.Object.DestroyImmediate(rectTransformTool);
+                                sceneDirty = true;
+                            }
+                        }
+                        else if (rectTransformTool != null)
+                        {
+                            UnityEngine.Object.DestroyImmediate(rectTransformTool);
+                            sceneDirty = true;
+                        }
+                    }
+                    #endregion
 
                     if (sceneDirty)
                         EditorSceneManager.MarkSceneDirty(activeScene);

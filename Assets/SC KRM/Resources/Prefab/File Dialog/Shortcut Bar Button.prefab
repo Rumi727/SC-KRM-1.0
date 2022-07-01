@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2528097743523021385}
+  - component: {fileID: 2652560865731346846}
   - component: {fileID: 6130790643050988318}
   - component: {fileID: 4795671616309407485}
   - component: {fileID: 6568789557254439086}
@@ -26,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437721061360966394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -42,6 +43,21 @@ RectTransform:
   m_AnchoredPosition: {x: -1.5, y: -6}
   m_SizeDelta: {x: -15, y: 0}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &2652560865731346846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437721061360966394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a272de5206b45204ea2dfe6e2f7ac3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
 --- !u!114 &6130790643050988318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5915680247247544686}
+  - component: {fileID: 5892725687897189158}
   - component: {fileID: 8339851969336404043}
   - component: {fileID: 4759088833571428954}
   - component: {fileID: 5076621533367043733}
@@ -167,6 +184,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5892725687897189158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3824832746002728515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a272de5206b45204ea2dfe6e2f7ac3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
 --- !u!222 &8339851969336404043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -231,6 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 457803392212214757}
+  - component: {fileID: 6971659193485737852}
   - component: {fileID: 2607946648500488959}
   - component: {fileID: 6516104239014800060}
   - component: {fileID: 1938579563300350866}
@@ -261,8 +294,23 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -4, y: 0}
-  m_SizeDelta: {x: 833, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &6971659193485737852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5015815994446294817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a272de5206b45204ea2dfe6e2f7ac3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
 --- !u!222 &2607946648500488959
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -422,6 +470,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 188430572599738591}
+  - component: {fileID: 1417314144536343982}
   - component: {fileID: 7412088885102442261}
   - component: {fileID: 454881919752182775}
   - component: {fileID: 6519776198333869900}
@@ -453,6 +502,21 @@ RectTransform:
   m_AnchoredPosition: {x: 3, y: 0.5}
   m_SizeDelta: {x: 0, y: -5}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1417314144536343982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065963481139276953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a272de5206b45204ea2dfe6e2f7ac3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _graphic: {fileID: 0}
 --- !u!222 &7412088885102442261
 CanvasRenderer:
   m_ObjectHideFlags: 0
