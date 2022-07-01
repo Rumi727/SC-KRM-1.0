@@ -163,6 +163,7 @@ namespace SCKRM.Editor
                     PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
                     hierarchyChangedEnable = false;
 
+                    #region Kernel
                     if (activeScene.path == $"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity")
                     {
                         Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
@@ -198,8 +199,15 @@ namespace SCKRM.Editor
                             sceneDirty = true;
                         }
                     }
+                    #endregion
 
-                    UnityEngine.Camera[] cameras = UnityEngine.Object.FindObjectsOfType<UnityEngine.Camera>(true);
+                    #region Camera Setting
+                    UnityEngine.Camera[] cameras;
+                    if (prefabStage != null)
+                        cameras = prefabStage.FindComponentsOfType<UnityEngine.Camera>();
+                    else
+                        cameras = UnityEngine.Object.FindObjectsOfType<UnityEngine.Camera>(true);
+
                     for (int i = 0; i < cameras.Length; i++)
                     {
                         UnityEngine.Camera camera = cameras[i];
@@ -215,11 +223,18 @@ namespace SCKRM.Editor
                             sceneDirty = true;
                         }
                     }
+                    #endregion
 
-                    Canvas[] canvass = UnityEngine.Object.FindObjectsOfType<Canvas>(true);
-                    for (int i = 0; i < canvass.Length; i++)
+                    #region Canvas Setting
+                    Canvas[] canvases;
+                    if (prefabStage != null)
+                        canvases = prefabStage.FindComponentsOfType<Canvas>();
+                    else
+                        canvases = UnityEngine.Object.FindObjectsOfType<Canvas>(true);
+
+                    for (int i = 0; i < canvases.Length; i++)
                     {
-                        Canvas canvas = canvass[i];
+                        Canvas canvas = canvases[i];
                         CanvasSetting canvasSetting = canvas.GetComponent<CanvasSetting>();
 
                         if (canvas.GetComponent<UIManager>() == null)
@@ -250,6 +265,8 @@ namespace SCKRM.Editor
                             }
                         }
                     }
+                    #endregion
+
                     #region Rect Transform Tool
                     Transform[] transforms;
                     if (prefabStage != null)
