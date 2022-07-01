@@ -72,16 +72,29 @@ namespace SCKRM.UI
         /// </summary>
         public event RectTransformEvent onCanvasGroupChanged;
 
-
+        protected override void Awake() => SetRectCorners();
 
         protected override void OnBeforeTransformParentChanged() => onBeforeTransformParentChanged?.Invoke(rectTransform);
         protected override void OnTransformParentChanged() => onTransformParentChanged?.Invoke(rectTransform);
 
-        protected override void OnRectTransformDimensionsChange() => onRectTransformDimensionsChange?.Invoke(rectTransform);
+        Vector3[] worldCornersArray = new Vector3[4];
+        protected override void OnRectTransformDimensionsChange()
+        {
+            SetRectCorners();
+            onRectTransformDimensionsChange?.Invoke(rectTransform);
+        }
         protected override void OnDidApplyAnimationProperties() => onDidApplyAnimationProperties?.Invoke(rectTransform);
 
         protected override void OnCanvasHierarchyChanged() => onCanvasHierarchyChanged?.Invoke(rectTransform);
         protected override void OnCanvasGroupChanged() => onCanvasGroupChanged?.Invoke(rectTransform);
+
+        void SetRectCorners()
+        {
+            rectTransform.GetWorldCorners(worldCornersArray);
+
+            localCorners = new RectCorner(rectTransform.rect);
+            worldCorners = new RectCorner(worldCornersArray[0], worldCornersArray[1], worldCornersArray[2], worldCornersArray[3]);
+        }
     }
 
     public struct RectCorner
