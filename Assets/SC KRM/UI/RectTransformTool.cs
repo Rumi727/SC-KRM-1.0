@@ -42,10 +42,16 @@ namespace SCKRM.UI
 
 
 
-        public RectCorner localCorners { get; private set; }
-        public RectCorner worldCorners { get; private set; }
-
-
+        Vector3[] worldCornersArray = new Vector3[4];
+        public RectCorner localCorners => rectTransform.rect;
+        public RectCorner worldCorners
+        {
+            get
+            {
+                rectTransform.GetWorldCorners(worldCornersArray);
+                return new RectCorner(worldCornersArray[0], worldCornersArray[1], worldCornersArray[2], worldCornersArray[3]);
+            }
+        }
 
         public delegate void RectTransformEvent(RectTransform changedRectTransform);
 
@@ -82,8 +88,6 @@ namespace SCKRM.UI
         public event RectTransformEvent onCanvasGroupChanged;
         //[SerializeField] UnityEvent onCanvasGroupChangedUnityEvent = new UnityEvent();
 
-        protected override void Awake() => SetRectCorners();
-
         protected override void OnBeforeTransformParentChanged()
         {
             onBeforeTransformParentChanged?.Invoke(rectTransform);
@@ -97,11 +101,8 @@ namespace SCKRM.UI
                 onTransformParentChangedUnityEvent.Invoke();*/
         }
 
-        Vector3[] worldCornersArray = new Vector3[4];
         protected override void OnRectTransformDimensionsChange()
         {
-            SetRectCorners();
-
             onRectTransformDimensionsChange?.Invoke(rectTransform);
             /*if (onRectTransformDimensionsChangeUnityEvent.GetPersistentEventCount() > 0)
                 onRectTransformDimensionsChangeUnityEvent.Invoke();*/
@@ -124,14 +125,6 @@ namespace SCKRM.UI
             onCanvasGroupChanged?.Invoke(rectTransform);
             /*if (onCanvasGroupChangedUnityEvent.GetPersistentEventCount() > 0)
                 onCanvasGroupChangedUnityEvent.Invoke();*/
-        }
-
-        void SetRectCorners()
-        {
-            rectTransform.GetWorldCorners(worldCornersArray);
-
-            localCorners = new RectCorner(rectTransform.rect);
-            worldCorners = new RectCorner(worldCornersArray[0], worldCornersArray[1], worldCornersArray[2], worldCornersArray[3]);
         }
     }
 
