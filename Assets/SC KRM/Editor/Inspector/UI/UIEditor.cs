@@ -77,8 +77,6 @@ namespace SCKRM.Editor
         {
             base.OnInspectorGUI();
 
-            DrawLine();
-
             UseProperty("_lerp", "애니메이션 사용");
 
             if (editor.lerp)
