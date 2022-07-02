@@ -130,7 +130,17 @@ namespace SCKRM.UI
 
     public struct RectCorner
     {
-        public Rect rect => this;
+        public Rect rect
+        {
+            get => this;
+            set
+            {
+                bottomLeft = new Vector2(rect.xMin, rect.yMin);
+                topLeft = new Vector2(rect.xMin, rect.yMax);
+                topRight = new Vector2(rect.xMax, rect.yMax);
+                bottomRight = new Vector2(rect.xMax, rect.yMin);
+            }
+        }
 
         public Vector2 bottomLeft { get; set; }
         public Vector2 topLeft { get; set; }
