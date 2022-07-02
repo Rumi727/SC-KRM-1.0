@@ -7,6 +7,7 @@ namespace SCKRM.UI.Layout
     [AddComponentMenu("SC KRM/UI/Layout/Horizontal Layout")]
     public sealed class HorizontalLayout : LayoutChildSetting<HorizontalLayoutSetting>
     {
+        public float[] childXPoses { get; private set; } = new float[0];
         public float lastXPos { get; private set; } = 0;
         public float centerLastXPos { get; private set; } = 0;
         public float rightLastXPos { get; private set; } = 0;
@@ -42,6 +43,9 @@ namespace SCKRM.UI.Layout
             if (!Kernel.isPlaying)
                 tracker.Clear();
 
+            if (childXPoses.Length != childRectTransforms.Count)
+                childXPoses = new float[childRectTransforms.Count];
+
             bool center = false;
             bool right = false;
             float x = 0;
@@ -49,9 +53,15 @@ namespace SCKRM.UI.Layout
             {
                 RectTransform childRectTransform = childRectTransforms[i];
                 if (childRectTransform == null)
+                {
+                    childXPoses[i] = x;
                     continue;
+                }
                 else if (!childRectTransform.gameObject.activeInHierarchy)
+                {
+                    childXPoses[i] = x;
                     continue;
+                }
 
                 if (!Kernel.isPlaying)
                 {
@@ -179,6 +189,8 @@ namespace SCKRM.UI.Layout
                     x += childRectTransform.rect.size.x + spacing;
                     lastXPos = x;
                 }
+
+                childXPoses[i] = x;
 
                 if (!Kernel.isPlaying || !lerp || !useAni)
                     childRectTransform.anchoredPosition = pos;
