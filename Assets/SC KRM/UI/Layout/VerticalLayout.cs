@@ -7,6 +7,7 @@ namespace SCKRM.UI.Layout
     [AddComponentMenu("SC KRM/UI/Layout/Vertical Layout")]
     public sealed class VerticalLayout : LayoutChildSetting<VerticalLayoutSetting>
     {
+        public float[] childYPoses { get; private set; } = new float[0];
         public float lastYPos { get; private set; } = 0;
         public float centerLastYPos { get; private set; } = 0;
         public float downLastYPos { get; private set; } = 0;
@@ -42,6 +43,9 @@ namespace SCKRM.UI.Layout
             if (!Kernel.isPlaying)
                 tracker.Clear();
 
+            if (childYPoses.Length != childRectTransforms.Count)
+                childYPoses = new float[childRectTransforms.Count];
+
             bool center = false;
             bool down = false;
             float y = 0;
@@ -49,9 +53,15 @@ namespace SCKRM.UI.Layout
             {
                 RectTransform childRectTransform = childRectTransforms[i];
                 if (childRectTransform == null)
+                {
+                    childYPoses[i] = y;
                     continue;
+                }
                 else if (!childRectTransform.gameObject.activeInHierarchy)
+                {
+                    childYPoses[i] = y;
                     continue;
+                }
 
                 if (!Kernel.isPlaying)
                 {
@@ -179,6 +189,8 @@ namespace SCKRM.UI.Layout
                     y -= childRectTransform.rect.height + spacing;
                     lastYPos = y;
                 }
+
+                childYPoses[i] = y;
 
                 if (!Kernel.isPlaying || !lerp || !useAni)
                     childRectTransform.anchoredPosition = pos;
