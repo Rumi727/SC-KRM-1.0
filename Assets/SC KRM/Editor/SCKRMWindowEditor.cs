@@ -1169,6 +1169,8 @@ namespace SCKRM.Editor
                             EditorGUILayout.HelpBox("'Resources' 폴더에 있고 IObjectPooling 인터페이스를 상속받는 스크립트가 최상단에 포함된 오브젝트를 넣어주세요", MessageType.Info);
                         }
                     }
+                    else
+                        EditorGUILayout.EndHorizontal();
 
                     GUI.enabled = true;
                 }
