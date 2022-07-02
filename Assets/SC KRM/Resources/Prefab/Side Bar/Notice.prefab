@@ -302,10 +302,10 @@ GameObject:
   m_Component:
   - component: {fileID: 836050093905084075}
   - component: {fileID: 558462065409271708}
-  - component: {fileID: 2710998002645997310}
   - component: {fileID: 3487246782793876375}
   - component: {fileID: 2270588504110008360}
   - component: {fileID: 4204424564127145177}
+  - component: {fileID: 2710998002645997310}
   - component: {fileID: 6095498022105680824}
   - component: {fileID: 465263910929733980}
   m_Layer: 0
@@ -352,29 +352,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
---- !u!114 &2710998002645997310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3050280473071299450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bca6f8ee03a694f4cb7d941a55dc64b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
-  _verticalLayout: {fileID: 0}
-  _childSizeFitter: {fileID: 0}
-  _removeButtonCanvasGroup: {fileID: 4096963356903654689}
-  _icon: {fileID: 4622889944937629372}
-  _nameText: {fileID: 3667870727633899496}
-  _infoText: {fileID: 559531018334064700}
+  _rectTransform: {fileID: 836050093905084075}
+  _graphic: {fileID: 2270588504110008360}
 --- !u!222 &3487246782793876375
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -430,6 +409,28 @@ MonoBehaviour:
   _type: gui
   _index: 0
   _image: {fileID: 2270588504110008360}
+--- !u!114 &2710998002645997310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050280473071299450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca6f8ee03a694f4cb7d941a55dc64b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
+  _graphic: {fileID: 0}
+  _verticalLayout: {fileID: 0}
+  _childSizeFitter: {fileID: 0}
+  _removeButtonCanvasGroup: {fileID: 4096963356903654689}
+  _icon: {fileID: 4622889944937629372}
+  _nameText: {fileID: 3667870727633899496}
+  _infoText: {fileID: 559531018334064700}
 --- !u!114 &6095498022105680824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 836050093905084075}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2270588504110008360}
   _lerp: 0
   _lerpValue: 0.2
@@ -472,6 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 836050093905084075}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2270588504110008360}
   _lerp: 0
   _lerpValue: 0.2

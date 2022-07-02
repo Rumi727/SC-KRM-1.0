@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2528097743523021385}
   - component: {fileID: 2652560865731346846}
-  - component: {fileID: 6130790643050988318}
   - component: {fileID: 4795671616309407485}
-  - component: {fileID: 6568789557254439086}
+  - component: {fileID: 6130790643050988318}
+  - component: {fileID: 287602970525691564}
   m_Layer: 5
   m_Name: Shortcut Bar Button
   m_TagString: Untagged
@@ -56,26 +56,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 2528097743523021385}
   _graphic: {fileID: 0}
---- !u!114 &6130790643050988318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437721061360966394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d5e8493ecde3134ebb4870e59aefa4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
-  _button: {fileID: 4795671616309407485}
-  _icon: {fileID: 6519776198333869900}
-  _text: {fileID: 1938579563300350866}
 --- !u!114 &4795671616309407485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +102,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6568789557254439086
+--- !u!114 &6130790643050988318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,15 +111,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 437721061360966394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a503a68f0bcefa04b8028041f70e88e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d5e8493ecde3134ebb4870e59aefa4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
+  _graphic: {fileID: 0}
+  _button: {fileID: 4795671616309407485}
+  _icon: {fileID: 6519776198333869900}
+  _text: {fileID: 1938579563300350866}
+--- !u!114 &287602970525691564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437721061360966394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a7581e4168deb419433c6a8240d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2528097743523021385}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
-  _targetRectTransform: {fileID: 457803392212214757}
+  _targetRectTransforms:
+  - {fileID: 457803392212214757}
   _xSize: 0
   _ySize: 1
   _offset: {x: 0, y: 5}
@@ -451,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 2528097743523021385}
   _rectTransform: {fileID: 457803392212214757}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 6516104239014800060}
   _lerp: 0
   _lerpValue: 0.2

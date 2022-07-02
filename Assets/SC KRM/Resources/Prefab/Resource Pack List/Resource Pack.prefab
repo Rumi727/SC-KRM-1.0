@@ -176,10 +176,10 @@ GameObject:
   m_Component:
   - component: {fileID: 570521442752873981}
   - component: {fileID: 6615646404191683841}
-  - component: {fileID: 2250496116285478646}
   - component: {fileID: 4329623227210807489}
   - component: {fileID: 1437238912739423102}
   - component: {fileID: 3902866909797427087}
+  - component: {fileID: 2250496116285478646}
   - component: {fileID: 6406183811211014382}
   - component: {fileID: 721748106083115530}
   m_Layer: 0
@@ -225,29 +225,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
---- !u!114 &2250496116285478646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2748353516012179500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366c35e11d55d7d468ad990f1ddf0fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
-  selected: 0
-  _verticalLayout: {fileID: 0}
-  _childSizeFitter: {fileID: 0}
-  _icon: {fileID: 8818949854222124973}
-  _nameText: {fileID: 1524431748461453268}
-  _descriptionText: {fileID: 3038178716134116539}
+  _rectTransform: {fileID: 570521442752873981}
+  _graphic: {fileID: 1437238912739423102}
 --- !u!222 &4329623227210807489
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -303,6 +282,28 @@ MonoBehaviour:
   _type: gui
   _index: 0
   _image: {fileID: 1437238912739423102}
+--- !u!114 &2250496116285478646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748353516012179500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366c35e11d55d7d468ad990f1ddf0fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentRectTransform: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
+  _graphic: {fileID: 0}
+  selected: 0
+  _verticalLayout: {fileID: 0}
+  _childSizeFitter: {fileID: 0}
+  _icon: {fileID: 8818949854222124973}
+  _nameText: {fileID: 1524431748461453268}
+  _descriptionText: {fileID: 3038178716134116539}
 --- !u!114 &6406183811211014382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 570521442752873981}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 1437238912739423102}
   _lerp: 0
   _lerpValue: 0.2
@@ -345,6 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 570521442752873981}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 1437238912739423102}
   _lerp: 0
   _lerpValue: 0.2
