@@ -53,7 +53,7 @@ namespace SCKRM.UI
             }
         }
 
-        public delegate void RectTransformEvent(RectTransform changedRectTransform);
+        public delegate void RectTransformEvent();
 
         /// <summary>
         /// 상위 트랜스폼이 변경되기 전에 호출됩니다
@@ -90,39 +90,39 @@ namespace SCKRM.UI
 
         protected override void OnBeforeTransformParentChanged()
         {
-            onBeforeTransformParentChanged?.Invoke(rectTransform);
+            onBeforeTransformParentChanged?.Invoke();
             /*if (onBeforeTransformParentChangedUnityEvent.GetPersistentEventCount() > 0)
                 onBeforeTransformParentChangedUnityEvent.Invoke();*/
         }
         protected override void OnTransformParentChanged()
         {
-            onTransformParentChanged?.Invoke(rectTransform);
+            onTransformParentChanged?.Invoke();
             /*if (onTransformParentChangedUnityEvent.GetPersistentEventCount() > 0)
                 onTransformParentChangedUnityEvent.Invoke();*/
         }
 
         protected override void OnRectTransformDimensionsChange()
         {
-            onRectTransformDimensionsChange?.Invoke(rectTransform);
+            onRectTransformDimensionsChange?.Invoke();
             /*if (onRectTransformDimensionsChangeUnityEvent.GetPersistentEventCount() > 0)
                 onRectTransformDimensionsChangeUnityEvent.Invoke();*/
         }
         protected override void OnDidApplyAnimationProperties()
         {
-            onDidApplyAnimationProperties?.Invoke(rectTransform);
+            onDidApplyAnimationProperties?.Invoke();
             /*if (onDidApplyAnimationPropertiesUnityEvent.GetPersistentEventCount() > 0)
                 onDidApplyAnimationPropertiesUnityEvent.Invoke();*/
         }
 
         protected override void OnCanvasHierarchyChanged()
         {
-            onCanvasHierarchyChanged?.Invoke(rectTransform);
+            onCanvasHierarchyChanged?.Invoke();
             /*if (onCanvasHierarchyChangedUnityEvent.GetPersistentEventCount() > 0)
                 onCanvasHierarchyChangedUnityEvent.Invoke();*/
         }
         protected override void OnCanvasGroupChanged()
         {
-            onCanvasGroupChanged?.Invoke(rectTransform);
+            onCanvasGroupChanged?.Invoke();
             /*if (onCanvasGroupChangedUnityEvent.GetPersistentEventCount() > 0)
                 onCanvasGroupChangedUnityEvent.Invoke();*/
         }
