@@ -4012,10 +4012,9 @@ namespace SCKRM
         }
         #endregion
 
+        static readonly KoreanLunisolarCalendar klc = new KoreanLunisolarCalendar();
         public static DateTime ToLunarDate(this DateTime dateTime)
         {
-            KoreanLunisolarCalendar klc = new KoreanLunisolarCalendar();
-
             int year = klc.GetYear(dateTime);
             int month = klc.GetMonth(dateTime);
             int day = klc.GetDayOfMonth(dateTime);
@@ -4036,8 +4035,6 @@ namespace SCKRM
 
         public static DateTime ToSolarDate(this DateTime dateTime, bool isLeapMonth = false)
         {
-            KoreanLunisolarCalendar klc = new KoreanLunisolarCalendar();
-
             int year = dateTime.Year;
             int month = dateTime.Month;
             int day = dateTime.Day;
