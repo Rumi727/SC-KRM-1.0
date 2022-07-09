@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5477792427623537723}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5161104910997935070}
   _lerp: 0
   _lerpValue: 0.2
@@ -521,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2522155065052842584}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8827416451169415932}
   _lerp: 0
   _lerpValue: 0.2
@@ -640,6 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8822245039545297045}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7565145349419306519}
   _lerp: 0
   _lerpValue: 0.2
@@ -885,6 +888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _textLayout: {fileID: 884855291335992650}
   _graphLayout: {fileID: 7515251356923265752}
@@ -1550,6 +1554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8578123551445239879}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5301459430066353222}
   _lerp: 0
   _lerpValue: 0.2
@@ -1669,6 +1674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3413143391039522738}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3469394567524261339}
   _lerp: 0
   _lerpValue: 0.2
@@ -1718,7 +1724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.7299957, y: 0}
+  m_AnchoredPosition: {x: 3.7299986, y: 0}
   m_SizeDelta: {x: -65.08, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144388624651245907
@@ -1750,6 +1756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2445179934866750458}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -2758,6 +2765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4672740001467306210}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4220663432685680695}
   _lerp: 0
   _lerpValue: 0.2
@@ -4288,6 +4296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2565516840996461909}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3669990276711224651}
   _inputField: {fileID: 71250827952955682}
 --- !u!114 &1404246901142734363
@@ -4304,6 +4313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 5714171119667106107}
   _rectTransform: {fileID: 2565516840996461909}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3669990276711224651}
   _lerp: 0
   _lerpValue: 0.2
@@ -4554,6 +4564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _leftText: {fileID: 868084628278197755}
   _rightText: {fileID: 8150686859310782603}
@@ -4986,6 +4997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 445194310898951883}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8887822605038226510}
   _inputField: {fileID: 3650703795804279333}
 --- !u!1 &981961500601646873
@@ -5370,6 +5382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8472055425627233793}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5879441470723488376}
   _lerp: 0
   _lerpValue: 0.2
@@ -6018,6 +6031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4982221516194175158}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2582070917459930485}
   _lerp: 0
   _lerpValue: 0.2
@@ -6037,6 +6051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4982221516194175158}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2582070917459930485}
   _xSize: 1
   _ySize: 1
@@ -6871,6 +6886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3571311392813455103}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7791780492222644230}
   _lerp: 0
   _lerpValue: 0.2
@@ -7690,6 +7706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5130631421025051098}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3361137480696378756}
   _lerp: 0
   _lerpValue: 0.2
@@ -8125,6 +8142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2511857846765518653}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 1539967034291642330}
   _lerp: 0
   _lerpValue: 0.2
@@ -8422,6 +8440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6352937720587886236}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3395807243256826164}
   _lerp: 0
   _lerpValue: 0.2
@@ -8541,6 +8560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6487409176427206604}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4859387037127466646}
   _lerp: 0
   _lerpValue: 0.2
@@ -8660,6 +8680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1054776351297858669}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4282752895564681749}
   _lerp: 0
   _lerpValue: 0.2
@@ -8741,6 +8762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2647591395713246938}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -9088,6 +9110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7969089367337080654}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8468319945405251462}
   _lerp: 0
   _lerpValue: 0.2
@@ -9129,7 +9152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3556050843750309016
 MonoBehaviour:
@@ -9418,6 +9441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 662036529527049798}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5378197163761696319}
   _lerp: 0
   _lerpValue: 0.2
@@ -9591,6 +9615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 152900882242567543}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 6609732308475883590}
   _lerp: 0
   _lerpValue: 0.2
@@ -9673,6 +9698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3352175836852875672}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -10013,6 +10039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 558235148889449061}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7647277643356664596}
   _lerp: 0
   _lerpValue: 0.2
@@ -10243,6 +10270,51 @@ MonoBehaviour:
   _type: gui
   _index: 0
   _image: {fileID: 7232834117902830073}
+--- !u!1 &2215791198196173491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4314700511780463504}
+  - component: {fileID: 1124296994017958886}
+  m_Layer: 0
+  m_Name: Discord Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4314700511780463504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215791198196173491}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2964736941529011238}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1124296994017958886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215791198196173491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f6adadfc0ce3c4ea6976ba32aff0b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _applicationId: 889548571140059157
 --- !u!1 &2226011784635433492
 GameObject:
   m_ObjectHideFlags: 0
@@ -10676,6 +10748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4729105713480671656}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -10702,6 +10775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4729105713480671656}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -10820,6 +10894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _image: {fileID: 4629600712605481662}
   _background: {fileID: 4134112406136330298}
@@ -11041,7 +11116,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1934084512807456401}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99578947
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11851,6 +11926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3000777061175466731}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 830380776276430643}
   _inputField: {fileID: 5486138260984438670}
 --- !u!1 &2342798495969641565
@@ -12265,6 +12341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5896793477991101085}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7345425383222533198}
   _lerp: 0
   _lerpValue: 0.2
@@ -12290,6 +12367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5896793477991101085}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7345425383222533198}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2396436493164394405
@@ -12400,6 +12478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5685781800713423684}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7161752421733481825}
   _lerp: 0
   _lerpValue: 0.2
@@ -12480,6 +12559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
 --- !u!114 &3153033743781451417
 MonoBehaviour:
@@ -12495,6 +12575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 274935658015554089}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -12521,6 +12602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 274935658015554089}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -12802,6 +12884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6665215115928794626}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2903137779748845696}
   _lerp: 0
   _lerpValue: 0.2
@@ -13141,6 +13224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3636991026441003159}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5556269148059769974}
   _lerp: 0
   _lerpValue: 0.2
@@ -13221,6 +13305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 9039010525741935321}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -13728,89 +13813,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!1 &2896872170364611462
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2335640975416411797}
-  - component: {fileID: 7144163180806506290}
-  - component: {fileID: 4579617479980296095}
-  m_Layer: 0
-  m_Name: test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2335640975416411797
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2896872170364611462}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7144163180806506290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2896872170364611462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a272de5206b45204ea2dfe6e2f7ac3f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
---- !u!114 &4579617479980296095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2896872170364611462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Content: {fileID: 0}
-  m_Horizontal: 1
-  m_Vertical: 1
-  m_MovementType: 1
-  m_Elasticity: 0.1
-  m_Inertia: 1
-  m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 0}
-  m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 0}
-  m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 0
-  m_HorizontalScrollbarSpacing: 0
-  m_VerticalScrollbarSpacing: 0
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2952792328224206556
 GameObject:
   m_ObjectHideFlags: 0
@@ -14047,6 +14049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   hide: {fileID: 3390760288997500701}
 --- !u!1 &3013936402308825311
@@ -14466,7 +14469,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &978515833943347096
 MonoBehaviour:
@@ -14827,6 +14830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5576310999095303526}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
 --- !u!114 &6230842138419436292
 MonoBehaviour:
@@ -14842,6 +14846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5576310999095303526}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -14868,6 +14873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5576310999095303526}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -15607,7 +15613,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8862740797278417134
 MonoBehaviour:
@@ -15729,6 +15735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8914352206888186950}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3887082873817029563}
   _lerp: 0
   _lerpValue: 0.2
@@ -15865,6 +15872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5180749512132245982}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 84690655566138625}
   _alpha: 0.33333334
   _dropPartMode: 1
@@ -16044,6 +16052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5613804314388473884}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -16653,6 +16662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6687162457109895375}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 6957300661359061929}
   _xSize: 1
   _ySize: 1
@@ -17278,6 +17288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3696608626188315236}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5191005542000934446}
   _lerp: 1
   _lerpValue: 0.2
@@ -17557,6 +17568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1818760885789760683}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -17583,6 +17595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1818760885789760683}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -17956,6 +17969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6264005940795542823}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 1833883893869580947}
   _lerp: 0
   _lerpValue: 0.2
@@ -18330,7 +18344,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6317074018140139742
 MonoBehaviour:
@@ -18745,6 +18759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8962791847273262322}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2301824881697508472}
   _lerp: 0
   _lerpValue: 0.2
@@ -18792,7 +18807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.5098486}
+  m_AnchoredPosition: {x: 0, y: 0.00018250814}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6073303534858875280
@@ -18824,6 +18839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6165992042693531516}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -18850,6 +18866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6165992042693531516}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -19279,6 +19296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3977140737324948733}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 9020161984062096115}
   _text: {fileID: 0}
 --- !u!114 &9020161984062096115
@@ -19728,6 +19746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8823851999204979361}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8393675880256522537}
   _lerp: 1
   _lerpValue: 0.2
@@ -20537,6 +20556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7125625583716815351}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 1413720596917001993}
   _lerp: 0
   _lerpValue: 0.2
@@ -20656,6 +20676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8214248333829552214}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7083312677274287310}
   _lerp: 0
   _lerpValue: 0.2
@@ -20973,6 +20994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1199465852522579512}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 697279313835867000}
   _lerp: 1
   _lerpValue: 0.2
@@ -21405,7 +21427,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6436220527069151998
 MonoBehaviour:
@@ -21992,6 +22014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 493371743838521367}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3046755751031439782}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &5044244652978964051
@@ -22866,6 +22889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _noticeListTransform: {fileID: 2520804082349610609}
   noticeBar: {fileID: 3313481173541874993}
@@ -23008,6 +23032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4640206562135312860}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -23876,7 +23901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.5098486}
+  m_AnchoredPosition: {x: 0, y: 0.00018250814}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6739739807946274241
@@ -23908,6 +23933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 9061763241364468236}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -23934,6 +23960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 9061763241364468236}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -24272,6 +24299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2810373236145300092}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5908062334362146917}
   _lerp: 0
   _lerpValue: 0.2
@@ -24466,7 +24494,6 @@ Transform:
   - {fileID: 376584899778000820}
   - {fileID: 1424417980056275728}
   - {fileID: 925954422228538203}
-  - {fileID: 7454866410676242092}
   - {fileID: 481146271331118903}
   - {fileID: 1937926004191480818}
   - {fileID: 8497249405618544556}
@@ -24477,7 +24504,7 @@ Transform:
   - {fileID: 3930929973013341725}
   - {fileID: 6204649909452973946}
   - {fileID: 16110314518057470}
-  - {fileID: 2335640975416411797}
+  - {fileID: 4314700511780463504}
   m_Father: {fileID: 3858346028857447725}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24589,6 +24616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3442054903890296896}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4401393492417242157}
   _lerp: 0
   _lerpValue: 0.2
@@ -24630,7 +24658,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3735112034922754442
 MonoBehaviour:
@@ -24761,6 +24789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8857143750454370527}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4997783023234269378}
   _lerp: 0
   _lerpValue: 0.2
@@ -24938,6 +24967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8522357488090363044}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7814168062744569933}
   _xSize: 1
   _ySize: 1
@@ -26132,6 +26162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2860975187966622844}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 512180190266702504}
   _xSize: 1
   _ySize: 1
@@ -26272,6 +26303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8673979069137479782}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -26298,6 +26330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8673979069137479782}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -26529,6 +26562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8688553918027345124}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7970702130867413088}
   _lerp: 0
   _lerpValue: 0.2
@@ -26736,7 +26770,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5335879974960115102
 MonoBehaviour:
@@ -26923,6 +26957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 114980636629478243}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4464673854888641497}
   _lerp: 0
   _lerpValue: 0.2
@@ -26948,6 +26983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 114980636629478243}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4464673854888641497}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6119089893744379264
@@ -27058,6 +27094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7266180564243114950}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8334913030380948053}
   _lerp: 0
   _lerpValue: 0.2
@@ -27231,6 +27268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3564253038542449397}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7831538250205483945}
   _lerp: 0
   _lerpValue: 0.2
@@ -27703,6 +27741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 759498245364599186}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4630977121614653796}
   _xSize: 1
   _ySize: 1
@@ -27817,6 +27856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8544072161242161425}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5450543512713372734}
   _lerp: 0
   _lerpValue: 0.2
@@ -27957,6 +27997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2954277912657838808}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5227191156714041695}
   _lerp: 0
   _lerpValue: 0.2
@@ -28881,6 +28922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 531377255852928034}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8480049152780182790}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6554277787209963517
@@ -29008,6 +29050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _mode: 2
 --- !u!114 &2035843946134804359
@@ -29024,6 +29067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 5714171119667106107}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -29216,7 +29260,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8516545418345170946
 MonoBehaviour:
@@ -29336,6 +29380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6149474196960552659}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -29362,6 +29407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6149474196960552659}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -29700,6 +29746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3391795222290344851}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2299563253739333573}
   _lerp: 0
   _lerpValue: 0.2
@@ -29929,6 +29976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7732606453855932476}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5071136493340400389}
   _lerp: 0
   _lerpValue: 0.2
@@ -31842,6 +31890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3241824862582696347}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7439437798601557390}
   _lerp: 0
   _lerpValue: 0.2
@@ -31921,6 +31970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2520804082349610609}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -31947,6 +31997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2520804082349610609}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -32231,6 +32282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2758168091850865433}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4954273770557532300}
   _lerp: 0
   _lerpValue: 0.2
@@ -32371,6 +32423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _canvasGroup: {fileID: 6788790350663394239}
 --- !u!225 &6788790350663394239
@@ -33041,7 +33094,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &673361671095575952
 MonoBehaviour:
@@ -33197,6 +33250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7871248735546719376}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2593592979841549889}
   _lerp: 1
   _lerpValue: 0.2
@@ -33222,6 +33276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7871248735546719376}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2593592979841549889}
   _lerp: 1
   _lerpValue: 0.2
@@ -33412,6 +33467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
 --- !u!114 &4794767247265119705
 MonoBehaviour:
@@ -33451,6 +33507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 2653072838958038030}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -33530,6 +33587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 1
   _lerpValue: 0.2
@@ -34041,7 +34099,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2964736941529011238}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &169683424202202892
 MonoBehaviour:
@@ -34057,6 +34115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   messageBoxCanvasGroup: {fileID: 5603727323028067361}
   messabeBoxBG: {fileID: 4339051522139893865}
@@ -34626,6 +34685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3075784719952607877}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7289742452216995153}
   _lerp: 0
   _lerpValue: 0.2
@@ -34777,6 +34837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 39248092669605474}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 3023914783232869583}
   _lerp: 1
   _lerpValue: 0.2
@@ -35093,7 +35154,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7068123700396693113}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99578947
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -35328,6 +35389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6791953802084834370}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4893976425302549202}
   _lerp: 0
   _lerpValue: 0.2
@@ -35605,6 +35667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   toggleGroup: {fileID: 2842843057606058495}
   content: {fileID: 6583820925162596584}
@@ -35717,6 +35780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7420819314999900861}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5902462593141056038}
   _lerp: 0
   _lerpValue: 0.2
@@ -36550,6 +36614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 7117259340331535152}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8561657452390959286}
   _lerp: 0
   _lerpValue: 0.2
@@ -36813,6 +36878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6867856800374100449}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 6841429888181482906}
   _lerp: 0
   _lerpValue: 0.2
@@ -36832,6 +36898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6867856800374100449}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 6841429888181482906}
   _xSize: 1
   _ySize: 1
@@ -37073,6 +37140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4701930215090364128}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 5325940062511060455}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8459591421140791699
@@ -37241,6 +37309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 6271892794893452762}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 8683863388078563525}
   _lerp: 0
   _lerpValue: 0.2
@@ -37266,6 +37335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _mode: 2
 --- !u!1 &8497560066164025253
@@ -37375,6 +37445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 0}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _mode: 0
 --- !u!1 &8524860465134668859
@@ -37485,6 +37556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 4769933092643205805}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 2836204853272461973}
   _lerp: 0
   _lerpValue: 0.2
@@ -37836,6 +37908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3367170457610186176}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4879872529138109167}
   _lerp: 0
   _lerpValue: 0.2
@@ -37916,6 +37989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 2954277912657838808}
   _rectTransform: {fileID: 3812908726952539211}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _lerp: 0
   _lerpValue: 0.2
@@ -39001,6 +39075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1560991558066819742}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 4383607839499739187}
   _lerp: 1
   _lerpValue: 0.2
@@ -39120,7 +39195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 3260765865344146849}
   _graphic: {fileID: 0}
 --- !u!223 &7456958521831504988
 Canvas:
@@ -39131,7 +39206,7 @@ Canvas:
   m_GameObject: {fileID: 8899418973490133235}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -39139,7 +39214,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 10000
   m_TargetDisplay: 0
@@ -39174,6 +39249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3260765865344146849}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _customSetting: 1
   _customGuiSize: 0
@@ -39398,6 +39474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 8391760830930632046}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 7140983579009142011}
   _lerp: 0
   _lerpValue: 0.2
@@ -43229,6 +43306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 3756693617863029385}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   dropdown: {fileID: 8172763209603253154}
 --- !u!224 &3756693617863029385 stripped
@@ -46977,68 +47055,6 @@ MonoBehaviour:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
   m_PrefabInstance: {fileID: 3777883198592109829}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &3895167103863444517
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2964736941529011238}
-    m_Modifications:
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6045287223416409237, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-      propertyPath: m_Name
-      value: Discord Presence
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
---- !u!4 &7454866410676242092 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5871401262863880841, guid: c36ebd2d0d157354bae6dcd0f893250c, type: 3}
-  m_PrefabInstance: {fileID: 3895167103863444517}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4004674843119009363
 PrefabInstance:
