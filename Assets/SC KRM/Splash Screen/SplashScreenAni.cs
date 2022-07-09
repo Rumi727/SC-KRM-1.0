@@ -30,6 +30,9 @@ namespace SCKRM.Splash
 
         async UniTaskVoid Awake()
         {
+            if (InitialLoadManager.isForceQuit)
+                return;
+
             if (SingletonCheck(this))
             {
                 SplashScreen.isAniPlaying = true;
