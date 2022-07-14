@@ -1,19 +1,18 @@
 using Discord;
-using SCKRM.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace SCKRM
+namespace SCKRM.Discord
 {
+    using Discord = global::Discord.Discord;
     public class DiscordManager : Manager<DiscordManager>
     {
         public static bool discordIsRunning { get; private set; }
 
-        public static Discord.Discord discord
+        public static Discord discord
         {
             get
             {
@@ -23,7 +22,7 @@ namespace SCKRM
                 return _discord;
             }
         }
-        static Discord.Discord _discord;
+        static Discord _discord;
 
         public static User? currentUser { get; private set; }
 
@@ -91,7 +90,7 @@ namespace SCKRM
 
         public static void Initialization()
         {
-            _discord = new Discord.Discord(instance._applicationId, (ulong)CreateFlags.NoRequireDiscord);
+            _discord = new Discord(instance._applicationId, (ulong)CreateFlags.NoRequireDiscord);
             discordIsRunning = true;
 
             userManager.OnCurrentUserUpdate += () =>
