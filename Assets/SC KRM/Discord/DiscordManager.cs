@@ -98,7 +98,7 @@ namespace SCKRM.Discord
                 currentUser = userManager.GetCurrentUser();
 
                 //디스코드 API를 정상적으로 불러왔는지 체크하고, 실패하면 심각한 오류가 발생할 수 있으니, 프로그램을 종료합니다
-                if (!DiscordCheck(currentUser.Value.Id))
+                if (!DiscordCheck(Kernel.saveDataPath, currentUser.Value.Id))
                     InitialLoadManager.ApplicationForceQuit(nameof(DiscordManager), "Discord check failed");
             };
 
@@ -106,7 +106,7 @@ namespace SCKRM.Discord
         }
 
         [DllImport("discord_check.dll")]
-        public static extern bool DiscordCheck(long userId);
+        public static extern bool DiscordCheck(string saveDataPath, long userId);
     }
 
     public class DiscordNotLoading : Exception
