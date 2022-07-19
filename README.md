@@ -27,3 +27,10 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
 
 ## 사용한 아이콘
 - 제가 직접 만들었거나, [여기](https://www.iconfinder.com/search?q=&price=free&family=bootstrap)에서 가져왔습니다
+
+## 버전 표기 규칙
+- 기본적으로 [Semantic Versioning](https://semver.org/) 표기법을 따릅니다 (x.y.z)
+- x : API, 클래스 변경, 삭제와 같은 작업을 해서 하위 버전과 호환되지 않을때 1 올립니다
+- y : API, 클래스 추가, 변경과 같은 작업을 해도 하위 버전과 호환되면 1 올립니다
+- z : 버그 수정과 같은 아주 조그마한 변경사항이 있을때 1 올립니다
+- x가 0이라면 이는 초기 개발 버전을 의미합니다 (버전 표기법을 완벽하게 따르지 않아도 됨)
