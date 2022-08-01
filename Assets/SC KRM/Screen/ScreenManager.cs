@@ -10,17 +10,24 @@ namespace SCKRM
         public static int height { get; private set; }
 
         public static Resolution currentResolution { get; private set; }
+        public static Resolution[] resolutions { get; private set; }
 
         void Awake()
         {
             if (SingletonCheck(this))
-                currentResolution = Screen.currentResolution;
+                ResolutionRefresh();
         }
 
         void Update()
         {
             width = Screen.width;
             height = Screen.height;
+        }
+
+        public static void ResolutionRefresh()
+        {
+            currentResolution = Screen.currentResolution;
+            resolutions = Screen.resolutions;
         }
     }
 }
