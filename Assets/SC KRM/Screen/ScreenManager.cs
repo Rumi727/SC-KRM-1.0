@@ -1,3 +1,4 @@
+using SCKRM.Window;
 using UnityEngine;
 
 namespace SCKRM
@@ -10,14 +11,16 @@ namespace SCKRM
 
         public static Resolution currentResolution { get; private set; }
 
-        void Awake() => SingletonCheck(this);
+        void Awake()
+        {
+            if (SingletonCheck(this))
+                currentResolution = Screen.currentResolution;
+        }
 
         void Update()
         {
             width = Screen.width;
             height = Screen.height;
-
-            currentResolution = Screen.currentResolution;
         }
     }
 }
