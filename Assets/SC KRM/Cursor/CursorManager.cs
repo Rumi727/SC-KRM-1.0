@@ -250,7 +250,7 @@ namespace SCKRM.Cursor
         public static void SetClientCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
         public static void SetClientCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
         public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setClientCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
-        public static void setClientCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
+        static void setClientCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             Vector2Int clientSize = WindowManager.GetClientSize();
