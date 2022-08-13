@@ -7,6 +7,7 @@ using UnityEngine.Profiling;
 
 namespace SCKRM.DebugUI
 {
+    [WikiDescription("F3 디버그 모드의 텍스트를 관리하는 클래스 입니다")]
     [AddComponentMenu("SC KRM/Debug/UI/Debug Text")]
     public sealed class DebugText : UI.UI
     {

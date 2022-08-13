@@ -94,6 +94,9 @@ namespace SCKRM.Editor
         FastString fastString = new FastString();
         void WikiTextCreate(Assembly assembly, Type type, string path)
         {
+            if (IsIgnore(type))
+                return;
+
             fastString.Clear();
 
             string[] nameSplit = type.Name.Split("`");
