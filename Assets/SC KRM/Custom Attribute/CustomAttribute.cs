@@ -61,9 +61,13 @@ namespace SCKRM
 
     }
 
-    [Description("이 어트리뷰트에 문자열을 입력하면 위키에 설명을 표시합니다")]
+    [WikiDescription("이 어트리뷰트를 추가하면 위키에 추가하지 않습니다")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
-    public class DescriptionAttribute : Attribute
+    public class WikiIgnoreAttribute : Attribute
+    {
+        public WikiIgnoreAttribute() { }
+    }
+
     [WikiDescription("이 어트리뷰트에 문자열을 입력하면 위키에 설명을 표시합니다")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
     public class WikiDescriptionAttribute : Attribute

@@ -156,7 +156,7 @@ namespace SCKRM.Editor
                 {
                     PropertyInfo propertyInfo = propertyInfos[i];
                     string accessModifterText = GetAccessModifier(propertyInfo, null, out PropertyMethod.AccessModifier accessModifter);
-                    if (accessModifter == PropertyMethod.AccessModifier.Private)
+                    if (IsIgnore(propertyInfo) || accessModifter == PropertyMethod.AccessModifier.Private)
                     {
                         removeCount++;
                         continue;
@@ -202,7 +202,7 @@ namespace SCKRM.Editor
                 for (int i = 0; i < fieldInfos.Length; i++)
                 {
                     FieldInfo fieldInfo = fieldInfos[i];
-                    if (fieldInfo.IsPrivate)
+                    if (IsIgnore(fieldInfo) || fieldInfo.IsPrivate)
                     {
                         removeCount++;
                         continue;
@@ -243,7 +243,7 @@ namespace SCKRM.Editor
                 for (int i = 0; i < methodInfos.Length; i++)
                 {
                     MethodInfo methodInfo = methodInfos[i];
-                    if (methodInfo.IsPrivate || methodInfo.IsConstructor || methodInfo.IsSpecialName)
+                    if (IsIgnore(methodInfo) || methodInfo.IsPrivate || methodInfo.IsConstructor || methodInfo.IsSpecialName)
                     {
                         removeCount++;
                         continue;
@@ -558,6 +558,11 @@ namespace SCKRM.Editor
 
             return "없음";
         }
+
+        bool IsIgnore(Type type) => type.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
+        bool IsIgnore(PropertyInfo propertyInfo) => propertyInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
+        bool IsIgnore(FieldInfo fieldInfo) => fieldInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
+        bool IsIgnore(MethodInfo methodInfo) => methodInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
     }
 
     public static class PropertyMethod
