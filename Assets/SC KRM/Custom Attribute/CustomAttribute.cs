@@ -74,8 +74,9 @@ namespace SCKRM
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = true)]
     public class WikiDescriptionAttribute : Attribute
     {
-        public string description { get; }
+        string _description;
+        public string description => _description.Replace("\n", "  \n");
 
-        public WikiDescriptionAttribute(string description) => this.description = description;
+        public WikiDescriptionAttribute(string description) => _description = description;
     }
 }
