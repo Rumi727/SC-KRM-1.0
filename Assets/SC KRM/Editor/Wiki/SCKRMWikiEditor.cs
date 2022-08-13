@@ -613,45 +613,45 @@ namespace SCKRM.Editor
 
         string GetDescription(Type type)
         {
-            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)type.GetCustomAttribute(typeof(WikiDescriptionAttribute));
-            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
-                return descriptionAttribute.description;
+            Attribute[] descriptionAttribute = type.GetCustomAttributes(typeof(WikiDescriptionAttribute)).ToArray();
+            if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
+                return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
             return "없음";
         }
 
         string GetDescription(PropertyInfo propertyInfo)
         {
-            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)propertyInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
-            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
-                return descriptionAttribute.description;
+            Attribute[] descriptionAttribute = propertyInfo.GetCustomAttributes(typeof(WikiDescriptionAttribute)).ToArray();
+            if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
+                return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
             return "없음";
         }
 
         string GetDescription(FieldInfo fieldInfo)
         {
-            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)fieldInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
-            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
-                return descriptionAttribute.description;
+            Attribute[] descriptionAttribute = fieldInfo.GetCustomAttributes(typeof(WikiDescriptionAttribute)).ToArray();
+            if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
+                return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
             return "없음";
         }
 
         string GetDescription(EventInfo eventInfo)
         {
-            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)eventInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
-            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
-                return descriptionAttribute.description;
+            Attribute[] descriptionAttribute = eventInfo.GetCustomAttributes(typeof(WikiDescriptionAttribute)).ToArray();
+            if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
+                return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
             return "없음";
         }
 
         string GetDescription(MethodInfo methodInfo)
         {
-            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)methodInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
-            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
-                return descriptionAttribute.description;
+            Attribute[] descriptionAttribute = methodInfo.GetCustomAttributes(typeof(WikiDescriptionAttribute)).ToArray();
+            if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
+                return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
             return "없음";
         }

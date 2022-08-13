@@ -71,7 +71,6 @@ namespace SCKRM
     }
 
     [WikiDescription("이 어트리뷰트에 문자열을 입력하면 위키에 설명을 표시합니다")]
-
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = true)]
     public class WikiDescriptionAttribute : Attribute
     {
