@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 
@@ -144,6 +145,7 @@ namespace SCKRM.Editor
             }
 
             fastString.Append("\n\n## 설명");
+            fastString.Append("\n" + GetDescription(type));
 
             {
                 fastString.Append("\n\n## 프로퍼티");
@@ -182,6 +184,7 @@ namespace SCKRM.Editor
                         fastString.Append($"\nset 접근자 - {GetAccessModifier(propertyInfo.SetMethod)}  ");
 
                     fastString.Append("\n\n### 설명");
+                    fastString.Append("\n" + GetDescription(propertyInfo));
 
                     if (i != propertyInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -222,6 +225,7 @@ namespace SCKRM.Editor
                     fastString.Append($"\n타입 - {TypeLinkCreate(assembly, fieldInfo.FieldType)}  ");
 
                     fastString.Append("\n\n### 설명");
+                    fastString.Append("\n" + GetDescription(fieldInfo));
 
                     if (i != fieldInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -262,6 +266,7 @@ namespace SCKRM.Editor
                     fastString.Append($"\n반환 타입 - {TypeLinkCreate(assembly, methodInfo.ReturnType)}  ");
 
                     fastString.Append("\n\n### 설명");
+                    fastString.Append("\n" + GetDescription(methodInfo));
 
                     if (i != methodInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -470,7 +475,7 @@ namespace SCKRM.Editor
 
         static bool IsOverride(MethodInfo methodInfo) => methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
 
-        public bool IsInheritance(Type type, PropertyInfo propertyInfo)
+        bool IsInheritance(Type type, PropertyInfo propertyInfo)
         {
             if (type.BaseType != null)
                 return type.BaseType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == propertyInfo.Name);
@@ -478,7 +483,7 @@ namespace SCKRM.Editor
             return false;
         }
 
-        public bool IsInheritance(Type type, FieldInfo fieldInfo)
+        bool IsInheritance(Type type, FieldInfo fieldInfo)
         {
             if (type.BaseType != null)
                 return type.BaseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == fieldInfo.Name);
@@ -486,7 +491,7 @@ namespace SCKRM.Editor
             return false;
         }
 
-        public bool IsInheritance(Type type, MethodInfo methodInfo)
+        bool IsInheritance(Type type, MethodInfo methodInfo)
         {
             if (type.BaseType != null)
                 return type.BaseType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == methodInfo.Name);
@@ -494,7 +499,7 @@ namespace SCKRM.Editor
             return false;
         }
 
-        public bool IsObsolete(PropertyInfo propertyInfo)
+        bool IsObsolete(PropertyInfo propertyInfo)
         {
             if (propertyInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
                 return true;
@@ -502,7 +507,7 @@ namespace SCKRM.Editor
             return false;
         }
 
-        public bool IsObsolete(FieldInfo fieldInfo)
+        bool IsObsolete(FieldInfo fieldInfo)
         {
             if (fieldInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
                 return true;
@@ -510,12 +515,48 @@ namespace SCKRM.Editor
             return false;
         }
 
-        public bool IsObsolete(MethodInfo methodInfo)
+        bool IsObsolete(MethodInfo methodInfo)
         {
             if (methodInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
                 return true;
 
             return false;
+        }
+
+        string GetDescription(Type type)
+        {
+            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)type.GetCustomAttribute(typeof(DescriptionAttribute));
+            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
+                return descriptionAttribute.description;
+
+            return "없음";
+        }
+
+        string GetDescription(PropertyInfo propertyInfo)
+        {
+            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)propertyInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
+                return descriptionAttribute.description;
+
+            return "없음";
+        }
+
+        string GetDescription(FieldInfo fieldInfo)
+        {
+            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
+                return descriptionAttribute.description;
+
+            return "없음";
+        }
+
+        string GetDescription(MethodInfo methodInfo)
+        {
+            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)methodInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
+                return descriptionAttribute.description;
+
+            return "없음";
         }
     }
 
