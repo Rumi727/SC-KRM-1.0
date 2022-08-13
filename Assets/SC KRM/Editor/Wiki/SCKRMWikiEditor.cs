@@ -155,8 +155,8 @@ namespace SCKRM.Editor
                 for (int i = 0; i < propertyInfos.Length; i++)
                 {
                     PropertyInfo propertyInfo = propertyInfos[i];
-                    string accessModifterText = GetAccessModifier(propertyInfo, null, out PropertyMethod.AccessModifier accessModifter);
-                    if (IsIgnore(propertyInfo) || accessModifter == PropertyMethod.AccessModifier.Private)
+                    string accessModifterText = GetAccessModifier(propertyInfo, null, null, out PropertyEventMethod.AccessModifier accessModifter);
+                    if (IsIgnore(propertyInfo) || accessModifter == PropertyEventMethod.AccessModifier.Private)
                     {
                         removeCount++;
                         continue;
@@ -221,7 +221,7 @@ namespace SCKRM.Editor
                     else
                         fastString.Append("  ");
 
-                    fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(null, fieldInfo, out _)}  ");
+                    fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(null, fieldInfo, null, out _)}  ");
                     fastString.Append($"\n타입 - {TypeLinkCreate(assembly, fieldInfo.FieldType)}  ");
 
                     fastString.Append("\n\n### 설명");
@@ -232,6 +232,53 @@ namespace SCKRM.Editor
                 }
 
                 if (fieldInfos.Length == removeCount)
+                    fastString.Append("\n없음  ");
+            }
+
+            {
+                fastString.Append("\n\n## 이벤트");
+
+                EventInfo[] eventInfos = type.GetEvents(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                int removeCount = 0;
+                for (int i = 0; i < eventInfos.Length; i++)
+                {
+                    EventInfo eventInfo = eventInfos[i];
+                    string accessModifterText = GetAccessModifier(null, null, eventInfo, out PropertyEventMethod.AccessModifier accessModifter);
+                    if (IsIgnore(eventInfo) || accessModifter == PropertyEventMethod.AccessModifier.Private)
+                    {
+                        removeCount++;
+                        continue;
+                    }
+
+                    bool inheritance = IsInheritance(type, eventInfo);
+                    bool obsolete = IsObsolete(eventInfo);
+
+                    fastString.Append($"\n### {eventInfo.Name}");
+                    if (inheritance && obsolete)
+                        fastString.Append(" (상속, 사용되지 않음)  ");
+                    else if (inheritance)
+                        fastString.Append(" (상속)  ");
+                    else if (obsolete)
+                        fastString.Append(" (사용되지 않음)  ");
+                    else
+                        fastString.Append("  ");
+
+                    fastString.Append($"\n엑세스 한정자 - {accessModifterText}  ");
+                    fastString.Append($"\n타입 - {TypeLinkCreate(assembly, eventInfo.EventHandlerType)}  ");
+
+                    if (eventInfo.AddMethod != null)
+                        fastString.Append($"\nadd 접근자 - {GetAccessModifier(eventInfo.AddMethod)}  ");
+                    if (eventInfo.RemoveMethod != null)
+                        fastString.Append($"\nremove 접근자 - {GetAccessModifier(eventInfo.RemoveMethod)}  ");
+
+                    fastString.Append("\n\n### 설명");
+                    fastString.Append("\n" + GetDescription(eventInfo));
+
+                    if (i != eventInfos.Length - 1)
+                        fastString.Append("\n\n");
+                }
+
+                if (eventInfos.Length == removeCount)
                     fastString.Append("\n없음  ");
             }
 
@@ -293,7 +340,7 @@ namespace SCKRM.Editor
             return accessModifier;
         }
 
-        string GetAccessModifier(PropertyInfo propertyInfo, FieldInfo fieldInfo, out PropertyMethod.AccessModifier accessModifier)
+        string GetAccessModifier(PropertyInfo propertyInfo, FieldInfo fieldInfo, EventInfo eventInfo, out PropertyEventMethod.AccessModifier accessModifier)
         {
             string accessModifierText = "";
 
@@ -301,17 +348,17 @@ namespace SCKRM.Editor
             {
                 accessModifier = propertyInfo.Accessmodifier();
 
-                if (accessModifier == PropertyMethod.AccessModifier.Private)
+                if (accessModifier == PropertyEventMethod.AccessModifier.Private)
                     accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private)";
-                else if (accessModifier == PropertyMethod.AccessModifier.Public)
+                else if (accessModifier == PropertyEventMethod.AccessModifier.Public)
                     accessModifierText = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
-                else if (accessModifier == PropertyMethod.AccessModifier.Internal)
+                else if (accessModifier == PropertyEventMethod.AccessModifier.Internal)
                     accessModifierText = "[internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
-                else if (accessModifier == PropertyMethod.AccessModifier.Protected)
+                else if (accessModifier == PropertyEventMethod.AccessModifier.Protected)
                     accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
-                else if (accessModifier == PropertyMethod.AccessModifier.ProtectedInternal)
+                else if (accessModifier == PropertyEventMethod.AccessModifier.ProtectedInternal)
                     accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected) [internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
-                else if (accessModifier == PropertyMethod.AccessModifier.PrivateProtected)
+                else if (accessModifier == PropertyEventMethod.AccessModifier.PrivateProtected)
                     accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private) [protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
 
                 if ((propertyInfo.GetMethod != null && propertyInfo.GetMethod.IsStatic) || (propertyInfo.SetMethod != null && propertyInfo.SetMethod.IsStatic))
@@ -319,35 +366,57 @@ namespace SCKRM.Editor
 
                 return accessModifierText;
             }
+            else if (eventInfo != null)
+            {
+                accessModifier = eventInfo.Accessmodifier();
+
+                if (accessModifier == PropertyEventMethod.AccessModifier.Private)
+                    accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private)";
+                else if (accessModifier == PropertyEventMethod.AccessModifier.Public)
+                    accessModifierText = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
+                else if (accessModifier == PropertyEventMethod.AccessModifier.Internal)
+                    accessModifierText = "[internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+                else if (accessModifier == PropertyEventMethod.AccessModifier.Protected)
+                    accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+                else if (accessModifier == PropertyEventMethod.AccessModifier.ProtectedInternal)
+                    accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected) [internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+                else if (accessModifier == PropertyEventMethod.AccessModifier.PrivateProtected)
+                    accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private) [protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+
+                if ((eventInfo.GetAddMethod() != null && eventInfo.GetAddMethod().IsStatic) || (eventInfo.GetRemoveMethod() != null && eventInfo.GetRemoveMethod().IsStatic))
+                    accessModifierText += " [static](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/static)";
+
+                return accessModifierText;
+            }
             else if (fieldInfo != null)
             {
-                accessModifier = PropertyMethod.AccessModifier.Private;
+                accessModifier = PropertyEventMethod.AccessModifier.Private;
 
                 if (fieldInfo.IsPrivate)
                     accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private)";
                 else if (fieldInfo.IsPublic)
                 {
-                    accessModifier = PropertyMethod.AccessModifier.Public;
+                    accessModifier = PropertyEventMethod.AccessModifier.Public;
                     accessModifierText = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
                 }
                 else if (fieldInfo.IsAssembly)
                 {
-                    accessModifier = PropertyMethod.AccessModifier.Internal;
+                    accessModifier = PropertyEventMethod.AccessModifier.Internal;
                     accessModifierText = "[internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
                 }
                 else if (fieldInfo.IsFamily)
                 {
-                    accessModifier = PropertyMethod.AccessModifier.Protected;
+                    accessModifier = PropertyEventMethod.AccessModifier.Protected;
                     accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
                 }
                 else if (fieldInfo.IsFamilyOrAssembly)
                 {
-                    accessModifier = PropertyMethod.AccessModifier.ProtectedInternal;
+                    accessModifier = PropertyEventMethod.AccessModifier.ProtectedInternal;
                     accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected) [internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
                 }
                 else if (fieldInfo.IsFamilyAndAssembly)
                 {
-                    accessModifier = PropertyMethod.AccessModifier.PrivateProtected;
+                    accessModifier = PropertyEventMethod.AccessModifier.PrivateProtected;
                     accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private) [protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
                 }
 
@@ -491,6 +560,14 @@ namespace SCKRM.Editor
             return false;
         }
 
+        bool IsInheritance(Type type, EventInfo eventInfo)
+        {
+            if (type.BaseType != null)
+                return type.BaseType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == eventInfo.Name);
+
+            return false;
+        }
+
         bool IsInheritance(Type type, MethodInfo methodInfo)
         {
             if (type.BaseType != null)
@@ -510,6 +587,14 @@ namespace SCKRM.Editor
         bool IsObsolete(FieldInfo fieldInfo)
         {
             if (fieldInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+                return true;
+
+            return false;
+        }
+
+        bool IsObsolete(EventInfo eventInfo)
+        {
+            if (eventInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
                 return true;
 
             return false;
@@ -550,6 +635,15 @@ namespace SCKRM.Editor
             return "없음";
         }
 
+        string GetDescription(EventInfo eventInfo)
+        {
+            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)eventInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
+            if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
+                return descriptionAttribute.description;
+
+            return "없음";
+        }
+
         string GetDescription(MethodInfo methodInfo)
         {
             WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)methodInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
@@ -562,10 +656,11 @@ namespace SCKRM.Editor
         bool IsIgnore(Type type) => type.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
         bool IsIgnore(PropertyInfo propertyInfo) => propertyInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
         bool IsIgnore(FieldInfo fieldInfo) => fieldInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
+        bool IsIgnore(EventInfo eventInfo) => eventInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
         bool IsIgnore(MethodInfo methodInfo) => methodInfo.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
     }
 
-    public static class PropertyMethod
+    public static class PropertyEventMethod
     {
         public static readonly List<AccessModifier> AccessModifiers = new List<AccessModifier>
         {
@@ -585,6 +680,17 @@ namespace SCKRM.Editor
                 return propertyInfo.SetMethod.Accessmodifier();
             var max = Math.Max(AccessModifiers.IndexOf(propertyInfo.GetMethod.Accessmodifier()),
                 AccessModifiers.IndexOf(propertyInfo.SetMethod.Accessmodifier()));
+            return AccessModifiers[max];
+        }
+
+        public static AccessModifier Accessmodifier(this EventInfo eventInfo)
+        {
+            if (eventInfo.AddMethod == null)
+                return eventInfo.AddMethod.Accessmodifier();
+            if (eventInfo.RemoveMethod == null)
+                return eventInfo.AddMethod.Accessmodifier();
+            var max = Math.Max(AccessModifiers.IndexOf(eventInfo.AddMethod.Accessmodifier()),
+                AccessModifiers.IndexOf(eventInfo.RemoveMethod.Accessmodifier()));
             return AccessModifiers[max];
         }
 
