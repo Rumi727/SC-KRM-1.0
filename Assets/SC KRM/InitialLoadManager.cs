@@ -18,6 +18,7 @@ using UnityEngine.UI;
 
 namespace SCKRM
 {
+    [WikiDescription("초기 로딩을 위한 클래스 입니다")]
     public static class InitialLoadManager
     {
         public static bool isInitialLoadStart { get; private set; } = false;

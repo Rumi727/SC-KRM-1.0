@@ -14,6 +14,7 @@ using UnityEngine.Audio;
 
 namespace SCKRM.Sound
 {
+    [WikiDescription("사운드를 관리하는 클래스 입니다")]
     [AddComponentMenu("SC KRM/Sound/Sound Manager", 0)]
     public sealed class SoundManager : Manager<SoundManager>
     {
@@ -53,8 +54,8 @@ namespace SCKRM.Sound
         [SerializeField] AudioMixerGroup _audioMixerGroup;
         public AudioMixerGroup audioMixerGroup => _audioMixerGroup;
 
-        public static List<SoundPlayer> soundList { get; } = new List<SoundPlayer>();
-        public static List<NBSPlayer> nbsList { get; } = new List<NBSPlayer>();
+        [WikiDescription("현재 재생되고 있는 사운드 리스트")] public static List<SoundPlayer> soundList { get; } = new List<SoundPlayer>();
+        [WikiDescription("현재 재생되고 있는 NBS 리스트")] public static List<NBSPlayer> nbsList { get; } = new List<NBSPlayer>();
 
 
 
@@ -68,6 +69,7 @@ namespace SCKRM.Sound
         /// <summary>
         /// It should only run on the main thread
         /// </summary>
+        [WikiDescription("모든 사운드 플레이어 새로고침")]
         public static void SoundRefresh()
         {
             if (!ThreadManager.isMainThread)
@@ -89,6 +91,7 @@ namespace SCKRM.Sound
         /// This method calls the ResourceManager.AudioReset method and exists for Unity events. Please don't use it in scripts
         /// </summary>
         [Obsolete("This method calls the ResourceManager.AudioReset method and exists for Unity events. Please don't use it in scripts", true)]
+        [WikiIgnore]
         public static void AudioReset() => ResourceManager.AudioReset().Forget();
 
         /// <summary>
@@ -116,7 +119,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+        [WikiDescription("소리를 재생합니다")] public static SoundPlayer PlaySound(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
         /// 소리를 재생합니다
@@ -161,7 +164,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        [WikiIgnore] public static SoundPlayer PlaySound(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
         /// 소리를 재생합니다
@@ -185,7 +188,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(SoundData<SoundMetaData> soundData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", soundData, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+        [WikiIgnore] public static SoundPlayer PlaySound(SoundData<SoundMetaData> soundData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playSound("", "", soundData, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
         /// 소리를 재생합니다
@@ -227,7 +230,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static SoundPlayer PlaySound(SoundData<SoundMetaData> soundData, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", soundData, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        [WikiIgnore] public static SoundPlayer PlaySound(SoundData<SoundMetaData> soundData, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playSound("", "", soundData, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         static SoundPlayer playSound(string key, string nameSpace, SoundData<SoundMetaData> soundData, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
         {
@@ -299,6 +302,7 @@ namespace SCKRM.Sound
         /// <exception cref="NotMainThreadMethodException"></exception>
         /// <exception cref="NotPlayModeMethodException"></exception>
         /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        [WikiDescription("소리를 중지합니다")]
         public static void StopSound(string key, string nameSpace = "", bool all = true)
         {
             if (!ThreadManager.isMainThread)
@@ -334,6 +338,7 @@ namespace SCKRM.Sound
         /// 모든 오디오를 중지
         /// Stop all audio
         /// </summary>
+        [WikiDescription("모든 오디오를 중지")]
         public static void StopSoundAll()
         {
             if (!ThreadManager.isMainThread)
@@ -355,6 +360,7 @@ namespace SCKRM.Sound
         /// 모든 효과음 또는 BGM 중지
         /// Stop all sounds or bgm
         /// </summary>
+        [WikiDescription("모든 효과음 또는 BGM 중지")]
         public static void StopSoundAll(bool bgm)
         {
             if (!ThreadManager.isMainThread)
@@ -407,6 +413,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
+        [WikiDescription("소리를 재생합니다")]
         public static NBSPlayer PlayNBS(string key, string nameSpace = "", float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playNBS(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
@@ -452,7 +459,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static NBSPlayer PlayNBS(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playNBS(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        [WikiIgnore] public static NBSPlayer PlayNBS(string key, string nameSpace, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playNBS(key, nameSpace, null, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         /// <summary>
         /// 소리를 재생합니다
@@ -476,7 +483,7 @@ namespace SCKRM.Sound
         /// 스테레오
         /// </param>
         /// <returns></returns>
-        public static NBSPlayer PlayNBS(SoundData<NBSMetaData> nbsData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playNBS("", "", nbsData, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
+        [WikiIgnore] public static NBSPlayer PlayNBS(SoundData<NBSMetaData> nbsData, float volume = 1, bool loop = false, float pitch = 1, float tempo = 1, float panStereo = 0) => playNBS("", "", nbsData, volume, loop, pitch, tempo, panStereo, false, 0, 16, null, 0, 0, 0);
 
         /// <summary>
         /// 소리를 재생합니다
@@ -518,7 +525,7 @@ namespace SCKRM.Sound
         /// Z 좌표
         /// </param>
         /// <returns></returns>
-        public static NBSPlayer PlayNBS(SoundData<NBSMetaData> nbsData, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playNBS("", "", nbsData, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
+        [WikiIgnore] public static NBSPlayer PlayNBS(SoundData<NBSMetaData> nbsData, float volume, bool loop, float pitch, float tempo, float panStereo, float minDistance = 0, float maxDistance = 16, Transform parent = null, float x = 0, float y = 0, float z = 0) => playNBS("", "", nbsData, volume, loop, pitch, tempo, panStereo, true, minDistance, maxDistance, parent, x, y, z);
 
         static NBSPlayer playNBS(string key, string nameSpace, SoundData<NBSMetaData> nbsData, float volume, bool loop, float pitch, float tempo, float panStereo, bool spatial, float minDistance, float maxDistance, Transform parent, float x, float y, float z)
         {
@@ -578,6 +585,7 @@ namespace SCKRM.Sound
         /// <summary>
         /// NBS 중지
         /// </summary>
+        [WikiDescription("NBS 중지")]
         public static void StopNBS(string key, string nameSpace = "", bool all = true)
         {
             if (!ThreadManager.isMainThread)
@@ -615,6 +623,7 @@ namespace SCKRM.Sound
         /// <exception cref="NotMainThreadMethodException"></exception>
         /// <exception cref="NotPlayModeMethodException"></exception>
         /// <exception cref="NotInitialLoadEndMethodException"></exception>
+        [WikiDescription("모든 NBS 중지")]
         public static void StopNBSAll()
         {
             if (!ThreadManager.isMainThread)

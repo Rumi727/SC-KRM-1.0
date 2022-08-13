@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
+    [WikiDescription("텍스트 렌더러 클래스들의 부모")]
     public abstract class CustomAllTextRenderer : CustomAllRenderer
     {
         public NameSpacePathReplacePair nameSpacePathReplacePair

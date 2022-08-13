@@ -5,7 +5,8 @@ using System;
 namespace SCKRM.CustomProperty
 {
     using UnityEditor;
-    
+
+    [WikiIgnore]
     [CustomPropertyDrawer(typeof(SetNameAttribute), true)]
     public sealed class SetNameAttributeDrawer : PropertyDrawer
     {
@@ -18,6 +19,7 @@ namespace SCKRM.CustomProperty
         }
     }
 
+    [WikiIgnore]
     [CustomPropertyDrawer(typeof(NotNullAttribute), true)]
     public sealed class NotNullAttributeDrawer : PropertyDrawer
     {

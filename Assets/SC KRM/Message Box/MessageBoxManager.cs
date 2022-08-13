@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.UI.Overlay.MessageBox
 {
+    [WikiDescription("메시지 박스를 관리하는 클래스 입니다")]
     [AddComponentMenu("SC KRM/Message Box/UI/Message Box Manager")]
     public sealed class MessageBoxManager : UIManager<MessageBoxManager>, IUIOverlay
     {
@@ -74,6 +75,7 @@ namespace SCKRM.UI.Overlay.MessageBox
         /// <returns>
         /// 선택한 인덱스
         /// </returns>
+        [WikiDescription("메시지 박스를 활성화 합니다")]
         public static async UniTask<int> Show(NameSpacePathReplacePair button, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon) => await show(new NameSpacePathReplacePair[] { button }, defaultIndex, info, icon);
         /// <summary>
         /// 메시지 박스를 활성화 합니다
@@ -93,7 +95,7 @@ namespace SCKRM.UI.Overlay.MessageBox
         /// <returns>
         /// 선택한 인덱스
         /// </returns>
-        public static async UniTask<int> Show(NameSpacePathReplacePair[] buttons, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon) => await show(buttons, defaultIndex, info, icon);
+        [WikiIgnore] public static async UniTask<int> Show(NameSpacePathReplacePair[] buttons, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon) => await show(buttons, defaultIndex, info, icon);
 
         static async UniTask<int> show(NameSpacePathReplacePair[] buttons, int defaultIndex, NameSpacePathReplacePair info, NameSpaceIndexTypePathPair icon)
         {

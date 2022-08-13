@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
+    [WikiDescription("이미지 렌더러")]
     [AddComponentMenu("SC KRM/Renderer/UI/Image")]
     [RequireComponent(typeof(Image))]
     public class CustomImageRenderer : CustomAllSpriteRenderer
     {
         [SerializeField, HideInInspector] Image _image; public Image image => _image = this.GetComponentFieldSave(_image);
 
+        [WikiDescription("새로고침")]
         public override async void Refresh()
         {
             Sprite sprite = SpriteReload(type, path, index, nameSpace);

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace SCKRM.Renderer
 {
+    [WikiDescription("선택 가능한 오브젝트 렌더러")]
     [AddComponentMenu("SC KRM/Renderer/UI/Selectable")]
     [RequireComponent(typeof(RequireComponent))]
     public sealed class CustomSelectableRenderer : CustomImageRenderer
@@ -23,6 +24,7 @@ namespace SCKRM.Renderer
         public SpriteStateData selectedSprite { get => _selectedSprite; set => _selectedSprite = value; }
         public SpriteStateData disabledSprite { get => _disabledSprite; set => _disabledSprite = value; }
 
+        [WikiDescription("새로고침")]
         public override async void Refresh()
         {
             base.Refresh();

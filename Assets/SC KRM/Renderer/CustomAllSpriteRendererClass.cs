@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SCKRM.Renderer
 {
+    [WikiDescription("모든 스프라이트 렌더러의 부모")]
     public abstract class CustomAllSpriteRenderer : CustomAllRenderer
     {
         int typeLock = 0;

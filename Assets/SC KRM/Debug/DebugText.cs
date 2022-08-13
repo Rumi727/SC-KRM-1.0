@@ -12,14 +12,14 @@ namespace SCKRM.DebugUI
     public sealed class DebugText : UI.UI
     {
         public delegate void DebugTextAction(FastString fastString);
-        public static event DebugTextAction leftDebugText;
-        public static event DebugTextAction rightDebugText;
+        [WikiDescription("F3 디버그 모드의 왼쪽 텍스트가 새로고침될때 호출되는 이벤트입니다")] public static event DebugTextAction leftDebugText;
+        [WikiDescription("F3 디버그 모드의 오른쪽 텍스트가 새로고침될때 호출되는 이벤트입니다")] public static event DebugTextAction rightDebugText;
 
-        public static FastString leftFastString { get; } = new FastString(2048);
-        public static FastString rightFastString { get; } = new FastString(2048);
+        [WikiDescription("F3 디버그 모드의 왼쪽 텍스트를 표시하기 위한 FastString 인스턴스를 가져옵니다")] public static FastString leftFastString { get; } = new FastString(2048);
+        [WikiDescription("F3 디버그 모드의 오른쪽 텍스트를 표시하기 위한 FastString 인스턴스를 가져옵니다")] public static FastString rightFastString { get; } = new FastString(2048);
 
-        [SerializeField] TMP_Text _leftText; public TMP_Text leftText => _leftText;
-        [SerializeField] TMP_Text _rightText; public TMP_Text rightText => _rightText;
+        [SerializeField] TMP_Text _leftText; [WikiDescription("왼쪽 텍스트 컴포넌트를 가져옵니다")] public TMP_Text leftText => _leftText;
+        [SerializeField] TMP_Text _rightText; [WikiDescription("오른쪽 텍스트 컴포넌트를 가져옵니다")] public TMP_Text rightText => _rightText;
 
         protected override void Awake()
         {
@@ -104,6 +104,7 @@ namespace SCKRM.DebugUI
 
 
 
+        [WikiDescription("왼쪽 텍스트를 새로고칩니다")]
         public void LeftRefresh()
         {
             leftFastString.Clear();
@@ -112,6 +113,7 @@ namespace SCKRM.DebugUI
             leftText.text = leftFastString.ToString();
         }
 
+        [WikiDescription("모든 텍스트를 새로고칩니다")]
         public void Refresh()
         {
             leftFastString.Clear();
@@ -127,6 +129,15 @@ namespace SCKRM.DebugUI
 
 
         #region LabelValue
+        [WikiDescription(
+@"라벨을 만듭니다
+
+예시 코드:
+```C#
+LabelValue(""Delta Time"", Kernel.deltaTime, fastString);
+//결과: Delta Time - 0.016666666
+```
+")]
         public static void LabelValue(string label, string value, FastString fastString, bool line = false)
         {
             fastString.Append(label);
@@ -139,6 +150,7 @@ namespace SCKRM.DebugUI
                 fastString.Append("\n");
         }
 
+        [WikiIgnore]
         public static void LabelValue(string label, int value, FastString fastString, bool line = false)
         {
             fastString.Append(label);
@@ -151,6 +163,7 @@ namespace SCKRM.DebugUI
                 fastString.Append("\n");
         }
 
+        [WikiIgnore]
         public static void LabelValue(string label, float value, FastString fastString, bool line = false)
         {
             fastString.Append(label);

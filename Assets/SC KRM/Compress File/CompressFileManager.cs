@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace SCKRM.Compress
 {
+    [WikiDescription("압축 파일 관련 메소드가 있는 클래스입니다")]
     public static class CompressFileManager
     {
         /// <summary>
@@ -28,6 +29,19 @@ namespace SCKRM.Compress
         /// <returns>
         /// 압축이 성공했는가의 여부입니다
         /// </returns>
+        [WikiDescription(
+@"파일을 압축합니다
+
+예시 코드:
+```C#
+void Awake()
+{
+    //C:/Users/Simsimhan Chobo/Documents 폴더 안에 있는 모든 파일을 0807 암호로 압축한다음 C:/Users/Simsimhan Chobo/Downloads 폴더에 압축 파일을 저장합니다
+    CompressZipFile(""C:/Users/Simsimhan Chobo/Documents"", ""C:/Users/Simsimhan Chobo/Downloads"", ""0807"");
+}
+```
+"
+)]
         public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null)
         {
             int stopLoop = 0;
@@ -185,6 +199,19 @@ namespace SCKRM.Compress
         /// 스레드에서 실행했을때를 대비한 인자입니다 (즉, 이 메소드는 스레드에 안전합니다 아마도요)
         /// </param>
         /// <returns></returns>
+        [WikiDescription(
+@"압축을 해제합니다
+
+예시 코드:
+```C#
+void Awake()
+{
+    //C:/Users/Simsimhan Chobo/Downloads/kurumi-chan.zip 파일을 0807 암호로 압축 해제한 다음 C:/Users/Simsimhan Chobo/Documents/kurumi-chan 폴더에 압축 해제한 파일들을 저장합니다
+    DecompressZipFile(""C:/Users/Simsimhan Chobo/Documents"", ""C:/Users/Simsimhan Chobo/Downloads"", ""0807"");
+}
+```
+"
+        )]
         public static bool DecompressZipFile(string zipFilePath, string targetDirectory, string password = "", ThreadMetaData threadMetaData = null)
         {
             int stopLoop = 0;

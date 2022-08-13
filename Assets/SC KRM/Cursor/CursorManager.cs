@@ -12,6 +12,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.Cursor
 {
+    [WikiDescription("마우스 포인터를 관리하는 클래스 입니다")]
     [AddComponentMenu("SC KRM/Cursor/UI/Cursor Manager")]
     public sealed class CursorManager : UIManager<CursorManager>
     {
@@ -25,6 +26,7 @@ namespace SCKRM.Cursor
         /// <summary>
         /// 마우스 포인터를 화면에 표시하고 있는지에 대한 여부입니다
         /// </summary>
+        [WikiDescription("마우스 포인터를 화면에 표시하고 있는지에 대한 여부입니다")]
         public static bool visible
         {
             get => _visible;
@@ -43,14 +45,17 @@ namespace SCKRM.Cursor
         /// <summary>
         /// 현재 마우스 포인터가 창 안에 있으며 이 프로그램을 포커스하고 있는지에 대한 여부입니다
         /// </summary>
+        [WikiDescription("현재 마우스 포인터가 창 안에 있으며 이 프로그램을 포커스하고 있는지에 대한 여부입니다")]
         public static bool isFocused { get; private set; } = false;
         /// <summary>
         /// 드래그 하고 있는지에 대한 여부입니다
         /// </summary>
+        [WikiDescription("드래그 하고 있는지에 대한 여부입니다")]
         public static bool isDragged { get; private set; } = false;
 
 
 
+        [WikiDescription("붙어있는 캔버스 그룹을 가져옵니다")]
         public CanvasGroup canvasGroup => _canvasGroup = this.GetComponentFieldSave(_canvasGroup); [SerializeField, NotNull] CanvasGroup _canvasGroup;
 
 
@@ -137,6 +142,7 @@ namespace SCKRM.Cursor
 
 
         static bool highPrecisionMouseWarningLock = false;
+        [WikiDescription("시스템 마우스 가속 무시 설정을 변경할때 경고창을 띄우는 메소드입니다")]
         public static async void HighPrecisionMouseWarning(Setting setting)
         {
             if (highPrecisionMouseWarningLock)
@@ -195,8 +201,9 @@ namespace SCKRM.Cursor
 
 
 
-        public static Vector2Int GetCursorPosition() => GetCursorPosition(0, 0);
-        public static Vector2Int GetCursorPosition(Vector2 datumPoint) => GetCursorPosition(datumPoint.x, datumPoint.y);
+        [WikiDescription("커서 위치를 가져옵니다")] public static Vector2Int GetCursorPosition() => GetCursorPosition(0, 0);
+        [WikiIgnore] public static Vector2Int GetCursorPosition(Vector2 datumPoint) => GetCursorPosition(datumPoint.x, datumPoint.y);
+        [WikiIgnore]
         public static Vector2Int GetCursorPosition(float xDatumPoint, float yDatumPoint)
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
@@ -211,8 +218,9 @@ namespace SCKRM.Cursor
         }
 
 
-        public static Vector2Int GetClientCursorPosition() => GetClientCursorPosition(0, 0);
-        public static Vector2Int GetClientCursorPosition(Vector2 datumPoint) => GetClientCursorPosition(datumPoint.x, datumPoint.y);
+        [WikiDescription("커서 위치를 클라이언트에 맞춰서 가져옵니다")] public static Vector2Int GetClientCursorPosition() => GetClientCursorPosition(0, 0);
+        [WikiIgnore] public static Vector2Int GetClientCursorPosition(Vector2 datumPoint) => GetClientCursorPosition(datumPoint.x, datumPoint.y);
+        [WikiIgnore]
         public static Vector2Int GetClientCursorPosition(float xDatumPoint, float yDatumPoint)
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
@@ -231,9 +239,9 @@ namespace SCKRM.Cursor
 
 
 
-        public static void SetCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
-        public static void SetCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
-        public static void SetCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
+        [WikiDescription("커서 위치를 변경합니다")] public static void SetCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
+        [WikiIgnore] public static void SetCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
+        [WikiIgnore] public static void SetCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
 
         static void setCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
@@ -247,9 +255,9 @@ namespace SCKRM.Cursor
 #endif
         }
 
-        public static void SetClientCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
-        public static void SetClientCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
-        public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setClientCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
+        [WikiDescription("커서 위치를 클라이언트에 맞춰서 변경합니다")] public static void SetClientCursorPosition(Vector2Int pos) => SetCursorPosition(pos.x, pos.y);
+        [WikiIgnore] public static void SetClientCursorPosition(Vector2Int pos, Vector2 datumPoint) => SetCursorPosition(pos.x, pos.y, datumPoint.x, datumPoint.y);
+        [WikiIgnore] public static void SetClientCursorPosition(int x, int y, float xDatumPoint = 0, float yDatumPoint = 0) => setClientCursorPosition(x, y, xDatumPoint, yDatumPoint, false);
         static void setClientCursorPosition(int x, int y, float xDatumPoint, float yDatumPoint, bool force)
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
@@ -271,8 +279,9 @@ namespace SCKRM.Cursor
 
 
 
-        public Vector2Int ClientPosToScreenPos(Vector2Int pos) => ClientPosToScreenPos(pos.x, pos.y);
+        [WikiIgnore] public Vector2Int ClientPosToScreenPos(Vector2Int pos) => ClientPosToScreenPos(pos.x, pos.y);
 
+        [WikiDescription("클라이언트 좌표를 스크린 좌표로 변경합니다")]
         public Vector2Int ClientPosToScreenPos(int x, int y)
         {
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN

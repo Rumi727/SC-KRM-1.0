@@ -15,6 +15,7 @@ using UnityEditor;
 
 namespace SCKRM.DragAndDrop
 {
+    [WikiDescription("드래그 앤 드랍을 관리하는 클래스 입니다")]
     [AddComponentMenu("SC KRM/Drag And Drop/Drag And Drop Manager")]
     public sealed class DragAndDropManager : Manager<DragAndDropManager>
     {
@@ -37,6 +38,8 @@ namespace SCKRM.DragAndDrop
         /// The method should return true if the file was detected successfully, and false if the detection was unsuccessful.
         /// </returns>
         public delegate bool DragAndDropFunc(string path, bool isFolder, Vector2 mousePos, ThreadMetaData threadMetaData);
+
+        [WikiDescription("사용자가 파일을 드래그 앤 드랍할때 발생하는 이벤트 입니다")]
         public static event DragAndDropFunc dragAndDropEvent;
 
 

@@ -8,10 +8,13 @@ using UnityEngine;
 namespace SCKRM.Discord
 {
     using Discord = global::Discord.Discord;
+    [WikiDescription("디스코드를 관리하는 클래스 입니다")]
     public class DiscordManager : Manager<DiscordManager>
     {
+        [WikiDescription("디스코드가 실행 중 인지에 대한 여부입니다")]
         public static bool discordIsRunning { get; private set; }
 
+        [WikiDescription("디스코드 인스턴스를 가져옵니다")]
         public static Discord discord
         {
             get
@@ -24,6 +27,7 @@ namespace SCKRM.Discord
         }
         static Discord _discord;
 
+        [WikiDescription("디스코드에 접속한 유저를 가져옵니다")]
         public static User? currentUser { get; private set; }
 
         #region Manager
@@ -41,6 +45,7 @@ namespace SCKRM.Discord
         public static VoiceManager voiceManager => discord.GetVoiceManager();
         #endregion
 
+        [WikiDescription("입력된 애플리케이션 아이디를 가져옵니다")]
         public static long applicationId
         {
             get
@@ -88,6 +93,7 @@ namespace SCKRM.Discord
             }
         }
 
+        [WikiDescription("디스코드 API를 초기화합니다")]
         public static void Initialization()
         {
             _discord = new Discord(instance._applicationId, (ulong)CreateFlags.NoRequireDiscord);
@@ -106,6 +112,7 @@ namespace SCKRM.Discord
         }
 
         [DllImport("discord_check.dll")]
+        [WikiDescription("디스코드 API를 정상적으로 불러왔는지 체크하고,\n실패하면 심각한 오류가 발생할 수 있으니, 프로그램을 종료합니다")]
         public static extern bool DiscordCheck(string saveDataPath, long userId);
     }
 
