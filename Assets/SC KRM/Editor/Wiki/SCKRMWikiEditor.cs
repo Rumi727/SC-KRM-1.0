@@ -1,0 +1,572 @@
+using SCKRM.Text;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
+
+namespace SCKRM.Editor
+{
+    public class SCKRMWikiEditor : EditorWindow
+    {
+        string selectedAssemblyName = "SC-KRM";
+        string selectedNameSpace = "SCKRM";
+        string selectedGithubWikiSite = "https://github.com/SimsimhanChobo/SC-KRM/wiki";
+        const string unityWikiSite = "https://docs.unity3d.com/ScriptReference/";
+        void OnGUI()
+        {
+            selectedAssemblyName = EditorGUILayout.TextField("Assembly name to create wiki", selectedAssemblyName);
+            selectedNameSpace = EditorGUILayout.TextField("Namespace to create wiki", selectedNameSpace);
+            selectedGithubWikiSite = EditorGUILayout.TextField("Github Wiki site to create wiki", selectedGithubWikiSite);
+
+            if (GUILayout.Button("Create a wiki"))
+                Initialize();
+        }
+
+        void Initialize()
+        {
+            string path = EditorUtility.OpenFolderPanel("위키 파일을 저장할 폴더 선택", "", "");
+            if (EditorUtility.DisplayDialog("파일 삭제", $"{selectedNameSpace}. 으로 시작하는 모든 파일을 제거하시갰습니까?", "예", "아니요"))
+            {
+                string[] files = Directory.GetFiles(path, selectedNameSpace + "*.md");
+                for (int i = 0; i < files.Length; i++)
+                    File.Delete(files[i]);
+            }
+
+            apiList.Clear();
+            Assembly[] assemblys = AppDomain.CurrentDomain.GetAssemblies();
+            for (int assemblysIndex = 0; assemblysIndex < assemblys.Length; assemblysIndex++)
+            {
+                Assembly assembly = assemblys[assemblysIndex];
+                string assemblyName = assembly.GetName().Name;
+
+                if (assemblyName == selectedAssemblyName)
+                {
+                    Type[] types = assemblys[assemblysIndex].GetTypes();
+                    for (int typesIndex = 0; typesIndex < types.Length; typesIndex++)
+                    {
+                        Type type = types[typesIndex];
+                        if (type.IsPublic && type.Namespace != null)
+                        {
+                            string[] nameSpaces = type.Namespace.Split(".");
+                            if (type.Namespace == selectedNameSpace || nameSpaces[0] == selectedNameSpace)
+                                WikiTextCreate(assembly, type, path);
+                        }
+                    }
+
+                    fastString.Clear();
+                    string nameSpace = "";
+                    int tabSize = 0;
+                    for (int i = 0; i < apiList.Count; i++)
+                    {
+                        Type api = apiList[i];
+                        if (nameSpace != api.Namespace)
+                        {
+                            nameSpace = api.Namespace;
+
+                            string[] split = api.Namespace.Split(".");
+                            tabSize = split.Length * 2;
+                            fastString.Append("\n" + Tab(tabSize - 2) + "* " + split[split.Length - 1]);
+                        }
+
+                        fastString.Append("\n" + Tab(tabSize) + "* " + TypeLinkCreate(assembly, api));
+                    }
+
+                    File.WriteAllText(PathTool.Combine(path, "_Sidebar.md"), fastString.ToString());
+                    return;
+                }
+            }
+        }
+
+        string Tab(int tabSize)
+        {
+            string tab = "";
+            for (int i = 0; i < tabSize; i++)
+                tab += " ";
+
+            return tab;
+        }
+
+        readonly List<Type> apiList = new List<Type>();
+        FastString fastString = new FastString();
+        void WikiTextCreate(Assembly assembly, Type type, string path)
+        {
+            fastString.Clear();
+
+            string[] nameSplit = type.Name.Split("`");
+            fastString.Append($"# {nameSplit[0]}");
+            fastString.Append($"\n네임스페이스 - {type.Namespace}  ");
+            fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(type)}  ");
+            fastString.Append($"\n타입 - {GetTypeName(type)}  ");
+            fastString.Append($"\n[식별자 이름](https://docs.microsoft.com/ko-kr/dotnet/csharp/fundamentals/coding-style/identifier-names) - {TypeLinkCreate(assembly, type)}  ");
+
+            if (type.BaseType != null)
+                fastString.Append($"\n[상속](https://docs.microsoft.com/ko-kr/dotnet/csharp/fundamentals/object-oriented/inheritance) - {TypeLinkCreate(assembly, type.BaseType)}  ");
+
+            {
+                string genericConstraint = "";
+                Type[] generics = type.GetGenericArguments();
+                for (int i = 0; i < generics.Length; i++)
+                {
+                    Type generic = generics[i];
+                    string text = "where " + generic.Name + " : ";
+                    bool isGenericConstraints = false;
+
+                    string parameter = ListGenericParameterAttributes(generic);
+                    if (parameter != "")
+                        isGenericConstraints = true;
+
+                    text += parameter;
+
+                    Type[] constraints = generic.GetGenericParameterConstraints();
+                    for (int j = 0; j < constraints.Length; j++)
+                    {
+                        Type constraint = constraints[j];
+                        if (constraint == typeof(ValueType))
+                            continue;
+
+                        if (j == 0 && parameter == "")
+                            text += TypeLinkCreate(assembly, constraint);
+                        else
+                            text += ", " + TypeLinkCreate(assembly, constraint);
+
+                        isGenericConstraints = true;
+                    }
+
+                    if (isGenericConstraints)
+                        genericConstraint += text + " ";
+                }
+
+                if (genericConstraint != "")
+                    fastString.Append($"\n[제네릭 제약 조건](https://docs.microsoft.com/ko-kr/dotnet/csharp/fundamentals/types/generics) - {genericConstraint}  ");
+            }
+
+            fastString.Append("\n\n## 설명");
+
+            {
+                fastString.Append("\n\n## 프로퍼티");
+
+                PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                int removeCount = 0;
+                for (int i = 0; i < propertyInfos.Length; i++)
+                {
+                    PropertyInfo propertyInfo = propertyInfos[i];
+                    string accessModifterText = GetAccessModifier(propertyInfo, null, out PropertyMethod.AccessModifier accessModifter);
+                    if (accessModifter == PropertyMethod.AccessModifier.Private)
+                    {
+                        removeCount++;
+                        continue;
+                    }
+
+                    bool inheritance = IsInheritance(type, propertyInfo);
+                    bool obsolete = IsObsolete(propertyInfo);
+
+                    fastString.Append($"\n### {propertyInfo.Name}");
+                    if (inheritance && obsolete)
+                        fastString.Append(" (상속, 사용되지 않음)  ");
+                    else if (inheritance)
+                        fastString.Append(" (상속)  ");
+                    else if (obsolete)
+                        fastString.Append(" (사용되지 않음)  ");
+                    else
+                        fastString.Append("  ");
+
+                    fastString.Append($"\n엑세스 한정자 - {accessModifterText}  ");
+                    fastString.Append($"\n타입 - {TypeLinkCreate(assembly, propertyInfo.PropertyType)}  ");
+
+                    if (propertyInfo.GetMethod != null)
+                        fastString.Append($"\nget 접근자 - {GetAccessModifier(propertyInfo.GetMethod)}  ");
+                    if (propertyInfo.SetMethod != null)
+                        fastString.Append($"\nset 접근자 - {GetAccessModifier(propertyInfo.SetMethod)}  ");
+
+                    fastString.Append("\n\n### 설명");
+
+                    if (i != propertyInfos.Length - 1)
+                        fastString.Append("\n\n");
+                }
+
+                if (propertyInfos.Length == removeCount)
+                    fastString.Append("\n없음  ");
+            }
+
+            {
+                fastString.Append("\n\n## 필드");
+
+                FieldInfo[] fieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                int removeCount = 0;
+                for (int i = 0; i < fieldInfos.Length; i++)
+                {
+                    FieldInfo fieldInfo = fieldInfos[i];
+                    if (fieldInfo.IsPrivate)
+                    {
+                        removeCount++;
+                        continue;
+                    }
+
+                    bool inheritance = IsInheritance(type, fieldInfo);
+                    bool obsolete = IsObsolete(fieldInfo);
+
+                    fastString.Append($"\n### {fieldInfo.Name}");
+                    if (inheritance && obsolete)
+                        fastString.Append(" (상속, 사용되지 않음)  ");
+                    else if (inheritance)
+                        fastString.Append(" (상속)  ");
+                    else if (obsolete)
+                        fastString.Append(" (사용되지 않음)  ");
+                    else
+                        fastString.Append("  ");
+
+                    fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(null, fieldInfo, out _)}  ");
+                    fastString.Append($"\n타입 - {TypeLinkCreate(assembly, fieldInfo.FieldType)}  ");
+
+                    fastString.Append("\n\n### 설명");
+
+                    if (i != fieldInfos.Length - 1)
+                        fastString.Append("\n\n");
+                }
+
+                if (fieldInfos.Length == removeCount)
+                    fastString.Append("\n없음  ");
+            }
+
+            {
+                fastString.Append("\n\n## 메소드");
+
+                MethodInfo[] methodInfos = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                int removeCount = 0;
+                for (int i = 0; i < methodInfos.Length; i++)
+                {
+                    MethodInfo methodInfo = methodInfos[i];
+                    if (methodInfo.IsPrivate || methodInfo.IsConstructor || methodInfo.IsSpecialName)
+                    {
+                        removeCount++;
+                        continue;
+                    }
+
+                    bool inheritance = IsInheritance(type, methodInfo);
+                    bool obsolete = IsObsolete(methodInfo);
+
+                    fastString.Append($"\n### {methodInfo.Name}");
+                    if (inheritance && obsolete)
+                        fastString.Append(" (상속, 사용되지 않음)  ");
+                    else if (inheritance)
+                        fastString.Append(" (상속)  ");
+                    else if (obsolete)
+                        fastString.Append(" (사용되지 않음)  ");
+                    else
+                        fastString.Append("  ");
+
+                    fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(methodInfo)}  ");
+                    fastString.Append($"\n반환 타입 - {TypeLinkCreate(assembly, methodInfo.ReturnType)}  ");
+
+                    fastString.Append("\n\n### 설명");
+
+                    if (i != methodInfos.Length - 1)
+                        fastString.Append("\n\n");
+                }
+
+                if (methodInfos.Length == removeCount)
+                    fastString.Append("\n없음  ");
+            }
+
+            File.WriteAllText(PathTool.Combine(path, type.Namespace + "." + type.Name + ".md"), fastString.ToString());
+            apiList.Add(type);
+        }
+
+        string GetAccessModifier(Type type)
+        {
+            string accessModifier = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
+            if (type.IsAbstract && type.IsSealed)
+                accessModifier += " [static](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/static)";
+            else if (type.IsAbstract)
+                accessModifier += " [abstract](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/abstract)";
+            else if (type.IsSealed)
+                accessModifier += " [sealed](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/sealed)";
+
+            return accessModifier;
+        }
+
+        string GetAccessModifier(PropertyInfo propertyInfo, FieldInfo fieldInfo, out PropertyMethod.AccessModifier accessModifier)
+        {
+            string accessModifierText = "";
+
+            if (propertyInfo != null)
+            {
+                accessModifier = propertyInfo.Accessmodifier();
+
+                if (accessModifier == PropertyMethod.AccessModifier.Private)
+                    accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private)";
+                else if (accessModifier == PropertyMethod.AccessModifier.Public)
+                    accessModifierText = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
+                else if (accessModifier == PropertyMethod.AccessModifier.Internal)
+                    accessModifierText = "[internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+                else if (accessModifier == PropertyMethod.AccessModifier.Protected)
+                    accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+                else if (accessModifier == PropertyMethod.AccessModifier.ProtectedInternal)
+                    accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected) [internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+                else if (accessModifier == PropertyMethod.AccessModifier.PrivateProtected)
+                    accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private) [protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+
+                if ((propertyInfo.GetMethod != null && propertyInfo.GetMethod.IsStatic) || (propertyInfo.SetMethod != null && propertyInfo.SetMethod.IsStatic))
+                    accessModifierText += " [static](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/static)";
+
+                return accessModifierText;
+            }
+            else if (fieldInfo != null)
+            {
+                accessModifier = PropertyMethod.AccessModifier.Private;
+
+                if (fieldInfo.IsPrivate)
+                    accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private)";
+                else if (fieldInfo.IsPublic)
+                {
+                    accessModifier = PropertyMethod.AccessModifier.Public;
+                    accessModifierText = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
+                }
+                else if (fieldInfo.IsAssembly)
+                {
+                    accessModifier = PropertyMethod.AccessModifier.Internal;
+                    accessModifierText = "[internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+                }
+                else if (fieldInfo.IsFamily)
+                {
+                    accessModifier = PropertyMethod.AccessModifier.Protected;
+                    accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+                }
+                else if (fieldInfo.IsFamilyOrAssembly)
+                {
+                    accessModifier = PropertyMethod.AccessModifier.ProtectedInternal;
+                    accessModifierText = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected) [internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+                }
+                else if (fieldInfo.IsFamilyAndAssembly)
+                {
+                    accessModifier = PropertyMethod.AccessModifier.PrivateProtected;
+                    accessModifierText = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private) [protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+                }
+
+                if (fieldInfo.IsLiteral && !fieldInfo.IsInitOnly)
+                    accessModifierText += " [const](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/const)";
+                else if (fieldInfo.IsStatic)
+                    accessModifierText += " [static](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/static)";
+                else if (fieldInfo.IsInitOnly)
+                    accessModifierText += " [readonly](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/readonly)";
+
+                return accessModifierText;
+            }
+
+            throw new NullReferenceException();
+        }
+
+        string GetAccessModifier(MethodInfo methodInfo)
+        {
+            string accessModifier = "";
+            if (methodInfo.IsPrivate)
+                accessModifier = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private)";
+            else if (methodInfo.IsPublic)
+                accessModifier = "[public](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/public)";
+            else if (methodInfo.IsAssembly)
+                accessModifier = "[internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+            else if (methodInfo.IsFamily)
+                accessModifier = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+            else if (methodInfo.IsFamilyOrAssembly)
+                accessModifier = "[protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected) [internal](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/internal)";
+            else if (methodInfo.IsFamilyAndAssembly)
+                accessModifier = "[private](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/private) [protected](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/protected)";
+
+            if (methodInfo.IsStatic)
+                accessModifier += " [static](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/static)";
+            else if (methodInfo.IsAbstract)
+                accessModifier += " [abstract](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/abstract)";
+            else if (methodInfo.IsVirtual)
+                accessModifier += " [virtual](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/virtual)";
+            else if (IsOverride(methodInfo))
+                accessModifier += " [override](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/override)";
+
+            return accessModifier;
+        }
+
+        string GetTypeName(Type type)
+        {
+            if (type.IsClass)
+                return "[class](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/class)";
+            else if (type.IsValueType)
+                return "[struct](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/struct)";
+            else if (type.IsInterface)
+                return "[interface](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/interface)";
+            else if (type.IsEnum)
+                return "[enum](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/enum)";
+            else
+                return "알 수 없음";
+        }
+
+        string TypeLinkCreate(Assembly assembly, Type type)
+        {
+            string fullName = type.Namespace + "." + type.Name;
+            string firstNameSpace = "";
+            if (type.Namespace != null)
+                firstNameSpace = type.Namespace.Split(".")[0];
+
+            if (type.Assembly == assembly)
+                return $"[{GetTypeGenericsName(type, true)}]({PathTool.Combine(selectedGithubWikiSite, fullName)})";
+            else if (firstNameSpace == "UnityEngine" || firstNameSpace == "UnityEditor")
+                return $"[{GetTypeGenericsName(type, true)}]({unityWikiSite + fullName.Replace("`", "_").Substring(firstNameSpace.Length + 1)}.html)";
+            else if (firstNameSpace == "System")
+                return $"[{GetTypeGenericsName(type, true)}](https://docs.microsoft.com/ko-kr/dotnet/api/{fullName.Replace("`", "-")}?view=netframework-4.8)";
+            else if (type.IsGenericParameter)
+                return $"[{GetTypeGenericsName(type, true)}](https://docs.microsoft.com/ko-kr/dotnet/csharp/fundamentals/types/generics)";
+            else
+                return GetTypeGenericsName(type);
+        }
+
+        string GetTypeGenericsName(Type type, bool replace = false)
+        {
+            string genericsName;
+            string[] nameSplit = type.Name.Split("`");
+            Type[] generics = type.GetGenericArguments();
+            if (generics.Length > 0)
+            {
+                genericsName = ($"{nameSplit[0]}<");
+
+                for (int genericsIndex = 0; genericsIndex < generics.Length; genericsIndex++)
+                {
+                    if (genericsIndex == generics.Length - 1)
+                        genericsName += $"{generics[genericsIndex].Name}>";
+                    else
+                        genericsName += $"{generics[genericsIndex].Name}, ";
+                }
+            }
+            else
+                genericsName = nameSplit[0];
+
+            if (replace)
+                return genericsName.Replace("<", "\\<").Replace(">", "\\>");
+            else
+                return genericsName;
+        }
+
+        string ListGenericParameterAttributes(Type type)
+        {
+            string retval = "";
+            GenericParameterAttributes attributes = type.GenericParameterAttributes;
+            GenericParameterAttributes constraints = attributes & GenericParameterAttributes.SpecialConstraintMask;
+
+            if (constraints != GenericParameterAttributes.None)
+            {
+                if ((constraints & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
+                {
+                    retval += "[class](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/class)";
+
+                    if ((constraints & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
+                        retval += ", new()";
+                }
+                else if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
+                    retval += "[struct](https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/struct)";
+            }
+
+            return retval;
+        }
+
+        static bool IsOverride(MethodInfo methodInfo) => methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
+
+        public bool IsInheritance(Type type, PropertyInfo propertyInfo)
+        {
+            if (type.BaseType != null)
+                return type.BaseType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == propertyInfo.Name);
+
+            return false;
+        }
+
+        public bool IsInheritance(Type type, FieldInfo fieldInfo)
+        {
+            if (type.BaseType != null)
+                return type.BaseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == fieldInfo.Name);
+
+            return false;
+        }
+
+        public bool IsInheritance(Type type, MethodInfo methodInfo)
+        {
+            if (type.BaseType != null)
+                return type.BaseType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Any(x => x.Name == methodInfo.Name);
+
+            return false;
+        }
+
+        public bool IsObsolete(PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+                return true;
+
+            return false;
+        }
+
+        public bool IsObsolete(FieldInfo fieldInfo)
+        {
+            if (fieldInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+                return true;
+
+            return false;
+        }
+
+        public bool IsObsolete(MethodInfo methodInfo)
+        {
+            if (methodInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+                return true;
+
+            return false;
+        }
+    }
+
+    public static class PropertyMethod
+    {
+        public static readonly List<AccessModifier> AccessModifiers = new List<AccessModifier>
+        {
+            AccessModifier.Private,
+            AccessModifier.Protected,
+            AccessModifier.ProtectedInternal,
+            AccessModifier.Internal,
+            AccessModifier.Public
+        };
+
+
+        public static AccessModifier Accessmodifier(this PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.SetMethod == null)
+                return propertyInfo.GetMethod.Accessmodifier();
+            if (propertyInfo.GetMethod == null)
+                return propertyInfo.SetMethod.Accessmodifier();
+            var max = Math.Max(AccessModifiers.IndexOf(propertyInfo.GetMethod.Accessmodifier()),
+                AccessModifiers.IndexOf(propertyInfo.SetMethod.Accessmodifier()));
+            return AccessModifiers[max];
+        }
+
+        public static AccessModifier Accessmodifier(this MethodInfo methodInfo)
+        {
+            if (methodInfo.IsPrivate)
+                return AccessModifier.Private;
+            if (methodInfo.IsFamily)
+                return AccessModifier.Protected;
+            if (methodInfo.IsFamilyOrAssembly)
+                return AccessModifier.ProtectedInternal;
+            if (methodInfo.IsFamilyAndAssembly)
+                return AccessModifier.PrivateProtected;
+            if (methodInfo.IsAssembly)
+                return AccessModifier.Internal;
+            if (methodInfo.IsPublic)
+                return AccessModifier.Public;
+            throw new ArgumentException("Did not find access modifier", "methodInfo");
+        }
+
+        public enum AccessModifier
+        {
+            Private,
+            Protected,
+            ProtectedInternal,
+            PrivateProtected,
+            Internal,
+            Public
+        }
+    }
+}
