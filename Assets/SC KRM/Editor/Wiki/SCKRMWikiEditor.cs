@@ -525,7 +525,7 @@ namespace SCKRM.Editor
 
         string GetDescription(Type type)
         {
-            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)type.GetCustomAttribute(typeof(DescriptionAttribute));
+            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)type.GetCustomAttribute(typeof(WikiDescriptionAttribute));
             if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
                 return descriptionAttribute.description;
 
@@ -534,7 +534,7 @@ namespace SCKRM.Editor
 
         string GetDescription(PropertyInfo propertyInfo)
         {
-            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)propertyInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)propertyInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
             if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
                 return descriptionAttribute.description;
 
@@ -543,7 +543,7 @@ namespace SCKRM.Editor
 
         string GetDescription(FieldInfo fieldInfo)
         {
-            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)fieldInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
             if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
                 return descriptionAttribute.description;
 
@@ -552,7 +552,7 @@ namespace SCKRM.Editor
 
         string GetDescription(MethodInfo methodInfo)
         {
-            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)methodInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+            WikiDescriptionAttribute descriptionAttribute = (WikiDescriptionAttribute)methodInfo.GetCustomAttribute(typeof(WikiDescriptionAttribute));
             if (descriptionAttribute != null && !string.IsNullOrEmpty(descriptionAttribute.description))
                 return descriptionAttribute.description;
 
