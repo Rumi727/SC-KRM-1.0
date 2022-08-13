@@ -159,21 +159,14 @@ namespace SCKRM.Editor
                 {
                     PropertyInfo propertyInfo = propertyInfos[i];
                     string accessModifterText = GetAccessModifier(propertyInfo, null, null, out PropertyEventMethod.AccessModifier accessModifter);
-                    if (IsIgnore(propertyInfo) || accessModifter == PropertyEventMethod.AccessModifier.Private)
+                    if (accessModifter == PropertyEventMethod.AccessModifier.Private || IsIgnore(propertyInfo) || IsInheritance(type, propertyInfo))
                     {
                         removeCount++;
                         continue;
                     }
 
-                    bool inheritance = IsInheritance(type, propertyInfo);
-                    bool obsolete = IsObsolete(propertyInfo);
-
                     fastString.Append($"\n### {propertyInfo.Name}");
-                    if (inheritance && obsolete)
-                        fastString.Append(" (상속, 사용되지 않음)  ");
-                    else if (inheritance)
-                        fastString.Append(" (상속)  ");
-                    else if (obsolete)
+                    if (IsObsolete(propertyInfo))
                         fastString.Append(" (사용되지 않음)  ");
                     else
                         fastString.Append("  ");
@@ -205,21 +198,14 @@ namespace SCKRM.Editor
                 for (int i = 0; i < fieldInfos.Length; i++)
                 {
                     FieldInfo fieldInfo = fieldInfos[i];
-                    if (IsIgnore(fieldInfo) || fieldInfo.IsPrivate)
+                    if (fieldInfo.IsPrivate || IsIgnore(fieldInfo) || IsInheritance(type, fieldInfo))
                     {
                         removeCount++;
                         continue;
                     }
 
-                    bool inheritance = IsInheritance(type, fieldInfo);
-                    bool obsolete = IsObsolete(fieldInfo);
-
                     fastString.Append($"\n### {fieldInfo.Name}");
-                    if (inheritance && obsolete)
-                        fastString.Append(" (상속, 사용되지 않음)  ");
-                    else if (inheritance)
-                        fastString.Append(" (상속)  ");
-                    else if (obsolete)
+                    if (IsObsolete(fieldInfo))
                         fastString.Append(" (사용되지 않음)  ");
                     else
                         fastString.Append("  ");
@@ -247,21 +233,14 @@ namespace SCKRM.Editor
                 {
                     EventInfo eventInfo = eventInfos[i];
                     string accessModifterText = GetAccessModifier(null, null, eventInfo, out PropertyEventMethod.AccessModifier accessModifter);
-                    if (IsIgnore(eventInfo) || accessModifter == PropertyEventMethod.AccessModifier.Private)
+                    if (accessModifter == PropertyEventMethod.AccessModifier.Private || IsIgnore(eventInfo) || IsInheritance(type, eventInfo))
                     {
                         removeCount++;
                         continue;
                     }
 
-                    bool inheritance = IsInheritance(type, eventInfo);
-                    bool obsolete = IsObsolete(eventInfo);
-
                     fastString.Append($"\n### {eventInfo.Name}");
-                    if (inheritance && obsolete)
-                        fastString.Append(" (상속, 사용되지 않음)  ");
-                    else if (inheritance)
-                        fastString.Append(" (상속)  ");
-                    else if (obsolete)
+                    if (IsObsolete(eventInfo))
                         fastString.Append(" (사용되지 않음)  ");
                     else
                         fastString.Append("  ");
@@ -293,21 +272,14 @@ namespace SCKRM.Editor
                 for (int i = 0; i < methodInfos.Length; i++)
                 {
                     MethodInfo methodInfo = methodInfos[i];
-                    if (IsIgnore(methodInfo) || methodInfo.IsPrivate || methodInfo.IsConstructor || methodInfo.IsSpecialName)
+                    if (methodInfo.IsPrivate || methodInfo.IsConstructor || methodInfo.IsSpecialName || IsIgnore(methodInfo) || IsInheritance(type, methodInfo))
                     {
                         removeCount++;
                         continue;
                     }
 
-                    bool inheritance = IsInheritance(type, methodInfo);
-                    bool obsolete = IsObsolete(methodInfo);
-
                     fastString.Append($"\n### {methodInfo.Name}");
-                    if (inheritance && obsolete)
-                        fastString.Append(" (상속, 사용되지 않음)  ");
-                    else if (inheritance)
-                        fastString.Append(" (상속)  ");
-                    else if (obsolete)
+                    if (IsObsolete(methodInfo))
                         fastString.Append(" (사용되지 않음)  ");
                     else
                         fastString.Append("  ");
