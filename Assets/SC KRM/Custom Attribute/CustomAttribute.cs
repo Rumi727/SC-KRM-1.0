@@ -75,7 +75,7 @@ namespace SCKRM
     public class WikiDescriptionAttribute : Attribute
     {
         string _description;
-        public string description => _description.Replace("\n", "  \n");
+        public string description => _description.Contains("\r") ? _description.Replace("\r", "  \r") : _description.Replace("\n", "  \n");
 
         public WikiDescriptionAttribute(string description) => _description = description;
     }
