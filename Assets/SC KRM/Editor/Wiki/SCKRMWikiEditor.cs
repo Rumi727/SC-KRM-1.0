@@ -179,8 +179,7 @@ namespace SCKRM.Editor
                     if (propertyInfo.SetMethod != null)
                         fastString.Append($"\nset 접근자 - {GetAccessModifier(propertyInfo.SetMethod)}  ");
 
-                    fastString.Append("\n\n### 설명");
-                    fastString.Append("\n" + GetDescription(propertyInfo));
+                    fastString.Append("\n\n" + GetDescription(propertyInfo));
 
                     if (i != propertyInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -213,8 +212,7 @@ namespace SCKRM.Editor
                     fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(null, fieldInfo, null, out _)}  ");
                     fastString.Append($"\n타입 - {TypeLinkCreate(assembly, fieldInfo.FieldType)}  ");
 
-                    fastString.Append("\n\n### 설명");
-                    fastString.Append("\n" + GetDescription(fieldInfo));
+                    fastString.Append("\n\n" + GetDescription(fieldInfo));
 
                     if (i != fieldInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -253,8 +251,7 @@ namespace SCKRM.Editor
                     if (eventInfo.RemoveMethod != null)
                         fastString.Append($"\nremove 접근자 - {GetAccessModifier(eventInfo.RemoveMethod)}  ");
 
-                    fastString.Append("\n\n### 설명");
-                    fastString.Append("\n" + GetDescription(eventInfo));
+                    fastString.Append("\n\n" + GetDescription(eventInfo));
 
                     if (i != eventInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -287,8 +284,7 @@ namespace SCKRM.Editor
                     fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(methodInfo)}  ");
                     fastString.Append($"\n반환 타입 - {TypeLinkCreate(assembly, methodInfo.ReturnType)}  ");
 
-                    fastString.Append("\n\n### 설명");
-                    fastString.Append("\n" + GetDescription(methodInfo));
+                    fastString.Append("\n\n" + GetDescription(methodInfo));
 
                     if (i != methodInfos.Length - 1)
                         fastString.Append("\n\n");
@@ -598,7 +594,7 @@ namespace SCKRM.Editor
             if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
                 return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
-            return "없음";
+            return "설명 없음";
         }
 
         string GetDescription(FieldInfo fieldInfo)
@@ -607,7 +603,7 @@ namespace SCKRM.Editor
             if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
                 return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
-            return "없음";
+            return "설명 없음";
         }
 
         string GetDescription(EventInfo eventInfo)
@@ -616,7 +612,7 @@ namespace SCKRM.Editor
             if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
                 return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
-            return "없음";
+            return "설명 없음";
         }
 
         string GetDescription(MethodInfo methodInfo)
@@ -625,7 +621,7 @@ namespace SCKRM.Editor
             if (descriptionAttribute.Length > 0 && !string.IsNullOrEmpty(((WikiDescriptionAttribute)descriptionAttribute[0]).description))
                 return ((WikiDescriptionAttribute)descriptionAttribute[0]).description;
 
-            return "없음";
+            return "설명 없음";
         }
 
         bool IsIgnore(Type type) => type.GetCustomAttribute(typeof(WikiIgnoreAttribute)) != null;
