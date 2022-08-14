@@ -101,6 +101,9 @@ namespace SCKRM.Editor
 
             string[] nameSplit = type.Name.Split("`");
             fastString.Append($"# {nameSplit[0]}");
+            if (IsObsolete(type))
+                fastString.Append(" (사용되지 않음)");
+
             fastString.Append($"\n네임스페이스 - {type.Namespace}  ");
             fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(type)}  ");
             fastString.Append($"\n타입 - {GetTypeName(type)}  ");
@@ -547,9 +550,17 @@ namespace SCKRM.Editor
             return false;
         }
 
+        bool IsObsolete(Type type)
+        {
+            if (type.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
+                return true;
+
+            return false;
+        }
+
         bool IsObsolete(PropertyInfo propertyInfo)
         {
-            if (propertyInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+            if (propertyInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
                 return true;
 
             return false;
@@ -557,7 +568,7 @@ namespace SCKRM.Editor
 
         bool IsObsolete(FieldInfo fieldInfo)
         {
-            if (fieldInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+            if (fieldInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
                 return true;
 
             return false;
@@ -565,7 +576,7 @@ namespace SCKRM.Editor
 
         bool IsObsolete(EventInfo eventInfo)
         {
-            if (eventInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+            if (eventInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
                 return true;
 
             return false;
@@ -573,7 +584,7 @@ namespace SCKRM.Editor
 
         bool IsObsolete(MethodInfo methodInfo)
         {
-            if (methodInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(System.ObsoleteAttribute)))
+            if (methodInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
                 return true;
 
             return false;
