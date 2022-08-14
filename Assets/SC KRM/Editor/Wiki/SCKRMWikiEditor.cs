@@ -99,10 +99,12 @@ namespace SCKRM.Editor
 
             fastString.Clear();
 
-            string[] nameSplit = type.Name.Split("`");
-            fastString.Append($"# {nameSplit[0]}");
-            if (IsObsolete(type))
-                fastString.Append(" (사용되지 않음)");
+            {
+                string[] nameSplit = type.Name.Split("`");
+                fastString.Append($"# {nameSplit[0]}");
+                if (IsObsolete(type, out string description))
+                    fastString.Append($" (사용되지 않음 '{description}')");
+            }
 
             fastString.Append($"\n네임스페이스 - {type.Namespace}  ");
             fastString.Append($"\n엑세스 한정자 - {GetAccessModifier(type)}  ");
@@ -169,8 +171,8 @@ namespace SCKRM.Editor
                     }
 
                     fastString.Append($"\n### {propertyInfo.Name}");
-                    if (IsObsolete(propertyInfo))
-                        fastString.Append(" (사용되지 않음)  ");
+                    if (IsObsolete(propertyInfo, out string description))
+                        fastString.Append($" (사용되지 않음 '{description}')  ");
                     else
                         fastString.Append("  ");
 
@@ -207,8 +209,8 @@ namespace SCKRM.Editor
                     }
 
                     fastString.Append($"\n### {fieldInfo.Name}");
-                    if (IsObsolete(fieldInfo))
-                        fastString.Append(" (사용되지 않음)  ");
+                    if (IsObsolete(fieldInfo, out string description))
+                        fastString.Append($" (사용되지 않음 '{description}')  ");
                     else
                         fastString.Append("  ");
 
@@ -241,8 +243,8 @@ namespace SCKRM.Editor
                     }
 
                     fastString.Append($"\n### {eventInfo.Name}");
-                    if (IsObsolete(eventInfo))
-                        fastString.Append(" (사용되지 않음)  ");
+                    if (IsObsolete(eventInfo, out string description))
+                        fastString.Append($" (사용되지 않음 '{description}')  ");
                     else
                         fastString.Append("  ");
 
@@ -279,8 +281,8 @@ namespace SCKRM.Editor
                     }
 
                     fastString.Append($"\n### {methodInfo.Name}");
-                    if (IsObsolete(methodInfo))
-                        fastString.Append(" (사용되지 않음)  ");
+                    if (IsObsolete(methodInfo, out string description))
+                        fastString.Append($" (사용되지 않음 '{description}')  ");
                     else
                         fastString.Append("  ");
 
@@ -550,44 +552,69 @@ namespace SCKRM.Editor
             return false;
         }
 
-        bool IsObsolete(Type type)
+        bool IsObsolete(Type type, out string description)
         {
-            if (type.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
-                return true;
+            ObsoleteAttribute obsoleteAttribute = (ObsoleteAttribute)type.GetCustomAttribute(typeof(ObsoleteAttribute));
+            if (obsoleteAttribute == null)
+            {
+                description = "";
+                return false;
+            }
 
-            return false;
+            description = obsoleteAttribute.Message;
+            return true;
         }
 
-        bool IsObsolete(PropertyInfo propertyInfo)
+        bool IsObsolete(PropertyInfo propertyInfo, out string description)
         {
-            if (propertyInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
-                return true;
+            ObsoleteAttribute obsoleteAttribute = (ObsoleteAttribute)propertyInfo.GetCustomAttribute(typeof(ObsoleteAttribute));
+            if (obsoleteAttribute == null)
+            {
+                description = "";
+                return false;
+            }
 
-            return false;
+            description = obsoleteAttribute.Message;
+            return true;
         }
 
-        bool IsObsolete(FieldInfo fieldInfo)
+        bool IsObsolete(FieldInfo fieldInfo, out string description)
         {
-            if (fieldInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
-                return true;
+            ObsoleteAttribute obsoleteAttribute = (ObsoleteAttribute)fieldInfo.GetCustomAttribute(typeof(ObsoleteAttribute));
+            if (obsoleteAttribute == null)
+            {
+                description = "";
+                return false;
+            }
 
-            return false;
+            description = obsoleteAttribute.Message;
+            return true;
         }
 
-        bool IsObsolete(EventInfo eventInfo)
+        bool IsObsolete(EventInfo eventInfo, out string description)
         {
-            if (eventInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
-                return true;
+            ObsoleteAttribute obsoleteAttribute = (ObsoleteAttribute)eventInfo.GetCustomAttribute(typeof(ObsoleteAttribute));
+            if (obsoleteAttribute == null)
+            {
+                description = "";
+                return false;
+            }
 
-            return false;
+            description = obsoleteAttribute.Message;
+            return true;
         }
 
-        bool IsObsolete(MethodInfo methodInfo)
+        bool IsObsolete(MethodInfo methodInfo, out string description)
         {
-            if (methodInfo.GetCustomAttributes().Any(x => x.GetType() == typeof(ObsoleteAttribute)))
-                return true;
+            ObsoleteAttribute obsoleteAttribute = (ObsoleteAttribute)methodInfo.GetCustomAttribute(typeof(ObsoleteAttribute));
+            if (obsoleteAttribute == null)
+            {
+                description = "";
+                return false;
+            }
 
-            return false;
+            description = obsoleteAttribute.Message;
+            return true;
         }
 
         string GetDescription(Type type)
