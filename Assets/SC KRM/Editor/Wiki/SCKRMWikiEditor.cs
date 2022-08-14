@@ -459,11 +459,11 @@ namespace SCKRM.Editor
                 firstNameSpace = type.Namespace.Split(".")[0];
 
             if (type.Assembly == assembly)
-                return $"[{GetTypeGenericsName(type, true)}]({PathTool.Combine(selectedGithubWikiSite, fullName)})";
+                return $"[{GetTypeGenericsName(type, true)}]({PathTool.Combine(selectedGithubWikiSite, fullName).Replace("[]", "")})";
             else if (firstNameSpace == "UnityEngine" || firstNameSpace == "UnityEditor")
-                return $"[{GetTypeGenericsName(type, true)}]({unityWikiSite + fullName.Replace("`", "_").Substring(firstNameSpace.Length + 1)}.html)";
+                return $"[{GetTypeGenericsName(type, true)}]({unityWikiSite + fullName.Replace("`", "_").Replace("[]", "").Substring(firstNameSpace.Length + 1)}.html)";
             else if (firstNameSpace == "System")
-                return $"[{GetTypeGenericsName(type, true)}](https://docs.microsoft.com/ko-kr/dotnet/api/{fullName.Replace("`", "-")}?view=netframework-4.8)";
+                return $"[{GetTypeGenericsName(type, true)}](https://docs.microsoft.com/ko-kr/dotnet/api/{fullName.Replace("`", "-").Replace("[]", "")}?view=netframework-4.8)";
             else if (type.IsGenericParameter)
                 return $"[{GetTypeGenericsName(type, true)}](https://docs.microsoft.com/ko-kr/dotnet/csharp/fundamentals/types/generics)";
             else
