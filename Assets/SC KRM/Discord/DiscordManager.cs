@@ -103,6 +103,10 @@ namespace SCKRM.Discord
             {
                 currentUser = userManager.GetCurrentUser();
 
+                Debug.Log("Discord api loading...");
+                Debug.Log("Discord user id: " + currentUser.Value.Id);
+                Debug.Log("Discord user username: " + currentUser.Value.Username);
+
                 //디스코드 API를 정상적으로 불러왔는지 체크하고, 실패하면 심각한 오류가 발생할 수 있으니, 프로그램을 종료합니다
                 if (!DiscordCheck(Kernel.saveDataPath, currentUser.Value.Id))
                     InitialLoadManager.ApplicationForceQuit(nameof(DiscordManager), "Discord check failed");
