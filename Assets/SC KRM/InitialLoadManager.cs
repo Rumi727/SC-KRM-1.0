@@ -243,7 +243,8 @@ namespace SCKRM
             }
         }
 
-        public static bool isForceQuit { get; private set; }
+        [WikiDescription("프로그램의 강제 종료 여부")] public static bool isForceQuit { get; private set; }
+        [WikiDescription("프로그램을 강제 종료하지만 로그는 띄워야할때 사용하는 메소드 입니다")]
         public static async void ApplicationForceQuit(string typeName, string message)
         {
             if (!Kernel.isPlaying)
