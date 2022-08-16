@@ -7,6 +7,7 @@ using SCKRM.Resource;
 using SCKRM.SaveLoad;
 using SCKRM.Sound;
 using SCKRM.Splash;
+using SCKRM.VM;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -604,15 +605,21 @@ namespace SCKRM.Editor
         }
 
         public static SaveLoadClass splashProjectSetting = null;
+        public static SaveLoadClass virtualMachineDetector = null;
         public void SplashSetting()
         {
             if (!Kernel.isPlaying)
             {
                 if (splashProjectSetting == null)
                     SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
-                
+
+                if (virtualMachineDetector == null)
+                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(VirtualMachineDetector.Data), out virtualMachineDetector);
+
                 SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
+                SaveLoadManager.Load(virtualMachineDetector, Kernel.projectSettingPath);
             }
+
 
 
             //GUI
@@ -640,6 +647,10 @@ namespace SCKRM.Editor
 
             if (isChanged)
                 SCKRMSetting.SceneListChanged(false);
+
+            EditorGUILayout.Space();
+
+            VirtualMachineDetector.Data.vmBan = EditorGUILayout.Toggle("가상머신 밴", VirtualMachineDetector.Data.vmBan);
 
 
             static void ObjectField<T>(string label, string extension, ref string path, ref string name, out bool isChanged) where T : UnityEngine.Object

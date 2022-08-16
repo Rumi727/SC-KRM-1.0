@@ -9,6 +9,7 @@ using SCKRM.Splash;
 using SCKRM.Threads;
 using SCKRM.UI;
 using SCKRM.UI.StatusBar;
+using SCKRM.VM;
 using System;
 using TMPro;
 using UnityEngine;
@@ -163,6 +164,12 @@ namespace SCKRM
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                     }
                 }
+
+                //가상머신 밴이 활성화되어있을때 가상 머신일 경우 프로그램을 강제종료 합니다
+#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
+                if (VirtualMachineDetector.Data.vmBan && (VirtualMachineDetector.HardwareDetection() || VirtualMachineDetector.ProcessDetection()))
+                    ApplicationForceQuit(nameof(InitialLoadManager), "Virtual machines are prohibited");
+#endif
 
                 isSettingLoadEnd = true;
 
