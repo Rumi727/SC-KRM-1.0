@@ -302,7 +302,7 @@ Resource refresh (Since the Unity API is used, we need to run it on the main thr
                 for (int j = 0; j < nameSpaces.Count; j++)
                 {
                     string nameSpace = nameSpaces[j];
-                    string resourcePackTexturePath = PathTool.Combine(resourcePack, texturePath.Replace(" % NameSpace%", nameSpace));
+                    string resourcePackTexturePath = PathTool.Combine(resourcePack, texturePath.Replace("%NameSpace%", nameSpace));
 
                     if (!Directory.Exists(resourcePackTexturePath))
                         continue;
