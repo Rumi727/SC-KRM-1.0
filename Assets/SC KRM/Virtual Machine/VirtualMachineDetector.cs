@@ -3,6 +3,7 @@ using Debug = UnityEngine.Debug;
 using System.Linq;
 using SCKRM.ProjectSetting;
 using Newtonsoft.Json;
+using System.IO;
 
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
 using System.Management;
@@ -42,5 +43,8 @@ namespace SCKRM.VM
 
         [WikiDescription("프로세서를 확인하는 방식으로 가상 머신을 감지합니다")]
         public static bool ProcessDetection() => Process.GetProcesses().Any(x => x.ProcessName == "vmtoolsd" || x.ProcessName == "VBoxTray" || x.ProcessName == "VBoxService");
+
+        [WikiDescription("폴더 / 파일을 확인하는 방식으로 가상 머신을 감지합니다")]
+        public static bool FileDetection() => Directory.Exists("C:/Program Files/VMware/VMware Tools") || Directory.Exists("C:/Program Files/Oracle/VirtualBox Guest Additions");
     }
 }
