@@ -155,6 +155,8 @@ namespace SCKRM.Editor
 
         public static void DrawList<T>(List<T> list, string label, DrawListFunc<T> func, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, false, Vector2.zero, tab, tab2, deleteSafety, (int index) => list[index].Equals(default(T)));
         public static Vector2 DrawList<T>(List<T> list, string label, DrawListFunc<T> func, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, true, scrollViewPos, tab, tab2, deleteSafety, (int index) => list[index].Equals(default(T)));
+        public static void DrawList<T>(List<T> list, string label, DrawListFunc<T> func, DrawListDefaultValueFunc defaultValueFunc, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, false, Vector2.zero, tab, tab2, deleteSafety, defaultValueFunc);
+        public static Vector2 DrawList<T>(List<T> list, string label, DrawListFunc<T> func, DrawListDefaultValueFunc defaultValueFunc, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, true, scrollViewPos, tab, tab2, deleteSafety, defaultValueFunc);
         static Vector2 drawList<T>(List<T> list, string label, DrawListFunc<T> func, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety, DrawListDefaultValueFunc defaultValueFunc)
         {
             if (label == null)
