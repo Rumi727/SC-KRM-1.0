@@ -172,7 +172,7 @@ namespace SCKRM.Editor
                 }
 
                 {
-                    if (deleteSafety && list.Count <= 0 || (list[list.Count - 1] != null && !list[list.Count - 1].Equals(default(T))))
+                    if (deleteSafety && (list.Count <= 0 || (list[list.Count - 1] != null && !list[list.Count - 1].Equals(default(T)))))
                         GUI.enabled = false;
 
                     if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
