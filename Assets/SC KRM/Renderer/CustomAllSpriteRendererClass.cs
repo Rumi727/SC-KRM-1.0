@@ -87,7 +87,7 @@ namespace SCKRM.Renderer
             queue.Enqueue();
         }*/
 
-        public static Sprite SpriteReload(string type, string name, int index, string nameSpace = "")
+        public static Sprite GetSprite(string type, string name, int index, string nameSpace = "")
         {
             if (Kernel.isPlaying)
             {

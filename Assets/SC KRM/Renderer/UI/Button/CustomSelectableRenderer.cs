@@ -30,10 +30,10 @@ namespace SCKRM.Renderer
             base.Refresh();
 
             SpriteState spriteState = new SpriteState();
-            spriteState.highlightedSprite = SpriteReload(highlightedSprite.type, highlightedSprite.name, highlightedSprite.index, highlightedSprite.nameSpace);
-            spriteState.pressedSprite = SpriteReload(pressedSprite.type, pressedSprite.name, pressedSprite.index, pressedSprite.nameSpace);
-            spriteState.selectedSprite = SpriteReload(selectedSprite.type, selectedSprite.name, selectedSprite.index, selectedSprite.nameSpace);
-            spriteState.disabledSprite = SpriteReload(disabledSprite.type, disabledSprite.name, disabledSprite.index, disabledSprite.nameSpace);
+            spriteState.highlightedSprite = GetSprite(highlightedSprite.type, highlightedSprite.name, highlightedSprite.index, highlightedSprite.nameSpace);
+            spriteState.pressedSprite = GetSprite(pressedSprite.type, pressedSprite.name, pressedSprite.index, pressedSprite.nameSpace);
+            spriteState.selectedSprite = GetSprite(selectedSprite.type, selectedSprite.name, selectedSprite.index, selectedSprite.nameSpace);
+            spriteState.disabledSprite = GetSprite(disabledSprite.type, disabledSprite.name, disabledSprite.index, disabledSprite.nameSpace);
 
             if (ThreadManager.isMainThread)
                 selectable.spriteState = spriteState;

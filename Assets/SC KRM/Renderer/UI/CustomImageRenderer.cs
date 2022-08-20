@@ -15,7 +15,7 @@ namespace SCKRM.Renderer
         [WikiDescription("새로고침")]
         public override async void Refresh()
         {
-            Sprite sprite = SpriteReload(type, path, index, nameSpace);
+            Sprite sprite = GetSprite(type, path, index, nameSpace);
 
             if (ThreadManager.isMainThread)
                 image.sprite = sprite;
