@@ -162,7 +162,9 @@ namespace SCKRM.Editor
             //GUI
             {
                 EditorGUILayout.BeginHorizontal();
-                GUILayout.Space(30 * tab);
+
+                if (tab > 0)
+                    GUILayout.Space(30 * tab);
 
                 {
                     if (GUILayout.Button("추가", GUILayout.ExpandWidth(false)))
@@ -213,7 +215,9 @@ namespace SCKRM.Editor
             for (int i = 0; i < list.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                GUILayout.Space(30 * (tab + tab2));
+
+                if (tab + tab2 > 0)
+                    GUILayout.Space(30 * (tab + tab2));
 
                 GUILayout.Label(label, GUILayout.ExpandWidth(false));
                 list[i] = func.Invoke(list[i]);
