@@ -12,7 +12,15 @@ namespace SCKRM.Editor
     {
         public SplashProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new SplashProjectSetting("SC KRM/스플래시", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new SplashProjectSetting("SC KRM/스플래시", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

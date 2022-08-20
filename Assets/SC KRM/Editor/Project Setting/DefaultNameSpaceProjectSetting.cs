@@ -11,7 +11,15 @@ namespace SCKRM.Editor
     {
         public DefaultNameSpaceProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new DefaultNameSpaceProjectSetting("SC KRM/기본 네임스페이스", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new DefaultNameSpaceProjectSetting("SC KRM/기본 네임스페이스", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

@@ -10,7 +10,15 @@ namespace SCKRM.Editor
     {
         public VideoProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new VideoProjectSetting("SC KRM/비디오", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new VideoProjectSetting("SC KRM/비디오", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

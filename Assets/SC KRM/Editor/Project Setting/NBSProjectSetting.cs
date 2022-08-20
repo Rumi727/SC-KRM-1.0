@@ -13,7 +13,15 @@ namespace SCKRM.Editor
     {
         public NBSProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new NBSProjectSetting("SC KRM/NBS", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new NBSProjectSetting("SC KRM/NBS", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

@@ -13,7 +13,15 @@ namespace SCKRM.Editor
     {
         public ControlProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new ControlProjectSetting("SC KRM/조작", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new ControlProjectSetting("SC KRM/조작", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

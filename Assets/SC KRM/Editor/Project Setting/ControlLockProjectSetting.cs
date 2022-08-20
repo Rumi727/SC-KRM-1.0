@@ -13,7 +13,15 @@ namespace SCKRM.Editor
     {
         public ControlLockProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new ControlLockProjectSetting("SC KRM/조작 잠금", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new ControlLockProjectSetting("SC KRM/조작 잠금", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

@@ -13,7 +13,15 @@ namespace SCKRM.Editor
     {
         public ObjectPoolingProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new ObjectPoolingProjectSetting("SC KRM/오브젝트 풀링", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new ObjectPoolingProjectSetting("SC KRM/오브젝트 풀링", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 

@@ -16,7 +16,15 @@ namespace SCKRM.Editor
     {
         public AudioProjectSetting(string path, SettingsScope scopes) : base(path, scopes) { }
 
-        [SettingsProvider] public static SettingsProvider CreateSettingsProvider() => new AudioProjectSetting("SC KRM/오디오", SettingsScope.Project);
+        static SettingsProvider instance;
+        [SettingsProvider]
+        public static SettingsProvider CreateSettingsProvider()
+        {
+            if (instance == null)
+                instance = new AudioProjectSetting("SC KRM/오디오", SettingsScope.Project);
+
+            return instance;
+        }
 
 
 
