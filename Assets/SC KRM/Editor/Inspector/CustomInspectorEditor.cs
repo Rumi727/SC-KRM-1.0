@@ -135,26 +135,27 @@ namespace SCKRM.Editor
 
 
         public delegate T DrawListFunc<T>(T value);
+        public delegate bool DrawListDefaultValueFunc(int index);
 
         public static void DrawList(List<int> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<int> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        static Vector2 drawList(List<int> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (int value) => EditorGUILayout.IntField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety);
+        static Vector2 drawList(List<int> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (int value) => EditorGUILayout.IntField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety, (int index) => list[index].Equals(0));
 
         public static void DrawList(List<float> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<float> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        static Vector2 drawList(List<float> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (float value) => EditorGUILayout.FloatField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety);
+        static Vector2 drawList(List<float> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (float value) => EditorGUILayout.FloatField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety, (int index) => list[index].Equals(0));
 
         public static void DrawList(List<double> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<double> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        static Vector2 drawList(List<double> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (double value) => EditorGUILayout.DoubleField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety);
+        static Vector2 drawList(List<double> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (double value) => EditorGUILayout.DoubleField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety, (int index) => list[index].Equals(0));
 
         public static void DrawList(List<string> list, string label, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, false, Vector2.zero, tab, tab2, deleteSafety);
         public static Vector2 DrawList(List<string> list, string label, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, true, scrollViewPos, tab, tab2, deleteSafety);
-        static Vector2 drawList(List<string> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (string value) => EditorGUILayout.TextField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety);
+        static Vector2 drawList(List<string> list, string label, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety) => drawList(list, label, (string value) => EditorGUILayout.TextField(value), scrollView, scrollViewPos, tab, tab2, deleteSafety, (int index) => string.IsNullOrWhiteSpace(list[index]));
 
-        public static void DrawList<T>(List<T> list, string label, DrawListFunc<T> func, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, false, Vector2.zero, tab, tab2, deleteSafety);
-        public static Vector2 DrawList<T>(List<T> list, string label, DrawListFunc<T> func, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, true, scrollViewPos, tab, tab2, deleteSafety);
-        static Vector2 drawList<T>(List<T> list, string label, DrawListFunc<T> func, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety)
+        public static void DrawList<T>(List<T> list, string label, DrawListFunc<T> func, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, false, Vector2.zero, tab, tab2, deleteSafety, (int index) => list[index].Equals(default(T)));
+        public static Vector2 DrawList<T>(List<T> list, string label, DrawListFunc<T> func, Vector2 scrollViewPos, int tab = 0, int tab2 = 0, bool deleteSafety = true) => drawList(list, label, func, true, scrollViewPos, tab, tab2, deleteSafety, (int index) => list[index].Equals(default(T)));
+        static Vector2 drawList<T>(List<T> list, string label, DrawListFunc<T> func, bool scrollView, Vector2 scrollViewPos, int tab, int tab2, bool deleteSafety, DrawListDefaultValueFunc defaultValueFunc)
         {
             if (label == null)
                 label = "";
@@ -172,7 +173,7 @@ namespace SCKRM.Editor
                 }
 
                 {
-                    if (deleteSafety && (list.Count <= 0 || (list[list.Count - 1] != null && !list[list.Count - 1].Equals(default(T)))))
+                    if (deleteSafety && (list.Count <= 0 || (list[list.Count - 1] != null && !defaultValueFunc.Invoke(list.Count - 1))))
                         GUI.enabled = false;
 
                     if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)) && list.Count > 0)
@@ -196,7 +197,7 @@ namespace SCKRM.Editor
                     {
                         for (int i = list.Count - 1; i >= count; i--)
                         {
-                            if (!deleteSafety || list.Count > 0 && (list[list.Count - 1] == null || list[list.Count - 1].Equals(default(T))))
+                            if (!deleteSafety || list.Count > 0 && (list[list.Count - 1] == null || defaultValueFunc.Invoke(list.Count - 1)))
                                 list.RemoveAt(list.Count - 1);
                             else
                                 count++;
@@ -243,7 +244,7 @@ namespace SCKRM.Editor
                 }
 
                 {
-                    if (deleteSafety && list[i] != null && !list[i].Equals(default(T)))
+                    if (deleteSafety && list[i] != null && !defaultValueFunc.Invoke(i))
                         GUI.enabled = false;
 
                     if (GUILayout.Button("삭제", GUILayout.ExpandWidth(false)))
