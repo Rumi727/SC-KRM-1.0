@@ -1,19 +1,11 @@
-using SCKRM.Input;
-using SCKRM.Json;
-using SCKRM.Object;
-using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
 using SCKRM.Resource;
-using SCKRM.SaveLoad;
 using SCKRM.Sound;
-using SCKRM.Splash;
-using SCKRM.VM;
+using SCKRM.Threads;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Profiling;
 
 namespace SCKRM.Editor
 {
@@ -46,16 +38,19 @@ namespace SCKRM.Editor
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
 
-                EditorGUILayout.Space();
+                if (Kernel.isPlayingAndNotPaused)
+                {
+                    EditorGUILayout.Space();
 
-                GUILayout.BeginHorizontal();
-                GUILayout.FlexibleSpace();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
 
-                GUILayout.Label("새로고침 딜레이", GUILayout.ExpandWidth(false));
-                inspectorUpdate = EditorGUILayout.Toggle(inspectorUpdate, GUILayout.Width(15));
+                    GUILayout.Label("새로고침 딜레이", GUILayout.ExpandWidth(false));
+                    inspectorUpdate = EditorGUILayout.Toggle(inspectorUpdate, GUILayout.Width(15));
 
-                GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+                }
 
                 CustomInspectorEditor.DrawLine(2);
             }
@@ -82,19 +77,19 @@ namespace SCKRM.Editor
 
         void OnInspectorUpdate()
         {
-            if (inspectorUpdate && Kernel.isPlaying)
+            if (inspectorUpdate && Kernel.isPlayingAndNotPaused)
                 Repaint();
         }
 
         void Update()
         {
-            if (!inspectorUpdate && Kernel.isPlaying)
+            if (!inspectorUpdate && Kernel.isPlayingAndNotPaused)
                 Repaint();
         }
 
         public static void Default()
         {
-            if (Kernel.isPlaying)
+            if (Kernel.isPlayingAndNotPaused)
             {
                 EditorGUILayout.LabelField("델타 타임 - " + Kernel.deltaTime);
                 EditorGUILayout.LabelField("FPS 델타 타임 - " + Kernel.fpsDeltaTime);
@@ -104,6 +99,14 @@ namespace SCKRM.Editor
                 CustomInspectorEditor.DrawLine();
 
                 EditorGUILayout.LabelField("FPS - " + Kernel.fps);
+
+                CustomInspectorEditor.DrawLine();
+
+                EditorGUILayout.LabelField("총 할당된 메모리 (MB) - " + (Profiler.GetTotalAllocatedMemoryLong() / 1048576f).Round(4));
+
+                CustomInspectorEditor.DrawLine();
+
+                EditorGUILayout.LabelField("메인 스레드 ID - " + ThreadManager.mainThreadId);
 
                 CustomInspectorEditor.DrawLine();
 
@@ -161,6 +164,14 @@ namespace SCKRM.Editor
             }
             else
             {
+                EditorGUILayout.LabelField("총 할당된 메모리 (MB) - " + (Profiler.GetTotalAllocatedMemoryLong() / 1048576f).Round(4));
+
+                CustomInspectorEditor.DrawLine();
+
+                EditorGUILayout.LabelField("메인 스레드 ID - " + ThreadManager.mainThreadId);
+
+                CustomInspectorEditor.DrawLine();
+
                 EditorGUILayout.LabelField("데이터 경로 - " + Kernel.dataPath);
                 EditorGUILayout.LabelField("스트리밍 에셋 경로 - " + Kernel.streamingAssetsPath);
                 EditorGUILayout.LabelField("영구 데이터 경로 - " + Kernel.persistentDataPath);
