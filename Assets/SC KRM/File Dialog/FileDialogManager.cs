@@ -291,6 +291,11 @@ namespace SCKRM.FileDialog
         [WikiDescription("폴더 열기")]
         public static async UniTask<(bool isSuccess, string[] selectedPath)> ShowFolderOpen(string title, bool single = false)
         {
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(ShowFolderOpen));
+
             await UniTask.WaitUntil(() => instance != null);
 
             isFolderOpenMode = true;
@@ -318,6 +323,11 @@ namespace SCKRM.FileDialog
         [WikiDescription("파일 열기")]
         public static async UniTask<(bool isSuccess, string[] selectedPath)> ShowFileOpen(string title, bool single = false, params ExtensionFilter[] extensionFilters)
         {
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(ShowFileOpen));
+
             await UniTask.WaitUntil(() => instance != null);
 
             isFolderOpenMode = false;
@@ -342,6 +352,11 @@ namespace SCKRM.FileDialog
         [WikiDescription("파일 저장")]
         public static async UniTask<(bool isSuccess, string selectedPath)> ShowFileSave(string title, params ExtensionFilter[] extensionFilters)
         {
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeSearchMethodException();
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(ShowFileSave));
+
             await UniTask.WaitUntil(() => instance != null);
 
             isFolderOpenMode = false;
@@ -394,7 +409,7 @@ namespace SCKRM.FileDialog
             {
                 ExtensionFilter extensionFilter = extensionFilters[i];
                 string[] extensions = extensionFilter.extensions;
-                string label = LanguageManager.LanguageLoad(extensionFilter.label.path, extensionFilter.label.nameSpace);
+                string label = ResourceManager.SearchLanguage(extensionFilter.label.path, extensionFilter.label.nameSpace);
                 label += " (";
 
                 for (int j = 0; j < extensions.Length; j++)
