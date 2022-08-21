@@ -1230,7 +1230,7 @@ Import image files as Texture2D type"
             {
                 Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
                 texture.filterMode = filterMode;
-                texture.name = Path.GetFileName(path);
+                texture.name = Path.GetFileNameWithoutExtension(path);
 
                 AsyncImageLoader.LoaderSettings loaderSettings = AsyncImageLoader.LoaderSettings.Default;
                 loaderSettings.generateMipmap = mipmapUse;
@@ -1354,7 +1354,7 @@ Various formats are supported. Among them, there are formats supported by SC KRM
 
                 Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
                 texture.filterMode = filterMode;
-                texture.name = Path.GetFileName(path);
+                texture.name = Path.GetFileNameWithoutExtension(path);
 
                 AsyncImageLoader.LoaderSettings loaderSettings = AsyncImageLoader.LoaderSettings.Default;
                 loaderSettings.generateMipmap = mipmapUse;
