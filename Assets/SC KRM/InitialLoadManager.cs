@@ -10,11 +10,14 @@ using SCKRM.UI;
 using SCKRM.UI.StatusBar;
 using SCKRM.VM;
 using System;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.LowLevel;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+[assembly: InternalsVisibleTo("SC-KRM-Editor")]
 
 namespace SCKRM
 {
