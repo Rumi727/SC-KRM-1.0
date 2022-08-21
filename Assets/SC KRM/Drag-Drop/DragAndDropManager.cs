@@ -5,6 +5,9 @@ using SCKRM.Threads;
 using System;
 using SCKRM.UI.SideBar;
 using K4.Threading;
+using SCKRM.ProjectSetting;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using B83.Win32;
 using System.Collections.Generic;
@@ -19,6 +22,17 @@ namespace SCKRM.DragAndDrop
     [AddComponentMenu("SC KRM/Drag And Drop/Drag And Drop Manager")]
     public sealed class DragAndDropManager : Manager<DragAndDropManager>
     {
+#if UNITY_EDITOR
+        /// <summary>
+        /// 이 클래스는 에디터에서만 접근할 수 있습니다
+        /// </summary>
+        [ProjectSettingSaveLoad]
+        public class Data
+        {
+            [JsonProperty] public static bool editorDADEnable { get; set; } = true;
+        }
+#endif
+
         /// <summary>
         /// </summary>
         /// <param name="paths">
@@ -109,6 +123,9 @@ namespace SCKRM.DragAndDrop
         Type type;
         void Update()
         {
+            if (!Data.editorDADEnable)
+                return;
+
             if (type == null)
             {
                 type = assembly.GetType("UnityEditor.GameView");
