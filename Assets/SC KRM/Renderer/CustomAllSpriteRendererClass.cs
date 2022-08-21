@@ -89,7 +89,7 @@ namespace SCKRM.Renderer
 
         public static Sprite GetSprite(string type, string name, int index, string nameSpace = "")
         {
-            if (Kernel.isPlaying)
+            if (Kernel.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 Sprite[] sprites = ResourceManager.SearchSprites(type, name, nameSpace);
                 if (sprites != null && index < sprites.Length)
@@ -99,7 +99,7 @@ namespace SCKRM.Renderer
             }
             else
             {
-                Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT5);
+                Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT1);
                 if (sprites != null && index < sprites.Length)
                     return sprites[index];
                 else
