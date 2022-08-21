@@ -10,9 +10,9 @@ namespace SCKRM.Renderer
     {
         [WikiDescription("새로고침 가능한 모든 오브젝트 새로고침")] public static void AllRefresh(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRefreshable>().ToArray(), thread);
 
-        [WikiDescription("모든 렌더러 새로고침")] public static void AllRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllRenderer>(true), thread);
+        [WikiDescription("모든 렌더러 새로고침")] public static void AllRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<IRendererRefreshable>().ToArray(), thread);
 
-        [WikiDescription("모든 텍스트 렌더러 새로고침")] public static void AllTextRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<CustomAllTextRenderer>(true), thread);
+        [WikiDescription("모든 텍스트 렌더러 새로고침")] public static void AllTextRerender(bool thread = true) => Refresh(UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(true).OfType<ITextRefreshable>().ToArray(), thread);
 
         static ThreadMetaData rerenderThread;
         [WikiDescription("새로고침 가능한 특정 오브젝트들을 새로고침")]
