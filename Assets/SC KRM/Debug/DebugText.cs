@@ -80,7 +80,7 @@ namespace SCKRM.DebugUI
                 LabelValue("Processor Count", SystemInfo.processorCount, fastString, true);
 
                 LabelValue("Graphics Device Name", SystemInfo.graphicsDeviceName, fastString);
-                LabelValue("Graphics Memory Size", SystemInfo.graphicsMemorySize, fastString, true);
+                LabelValue("Graphics Memory Size (MB)", SystemInfo.graphicsMemorySize, fastString, true);
 
                 LabelValue("System Memory Size (MB)", SystemInfo.systemMemorySize, fastString);
             }
