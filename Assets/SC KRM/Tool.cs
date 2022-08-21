@@ -2140,7 +2140,7 @@ namespace SCKRM
 
     public static class ListTool
     {
-        public static void Move<T>(this List<T> list, int oldIndex, int newIndex)
+        public static void Move<T>(this IList<T> list, int oldIndex, int newIndex)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2150,7 +2150,7 @@ namespace SCKRM
             list.Insert(newIndex, temp);
         }
 
-        public static void Change<T>(this List<T> list, int oldIndex, int newIndex)
+        public static void Change<T>(this IList<T> list, int oldIndex, int newIndex)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2167,12 +2167,12 @@ namespace SCKRM
         /// <param name="list">리스트</param>
         /// <param name="target">기준</param>
         /// <returns></returns>
-        public static byte CloseValue(this List<byte> list, byte target)
+        public static byte CloseValue(this IEnumerable<byte> list, byte target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
@@ -2185,12 +2185,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static sbyte CloseValue(this List<sbyte> list, sbyte target)
+        public static sbyte CloseValue(this IEnumerable<sbyte> list, sbyte target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2203,12 +2203,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static short CloseValue(this List<short> list, short target)
+        public static short CloseValue(this IEnumerable<short> list, short target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2221,12 +2221,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static ushort CloseValue(this List<ushort> list, ushort target)
+        public static ushort CloseValue(this IEnumerable<ushort> list, ushort target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
@@ -2239,12 +2239,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValue(this List<int> list, int target)
+        public static int CloseValue(this IEnumerable<int> list, int target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2257,12 +2257,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static uint CloseValue(this List<uint> list, uint target)
+        public static uint CloseValue(this IEnumerable<uint> list, uint target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
@@ -2275,12 +2275,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static long CloseValue(this List<long> list, long target)
+        public static long CloseValue(this IEnumerable<long> list, long target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2293,12 +2293,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static ulong CloseValue(this List<ulong> list, ulong target)
+        public static ulong CloseValue(this IEnumerable<ulong> list, ulong target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
@@ -2311,12 +2311,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static float CloseValue(this List<float> list, float target)
+        public static float CloseValue(this IEnumerable<float> list, float target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2329,12 +2329,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static double CloseValue(this List<double> list, double target)
+        public static double CloseValue(this IEnumerable<double> list, double target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2347,12 +2347,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static decimal CloseValue(this List<decimal> list, decimal target)
+        public static decimal CloseValue(this IEnumerable<decimal> list, decimal target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2365,12 +2365,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static BigInteger CloseValue(this List<BigInteger> list, BigInteger target)
+        public static BigInteger CloseValue(this IEnumerable<BigInteger> list, BigInteger target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2383,12 +2383,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static BigDecimal CloseValue(this List<BigDecimal> list, BigDecimal target)
+        public static BigDecimal CloseValue(this IEnumerable<BigDecimal> list, BigDecimal target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
@@ -2401,12 +2401,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static nint CloseValue(this List<nint> list, nint target)
+        public static nint CloseValue(this IEnumerable<nint> list, nint target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
@@ -2419,12 +2419,12 @@ namespace SCKRM
         /// <param name="target">기준</param>
         /// <returns></returns>
         [WikiIgnore]
-        public static nuint CloseValue(this List<nuint> list, nuint target)
+        public static nuint CloseValue(this IEnumerable<nuint> list, nuint target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            if (list.Count > 0)
+            if (list.Count() > 0)
                 return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
 
             return 0;
@@ -2438,7 +2438,7 @@ namespace SCKRM
         /// <param name="list"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static int CloseValueIndex(this List<byte> list, byte target)
+        public static int CloseValueIndex(this IList<byte> list, byte target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2456,7 +2456,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<sbyte> list, sbyte target)
+        public static int CloseValueIndex(this IList<sbyte> list, sbyte target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2474,7 +2474,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<short> list, short target)
+        public static int CloseValueIndex(this IList<short> list, short target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2492,7 +2492,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<ushort> list, ushort target)
+        public static int CloseValueIndex(this IList<ushort> list, ushort target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2510,7 +2510,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<int> list, int target)
+        public static int CloseValueIndex(this IList<int> list, int target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2528,7 +2528,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<uint> list, uint target)
+        public static int CloseValueIndex(this IList<uint> list, uint target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2546,7 +2546,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<long> list, long target)
+        public static int CloseValueIndex(this IList<long> list, long target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2564,7 +2564,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<ulong> list, ulong target)
+        public static int CloseValueIndex(this IList<ulong> list, ulong target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2582,7 +2582,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<float> list, float target)
+        public static int CloseValueIndex(this IList<float> list, float target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2600,7 +2600,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<double> list, double target)
+        public static int CloseValueIndex(this IList<double> list, double target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2618,7 +2618,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<decimal> list, decimal target)
+        public static int CloseValueIndex(this IList<decimal> list, decimal target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2636,7 +2636,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<BigInteger> list, BigInteger target)
+        public static int CloseValueIndex(this IList<BigInteger> list, BigInteger target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2654,7 +2654,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<BigDecimal> list, BigDecimal target)
+        public static int CloseValueIndex(this IList<BigDecimal> list, BigDecimal target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2672,7 +2672,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<nint> list, nint target)
+        public static int CloseValueIndex(this IList<nint> list, nint target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -2690,7 +2690,7 @@ namespace SCKRM
         /// <param name="target"></param>
         /// <returns></returns>
         [WikiIgnore]
-        public static int CloseValueIndex(this List<nuint> list, nuint target)
+        public static int CloseValueIndex(this IList<nuint> list, nuint target)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -3004,7 +3004,7 @@ namespace SCKRM
         }
 
         #region Deduplicate
-        public static void Deduplicate(this List<float> values, float delta)
+        public static void Deduplicate(this IList<float> values, float delta)
         {
             int index = 0;
             while (index < values.Count)
@@ -3025,7 +3025,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<float> values, float delta, float setValue)
+        public static void Deduplicate(this IList<float> values, float delta, float setValue)
         {
             int index = 0;
             while (index < values.Count)
@@ -3046,7 +3046,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<double> values, double delta)
+        public static void Deduplicate(this IList<double> values, double delta)
         {
             int index = 0;
             while (index < values.Count)
@@ -3067,7 +3067,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<double> values, double delta, double setValue)
+        public static void Deduplicate(this IList<double> values, double delta, double setValue)
         {
             int index = 0;
             while (index < values.Count)
@@ -3088,7 +3088,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<decimal> values, decimal delta)
+        public static void Deduplicate(this IList<decimal> values, decimal delta)
         {
             int index = 0;
             while (index < values.Count)
@@ -3109,7 +3109,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<decimal> values, decimal delta, decimal setValue)
+        public static void Deduplicate(this IList<decimal> values, decimal delta, decimal setValue)
         {
             int index = 0;
             while (index < values.Count)
@@ -3130,7 +3130,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<BigDecimal> values, BigDecimal delta)
+        public static void Deduplicate(this IList<BigDecimal> values, BigDecimal delta)
         {
             int index = 0;
             while (index < values.Count)
@@ -3151,7 +3151,7 @@ namespace SCKRM
         }
 
         [WikiIgnore]
-        public static void Deduplicate(this List<BigDecimal> values, BigDecimal delta, BigDecimal setValue)
+        public static void Deduplicate(this IList<BigDecimal> values, BigDecimal delta, BigDecimal setValue)
         {
             int index = 0;
             while (index < values.Count)
@@ -3171,370 +3171,6 @@ namespace SCKRM
             }
         }
         #endregion
-    }
-
-    public static class ArrayTool
-    {
-        #region Close Value
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// byte
-        /// </returns>
-        public static byte CloseValue(this byte[] array, byte target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// sbyte
-        /// </returns>
-        [WikiIgnore]
-        public static sbyte CloseValue(this sbyte[] array, sbyte target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// short
-        /// </returns>
-        [WikiIgnore]
-        public static short CloseValue(this short[] array, short target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// ushort
-        /// </returns>
-        [WikiIgnore]
-        public static ushort CloseValue(this ushort[] array, ushort target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// int
-        /// </returns>
-        [WikiIgnore]
-        public static int CloseValue(this int[] array, int target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// uint
-        /// </returns>
-        [WikiIgnore]
-        public static uint CloseValue(this uint[] array, uint target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// long
-        /// </returns>
-        [WikiIgnore]
-        public static long CloseValue(this long[] array, long target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// ulong
-        /// </returns>
-        [WikiIgnore]
-        public static ulong CloseValue(this ulong[] array, ulong target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// float
-        /// </returns>
-        [WikiIgnore]
-        public static float CloseValue(this float[] array, float target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// double
-        /// </returns>
-        [WikiIgnore]
-        public static double CloseValue(this double[] array, double target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// double
-        /// </returns>
-        [WikiIgnore]
-        public static decimal CloseValue(this decimal[] array, decimal target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// double
-        /// </returns>
-        [WikiIgnore]
-        public static BigInteger CloseValue(this BigInteger[] array, BigInteger target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// double
-        /// </returns>
-        [WikiIgnore]
-        public static BigDecimal CloseValue(this BigDecimal[] array, BigDecimal target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// double
-        /// </returns>
-        [WikiIgnore]
-        public static nint CloseValue(this nint[] array, nint target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
-
-            return 0;
-        }
-
-        /// <summary>
-        /// 가장 가까운 수를 찾습니다
-        /// </summary>
-        /// <param name="array">
-        /// 리스트
-        /// </param>
-        /// <param name="target">
-        /// 기준
-        /// </param>
-        /// <returns>
-        /// double
-        /// </returns>
-        [WikiIgnore]
-        public static nuint CloseValue(this nuint[] array, nuint target)
-        {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
-
-            if (array.Length > 0)
-                return array.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
-
-            return 0;
-        }
-        #endregion Close Value
     }
 
     public static class StringTool
