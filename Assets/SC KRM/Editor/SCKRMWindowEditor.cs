@@ -41,7 +41,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                tabIndex = GUILayout.Toolbar(tabIndex, new string[] { "일반", "오디오", "NBS", "리소스" }, GUILayout.ExpandWidth(false));
+                tabIndex = GUILayout.Toolbar(tabIndex, new string[] { "일반", "오디오", "NBS", "리소스" }, GUILayout.Width(300));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
