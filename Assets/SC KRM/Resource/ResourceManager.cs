@@ -1338,12 +1338,15 @@ Various formats are supported. Among them, there are formats supported by SC KRM
             if (path == null)
                 path = "";
 
-            if (pathExtensionUse)
-                path = PathTool.GetPathWithExtension(path);
+            bool exists;
+            if (!pathExtensionUse)
+                exists = FileExtensionExists(path, out path, textureExtension);
+            else
+                exists = File.Exists(path);
 
-            if (FileExtensionExists(path, out string outPath, textureExtension))
+            if (exists)
             {
-                using UnityWebRequest www = UnityWebRequest.Get(outPath);
+                using UnityWebRequest www = UnityWebRequest.Get(path);
                 await www.SendWebRequest();
 
                 if (www.result != UnityWebRequest.Result.Success)
