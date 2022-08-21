@@ -2715,7 +2715,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2733,7 +2733,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2751,7 +2751,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2769,7 +2769,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2787,7 +2787,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2805,7 +2805,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2823,7 +2823,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2841,7 +2841,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2859,7 +2859,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2877,7 +2877,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2895,7 +2895,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2913,7 +2913,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2931,7 +2931,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2949,7 +2949,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
@@ -2967,7 +2967,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count > 0)
-                return list.IndexOf(list.CloseValue(target));
+                return list.BinarySearch(list.CloseValue(target));
 
             return 0;
         }
