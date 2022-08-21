@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using SCKRM.Input;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
