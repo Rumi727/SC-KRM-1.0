@@ -191,7 +191,7 @@ namespace SCKRM.Renderer
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
 
             if (!int.TryParse(ResourceManager.GetNameSpace(value, out value), out int spriteIndex))
-                spriteIndex = 0;
+                spriteIndex = -1;
 
             string type = ResourceManager.GetTextureType(value, out value);
             return new NameSpaceIndexTypePathPair(nameSpace, spriteIndex, type, value);
