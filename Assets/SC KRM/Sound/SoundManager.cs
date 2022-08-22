@@ -303,7 +303,7 @@ namespace SCKRM.Sound
         /// <exception cref="NotPlayModeMethodException"></exception>
         /// <exception cref="NotInitialLoadEndMethodException"></exception>
         [WikiDescription("소리를 중지합니다")]
-        public static void StopSound(string key, string nameSpace = "", bool all = true)
+        public static int StopSound(string key, string nameSpace = "", bool all = true)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopSound));
@@ -320,6 +320,7 @@ namespace SCKRM.Sound
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
+            int stopCount = 0;
             for (int i = 0; i < soundList.Count; i++)
             {
                 SoundPlayer soundObject = soundList[i];
@@ -327,11 +328,14 @@ namespace SCKRM.Sound
                 {
                     soundObject.Remove();
                     if (!all)
-                        return;
+                        return 1;
 
+                    stopCount++;
                     i--;
                 }
             }
+
+            return stopCount;
         }
 
         /// <summary>
@@ -339,7 +343,7 @@ namespace SCKRM.Sound
         /// Stop all audio
         /// </summary>
         [WikiDescription("모든 오디오를 중지")]
-        public static void StopSoundAll()
+        public static int StopSoundAll()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopSoundAll));
@@ -348,12 +352,17 @@ namespace SCKRM.Sound
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
+            int stopCount = 0;
             for (int i = 0; i < soundList.Count; i++)
             {
                 SoundPlayer soundObject = soundList[i];
                 soundObject.Remove();
+
+                stopCount++;
                 i--;
             }
+
+            return stopCount;
         }
 
         /// <summary>
@@ -361,7 +370,7 @@ namespace SCKRM.Sound
         /// Stop all sounds or bgm
         /// </summary>
         [WikiDescription("모든 효과음 또는 BGM 중지")]
-        public static void StopSoundAll(bool bgm)
+        public static int StopSoundAll(bool bgm)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopSoundAll));
@@ -370,20 +379,27 @@ namespace SCKRM.Sound
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
 
+            int stopCount = 0;
             for (int i = 0; i < soundList.Count; i++)
             {
                 SoundPlayer soundObject = soundList[i];
                 if (bgm && soundObject.soundData.isBGM)
                 {
                     soundObject.Remove();
+
+                    stopCount++;
                     i--;
                 }
                 else if (!bgm && !soundObject.soundData.isBGM)
                 {
                     soundObject.Remove();
+
+                    stopCount++;
                     i--;
                 }
             }
+
+            return stopCount;
         }
 
 
@@ -586,7 +602,7 @@ namespace SCKRM.Sound
         /// NBS 중지
         /// </summary>
         [WikiDescription("NBS 중지")]
-        public static void StopNBS(string key, string nameSpace = "", bool all = true)
+        public static int StopNBS(string key, string nameSpace = "", bool all = true)
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopNBS));
@@ -603,6 +619,7 @@ namespace SCKRM.Sound
             if (nameSpace == "")
                 nameSpace = ResourceManager.defaultNameSpace;
 
+            int stopCount = 0;
             for (int i = 0; i < nbsList.Count; i++)
             {
                 NBSPlayer nbsPlayer = nbsList[i];
@@ -610,11 +627,14 @@ namespace SCKRM.Sound
                 {
                     nbsPlayer.Remove();
                     if (!all)
-                        return;
+                        return stopCount;
 
+                    stopCount++;
                     i--;
                 }
             }
+
+            return stopCount;
         }
 
         /// <summary>
@@ -624,7 +644,7 @@ namespace SCKRM.Sound
         /// <exception cref="NotPlayModeMethodException"></exception>
         /// <exception cref="NotInitialLoadEndMethodException"></exception>
         [WikiDescription("모든 NBS 중지")]
-        public static void StopNBSAll()
+        public static int StopNBSAll()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(StopNBSAll));
@@ -633,10 +653,13 @@ namespace SCKRM.Sound
             if (!InitialLoadManager.isInitialLoadEnd)
                 throw new NotInitialLoadEndMethodException(nameof(StopNBSAll));
 
+            int stopCount = 0;
             for (int i = 0; i < nbsList.Count; i++)
             {
                 NBSPlayer nbsPlayer = nbsList[i];
                 nbsPlayer.Remove();
+
+                stopCount++;
                 i--;
             }
 
@@ -664,15 +687,17 @@ namespace SCKRM.Sound
                 if (bgm && nbsObject.soundData.isBGM)
                 {
                     nbsObject.Remove();
+
+                    stopCount++;
                     i--;
                 }
                 else if (!bgm && !nbsObject.soundData.isBGM)
                 {
                     nbsObject.Remove();
+
+                    stopCount++;
                     i--;
                 }
-
-                stopCount++;
             }
 
             return stopCount;
