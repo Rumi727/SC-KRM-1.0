@@ -218,6 +218,23 @@
 	"notice.april_fools_day.description": "오늘은 만우절 입니다!\n<s>하지만 지금은 제 점심이죠</s>",
 	
 	
+	
+	"command.value_of": "%name%의 값은 %value%입니다",
+	"command.change_to": "%name%를 %value%(으)로 변경했습니다",
+	
+	"command.play_sound": "소리를 재생했습니다",
+	"command.stop_sound": "소리를 중지했습니다",
+	"command.stop_sound_all": "모든 소리를 중지했습니다",
+	
+	"command.play_nbs": "NBS를 재생했습니다",
+	"command.stop_nbs": "NBS를 중지했습니다",
+	"command.stop_nbs_all": "모든 NBS를 중지했습니다",
+	
+	"command.all_refresh": "모두 새로 고쳤습니다",
+	"command.all_rerender": "모든 렌더러를 새로 고쳤습니다",
+	"command.all_text_rerender": "모든 텍스트 렌더러를 새로 고쳤습니다",
+	
+	
 
 	"subtitles.easter_egg_music_play": "이스터에그 음악이 재생됨"
 }

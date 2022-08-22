@@ -211,5 +211,22 @@
 	
 	
 	
+	"command.value_of": "The value of %name% is %value%",
+	"command.change_to": "Changed %name% to %value%",
+	
+	"command.play_sound": "Played sound",
+	"command.stop_sound": "Stopped sound",
+	"command.stop_sound_all": "Stopped all sounds",
+	
+	"command.play_nbs": "Played NBS",
+	"command.stop_nbs": "Stopped NBS",
+	"command.stop_nbs_all": "Stopped all NBS",
+	
+	"command.all_refresh": "All refreshed",
+	"command.all_rerender": "Refreshed all renderers",
+	"command.all_text_rerender": "Refreshed all text renderers",
+	
+	
+	
 	"subtitles.easter_egg_music_play": "Easter egg music is playing"
 }

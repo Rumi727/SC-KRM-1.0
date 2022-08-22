@@ -211,5 +211,22 @@
 	
 	
 	
+	"command.value_of": "%name% の値は %value% です",
+	"command.change_to": "%name% を %value% に変更しました",
+	
+	"command.play_sound": "音を再生しました",
+	"command.stop_sound": "音を停止しました",
+	"command.stop_sound_all": "すべての音を停止しました",
+	
+	"command.play_nbs": "NBSを再生しました",
+	"command.stop_nbs": "NBSを停止しました",
+	"command.stop_nbs_all": "すべてのNBSを停止しました",
+	
+	"command.all_refresh": "すべて更新しました",
+	"command.all_rerender": "すべてのレンダラーを更新しました",
+	"command.all_text_rerender": "すべてのテキストレンダラーを更新しました",
+	
+	
+	
 	"subtitles.easter_egg_music_play": "イースターエッグ音楽が再生されました"
 }
