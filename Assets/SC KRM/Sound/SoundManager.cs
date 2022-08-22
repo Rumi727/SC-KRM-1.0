@@ -639,6 +639,43 @@ namespace SCKRM.Sound
                 nbsPlayer.Remove();
                 i--;
             }
+
+            return stopCount;
+        }
+
+        /// <summary>
+        /// 모든 NBS 효과음 또는 NBS 중지
+        /// Stop all NBS sounds or NBS
+        /// </summary>
+        [WikiDescription("모든 NBS 효과음 또는 NBS 중지")]
+        public static int StopNBSAll(bool bgm)
+        {
+            if (!ThreadManager.isMainThread)
+                throw new NotMainThreadMethodException(nameof(StopSoundAll));
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeMethodException(nameof(StopSoundAll));
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException(nameof(StopSoundAll));
+
+            int stopCount = 0;
+            for (int i = 0; i < soundList.Count; i++)
+            {
+                NBSPlayer nbsObject = nbsList[i];
+                if (bgm && nbsObject.soundData.isBGM)
+                {
+                    nbsObject.Remove();
+                    i--;
+                }
+                else if (!bgm && !nbsObject.soundData.isBGM)
+                {
+                    nbsObject.Remove();
+                    i--;
+                }
+
+                stopCount++;
+            }
+
+            return stopCount;
         }
     }
 }
