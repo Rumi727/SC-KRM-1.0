@@ -12,7 +12,7 @@ namespace SCKRM.Command
     public sealed class CommandManager : Manager<CommandManager>
     {
         public static CommandDispatcher<DefaultCommandSource> commandDispatcher { get; } = new CommandDispatcher<DefaultCommandSource>();
-        public static DefaultCommandSource emptyCommandSource { get; } = new DefaultCommandSource();
+        public static DefaultCommandSource defaultCommandSource { get; } = new DefaultCommandSource();
 
         void Awake()
         {
