@@ -8,7 +8,15 @@ namespace SCKRM.Command
 {
     public static class CommandLanguage
     {
-        public static string SearchLanguage(string key, string nameSpace = "", string language = "") => ResourceManager.SearchLanguage("command." + key, nameSpace, language);
+        public static string SearchLanguage(string key, string nameSpace = "", string language = "")
+        {
+            string text = ResourceManager.SearchLanguage("command." + key, nameSpace, language);
+
+            if (!string.IsNullOrEmpty(text))
+                return text;
+            else
+                return "command." + key;
+        }
     }
 
     public static class IStringReaderExpansion
@@ -145,10 +153,15 @@ namespace SCKRM.Command
 
     public static class BuiltInExceptionsExpansion
     {
-        static readonly Dynamic2CommandExceptionType COLON_TOO_MANY = new Dynamic2CommandExceptionType((object found, object max) => new LiteralMessage($"Colon must not be many than {max}, found {found}"));
-
 #pragma warning disable IDE0060 // 사용하지 않는 매개 변수를 제거하세요.
-        public static Dynamic2CommandExceptionType ColonTooMany(this IBuiltInExceptionProvider e) => COLON_TOO_MANY;
+        public static Dynamic2CommandExceptionType ColonTooMany(this IBuiltInExceptionProvider e)
+        {
+            return new Dynamic2CommandExceptionType((found, max) =>
+            {
+                string message = CommandLanguage.SearchLanguage("colon_too_many").Replace("%found%", found.ToString()).Replace("%max%", max.ToString());
+                return new LiteralMessage(message);
+            });
+        }
 #pragma warning restore IDE0060 // 사용하지 않는 매개 변수를 제거하세요.
     }
 }

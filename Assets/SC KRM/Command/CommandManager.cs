@@ -1,11 +1,14 @@
 using Brigadier.NET;
 using Brigadier.NET.Builder;
+using Brigadier.NET.Exceptions;
 using Cysharp.Threading.Tasks;
 using SCKRM.Renderer;
 using SCKRM.Resource;
 using SCKRM.Rhythm;
 using SCKRM.Sound;
 using UnityEngine;
+
+using BuiltInExceptions = SCKRM.Command.Exceptions.BuiltInExceptions;
 
 namespace SCKRM.Command
 {
@@ -18,6 +21,8 @@ namespace SCKRM.Command
         {
             if (SingletonCheck(this))
             {
+                CommandSyntaxException.BuiltInExceptions = new BuiltInExceptions();
+
                 RegisterGameSpeed();
 
                 RegisterPlaySound();
