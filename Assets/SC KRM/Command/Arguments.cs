@@ -98,6 +98,7 @@ namespace SCKRM.Command
 
         public override Vector2 Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             if (x < _minimum)
@@ -110,6 +111,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -174,6 +181,7 @@ namespace SCKRM.Command
 
         public override Vector2Int Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             int x = reader.ReadInt();
             if (x < _minimum)
@@ -186,6 +194,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -250,6 +264,7 @@ namespace SCKRM.Command
 
         public override Vector3 Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             if (x < _minimum)
@@ -264,6 +279,12 @@ namespace SCKRM.Command
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
             }
 
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
             if (y < _minimum)
@@ -276,6 +297,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -340,18 +367,25 @@ namespace SCKRM.Command
 
         public override Vector3Int Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             int x = reader.ReadInt();
             if (x < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, x, _minimum);
             }
 
             if (x > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, x, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -359,13 +393,19 @@ namespace SCKRM.Command
             if (y < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, y, _minimum);
             }
 
             if (y > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, y, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -373,13 +413,13 @@ namespace SCKRM.Command
             if (z < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, z, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, z, _minimum);
             }
 
             if (z > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, z, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, z, _maximum);
             }
 
             return new Vector3Int(x, y, z);
@@ -430,6 +470,7 @@ namespace SCKRM.Command
 
         public override Vector4 Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             if (x < _minimum)
@@ -442,6 +483,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -458,6 +505,12 @@ namespace SCKRM.Command
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
             }
 
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+
             cursor = ++reader.Cursor;
             float z = reader.ReadFloat();
             if (z < _minimum)
@@ -470,6 +523,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, z, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -534,6 +593,7 @@ namespace SCKRM.Command
 
         public override Rect Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             if (x < _minimum)
@@ -546,6 +606,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -562,6 +628,12 @@ namespace SCKRM.Command
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
             }
 
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+
             cursor = ++reader.Cursor;
             float width = reader.ReadFloat();
             if (width < _minimum)
@@ -574,6 +646,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, width, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -638,18 +716,25 @@ namespace SCKRM.Command
 
         public override RectInt Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             int x = reader.ReadInt();
             if (x < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, x, _minimum);
             }
 
             if (x > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, x, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -657,13 +742,19 @@ namespace SCKRM.Command
             if (y < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, y, _minimum);
             }
 
             if (y > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, y, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -671,13 +762,19 @@ namespace SCKRM.Command
             if (width < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, width, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, width, _minimum);
             }
 
             if (width > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, width, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, width, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -685,13 +782,13 @@ namespace SCKRM.Command
             if (height < _minimum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, height, _minimum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, height, _minimum);
             }
 
             if (height > _maximum)
             {
                 reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, height, _maximum);
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, height, _maximum);
             }
 
             return new RectInt(x, y, width, height);
@@ -732,6 +829,7 @@ namespace SCKRM.Command
 
         public override Color Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float r = reader.ReadFloat();
             if (r < _minimum)
@@ -746,6 +844,12 @@ namespace SCKRM.Command
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, r, _maximum);
             }
 
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+
             cursor = ++reader.Cursor;
             float g = reader.ReadFloat();
             if (g < _minimum)
@@ -758,6 +862,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, g, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -791,6 +901,7 @@ namespace SCKRM.Command
 
         public override Color Parse(IStringReader reader)
         {
+            int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float r = reader.ReadFloat();
             if (r < _minimum)
@@ -803,6 +914,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, r, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
@@ -819,6 +936,12 @@ namespace SCKRM.Command
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, g, _maximum);
             }
 
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+
             cursor = ++reader.Cursor;
             float b = reader.ReadFloat();
             if (b < _minimum)
@@ -831,6 +954,12 @@ namespace SCKRM.Command
             {
                 reader.Cursor = cursor;
                 throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, b, _maximum);
+            }
+
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
             }
 
             cursor = ++reader.Cursor;
