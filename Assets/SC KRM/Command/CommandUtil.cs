@@ -40,7 +40,7 @@ namespace SCKRM.Command
                     return new NameSpacePathPair(text);
             }
             else
-                throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, 1, count);
+                throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, count, 1);
         }
 
         public static NameSpaceTypePathPair ReadNameSpaceTypePathPair(this IStringReader reader)
@@ -62,7 +62,7 @@ namespace SCKRM.Command
                     return new NameSpaceTypePathPair(ResourceManager.GetTextureType(text, out string value), value);
             }
             else
-                throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, 1, count);
+                throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, count, 1);
         }
 
         public static NameSpaceIndexTypePathPair ReadNameSpaceIndexTypePathPair(this IStringReader reader)
@@ -147,7 +147,7 @@ namespace SCKRM.Command
                     return new NameSpaceIndexTypePathPair(ResourceManager.GetTextureType(text, out string value), value);
             }
             else
-                throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, 2, count);
+                throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, count, 2);
         }
     }
 
