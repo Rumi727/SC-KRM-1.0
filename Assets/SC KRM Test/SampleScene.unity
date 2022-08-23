@@ -204,6 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 542794889}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _customSetting: 1
   _customGuiSize: 0
@@ -282,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 542794889}
   _graphic: {fileID: 0}
 --- !u!1 &545502679
 GameObject:
@@ -448,8 +449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
-  _graphic: {fileID: 0}
+  _rectTransform: {fileID: 545502680}
+  _graphic: {fileID: 545502684}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,6 +941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 913368625}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _customSetting: 0
   _customGuiSize: 0
@@ -1031,7 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 913368625}
   _graphic: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
@@ -2055,6 +2057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
   _rectTransform: {fileID: 1800996217}
+  _rectTransformTool: {fileID: 0}
   _graphic: {fileID: 0}
   _customSetting: 0
   _customGuiSize: 0
@@ -2133,7 +2136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 1800996217}
   _graphic: {fileID: 0}
 --- !u!1 &2058743801
 GameObject:
@@ -2194,7 +2197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 2058743802}
   _graphic: {fileID: 0}
 --- !u!1 &2081374923
 GameObject:

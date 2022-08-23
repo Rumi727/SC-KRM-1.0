@@ -8,6 +8,7 @@
     "resource_pack_list.resource_pack": "Prefab/Resource Pack List/Resource Pack",
     "file_dialog_shortcut_bar.button": "Prefab/File Dialog/Shortcut Bar Button",
     "file_dialog_shortcut_bar.line": "Prefab/File Dialog/Line",
-    "file_dialog_my_pc.button": "Prefab/File Dialog/My PC Button"
+    "file_dialog_my_pc.button": "Prefab/File Dialog/My PC Button",
+    "command.autocomplete_text": "Prefab/Command/Autocomplete Text"
   }
 }

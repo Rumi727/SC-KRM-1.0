@@ -6,6 +6,8 @@ using SCKRM.Renderer;
 using SCKRM.Resource;
 using SCKRM.Rhythm;
 using SCKRM.Sound;
+using System;
+using TMPro;
 using UnityEngine;
 
 using BuiltInExceptions = SCKRM.Command.Exceptions.BuiltInExceptions;
@@ -17,11 +19,14 @@ namespace SCKRM.Command
         public static CommandDispatcher<DefaultCommandSource> commandDispatcher { get; } = new CommandDispatcher<DefaultCommandSource>();
         public static DefaultCommandSource defaultCommandSource { get; } = new DefaultCommandSource();
 
+        [SerializeField] TMP_InputField _inputField; public TMP_InputField inputField => _inputField;
+
         void Awake()
         {
             if (SingletonCheck(this))
             {
                 CommandSyntaxException.BuiltInExceptions = new BuiltInExceptions();
+                CommandSyntaxException.ContextAmount = 32;
 
                 RegisterGameSpeed();
 
@@ -36,6 +41,62 @@ namespace SCKRM.Command
                 RegisterAllRefresh();
                 RegisterAllRerender();
                 RegisterAllTextRerender();
+
+                commandDispatcher.Register(x =>
+                    x.Literal("asdfasdf")
+                        .Then(x =>
+                            x.Argument("asdf", Arguments.Integer())
+                                .Then(x =>
+                                    x.Argument("asdf2", Arguments.Integer())
+                                        .Then(x =>
+                                            x.Literal("asdf3")
+                                                .Then(x =>
+                                                    x.Argument("asdf4", Arguments.Integer())
+                                                        .Executes(x => 1)
+                                                )
+                                                .Executes(x => 1)
+                                        )
+                                        .Then(x =>
+                                            x.Literal("asdf5")
+                                                .Then(x =>
+                                                    x.Argument("asdf6", Arguments.Integer())
+                                                        .Executes(x => 1)
+                                                )
+                                                .Executes(x => 1)
+                                        )
+                                        .Executes(x => 1)
+                                )
+                        )
+                );
+            }
+        }
+
+        static bool onValueChangedLock = false;
+        public static void OnValueChanged(string input)
+        {
+            if (onValueChangedLock)
+                return;
+
+            onValueChangedLock = true;
+
+            if (input.Contains("\n"))
+            {
+                instance.inputField.text = "";
+                Execute(input.Replace("\n", ""));
+            }
+
+            onValueChangedLock = false;
+        }
+
+        public static void Execute(string input)
+        {
+            try
+            {
+                commandDispatcher.Execute(input, defaultCommandSource);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
             }
         }
 
@@ -259,10 +320,10 @@ namespace SCKRM.Command
             commandDispatcher.Register(x =>
                 x.Literal("stopsoundall")
                     .Then(x =>
-                        x.Argument("all", Arguments.Bool())
+                        x.Argument("bgm", Arguments.Bool())
                             .Executes(x =>
                             {
-                                int stopCount = SoundManager.StopSoundAll(Arguments.GetBool(x, "all"));
+                                int stopCount = SoundManager.StopSoundAll(Arguments.GetBool(x, "bgm"));
 
                                 string log = CommandLanguage.SearchLanguage("stop_sound_all");
                                 x.Source.lastCommandResult = new CommandResult(true, stopCount, stopCount, log);
@@ -476,10 +537,10 @@ namespace SCKRM.Command
             commandDispatcher.Register(x =>
                 x.Literal("stopnbsall")
                     .Then(x =>
-                        x.Argument("all", Arguments.Bool())
+                        x.Argument("bgm", Arguments.Bool())
                             .Executes(x =>
                             {
-                                int stopCount = SoundManager.StopNBSAll(Arguments.GetBool(x, "all"));
+                                int stopCount = SoundManager.StopNBSAll(Arguments.GetBool(x, "bgm"));
 
                                 string log = CommandLanguage.SearchLanguage("stop_nbs_all");
                                 x.Source.lastCommandResult = new CommandResult(true, stopCount, stopCount, log);
