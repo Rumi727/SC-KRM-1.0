@@ -249,7 +249,7 @@
 	"command.dispatcher_parse_exception": "Could not parse command: %message%",
 	
 	"command.context.here": "<--[HERE]",
-  "command.context.parse_error": "%message% at position %pos%: %text%",
+    "command.context.parse_error": "%message% at position %pos%: %text%",
 	
 	
 	
