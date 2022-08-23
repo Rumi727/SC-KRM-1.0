@@ -13,14 +13,14 @@ namespace SCKRM.Renderer
         [SerializeField, HideInInspector] Image _image; public Image image => _image = this.GetComponentFieldSave(_image);
 
         [WikiDescription("새로고침")]
-        public override async void Refresh()
+        public override void Refresh()
         {
             Sprite sprite = GetSprite(type, path, index, nameSpace);
 
             if (ThreadManager.isMainThread)
                 image.sprite = sprite;
             else
-                await K4UnityThreadDispatcher.Execute(() => image.sprite = sprite);
+                K4UnityThreadDispatcher.Execute(() => image.sprite = sprite);
         }
     }
 }

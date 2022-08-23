@@ -19,7 +19,7 @@ namespace SCKRM.Renderer
         [SerializeField] SpriteDrawMode _drawMode = SpriteDrawMode.Simple;
         public SpriteDrawMode drawMode { get => _drawMode; set => _drawMode = value; }
 
-        public override async void Refresh()
+        public override void Refresh()
         {
             Sprite sprite = GetSprite(type, path, index, nameSpace);
             if (ThreadManager.isMainThread)
@@ -30,7 +30,7 @@ namespace SCKRM.Renderer
             }
             else
             {
-                await K4UnityThreadDispatcher.Execute(() =>
+                K4UnityThreadDispatcher.Execute(() =>
                 {
                     spriteRenderer.sprite = sprite;
                     spriteRenderer.drawMode = drawMode;

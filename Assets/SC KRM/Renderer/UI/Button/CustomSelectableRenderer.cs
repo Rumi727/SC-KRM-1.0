@@ -25,7 +25,7 @@ namespace SCKRM.Renderer
         public SpriteStateData disabledSprite { get => _disabledSprite; set => _disabledSprite = value; }
 
         [WikiDescription("새로고침")]
-        public override async void Refresh()
+        public override void Refresh()
         {
             base.Refresh();
 
@@ -38,9 +38,7 @@ namespace SCKRM.Renderer
             if (ThreadManager.isMainThread)
                 selectable.spriteState = spriteState;
             else
-            {
-                await K4UnityThreadDispatcher.Execute(() => selectable.spriteState = spriteState);
-            }
+                K4UnityThreadDispatcher.Execute(() => selectable.spriteState = spriteState);
         }
 
         [System.Serializable]
