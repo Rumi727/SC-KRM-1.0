@@ -41,33 +41,6 @@ namespace SCKRM.Command
                 RegisterAllRefresh();
                 RegisterAllRerender();
                 RegisterAllTextRerender();
-
-                commandDispatcher.Register(x =>
-                    x.Literal("asdfasdf")
-                        .Then(x =>
-                            x.Argument("asdf", Arguments.Integer())
-                                .Then(x =>
-                                    x.Argument("asdf2", Arguments.Integer())
-                                        .Then(x =>
-                                            x.Literal("asdf3")
-                                                .Then(x =>
-                                                    x.Argument("asdf4", Arguments.Integer())
-                                                        .Executes(x => 1)
-                                                )
-                                                .Executes(x => 1)
-                                        )
-                                        .Then(x =>
-                                            x.Literal("asdf5")
-                                                .Then(x =>
-                                                    x.Argument("asdf6", Arguments.Integer())
-                                                        .Executes(x => 1)
-                                                )
-                                                .Executes(x => 1)
-                                        )
-                                        .Executes(x => 1)
-                                )
-                        )
-                );
             }
         }
 
