@@ -14,7 +14,7 @@ namespace SCKRM.Command
     public sealed class CommandManager : Manager<CommandManager>
     {
         public static CommandDispatcher<DefaultCommandSource> commandDispatcher { get; } = new CommandDispatcher<DefaultCommandSource>();
-        public static DefaultCommandSource defaultCommandSource { get; } = new DefaultCommandSource();
+        public static DefaultCommandSource defaultCommandSource { get; set; } = new DefaultCommandSource();
 
         [SerializeField] TMP_InputField _inputField; public TMP_InputField inputField => _inputField;
 
