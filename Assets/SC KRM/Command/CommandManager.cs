@@ -615,7 +615,7 @@ namespace SCKRM.Command
 
     public struct CommandResult
     {
-        public CommandResult(bool isSuccess, object result, double resultNumber, string logText)
+        public CommandResult(bool isSuccess = false, object result = null, double resultNumber = 0, string logText = "")
         {
             this.isSuccess = isSuccess;
 
