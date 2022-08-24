@@ -45,13 +45,15 @@ namespace SCKRM.UI.Overlay.MessageBox
             {
                 messageBoxCanvasGroup.alpha = messageBoxCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
                 if (messageBoxCanvasGroup.alpha < 0.01f)
+                {
                     messageBoxCanvasGroup.alpha = 0;
+
+                    if (messabeBoxBG.activeSelf)
+                        messabeBoxBG.SetActive(false);
+                }
 
                 messageBoxCanvasGroup.interactable = false;
                 messageBoxCanvasGroup.blocksRaycasts = false;
-
-                if (messabeBoxBG.activeSelf)
-                    messabeBoxBG.SetActive(false);
             }
         }
 

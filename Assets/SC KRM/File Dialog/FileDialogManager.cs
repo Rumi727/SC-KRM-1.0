@@ -137,13 +137,15 @@ namespace SCKRM.FileDialog
             {
                 fileDialogCanvasGroup.alpha = fileDialogCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
                 if (fileDialogCanvasGroup.alpha < 0.01f)
+                {
                     fileDialogCanvasGroup.alpha = 0;
+
+                    if (fileDialogBG.activeSelf)
+                        fileDialogBG.SetActive(false);
+                }
 
                 fileDialogCanvasGroup.interactable = false;
                 fileDialogCanvasGroup.blocksRaycasts = false;
-
-                if (fileDialogBG.activeSelf)
-                    fileDialogBG.SetActive(false);
             }
         }
 
