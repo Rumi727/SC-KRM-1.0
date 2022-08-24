@@ -39,7 +39,6 @@ namespace SCKRM.Splash
 
                 canvasGroup.alpha = 0;
                 progressBarCanvasGroup.alpha = 0;
-                progressBar.allowNoResponse = false;
 
                 bow = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "random/bow"));
                 drawmap = await ResourceManager.GetAudio(PathTool.Combine(Kernel.streamingAssetsPath, ResourceManager.soundPath.Replace("%NameSpace%", "minecraft"), "ui/cartography_table/drawmap") + Random.Range(1, 4));
