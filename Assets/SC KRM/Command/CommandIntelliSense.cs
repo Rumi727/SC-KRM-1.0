@@ -49,15 +49,15 @@ namespace SCKRM.Command
         }
 
         static readonly FastString descriptionFastString = new FastString();
-        public void IntelliSense(string allText)
+        public void IntelliSense(string allInput)
         {
-            string input = allText;
+            string input = allInput;
             if (input.Length > 0)
                 input = input.Remove((chatInputField.caretPosition - 1).Clamp(0, input.Length - 1));
 
             CommandDispatcher<DefaultCommandSource> commandDispatcher = CommandManager.commandDispatcher;
             RootCommandNode<DefaultCommandSource> root = commandDispatcher.GetRoot();
-            ParseResults<DefaultCommandSource> allTextParseResults = commandDispatcher.Parse(allText, CommandManager.defaultCommandSource);
+            ParseResults<DefaultCommandSource> allTextParseResults = commandDispatcher.Parse(allInput, CommandManager.defaultCommandSource);
             ICollection<CommandNode<DefaultCommandSource>> rootNodes = root.Children;
 
             descriptionText.text = "";
@@ -71,7 +71,7 @@ namespace SCKRM.Command
                 var lastException = exceptions.Last();
                 foreach (var exception in exceptions)
                 {
-                    descriptionFastString.Append(GetExceptionMessage(exception.Value));
+                    descriptionFastString.Append(exception.Value.GetCustomExceptionMessage());
 
                     if (!exception.Equals(lastException))
                         descriptionFastString.Append("\n");
@@ -88,7 +88,7 @@ namespace SCKRM.Command
                 {
                     CommandNode<DefaultCommandSource> node = currentContext.Nodes.Last().Node;
                     LiteralCommandNode<DefaultCommandSource>[] literalNodes = node.Children.OfType<LiteralCommandNode<DefaultCommandSource>>().ToArray();
-                    LiteralObjectCreate(literalNodes, allText);
+                    LiteralObjectCreate(literalNodes, input);
 
                     if (autocompleteTextList.Count <= 0)
                     {
@@ -111,7 +111,7 @@ namespace SCKRM.Command
                     }
                 }
                 else
-                    LiteralObjectCreate(rootNodes, allText);
+                    LiteralObjectCreate(rootNodes, input);
             }
 
             if (autocompleteTextList.Count > 0)
@@ -144,14 +144,14 @@ namespace SCKRM.Command
         }
 
         float autocompleteMaxSizeX = 0;
-        void LiteralObjectCreate(IEnumerable<CommandNode<DefaultCommandSource>> literalNodes, string allInput)
+        void LiteralObjectCreate(IEnumerable<CommandNode<DefaultCommandSource>> literalNodes, string input)
         {
             LiteralObjectRemove();
 
             foreach (var node in literalNodes)
             {
-                string[] allInputSplit = allInput.Split(' ');
-                if (!node.Name.StartsWith(allInputSplit[allInputSplit.Length - 1]))
+                string[] inputSplit = input.Split(' ');
+                if (!node.Name.StartsWith(inputSplit[inputSplit.Length - 1]))
                     continue;
 
                 CommandAutocompleteText autocompleteText = (CommandAutocompleteText)ObjectPoolingSystem.ObjectCreate("command.autocomplete_text", autocompleteContent).monoBehaviour;
@@ -169,31 +169,6 @@ namespace SCKRM.Command
 
             autocompleteTargetSizeFitter.LayoutRefresh();
             autocompleteTargetSizeFitter.SizeUpdate();
-        }
-
-        static readonly FastString exceptionFastString = new FastString();
-        public static string GetExceptionMessage(CommandSyntaxException exception)
-        {
-            string here = CommandLanguage.SearchLanguage("context.here");
-            string parseError = CommandLanguage.SearchLanguage("context.parse_error");
-            string message = exception.RawMessage().String;
-
-            parseError = parseError.Replace("%message%", message);
-            parseError = parseError.Replace("%pos%", exception.Cursor.ToString());
-
-            if (exception.Input == null || exception.Cursor < 0)
-                return message;
-
-            exceptionFastString.Clear();
-            int num = exception.Input.Length.Min(exception.Cursor);
-            if (num > CommandSyntaxException.ContextAmount)
-                exceptionFastString.Append("...");
-
-            int num2 = 0.Max(num - CommandSyntaxException.ContextAmount);
-            exceptionFastString.Append(exception.Input.Substring(num2, num - num2));
-            exceptionFastString.Append(here);
-
-            return parseError.Replace("%text%", exceptionFastString.ToString());
         }
     }
 }

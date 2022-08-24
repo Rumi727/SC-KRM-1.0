@@ -94,6 +94,10 @@ namespace SCKRM.Command
             {
                 commandDispatcher.Execute(input, defaultCommandSource);
             }
+            catch (CommandSyntaxException e)
+            {
+                Debug.LogException(e.GetCustomException());
+            }
             catch (Exception e)
             {
                 Debug.LogException(e);
