@@ -39,7 +39,7 @@ namespace SCKRM.SaveLoad
             this.fieldInfos = fieldInfos;
         }
 
-        public class SaveLoadVariable<T>
+        public class SaveLoadVariable<T> where T : MemberInfo
         {
             public T variableInfo { get; }
             public object defaultValue { get; }
