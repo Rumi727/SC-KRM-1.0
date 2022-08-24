@@ -82,11 +82,14 @@ namespace SCKRM.Command
             else
             {
                 ParseResults<DefaultCommandSource> parseResults = commandDispatcher.Parse(input, CommandManager.defaultCommandSource);
-                CommandContextBuilder<DefaultCommandSource> currentContext = parseResults.Context;
+                CommandContextBuilder<DefaultCommandSource> currentContext = parseResults.Context.LastChild;
 
                 if (currentContext.Nodes.Count > 0)
                 {
                     CommandNode<DefaultCommandSource> node = currentContext.Nodes.Last().Node;
+                    while (node.Redirect != null)
+                        node = node.Redirect;
+
                     LiteralCommandNode<DefaultCommandSource>[] literalNodes = node.Children.OfType<LiteralCommandNode<DefaultCommandSource>>().ToArray();
                     LiteralObjectCreate(literalNodes, input);
 

@@ -1,22 +1,32 @@
 using Brigadier.NET;
 using Brigadier.NET.Builder;
 using Brigadier.NET.Exceptions;
+using Brigadier.NET.Tree;
+using Cysharp.Threading.Tasks;
+using SCKRM.Input;
 using SCKRM.Renderer;
 using SCKRM.Sound;
+using SCKRM.UI;
+using SCKRM.UI.Overlay;
+using SCKRM.UI.StatusBar;
 using System;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 using BuiltInExceptions = SCKRM.Command.Exceptions.BuiltInExceptions;
 
 namespace SCKRM.Command
 {
-    public sealed class CommandManager : Manager<CommandManager>
+    public sealed class CommandManager : Manager<CommandManager>, IUIOverlay
     {
         public static CommandDispatcher<DefaultCommandSource> commandDispatcher { get; } = new CommandDispatcher<DefaultCommandSource>();
         public static DefaultCommandSource defaultCommandSource { get; set; } = new DefaultCommandSource();
 
+        public static bool isChatShow { get; private set; } = false;
+
         [SerializeField] TMP_InputField _inputField; public TMP_InputField inputField => _inputField;
+        [SerializeField] GameObject _chat; public GameObject chat => _chat;
+        [SerializeField] CanvasGroup _commandCanvasGroup; public CanvasGroup commandCanvasGroup => _commandCanvasGroup;
 
         void Awake()
         {
@@ -24,6 +34,10 @@ namespace SCKRM.Command
             {
                 CommandSyntaxException.BuiltInExceptions = new BuiltInExceptions();
                 CommandSyntaxException.ContextAmount = 32;
+
+                RegisterExecute();
+
+                RegisterLog();
 
                 RegisterGameSpeed();
 
@@ -41,22 +55,98 @@ namespace SCKRM.Command
             }
         }
 
-        static bool onValueChangedLock = false;
-        public static void OnValueChanged(string input)
+        void Update()
         {
-            if (onValueChangedLock)
+            if (!InitialLoadManager.isInitialLoadEnd)
                 return;
 
-            onValueChangedLock = true;
-
-            if (input.Contains("\n"))
+            if (isChatShow)
             {
-                instance.inputField.text = "";
-                Execute(input.Replace("\n", ""));
-            }
+                commandCanvasGroup.alpha = commandCanvasGroup.alpha.Lerp(1, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                if (commandCanvasGroup.alpha > 0.99f)
+                    commandCanvasGroup.alpha = 1;
 
-            onValueChangedLock = false;
+                commandCanvasGroup.interactable = true;
+                commandCanvasGroup.blocksRaycasts = true;
+
+                if (!chat.activeSelf)
+                    chat.SetActive(true);
+
+                StatusBarManager.tabSelectGameObject = Kernel.emptyTransform.gameObject;
+                if (EventSystem.current.currentSelectedGameObject != inputField.gameObject)
+                    EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+                if (!inputField.isFocused)
+                    inputField.Select();
+
+                if (InputManager.GetKey("gui.ok", InputType.Down, "all", "force"))
+                {
+                    if (!string.IsNullOrWhiteSpace(inputField.text))
+                        Execute(inputField.text);
+
+                    inputField.text = "";
+                    Hide().Forget();
+                }
+            }
+            else
+            {
+                if (InputManager.GetKey("command_manager.chat_show", InputType.Down, "all"))
+                    Show().Forget();
+
+                commandCanvasGroup.alpha = commandCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                if (commandCanvasGroup.alpha < 0.01f)
+                {
+                    commandCanvasGroup.alpha = 0;
+
+                    if (chat.activeSelf)
+                        chat.SetActive(false);
+                }
+
+                commandCanvasGroup.interactable = false;
+                commandCanvasGroup.blocksRaycasts = false;
+            }
         }
+
+
+        static GameObject previouslySelectedGameObject = null;
+        static bool previouslyForceInputLock = false;
+        public static async UniTask Show()
+        {
+            if (isChatShow)
+                return;
+
+            await UniTask.WaitUntil(() => instance != null);
+
+            instance.inputField.text = "";
+
+            isChatShow = true;
+            UIOverlayManager.showedOverlays.Add(instance);
+
+            previouslyForceInputLock = InputManager.forceInputLock;
+            previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
+
+            InputManager.forceInputLock = true;
+            EventSystem.current.SetSelectedGameObject(null);
+
+            UIManager.BackEventAdd(hide, true);
+        }
+
+        public static async UniTask Hide()
+        {
+            if (!isChatShow)
+                return;
+
+            await UniTask.WaitUntil(() => instance != null);
+
+            isChatShow = false;
+            UIOverlayManager.showedOverlays.Remove(instance);
+
+            InputManager.forceInputLock = previouslyForceInputLock;
+            EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);
+
+            UIManager.BackEventRemove(hide, true);
+        }
+
+        static void hide() => Hide().Forget();
 
         public static void Execute(string input)
         {
@@ -72,6 +162,65 @@ namespace SCKRM.Command
             {
                 Debug.LogException(e);
             }
+        }
+
+        static void RegisterExecute()
+        {
+            CommandNode<DefaultCommandSource> root = commandDispatcher.GetRoot();
+            CommandNode<DefaultCommandSource> execute = 
+            commandDispatcher.Register(x =>
+                x.Literal("execute")
+                    .Then(x =>
+                        x.Literal("run")
+                            .Redirect(root)
+                    )
+            );
+
+            Positioned();
+
+            void Positioned()
+            {
+                commandDispatcher.Register(x =>
+                    x.Literal("execute")
+                        .Then(x =>
+                            x.Literal("positioned")
+                                .Then(x =>
+                                    x.Argument("pos", Arguments.Vector3())
+                                        .Executes(x =>
+                                        {
+                                            Vector3 pos = Arguments.GetVector3(x, "pos");
+                                            float magnitude = pos.magnitude;
+
+                                            Debug.Log(pos);
+
+                                            x.Source.currentPosition = pos;
+                                            x.Source.lastCommandResult = new CommandResult(true, pos, magnitude);
+
+                                            return (int)magnitude;
+                                        })
+                                        .Redirect(execute)
+                                )
+                        )
+                );
+            }
+        }
+
+        static void RegisterLog()
+        {
+            commandDispatcher.Register(x =>
+                x.Literal("log")
+                    .Then(x =>
+                        x.Argument("text", Arguments.String())
+                            .Executes(x =>
+                            {
+                                string text = Arguments.GetString(x, "text");
+                                Debug.Log(text);
+
+                                x.Source.lastCommandResult = new CommandResult(true, text, text.Length, text);
+                                return text.Length;
+                            })
+                    )
+            );
         }
 
         static void RegisterGameSpeed()
@@ -581,6 +730,8 @@ namespace SCKRM.Command
     public class DefaultCommandSource
     {
         public CommandResult lastCommandResult { get; set; } = new CommandResult();
+
+        public virtual Vector3 currentPosition { get; set; } = Vector3.zero;
     }
 
     public struct CommandResult
