@@ -152,6 +152,7 @@ namespace SCKRM.Command
         {
             try
             {
+                defaultCommandSource.Initialization();
                 commandDispatcher.Execute(input, defaultCommandSource);
                 defaultCommandSource.ExecuteAtTheEndInvoke();
             }
@@ -740,6 +741,13 @@ namespace SCKRM.Command
         public delegate void ExecuteAtTheEnd(DefaultCommandSource source);
 
         public void ExecuteAtTheEndInvoke() => executeAtTheEnd.Invoke(this);
+        public virtual void Initialization()
+        {
+            lastCommandResult = new CommandResult();
+
+            currentPosition = Vector3.zero;
+            currentRotation = Vector3.zero;
+        }
     }
 
     public struct CommandResult

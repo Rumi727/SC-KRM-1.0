@@ -55,6 +55,8 @@ namespace SCKRM.Command
             if (input.Length > 0)
                 input = input.Remove((chatInputField.caretPosition - 1).Clamp(0, input.Length - 1));
 
+            CommandManager.defaultCommandSource.Initialization();
+
             CommandDispatcher<DefaultCommandSource> commandDispatcher = CommandManager.commandDispatcher;
             RootCommandNode<DefaultCommandSource> root = commandDispatcher.GetRoot();
             ParseResults<DefaultCommandSource> allTextParseResults = commandDispatcher.Parse(allInput, CommandManager.defaultCommandSource);
@@ -81,6 +83,8 @@ namespace SCKRM.Command
             }
             else
             {
+                CommandManager.defaultCommandSource.Initialization();
+
                 ParseResults<DefaultCommandSource> parseResults = commandDispatcher.Parse(input, CommandManager.defaultCommandSource);
                 CommandContextBuilder<DefaultCommandSource> currentContext = parseResults.Context.LastChild;
 
