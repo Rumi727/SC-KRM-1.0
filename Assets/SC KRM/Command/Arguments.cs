@@ -85,6 +85,17 @@ namespace SCKRM.Command
 
         public static NameSpaceIndexTypePathPairArgumentType NameSpaceIndexTypePathPair() => new NameSpaceIndexTypePathPairArgumentType();
         public static NameSpaceIndexTypePathPair GetNameSpaceIndexTypePathPair<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<NameSpaceIndexTypePathPair>(name);
+
+        [Flags]
+        public enum PosSwizzle
+        {
+            none = 0,
+            x = 1 << 1,
+            y = 1 << 2,
+            z = 1 << 3,
+
+            all = x | y | z
+        }
     }
 
     public class Vector2ArgumentType : ArgumentType<Vector2>

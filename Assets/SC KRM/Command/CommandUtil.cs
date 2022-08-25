@@ -206,17 +206,6 @@ namespace SCKRM.Command
                     CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
             }
         }
-
-        [Flags]
-        public enum PosSwizzle
-        {
-            none = 0,
-            x = 1 << 1,
-            y = 1 << 2,
-            z = 1 << 3,
-
-            all = x | y | z
-        }
     }
 
     public static class BuiltInExceptionsExpansion
