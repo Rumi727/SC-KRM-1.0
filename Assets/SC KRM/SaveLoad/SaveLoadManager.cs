@@ -166,9 +166,6 @@ namespace SCKRM.SaveLoad
             File.WriteAllText(PathTool.Combine(saveDataPath, saveLoadClass.name) + ".json", jObject.ToString());
         }
 
-        /// <summary>
-        /// GetTextWebRequest를 사용하기 때문에 안드로이드에선 메인 스레드에서 실행해야 합니다
-        /// </summary>
         [WikiDescription("전부 로드")]
         public static void LoadAll(SaveLoadClass[] saveLoadClassList, string loadDataPath, bool noExistsCheck = false)
         {
@@ -181,9 +178,6 @@ namespace SCKRM.SaveLoad
                 Load(saveLoadClassList[i], loadDataPath, noExistsCheck);
         }
 
-        /// <summary>
-        /// GetTextWebRequest를 사용하기 때문에 안드로이드에선 메인 스레드에서 실행해야 합니다
-        /// </summary>
         [WikiDescription("로드")]
         public static void Load(SaveLoadClass saveLoadClass, string loadDataPath, bool noExistsCheck = false)
         {
