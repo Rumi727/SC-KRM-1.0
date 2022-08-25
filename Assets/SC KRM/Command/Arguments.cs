@@ -86,6 +86,9 @@ namespace SCKRM.Command
         public static NameSpaceIndexTypePathPairArgumentType NameSpaceIndexTypePathPair() => new NameSpaceIndexTypePathPairArgumentType();
         public static NameSpaceIndexTypePathPair GetNameSpaceIndexTypePathPair<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<NameSpaceIndexTypePathPair>(name);
 
+        public static PosSwizzleArgumentType PosSwizzle() => new PosSwizzleArgumentType();
+        public static PosSwizzleEnum GetPosSwizzle<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<PosSwizzleEnum>(name);
+
         [Flags]
         public enum PosSwizzleEnum
         {
@@ -1133,5 +1136,16 @@ namespace SCKRM.Command
         public override int GetHashCode() => 0;
 
         public override string ToString() => $"NameSpaceIndexTypePathPair[]()";
+    }
+
+    public class PosSwizzleArgumentType : ArgumentType<Arguments.PosSwizzleEnum>
+    {
+        public override Arguments.PosSwizzleEnum Parse(IStringReader reader) => reader.ReadPosSwizzle();
+
+        public override bool Equals(object o) => o is SpritesArgumentType;
+
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"Arguments.PosSwizzle()";
     }
 }
