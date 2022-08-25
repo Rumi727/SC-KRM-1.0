@@ -59,6 +59,12 @@ namespace SCKRM.Command
         public static ColorAlphaArgumentType ColorAlpha() => new ColorAlphaArgumentType();
         public static Color GetColorAlpha<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Color>(name);
 
+        public static TransformArgumentType Transform() => new TransformArgumentType();
+        public static Transform GetTransform<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Transform>(name);
+
+        public static TransformsStringArgumentType Transforms() => new TransformsStringArgumentType();
+        public static Transform[] GetTransforms<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Transform[]>(name);
+
         public static GameObjectArgumentType GameObject() => new GameObjectArgumentType();
         public static GameObject GetGameObject<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<GameObject>(name);
 
