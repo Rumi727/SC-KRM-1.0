@@ -986,6 +986,36 @@ namespace SCKRM.Command
         public override string ToString() => $"Color({_minimum}, {_maximum})";
     }
 
+    public class TransformArgumentType : ArgumentType<Transform>
+    {
+        public override Transform Parse(IStringReader reader)
+        {
+            int hashCode = reader.ReadInt();
+            return UnityEngine.Object.FindObjectsOfType<Transform>().First(x => x.GetHashCode() == hashCode);
+        }
+
+        public override bool Equals(object o) => o is TransformArgumentType;
+
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"Transform()";
+    }
+
+    public class TransformsStringArgumentType : ArgumentType<Transform[]>
+    {
+        public override Transform[] Parse(IStringReader reader)
+        {
+            string name = reader.ReadString();
+            return UnityEngine.Object.FindObjectsOfType<Transform>().Where(x => x.name == name).ToArray();
+        }
+
+        public override bool Equals(object o) => o is TransformsStringArgumentType;
+
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"Transform[]()";
+    }
+
     public class GameObjectArgumentType : ArgumentType<GameObject>
     {
         public override GameObject Parse(IStringReader reader)
