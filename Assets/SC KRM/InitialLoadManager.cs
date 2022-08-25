@@ -191,9 +191,6 @@ namespace SCKRM
                     isInitialLoadEnd = true;
                     initialLoadEnd?.Invoke();
 
-                    //리소스를 로딩했으니 모든 렌더러를 전부 재렌더링합니다
-                    RendererManager.AllRerender();
-
                     Debug.Log("Kernel: Initial loading finished!");
                 }
 
