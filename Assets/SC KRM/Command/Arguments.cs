@@ -87,7 +87,7 @@ namespace SCKRM.Command
         public static NameSpaceIndexTypePathPair GetNameSpaceIndexTypePathPair<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<NameSpaceIndexTypePathPair>(name);
 
         [Flags]
-        public enum PosSwizzle
+        public enum PosSwizzleEnum
         {
             none = 0,
             x = 1 << 1,
