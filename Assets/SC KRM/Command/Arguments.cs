@@ -1063,39 +1063,6 @@ namespace SCKRM.Command
         public override string ToString() => $"GameObject[]()";
     }
 
-    public class NameSpacePathPairArgumentType : ArgumentType<NameSpacePathPair>
-    {
-        public override NameSpacePathPair Parse(IStringReader reader) => reader.ReadNameSpacePathPair();
-
-        public override bool Equals(object o) => o is NameSpacePathPairArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"NameSpacePathPair[]()";
-    }
-
-    public class NameSpaceTypePathPairArgumentType : ArgumentType<NameSpaceTypePathPair>
-    {
-        public override NameSpaceTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceTypePathPair();
-
-        public override bool Equals(object o) => o is NameSpaceTypePathPairArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"NameSpaceTypePathPair[]()";
-    }
-
-    public class NameSpaceIndexTypePathPairArgumentType : ArgumentType<NameSpaceIndexTypePathPair>
-    {
-        public override NameSpaceIndexTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceIndexTypePathPair();
-
-        public override bool Equals(object o) => o is NameSpaceIndexTypePathPairArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"NameSpaceIndexTypePathPair[]()";
-    }
-
     public class SpriteArgumentType : ArgumentType<Sprite>
     {
         public override Sprite Parse(IStringReader reader)
@@ -1133,5 +1100,38 @@ namespace SCKRM.Command
         public override int GetHashCode() => 0;
 
         public override string ToString() => $"Sprite[]()";
+    }
+
+    public class NameSpacePathPairArgumentType : ArgumentType<NameSpacePathPair>
+    {
+        public override NameSpacePathPair Parse(IStringReader reader) => reader.ReadNameSpacePathPair();
+
+        public override bool Equals(object o) => o is NameSpacePathPairArgumentType;
+
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"NameSpacePathPair[]()";
+    }
+
+    public class NameSpaceTypePathPairArgumentType : ArgumentType<NameSpaceTypePathPair>
+    {
+        public override NameSpaceTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceTypePathPair();
+
+        public override bool Equals(object o) => o is NameSpaceTypePathPairArgumentType;
+
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"NameSpaceTypePathPair[]()";
+    }
+
+    public class NameSpaceIndexTypePathPairArgumentType : ArgumentType<NameSpaceIndexTypePathPair>
+    {
+        public override NameSpaceIndexTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceIndexTypePathPair();
+
+        public override bool Equals(object o) => o is NameSpaceIndexTypePathPairArgumentType;
+
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"NameSpaceIndexTypePathPair[]()";
     }
 }
