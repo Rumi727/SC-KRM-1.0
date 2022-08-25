@@ -242,6 +242,7 @@
 	"command.reader_expected_float": "Expected float",
 	"command.reader_expected_bool": "Expected bool",
 	"command.reader_expected_symbol": "Expected '%symbol%'",
+	"command.reader_invalid_pos_swizzle": "'Invalid swizzle, expected combination of 'x', 'y' and 'z'",
 	
 	"command.dispatcher_unknown_command": "Unknown or incomplete command",
 	"command.dispatcher_unknown_argument": "Incorrect argument for command",

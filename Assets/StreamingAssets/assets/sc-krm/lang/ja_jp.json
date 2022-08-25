@@ -242,6 +242,7 @@
 	"command.reader_expected_float": "浮動小数点数が必要です",
 	"command.reader_expected_bool": "ブーリアン値が必要です",
 	"command.reader_expected_symbol": "「%symbol%」が必要です",
+	"command.reader_invalid_pos_swizzle": "'無効な組み合わせです。「x」「y」「z」の組み合わせであるべきです",
 	
 	"command.dispatcher_unknown_command": "不明または不完全なコマンドです",
 	"command.dispatcher_unknown_argument": "コマンドの引数が正しくありません",

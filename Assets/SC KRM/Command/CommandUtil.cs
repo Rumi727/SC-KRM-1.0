@@ -3,6 +3,7 @@ using Brigadier.NET.Exceptions;
 using SCKRM.Renderer;
 using SCKRM.Resource;
 using SCKRM.Text;
+using System;
 using System.Text.RegularExpressions;
 
 namespace SCKRM.Command
@@ -150,6 +151,72 @@ namespace SCKRM.Command
             else
                 throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, count, 2);
         }
+
+        public static PosSwizzle ReadPosSwizzle(this IStringReader reader)
+        {
+            PosSwizzle posSwizzle = PosSwizzle.none;
+
+            Check();
+            reader.Cursor++;
+            Check();
+            reader.Cursor++;
+            Check();
+
+            return posSwizzle;
+
+            void Check()
+            {
+                if (reader.Peek() == 'x')
+                {
+                    if (!posSwizzle.HasFlag(PosSwizzle.x))
+                    {
+                        if (!posSwizzle.HasFlag(PosSwizzle.none))
+                            posSwizzle |= PosSwizzle.x;
+                        else
+                            posSwizzle = PosSwizzle.x;
+                    }
+                    else
+                        CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                }
+                else if (reader.Peek() == 'y')
+                {
+                    if (!posSwizzle.HasFlag(PosSwizzle.y))
+                    {
+                        if (!posSwizzle.HasFlag(PosSwizzle.none))
+                            posSwizzle |= PosSwizzle.y;
+                        else
+                            posSwizzle = PosSwizzle.y;
+                    }
+                    else
+                        CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                }
+                else if (reader.Peek() == 'z')
+                {
+                    if (posSwizzle.HasFlag(PosSwizzle.z))
+                    {
+                        if (!posSwizzle.HasFlag(PosSwizzle.none))
+                            posSwizzle |= PosSwizzle.z;
+                        else
+                            posSwizzle = PosSwizzle.z;
+                    }
+                    else
+                        CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                }
+                else
+                    CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+            }
+        }
+
+        [Flags]
+        public enum PosSwizzle
+        {
+            none = 0,
+            x = 1 << 1,
+            y = 1 << 2,
+            z = 1 << 3,
+
+            all = x | y | z
+        }
     }
 
     public static class BuiltInExceptionsExpansion
@@ -162,6 +229,12 @@ namespace SCKRM.Command
                 string message = CommandLanguage.SearchLanguage("colon_too_many").Replace("%found%", found.ToString()).Replace("%max%", max.ToString());
                 return new LiteralMessage(message);
             });
+        }
+
+        public static SimpleCommandExceptionType InvalidPosSwizzle(this IBuiltInExceptionProvider e)
+        {
+            string message = CommandLanguage.SearchLanguage("reader_invalid_pos_swizzle");
+            return new SimpleCommandExceptionType(new LiteralMessage(message));
         }
 #pragma warning restore IDE0060 // 사용하지 않는 매개 변수를 제거하세요.
 
