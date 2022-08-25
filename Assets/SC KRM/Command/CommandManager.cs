@@ -153,6 +153,7 @@ namespace SCKRM.Command
             try
             {
                 commandDispatcher.Execute(input, defaultCommandSource);
+                defaultCommandSource.ExecuteAtTheEndInvoke();
             }
             catch (CommandSyntaxException e)
             {
@@ -732,6 +733,13 @@ namespace SCKRM.Command
 
         public virtual Vector3 currentPosition { get; set; } = Vector3.zero;
         public virtual Vector3 currentRotation { get; set; } = Vector3.zero;
+
+
+
+        public event ExecuteAtTheEnd executeAtTheEnd;
+        public delegate void ExecuteAtTheEnd(DefaultCommandSource source);
+
+        public void ExecuteAtTheEndInvoke() => executeAtTheEnd.Invoke(this);
     }
 
     public struct CommandResult
