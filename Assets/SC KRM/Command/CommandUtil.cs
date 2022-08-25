@@ -152,9 +152,9 @@ namespace SCKRM.Command
                 throw CommandSyntaxException.BuiltInExceptions.ColonTooMany().CreateWithContext(reader, count, 2);
         }
 
-        public static PosSwizzle ReadPosSwizzle(this IStringReader reader)
+        public static Arguments.PosSwizzle ReadPosSwizzle(this IStringReader reader)
         {
-            PosSwizzle posSwizzle = PosSwizzle.none;
+            Arguments.PosSwizzle posSwizzle = Arguments.PosSwizzle.none;
 
             Check();
             reader.Cursor++;
@@ -168,36 +168,36 @@ namespace SCKRM.Command
             {
                 if (reader.Peek() == 'x')
                 {
-                    if (!posSwizzle.HasFlag(PosSwizzle.x))
+                    if (!posSwizzle.HasFlag(Arguments.PosSwizzle.x))
                     {
-                        if (!posSwizzle.HasFlag(PosSwizzle.none))
-                            posSwizzle |= PosSwizzle.x;
+                        if (!posSwizzle.HasFlag(Arguments.PosSwizzle.none))
+                            posSwizzle |= Arguments.PosSwizzle.x;
                         else
-                            posSwizzle = PosSwizzle.x;
+                            posSwizzle = Arguments.PosSwizzle.x;
                     }
                     else
                         CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
                 }
                 else if (reader.Peek() == 'y')
                 {
-                    if (!posSwizzle.HasFlag(PosSwizzle.y))
+                    if (!posSwizzle.HasFlag(Arguments.PosSwizzle.y))
                     {
-                        if (!posSwizzle.HasFlag(PosSwizzle.none))
-                            posSwizzle |= PosSwizzle.y;
+                        if (!posSwizzle.HasFlag(Arguments.PosSwizzle.none))
+                            posSwizzle |= Arguments.PosSwizzle.y;
                         else
-                            posSwizzle = PosSwizzle.y;
+                            posSwizzle = Arguments.PosSwizzle.y;
                     }
                     else
                         CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
                 }
                 else if (reader.Peek() == 'z')
                 {
-                    if (posSwizzle.HasFlag(PosSwizzle.z))
+                    if (posSwizzle.HasFlag(Arguments.PosSwizzle.z))
                     {
-                        if (!posSwizzle.HasFlag(PosSwizzle.none))
-                            posSwizzle |= PosSwizzle.z;
+                        if (!posSwizzle.HasFlag(Arguments.PosSwizzle.none))
+                            posSwizzle |= Arguments.PosSwizzle.z;
                         else
-                            posSwizzle = PosSwizzle.z;
+                            posSwizzle = Arguments.PosSwizzle.z;
                     }
                     else
                         CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
