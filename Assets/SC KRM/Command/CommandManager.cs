@@ -202,7 +202,6 @@ namespace SCKRM.Command
                                 )
                         )
                 );
-            }
         }
 
         static void RegisterLog()
@@ -252,7 +251,7 @@ namespace SCKRM.Command
             commandDispatcher.Register(x =>
                 x.Literal("playsound")
                     .Then(x =>
-                        x.Argument("key", Arguments.NameSpacePathPair())
+                        x.Argument("sound", Arguments.NameSpacePathPair())
                             .Then(x =>
                                 x.Argument("volume", Arguments.Float())
                                     .Then(x =>
@@ -271,7 +270,7 @@ namespace SCKRM.Command
                                                                                         x.Argument("position", Arguments.Vector3())
                                                                                             .Executes(x =>
                                                                                             {
-                                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                                                                 float volume = Arguments.GetFloat(x, "volume");
                                                                                                 bool loop = Arguments.GetBool(x, "loop");
                                                                                                 float pitch = Arguments.GetFloat(x, "pitch");
@@ -290,7 +289,7 @@ namespace SCKRM.Command
                                                                                     )
                                                                                     .Executes(x =>
                                                                                     {
-                                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                                                         float volume = Arguments.GetFloat(x, "volume");
                                                                                         bool loop = Arguments.GetBool(x, "loop");
                                                                                         float pitch = Arguments.GetFloat(x, "pitch");
@@ -308,7 +307,7 @@ namespace SCKRM.Command
                                                                             )
                                                                             .Executes(x =>
                                                                             {
-                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                                                 float volume = Arguments.GetFloat(x, "volume");
                                                                                 bool loop = Arguments.GetBool(x, "loop");
                                                                                 float pitch = Arguments.GetFloat(x, "pitch");
@@ -325,7 +324,7 @@ namespace SCKRM.Command
                                                                     )
                                                                     .Executes(x =>
                                                                     {
-                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                                         float volume = Arguments.GetFloat(x, "volume");
                                                                         bool loop = Arguments.GetBool(x, "loop");
                                                                         float pitch = Arguments.GetFloat(x, "pitch");
@@ -341,7 +340,7 @@ namespace SCKRM.Command
                                                             )
                                                             .Executes(x =>
                                                             {
-                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                                 float volume = Arguments.GetFloat(x, "volume");
                                                                 bool loop = Arguments.GetBool(x, "loop");
                                                                 float pitch = Arguments.GetFloat(x, "pitch");
@@ -356,7 +355,7 @@ namespace SCKRM.Command
                                                     )
                                                     .Executes(x =>
                                                     {
-                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                         float volume = Arguments.GetFloat(x, "volume");
                                                         bool loop = Arguments.GetBool(x, "loop");
                                                         float pitch = Arguments.GetFloat(x, "pitch");
@@ -370,7 +369,7 @@ namespace SCKRM.Command
                                             )
                                             .Executes(x =>
                                             {
-                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                                 float volume = Arguments.GetFloat(x, "volume");
                                                 bool loop = Arguments.GetBool(x, "loop");
 
@@ -383,7 +382,7 @@ namespace SCKRM.Command
                                     )
                                     .Executes(x =>
                                     {
-                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                         float volume = Arguments.GetFloat(x, "volume");
 
                                         SoundManager.PlaySound(nameSpacePathPair.path, nameSpacePathPair.nameSpace, volume);
@@ -395,7 +394,7 @@ namespace SCKRM.Command
                             )
                             .Executes(x =>
                             {
-                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                 SoundManager.PlaySound(nameSpacePathPair.path, nameSpacePathPair.nameSpace);
 
                                 string log = CommandLanguage.SearchLanguage("play_sound");
@@ -411,12 +410,12 @@ namespace SCKRM.Command
             commandDispatcher.Register(x =>
                 x.Literal("stopsound")
                     .Then(x =>
-                        x.Argument("key", Arguments.NameSpacePathPair())
+                        x.Argument("sound", Arguments.NameSpacePathPair())
                             .Then(x =>
                                 x.Argument("all", Arguments.Bool())
                                     .Executes(x =>
                                     {
-                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                         bool all = Arguments.GetBool(x, "all");
                                         int stopCount = SoundManager.StopSound(nameSpacePathPair.path, nameSpacePathPair.nameSpace, all);
 
@@ -427,7 +426,7 @@ namespace SCKRM.Command
                             )
                             .Executes(x =>
                             {
-                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "sound");
                                 int stopCount = SoundManager.StopSound(nameSpacePathPair.path, nameSpacePathPair.nameSpace);
 
                                 string log = CommandLanguage.SearchLanguage("stop_sound");
@@ -469,7 +468,7 @@ namespace SCKRM.Command
             commandDispatcher.Register(x =>
                 x.Literal("playnbs")
                     .Then(x =>
-                        x.Argument("key", Arguments.NameSpacePathPair())
+                        x.Argument("nbs", Arguments.NameSpacePathPair())
                             .Then(x =>
                                 x.Argument("volume", Arguments.Float())
                                     .Then(x =>
@@ -488,7 +487,7 @@ namespace SCKRM.Command
                                                                                         x.Argument("position", Arguments.Vector3())
                                                                                             .Executes(x =>
                                                                                             {
-                                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                                                                 float volume = Arguments.GetFloat(x, "volume");
                                                                                                 bool loop = Arguments.GetBool(x, "loop");
                                                                                                 float pitch = Arguments.GetFloat(x, "pitch");
@@ -507,7 +506,7 @@ namespace SCKRM.Command
                                                                                     )
                                                                                     .Executes(x =>
                                                                                     {
-                                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                                                         float volume = Arguments.GetFloat(x, "volume");
                                                                                         bool loop = Arguments.GetBool(x, "loop");
                                                                                         float pitch = Arguments.GetFloat(x, "pitch");
@@ -525,7 +524,7 @@ namespace SCKRM.Command
                                                                             )
                                                                             .Executes(x =>
                                                                             {
-                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                                                 float volume = Arguments.GetFloat(x, "volume");
                                                                                 bool loop = Arguments.GetBool(x, "loop");
                                                                                 float pitch = Arguments.GetFloat(x, "pitch");
@@ -542,7 +541,7 @@ namespace SCKRM.Command
                                                                     )
                                                                     .Executes(x =>
                                                                     {
-                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                                         float volume = Arguments.GetFloat(x, "volume");
                                                                         bool loop = Arguments.GetBool(x, "loop");
                                                                         float pitch = Arguments.GetFloat(x, "pitch");
@@ -558,7 +557,7 @@ namespace SCKRM.Command
                                                             )
                                                             .Executes(x =>
                                                             {
-                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                                 float volume = Arguments.GetFloat(x, "volume");
                                                                 bool loop = Arguments.GetBool(x, "loop");
                                                                 float pitch = Arguments.GetFloat(x, "pitch");
@@ -573,7 +572,7 @@ namespace SCKRM.Command
                                                     )
                                                     .Executes(x =>
                                                     {
-                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                         float volume = Arguments.GetFloat(x, "volume");
                                                         bool loop = Arguments.GetBool(x, "loop");
                                                         float pitch = Arguments.GetFloat(x, "pitch");
@@ -587,7 +586,7 @@ namespace SCKRM.Command
                                             )
                                             .Executes(x =>
                                             {
-                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                                 float volume = Arguments.GetFloat(x, "volume");
                                                 bool loop = Arguments.GetBool(x, "loop");
 
@@ -600,7 +599,7 @@ namespace SCKRM.Command
                                     )
                                     .Executes(x =>
                                     {
-                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                         float volume = Arguments.GetFloat(x, "volume");
 
                                         SoundManager.PlayNBS(nameSpacePathPair.path, nameSpacePathPair.nameSpace, volume);
@@ -612,7 +611,7 @@ namespace SCKRM.Command
                             )
                             .Executes(x =>
                             {
-                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                 SoundManager.PlayNBS(nameSpacePathPair.path, nameSpacePathPair.nameSpace);
 
                                 string log = CommandLanguage.SearchLanguage("play_nbs");
@@ -628,12 +627,12 @@ namespace SCKRM.Command
             commandDispatcher.Register(x =>
                 x.Literal("stopnbs")
                     .Then(x =>
-                        x.Argument("key", Arguments.NameSpacePathPair())
+                        x.Argument("nbs", Arguments.NameSpacePathPair())
                             .Then(x =>
                                 x.Argument("all", Arguments.Bool())
                                     .Executes(x =>
                                     {
-                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                        NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                         bool all = Arguments.GetBool(x, "all");
                                         int stopCount = SoundManager.StopNBS(nameSpacePathPair.path, nameSpacePathPair.nameSpace, all);
 
@@ -644,7 +643,7 @@ namespace SCKRM.Command
                             )
                             .Executes(x =>
                             {
-                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "key");
+                                NameSpacePathPair nameSpacePathPair = Arguments.GetNameSpacePathPair(x, "nbs");
                                 int stopCount = SoundManager.StopNBS(nameSpacePathPair.path, nameSpacePathPair.nameSpace);
 
                                 string log = CommandLanguage.SearchLanguage("stop_nbs");
@@ -732,6 +731,7 @@ namespace SCKRM.Command
         public CommandResult lastCommandResult { get; set; } = new CommandResult();
 
         public virtual Vector3 currentPosition { get; set; } = Vector3.zero;
+        public virtual Vector3 currentRotation { get; set; } = Vector3.zero;
     }
 
     public struct CommandResult
