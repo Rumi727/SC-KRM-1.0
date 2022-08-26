@@ -330,7 +330,7 @@ namespace SCKRM.Command
                                                                                                 float panStereo = Arguments.GetFloat(x, "panStereo");
                                                                                                 float minDistance = Arguments.GetFloat(x, "minDistance");
                                                                                                 float maxDistance = Arguments.GetFloat(x, "maxDistance");
-                                                                                                Vector3 position = Arguments.GetVector3(x, "position");
+                                                                                                Vector3 position = Arguments.GetVector3(x, "position", x.Source.currentPosition);
 
                                                                                                 SoundManager.PlaySound(nameSpacePathPair.path, nameSpacePathPair.nameSpace, volume, loop, pitch, tempo, panStereo, minDistance, maxDistance, null, position.x, position.y, position.z);
 
