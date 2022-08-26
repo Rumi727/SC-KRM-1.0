@@ -188,8 +188,6 @@ namespace SCKRM.Command
                                             Vector3 pos = Arguments.GetVector3(x, "pos", x.Source.currentPosition);
                                             float magnitude = pos.magnitude;
 
-                                            Debug.Log(pos);
-
                                             x.Source.currentPosition = pos;
                                             x.Source.lastCommandResult = new CommandResult(true, pos, magnitude);
 
