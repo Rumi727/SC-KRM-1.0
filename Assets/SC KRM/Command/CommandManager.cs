@@ -13,7 +13,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using BuiltInExceptions = SCKRM.Command.Exceptions.BuiltInExceptions;
 
 namespace SCKRM.Command
 {

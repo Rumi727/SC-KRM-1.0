@@ -2,7 +2,7 @@ using Brigadier.NET;
 using Brigadier.NET.Exceptions;
 using SCKRM.Text;
 
-namespace SCKRM.Command.Exceptions
+namespace SCKRM.Command
 {
 	public class BuiltInExceptions : IBuiltInExceptionProvider
 	{
