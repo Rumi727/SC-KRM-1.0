@@ -796,7 +796,7 @@ namespace SCKRM.Command
         public event ExecuteAtTheEnd executeAtTheEnd;
         public delegate void ExecuteAtTheEnd(DefaultCommandSource source);
 
-        public void ExecuteAtTheEndInvoke() => executeAtTheEnd.Invoke(this);
+        public void ExecuteAtTheEndInvoke() => executeAtTheEnd?.Invoke(this);
         public virtual void Initialization()
         {
             lastCommandResult = new CommandResult();
