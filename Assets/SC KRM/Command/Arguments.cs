@@ -32,16 +32,16 @@ namespace SCKRM.Command
         public static StringArgumentType GreedyString() => Brigadier.NET.Arguments.GreedyString();
         public static string GetString<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<string>(name);
 
-        public static Vector2ArgumentType Vector2(float min = float.MinValue, float max = float.MaxValue) => new Vector2ArgumentType(min, max);
+        public static Vector2ArgumentType Vector2(bool localBasePosAllow = true, float min = float.MinValue, float max = float.MaxValue) => new Vector2ArgumentType(localBasePosAllow, min, max);
         public static Vector2 GetVector2<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector2>(name);
 
-        public static Vector2IntArgumentType Vector2Int(int min = int.MinValue, int max = int.MaxValue) => new Vector2IntArgumentType(min, max);
+        public static Vector2IntArgumentType Vector2Int(bool localBasePosAllow = true, int min = int.MinValue, int max = int.MaxValue) => new Vector2IntArgumentType(localBasePosAllow, min, max);
         public static Vector2Int GetVector2Int<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector2Int>(name);
 
-        public static Vector3ArgumentType Vector3(float min = float.MinValue, float max = float.MaxValue) => new Vector3ArgumentType(min, max);
+        public static Vector3ArgumentType Vector3(bool localBasePosAllow = true, float min = float.MinValue, float max = float.MaxValue) => new Vector3ArgumentType(localBasePosAllow, min, max);
         public static Vector3 GetVector3<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector3>(name);
 
-        public static Vector3IntArgumentType Vector3Int(int min = int.MinValue, int max = int.MaxValue) => new Vector3IntArgumentType(min, max);
+        public static Vector3IntArgumentType Vector3Int(bool localBasePosAllow = true, int min = int.MinValue, int max = int.MaxValue) => new Vector3IntArgumentType(localBasePosAllow, min, max);
         public static Vector3Int GetVector3Int<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector3Int>(name);
 
         public static Vector4ArgumentType Vector4(float min = float.MinValue, float max = float.MaxValue) => new Vector4ArgumentType(min, max);
@@ -99,6 +99,14 @@ namespace SCKRM.Command
 
             all = x | y | z
         }
+    }
+
+    public enum BasePos
+    {
+        none,
+        world,
+        offset,
+        local
     }
 
     public abstract class BaseArgumentType<T, TResult> : ArgumentType<TResult> where T : BaseArgumentType<T, TResult>
@@ -240,99 +248,236 @@ namespace SCKRM.Command
         }
     }
 
-    public class Vector2ArgumentType : BaseDuplicateFloatArgumentType<Vector2ArgumentType, Vector2>
+    public abstract class BaseVectorArgumentType<T, TResult> : BaseDuplicateFloatArgumentType<T, TResult> where T : BaseVectorArgumentType<T, TResult>
     {
-        internal Vector2ArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        public virtual bool localBasePosAllow { get; }
+
+        internal BaseVectorArgumentType(bool localBasePosAllow, float minimum, float maximum) : base(minimum, maximum) => this.localBasePosAllow = localBasePosAllow;
+
+        public void ReadBasePos(IStringReader reader, ref BasePos basePos)
+        {
+            if (reader.Peek() == '~')
+            {
+                reader.Cursor++;
+                basePos = BasePos.offset;
+
+                return;
+            }
+            else if (reader.Peek() == '^')
+            {
+                if (basePos == BasePos.none || basePos == BasePos.offset)
+                {
+                    reader.Cursor++;
+                    basePos = BasePos.local;
+
+                    return;
+                }
+                else
+                    throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+            }
+
+            basePos = BasePos.world;
+        }
+
+        public DefaultCommandSource GetDefaultCommandSource<TSource>(TSource source)
+        {
+            if (source is not DefaultCommandSource)
+                throw new NotSupportedException("To use this argument, TSource must inherit from the DefaultCommandSource class.");
+
+            return source as DefaultCommandSource;
+        }
+    }
+
+    public abstract class BaseVectorIntArgumentType<T, TResult> : BaseDuplicateIntArgumentType<T, TResult> where T : BaseVectorIntArgumentType<T, TResult>
+    {
+        public virtual DefaultCommandSource source { get; }
+        public virtual bool localBasePosAllow { get; }
+
+        internal BaseVectorIntArgumentType(bool localBasePosAllow, int minimum, int maximum) : base(minimum, maximum) => this.localBasePosAllow = localBasePosAllow;
+
+        public BasePos ReadBasePos(IStringReader reader, ref BasePos basePos)
+        {
+            if (reader.Peek() == '~')
+            {
+                reader.Cursor++;
+                return BasePos.offset;
+            }
+            else if (reader.Peek() == '^')
+            {
+                if (basePos == BasePos.none || basePos == BasePos.offset)
+                {
+                    reader.Cursor++;
+                    return BasePos.local;
+                }
+                else
+                    throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+            }
+
+            return BasePos.world;
+        }
+
+        public DefaultCommandSource GetDefaultCommandSource<TSource>(TSource source)
+        {
+            if (source is not DefaultCommandSource)
+                throw new NotSupportedException("To use this argument, TSource must inherit from the DefaultCommandSource class.");
+
+            return source as DefaultCommandSource;
+        }
+    }
+
+    public class Vector2ArgumentType : BaseVectorArgumentType<Vector2ArgumentType, Vector2>
+    {
+        internal Vector2ArgumentType(bool localBasePosAllow, float minimum, float maximum) : base(localBasePosAllow, minimum, maximum)
         {
         }
 
-        public override Vector2 Parse(IStringReader reader)
+        public override Vector2 Parse<TSource>(TSource source, IStringReader reader)
         {
+            DefaultCommandSource commandSource = GetDefaultCommandSource(source);
+
+            Quaternion rotation = Quaternion.Euler(commandSource.currentRotation);
+            BasePos basePos = BasePos.none;
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float x = reader.ReadFloat();
+
+            ReadBasePos(reader, ref basePos);
+            float x = basePos == BasePos.offset ? commandSource.currentPosition.x + reader.ReadFloat() : reader.ReadFloat();
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float y = reader.ReadFloat();
+            ReadBasePos(reader, ref basePos);
+            float y = basePos == BasePos.offset ? commandSource.currentPosition.y + reader.ReadFloat() : reader.ReadFloat();
             MinMaxThrow(reader, cursor, y);
+
+            if (basePos == BasePos.local)
+            {
+                CanReadThrow(reader, firstCursor);
+
+                cursor = ++reader.Cursor;
+                ReadBasePos(reader, ref basePos);
+                float z = reader.ReadFloat();
+                MinMaxThrow(reader, cursor, z);
+
+                return commandSource.currentPosition + (rotation * new Vector3(x, y, z));
+            }
 
             return new Vector2(x, y);
         }
     }
 
-    public class Vector2IntArgumentType : BaseDuplicateIntArgumentType<Vector2IntArgumentType, Vector2Int>
+    public class Vector2IntArgumentType : BaseVectorIntArgumentType<Vector2IntArgumentType, Vector2Int>
     {
-        internal Vector2IntArgumentType(int minimum, int maximum) : base(minimum, maximum)
+        internal Vector2IntArgumentType(bool localBasePosAllow, int minimum, int maximum) : base(localBasePosAllow, minimum, maximum)
         {
         }
 
-        public override Vector2Int Parse(IStringReader reader)
+        public override Vector2Int Parse<TSource>(TSource source, IStringReader reader)
         {
+            DefaultCommandSource commandSource = GetDefaultCommandSource(source);
+
+            Quaternion rotation = Quaternion.Euler(commandSource.currentRotation);
+            BasePos basePos = BasePos.none;
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            int x = reader.ReadInt();
+
+            ReadBasePos(reader, ref basePos);
+            int x = basePos == BasePos.offset ? (int)commandSource.currentPosition.x + reader.ReadInt() : reader.ReadInt();
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int y = reader.ReadInt();
+            ReadBasePos(reader, ref basePos);
+            int y = basePos == BasePos.offset ? (int)commandSource.currentPosition.y + reader.ReadInt() : reader.ReadInt();
             MinMaxThrow(reader, cursor, y);
+
+            if (basePos == BasePos.local)
+            {
+                CanReadThrow(reader, firstCursor);
+
+                cursor = ++reader.Cursor;
+                ReadBasePos(reader, ref basePos);
+                int z = reader.ReadInt();
+                MinMaxThrow(reader, cursor, z);
+
+                return Vector2Int.FloorToInt(commandSource.currentPosition + (rotation * new Vector3(x, y, z)));
+            }
 
             return new Vector2Int(x, y);
         }
     }
 
-    public class Vector3ArgumentType : BaseDuplicateFloatArgumentType<Vector3ArgumentType, Vector3>
+    public class Vector3ArgumentType : BaseVectorArgumentType<Vector3ArgumentType, Vector3>
     {
-        internal Vector3ArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        internal Vector3ArgumentType(bool localBasePosAllow, float minimum, float maximum) : base(localBasePosAllow, minimum, maximum)
         {
         }
 
-        public override Vector3 Parse(IStringReader reader)
+        public override Vector3 Parse<TSource>(TSource source, IStringReader reader)
         {
+            DefaultCommandSource commandSource = GetDefaultCommandSource(source);
+
+            Quaternion rotation = Quaternion.Euler(commandSource.currentRotation);
+            BasePos basePos = BasePos.none;
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float x = reader.ReadFloat();
+
+            ReadBasePos(reader, ref basePos);
+            float x = basePos == BasePos.offset ? commandSource.currentPosition.x + reader.ReadFloat() : reader.ReadFloat();
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float y = reader.ReadFloat();
+            ReadBasePos(reader, ref basePos);
+            float y = basePos == BasePos.offset ? commandSource.currentPosition.y + reader.ReadFloat() : reader.ReadFloat();
             MinMaxThrow(reader, cursor, y);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float z = reader.ReadFloat();
-            MinMaxThrow(reader, cursor, z);
+            ReadBasePos(reader, ref basePos);
+            float z = basePos == BasePos.offset ? commandSource.currentPosition.y + reader.ReadFloat() : reader.ReadFloat();
+            MinMaxThrow(reader, cursor, y);
+
+            if (basePos == BasePos.local)
+                return commandSource.currentPosition + (rotation * new Vector3(x, y, z));
 
             return new Vector3(x, y, z);
         }
     }
 
-    public class Vector3IntArgumentType : BaseDuplicateIntArgumentType<Vector3IntArgumentType, Vector3Int>
+    public class Vector3IntArgumentType : BaseVectorIntArgumentType<Vector3IntArgumentType, Vector3Int>
     {
-        internal Vector3IntArgumentType(int minimum, int maximum) : base(minimum, maximum)
+        internal Vector3IntArgumentType(bool localBasePosAllow, int minimum, int maximum) : base(localBasePosAllow, minimum, maximum)
         {
         }
 
-        public override Vector3Int Parse(IStringReader reader)
+        public override Vector3Int Parse<TSource>(TSource source, IStringReader reader)
         {
+            DefaultCommandSource commandSource = GetDefaultCommandSource(source);
+
+            Quaternion rotation = Quaternion.Euler(commandSource.currentRotation);
+            BasePos basePos = BasePos.none;
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            int x = reader.ReadInt();
+
+            ReadBasePos(reader, ref basePos);
+            int x = basePos == BasePos.offset ? (int)commandSource.currentPosition.x + reader.ReadInt() : reader.ReadInt();
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int y = reader.ReadInt();
+            ReadBasePos(reader, ref basePos);
+            int y = basePos == BasePos.offset ? (int)commandSource.currentPosition.y + reader.ReadInt() : reader.ReadInt();
             MinMaxThrow(reader, cursor, y);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int z = reader.ReadInt();
+            ReadBasePos(reader, ref basePos);
+            int z = basePos == BasePos.offset ? (int)commandSource.currentPosition.y + reader.ReadInt() : reader.ReadInt();
             MinMaxThrow(reader, cursor, z);
+
+            if (basePos == BasePos.local)
+                return Vector3Int.FloorToInt(commandSource.currentPosition + (rotation * new Vector3(x, y, z)));
 
             return new Vector3Int(x, y, z);
         }
@@ -344,7 +489,7 @@ namespace SCKRM.Command
         {
         }
 
-        public override Vector4 Parse(IStringReader reader)
+        public override Vector4 Parse<TSource>(TSource source, IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
@@ -376,7 +521,7 @@ namespace SCKRM.Command
         {
         }
 
-        public override Rect Parse(IStringReader reader)
+        public override Rect Parse<TSource>(TSource source, IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
@@ -408,7 +553,7 @@ namespace SCKRM.Command
         {
         }
 
-        public override RectInt Parse(IStringReader reader)
+        public override RectInt Parse<TSource>(TSource source, IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
@@ -443,7 +588,7 @@ namespace SCKRM.Command
         {
         }
 
-        public override Color Parse(IStringReader reader)
+        public override Color Parse<TSource>(TSource source, IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
@@ -474,7 +619,7 @@ namespace SCKRM.Command
 
         }
 
-        public override Color Parse(IStringReader reader)
+        public override Color Parse<TSource>(TSource source, IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
@@ -502,7 +647,7 @@ namespace SCKRM.Command
 
     public class TransformArgumentType : BaseArgumentType<TransformArgumentType, Transform>
     {
-        public override Transform Parse(IStringReader reader)
+        public override Transform Parse<TSource>(TSource source, IStringReader reader)
         {
             int hashCode = reader.ReadInt();
             return UnityEngine.Object.FindObjectsOfType<Transform>().First(x => x.GetHashCode() == hashCode);
@@ -511,7 +656,7 @@ namespace SCKRM.Command
 
     public class TransformsStringArgumentType : BaseArgumentType<TransformsStringArgumentType, Transform[]>
     {
-        public override Transform[] Parse(IStringReader reader)
+        public override Transform[] Parse<TSource>(TSource source, IStringReader reader)
         {
             string name = reader.ReadString();
             return UnityEngine.Object.FindObjectsOfType<Transform>().Where(x => x.name == name).ToArray();
@@ -520,7 +665,7 @@ namespace SCKRM.Command
 
     public class GameObjectArgumentType : BaseArgumentType<GameObjectArgumentType, GameObject>
     {
-        public override GameObject Parse(IStringReader reader)
+        public override GameObject Parse<TSource>(TSource source, IStringReader reader)
         {
             int hashCode = reader.ReadInt();
             return UnityEngine.Object.FindObjectsOfType<GameObject>().First(x => x.GetHashCode() == hashCode);
@@ -529,7 +674,7 @@ namespace SCKRM.Command
 
     public class GameObjectsStringArgumentType : BaseArgumentType<GameObjectsStringArgumentType, GameObject[]>
     {
-        public override GameObject[] Parse(IStringReader reader)
+        public override GameObject[] Parse<TSource>(TSource source, IStringReader reader)
         {
             string name = reader.ReadString();
             return UnityEngine.Object.FindObjectsOfType<GameObject>().Where(x => x.name == name).ToArray();
@@ -538,7 +683,7 @@ namespace SCKRM.Command
 
     public class SpriteArgumentType : BaseArgumentType<SpriteArgumentType, Sprite>
     {
-        public override Sprite Parse(IStringReader reader)
+        public override Sprite Parse<TSource>(TSource source, IStringReader reader)
         {
             NameSpaceIndexTypePathPair nameSpaceIndexTypePathPair = reader.ReadNameSpaceIndexTypePathPair();
             string nameSpace = nameSpaceIndexTypePathPair.nameSpace;
@@ -552,7 +697,7 @@ namespace SCKRM.Command
 
     public class SpritesArgumentType : BaseArgumentType<SpritesArgumentType, Sprite[]>
     {
-        public override Sprite[] Parse(IStringReader reader)
+        public override Sprite[] Parse<TSource>(TSource source, IStringReader reader)
         {
             NameSpaceTypePathPair nameSpaceTypePathPair = reader.ReadNameSpaceTypePathPair();
             string nameSpace = nameSpaceTypePathPair.nameSpace;
@@ -565,21 +710,21 @@ namespace SCKRM.Command
 
     public class NameSpacePathPairArgumentType : BaseArgumentType<NameSpacePathPairArgumentType, NameSpacePathPair>
     {
-        public override NameSpacePathPair Parse(IStringReader reader) => reader.ReadNameSpacePathPair();
+        public override NameSpacePathPair Parse<TSource>(TSource source, IStringReader reader) => reader.ReadNameSpacePathPair();
     }
 
     public class NameSpaceTypePathPairArgumentType : BaseArgumentType<NameSpaceTypePathPairArgumentType, NameSpaceTypePathPair>
     {
-        public override NameSpaceTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceTypePathPair();
+        public override NameSpaceTypePathPair Parse<TSource>(TSource source, IStringReader reader) => reader.ReadNameSpaceTypePathPair();
     }
 
     public class NameSpaceIndexTypePathPairArgumentType : BaseArgumentType<NameSpaceIndexTypePathPairArgumentType, NameSpaceIndexTypePathPair>
     {
-        public override NameSpaceIndexTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceIndexTypePathPair();
+        public override NameSpaceIndexTypePathPair Parse<TSource>(TSource source, IStringReader reader) => reader.ReadNameSpaceIndexTypePathPair();
     }
 
     public class PosSwizzleArgumentType : BaseArgumentType<PosSwizzleArgumentType, Arguments.PosSwizzleEnum>
     {
-        public override Arguments.PosSwizzleEnum Parse(IStringReader reader) => reader.ReadPosSwizzle();
+        public override Arguments.PosSwizzleEnum Parse<TSource>(TSource source, IStringReader reader) => reader.ReadPosSwizzle();
     }
 }
