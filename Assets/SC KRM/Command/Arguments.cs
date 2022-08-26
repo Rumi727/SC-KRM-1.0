@@ -101,20 +101,20 @@ namespace SCKRM.Command
         }
     }
 
-    public abstract class BaseArgumentType<TSource, TResult> : ArgumentType<TResult> where TSource : BaseArgumentType<TSource, TResult>
+    public abstract class BaseArgumentType<T, TResult> : ArgumentType<TResult> where T : BaseArgumentType<T, TResult>
     {
         internal BaseArgumentType()
         {
         }
 
-        public override bool Equals(object o) => o is TSource;
+        public override bool Equals(object o) => o is T;
 
         public override int GetHashCode() => 0;
 
         public override string ToString() => $"{typeof(TResult).Name}()";
     }
 
-    public abstract class BaseDuplicateIntArgumentType<TSource, TResult> : BaseArgumentType<BaseDuplicateIntArgumentType<TSource, TResult>, TResult> where TSource : BaseDuplicateIntArgumentType<TSource, TResult>
+    public abstract class BaseDuplicateIntArgumentType<T, TResult> : BaseArgumentType<BaseDuplicateIntArgumentType<T, TResult>, TResult> where T : BaseDuplicateIntArgumentType<T, TResult>
     {
         public virtual int minimum { get; }
         public virtual int maximum { get; }
@@ -153,10 +153,10 @@ namespace SCKRM.Command
         {
             if (this == o)
                 return true;
-            else if (o is not TSource)
+            else if (o is not T)
                 return false;
 
-            TSource baseDuplicateIntArgument = (TSource)o;
+            T baseDuplicateIntArgument = (T)o;
             if (minimum == baseDuplicateIntArgument.minimum && maximum == baseDuplicateIntArgument.maximum)
                 return true;
 
@@ -177,7 +177,7 @@ namespace SCKRM.Command
         }
     }
 
-    public abstract class BaseDuplicateFloatArgumentType<TSource, TResult> : BaseArgumentType<BaseDuplicateFloatArgumentType<TSource, TResult>, TResult> where TSource : BaseDuplicateFloatArgumentType<TSource, TResult>
+    public abstract class BaseDuplicateFloatArgumentType<T, TResult> : BaseArgumentType<BaseDuplicateFloatArgumentType<T, TResult>, TResult> where T : BaseDuplicateFloatArgumentType<T, TResult>
     {
         public virtual float minimum { get; }
         public virtual float maximum { get; }
@@ -216,10 +216,10 @@ namespace SCKRM.Command
         {
             if (this == o)
                 return true;
-            else if (o is not TSource)
+            else if (o is not T)
                 return false;
 
-            TSource baseDuplicateFloatArgument = (TSource)o;
+            T baseDuplicateFloatArgument = (T)o;
             if (minimum == baseDuplicateFloatArgument.minimum && maximum == baseDuplicateFloatArgument.maximum)
                 return true;
 
