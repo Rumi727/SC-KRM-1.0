@@ -77,7 +77,7 @@ namespace SCKRM.Command
                 if (!inputField.isFocused)
                     inputField.Select();
 
-                if (InputManager.GetKey("gui.ok", InputType.Down, "all", "force"))
+                if (InputManager.GetKey("gui.ok", InputType.Down, InputManager.inputLockDenyAllForce))
                 {
                     if (!string.IsNullOrWhiteSpace(inputField.text))
                         Execute(inputField.text);
@@ -88,7 +88,7 @@ namespace SCKRM.Command
             }
             else
             {
-                if (InputManager.GetKey("command_manager.chat_show", InputType.Down, "all"))
+                if (InputManager.GetKey("command_manager.chat_show", InputType.Down, InputManager.inputLockDenyAll))
                     Show().Forget();
 
                 commandCanvasGroup.alpha = commandCanvasGroup.alpha.Lerp(0, 0.2f * Kernel.fpsUnscaledDeltaTime);
