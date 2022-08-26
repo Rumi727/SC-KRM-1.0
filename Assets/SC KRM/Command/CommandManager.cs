@@ -75,7 +75,7 @@ namespace SCKRM.Command
                 if (EventSystem.current.currentSelectedGameObject != inputField.gameObject)
                     EventSystem.current.SetSelectedGameObject(inputField.gameObject);
                 if (!inputField.isFocused)
-                    inputField.Select();
+                    UIManager.BackEventInvoke();
 
                 if (InputManager.GetKey("gui.ok", InputType.Down, InputManager.inputLockDenyAllForceInput))
                 {
