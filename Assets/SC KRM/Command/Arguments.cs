@@ -268,14 +268,17 @@ namespace SCKRM.Command
             return builder.BuildFuture();
         }
 
-        public void ReadBasePos(IStringReader reader, ref BasePos basePos)
+        public float ReadFloat(IStringReader reader, float offset, ref BasePos basePos)
         {
             if (reader.Peek() == '~')
             {
                 reader.Cursor++;
                 basePos = BasePos.offset;
 
-                return;
+                if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                    return offset;
+                else
+                    return offset + reader.ReadFloat();
             }
             else if (reader.Peek() == '^')
             {
@@ -284,13 +287,19 @@ namespace SCKRM.Command
                     reader.Cursor++;
                     basePos = BasePos.local;
 
-                    return;
+                    if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                        return 0;
+                    else
+                        return reader.ReadFloat();
                 }
                 else
                     throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
             }
-
-            basePos = BasePos.world;
+            else
+            {
+                basePos = BasePos.world;
+                return reader.ReadFloat();
+            }
         }
 
         public DefaultCommandSource GetDefaultCommandSource<TSource>(TSource source)
@@ -321,25 +330,38 @@ namespace SCKRM.Command
             return builder.BuildFuture();
         }
 
-        public BasePos ReadBasePos(IStringReader reader, ref BasePos basePos)
+        public int ReadInt(IStringReader reader, int offset, ref BasePos basePos)
         {
             if (reader.Peek() == '~')
             {
                 reader.Cursor++;
-                return BasePos.offset;
+                basePos = BasePos.offset;
+
+                if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                    return offset;
+                else
+                    return offset + reader.ReadInt();
             }
             else if (reader.Peek() == '^')
             {
                 if (basePos == BasePos.none || basePos == BasePos.offset)
                 {
                     reader.Cursor++;
-                    return BasePos.local;
+                    basePos = BasePos.local;
+
+                    if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                        return 0;
+                    else
+                        return reader.ReadInt();
                 }
                 else
                     throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
             }
-
-            return BasePos.world;
+            else
+            {
+                basePos = BasePos.world;
+                return reader.ReadInt();
+            }
         }
 
         public DefaultCommandSource GetDefaultCommandSource<TSource>(TSource source)
@@ -366,14 +388,12 @@ namespace SCKRM.Command
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
 
-            ReadBasePos(reader, ref basePos);
-            float x = basePos == BasePos.offset ? commandSource.currentPosition.x + reader.ReadFloat() : reader.ReadFloat();
+            float x = ReadFloat(reader, commandSource.currentPosition.x, ref basePos);
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            ReadBasePos(reader, ref basePos);
-            float y = basePos == BasePos.offset ? commandSource.currentPosition.y + reader.ReadFloat() : reader.ReadFloat();
+            float y = ReadFloat(reader, commandSource.currentPosition.y, ref basePos);
             MinMaxThrow(reader, cursor, y);
 
             if (basePos == BasePos.local)
@@ -381,8 +401,7 @@ namespace SCKRM.Command
                 CanReadThrow(reader, firstCursor);
 
                 cursor = ++reader.Cursor;
-                ReadBasePos(reader, ref basePos);
-                float z = reader.ReadFloat();
+                float z = ReadFloat(reader, commandSource.currentPosition.z, ref basePos);
                 MinMaxThrow(reader, cursor, z);
 
                 return commandSource.currentPosition + (rotation * new Vector3(x, y, z));
@@ -407,14 +426,12 @@ namespace SCKRM.Command
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
 
-            ReadBasePos(reader, ref basePos);
-            int x = basePos == BasePos.offset ? (int)commandSource.currentPosition.x + reader.ReadInt() : reader.ReadInt();
+            int x = ReadInt(reader, (int)commandSource.currentPosition.x, ref basePos);
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            ReadBasePos(reader, ref basePos);
-            int y = basePos == BasePos.offset ? (int)commandSource.currentPosition.y + reader.ReadInt() : reader.ReadInt();
+            int y = ReadInt(reader, (int)commandSource.currentPosition.y, ref basePos);
             MinMaxThrow(reader, cursor, y);
 
             if (basePos == BasePos.local)
@@ -422,8 +439,7 @@ namespace SCKRM.Command
                 CanReadThrow(reader, firstCursor);
 
                 cursor = ++reader.Cursor;
-                ReadBasePos(reader, ref basePos);
-                int z = reader.ReadInt();
+                int z = ReadInt(reader, (int)commandSource.currentPosition.z, ref basePos);
                 MinMaxThrow(reader, cursor, z);
 
                 return Vector2Int.FloorToInt(commandSource.currentPosition + (rotation * new Vector3(x, y, z)));
@@ -448,20 +464,17 @@ namespace SCKRM.Command
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
 
-            ReadBasePos(reader, ref basePos);
-            float x = basePos == BasePos.offset ? commandSource.currentPosition.x + reader.ReadFloat() : reader.ReadFloat();
+            float x = ReadFloat(reader, commandSource.currentPosition.x, ref basePos);
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            ReadBasePos(reader, ref basePos);
-            float y = basePos == BasePos.offset ? commandSource.currentPosition.y + reader.ReadFloat() : reader.ReadFloat();
+            float y = ReadFloat(reader, commandSource.currentPosition.y, ref basePos);
             MinMaxThrow(reader, cursor, y);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            ReadBasePos(reader, ref basePos);
-            float z = basePos == BasePos.offset ? commandSource.currentPosition.y + reader.ReadFloat() : reader.ReadFloat();
+            float z = ReadFloat(reader, commandSource.currentPosition.z, ref basePos);
             MinMaxThrow(reader, cursor, y);
 
             if (basePos == BasePos.local)
@@ -486,20 +499,17 @@ namespace SCKRM.Command
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
 
-            ReadBasePos(reader, ref basePos);
-            int x = basePos == BasePos.offset ? (int)commandSource.currentPosition.x + reader.ReadInt() : reader.ReadInt();
+            int x = ReadInt(reader, (int)commandSource.currentPosition.x, ref basePos);
             MinMaxThrow(reader, cursor, x);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            ReadBasePos(reader, ref basePos);
-            int y = basePos == BasePos.offset ? (int)commandSource.currentPosition.y + reader.ReadInt() : reader.ReadInt();
+            int y = ReadInt(reader, (int)commandSource.currentPosition.y, ref basePos);
             MinMaxThrow(reader, cursor, y);
             CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            ReadBasePos(reader, ref basePos);
-            int z = basePos == BasePos.offset ? (int)commandSource.currentPosition.y + reader.ReadInt() : reader.ReadInt();
+            int z = ReadInt(reader, (int)commandSource.currentPosition.z, ref basePos);
             MinMaxThrow(reader, cursor, z);
 
             if (basePos == BasePos.local)
