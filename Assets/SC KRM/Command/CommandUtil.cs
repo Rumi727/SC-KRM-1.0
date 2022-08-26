@@ -153,28 +153,17 @@ namespace SCKRM.Command
         public static Arguments.PosSwizzleEnum ReadPosSwizzle(this IStringReader reader)
         {
             Arguments.PosSwizzleEnum posSwizzle = Arguments.PosSwizzleEnum.none;
+            while (reader.CanRead() && !char.IsWhiteSpace(reader.Peek()))
+                Check();
 
-            Check();
-
-            if (reader.Cursor + 1 >= reader.TotalLength)
-                return posSwizzle;
-            else
-                reader.Cursor++;
-
-            Check();
-
-            if (reader.Cursor + 1 >= reader.TotalLength)
-                return posSwizzle;
-            else
-                reader.Cursor++;
-
-            Check();
             return posSwizzle;
 
             void Check()
             {
                 if (reader.Peek() == 'x')
                 {
+                    reader.Cursor++;
+
                     if (!posSwizzle.HasFlag(Arguments.PosSwizzleEnum.x))
                     {
                         if (!posSwizzle.HasFlag(Arguments.PosSwizzleEnum.none))
@@ -183,10 +172,12 @@ namespace SCKRM.Command
                             posSwizzle = Arguments.PosSwizzleEnum.x;
                     }
                     else
-                        CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                        throw CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle().CreateWithContext(reader);
                 }
                 else if (reader.Peek() == 'y')
                 {
+                    reader.Cursor++;
+
                     if (!posSwizzle.HasFlag(Arguments.PosSwizzleEnum.y))
                     {
                         if (!posSwizzle.HasFlag(Arguments.PosSwizzleEnum.none))
@@ -195,11 +186,13 @@ namespace SCKRM.Command
                             posSwizzle = Arguments.PosSwizzleEnum.y;
                     }
                     else
-                        CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                        throw CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle().CreateWithContext(reader);
                 }
                 else if (reader.Peek() == 'z')
                 {
-                    if (posSwizzle.HasFlag(Arguments.PosSwizzleEnum.z))
+                    reader.Cursor++;
+
+                    if (!posSwizzle.HasFlag(Arguments.PosSwizzleEnum.z))
                     {
                         if (!posSwizzle.HasFlag(Arguments.PosSwizzleEnum.none))
                             posSwizzle |= Arguments.PosSwizzleEnum.z;
@@ -207,10 +200,10 @@ namespace SCKRM.Command
                             posSwizzle = Arguments.PosSwizzleEnum.z;
                     }
                     else
-                        CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                        throw CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle().CreateWithContext(reader);
                 }
                 else
-                    CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
+                    throw CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle().CreateWithContext(reader);
             }
         }
     }
