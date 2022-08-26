@@ -101,972 +101,442 @@ namespace SCKRM.Command
         }
     }
 
-    public class Vector2ArgumentType : ArgumentType<Vector2>
+    public abstract class BaseArgumentType<TSource, TResult> : ArgumentType<TResult> where TSource : BaseArgumentType<TSource, TResult>
     {
-        readonly float _minimum;
-        readonly float _maximum;
-
-        internal Vector2ArgumentType(float minimum, float maximum)
+        internal BaseArgumentType()
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
 
-        public float Minimum() => _minimum;
+        public override bool Equals(object o) => o is TSource;
 
-        public float Maximum() => _maximum;
+        public override int GetHashCode() => 0;
+
+        public override string ToString() => $"{typeof(TResult).Name}()";
+    }
+
+    public abstract class BaseDuplicateIntArgumentType<TSource, TResult> : BaseArgumentType<BaseDuplicateIntArgumentType<TSource, TResult>, TResult> where TSource : BaseDuplicateIntArgumentType<TSource, TResult>
+    {
+        public virtual int minimum { get; }
+        public virtual int maximum { get; }
+
+        internal BaseDuplicateIntArgumentType(int minimum, int maximum)
+        {
+            this.minimum = minimum;
+            this.maximum = maximum;
+        }
+
+        public void MinMaxThrow(IStringReader reader, int cursor, int value)
+        {
+            if (value < minimum)
+            {
+                reader.Cursor = cursor;
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, value, minimum);
+            }
+
+            if (value > maximum)
+            {
+                reader.Cursor = cursor;
+                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, value, maximum);
+            }
+        }
+
+        public void CanReadThrow(IStringReader reader, int firstCursor)
+        {
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+        }
+
+        public override bool Equals(object o)
+        {
+            if (this == o)
+                return true;
+            else if (o is not TSource)
+                return false;
+
+            TSource baseDuplicateIntArgument = (TSource)o;
+            if (minimum == baseDuplicateIntArgument.minimum && maximum == baseDuplicateIntArgument.maximum)
+                return true;
+
+            return false;
+        }
+
+        public override int GetHashCode() => (int)(31f * minimum + maximum);
+
+        public override string ToString()
+        {
+            if (minimum == int.MinValue && maximum == int.MaxValue)
+                return typeof(TResult).Name + "()";
+
+            if (maximum == int.MaxValue)
+                return $"{typeof(TResult).Name}({minimum})";
+
+            return $"{typeof(TResult).Name}({minimum}, {maximum})";
+        }
+    }
+
+    public abstract class BaseDuplicateFloatArgumentType<TSource, TResult> : BaseArgumentType<BaseDuplicateFloatArgumentType<TSource, TResult>, TResult> where TSource : BaseDuplicateFloatArgumentType<TSource, TResult>
+    {
+        public virtual float minimum { get; }
+        public virtual float maximum { get; }
+
+        internal BaseDuplicateFloatArgumentType(float minimum, float maximum)
+        {
+            this.minimum = minimum;
+            this.maximum = maximum;
+        }
+
+        public void MinMaxThrow(IStringReader reader, int cursor, float value)
+        {
+            if (value < minimum)
+            {
+                reader.Cursor = cursor;
+                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, value, minimum);
+            }
+
+            if (value > maximum)
+            {
+                reader.Cursor = cursor;
+                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, value, maximum);
+            }
+        }
+
+        public void CanReadThrow(IStringReader reader, int firstCursor)
+        {
+            if (!reader.CanRead(2))
+            {
+                reader.Cursor = firstCursor;
+                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
+            }
+        }
+
+        public override bool Equals(object o)
+        {
+            if (this == o)
+                return true;
+            else if (o is not TSource)
+                return false;
+
+            TSource baseDuplicateFloatArgument = (TSource)o;
+            if (minimum == baseDuplicateFloatArgument.minimum && maximum == baseDuplicateFloatArgument.maximum)
+                return true;
+
+            return false;
+        }
+
+        public override int GetHashCode() => (int)(31f * minimum + maximum);
+
+        public override string ToString()
+        {
+            if (minimum == float.MinValue && maximum == float.MaxValue)
+                return typeof(TResult) + "()";
+
+            if (maximum == float.MaxValue)
+                return $"{typeof(TResult)}({minimum:#.0})";
+
+            return $"{typeof(TResult)}({minimum:#.0}, {maximum:#.0})";
+        }
+    }
+
+    public class Vector2ArgumentType : BaseDuplicateFloatArgumentType<Vector2ArgumentType, Vector2>
+    {
+        internal Vector2ArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        {
+        }
 
         public override Vector2 Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
-            }
+            MinMaxThrow(reader, cursor, y);
 
             return new Vector2(x, y);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not Vector2ArgumentType)
-                return false;
-
-            Vector2ArgumentType vector2ArgumentType = (Vector2ArgumentType)o;
-            if (_maximum == vector2ArgumentType._maximum)
-                return _minimum == vector2ArgumentType._minimum;
-            
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == float.MinValue && _maximum == float.MaxValue)
-                return "Vector2()";
-
-            if (_maximum == float.MaxValue)
-                return $"Vector2({_minimum:#.0})";
-
-            return $"Vector2({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class Vector2IntArgumentType : ArgumentType<Vector2Int>
+    public class Vector2IntArgumentType : BaseDuplicateIntArgumentType<Vector2IntArgumentType, Vector2Int>
     {
-        readonly int _minimum;
-        readonly int _maximum;
-
-        internal Vector2IntArgumentType(int minimum, int maximum)
+        internal Vector2IntArgumentType(int minimum, int maximum) : base(minimum, maximum)
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
-
-        public int Minimum() => _minimum;
-
-        public int Maximum() => _maximum;
 
         public override Vector2Int Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             int x = reader.ReadInt();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             int y = reader.ReadInt();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
-            }
+            MinMaxThrow(reader, cursor, y);
 
             return new Vector2Int(x, y);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not Vector2IntArgumentType)
-                return false;
-
-            Vector2IntArgumentType vector2IntArgumentType = (Vector2IntArgumentType)o;
-            if (_maximum == vector2IntArgumentType._maximum)
-                return _minimum == vector2IntArgumentType._minimum;
-
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == int.MinValue && _maximum == int.MaxValue)
-                return "Vector2Int()";
-
-            if (_maximum == int.MaxValue)
-                return $"Vector2Int({_minimum:#.0})";
-
-            return $"Vector2Int({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class Vector3ArgumentType : ArgumentType<Vector3>
+    public class Vector3ArgumentType : BaseDuplicateFloatArgumentType<Vector3ArgumentType, Vector3>
     {
-        readonly float _minimum;
-        readonly float _maximum;
-
-        internal Vector3ArgumentType(float minimum, float maximum)
+        internal Vector3ArgumentType(float minimum, float maximum) : base(minimum, maximum)
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
-
-        public float Minimum() => _minimum;
-
-        public float Maximum() => _maximum;
 
         public override Vector3 Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, y);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float z = reader.ReadFloat();
-            if (z < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, z, _minimum);
-            }
-
-            if (z > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, z, _maximum);
-            }
+            MinMaxThrow(reader, cursor, z);
 
             return new Vector3(x, y, z);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not Vector3ArgumentType)
-                return false;
-
-            Vector3ArgumentType vector3ArgumentType = (Vector3ArgumentType)o;
-            if (_maximum == vector3ArgumentType._maximum)
-                return _minimum == vector3ArgumentType._minimum;
-
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == float.MinValue && _maximum == float.MaxValue)
-                return "Vector3()";
-
-            if (_maximum == float.MaxValue)
-                return $"Vector3({_minimum:#.0})";
-
-            return $"Vector3({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class Vector3IntArgumentType : ArgumentType<Vector3Int>
+    public class Vector3IntArgumentType : BaseDuplicateIntArgumentType<Vector3IntArgumentType, Vector3Int>
     {
-        readonly int _minimum;
-        readonly int _maximum;
-
-        internal Vector3IntArgumentType(int minimum, int maximum)
+        internal Vector3IntArgumentType(int minimum, int maximum) : base(minimum, maximum)
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
-
-        public int Minimum() => _minimum;
-
-        public int Maximum() => _maximum;
 
         public override Vector3Int Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             int x = reader.ReadInt();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             int y = reader.ReadInt();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, y, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, y);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             int z = reader.ReadInt();
-            if (z < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, z, _minimum);
-            }
-
-            if (z > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, z, _maximum);
-            }
+            MinMaxThrow(reader, cursor, z);
 
             return new Vector3Int(x, y, z);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not Vector3IntArgumentType)
-                return false;
-
-            Vector3IntArgumentType vector3IntArgumentType = (Vector3IntArgumentType)o;
-            if (_maximum == vector3IntArgumentType._maximum)
-                return _minimum == vector3IntArgumentType._minimum;
-
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == int.MinValue && _maximum == int.MaxValue)
-                return "Vector3Int()";
-
-            if (_maximum == int.MaxValue)
-                return $"Vector3Int({_minimum:#.0})";
-
-            return $"Vector3Int({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class Vector4ArgumentType : ArgumentType<Vector4>
+    public class Vector4ArgumentType : BaseDuplicateFloatArgumentType<Vector4ArgumentType, Vector4>
     {
-        readonly float _minimum;
-        readonly float _maximum;
-
-        internal Vector4ArgumentType(float minimum, float maximum)
+        internal Vector4ArgumentType(float minimum, float maximum) : base(minimum, maximum)
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
-
-        public float Minimum() => _minimum;
-
-        public float Maximum() => _maximum;
 
         public override Vector4 Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, y);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float z = reader.ReadFloat();
-            if (z < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, z, _minimum);
-            }
-
-            if (z > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, z, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, z);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float w = reader.ReadFloat();
-            if (w < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, w, _minimum);
-            }
-
-            if (w > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, w, _maximum);
-            }
+            MinMaxThrow(reader, cursor, w);
 
             return new Vector4(x, y, z, w);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not Vector4ArgumentType)
-                return false;
-
-            Vector4ArgumentType vector4ArgumentType = (Vector4ArgumentType)o;
-            if (_maximum == vector4ArgumentType._maximum)
-                return _minimum == vector4ArgumentType._minimum;
-
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == float.MinValue && _maximum == float.MaxValue)
-                return "Vector4()";
-
-            if (_maximum == float.MaxValue)
-                return $"Vector4({_minimum:#.0})";
-
-            return $"Vector4({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class RectArgumentType : ArgumentType<Rect>
+    public class RectArgumentType : BaseDuplicateFloatArgumentType<RectArgumentType, Rect>
     {
-        readonly float _minimum;
-        readonly float _maximum;
-
-        internal RectArgumentType(float minimum, float maximum)
+        internal RectArgumentType(float minimum, float maximum) : base(minimum, maximum)
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
-
-        public float Minimum() => _minimum;
-
-        public float Maximum() => _maximum;
 
         public override Rect Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, y, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, y);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float width = reader.ReadFloat();
-            if (width < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, width, _minimum);
-            }
-
-            if (width > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, width, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, width);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float height = reader.ReadFloat();
-            if (height < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, height, _minimum);
-            }
-
-            if (height > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, height, _maximum);
-            }
+            MinMaxThrow(reader, cursor, height);
 
             return new Rect(x, y, width, height);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not RectArgumentType)
-                return false;
-
-            RectArgumentType rectArgumentType = (RectArgumentType)o;
-            if (_maximum == rectArgumentType._maximum)
-                return _minimum == rectArgumentType._minimum;
-
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == float.MinValue && _maximum == float.MaxValue)
-                return "Rect()";
-
-            if (_maximum == float.MaxValue)
-                return $"Rect({_minimum:#.0})";
-
-            return $"Rect({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class RectIntArgumentType : ArgumentType<RectInt>
+    public class RectIntArgumentType : BaseDuplicateIntArgumentType<RectIntArgumentType, RectInt>
     {
-        readonly int _minimum;
-        readonly int _maximum;
-
-        internal RectIntArgumentType(int minimum, int maximum)
+        internal RectIntArgumentType(int minimum, int maximum) : base(minimum, maximum)
         {
-            _minimum = minimum;
-            _maximum = maximum;
         }
-
-        public int Minimum() => _minimum;
-
-        public int Maximum() => _maximum;
 
         public override RectInt Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             int x = reader.ReadInt();
-            if (x < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, x, _minimum);
-            }
-
-            if (x > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, x, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, x);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             int y = reader.ReadInt();
-            if (y < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, y, _minimum);
-            }
-
-            if (y > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, y, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, y);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             int width = reader.ReadInt();
-            if (width < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, width, _minimum);
-            }
-
-            if (width > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, width, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, width);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             int height = reader.ReadInt();
-            if (height < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooLow().CreateWithContext(reader, height, _minimum);
-            }
-
-            if (height > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.IntegerTooHigh().CreateWithContext(reader, height, _maximum);
-            }
+            MinMaxThrow(reader, cursor, height);
 
             return new RectInt(x, y, width, height);
         }
-
-        public override bool Equals(object o)
-        {
-            if (this == o)
-                return true;
-            else if (o is not RectIntArgumentType)
-                return false;
-
-            RectIntArgumentType rectIntArgumentType = (RectIntArgumentType)o;
-            if (_maximum == rectIntArgumentType._maximum)
-                return _minimum == rectIntArgumentType._minimum;
-
-            return false;
-        }
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString()
-        {
-            if (_minimum == int.MinValue && _maximum == int.MaxValue)
-                return "RectInt()";
-
-            if (_maximum == int.MaxValue)
-                return $"RectInt({_minimum:#.0})";
-
-            return $"RectInt({_minimum:#.0}, {_maximum:#.0})";
-        }
     }
 
-    public class ColorArgumentType : ArgumentType<Color>
+    public class ColorArgumentType : BaseDuplicateFloatArgumentType<ColorArgumentType, Color>
     {
-        const float _minimum = 0;
-        const float _maximum = 255;
+        public override float minimum => 0;
+        public override float maximum => 255;
+
+        internal ColorArgumentType() : base(0, 255)
+        {
+        }
 
         public override Color Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float r = reader.ReadFloat();
-            if (r < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, r, _minimum);
-            }
-
-            if (r > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, r, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, r);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float g = reader.ReadFloat();
-            if (g < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, g, _minimum);
-            }
-
-            if (g > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, g, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, g);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float b = reader.ReadFloat();
-            if (b < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, b, _minimum);
-            }
-
-            if (b > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, b, _maximum);
-            }
+            MinMaxThrow(reader, cursor, b);
 
             return new Color(r, g, b);
         }
-
-        public override bool Equals(object o) => o is ColorArgumentType;
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString() => $"Color({_minimum}, {_maximum})";
     }
 
-    public class ColorAlphaArgumentType : ArgumentType<Color>
+    public class ColorAlphaArgumentType : BaseDuplicateFloatArgumentType<ColorAlphaArgumentType, Color>
     {
-        const float _minimum = 0;
-        const float _maximum = 255;
+        public override float minimum => 0;
+        public override float maximum => 255;
+
+        internal ColorAlphaArgumentType() : base(0, 255)
+        {
+
+        }
 
         public override Color Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
             float r = reader.ReadFloat();
-            if (r < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, r, _minimum);
-            }
-
-            if (r > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, r, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, r);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float g = reader.ReadFloat();
-            if (g < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, g, _minimum);
-            }
-
-            if (g > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, g, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, g);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float b = reader.ReadFloat();
-            if (b < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, b, _minimum);
-            }
-
-            if (b > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, b, _maximum);
-            }
-
-            if (!reader.CanRead(2))
-            {
-                reader.Cursor = firstCursor;
-                throw CommandSyntaxException.BuiltInExceptions.DispatcherUnknownArgument().CreateWithContext(reader);
-            }
+            MinMaxThrow(reader, cursor, b);
+            CanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float a = reader.ReadFloat();
-            if (a < _minimum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooLow().CreateWithContext(reader, a, _minimum);
-            }
-
-            if (a > _maximum)
-            {
-                reader.Cursor = cursor;
-                throw CommandSyntaxException.BuiltInExceptions.FloatTooHigh().CreateWithContext(reader, a, _maximum);
-            }
+            MinMaxThrow(reader, cursor, a);
 
             return new Color(r, g, b, a);
         }
-
-        public override bool Equals(object o) => o is ColorAlphaArgumentType;
-
-        public override int GetHashCode() => (int)(31f * _minimum + _maximum);
-
-        public override string ToString() => $"Color({_minimum}, {_maximum})";
     }
 
-    public class TransformArgumentType : ArgumentType<Transform>
+    public class TransformArgumentType : BaseArgumentType<TransformArgumentType, Transform>
     {
         public override Transform Parse(IStringReader reader)
         {
             int hashCode = reader.ReadInt();
             return UnityEngine.Object.FindObjectsOfType<Transform>().First(x => x.GetHashCode() == hashCode);
         }
-
-        public override bool Equals(object o) => o is TransformArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"Transform()";
     }
 
-    public class TransformsStringArgumentType : ArgumentType<Transform[]>
+    public class TransformsStringArgumentType : BaseArgumentType<TransformsStringArgumentType, Transform[]>
     {
         public override Transform[] Parse(IStringReader reader)
         {
             string name = reader.ReadString();
             return UnityEngine.Object.FindObjectsOfType<Transform>().Where(x => x.name == name).ToArray();
         }
-
-        public override bool Equals(object o) => o is TransformsStringArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"Transform[]()";
     }
 
-    public class GameObjectArgumentType : ArgumentType<GameObject>
+    public class GameObjectArgumentType : BaseArgumentType<GameObjectArgumentType, GameObject>
     {
         public override GameObject Parse(IStringReader reader)
         {
             int hashCode = reader.ReadInt();
             return UnityEngine.Object.FindObjectsOfType<GameObject>().First(x => x.GetHashCode() == hashCode);
         }
-
-        public override bool Equals(object o) => o is GameObjectArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"GameObject()";
     }
 
-    public class GameObjectsStringArgumentType : ArgumentType<GameObject[]>
+    public class GameObjectsStringArgumentType : BaseArgumentType<GameObjectsStringArgumentType, GameObject[]>
     {
         public override GameObject[] Parse(IStringReader reader)
         {
             string name = reader.ReadString();
             return UnityEngine.Object.FindObjectsOfType<GameObject>().Where(x => x.name == name).ToArray();
         }
-
-        public override bool Equals(object o) => o is GameObjectsStringArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"GameObject[]()";
     }
 
-    public class SpriteArgumentType : ArgumentType<Sprite>
+    public class SpriteArgumentType : BaseArgumentType<SpriteArgumentType, Sprite>
     {
         public override Sprite Parse(IStringReader reader)
         {
@@ -1078,15 +548,9 @@ namespace SCKRM.Command
 
             return ResourceManager.SearchSprites(type, name, nameSpace)[index];
         }
-
-        public override bool Equals(object o) => o is SpriteArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"Sprite()";
     }
 
-    public class SpritesArgumentType : ArgumentType<Sprite[]>
+    public class SpritesArgumentType : BaseArgumentType<SpritesArgumentType, Sprite[]>
     {
         public override Sprite[] Parse(IStringReader reader)
         {
@@ -1097,55 +561,25 @@ namespace SCKRM.Command
 
             return ResourceManager.SearchSprites(type, name, nameSpace);
         }
-
-        public override bool Equals(object o) => o is SpritesArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"Sprite[]()";
     }
 
-    public class NameSpacePathPairArgumentType : ArgumentType<NameSpacePathPair>
+    public class NameSpacePathPairArgumentType : BaseArgumentType<NameSpacePathPairArgumentType, NameSpacePathPair>
     {
         public override NameSpacePathPair Parse(IStringReader reader) => reader.ReadNameSpacePathPair();
-
-        public override bool Equals(object o) => o is NameSpacePathPairArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"NameSpacePathPair[]()";
     }
 
-    public class NameSpaceTypePathPairArgumentType : ArgumentType<NameSpaceTypePathPair>
+    public class NameSpaceTypePathPairArgumentType : BaseArgumentType<NameSpaceTypePathPairArgumentType, NameSpaceTypePathPair>
     {
         public override NameSpaceTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceTypePathPair();
-
-        public override bool Equals(object o) => o is NameSpaceTypePathPairArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"NameSpaceTypePathPair[]()";
     }
 
-    public class NameSpaceIndexTypePathPairArgumentType : ArgumentType<NameSpaceIndexTypePathPair>
+    public class NameSpaceIndexTypePathPairArgumentType : BaseArgumentType<NameSpaceIndexTypePathPairArgumentType, NameSpaceIndexTypePathPair>
     {
         public override NameSpaceIndexTypePathPair Parse(IStringReader reader) => reader.ReadNameSpaceIndexTypePathPair();
-
-        public override bool Equals(object o) => o is NameSpaceIndexTypePathPairArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"NameSpaceIndexTypePathPair[]()";
     }
 
-    public class PosSwizzleArgumentType : ArgumentType<Arguments.PosSwizzleEnum>
+    public class PosSwizzleArgumentType : BaseArgumentType<PosSwizzleArgumentType, Arguments.PosSwizzleEnum>
     {
         public override Arguments.PosSwizzleEnum Parse(IStringReader reader) => reader.ReadPosSwizzle();
-
-        public override bool Equals(object o) => o is SpritesArgumentType;
-
-        public override int GetHashCode() => 0;
-
-        public override string ToString() => $"Arguments.PosSwizzle()";
     }
 }
