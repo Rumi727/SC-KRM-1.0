@@ -6,8 +6,10 @@ using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace SCKRM.Input
 {
@@ -87,7 +89,11 @@ namespace SCKRM.Input
         public static string[] inputLockDenyEmpty { get; } = new string[0];
         public static string[] inputLockDenyAll { get; } = new string[] { "all" };
         public static string[] inputLockDenyForce { get; } = new string[] { "force" };
+        public static string[] inputLockDenyInput { get; } = new string[] { "input" };
         public static string[] inputLockDenyAllForce { get; } = new string[] { "all", "force" };
+        public static string[] inputLockDenyAllInput { get; } = new string[] { "all", "input" };
+        public static string[] inputLockDenyForceInput { get; } = new string[] { "force", "input" };
+        public static string[] inputLockDenyAllForceInput { get; } = new string[] { "all", "force", "input" };
 
 
 
@@ -102,6 +108,11 @@ namespace SCKRM.Input
         /// </summary>
         [WikiDescription("픽셀 좌표의 현재 마우스 위치\nThe current mouse position in pixel coordinates")]
         public static Vector2 mousePosition { get; private set; } = Vector2.zero;
+
+
+
+        [WikiDescription("모든 텍스트 메쉬 프로의 인풋 필드를 가져옵니다")] public static TMP_InputField[] allInputFields { get; private set; }
+        [WikiDescription("텍스트 메쉬 프로의 인풋 필드가 하나라도 포커스 되어있다면 true를 반환합니다")] public static bool isInputFieldFocused { get; set; }
 
 
 
@@ -659,7 +670,9 @@ Checks input locks. Returns true if any of the locks except the input lock to ig
             if (inputLockDeny == null)
                 inputLockDeny = new string[0];
 
-            if (!inputLockDeny.Contains("force") && forceInputLock)
+            if (!inputLockDeny.Contains("input") && isInputFieldFocused)
+                return true;
+            else if (!inputLockDeny.Contains("force") && forceInputLock)
                 return true;
             else if (inputLockDeny.Contains("all"))
                 return false;
@@ -758,6 +771,16 @@ Checks input locks. Returns true if any of the locks except the input lock to ig
             {
                 allInputFields = Selectable.allSelectablesArray.OfType<TMP_InputField>().ToArray();
                 allSelectableCount = Selectable.allSelectableCount;
+            }
+
+            isInputFieldFocused = false;
+            for (int i = 0; i < allInputFields.Length; i++)
+            {
+                if (allInputFields[i].isFocused)
+                {
+                    isInputFieldFocused = true;
+                    break;
+                }
             }
         }
     }
