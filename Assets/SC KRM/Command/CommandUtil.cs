@@ -155,11 +155,20 @@ namespace SCKRM.Command
             Arguments.PosSwizzleEnum posSwizzle = Arguments.PosSwizzleEnum.none;
 
             Check();
-            reader.Cursor++;
-            Check();
-            reader.Cursor++;
+
+            if (reader.Cursor + 1 >= reader.TotalLength)
+                return posSwizzle;
+            else
+                reader.Cursor++;
+
             Check();
 
+            if (reader.Cursor + 1 >= reader.TotalLength)
+                return posSwizzle;
+            else
+                reader.Cursor++;
+
+            Check();
             return posSwizzle;
 
             void Check()
