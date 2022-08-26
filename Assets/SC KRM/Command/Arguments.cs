@@ -205,7 +205,7 @@ namespace SCKRM.Command
             }
         }
 
-        public void CanReadThrow(IStringReader reader, int firstCursor)
+        public void NextCanReadThrow(IStringReader reader, int firstCursor)
         {
             if (!reader.CanRead(2))
             {
@@ -254,7 +254,7 @@ namespace SCKRM.Command
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
@@ -298,12 +298,12 @@ namespace SCKRM.Command
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
             MinMaxThrow(reader, cursor, y);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float z = reader.ReadFloat();
@@ -352,17 +352,17 @@ namespace SCKRM.Command
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
             MinMaxThrow(reader, cursor, y);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float z = reader.ReadFloat();
             MinMaxThrow(reader, cursor, z);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float w = reader.ReadFloat();
@@ -384,17 +384,17 @@ namespace SCKRM.Command
             int cursor = reader.Cursor;
             float x = reader.ReadFloat();
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float y = reader.ReadFloat();
             MinMaxThrow(reader, cursor, y);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float width = reader.ReadFloat();
             MinMaxThrow(reader, cursor, width);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float height = reader.ReadFloat();
@@ -451,12 +451,12 @@ namespace SCKRM.Command
             int cursor = reader.Cursor;
             float r = reader.ReadFloat();
             MinMaxThrow(reader, cursor, r);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float g = reader.ReadFloat();
             MinMaxThrow(reader, cursor, g);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float b = reader.ReadFloat();
@@ -482,17 +482,17 @@ namespace SCKRM.Command
             int cursor = reader.Cursor;
             float r = reader.ReadFloat();
             MinMaxThrow(reader, cursor, r);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float g = reader.ReadFloat();
             MinMaxThrow(reader, cursor, g);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float b = reader.ReadFloat();
             MinMaxThrow(reader, cursor, b);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
             float a = reader.ReadFloat();
