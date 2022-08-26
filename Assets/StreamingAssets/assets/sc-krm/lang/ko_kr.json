@@ -223,8 +223,8 @@
 	"command.double_too_small": "배정도 부동 소수점은 %min% 이상이어야 하는데, %found%이(가) 있습니다",
 	"command.double_too_big": "배정도 부동 소수점은 %max% 이하여야 하는데, %found%이(가) 있습니다",
 	
-	"command.float_too_small": "부동 소수점는 %min% 이상이어야 하는데, %found%이(가) 있습니다",
-	"command.float_too_big": "부동 소수점는 %max% 이하여야 하는데, %found%이(가) 있습니다",
+	"command.float_too_small": "부동 소수점은 %min% 이상이어야 하는데, %found%이(가) 있습니다",
+	"command.float_too_big": "부동 소수점은 %max% 이하여야 하는데, %found%이(가) 있습니다",
 	
 	"command.integer_too_small": "정수는 %min% 이상이어야 하는데, %found%이(가) 있습니다",
 	"command.integer_too_big": "정수는 %max% 이하여야 하는데, %found%이(가) 있습니다",
