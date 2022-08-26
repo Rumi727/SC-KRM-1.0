@@ -1,5 +1,4 @@
 using Brigadier.NET;
-using Brigadier.NET.Context;
 using Brigadier.NET.Exceptions;
 using Brigadier.NET.Suggestion;
 using Brigadier.NET.Tree;
@@ -9,7 +8,6 @@ using SCKRM.UI;
 using SCKRM.UI.Layout;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -36,6 +34,7 @@ namespace SCKRM.Command
         protected override void OnEnable() => tempCaretPosition = -1;
 
         int tempCaretPosition = -1;
+        Suggestions suggestions;
         void Update()
         {
             if (!InitialLoadManager.isInitialLoadEnd)
@@ -54,22 +53,19 @@ namespace SCKRM.Command
         public async void IntelliSense(string allInput)
         {
             string input = allInput;
-            if (input.Length > 0 && chatInputField.caretPosition < allInput.Length)
-                input = input.Remove(chatInputField.caretPosition.Clamp(0, allInput.Length));
+            input = input.Substring(0, chatInputField.caretPosition.Clamp(0, allInput.Length));
 
             CommandManager.defaultCommandSource.Initialization();
 
             CommandDispatcher<DefaultCommandSource> commandDispatcher = CommandManager.commandDispatcher;
-            RootCommandNode<DefaultCommandSource> root = commandDispatcher.GetRoot();
             ParseResults<DefaultCommandSource> allTextParseResults = commandDispatcher.Parse(allInput, CommandManager.defaultCommandSource);
-            ICollection<CommandNode<DefaultCommandSource>> rootNodes = root.Children;
 
             descriptionText.text = "";
+            LiteralObjectRemove();
 
             IDictionary<CommandNode<DefaultCommandSource>, CommandSyntaxException> exceptions = allTextParseResults.Exceptions;
             if (allTextParseResults.Exceptions.Count > 0)
             {
-                LiteralObjectRemove();
                 descriptionFastString.Clear();
 
                 var lastException = exceptions.Last();
@@ -88,14 +84,40 @@ namespace SCKRM.Command
                 CommandManager.defaultCommandSource.Initialization();
 
                 ParseResults<DefaultCommandSource> parseResults = commandDispatcher.Parse(input, CommandManager.defaultCommandSource);
-                Suggestions suggestions = await commandDispatcher.GetCompletionSuggestions(parseResults);
+                suggestions = await commandDispatcher.GetCompletionSuggestions(parseResults);
 
                 if (suggestions.List.Count > 0)
                     LiteralObjectCreate(suggestions.List);
-                else if (parseResults.Context.Nodes.Count > 0)
+                else if (parseResults.Context.LastChild.Nodes.Count > 0)
                 {
-                    LiteralObjectRemove();
-                    commandDispatcher.GetSmartUsage(parseResults.Context.Nodes.Last().Node, CommandManager.defaultCommandSource);
+                    parseResults = commandDispatcher.Parse(input.Remove(input.Length - 1), CommandManager.defaultCommandSource);
+                    suggestions = await commandDispatcher.GetCompletionSuggestions(parseResults);
+
+                    if (suggestions.List.Count > 0)
+                        LiteralObjectCreate(suggestions.List);
+                    else
+                    {
+                        CommandNode<DefaultCommandSource> node = parseResults.Context.LastChild.Nodes.Last().Node;
+                        while (node.Redirect != null)
+                            node = node.Redirect;
+
+                        descriptionFastString.Clear();
+
+                        IDictionary<CommandNode<DefaultCommandSource>, string> usages = commandDispatcher.GetSmartUsage(node, CommandManager.defaultCommandSource);
+                        if (usages.Count > 0)
+                        {
+                            KeyValuePair<CommandNode<DefaultCommandSource>, string> lastUsage = usages.Last();
+                            foreach (var usage in usages)
+                            {
+                                descriptionFastString.Append(usage.Value);
+
+                                if (!usage.Equals(lastUsage))
+                                    descriptionFastString.Append("\n");
+                            }
+
+                            descriptionText.text = descriptionFastString.ToString();
+                        }
+                    }
                 }
 
 
@@ -165,8 +187,6 @@ namespace SCKRM.Command
 
         void LiteralObjectCreate(List<Suggestion> texts)
         {
-            LiteralObjectRemove();
-
             for (int i = 0; i < texts.Count; i++)
             {
                 string text = texts[i].Text;
