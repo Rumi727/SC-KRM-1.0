@@ -237,6 +237,12 @@ namespace SCKRM.Command
 			string message = CommandLanguage.SearchLanguage("reader_invalid_pos_swizzle");
 			return new SimpleCommandExceptionType(new LiteralMessage(message));
 		}
+
+		public static SimpleCommandExceptionType WorldLocalPosMixed(this IBuiltInExceptionProvider e)
+		{
+			string message = CommandLanguage.SearchLanguage("world_local_pos_mixed");
+			return new SimpleCommandExceptionType(new LiteralMessage(message));
+		}
 #pragma warning restore IDE0060 // 사용하지 않는 매개 변수를 제거하세요.
 
 		public static CommandSyntaxException GetCustomException(this CommandSyntaxException exception)

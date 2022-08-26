@@ -228,6 +228,8 @@
 	
 	"command.literal_incorrect": "リテラル「%expected%」が必要です",
 	
+	"command.world_local_pos_mixed": "ワールド座標とローカル座標は混合できません（^を用いるか用いないかは統一する必要があります）",
+	
 	"command.reader_expected_start_of_quote": "文字列の始めには引用符が必要です",
 	"command.reader_expected_end_of_quote": "文字列の引用符が閉じられていません",
 	"command.reader_invalid_escape": "無効な文字列内のエスケープシーケンス：「\\%character%」",

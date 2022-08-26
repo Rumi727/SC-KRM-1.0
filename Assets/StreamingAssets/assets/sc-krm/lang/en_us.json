@@ -228,6 +228,8 @@
 	
 	"command.literal_incorrect": "Expected literal %expected%",
 	
+	"command.world_local_pos_mixed": "Cannot mix world & local coordinates (everything must either use ^ or not)",
+	
 	"command.reader_expected_start_of_quote": "Expected quote to start a string",
 	"command.reader_expected_end_of_quote": "Unclosed quoted string",
 	"command.reader_invalid_escape": "Invalid escape sequence '\\%character%' in quoted string",

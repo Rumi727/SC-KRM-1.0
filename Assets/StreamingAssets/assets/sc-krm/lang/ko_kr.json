@@ -236,6 +236,8 @@
 	
 	"command.literal_incorrect": "리터럴 %expected%이(가) 필요합니다",
 	
+	"command.world_local_pos_mixed": "세계와 로컬 좌표는 섞어 쓸 수 없습니다 (모두 ^을 사용하거나 사용하지 않아야 합니다)",
+	
 	"command.reader_expected_start_of_quote": "문자열을 시작하는 따옴표가 필요합니다",
 	"command.reader_expected_end_of_quote": "따옴표가 달린 문자열이 닫히지 않았습니다",
 	"command.reader_invalid_escape": "따옴표가 달린 문자열에 잘못된 이스케이프 시퀀스 '\\%character%'이(가) 있습니다",
