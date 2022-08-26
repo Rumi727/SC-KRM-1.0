@@ -2,10 +2,12 @@ using Brigadier.NET;
 using Brigadier.NET.ArgumentTypes;
 using Brigadier.NET.Context;
 using Brigadier.NET.Exceptions;
+using Brigadier.NET.Suggestion;
 using SCKRM.Renderer;
 using SCKRM.Resource;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SCKRM.Command
@@ -254,6 +256,18 @@ namespace SCKRM.Command
 
         internal BaseVectorArgumentType(bool localBasePosAllow, float minimum, float maximum) : base(minimum, maximum) => this.localBasePosAllow = localBasePosAllow;
 
+        public override Task<Suggestions> ListSuggestions<TSource>(CommandContext<TSource> context, SuggestionsBuilder builder)
+        {
+            if ("".StartsWith(builder.RemainingLowerCase))
+                builder.Suggest("~ ");
+            else if ("~ ".StartsWith(builder.RemainingLowerCase))
+                builder.Suggest("~ ~ ");
+            else if ("~ ~ ".StartsWith(builder.RemainingLowerCase))
+                builder.Suggest("~ ~ ~");
+
+            return builder.BuildFuture();
+        }
+
         public void ReadBasePos(IStringReader reader, ref BasePos basePos)
         {
             if (reader.Peek() == '~')
@@ -294,6 +308,18 @@ namespace SCKRM.Command
         public virtual bool localBasePosAllow { get; }
 
         internal BaseVectorIntArgumentType(bool localBasePosAllow, int minimum, int maximum) : base(minimum, maximum) => this.localBasePosAllow = localBasePosAllow;
+
+        public override Task<Suggestions> ListSuggestions<TSource>(CommandContext<TSource> context, SuggestionsBuilder builder)
+        {
+            if ("".StartsWith(builder.RemainingLowerCase))
+                builder.Suggest("~ ");
+            else if ("~ ".StartsWith(builder.RemainingLowerCase))
+                builder.Suggest("~ ~ ");
+            else if ("~ ~ ".StartsWith(builder.RemainingLowerCase))
+                builder.Suggest("~ ~ ~");
+
+            return builder.BuildFuture();
+        }
 
         public BasePos ReadBasePos(IStringReader reader, ref BasePos basePos)
         {
