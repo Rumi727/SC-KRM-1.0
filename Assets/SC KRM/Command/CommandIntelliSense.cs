@@ -57,8 +57,6 @@ namespace SCKRM.Command
             if (input.Length > 0 && chatInputField.caretPosition < allInput.Length)
                 input = input.Remove(chatInputField.caretPosition.Clamp(0, allInput.Length));
 
-            Debug.Log(input);
-
             CommandManager.defaultCommandSource.Initialization();
 
             CommandDispatcher<DefaultCommandSource> commandDispatcher = CommandManager.commandDispatcher;
