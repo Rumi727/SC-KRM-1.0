@@ -462,7 +462,7 @@ namespace SCKRM.Command
             float b = reader.ReadFloat();
             MinMaxThrow(reader, cursor, b);
 
-            return new Color(r, g, b);
+            return new Color(r / maximum, g / maximum, b / maximum);
         }
     }
 
@@ -498,7 +498,7 @@ namespace SCKRM.Command
             float a = reader.ReadFloat();
             MinMaxThrow(reader, cursor, a);
 
-            return new Color(r, g, b, a);
+            return new Color(r / maximum, g / maximum, b / maximum, a / maximum);
         }
     }
 
