@@ -625,7 +625,9 @@ Is any key or mouse button currently held down?"
 
             return !InputLockCheck(inputLockDeny) && UnityEngine.Input.anyKey;
         }
+        #endregion
 
+        #region Input Lock
         /// <summary>
         /// 인풋 락을 체크합니다 무시할 인풋 락을 제외한 락중에 하나라도 락이 걸려있다면 true를 반환합니다
         /// Checks input locks. Returns true if any of the locks except the input lock to ignore are locked.
@@ -670,9 +672,7 @@ Checks input locks. Returns true if any of the locks except the input lock to ig
 
             return false;
         }
-        #endregion
 
-        #region Input Lock
         /// <summary>
         /// 인풋 락을 설정합니다
         /// Set input lock
@@ -750,6 +750,16 @@ Checks input locks. Returns true if any of the locks except the input lock to ig
         [SerializeField] void OnDelta(InputAction.CallbackContext context) => mouseDelta = context.ReadValue<Vector2>();
         [SerializeField] void OnPosition(InputAction.CallbackContext context) => mousePosition = context.ReadValue<Vector2>();
         [SerializeField] void OnScroll(InputAction.CallbackContext context) => mouseScrollDelta = context.ReadValue<Vector2>();
+
+        static int allSelectableCount;
+        void Update()
+        {
+            if (allSelectableCount != Selectable.allSelectableCount)
+            {
+                allInputFields = Selectable.allSelectablesArray.OfType<TMP_InputField>().ToArray();
+                allSelectableCount = Selectable.allSelectableCount;
+            }
+        }
     }
 
     public enum InputType
