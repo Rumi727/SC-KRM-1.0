@@ -1,6 +1,7 @@
 using Brigadier.NET;
 using Brigadier.NET.Context;
 using Brigadier.NET.Exceptions;
+using Brigadier.NET.Suggestion;
 using Brigadier.NET.Tree;
 using SCKRM.Object;
 using SCKRM.Text;
@@ -8,6 +9,7 @@ using SCKRM.UI;
 using SCKRM.UI.Layout;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -49,11 +51,13 @@ namespace SCKRM.Command
         }
 
         static readonly FastString descriptionFastString = new FastString();
-        public void IntelliSense(string allInput)
+        public async void IntelliSense(string allInput)
         {
             string input = allInput;
-            if (input.Length > 0)
-                input = input.Remove((chatInputField.caretPosition - 1).Clamp(0, input.Length - 1));
+            if (input.Length > 0 && chatInputField.caretPosition < allInput.Length)
+                input = input.Remove(chatInputField.caretPosition.Clamp(0, allInput.Length));
+
+            Debug.Log(input);
 
             CommandManager.defaultCommandSource.Initialization();
 
@@ -86,11 +90,22 @@ namespace SCKRM.Command
                 CommandManager.defaultCommandSource.Initialization();
 
                 ParseResults<DefaultCommandSource> parseResults = commandDispatcher.Parse(input, CommandManager.defaultCommandSource);
-                CommandContextBuilder<DefaultCommandSource> currentContext = parseResults.Context.LastChild;
+                Suggestions suggestions = await commandDispatcher.GetCompletionSuggestions(parseResults);
 
+                if (suggestions.List.Count > 0)
+                    LiteralObjectCreate(suggestions.List);
+                else if (parseResults.Context.Nodes.Count > 0)
+                {
+                    LiteralObjectRemove();
+                    commandDispatcher.GetSmartUsage(parseResults.Context.Nodes.Last().Node, CommandManager.defaultCommandSource);
+                }
+
+
+                /*CommandContextBuilder<DefaultCommandSource> currentContext = parseResults.Context.LastChild;
                 if (currentContext.Nodes.Count > 0)
                 {
-                    CommandNode<DefaultCommandSource> node = currentContext.Nodes.Last().Node;
+                    
+                    /*CommandNode<DefaultCommandSource> node = currentContext.Nodes.Last().Node;
                     while (node.Redirect != null)
                         node = node.Redirect;
 
@@ -118,7 +133,7 @@ namespace SCKRM.Command
                     }
                 }
                 else
-                    LiteralObjectCreate(rootNodes, input);
+                    LiteralObjectCreate(rootNodes, input);*/
             }
 
             if (autocompleteTextList.Count > 0)
@@ -148,6 +163,30 @@ namespace SCKRM.Command
 
             autocompleteTextList.Clear();
             autocompleteMaxSizeX = 0;
+        }
+
+        void LiteralObjectCreate(List<Suggestion> texts)
+        {
+            LiteralObjectRemove();
+
+            for (int i = 0; i < texts.Count; i++)
+            {
+                string text = texts[i].Text;
+                CommandAutocompleteText autocompleteText = (CommandAutocompleteText)ObjectPoolingSystem.ObjectCreate("command.autocomplete_text", autocompleteContent).monoBehaviour;
+                autocompleteText.text.text = text;
+
+                autocompleteText.betterContentSizeFitter.SetLayoutHorizontal();
+                autocompleteText.betterContentSizeFitter.SetLayoutVertical();
+
+                autocompleteMaxSizeX = autocompleteMaxSizeX.Max(autocompleteText.rectTransform.rect.size.x);
+                autocompleteTextList.Add(autocompleteText);
+            }
+
+            autocompleteContentChildSizeFitter.LayoutRefresh();
+            autocompleteContentChildSizeFitter.SizeUpdate();
+
+            autocompleteTargetSizeFitter.LayoutRefresh();
+            autocompleteTargetSizeFitter.SizeUpdate();
         }
 
         float autocompleteMaxSizeX = 0;
