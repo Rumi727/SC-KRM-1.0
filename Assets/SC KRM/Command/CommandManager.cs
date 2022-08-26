@@ -183,9 +183,9 @@ namespace SCKRM.Command
                             x.Literal("positioned")
                                 .Then(x =>
                                     x.Argument("pos", Arguments.Vector3())
-                                        .Executes(x =>
+                                        .Redirect(execute, x =>
                                         {
-                                            Vector3 pos = Arguments.GetVector3(x, "pos");
+                                            Vector3 pos = Arguments.GetVector3(x, "pos", x.Source.currentPosition);
                                             float magnitude = pos.magnitude;
 
                                             Debug.Log(pos);
@@ -193,16 +193,15 @@ namespace SCKRM.Command
                                             x.Source.currentPosition = pos;
                                             x.Source.lastCommandResult = new CommandResult(true, pos, magnitude);
 
-                                            return (int)magnitude;
+                                            return x.Source;
                                         })
-                                        .Redirect(execute)
                                 )
                         )
                         .Then(x =>
                             x.Literal("align")
                                 .Then(x =>
                                     x.Argument("axes", Arguments.PosSwizzle())
-                                        .Executes(x =>
+                                        .Redirect(execute, x =>
                                         {
                                             Arguments.PosSwizzleEnum posSwizzle = Arguments.GetPosSwizzle(x, "axes");
 
@@ -217,36 +216,34 @@ namespace SCKRM.Command
                                             x.Source.currentPosition = position;
                                             x.Source.lastCommandResult = new CommandResult(true, posSwizzle, (int)posSwizzle);
 
-                                            return (int)posSwizzle;
+                                            return x.Source;
                                         })
-                                        .Redirect(execute)
                                 )
                         )
                         .Then(x =>
                             x.Literal("facing")
                                 .Then(x =>
                                     x.Argument("pos", Arguments.Vector3())
-                                        .Executes(x =>
+                                        .Redirect(execute, x =>
                                         {
-                                            Vector3 pos = Arguments.GetVector3(x, "pos");
+                                            Vector3 pos = Arguments.GetVector3(x, "pos", x.Source.currentPosition);
                                             Vector3 rotation = Quaternion.LookRotation(pos).eulerAngles;
                                             float magnitude = rotation.magnitude;
 
                                             x.Source.currentPosition = pos;
                                             x.Source.lastCommandResult = new CommandResult(true, rotation, rotation.magnitude);
 
-                                            return (int)rotation.magnitude;
+                                            return x.Source;
                                         })
-                                        .Redirect(execute)
                                 )
                         )
                         .Then(x =>
                             x.Literal("rotated")
                                 .Then(x =>
                                     x.Argument("rot", Arguments.Vector3())
-                                        .Executes(x =>
+                                        .Redirect(execute, x =>
                                         {
-                                            Vector3 rotation = Arguments.GetVector3(x, "rot");
+                                            Vector3 rotation = Arguments.GetVector3(x, "rot", x.Source.currentRotation);
                                             float magnitude = rotation.magnitude;
 
                                             Debug.Log(rotation);
@@ -254,9 +251,8 @@ namespace SCKRM.Command
                                             x.Source.currentRotation = rotation;
                                             x.Source.lastCommandResult = new CommandResult(true, rotation, magnitude);
 
-                                            return (int)magnitude;
+                                            return x.Source;
                                         })
-                                        .Redirect(execute)
                                 )
                         )
                 );

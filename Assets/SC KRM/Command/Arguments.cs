@@ -34,32 +34,104 @@ namespace SCKRM.Command
         public static StringArgumentType GreedyString() => Brigadier.NET.Arguments.GreedyString();
         public static string GetString<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<string>(name);
 
-        public static Vector2ArgumentType Vector2(float min = float.MinValue, float max = float.MaxValue) => new Vector2ArgumentType(min, max);
-        public static Vector2 GetVector2<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector2>(name);
+        public static Vector2ArgumentType Vector2(float min = float.MinValue, float max = float.MaxValue, bool alowNumberBaseType = true) => new Vector2ArgumentType(min, max, alowNumberBaseType);
+        public static Vector2 GetVector2<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Vector2 result, NumberBaseType[] numberBaseTypes)>(name).result;
+        public static Vector2 GetVector2<TSource>(CommandContext<TSource> context, string name, Vector2 offset)
+        {
+            DefaultCommandSource source = GetDefaultCommandSource(context.Source);
+            (Vector2 result, NumberBaseType[] numberBaseTypes) = context.GetArgument<(Vector2 result, NumberBaseType[] numberBaseTypes)>(name);
 
-        public static Vector2IntArgumentType Vector2Int(int min = int.MinValue, int max = int.MaxValue) => new Vector2IntArgumentType(min, max);
-        public static Vector2Int GetVector2Int<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector2Int>(name);
+            if (numberBaseTypes[0] == NumberBaseType.local)
+                return offset + (Vector2)(Quaternion.Euler(source.currentRotation) * new Vector2(result.x, result.y));
+            else
+            {
+                if (numberBaseTypes[0] == NumberBaseType.offset)
+                    result.x += offset.x;
+                if (numberBaseTypes[1] == NumberBaseType.offset)
+                    result.y += offset.y;
 
-        public static Vector3ArgumentType Vector3(float min = float.MinValue, float max = float.MaxValue) => new Vector3ArgumentType(min, max);
-        public static Vector3 GetVector3<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector3>(name);
+                return result;
+            }
+        }
 
-        public static Vector3IntArgumentType Vector3Int(int min = int.MinValue, int max = int.MaxValue) => new Vector3IntArgumentType(min, max);
-        public static Vector3Int GetVector3Int<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector3Int>(name);
+        public static Vector2IntArgumentType Vector2Int(int min = int.MinValue, int max = int.MaxValue, bool alowNumberBaseType = true) => new Vector2IntArgumentType(min, max, alowNumberBaseType);
+        public static Vector2Int GetVector2Int<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Vector2Int result, NumberBaseType[] numberBaseTypes)>(name).result;
+        public static Vector2Int GetVector2Int<TSource>(CommandContext<TSource> context, string name, Vector2Int offset)
+        {
+            (Vector2Int result, NumberBaseType[] numberBaseTypes) = context.GetArgument<(Vector2Int result, NumberBaseType[] numberBaseTypes)>(name);
+            DefaultCommandSource source = GetDefaultCommandSource(context.Source);
 
-        public static Vector4ArgumentType Vector4(float min = float.MinValue, float max = float.MaxValue) => new Vector4ArgumentType(min, max);
-        public static Vector4 GetVector4<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Vector4>(name);
+            if (numberBaseTypes[0] == NumberBaseType.local)
+                return offset + UnityEngine.Vector2Int.FloorToInt(Quaternion.Euler(source.currentRotation) * new Vector2(result.x, result.y));
+            else
+            {
+                if (numberBaseTypes[0] == NumberBaseType.offset)
+                    result.x += offset.x;
+                if (numberBaseTypes[1] == NumberBaseType.offset)
+                    result.y += offset.y;
 
-        public static RectArgumentType Rect(float min = float.MinValue, float max = float.MaxValue) => new RectArgumentType(min, max);
-        public static Rect GetRect<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Rect>(name);
+                return result;
+            }
+        }
 
-        public static RectIntArgumentType RectInt(int min = int.MinValue, int max = int.MaxValue) => new RectIntArgumentType(min, max);
-        public static RectInt GetRectInt<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<RectInt>(name);
+        public static Vector3ArgumentType Vector3(float min = float.MinValue, float max = float.MaxValue, bool alowNumberBaseType = true) => new Vector3ArgumentType(min, max, alowNumberBaseType);
+        public static Vector3 GetVector3<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Vector3 result, NumberBaseType[] numberBaseTypes)>(name).result;
+        public static Vector3 GetVector3<TSource>(CommandContext<TSource> context, string name, Vector3 offset)
+        {
+            DefaultCommandSource source = GetDefaultCommandSource(context.Source);
+            (Vector3 result, NumberBaseType[] numberBaseTypes) = context.GetArgument<(Vector3 result, NumberBaseType[] numberBaseTypes)>(name);
 
-        public static ColorArgumentType Color() => new ColorArgumentType();
-        public static Color GetColor<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Color>(name);
+            if (numberBaseTypes[0] == NumberBaseType.local)
+                return offset + (Quaternion.Euler(source.currentRotation) * new Vector3(result.x, result.y));
+            else
+            {
+                if (numberBaseTypes[0] == NumberBaseType.offset)
+                    result.x += offset.x;
+                if (numberBaseTypes[1] == NumberBaseType.offset)
+                    result.y += offset.y;
+                if (numberBaseTypes[2] == NumberBaseType.offset)
+                    result.z += offset.z;
 
-        public static ColorAlphaArgumentType ColorAlpha() => new ColorAlphaArgumentType();
-        public static Color GetColorAlpha<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Color>(name);
+                return result;
+            }
+        }
+
+        public static Vector3IntArgumentType Vector3Int(int min = int.MinValue, int max = int.MaxValue, bool alowNumberBaseType = true) => new Vector3IntArgumentType(min, max, alowNumberBaseType);
+        public static Vector3Int GetVector3Int<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Vector3Int result, NumberBaseType[] numberBaseTypes)>(name).result;
+        public static Vector3Int GetVector3Int<TSource>(CommandContext<TSource> context, string name, Vector3Int offset)
+        {
+            (Vector3Int result, NumberBaseType[] numberBaseTypes) = context.GetArgument<(Vector3Int result, NumberBaseType[] numberBaseTypes)>(name);
+            DefaultCommandSource source = GetDefaultCommandSource(context.Source);
+
+            if (numberBaseTypes[0] == NumberBaseType.local)
+                return offset + UnityEngine.Vector3Int.FloorToInt(Quaternion.Euler(source.currentRotation) * new Vector3(result.x, result.y));
+            else
+            {
+                if (numberBaseTypes[0] == NumberBaseType.offset)
+                    result.x += offset.x;
+                if (numberBaseTypes[1] == NumberBaseType.offset)
+                    result.y += offset.y;
+                if (numberBaseTypes[2] == NumberBaseType.offset)
+                    result.z += offset.z;
+
+                return result;
+            }
+        }
+
+        public static Vector4ArgumentType Vector4(float min = float.MinValue, float max = float.MaxValue) => new Vector4ArgumentType(min, max, false);
+        public static Vector4 GetVector4<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Vector4 result, NumberBaseType[] numberBaseTypes)>(name).result;
+
+        public static RectArgumentType Rect(float min = float.MinValue, float max = float.MaxValue) => new RectArgumentType(min, max, false);
+        public static Rect GetRect<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Rect result, NumberBaseType[] numberBaseTypes)>(name).result;
+
+        public static RectIntArgumentType RectInt(int min = int.MinValue, int max = int.MaxValue) => new RectIntArgumentType(min, max, false);
+        public static RectInt GetRectInt<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(RectInt result, NumberBaseType[] numberBaseTypes)>(name).result;
+
+        public static ColorArgumentType Color() => new ColorArgumentType(false);
+        public static Color GetColor<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Color result, NumberBaseType[] numberBaseTypes)>(name).result;
+
+        public static ColorAlphaArgumentType ColorAlpha() => new ColorAlphaArgumentType(false);
+        public static Color GetColorAlpha<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<(Color result, NumberBaseType[] numberBaseTypes)>(name).result;
 
         public static TransformArgumentType Transform() => new TransformArgumentType();
         public static Transform GetTransform<TSource>(CommandContext<TSource> context, string name) => context.GetArgument<Transform>(name);
@@ -101,6 +173,22 @@ namespace SCKRM.Command
 
             all = x | y | z
         }
+
+        public static DefaultCommandSource GetDefaultCommandSource<TSource>(TSource source)
+        {
+            if (source is not DefaultCommandSource)
+                throw new NotSupportedException("To use this argument, TSource must inherit from the DefaultCommandSource class.");
+
+            return source as DefaultCommandSource;
+        }
+    }
+
+    public enum NumberBaseType
+    {
+        none,
+        world,
+        offset,
+        local
     }
 
     public abstract class BaseArgumentType<T, TResult> : ArgumentType<TResult> where T : BaseArgumentType<T, TResult>
@@ -116,15 +204,60 @@ namespace SCKRM.Command
         public override string ToString() => $"{typeof(TResult).Name}()";
     }
 
-    public abstract class BaseDuplicateIntArgumentType<T, TResult> : BaseArgumentType<BaseDuplicateIntArgumentType<T, TResult>, TResult> where T : BaseDuplicateIntArgumentType<T, TResult>
+    public abstract class BaseDuplicateIntArgumentType<T, TResult> : BaseArgumentType<BaseDuplicateIntArgumentType<T, TResult>, (TResult result, NumberBaseType[] numberBaseTypes)> where T : BaseDuplicateIntArgumentType<T, TResult>
     {
         public virtual int minimum { get; }
         public virtual int maximum { get; }
 
-        internal BaseDuplicateIntArgumentType(int minimum, int maximum)
+        public virtual bool allowNumberBaseType { get; }
+
+        internal BaseDuplicateIntArgumentType(int minimum, int maximum, bool allowNumberBaseType)
         {
             this.minimum = minimum;
             this.maximum = maximum;
+
+            this.allowNumberBaseType = allowNumberBaseType;
+        }
+
+        public int ReadInt(IStringReader reader, NumberBaseType previousNumberBaseType, out NumberBaseType numberBaseType)
+        {
+            if (allowNumberBaseType)
+            {
+                if (reader.Peek() == '~')
+                {
+                    if (previousNumberBaseType == NumberBaseType.local)
+                        throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+
+                    reader.Cursor++;
+                    numberBaseType = NumberBaseType.offset;
+
+                    if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                        return 0;
+                    else
+                        return reader.ReadInt();
+                }
+                else if (reader.Peek() == '^')
+                {
+                    if (previousNumberBaseType == NumberBaseType.none || previousNumberBaseType == NumberBaseType.local)
+                    {
+                        reader.Cursor++;
+                        numberBaseType = NumberBaseType.local;
+
+                        if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                            return 0;
+                        else
+                            return reader.ReadInt();
+                    }
+                    else
+                        throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+                }
+            }
+
+            if (previousNumberBaseType == NumberBaseType.local)
+                throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+
+            numberBaseType = NumberBaseType.world;
+            return reader.ReadInt();
         }
 
         public void MinMaxThrow(IStringReader reader, int cursor, int value)
@@ -142,7 +275,7 @@ namespace SCKRM.Command
             }
         }
 
-        public void CanReadThrow(IStringReader reader, int firstCursor)
+        public void NextCanReadThrow(IStringReader reader, int firstCursor)
         {
             if (!reader.CanRead(2))
             {
@@ -179,15 +312,60 @@ namespace SCKRM.Command
         }
     }
 
-    public abstract class BaseDuplicateFloatArgumentType<T, TResult> : BaseArgumentType<BaseDuplicateFloatArgumentType<T, TResult>, TResult> where T : BaseDuplicateFloatArgumentType<T, TResult>
+    public abstract class BaseDuplicateFloatArgumentType<T, TResult> : BaseArgumentType<BaseDuplicateFloatArgumentType<T, TResult>, (TResult result, NumberBaseType[] numberBaseTypes)> where T : BaseDuplicateFloatArgumentType<T, TResult>
     {
         public virtual float minimum { get; }
         public virtual float maximum { get; }
 
-        internal BaseDuplicateFloatArgumentType(float minimum, float maximum)
+        public virtual bool allowNumberBaseType { get; }
+
+        internal BaseDuplicateFloatArgumentType(float minimum, float maximum, bool allowNumberBaseType)
         {
             this.minimum = minimum;
             this.maximum = maximum;
+
+            this.allowNumberBaseType = allowNumberBaseType;
+        }
+
+        public float ReadFloat(IStringReader reader, NumberBaseType previousNumberBaseType, out NumberBaseType numberBaseType)
+        {
+            if (allowNumberBaseType)
+            {
+                if (reader.Peek() == '~')
+                {
+                    if (previousNumberBaseType == NumberBaseType.local)
+                        throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+
+                    reader.Cursor++;
+                    numberBaseType = NumberBaseType.offset;
+
+                    if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                        return 0;
+                    else
+                        return reader.ReadFloat();
+                }
+                else if (reader.Peek() == '^')
+                {
+                    if (previousNumberBaseType == NumberBaseType.none || previousNumberBaseType == NumberBaseType.local)
+                    {
+                        reader.Cursor++;
+                        numberBaseType = NumberBaseType.local;
+
+                        if (!reader.CanRead() || char.IsWhiteSpace(reader.Peek()))
+                            return 0;
+                        else
+                            return reader.ReadFloat();
+                    }
+                    else
+                        throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+                }
+            }
+
+            if (previousNumberBaseType == NumberBaseType.local)
+                throw CommandSyntaxException.BuiltInExceptions.WorldLocalPosMixed().CreateWithContext(reader);
+
+            numberBaseType = NumberBaseType.world;
+            return reader.ReadFloat();
         }
 
         public void MinMaxThrow(IStringReader reader, int cursor, float value)
@@ -244,195 +422,195 @@ namespace SCKRM.Command
 
     public class Vector2ArgumentType : BaseDuplicateFloatArgumentType<Vector2ArgumentType, Vector2>
     {
-        internal Vector2ArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        internal Vector2ArgumentType(float minimum, float maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override Vector2 Parse(IStringReader reader)
+        public override (Vector2 result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float x = reader.ReadFloat();
+            float x = ReadFloat(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float y = reader.ReadFloat();
+            float y = ReadFloat(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
 
-            return new Vector2(x, y);
+            return (new Vector2(x, y), new NumberBaseType[] { xBaseType, yBaseType });
         }
     }
 
     public class Vector2IntArgumentType : BaseDuplicateIntArgumentType<Vector2IntArgumentType, Vector2Int>
     {
-        internal Vector2IntArgumentType(int minimum, int maximum) : base(minimum, maximum)
+        internal Vector2IntArgumentType(int minimum, int maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override Vector2Int Parse(IStringReader reader)
+        public override (Vector2Int result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            int x = reader.ReadInt();
+            int x = ReadInt(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int y = reader.ReadInt();
+            int y = ReadInt(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
 
-            return new Vector2Int(x, y);
+            return (new Vector2Int(x, y), new NumberBaseType[] { xBaseType, yBaseType });
         }
     }
 
     public class Vector3ArgumentType : BaseDuplicateFloatArgumentType<Vector3ArgumentType, Vector3>
     {
-        internal Vector3ArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        internal Vector3ArgumentType(float minimum, float maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override Vector3 Parse(IStringReader reader)
+        public override (Vector3 result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float x = reader.ReadFloat();
+            float x = ReadFloat(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float y = reader.ReadFloat();
+            float y = ReadFloat(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float z = reader.ReadFloat();
+            float z = ReadFloat(reader, yBaseType, out NumberBaseType zBaseType);
             MinMaxThrow(reader, cursor, z);
 
-            return new Vector3(x, y, z);
+            return (new Vector3(x, y, z), new NumberBaseType[] { xBaseType, yBaseType, zBaseType });
         }
     }
 
     public class Vector3IntArgumentType : BaseDuplicateIntArgumentType<Vector3IntArgumentType, Vector3Int>
     {
-        internal Vector3IntArgumentType(int minimum, int maximum) : base(minimum, maximum)
+        internal Vector3IntArgumentType(int minimum, int maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override Vector3Int Parse(IStringReader reader)
+        public override (Vector3Int result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            int x = reader.ReadInt();
+            int x = ReadInt(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int y = reader.ReadInt();
+            int y = ReadInt(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int z = reader.ReadInt();
+            int z = ReadInt(reader, yBaseType, out NumberBaseType zBaseType);
             MinMaxThrow(reader, cursor, z);
 
-            return new Vector3Int(x, y, z);
+            return (new Vector3Int(x, y), new NumberBaseType[] { xBaseType, yBaseType, zBaseType });
         }
     }
 
     public class Vector4ArgumentType : BaseDuplicateFloatArgumentType<Vector4ArgumentType, Vector4>
     {
-        internal Vector4ArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        internal Vector4ArgumentType(float minimum, float maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override Vector4 Parse(IStringReader reader)
+        public override (Vector4 result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float x = reader.ReadFloat();
+            float x = ReadFloat(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float y = reader.ReadFloat();
+            float y = ReadFloat(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float z = reader.ReadFloat();
+            float z = ReadFloat(reader, yBaseType, out NumberBaseType zBaseType);
             MinMaxThrow(reader, cursor, z);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float w = reader.ReadFloat();
+            float w = ReadFloat(reader, zBaseType, out NumberBaseType wBaseType);
             MinMaxThrow(reader, cursor, w);
 
-            return new Vector4(x, y, z, w);
+            return (new Vector4(x, y, z, w), new NumberBaseType[] { xBaseType, yBaseType, zBaseType, wBaseType });
         }
     }
 
     public class RectArgumentType : BaseDuplicateFloatArgumentType<RectArgumentType, Rect>
     {
-        internal RectArgumentType(float minimum, float maximum) : base(minimum, maximum)
+        internal RectArgumentType(float minimum, float maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override Rect Parse(IStringReader reader)
+        public override (Rect result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float x = reader.ReadFloat();
+            float x = ReadFloat(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float y = reader.ReadFloat();
+            float y = ReadFloat(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float width = reader.ReadFloat();
+            float width = ReadFloat(reader, yBaseType, out NumberBaseType widthBaseType);
             MinMaxThrow(reader, cursor, width);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float height = reader.ReadFloat();
+            float height = ReadFloat(reader, widthBaseType, out NumberBaseType heightBaseType);
             MinMaxThrow(reader, cursor, height);
 
-            return new Rect(x, y, width, height);
+            return (new Rect(x, y, width, height), new NumberBaseType[] { xBaseType, yBaseType, widthBaseType, heightBaseType });
         }
     }
 
     public class RectIntArgumentType : BaseDuplicateIntArgumentType<RectIntArgumentType, RectInt>
     {
-        internal RectIntArgumentType(int minimum, int maximum) : base(minimum, maximum)
+        internal RectIntArgumentType(int minimum, int maximum, bool allowNumberBaseType) : base(minimum, maximum, allowNumberBaseType)
         {
         }
 
-        public override RectInt Parse(IStringReader reader)
+        public override (RectInt result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            int x = reader.ReadInt();
+            int x = ReadInt(reader, NumberBaseType.none, out NumberBaseType xBaseType);
             MinMaxThrow(reader, cursor, x);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int y = reader.ReadInt();
+            int y = ReadInt(reader, xBaseType, out NumberBaseType yBaseType);
             MinMaxThrow(reader, cursor, y);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int width = reader.ReadInt();
+            int width = ReadInt(reader, yBaseType, out NumberBaseType widthBaseType);
             MinMaxThrow(reader, cursor, width);
-            CanReadThrow(reader, firstCursor);
+            NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            int height = reader.ReadInt();
+            int height = ReadInt(reader, widthBaseType, out NumberBaseType heightBaseType);
             MinMaxThrow(reader, cursor, height);
 
-            return new RectInt(x, y, width, height);
+            return (new RectInt(x, y, width, height), new NumberBaseType[] { xBaseType, yBaseType, widthBaseType, heightBaseType });
         }
     }
 
@@ -441,28 +619,28 @@ namespace SCKRM.Command
         public override float minimum => 0;
         public override float maximum => 255;
 
-        internal ColorArgumentType() : base(0, 255)
+        internal ColorArgumentType(bool allowNumberBaseType) : base(0, 255, allowNumberBaseType)
         {
         }
 
-        public override Color Parse(IStringReader reader)
+        public override (Color result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float r = reader.ReadFloat();
+            float r = ReadFloat(reader, NumberBaseType.none, out NumberBaseType rBaseType);
             MinMaxThrow(reader, cursor, r);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float g = reader.ReadFloat();
+            float g = ReadFloat(reader, rBaseType, out NumberBaseType gBaseType);
             MinMaxThrow(reader, cursor, g);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float b = reader.ReadFloat();
+            float b = ReadFloat(reader, gBaseType, out NumberBaseType bBaseType);
             MinMaxThrow(reader, cursor, b);
 
-            return new Color(r / maximum, g / maximum, b / maximum);
+            return (new Color(r / maximum, g / maximum, b / maximum), new NumberBaseType[] { rBaseType, gBaseType, bBaseType });
         }
     }
 
@@ -471,34 +649,34 @@ namespace SCKRM.Command
         public override float minimum => 0;
         public override float maximum => 255;
 
-        internal ColorAlphaArgumentType() : base(0, 255)
+        internal ColorAlphaArgumentType(bool allowNumberBaseType) : base(0, 255, allowNumberBaseType)
         {
 
         }
 
-        public override Color Parse(IStringReader reader)
+        public override (Color result, NumberBaseType[] numberBaseTypes) Parse(IStringReader reader)
         {
             int firstCursor = reader.Cursor;
             int cursor = reader.Cursor;
-            float r = reader.ReadFloat();
+            float r = ReadFloat(reader, NumberBaseType.none, out NumberBaseType rBaseType);
             MinMaxThrow(reader, cursor, r);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float g = reader.ReadFloat();
+            float g = ReadFloat(reader, rBaseType, out NumberBaseType gBaseType);
             MinMaxThrow(reader, cursor, g);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float b = reader.ReadFloat();
+            float b = ReadFloat(reader, gBaseType, out NumberBaseType bBaseType);
             MinMaxThrow(reader, cursor, b);
             NextCanReadThrow(reader, firstCursor);
 
             cursor = ++reader.Cursor;
-            float a = reader.ReadFloat();
+            float a = ReadFloat(reader, bBaseType, out NumberBaseType aBaseType);
             MinMaxThrow(reader, cursor, a);
 
-            return new Color(r / maximum, g / maximum, b / maximum, a / maximum);
+            return (new Color(r / maximum, g / maximum, b / maximum, a / maximum), new NumberBaseType[] { rBaseType, gBaseType, bBaseType, aBaseType });
         }
     }
 
