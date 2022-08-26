@@ -2,8 +2,6 @@ using Brigadier.NET;
 using Brigadier.NET.Exceptions;
 using SCKRM.Renderer;
 using SCKRM.Resource;
-using SCKRM.Text;
-using System;
 using System.Text.RegularExpressions;
 
 namespace SCKRM.Command
@@ -205,57 +203,6 @@ namespace SCKRM.Command
                 else
                     CommandSyntaxException.BuiltInExceptions.InvalidPosSwizzle();
             }
-        }
-    }
-
-    public static class BuiltInExceptionsExpansion
-    {
-#pragma warning disable IDE0060 // 사용하지 않는 매개 변수를 제거하세요.
-        public static Dynamic2CommandExceptionType ColonTooMany(this IBuiltInExceptionProvider e)
-        {
-            return new Dynamic2CommandExceptionType((found, max) =>
-            {
-                string message = CommandLanguage.SearchLanguage("colon_too_many").Replace("%found%", found.ToString()).Replace("%max%", max.ToString());
-                return new LiteralMessage(message);
-            });
-        }
-
-        public static SimpleCommandExceptionType InvalidPosSwizzle(this IBuiltInExceptionProvider e)
-        {
-            string message = CommandLanguage.SearchLanguage("reader_invalid_pos_swizzle");
-            return new SimpleCommandExceptionType(new LiteralMessage(message));
-        }
-#pragma warning restore IDE0060 // 사용하지 않는 매개 변수를 제거하세요.
-
-        public static CommandSyntaxException GetCustomException(this CommandSyntaxException exception)
-        {
-            exception.CustomMessage = GetCustomExceptionMessage(exception);
-            return exception;
-        }
-
-        static readonly FastString exceptionFastString = new FastString();
-        public static string GetCustomExceptionMessage(this CommandSyntaxException exception)
-        {
-            string here = CommandLanguage.SearchLanguage("context.here");
-            string parseError = CommandLanguage.SearchLanguage("context.parse_error");
-            string message = exception.RawMessage().String;
-
-            parseError = parseError.Replace("%message%", message);
-            parseError = parseError.Replace("%pos%", exception.Cursor.ToString());
-
-            if (exception.Input == null || exception.Cursor < 0)
-                return message;
-
-            exceptionFastString.Clear();
-            int num = exception.Input.Length.Min(exception.Cursor);
-            if (num > CommandSyntaxException.ContextAmount)
-                exceptionFastString.Append("...");
-
-            int num2 = 0.Max(num - CommandSyntaxException.ContextAmount);
-            exceptionFastString.Append(exception.Input.Substring(num2, num - num2));
-            exceptionFastString.Append(here);
-
-            return parseError.Replace("%text%", exceptionFastString.ToString());
         }
     }
 }
