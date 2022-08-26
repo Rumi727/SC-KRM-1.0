@@ -77,7 +77,7 @@ namespace SCKRM.Command
                 if (!inputField.isFocused)
                     inputField.Select();
 
-                if (InputManager.GetKey("gui.ok", InputType.Down, InputManager.inputLockDenyAllForce))
+                if (InputManager.GetKey("gui.ok", InputType.Down, InputManager.inputLockDenyAllForceInput))
                 {
                     if (!string.IsNullOrWhiteSpace(inputField.text))
                         Execute(inputField.text);
