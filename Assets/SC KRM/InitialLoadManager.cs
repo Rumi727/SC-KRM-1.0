@@ -174,6 +174,7 @@ namespace SCKRM
                 if (VirtualMachineDetector.Data.vmBan && (VirtualMachineDetector.HardwareDetection() || VirtualMachineDetector.ProcessDetection() || VirtualMachineDetector.FileDetection()))
                     ApplicationForceQuit(nameof(InitialLoadManager), "Virtual machines are prohibited");
 #endif
+                AwakenManager.AllAwakenableMethodAwaken();
 
                 {
                     //리소스를 로딩합니다
