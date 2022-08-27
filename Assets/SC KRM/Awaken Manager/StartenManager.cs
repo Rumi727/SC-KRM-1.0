@@ -4,7 +4,7 @@ using System.Reflection;
 namespace SCKRM
 {
     /// <summary>
-    /// 프로젝트 설정과 세이브 파일 불러오기가 끝나면 메소드를 호출 시켜주는 어트리뷰트 입니다
+    /// 초기 로딩이 끝나고 씬이 이동되기 전에 메소드를 호출 시켜주는 어트리뷰트 입니다
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     [WikiDescription("초기 로딩이 끝나고 씬이 이동되기 전에 메소드를 호출 시켜주는 어트리뷰트 입니다")]
