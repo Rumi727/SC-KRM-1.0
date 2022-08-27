@@ -1,4 +1,5 @@
 using SCKRM.Resource;
+using System.Text.RegularExpressions;
 using System.Threading;
 using UnityEngine;
 
@@ -190,7 +191,11 @@ namespace SCKRM.Renderer
         {
             string nameSpace = ResourceManager.GetNameSpace(value, out value);
 
-            if (!int.TryParse(ResourceManager.GetNameSpace(value, out value), out int spriteIndex))
+            MatchCollection matches = Regex.Matches(value, ":");
+            int count = matches.Count;
+
+            int spriteIndex = 0;
+            if (count >= 2 && !int.TryParse(ResourceManager.GetNameSpace(value, out value), out spriteIndex))
                 spriteIndex = -1;
 
             string type = ResourceManager.GetTextureType(value, out value);
