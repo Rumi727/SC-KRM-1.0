@@ -71,11 +71,8 @@ namespace SCKRM.Command
                 if (!chat.activeSelf)
                     chat.SetActive(true);
 
-                StatusBarManager.tabSelectGameObject = Kernel.emptyTransform.gameObject;
-                if (EventSystem.current.currentSelectedGameObject != inputField.gameObject)
-                    EventSystem.current.SetSelectedGameObject(inputField.gameObject);
-                if (!inputField.isFocused)
-                    UIManager.BackEventInvoke();
+                if (!instance.inputField.isFocused)
+                    instance.inputField.Select();
 
                 if (InputManager.GetKey("gui.ok", InputType.Down, InputManager.inputLockDenyAllForceInput))
                 {
@@ -106,6 +103,7 @@ namespace SCKRM.Command
         }
 
 
+        static GameObject previouslyTabSelectGameObject = null;
         static GameObject previouslySelectedGameObject = null;
         static bool previouslyForceInputLock = false;
         public static async UniTask Show()
@@ -115,17 +113,15 @@ namespace SCKRM.Command
 
             await UniTask.WaitUntil(() => instance != null);
 
-            instance.inputField.text = "";
-
             isChatShow = true;
-            UIOverlayManager.showedOverlays.Add(instance);
 
+            previouslyForceInputLock = StatusBarManager.tabSelectGameObject;
             previouslyForceInputLock = InputManager.forceInputLock;
             previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
 
-            InputManager.forceInputLock = true;
-            EventSystem.current.SetSelectedGameObject(null);
+            instance.inputField.text = "";
 
+            InputManager.forceInputLock = true;
             UIManager.BackEventAdd(hide, true);
         }
 
