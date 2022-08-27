@@ -32,7 +32,7 @@ namespace SCKRM.Cursor
             get => _visible;
             set
             {
-                if (value)
+                if (value && InputManager.mousePresent)
                     instance.canvasGroup.alpha = 1;
                 else
                     instance.canvasGroup.alpha = 0;
@@ -69,8 +69,15 @@ namespace SCKRM.Cursor
 
         Vector2 dragStartMousePosition = Vector2.zero;
         bool dragStart = false;
+        bool mousePresent = false;
         void LateUpdate()
         {
+            if (InputManager.mousePresent != mousePresent)
+            {
+                visible = visible;
+                mousePresent = InputManager.mousePresent;
+            }
+
             isFocused = InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width && InputManager.mousePosition.y >= 0 && InputManager.mousePosition.y <= ScreenManager.height;
             UnityEngine.Cursor.visible = !isFocused;
 

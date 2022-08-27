@@ -111,6 +111,17 @@ namespace SCKRM.Input
 
 
 
+#if UNITY_EDITOR_LINUX || (!UNITY_EDITOR && (UNITY_STANDALONE_LINUX || UNITY_WEBGL))
+        public static bool mousePresent => true;
+#elif !UNITY_EDITOR && (UNITY_IOS || UNITY_WII)
+        public static bool mousePresent => false;
+#else
+        [WikiDescription("마우스 장치가 감지되었는지 여부를 나타냅니다\nIndicates if a mouse device is detected")]
+        public static bool mousePresent => UnityEngine.Input.mousePresent;
+#endif
+
+
+
         [WikiDescription("모든 텍스트 메쉬 프로의 인풋 필드를 가져옵니다")] public static TMP_InputField[] allInputFields { get; private set; }
         [WikiDescription("텍스트 메쉬 프로의 인풋 필드가 하나라도 포커스 되어있다면 true를 반환합니다")] public static bool isInputFieldFocused { get; set; }
 
