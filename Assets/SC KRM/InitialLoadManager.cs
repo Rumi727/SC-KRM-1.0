@@ -29,6 +29,10 @@ namespace SCKRM
         public static bool isInitialLoadEnd { get; private set; } = false;
         public static bool isSceneMoveEnd { get; private set; } = false;
 
+        public static event Action initialLoadStart;
+        public static event Action initialLoadEnd;
+        public static event Action initialLoadEndSceneMove;
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         static async UniTaskVoid InitialLoad()
         {
@@ -41,6 +45,7 @@ namespace SCKRM
             {
                 //초기로딩이 시작됬습니다
                 isInitialLoadStart = true;
+                initialLoadStart?.Invoke();
 
                 //이 함수는 어떠한 경우에도 메인스레드가 아닌 스레드에서 실행되면 안됩니다
                 if (!ThreadManager.isMainThread)
@@ -185,6 +190,7 @@ namespace SCKRM
                 {
                     //초기 로딩이 끝났습니다
                     isInitialLoadEnd = true;
+                    initialLoadEnd?.Invoke();
 
                     Debug.Log("Kernel: Initial loading finished!");
                 }
@@ -227,6 +233,7 @@ namespace SCKRM
 
                     //씬을 이동했으면 이벤트를 호출합니다
                     isSceneMoveEnd = true;
+                    initialLoadEndSceneMove?.Invoke();
                 }
             }
             catch (Exception e)
