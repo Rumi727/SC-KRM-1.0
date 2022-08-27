@@ -2,6 +2,7 @@ using Brigadier.NET;
 using Brigadier.NET.Exceptions;
 using Brigadier.NET.Suggestion;
 using Brigadier.NET.Tree;
+using SCKRM.Input;
 using SCKRM.Object;
 using SCKRM.Text;
 using SCKRM.UI;
@@ -40,13 +41,20 @@ namespace SCKRM.Command
             if (!InitialLoadManager.isInitialLoadEnd)
                 return;
 
+            descriptionTextBetterContentSizeFitter.max = new Vector2(rectTransform.rect.width, descriptionTextBetterContentSizeFitter.max.y);
+
             if (tempCaretPosition != chatInputField.caretPosition)
             {
                 IntelliSense(chatInputField.text);
                 tempCaretPosition = chatInputField.caretPosition;
             }
 
-            descriptionTextBetterContentSizeFitter.max = new Vector2(rectTransform.rect.width, descriptionTextBetterContentSizeFitter.max.y);
+            if (suggestions != null && suggestions.List.Count == 1 && InputManager.GetKey("gui.tab", InputType.Down, InputManager.inputLockDenyAllForceInput))
+            {
+                int previouslyCount = chatInputField.text.Length;
+                chatInputField.text = suggestions.List[0].Apply(chatInputField.text);
+                chatInputField.caretPosition += chatInputField.text.Length - previouslyCount;
+            }
         }
 
         static readonly FastString descriptionFastString = new FastString();
@@ -116,6 +124,8 @@ namespace SCKRM.Command
                             descriptionText.text = descriptionFastString.ToString();
                         }
                     }
+                    else
+                        suggestions = null;
                 }
 
 
