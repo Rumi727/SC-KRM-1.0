@@ -16,7 +16,7 @@ using UnityEngine.EventSystems;
 
 namespace SCKRM.Command
 {
-    public sealed class CommandManager : Manager<CommandManager>, IUIOverlay
+    public sealed class CommandManager : Manager<CommandManager>
     {
         public static CommandDispatcher<DefaultCommandSource> commandDispatcher { get; } = new CommandDispatcher<DefaultCommandSource>();
         public static DefaultCommandSource defaultCommandSource { get; set; } = new DefaultCommandSource();
@@ -133,8 +133,8 @@ namespace SCKRM.Command
             await UniTask.WaitUntil(() => instance != null);
 
             isChatShow = false;
-            UIOverlayManager.showedOverlays.Remove(instance);
 
+            StatusBarManager.tabSelectGameObject = previouslyTabSelectGameObject;
             InputManager.forceInputLock = previouslyForceInputLock;
             EventSystem.current.SetSelectedGameObject(previouslySelectedGameObject);
 
