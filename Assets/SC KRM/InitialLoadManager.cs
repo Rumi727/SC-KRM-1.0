@@ -167,13 +167,13 @@ namespace SCKRM
                     }
                 }
 
+                isSettingLoadEnd = true;
+
                 //가상머신 밴이 활성화되어있을때 가상 머신일 경우 프로그램을 강제종료 합니다
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
                 if (VirtualMachineDetector.Data.vmBan && (VirtualMachineDetector.HardwareDetection() || VirtualMachineDetector.ProcessDetection() || VirtualMachineDetector.FileDetection()))
                     ApplicationForceQuit(nameof(InitialLoadManager), "Virtual machines are prohibited");
 #endif
-
-                isSettingLoadEnd = true;
 
                 {
                     //리소스를 로딩합니다
