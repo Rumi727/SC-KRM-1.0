@@ -29,6 +29,9 @@ namespace SCKRM.Editor
         void Initialize()
         {
             string path = EditorUtility.OpenFolderPanel("위키 파일을 저장할 폴더 선택", "", "");
+            if (string.IsNullOrWhiteSpace(path))
+                return;
+
             if (EditorUtility.DisplayDialog("파일 삭제", $"{selectedNameSpace}. 으로 시작하는 모든 파일을 제거하시갰습니까?", "예", "아니요"))
             {
                 string[] files = Directory.GetFiles(path, selectedNameSpace + "*.md");
