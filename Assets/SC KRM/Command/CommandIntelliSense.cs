@@ -93,9 +93,7 @@ namespace SCKRM.Command
                     parseResults = commandDispatcher.Parse(input.Remove(input.Length - 1), CommandManager.defaultCommandSource);
                     suggestions = await commandDispatcher.GetCompletionSuggestions(parseResults);
 
-                    if (suggestions.List.Count > 0)
-                        LiteralObjectCreate(suggestions.List);
-                    else
+                    if (suggestions.List.Count <= 0)
                     {
                         CommandNode<DefaultCommandSource> node = parseResults.Context.LastChild.Nodes.Last().Node;
                         while (node.Redirect != null)

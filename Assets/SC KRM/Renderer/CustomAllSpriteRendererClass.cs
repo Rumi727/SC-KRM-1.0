@@ -92,16 +92,17 @@ namespace SCKRM.Renderer
             if (Kernel.isPlaying && InitialLoadManager.isInitialLoadEnd)
             {
                 Sprite[] sprites = ResourceManager.SearchSprites(type, name, nameSpace);
-                if (sprites != null && index < sprites.Length)
-                    return sprites[index];
+                Debug.Log(index);
+                if (sprites != null && sprites.Length > 0)
+                    return sprites[index.Clamp(0, sprites.Length - 1)];
 
                 return null;
             }
             else
             {
                 Sprite[] sprites = ResourceManager.GetSprites(Kernel.streamingAssetsPath, type, name, nameSpace, TextureFormat.DXT1);
-                if (sprites != null && index < sprites.Length)
-                    return sprites[index];
+                if (sprites != null && sprites.Length > 0)
+                    return sprites[index.Clamp(0, sprites.Length - 1)];
                 else
                     return null;
             }
