@@ -29,7 +29,6 @@ namespace SCKRM
         public static bool isInitialLoadEnd { get; private set; } = false;
         public static bool isSceneMoveEnd { get; private set; } = false;
 
-        public static event Action initialLoadStart;
         public static event Action initialLoadEnd;
         public static event Action initialLoadEndSceneMove;
 
@@ -45,7 +44,6 @@ namespace SCKRM
             {
                 //초기로딩이 시작됬습니다
                 isInitialLoadStart = true;
-                initialLoadStart?.Invoke();
 
                 //이 함수는 어떠한 경우에도 메인스레드가 아닌 스레드에서 실행되면 안됩니다
                 if (!ThreadManager.isMainThread)
