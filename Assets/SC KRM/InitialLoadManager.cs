@@ -195,6 +195,8 @@ namespace SCKRM
                     Debug.Log("Kernel: Initial loading finished!");
                 }
 
+                StartenManager.AllStartableMethodAwaken();
+
                 //강제종료 된 상태면, 씬을 이동하지 않습니다
                 if (!isForceQuit)
                 {
