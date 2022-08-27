@@ -158,7 +158,7 @@ namespace SCKRM.Cursor
                     setting.ScriptOnValueChanged();
 
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
-                    (bool IsCanceled, int Result) = await MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/icon/exclamation_mark").SuppressCancellationThrow()
+                    (bool IsCanceled, int Result) = await MessageBoxManager.Show(new Renderer.NameSpacePathReplacePair[] { "sc-krm:gui.yes", "sc-krm:gui.no" }, 1, "sc-krm:options.input.highPrecisionMouse.warning", "sc-krm:gui/icon/exclamation_mark").SuppressCancellationThrow();
                     if (IsCanceled)
                         return;
                     else if (Result == 0)
