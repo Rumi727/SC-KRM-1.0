@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Unity.Burst;
@@ -170,6 +170,22 @@ public static partial class AsyncImageLoader {
           var bpp = FreeImage.GetBPP(_bitmap);
 
           switch (bpp) {
+            case 1:
+              _textureFormat = TextureFormat.RGB24;
+              _pixelSize = 3;
+              break;
+            case 2:
+              _textureFormat = TextureFormat.RGB24;
+              _pixelSize = 3;
+              break;
+            case 4:
+              _textureFormat = TextureFormat.RGB24;
+              _pixelSize = 3;
+              break;
+            case 8:
+              _textureFormat = TextureFormat.RGB24;
+              _pixelSize = 3;
+              break;
             case 24:
               _textureFormat = TextureFormat.RGB24;
               _pixelSize = 3;
