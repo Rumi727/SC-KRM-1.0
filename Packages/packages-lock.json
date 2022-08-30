@@ -1,15 +1,5 @@
 {
   "dependencies": {
-    "com.looooong.asyncimageloader": {
-      "version": "https://github.com/Looooong/UnityAsyncImageLoader.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.burst": "1.5.4",
-        "com.unity.mathematics": "1.2.1"
-      },
-      "hash": "96335b57074e28aad777f9a585e1b0447b5eadf1"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -18,7 +8,7 @@
     },
     "com.unity.burst": {
       "version": "1.6.6",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1"
