@@ -251,7 +251,7 @@ Build: const true"
         /// Build: const true
         /// </summary>
         [WikiDescription(
-        @"Editor: ![ThreadManager.isMainThread](https://github.com/SimsimhanChobo/SC-KRM/wiki/SCKRM.Threads.ThreadManager#ismainthread) || ([Application.isPlaying](https://docs.unity3d.com/ScriptReference/Application-isPlaying.html) && ![UnityEditor.EditorApplication.isPaused](https://docs.unity3d.com/ScriptReference/EditorApplication-isPaused.html))
+@"Editor: ![ThreadManager.isMainThread](https://github.com/SimsimhanChobo/SC-KRM/wiki/SCKRM.Threads.ThreadManager#ismainthread) || ([Application.isPlaying](https://docs.unity3d.com/ScriptReference/Application-isPlaying.html) && ![UnityEditor.EditorApplication.isPaused](https://docs.unity3d.com/ScriptReference/EditorApplication-isPaused.html))
 Build: const true"
 )]
         public static bool isPlayingAndNotPaused => !ThreadManager.isMainThread || (Application.isPlaying && !UnityEditor.EditorApplication.isPaused);
