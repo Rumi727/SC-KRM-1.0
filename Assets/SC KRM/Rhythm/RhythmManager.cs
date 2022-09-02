@@ -21,9 +21,9 @@ namespace SCKRM.Rhythm
         }
 
         [WikiDescription("현재 사운드 플레이어")] public static ISoundPlayer soundPlayer { get; private set; }
-        [WikiDescription("현재 BPM 리스트")] public static BeatValuePairList<double> bpmList { get; private set; }
+        [WikiDescription("현재 BPM 리스트")] public static IBeatValuePairList<double> bpmList { get; private set; }
         [WikiDescription("현재 오프셋")] public static double offset { get; private set; }
-        [WikiDescription("현재 드롭파트 리스트")] public static BeatValuePairList<bool> dropPartList { get; private set; }
+        [WikiDescription("현재 드롭파트 리스트")] public static IBeatValuePairList<bool> dropPartList { get; private set; }
 
 
 
@@ -148,7 +148,7 @@ namespace SCKRM.Rhythm
         }
 
         [WikiDescription("리듬 재생")]
-        public static void Play(BeatValuePairList<double> bpmList, double offset, BeatValuePairList<bool> dropPartList, ISoundPlayer soundPlayer)
+        public static void Play(IBeatValuePairList<double> bpmList, double offset, IBeatValuePairList<bool> dropPartList, ISoundPlayer soundPlayer)
         {
             currentBeat = 0;
             bpmOffsetBeat = 0;
@@ -188,7 +188,7 @@ namespace SCKRM.Rhythm
             for (int i = 0; i < bpmList.Count; i++)
             {
                 {
-                    BeatValuePair<double> bpm = bpmList[i];
+                    IBeatValuePair<double> bpm = bpmList[i];
                     BPMChange(bpm.value, bpm.beat);
                 }
 
@@ -196,7 +196,7 @@ namespace SCKRM.Rhythm
                 {
                     if (i - 1 >= 0)
                     {
-                        BeatValuePair<double> bpm = bpmList[i - 1];
+                        IBeatValuePair<double> bpm = bpmList[i - 1];
                         BPMChange(bpm.value, bpm.beat);
                     }
 
