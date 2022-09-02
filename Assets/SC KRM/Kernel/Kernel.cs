@@ -484,25 +484,25 @@ Build: const true"
 
 
     [WikiDescription("No object in folder\n폴더에 오브젝트가 없습니다")]
-    public class NullObjectException : Exception
+    public class NullFolderObjectException : Exception
     {
         /// <summary>
         /// No object in folder
         /// 폴더에 오브젝트가 없습니다
         /// </summary>
-        public NullObjectException() : base("No object in folder\n폴더에 오브젝트가 없습니다") { }
+        public NullFolderObjectException() : base("No object in folder\n폴더에 오브젝트가 없습니다") { }
 
         /// <summary>
         /// No object in {objectPath} folder
         /// {objectPath} 폴더에 오브젝트가 없습니다
         /// </summary>
-        public NullObjectException(string objectPath) : base($"No object in {objectPath} folder\n{objectPath} 폴더에 오브젝트가 없습니다") { }
+        public NullFolderObjectException(string objectPath) : base($"No object in {objectPath} folder\n{objectPath} 폴더에 오브젝트가 없습니다") { }
 
         /// <summary>
         /// Object {objectName} does not exist in {objectPath} folder
         /// {objectPath} 폴더에 {objectName} 오브젝트가 없습니다
         /// </summary>
-        public NullObjectException(string objectPath, string objectName) : base($"Object {objectName} does not exist in {objectPath} folder\n{objectPath} 폴더에 {objectName} 오브젝트가 없습니다") { }
+        public NullFolderObjectException(string objectPath, string objectName) : base($"Object {objectName} does not exist in {objectPath} folder\n{objectPath} 폴더에 {objectName} 오브젝트가 없습니다") { }
     }
 
     [WikiDescription("No object in resource folder\n리소스 폴더에 오브젝트가 없습니다")]
