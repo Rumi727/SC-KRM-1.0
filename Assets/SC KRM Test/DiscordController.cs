@@ -2,16 +2,16 @@ using System;
 using UnityEngine;
 using DiscordPresence;
 using SCKRM;
+using SCKRM.Discord;
 
 public class DiscordController : MonoBehaviour
 {
     long startTime = -1;
     //float timer = 0;
 
-    void Awake()
+    void Awake() => startTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+    void Update()
     {
-        startTime = DateTimeOffset.Now.ToUnixTimeSeconds();
-
         string version;
 #if UNITY_EDITOR
         version = $"{Kernel.productName} {Kernel.version} | Unity {Kernel.unityVersion}";
@@ -19,6 +19,6 @@ public class DiscordController : MonoBehaviour
         version = $"{Kernel.productName} {Kernel.version}";
 #endif
 
-        PresenceManager.UpdatePresence("Simsimhan Chobo Kernel Manager", "Rich Presence Test", startTime, PresenceManager.instance.presence.endTimestamp, PresenceManager.instance.presence.largeImageKey, version);
+        DiscordManager.UpdatePresence("Simsimhan Chobo Kernel Manager", "Rich Presence Test", startTime, DiscordManager.presence.endTimestamp, DiscordManager.presence.largeImageKey, version);
     }
 }
