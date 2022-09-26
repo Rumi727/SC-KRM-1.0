@@ -109,13 +109,14 @@ namespace SCKRM.UI
             }
 
 #if UNITY_EDITOR
-            PrefabAssetType prefabAssetType = PrefabUtility.GetPrefabAssetType(gameObject);
-            if (prefabAssetType == PrefabAssetType.NotAPrefab)
             {
-                if (safeScreen.parent != transform)
-                    safeScreen.SetParent(transform);
+                PrefabAssetType prefabAssetType = PrefabUtility.GetPrefabAssetType(safeScreen.gameObject);
+                if (prefabAssetType == PrefabAssetType.NotAPrefab)
+                {
+                    if (safeScreen.parent != transform)
+                        safeScreen.SetParent(transform);
+                }
             }
-
 #else
             if (safeScreen.parent != transform)
                 safeScreen.SetParent(transform);
@@ -157,7 +158,15 @@ namespace SCKRM.UI
                 Transform childtransform = safeScreen.GetChild(i);
                 if (childtransform != safeScreen)
                 {
-                    childtransform.SetParent(transform);
+#if UNITY_EDITOR
+                    {
+                        PrefabAssetType prefabAssetType = PrefabUtility.GetPrefabAssetType(childtransform.gameObject);
+                        if (prefabAssetType == PrefabAssetType.NotAPrefab)
+                            childtransform.SetParent(safeScreen);
+                    }
+#else
+                    childtransform.SetParent(safeScreen);
+#endif
 
                     i--;
                     childCount--;
