@@ -1,6 +1,10 @@
 using SCKRM.UI.StatusBar;
-using System;
+using System
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace SCKRM.UI
 {
@@ -104,8 +108,18 @@ namespace SCKRM.UI
                 tracker.Add(this, safeScreen, DrivenTransformProperties.All);
             }
 
+#if UNITY_EDITOR
+            PrefabAssetType prefabAssetType = PrefabUtility.GetPrefabAssetType(gameObject);
+            if (prefabAssetType == PrefabAssetType.NotAPrefab)
+            {
+                if (safeScreen.parent != transform)
+                    safeScreen.SetParent(transform);
+            }
+
+#else
             if (safeScreen.parent != transform)
                 safeScreen.SetParent(transform);
+#endif
 
             safeScreen.anchorMin = Vector2.zero;
             safeScreen.anchorMax = Vector2.one;
@@ -175,7 +189,7 @@ namespace SCKRM.UI
 
             transform.rotation = camera.transform.rotation;
             transform.position = camera.transform.position + (transform.forward * planeDistance);
-            
+
 
 
             float width = camera.pixelWidth * (1 / UIManager.currentGuiSize);
