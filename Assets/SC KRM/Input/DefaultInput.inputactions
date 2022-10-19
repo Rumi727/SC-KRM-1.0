@@ -157,6 +157,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3df20347-dc43-4b4b-8ec1-e71845744287",
+                    "path": "<VirtualPointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fce43737-a137-4db6-9e9a-4736187fd8bc",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
