@@ -94,7 +94,7 @@ namespace SCKRM.UI.StatusBar
             {
                 {
                     bool mouseYisScreenY = false;
-                    if (InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width)
+                    if (!statusBarForceHide && (InputManager.mousePosition.x >= 0 && InputManager.mousePosition.x <= ScreenManager.width))
                     {
                         if (SaveData.bottomMode)
                             mouseYisScreenY = InputManager.mousePosition.y <= 1;
@@ -144,7 +144,7 @@ namespace SCKRM.UI.StatusBar
                         }
                     }
 
-                    if ((!selectedStatusBar || (statusBarShow && defaultTabAllow)) && (InputManager.GetKey("gui.tab", InputType.Down, InputManager.inputLockDenyAllForce)))
+                    if ((!selectedStatusBar || (statusBarShow && defaultTabAllow)) && InputManager.GetKey("gui.tab", InputType.Down, InputManager.inputLockDenyAllForce))
                         Tab();
                     else if (selectedStatusBar && InputManager.GetKey("gui.back", InputType.Down, InputManager.inputLockDenyAll))
                         EventSystem.current.SetSelectedGameObject(null);
@@ -283,7 +283,7 @@ namespace SCKRM.UI.StatusBar
                 return;
             }
 
-            if (defaultTabAllow)
+            if (defaultTabAllow && !statusBarForceHide)
             {
                 Selectable[] selectables = instance.GetComponentsInChildren<Selectable>();
                 if (selectables.Length > 0)
