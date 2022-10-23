@@ -21,6 +21,7 @@ namespace SCKRM.UI.StatusBar
             [JsonProperty] public static bool toggleSeconds { get; set; } = false;
         }
 
+        public static bool statusBarForceHide { get; set; } = false;
         public static bool allowStatusBarShow { get; set; } = false;
         public static bool backButtonShow { get; set; } = true;
 
@@ -103,7 +104,7 @@ namespace SCKRM.UI.StatusBar
 
                     selectedStatusBar = pointer || mouseYisScreenY || SideBarManager.isSideBarShow || (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponentInParent<Kernel>() != null);
                     bool statusBarShow = selectedStatusBar || timer > 0;
-                    isStatusBarShow = allowStatusBarShow || statusBarShow;
+                    isStatusBarShow = (allowStatusBarShow || statusBarShow) && !statusBarForceHide;
                     defaultTabAllow = oldSelectedObject == null || !oldSelectedObject.activeInHierarchy || oldSelectedObject.GetComponentInParent<UIManager>() == null;
 
                     if (selectedStatusBar)
@@ -142,7 +143,7 @@ namespace SCKRM.UI.StatusBar
                                 background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsUnscaledDeltaTime);
                         }
                     }
-                    
+
                     if ((!selectedStatusBar || (statusBarShow && defaultTabAllow)) && (InputManager.GetKey("gui.tab", InputType.Down, InputManager.inputLockDenyAllForce)))
                         Tab();
                     else if (selectedStatusBar && InputManager.GetKey("gui.back", InputType.Down, InputManager.inputLockDenyAll))
@@ -272,7 +273,7 @@ namespace SCKRM.UI.StatusBar
         {
             if (!instance.layout.activeSelf)
                 instance.layout.SetActive(true);
-            
+
             if (tabSelectGameObject != null)
             {
                 if (!tabAllow)
