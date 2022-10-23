@@ -71,8 +71,6 @@ namespace SCKRM.UI
         /// Please put base.Remove() when overriding
         /// </summary>
         public virtual bool Remove() => IObjectPooling.RemoveDefault(this, this);
-
-        protected override void OnDestroy() => Remove();
     }
 
     public class UIManager<T> : UI where T : MonoBehaviour
