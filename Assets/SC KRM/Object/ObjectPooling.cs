@@ -27,37 +27,47 @@ namespace SCKRM.Object
         [WikiDescription("오브젝트를 삭제할때의 기본 스크립트")]
         public static bool RemoveDefault(MonoBehaviour monoBehaviour, IObjectPooling objectPooling)
         {
-            if (!objectPooling.isActived)
-                return false;
+            if (monoBehaviour != null)
+            {
+                if (!objectPooling.isActived)
+                    return false;
 
-            ObjectPoolingSystem.ObjectRemove(objectPooling.objectKey, monoBehaviour, objectPooling);
-            monoBehaviour.name = objectPooling.objectKey;
+                ObjectPoolingSystem.ObjectRemove(objectPooling.objectKey, monoBehaviour, objectPooling);
+                monoBehaviour.name = objectPooling.objectKey;
 
-            monoBehaviour.transform.localPosition = Vector3.zero;
+                monoBehaviour.transform.localPosition = Vector3.zero;
 
-            monoBehaviour.transform.localEulerAngles = Vector3.zero;
-            monoBehaviour.transform.localScale = Vector3.one;
+                monoBehaviour.transform.localEulerAngles = Vector3.zero;
+                monoBehaviour.transform.localScale = Vector3.one;
 
-            monoBehaviour.StopAllCoroutines();
-            return true;
+                monoBehaviour.StopAllCoroutines();
+                return true;
+            }
+            else
+                return true;
         }
 
         [WikiIgnore]
         public static bool RemoveDefault(UI.UI ui, IObjectPooling objectPooling)
         {
-            if (!objectPooling.isActived)
-                return false;
+            if (ui != null)
+            {
+                if (!objectPooling.isActived)
+                    return false;
 
-            ObjectPoolingSystem.ObjectRemove(objectPooling.objectKey, ui, objectPooling);
-            ui.name = objectPooling.objectKey;
+                ObjectPoolingSystem.ObjectRemove(objectPooling.objectKey, ui, objectPooling);
+                ui.name = objectPooling.objectKey;
 
-            ui.rectTransform.anchoredPosition = Vector3.zero;
+                ui.rectTransform.anchoredPosition = Vector3.zero;
 
-            ui.rectTransform.localEulerAngles = Vector3.zero;
-            ui.rectTransform.localScale = Vector3.one;
+                ui.rectTransform.localEulerAngles = Vector3.zero;
+                ui.rectTransform.localScale = Vector3.one;
 
-            ui.StopAllCoroutines();
-            return true;
+                ui.StopAllCoroutines();
+                return true;
+            }
+            else
+                return true;
         }
     }
 
@@ -89,5 +99,7 @@ namespace SCKRM.Object
         /// </summary>
         [WikiDescription("오브젝트 삭제")]
         public virtual bool Remove() => IObjectPooling.RemoveDefault(this, this);
+
+        public virtual void OnDestroy() => Remove();
     }
 }
