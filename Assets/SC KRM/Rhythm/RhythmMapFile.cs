@@ -1,5 +1,6 @@
 using SCKRM.Easing;
 using SCKRM.Json;
+using System;
 using System.Collections.Generic;
 
 namespace SCKRM.Rhythm
@@ -54,6 +55,54 @@ namespace SCKRM.Rhythm
             tempBeat = beat;
 
             return value;
+        }
+
+        public void FindValue(Predicate<TPair> match) => FindValue(RhythmManager.currentBeat, match, out _, out _);
+        public void FindValue(double currentBeat, Predicate<TPair> match) => FindValue(currentBeat, match, out _, out _);
+
+        public virtual void FindValue(double currentBeat, Predicate<TPair> match, out double beat, out int index)
+        {
+            if (Count <= 0)
+            {
+                beat = 0;
+                index = 0;
+
+                return;
+            }
+
+            TPair firstPair = this[0];
+            bool firstPairMatch = match(firstPair);
+            if ((Count <= 1 && firstPairMatch) || (firstPair.beat >= currentBeat && firstPairMatch))
+            {
+                beat = this[0].beat;
+                index = 0;
+
+                return;
+            }
+            else
+            {
+                TPair lastPair = firstPair;
+                int lastIndex = 0;
+                for (int i = 0; i < Count; i++)
+                {
+                    TPair pair = this[i];
+                    if (pair.beat >= currentBeat && match(lastPair))
+                    {
+                        beat = lastPair.beat;
+                        index = lastIndex - 1;
+
+                        return;
+                    }
+
+                    lastPair = pair;
+                    lastIndex = i;
+                }
+
+                beat = 0;
+                index = 0;
+
+                return;
+            }
         }
     }
     #endregion
