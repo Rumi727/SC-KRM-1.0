@@ -3951,16 +3951,100 @@ namespace SCKRM
             return fieldToSave;
         }
 
-        public static T[] GetComponentsInChildrenFieldSave<T>(this Component component, T[] fieldToSave, bool includeInactive = false, GetComponentsInChildrenMode mode = GetComponentsInChildrenMode.addZeroLengthIfNull)
+        public static T[] GetComponentsFieldSave<T>(this Component component, T[] fieldToSave, GetComponentsMode mode = GetComponentsMode.addZeroLengthIfNull)
+        {
+            if (fieldToSave == null)
+            {
+                fieldToSave = component.GetComponents<T>();
+                if (fieldToSave == null)
+                {
+                    if (mode == GetComponentsMode.addZeroLengthIfNull)
+                        return new T[0];
+                    else if (mode == GetComponentsMode.destroyIfNull)
+                    {
+                        UnityEngine.Object.DestroyImmediate(component);
+                        return null;
+                    }
+                }
+            }
+
+            return fieldToSave;
+        }
+
+
+
+        public static T GetComponentInParentFieldSave<T>(this Component component, T fieldToSave, GetComponentMode mode = GetComponentMode.addIfNull) where T : Component
+        {
+            if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
+            {
+                fieldToSave = component.GetComponentInParent<T>();
+                if (fieldToSave == null)
+                {
+                    if (mode == GetComponentMode.addIfNull)
+                        return component.gameObject.AddComponent<T>();
+                    else if (mode == GetComponentMode.destroyIfNull)
+                    {
+                        UnityEngine.Object.DestroyImmediate(component);
+                        return null;
+                    }
+                }
+            }
+
+            return fieldToSave;
+        }
+
+        public static T[] GetComponentsInParentFieldSave<T>(this Component component, T[] fieldToSave, bool includeInactive = false, GetComponentsMode mode = GetComponentsMode.addZeroLengthIfNull)
+        {
+            if (fieldToSave == null)
+            {
+                fieldToSave = component.GetComponentsInParent<T>(includeInactive);
+                if (fieldToSave == null)
+                {
+                    if (mode == GetComponentsMode.addZeroLengthIfNull)
+                        return new T[0];
+                    else if (mode == GetComponentsMode.destroyIfNull)
+                    {
+                        UnityEngine.Object.DestroyImmediate(component);
+                        return null;
+                    }
+                }
+            }
+
+            return fieldToSave;
+        }
+
+
+
+        public static T GetComponentInChildrenFieldSave<T>(this Component component, T fieldToSave, GetComponentMode mode = GetComponentMode.addIfNull) where T : Component
+        {
+            if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
+            {
+                fieldToSave = component.GetComponentInChildren<T>();
+                if (fieldToSave == null)
+                {
+                    if (mode == GetComponentMode.addIfNull)
+                        return component.gameObject.AddComponent<T>();
+                    else if (mode == GetComponentMode.destroyIfNull)
+                    {
+                        UnityEngine.Object.DestroyImmediate(component);
+                        return null;
+                    }
+                }
+            }
+
+            return fieldToSave;
+        }
+
+        public static T[] GetComponentsInChildrenFieldSave<T>(this Component component, T[] fieldToSave, bool includeInactive = false, GetComponentsMode mode = GetComponentsMode.addZeroLengthIfNull)
         {
             if (fieldToSave == null)
             {
                 fieldToSave = component.GetComponentsInChildren<T>(includeInactive);
                 if (fieldToSave == null)
                 {
-                    if (mode == GetComponentsInChildrenMode.addZeroLengthIfNull)
+                    if (mode == GetComponentsMode.addZeroLengthIfNull)
                         return new T[0];
-                    else if (mode == GetComponentsInChildrenMode.destroyIfNull)
+                    else if (mode == GetComponentsMode.destroyIfNull)
                     {
                         UnityEngine.Object.DestroyImmediate(component);
                         return null;
@@ -3978,7 +4062,7 @@ namespace SCKRM
             destroyIfNull
         }
 
-        public enum GetComponentsInChildrenMode
+        public enum GetComponentsMode
         {
             none,
             addZeroLengthIfNull,
