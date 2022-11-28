@@ -3973,20 +3973,16 @@ namespace SCKRM
 
 
 
-        public static T GetComponentInParentFieldSave<T>(this Component component, T fieldToSave, GetComponentMode mode = GetComponentMode.addIfNull) where T : Component
+        public static T GetComponentInParentFieldSave<T>(this Component component, T fieldToSave, GetComponentInMode mode = GetComponentInMode.none) where T : Component
         {
             if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
             {
                 fieldToSave = component.GetComponentInParent<T>();
-                if (fieldToSave == null)
+
+                if (fieldToSave == null && mode == GetComponentInMode.destroyIfNull)
                 {
-                    if (mode == GetComponentMode.addIfNull)
-                        return component.gameObject.AddComponent<T>();
-                    else if (mode == GetComponentMode.destroyIfNull)
-                    {
-                        UnityEngine.Object.DestroyImmediate(component);
-                        return null;
-                    }
+                    UnityEngine.Object.DestroyImmediate(component);
+                    return null;
                 }
             }
 
@@ -4015,20 +4011,15 @@ namespace SCKRM
 
 
 
-        public static T GetComponentInChildrenFieldSave<T>(this Component component, T fieldToSave, GetComponentMode mode = GetComponentMode.addIfNull) where T : Component
+        public static T GetComponentInChildrenFieldSave<T>(this Component component, T fieldToSave, GetComponentInMode mode = GetComponentInMode.none) where T : Component
         {
             if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
             {
                 fieldToSave = component.GetComponentInChildren<T>();
-                if (fieldToSave == null)
+                if (fieldToSave == null && mode == GetComponentInMode.destroyIfNull)
                 {
-                    if (mode == GetComponentMode.addIfNull)
-                        return component.gameObject.AddComponent<T>();
-                    else if (mode == GetComponentMode.destroyIfNull)
-                    {
-                        UnityEngine.Object.DestroyImmediate(component);
-                        return null;
-                    }
+                    UnityEngine.Object.DestroyImmediate(component);
+                    return null;
                 }
             }
 
@@ -4059,6 +4050,12 @@ namespace SCKRM
         {
             none,
             addIfNull,
+            destroyIfNull
+        }
+
+        public enum GetComponentInMode
+        {
+            none,
             destroyIfNull
         }
 
