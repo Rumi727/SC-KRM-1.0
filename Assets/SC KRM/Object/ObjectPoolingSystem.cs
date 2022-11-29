@@ -6,6 +6,7 @@ using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SCKRM.Object
 {
@@ -202,6 +203,9 @@ namespace SCKRM.Object
             {
                 monoBehaviour.gameObject.SetActive(false);
                 monoBehaviour.transform.SetParent(instance.transform);
+
+                if (EventSystem.current.currentSelectedGameObject == monoBehaviour.gameObject)
+                    EventSystem.current.SetSelectedGameObject(null);
 
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
                 objectPooling.isActived = false;
