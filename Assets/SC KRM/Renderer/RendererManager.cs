@@ -20,10 +20,8 @@ namespace SCKRM.Renderer
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException(nameof(Rerender));
-            if (!Kernel.isPlaying)
-                throw new NotPlayModeMethodException(nameof(Rerender));
-
-            if (thread)
+            
+            if (Kernel.isPlaying && thread)
             {
                 if (rerenderThread != null)
                     rerenderThread.Remove();
