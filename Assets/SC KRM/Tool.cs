@@ -2398,7 +2398,7 @@ namespace SCKRM
                 throw new ArgumentNullException(nameof(list));
 
             if (list.Count() > 0)
-                return list.Aggregate((x, y) => (x - target) < (y - target) ? x : y);
+                return list.Aggregate((x, y) => (x - target).Abs() < (y - target).Abs() ? x : y);
 
             return 0;
         }
@@ -2443,7 +2443,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     sbyte currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2503,7 +2503,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     short currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2563,7 +2563,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     int currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2623,7 +2623,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     long currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2683,7 +2683,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     float currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2713,7 +2713,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     double currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2743,7 +2743,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     decimal currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2773,7 +2773,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     BigInteger currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2803,7 +2803,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     BigDecimal currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2833,7 +2833,7 @@ namespace SCKRM
                 while (enumerator.MoveNext())
                 {
                     nint currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2897,7 +2897,7 @@ namespace SCKRM
                         continue;
 
                     sbyte currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2930,7 +2930,7 @@ namespace SCKRM
                         continue;
 
                     byte currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -2963,7 +2963,7 @@ namespace SCKRM
                         continue;
 
                     short currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3029,7 +3029,7 @@ namespace SCKRM
                         continue;
 
                     int currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3092,7 +3092,7 @@ namespace SCKRM
                         continue;
 
                     long currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3158,7 +3158,7 @@ namespace SCKRM
                         continue;
 
                     float currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3183,15 +3183,16 @@ namespace SCKRM
             if (list.Count() > 0)
             {
                 using IEnumerator<T> enumerator = list.GetEnumerator();
-                double val = getNumberFunc(enumerator.Current);
+                enumerator.MoveNext();
 
+                double val = getNumberFunc(enumerator.Current);
                 while (enumerator.MoveNext())
                 {
                     if (!predicate(enumerator.Current))
                         continue;
 
                     double currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3224,7 +3225,7 @@ namespace SCKRM
                         continue;
 
                     decimal currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3257,7 +3258,7 @@ namespace SCKRM
                         continue;
 
                     BigInteger currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3290,7 +3291,7 @@ namespace SCKRM
                         continue;
 
                     BigDecimal currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
@@ -3323,7 +3324,7 @@ namespace SCKRM
                         continue;
 
                     nint currentNumber = getNumberFunc(enumerator.Current);
-                    val = (val - target) < (currentNumber - target) ? val : currentNumber;
+                    val = (val - target).Abs() < (currentNumber - target).Abs() ? val : currentNumber;
                 }
 
                 return val;
