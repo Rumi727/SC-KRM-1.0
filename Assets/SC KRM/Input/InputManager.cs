@@ -735,7 +735,7 @@ Checks input locks. Returns true if any of the locks except the input lock to ig
             Data.inputLockList[key] = value;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// 인풋 락을 설정합니다
         /// Set input lock
         /// </summary>
@@ -763,7 +763,7 @@ Checks input locks. Returns true if any of the locks except the input lock to ig
 
             if (Data.inputLockList.ContainsKey(key))
                 Data.inputLockList[key] = value;
-        }
+        }*/
         #endregion
 
 
