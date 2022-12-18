@@ -5,7 +5,7 @@ using System.Reflection;
 public static class Debug
 {
     [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-    public static void Log(string message, string className = null)
+    public static void Log(object message, string className = null)
     {
         if (className == null)
             className = NameOfCallingClass();
@@ -14,7 +14,7 @@ public static class Debug
     }
 
     [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-    public static void LogWarning(string message, string className = null)
+    public static void LogWarning(object message, string className = null)
     {
         if (className == null)
             className = NameOfCallingClass();
@@ -23,7 +23,7 @@ public static class Debug
     }
 
     [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-    public static void LogError(string message, string className = null)
+    public static void LogError(object message, string className = null)
     {
         if (className == null)
             className = NameOfCallingClass();
@@ -31,7 +31,7 @@ public static class Debug
         UnityEngine.Debug.LogError(LogText(className, message));
     }
 
-    public static void ForceLog(string message, string className = null)
+    public static void ForceLog(object message, string className = null)
     {
         if (className == null)
             className = NameOfCallingClass();
@@ -39,7 +39,7 @@ public static class Debug
         UnityEngine.Debug.Log(ForceLogText(className, message));
     }
 
-    public static void ForceLogWarning(string message, string className = null)
+    public static void ForceLogWarning(object message, string className = null)
     {
         if (className == null)
             className = NameOfCallingClass();
@@ -47,7 +47,7 @@ public static class Debug
         UnityEngine.Debug.LogWarning(ForceLogText(className, message));
     }
 
-    public static void ForceLogError(string message, string className = null)
+    public static void ForceLogError(object message, string className = null)
     {
         if (className == null)
             className = NameOfCallingClass();
@@ -55,8 +55,8 @@ public static class Debug
         UnityEngine.Debug.LogError(ForceLogText(className, message));
     }
 
-    static string LogText(string className, string message) => className + ": " + message;
-    static string ForceLogText(string className, string message) => "<b>" + className + "</b>: " + message;
+    static string LogText(string className, object message) => className + ": " + message;
+    static string ForceLogText(string className, object message) => "<b>" + className + "</b>: " + message;
 
 
     public static void LogException(Exception exception) => UnityEngine.Debug.LogException(exception);
