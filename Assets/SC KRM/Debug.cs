@@ -55,8 +55,8 @@ public static class Debug
         UnityEngine.Debug.LogError(ForceLogText(className, message));
     }
 
-    static string LogText(string className, object message) => className + ": " + message;
-    static string ForceLogText(string className, object message) => "<b>" + className + "</b>: " + message;
+    static string LogText(string className, object message) => "[" + className + "] " + message;
+    static string ForceLogText(string className, object message) => "<b>[" + className + "]</b> " + message;
 
 
     public static void LogException(Exception exception) => UnityEngine.Debug.LogException(exception);
