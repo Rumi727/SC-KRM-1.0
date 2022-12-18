@@ -1,12 +1,10 @@
 using Newtonsoft.Json;
 using SCKRM.ProjectSetting;
 using SCKRM.Renderer;
-using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace SCKRM.Object
 {
@@ -27,10 +25,6 @@ namespace SCKRM.Object
             public List<(MonoBehaviour monoBehaviour, IObjectPooling objectPooling)> objectPooling = new List<(MonoBehaviour, IObjectPooling)>();
         }
 
-#if UNITY_EDITOR
-        static SaveLoadClass data;
-#endif
-
 
 
         void Awake() => SingletonCheck(this);
@@ -41,18 +35,6 @@ namespace SCKRM.Object
         /// <param name="objectKey">미리 생성할 오브젝트 키</param>
         public static void ObjectAdvanceCreate(string objectKey)
         {
-            if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(ObjectAdvanceCreate));
-            if (!Kernel.isPlaying)
-                throw new NotPlayModeMethodException(nameof(ObjectAdvanceCreate));
-            if (!InitialLoadManager.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(ObjectAdvanceCreate));
-            if (instance == null)
-                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
-
-            if (objectKey == null)
-                objectKey = "";
-
             MonoBehaviour monoBehaviour = Resources.Load<MonoBehaviour>(Data.prefabList[objectKey]);
             IObjectPooling objectPooling = monoBehaviour as IObjectPooling;
             if (objectPooling == null)
@@ -69,18 +51,15 @@ namespace SCKRM.Object
         public static void ObjectAdd(string objectKey, MonoBehaviour monoBehaviour)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(ObjectAdvanceCreate));
+                throw new NotMainThreadMethodException();
             if (!Kernel.isPlaying)
-                throw new NotPlayModeMethodException(nameof(ObjectAdvanceCreate));
+                throw new NotPlayModeMethodException();
             if (!InitialLoadManager.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(ObjectAdvanceCreate));
+                throw new NotInitialLoadEndMethodException();
             if (instance == null)
-                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
+                throw new NullScriptMethodException(nameof(ObjectPoolingSystem));
             if (monoBehaviour == null)
                 throw new NullReferenceException(nameof(monoBehaviour));
-
-            if (objectKey == null)
-                objectKey = "";
 
             MonoBehaviour instantiate = Instantiate(monoBehaviour, instance.transform);
             IObjectPooling objectPooling = instantiate as IObjectPooling;
@@ -107,24 +86,15 @@ namespace SCKRM.Object
         public static (MonoBehaviour monoBehaviour, IObjectPooling objectPooling) ObjectCreate(string objectKey, Transform parent = null, bool autoRefresh = true)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(ObjectCreate));
-            if (Kernel.isPlaying && !InitialLoadManager.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
-            if (Kernel.isPlaying && instance == null)
-                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectCreate));
-
-            if (objectKey == null)
-                objectKey = "";
-
+                throw new NotMainThreadMethodException();
             if (!Kernel.isPlaying)
-            {
-                if (data == null)
-                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(Data), out data);
+                throw new NotPlayModeMethodException();
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException();
+            if (instance == null)
+                throw new NullScriptMethodException(nameof(ObjectPoolingSystem));
 
-                SaveLoadManager.Load(data, Kernel.projectSettingPath);
-            }
-
-            if (Kernel.isPlaying && objectList.objectKey.Contains(objectKey))
+            if (objectList.objectKey.Contains(objectKey))
             {
                 (MonoBehaviour monoBehaviour, IObjectPooling objectPooling) = objectList.objectPooling[objectList.objectKey.IndexOf(objectKey)];
 
@@ -132,7 +102,7 @@ namespace SCKRM.Object
                 monoBehaviour.gameObject.SetActive(true);
 
                 objectPooling.objectKey = objectKey;
-                
+
                 {
                     int i = objectList.objectKey.IndexOf(objectKey);
                     objectList.objectKey.RemoveAt(i);
@@ -186,36 +156,27 @@ namespace SCKRM.Object
         public static bool ObjectRemove(string objectKey, MonoBehaviour monoBehaviour, IObjectPooling objectPooling)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(ObjectRemove));
-            if (Kernel.isPlaying && !InitialLoadManager.isInitialLoadEnd)
-                throw new NotInitialLoadEndMethodException(nameof(ObjectCreate));
-            if (Kernel.isPlaying && instance == null)
-                throw new NullScriptMethodException(nameof(ObjectPoolingSystem), nameof(ObjectRemove));
+                throw new NotMainThreadMethodException();
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeMethodException();
+            if (!InitialLoadManager.isInitialLoadEnd)
+                throw new NotInitialLoadEndMethodException();
+            if (instance == null)
+                throw new NullScriptMethodException(nameof(ObjectRemove));
             if (monoBehaviour == null)
                 throw new NullReferenceException(nameof(monoBehaviour));
             if (objectPooling == null)
                 throw new NullReferenceException(nameof(objectPooling));
 
-            if (objectKey == null)
-                objectKey = "";
-
-            if (Kernel.isPlaying)
-            {
-                monoBehaviour.gameObject.SetActive(false);
-                monoBehaviour.transform.SetParent(instance.transform);
-
-                if (EventSystem.current.currentSelectedGameObject == monoBehaviour.gameObject)
-                    EventSystem.current.SetSelectedGameObject(null);
+            monoBehaviour.gameObject.SetActive(false);
+            monoBehaviour.transform.SetParent(instance.transform);
 
 #pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                objectPooling.isActived = false;
+            objectPooling.isActived = false;
 #pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
 
-                objectList.objectKey.Add(objectKey);
-                objectList.objectPooling.Add((monoBehaviour, objectPooling));
-            }
-            else
-                DestroyImmediate(monoBehaviour.gameObject);
+            objectList.objectKey.Add(objectKey);
+            objectList.objectPooling.Add((monoBehaviour, objectPooling));
 
             return true;
         }

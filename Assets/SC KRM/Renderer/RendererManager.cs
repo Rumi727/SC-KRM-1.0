@@ -19,9 +19,11 @@ namespace SCKRM.Renderer
         public static void Refresh(IRefreshable[] refreshableObjects, bool thread = true)
         {
             if (!ThreadManager.isMainThread)
-                throw new NotMainThreadMethodException(nameof(Rerender));
-            
-            if (Kernel.isPlaying && thread)
+                throw new NotMainThreadMethodException();
+            if (!Kernel.isPlaying)
+                throw new NotPlayModeMethodException();
+
+            if (thread)
             {
                 if (rerenderThread != null)
                     rerenderThread.Remove();
