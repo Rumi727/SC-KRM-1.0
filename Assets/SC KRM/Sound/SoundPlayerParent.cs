@@ -30,6 +30,8 @@ namespace SCKRM.Sound
         [WikiDescription("곡의 길이")] float length { get; }
         [WikiDescription("곡의 실제 길이")] float realLength { get; }
 
+        [WikiDescription("루프 가능 여부")] bool loop { get; set; }
+
 
 
         event Action timeChanged;
