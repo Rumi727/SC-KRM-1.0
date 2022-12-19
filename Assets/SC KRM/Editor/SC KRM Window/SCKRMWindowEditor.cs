@@ -20,7 +20,7 @@ namespace SCKRM.Editor
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                tabIndex = GUILayout.Toolbar(tabIndex, tabNames.ToArray(), GUILayout.Width(300));
+                tabIndex = GUILayout.Toolbar(tabIndex, tabNames.ToArray(), GUILayout.ExpandWidth(false));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
