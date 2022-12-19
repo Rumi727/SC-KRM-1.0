@@ -157,7 +157,7 @@ namespace SCKRM.Editor
 
                 for (int i = SoundManager.soundList.Count - 1; i >= 0; i--)
                 {
-                    SoundObjectEditor.GUI(SoundManager.soundList[i]);
+                    SoundPlayerEditor.GUI(SoundManager.soundList[i]);
                     CustomInspectorEditor.DrawLine(2);
                 }
 
