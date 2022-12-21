@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -144,7 +145,34 @@ namespace SCKRM.Resource
         public static bool isInitialLoadAudioEnd { get; private set; } = false;
         public static bool isAudioReset { get; private set; } = false;
         public static bool isInitialLoadLanguageEnd { get; private set; } = false;
-        public static bool isResourceRefesh { get; private set; } = false;
+
+        /// <summary>
+        /// Thread-Safe
+        /// </summary>
+        public static bool isResourceRefesh
+        { 
+            get
+            {
+                while (Interlocked.CompareExchange(ref isResourceRefeshLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                bool value = _isResourceRefesh;
+
+                Interlocked.Decrement(ref isResourceRefeshLock);
+                return value;
+            }
+            private set
+            {
+                while (Interlocked.CompareExchange(ref isResourceRefeshLock, 1, 0) != 0)
+                    Thread.Sleep(1);
+
+                _isResourceRefesh = value;
+
+                Interlocked.Decrement(ref isResourceRefeshLock);
+            }
+        }
+        static bool _isResourceRefesh = false;
+        static int isResourceRefeshLock = 0;
 
 
 
