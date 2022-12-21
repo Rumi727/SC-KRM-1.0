@@ -417,42 +417,19 @@ Resource refresh (Since the Unity API is used, we need to run it on the main thr
                             }
                         }
 
-                        if (!packTextureTypePaths.ContainsKey(nameSpace))
-                        {
-                            packTextureTypePaths.Add(nameSpace, new Dictionary<string, string>());
-                            packTextureTypePaths[nameSpace].Add(type, typePath);
-                        }
-                        else if (!packTextureTypePaths[nameSpace].ContainsKey(type))
-                            packTextureTypePaths[nameSpace].Add(type, typePath);
+                        packTextureTypePaths.TryAdd(nameSpace, new Dictionary<string, string>());
+                        packTextureTypePaths[nameSpace].TryAdd(type, typePath);
 
-                        if (!packTexturePaths.ContainsKey(nameSpace))
-                        {
-                            packTexturePaths.Add(nameSpace, new Dictionary<string, Dictionary<string, string>>());
-                            packTexturePaths[nameSpace].Add(type, fileName_texturePaths);
-                        }
-                        else if (!packTexturePaths[nameSpace].ContainsKey(type))
-                            packTexturePaths[nameSpace].Add(type, fileName_texturePaths);
-                        else
+                        packTexturePaths.TryAdd(nameSpace, new Dictionary<string, Dictionary<string, string>>());
+                        if (!packTexturePaths[nameSpace].TryAdd(type, fileName_texturePaths))
                             packTexturePaths[nameSpace][type] = packTexturePaths[nameSpace][type].Concat(fileName_texturePaths).ToDictionary(a => a.Key, b => b.Value);
 
-                        if (!nameSpace_type_textureNames.ContainsKey(nameSpace))
-                        {
-                            nameSpace_type_textureNames.Add(nameSpace, new Dictionary<string, List<string>>());
-                            nameSpace_type_textureNames[nameSpace].Add(type, textureNames);
-                        }
-                        else if (!nameSpace_type_textureNames[nameSpace].ContainsKey(type))
-                            nameSpace_type_textureNames[nameSpace].Add(type, textureNames);
-                        else
+                        nameSpace_type_textureNames.TryAdd(nameSpace, new Dictionary<string, List<string>>());
+                        if (!nameSpace_type_textureNames[nameSpace].TryAdd(type, textureNames))
                             nameSpace_type_textureNames[nameSpace][type] = nameSpace_type_textureNames[nameSpace][type].Concat(textureNames).ToList();
 
-                        if (!nameSpace_type_textures.ContainsKey(nameSpace))
-                        {
-                            nameSpace_type_textures.Add(nameSpace, new Dictionary<string, Texture2D[]>());
-                            nameSpace_type_textures[nameSpace].Add(type, textures.ToArray());
-                        }
-                        else if (!nameSpace_type_textures[nameSpace].ContainsKey(type))
-                            nameSpace_type_textures[nameSpace].Add(type, textures.ToArray());
-                        else
+                        nameSpace_type_textures.TryAdd(nameSpace, new Dictionary<string, Texture2D[]>());
+                        if (!nameSpace_type_textures[nameSpace].TryAdd(type, textures.ToArray()))
                             nameSpace_type_textures[nameSpace][type] = nameSpace_type_textures[nameSpace][type].Concat(textures).ToArray();
 
 
@@ -606,19 +583,9 @@ Resource refresh (Since the Unity API is used, we need to run it on the main thr
                         }
                         Sprite[] sprites = GetSprites(background, spriteMetaDatas);
 
-                        if (!allTextureSprites.ContainsKey(nameSpace.Key))
-                        {
-                            allTextureSprites.Add(nameSpace.Key, new Dictionary<string, Dictionary<string, Sprite[]>>());
-                            allTextureSprites[nameSpace.Key].Add(type.Key, new Dictionary<string, Sprite[]>());
-                            allTextureSprites[nameSpace.Key][type.Key].Add(fileName.Key, sprites);
-                        }
-                        else if (!allTextureSprites[nameSpace.Key].ContainsKey(type.Key))
-                        {
-                            allTextureSprites[nameSpace.Key].Add(type.Key, new Dictionary<string, Sprite[]>());
-                            allTextureSprites[nameSpace.Key][type.Key].Add(fileName.Key, sprites);
-                        }
-                        else
-                            allTextureSprites[nameSpace.Key][type.Key].Add(fileName.Key, sprites);
+                        allTextureSprites.TryAdd(nameSpace.Key, new Dictionary<string, Dictionary<string, Sprite[]>>());
+                        allTextureSprites[nameSpace.Key].TryAdd(type.Key, new Dictionary<string, Sprite[]>());
+                        allTextureSprites[nameSpace.Key][type.Key].TryAdd(fileName.Key, sprites);
 
                         if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
@@ -728,13 +695,8 @@ Resource refresh (Since the Unity API is used, we need to run it on the main thr
                                             soundMetaDatas.Add(soundMetaData);
                                     }
 
-                                    if (!allSounds.ContainsKey(nameSpace))
-                                    {
-                                        allSounds.Add(nameSpace, new Dictionary<string, SoundData<MetaData>>());
-                                        allSounds[nameSpace].Add(soundData.Key, new SoundData<MetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
-                                    }
-                                    else if (!allSounds[nameSpace].ContainsKey(soundData.Key))
-                                        allSounds[nameSpace].Add(soundData.Key, new SoundData<MetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
+                                    allSounds.TryAdd(nameSpace, new Dictionary<string, SoundData<MetaData>>());
+                                    allSounds[nameSpace].TryAdd(soundData.Key, new SoundData<MetaData>(soundData.Value.subtitle, soundData.Value.isBGM, soundMetaDatas.ToArray()));
                                 }
                             }
 
@@ -780,19 +742,9 @@ Resource refresh (Since the Unity API is used, we need to run it on the main thr
 
                         foreach (var languageDictionary in dictionary)
                         {
-                            if (!allLanguages.ContainsKey(nameSpace))
-                            {
-                                allLanguages.Add(nameSpace, new Dictionary<string, Dictionary<string, string>>());
-                                allLanguages[nameSpace].Add(language.language, new Dictionary<string, string>());
-                                allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
-                            }
-                            else if (!allLanguages[nameSpace].ContainsKey(language.language))
-                            {
-                                allLanguages[nameSpace].Add(language.language, new Dictionary<string, string>());
-                                allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
-                            }
-                            else if (!allLanguages[nameSpace][language.language].ContainsKey(languageDictionary.Key))
-                                allLanguages[nameSpace][language.language].Add(languageDictionary.Key, languageDictionary.Value);
+                            allLanguages.TryAdd(nameSpace, new Dictionary<string, Dictionary<string, string>>());
+                            allLanguages[nameSpace].TryAdd(language.language, new Dictionary<string, string>());
+                            allLanguages[nameSpace][language.language].TryAdd(languageDictionary.Key, languageDictionary.Value);
                         }
                     }
                 }
