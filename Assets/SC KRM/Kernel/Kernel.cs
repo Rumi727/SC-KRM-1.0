@@ -86,7 +86,7 @@ namespace SCKRM
         static string _temporaryCachePath = "";
 
         /// <summary>
-        /// Kernel.persistentDataPath + "/Save Data"
+        /// PathTool.Combine(Kernel.persistentDataPath, "Save Data")
         /// </summary>
         [WikiDescription("[Kernel.persistentDataPath](https://github.com/SimsimhanChobo/SC-KRM/wiki/SCKRM.Kernel#persistentdatapath) + \"/Save Data\"")]
         public static string saveDataPath
@@ -97,7 +97,7 @@ namespace SCKRM
                     return _saveDataPath;
                 else
                 {
-                    _saveDataPath = persistentDataPath + "/Save Data";
+                    _saveDataPath = PathTool.Combine(persistentDataPath + "Save Data");
 
                     if (!Directory.Exists(_saveDataPath))
                         Directory.CreateDirectory(_saveDataPath);
@@ -109,7 +109,7 @@ namespace SCKRM
         static string _saveDataPath = "";
 
         /// <summary>
-        /// Kernel.persistentDataPath + "/Resource Pack"
+        /// PathTool.Combine(Kernel.persistentDataPath, "Resource Pack")
         /// </summary>
         [WikiDescription("[Kernel.persistentDataPath](https://github.com/SimsimhanChobo/SC-KRM/wiki/SCKRM.Kernel#persistentdatapath) + \"/Resource Pack\"")]
         public static string resourcePackPath
@@ -120,7 +120,7 @@ namespace SCKRM
                     return _resourcePackPath;
                 else
                 {
-                    _resourcePackPath = persistentDataPath + "/Resource Pack";
+                    _resourcePackPath = PathTool.Combine(persistentDataPath, "Resource Pack");
 
                     if (!Directory.Exists(_resourcePackPath))
                         Directory.CreateDirectory(_resourcePackPath);
@@ -132,10 +132,10 @@ namespace SCKRM
         static string _resourcePackPath = "";
 
         /// <summary>
-        /// Kernel.streamingAssetsPath + "/projectSettings"
+        /// PathTool.Combine(Kernel.streamingAssetsPath, "projectSettings")
         /// </summary>
         [WikiDescription("[Kernel.streamingAssetsPath](https://github.com/SimsimhanChobo/SC-KRM/wiki/SCKRM.Kernel#streamingAssetsPath) + \"/projectSettings\"")]
-        public static string projectSettingPath { get; } = streamingAssetsPath + "/projectSettings";
+        public static string projectSettingPath { get; } = PathTool.Combine(streamingAssetsPath, "projectSettings");
 
 
 
