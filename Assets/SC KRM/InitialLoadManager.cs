@@ -247,7 +247,7 @@ namespace SCKRM
 
                 if (!isInitialLoadEnd)
                 {
-                    Debug.ForceLogError("Initial loading failed");
+                    Debug.ForceLogError("Initial loading failed", nameof(InitialLoadManager));
 
                     if (isInitialLoadStart)
                         ApplicationForceQuit("Initial loading failed\n\n" + e.GetType().Name + ": " + e.Message + "\n\n" + e.StackTrace.Substring(5));
