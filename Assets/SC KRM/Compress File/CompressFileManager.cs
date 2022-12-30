@@ -42,7 +42,7 @@ void Awake()
 ```
 "
 )]
-        public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null)
+        public static bool CompressZipFile(string sourceDirectory, string zipFilePath, string password = "", ThreadMetaData threadMetaData = null, Predicate<string> predicate = null)
         {
             int stopLoop = 0;
 
@@ -52,7 +52,7 @@ void Awake()
                 try
                 {
                     //압축 대상 폴더의 파일 목록
-                    List<string> fileList = GenerateFileList(sourceDirectory);
+                    List<string> fileList = GenerateFileList(sourceDirectory, predicate);
 
                     //압축 대상 폴더 경로의 길이 + 1
                     int TrimLength = (Directory.GetParent(sourceDirectory)).ToString().Length + 1;
@@ -158,7 +158,7 @@ void Awake()
             }
         }
 
-        static List<string> GenerateFileList(string Dir)
+        static List<string> GenerateFileList(string Dir, Predicate<string> predicate)
         {
             List<string> fils = new List<string>();
             bool Empty = true;
@@ -168,6 +168,9 @@ void Awake()
             for (int i = 0; i < filePaths.Length; i++)
             {
                 string file = filePaths[i];
+                if (!(predicate?.Invoke(file)).GetValueOrDefault())
+                    continue;
+
                 fils.Add(file);
                 Empty = false;
             }
@@ -182,7 +185,7 @@ void Awake()
             {
                 string dirs = paths[i];
                 //해당 폴더로 다시 GenerateFileList 재귀 호출
-                List<string> generateFileList = GenerateFileList(dirs);
+                List<string> generateFileList = GenerateFileList(dirs, predicate);
                 for (int i1 = 0; i1 < generateFileList.Count; i1++)
                     //해당 폴더 내의 파일, 폴더 추가.
                     fils.Add(generateFileList[i1]);
