@@ -97,7 +97,7 @@ namespace SCKRM
                     return _saveDataPath;
                 else
                 {
-                    _saveDataPath = PathTool.Combine(persistentDataPath + "Save Data");
+                    _saveDataPath = PathTool.Combine(persistentDataPath, "Save Data");
 
                     if (!Directory.Exists(_saveDataPath))
                         Directory.CreateDirectory(_saveDataPath);
