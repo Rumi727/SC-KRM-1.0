@@ -4865,6 +4865,8 @@ namespace SCKRM
 
     public static class PathTool
     {
+        public const string urlPathPrefix = "file://";
+
         /// <summary>
         /// (paths = ("asdf", "asdf")) = "asdf/asdf" (Path.Combine is "asdf\asdf")
         /// </summary>
@@ -4910,6 +4912,8 @@ namespace SCKRM
             else
                 return path;
         }
+
+        public static string UrlPathPrefix(this string path) => urlPathPrefix + path;
     }
 
     public static class DirectoryTool

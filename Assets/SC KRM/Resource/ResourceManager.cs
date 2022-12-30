@@ -1333,7 +1333,7 @@ Various formats are supported. Among them, there are formats supported by SC KRM
 #if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR) || UNITY_EDITOR_LINUX
                 byte[] textureBytes = File.ReadAllBytes(path);
 #else
-                using UnityWebRequest www = UnityWebRequest.Get(path);
+                using UnityWebRequest www = UnityWebRequest.Get(path.UrlPathPrefix());
                 await www.SendWebRequest();
 
                 if (www.result != UnityWebRequest.Result.Success)
@@ -1625,7 +1625,7 @@ Import audio files as audio clips (Since the Unity API is used, we need to run i
             {
                 if (File.Exists(path + extension))
                 {
-                    using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path + extension, type);
+                    using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip((path + extension).UrlPathPrefix(), type);
                     DownloadHandlerAudioClip downloadHandlerAudioClip = (DownloadHandlerAudioClip)www.downloadHandler;
                     downloadHandlerAudioClip.streamAudio = stream;
                     downloadHandlerAudioClip.compressed = false;
