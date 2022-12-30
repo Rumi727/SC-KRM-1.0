@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using ICSharpCode.SharpZipLib.Zip;
 using SCKRM.Threads;
-using UnityEngine;
 
 namespace SCKRM.Compress
 {
@@ -236,9 +235,9 @@ void Awake()
 
                 try
                 {
-                    using (ZipFile zipFile = new ZipFile(fileStream))
+                    if (threadMetaData != null)
                     {
-                        if (threadMetaData != null)
+                        using (ZipFile zipFile = new ZipFile(File.OpenRead(zipFilePath)))
                         {
                             threadMetaData.name = "compress_file_manager.decompress";
                             threadMetaData.info = "";
@@ -255,8 +254,8 @@ void Awake()
                     if (password != null && password != string.Empty)
                         zipInputStream.Password = password;
 
-                    ZipEntry theEntry;
                     //반복하며 파일을 가져옴.
+                    ZipEntry theEntry;
                     while ((theEntry = zipInputStream.GetNextEntry()) != null)
                     {
                         Interlocked.Decrement(ref stopLoop);
