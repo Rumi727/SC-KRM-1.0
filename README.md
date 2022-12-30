@@ -10,7 +10,7 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
 ## 플랫폼
 - Windows
 - Standalone (테스트 되지 않았음, 이론상 대부분은 작동)
-- Linux (``) (오디오를 불러오지 못함)
+- Linux (오디오를 불러오지 못함)
 - Android
 - iOS (``)
 
