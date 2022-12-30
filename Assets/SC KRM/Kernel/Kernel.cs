@@ -51,7 +51,33 @@ namespace SCKRM
         /// Application.streamingAssetsPath
         /// </summary>
         [WikiDescription("[Application.streamingAssetsPath](https://docs.unity3d.com/ScriptReference/Application-streamingAssetsPath.html)")]
-        public static string streamingAssetsPath { get; } = Application.streamingAssetsPath;
+        public static string streamingAssetsPath
+        {
+            get
+            {
+#if (UNITY_ANDROID || ENABLE_ANDROID_SUPPORT) && !UNITY_EDITOR
+                if (_streamingAssetsPath != "")
+                    return _streamingAssetsPath;
+                else
+                {
+                    _streamingAssetsPath = PathTool.Combine(persistentDataPath, streamingAssetsFolderName);
+
+                    if (!Directory.Exists(_streamingAssetsPath))
+                        Directory.CreateDirectory(_streamingAssetsPath);
+
+                    return _streamingAssetsPath;
+                }
+#else
+                if (_streamingAssetsPath != "")
+                    return _streamingAssetsPath;
+                else
+                    return _streamingAssetsPath = Application.streamingAssetsPath;;
+#endif
+            }
+        }
+        static string _streamingAssetsPath = "";
+
+        public const string streamingAssetsFolderName = "StreamingAssets";
 
         /// <summary>
         /// Application.persistentDataPath

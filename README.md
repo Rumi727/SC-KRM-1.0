@@ -11,6 +11,7 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
 - Windows
 - Standalone (테스트 되지 않았음, 이론상 대부분은 작동)
 - Linux (``) (오디오를 불러오지 못함)
+- Android
 - iOS (``)
 
 ## 사용된 패키지와 DLL, 오픈 소스
@@ -70,3 +71,6 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
   
 ## GIF 포맷은 이제 버릴때가 됐습니다!!!!!!
 SC KRM은 곧 APNG 포맷을 지원할 것 입니다
+
+## 전처리기
+- `ENABLE_ANDROID_SUPPORT` (안드로이드 스트리밍 에셋 호환 코드 강제 활성화)
