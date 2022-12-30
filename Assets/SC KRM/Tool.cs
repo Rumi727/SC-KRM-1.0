@@ -5140,11 +5140,11 @@ namespace SCKRM
 
 
 
-        public static T GetComponentInParentFieldSave<T>(this Component component, T fieldToSave, GetComponentInMode mode = GetComponentInMode.none) where T : Component
+        public static T GetComponentInParentFieldSave<T>(this Component component, T fieldToSave, bool includeInactive = false, GetComponentInMode mode = GetComponentInMode.none) where T : Component
         {
             if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
             {
-                fieldToSave = component.GetComponentInParent<T>();
+                fieldToSave = component.GetComponentInParent<T>(includeInactive);
 
                 if (fieldToSave == null && mode == GetComponentInMode.destroyIfNull)
                 {
@@ -5178,11 +5178,11 @@ namespace SCKRM
 
 
 
-        public static T GetComponentInChildrenFieldSave<T>(this Component component, T fieldToSave, GetComponentInMode mode = GetComponentInMode.none) where T : Component
+        public static T GetComponentInChildrenFieldSave<T>(this Component component, T fieldToSave, bool includeInactive = false, GetComponentInMode mode = GetComponentInMode.none) where T : Component
         {
             if (fieldToSave == null || fieldToSave.gameObject != component.gameObject)
             {
-                fieldToSave = component.GetComponentInChildren<T>();
+                fieldToSave = component.GetComponentInChildren<T>(includeInactive);
                 if (fieldToSave == null && mode == GetComponentInMode.destroyIfNull)
                 {
                     UnityEngine.Object.DestroyImmediate(component);

@@ -55,7 +55,7 @@ void Awake()
                     List<string> fileList = GenerateFileList(sourceDirectory, predicate);
 
                     //압축 대상 폴더 경로의 길이 + 1
-                    int TrimLength = (Directory.GetParent(sourceDirectory)).ToString().Length + 1;
+                    int TrimLength = sourceDirectory.Length + 1;
 
                     //find number of chars to remove. from orginal file path. remove '\'
                     FileStream ostream;
