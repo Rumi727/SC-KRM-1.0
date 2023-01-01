@@ -7,12 +7,12 @@ namespace SCKRM.UI.SideBar
     [AddComponentMenu("SC KRM/UI/Kerenl/Side Bar/Running Task List")]
     public sealed class RunningTaskList : UI
     {
-        [System.NonSerialized] List<AsyncTask> tempList = new List<AsyncTask>();
-
         protected override void Awake()
         {
             AsyncTaskManager.asyncTaskChange -= Refresh;
             AsyncTaskManager.asyncTaskChange += Refresh;
+
+            Refresh();
         }
 
         void Refresh()
