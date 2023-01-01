@@ -29,7 +29,6 @@ namespace SCKRM.UI.SideBar
                 if (i >= runningTaskInfos.Length)
                 {
                     RunningTaskInfo runningTaskInfo = (RunningTaskInfo)ObjectPoolingSystem.ObjectCreate("running_task_list.running_task", transform).monoBehaviour;
-                    runningTaskInfo.transform.SetSiblingIndex(0);
                     runningTaskInfo.asyncTask = AsyncTaskManager.asyncTasks[i];
                     runningTaskInfo.asyncTaskIndex = i;
                     runningTaskInfo.InfoLoad();
@@ -37,7 +36,6 @@ namespace SCKRM.UI.SideBar
                 else
                 {
                     RunningTaskInfo runningTaskInfo = runningTaskInfos[i];
-                    runningTaskInfo.transform.SetSiblingIndex(0);
                     runningTaskInfo.asyncTask = AsyncTaskManager.asyncTasks[i];
                     runningTaskInfo.asyncTaskIndex = i;
                     runningTaskInfo.InfoLoad();
