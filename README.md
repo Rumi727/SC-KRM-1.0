@@ -34,6 +34,7 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
 - [SharpZipLib](https://github.com/icsharpcode/SharpZipLib)
 - [Brigadier.NET](https://github.com/SimsimhanChobo/Brigadier.NET) ([Original](https://github.com/AtomicBlom/Brigadier.NET))
 - [Simple Zoom](https://github.com/SimsimhanChobo/simple-zoom) ([Original](https://github.com/daniellochner/simple-zoom))
+- [UI Extensions](https://github.com/Unity-UI-Extensions/com.unity.uiextensions)
 
 볼드 처리된 패키지는 이 프로젝트를 사용하기 전에 무조건 패키지를 직접 설치해주셔야 합니다 (링크가 없는것은 유니티 레지스트리에 있습니다)   
 안그러면, 컴파일 에러가 나고 관련 참조가 끊어질수 있습니다
