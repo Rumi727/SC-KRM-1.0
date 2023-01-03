@@ -24,13 +24,13 @@ public class Postest : MonoBehaviour
 
         rhythmMap.info.offset = 1.194;
         rhythmMap.globalEffect.bpm.Add(new BeatValuePair<double>(0, 171));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(0, false));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(161, true));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(288, false));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(429, true));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(556, false));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(605, true));
-        rhythmMap.globalEffect.dropPart.Add(new BeatValuePair<bool>(732, false));*/
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(0, false));
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(161, true));
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(288, false));
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(429, true));
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(556, false));
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(605, true));
+        rhythmMap.globalEffect.yukiMode.Add(new BeatValuePair<bool>(732, false));*/
 
         /*bool temp = false;
         for (int i = 4; i < 1000; i += 4)
