@@ -242,6 +242,8 @@ namespace SCKRM.Rhythm
         [WikiDescription("리듬 재생")]
         public static void Play(BeatValuePairList<double> bpmList, double offset, BeatValuePairList<bool> dropPartList, ISoundPlayer soundPlayer = null, double startDelay = 0)
         {
+            Debug.Log("Play");
+
             _time = -(startDelay - offset).Clamp(0);
 
             currentBeat = double.MinValue;
@@ -268,13 +270,13 @@ namespace SCKRM.Rhythm
             isEnd = false;
 
             FixBPM();
-
-            Debug.Log("Play");
         }
 
         [WikiDescription("리듬 정지")]
         public static void Stop()
         {
+            Debug.Log("Stop");
+
             _time = 0;
 
             currentBeat = double.MinValue;
@@ -299,14 +301,14 @@ namespace SCKRM.Rhythm
             isPlaying = false;
             isStart = false;
             isEnd = false;
-
-            Debug.Log("Stop");
         }
 
         public static void SoundPlayerChange(ISoundPlayer soundPlayer)
         {
             if (!isPlaying)
                 return;
+
+            Debug.Log("Sound Player Changed");
 
             if (RhythmManager.soundPlayer != null)
             {
@@ -321,8 +323,6 @@ namespace SCKRM.Rhythm
                 RhythmManager.soundPlayer.timeChanged += SoundPlayerTimeChange;
                 RhythmManager.soundPlayer.looped += SoundPlayerTimeChange;
             }
-
-            Debug.Log("Sound Player Changed");
         }
 
         static bool timeChangedEventLock = false;
@@ -331,14 +331,16 @@ namespace SCKRM.Rhythm
             if (timeChangedEventLock)
                 return;
 
+            Debug.Log("Sound Player Time Changed");
+
             _time = soundPlayer.time;
             FixBPM();
-
-            Debug.Log("Sound Player Time Changed");
         }
 
         static void FixBPM()
         {
+            Debug.Log("Fix BPM");
+
             for (int i = 0; i < bpmList.Count; i++)
             {
                 {
@@ -359,7 +361,6 @@ namespace SCKRM.Rhythm
             }
 
             SetCurrentBeat();
-            Debug.Log("Fix BPM");
         }
     }
 }
