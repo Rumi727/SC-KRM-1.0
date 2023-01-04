@@ -626,7 +626,7 @@ namespace SCKRM
 
         [WikiIgnore] public static double Distance(this double a, double b) => (a - b).Abs();
 
-        [WikiIgnore] public static decimal Distance(this long a, decimal b) => (a - b).Abs();
+        [WikiIgnore] public static decimal Distance(this decimal a, decimal b) => (a - b).Abs();
 
         [WikiIgnore] public static BigInteger Distance(this BigInteger a, BigInteger b) => (a - b).Abs();
 
@@ -5051,7 +5051,7 @@ namespace SCKRM
                         return TimeSpan.FromSeconds(second).ToString(@"s");
                 }
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 Debug.LogException(e);
                 return "--:--";
