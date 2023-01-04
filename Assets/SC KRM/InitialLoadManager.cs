@@ -230,7 +230,7 @@ namespace SCKRM
 #endif
                     {
                         //씬 애니메이션이 끝날때까지 기다립니다
-                        Debug.ForceLog("Kernel: Waiting for scene animation...");
+                        Debug.ForceLog("Kernel: Waiting for scene animation...", nameof(InitialLoadManager));
                         if (await UniTask.WaitUntil(() => !SplashScreen.isAniPlaying, cancellationToken: AsyncTaskManager.cancelToken).SuppressCancellationThrow())
                             return;
                     }
