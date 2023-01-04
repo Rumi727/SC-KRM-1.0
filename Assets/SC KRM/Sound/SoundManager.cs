@@ -19,12 +19,6 @@ namespace SCKRM.Sound
     [AddComponentMenu("SC KRM/Sound/Sound Manager", 0)]
     public sealed class SoundManager : Manager<SoundManager>
     {
-        [ProjectSettingSaveLoad]
-        public sealed class Data
-        {
-            [JsonProperty] public static bool useTempo { get; set; }
-        }
-
         [GeneralSaveLoad]
         public sealed class SaveData
         {
@@ -85,6 +79,20 @@ namespace SCKRM.Sound
                 }
             }
             static bool _fixAudioLatency = true;
+
+            [JsonProperty]
+            public static bool useTempo
+            {
+                get => _useTempo;
+                set
+                {
+                    _useTempo = value;
+
+                    if (!InitialLoadManager.isInitialLoadEnd)
+                        SoundManager.useTempo = value;
+                }
+            }
+            static bool _useTempo = true;
         }
 
         [SerializeField] AudioMixerGroup _audioMixerGroup;
@@ -97,6 +105,10 @@ namespace SCKRM.Sound
 
         public const int maxSoundCount = 256;
         public const int maxNBSCount = 16;
+
+
+
+        [WikiDescription("템포 기능을 사용 가능한지 여부")] public static bool useTempo { get; private set; }
 
 
 
