@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using K4.Threading;
 using Newtonsoft.Json;
 using SCKRM.NBS;
@@ -27,7 +28,7 @@ namespace SCKRM.Sound
         [GeneralSaveLoad]
         public sealed class SaveData
         {
-            static int _mainVolume = 100; [JsonProperty]
+            [JsonProperty]
             public static int mainVolume
             {
                 get => _mainVolume.Clamp(0, 200);
@@ -48,8 +49,42 @@ namespace SCKRM.Sound
                     }
                 }
             }
+            static int _mainVolume = 100;
             static int _bgmVolume = 100; [JsonProperty] public static int bgmVolume { get => _bgmVolume.Clamp(0, 200); set => _bgmVolume = value; }
             static int _soundVolume = 100; [JsonProperty] public static int soundVolume { get => _soundVolume.Clamp(0, 200); set => _soundVolume = value; }
+
+            [JsonProperty]
+            public static bool fixAudioLatency
+            {
+                get => _fixAudioLatency;
+                set
+                {
+                    if (fixAudioLatency == value || ResourceManager.isAudioReset)
+                        return;
+
+                    _fixAudioLatency = value;
+
+                    if (!InitialLoadManager.isInitialLoadEnd)
+                        return;
+
+                    if (ThreadManager.isMainThread)
+                        FixAudioLatencyChange();
+                    else
+                        K4UnityThreadDispatcher.Execute(FixAudioLatencyChange);
+
+                    void FixAudioLatencyChange()
+                    {
+                        AudioConfiguration audioConfiguration = AudioSettings.GetConfiguration();
+                        if (value)
+                            audioConfiguration.dspBufferSize = 256;
+                        else
+                            audioConfiguration.dspBufferSize = 1024;
+
+                        ResourceManager.AudioReset(audioConfiguration).Forget();
+                    }
+                }
+            }
+            static bool _fixAudioLatency = true;
         }
 
         [SerializeField] AudioMixerGroup _audioMixerGroup;

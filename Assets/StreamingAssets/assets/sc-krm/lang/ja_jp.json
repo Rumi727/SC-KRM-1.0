@@ -54,6 +54,8 @@
 	"options.sound.bgmVolume": "音楽",
 	"options.sound.soundVolume": "効果音",
 	"options.sound.noteBlockVolume": "ノートブロック",
+	"options.sound.fix_audio_latency": "オーディオレイテンシ",
+	"options.sound.fix_audio_latency.info": "オーディオレイテンシを修正します (音声が途切れることがあります！)",
 	"options.sound.audio_reset": "オーディオリセット",
 	"options.sound.audio_reset.info": "Unityオーディオをリセットします（音が途切れたときにのみ使用してください）",
 	

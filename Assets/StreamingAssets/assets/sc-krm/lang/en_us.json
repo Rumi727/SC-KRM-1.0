@@ -54,6 +54,8 @@
 	"options.sound.bgmVolume": "Music",
 	"options.sound.soundVolume": "SFX",
 	"options.sound.noteBlockVolume": "Note Block",
+	"options.sound.fix_audio_latency": "Fix Audio Latency",
+	"options.sound.fix_audio_latency.info": "Fix audio latency (Sound may choppy!)",
 	"options.sound.audio_reset": "Audio reset",
 	"options.sound.audio_reset.info": "Reset Unity Audio (Only use when sound is choppy)",
 	
