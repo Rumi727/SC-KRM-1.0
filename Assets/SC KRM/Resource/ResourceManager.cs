@@ -786,6 +786,9 @@ delete garbage"
 
             AudioSettings.Reset(AudioSettings.GetConfiguration());
 
+            //볼륨을 재설정 합니다
+            SoundManager.SaveData.mainVolume = SoundManager.SaveData.mainVolume;
+
             AsyncTask asyncTask = new AsyncTask("notice.running_task.audio_refresh.name", "", false, true);
             resourceRefreshAsyncTask = asyncTask;
             resourceRefreshDetailedAsyncTask = asyncTask;
