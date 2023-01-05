@@ -344,7 +344,7 @@ namespace SCKRM.Rhythm
 
         public bool disturbance { get; set; }
 
-        public BeatValuePair(double beat, TValue value, bool disturbance)
+        public BeatValuePair(double beat, TValue value, bool disturbance = false)
         {
             this.beat = beat;
             this.value = value;
@@ -363,7 +363,7 @@ namespace SCKRM.Rhythm
 
         public bool disturbance { get; set; }
 
-        public BeatValuePairAni(double beat, TValue value, double length, EasingFunction.Ease easingFunction, bool disturbance)
+        public BeatValuePairAni(double beat, TValue value, double length, EasingFunction.Ease easingFunction = EasingFunction.Ease.Linear, bool disturbance = false)
         {
             this.beat = beat;
             this.value = value;
