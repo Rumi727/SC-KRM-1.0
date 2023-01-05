@@ -48,7 +48,16 @@ namespace SCKRM.Rhythm
             }
             else
             {
-                int findIndex = FindIndex(x => x.beat >= currentBeat);
+                int findIndex = -1;
+                for (int i = 0; i < Count; i++)
+                {
+                    if (this[i].beat >= currentBeat)
+                    {
+                        findIndex = i;
+                        break;
+                    }
+                }
+
                 if (findIndex < 0)
                     findIndex = Count;
 
@@ -146,7 +155,16 @@ namespace SCKRM.Rhythm
             }
             else
             {
-                int findIndex = FindIndex(x => x.beat >= currentBeat);
+                int findIndex = -1;
+                for (int i = 0; i < Count; i++)
+                {
+                    if (this[i].beat >= currentBeat)
+                    {
+                        findIndex = i;
+                        break;
+                    }
+                }
+                
                 if (findIndex < 0)
                     findIndex = Count;
 
