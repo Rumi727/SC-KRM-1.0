@@ -307,6 +307,8 @@ namespace SCKRM.Rhythm
     {
         double beat { get; set; }
         TValue value { get; set; }
+
+        bool disturbance { get; set; }
     }
 
     public interface IBeatValuePairAni<TValue> : IBeatValuePair<TValue>
@@ -322,10 +324,14 @@ namespace SCKRM.Rhythm
         public double beat { get; set; }
         public TValue value { get; set; }
 
-        public BeatValuePair(double beat, TValue value)
+        public bool disturbance { get; set; }
+
+        public BeatValuePair(double beat, TValue value, bool disturbance)
         {
             this.beat = beat;
             this.value = value;
+
+            this.disturbance = disturbance;
         }
     }
 
@@ -337,13 +343,17 @@ namespace SCKRM.Rhythm
         public double length { get; set; }
         public EasingFunction.Ease easingFunction { get; set; }
 
-        public BeatValuePairAni(double beat, TValue value, double length, EasingFunction.Ease easingFunction)
+        public bool disturbance { get; set; }
+
+        public BeatValuePairAni(double beat, TValue value, double length, EasingFunction.Ease easingFunction, bool disturbance)
         {
             this.beat = beat;
             this.value = value;
 
             this.length = length;
             this.easingFunction = easingFunction;
+
+            this.disturbance = disturbance;
         }
     }
     #endregion
