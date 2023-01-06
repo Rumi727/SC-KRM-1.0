@@ -402,7 +402,7 @@ Build: const true"
             fixedDeltaTime = 1f / VideoManager.Data.standardFPS;
             Time.fixedDeltaTime = fixedDeltaTime;
 
-            fps = 1f / deltaTime;
+            fps = 1f / unscaledDeltaTime;
 
             internetReachability = Application.internetReachability;
         }
