@@ -1352,14 +1352,17 @@ Various formats are supported. Among them, there are formats supported by SC KRM
                 Texture2D texture = new Texture2D(0, 0, textureFormat, mipmapUse);
                 texture.filterMode = filterMode;
                 texture.name = Path.GetFileNameWithoutExtension(path);
-                texture.hideFlags = hideFlags;
 
                 AsyncImageLoader.LoaderSettings loaderSettings = AsyncImageLoader.LoaderSettings.Default;
                 loaderSettings.generateMipmap = mipmapUse;
                 loaderSettings.logException = true;
 
+                texture.hideFlags = HideFlags.DontUnloadUnusedAsset;
+
                 if (!await AsyncImageLoader.LoadImageAsync(texture, textureBytes, loaderSettings))
                     return null;
+
+                texture.hideFlags = hideFlags;
 
                 if (compressionType == TextureMetaData.CompressionType.normal)
                     texture.Compress(false);
