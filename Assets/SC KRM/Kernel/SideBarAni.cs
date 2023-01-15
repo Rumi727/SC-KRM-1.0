@@ -132,7 +132,7 @@ namespace SCKRM.UI.SideBar
                         if (scrollBarParentRectTransform != null && !scrollBarParentRectTransform.gameObject.activeSelf)
                         {
                             scrollBarParentRectTransform.gameObject.SetActive(true);
-                            SideBarManager.showedSideBars.Add(this);
+                            SideBarManager.allShowedSideBars.Add(this);
                         }
                     }
                 }

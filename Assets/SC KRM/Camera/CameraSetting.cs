@@ -35,12 +35,16 @@ namespace SCKRM.Camera
 
                 if (StatusBarManager.cropTheScreen)
                 {
-                    float y = StatusBarManager.cropedRect.max.y * UIManager.currentGuiSize / ScreenManager.height;
+                    float minX = StatusBarManager.cropedRect.min.x * UIManager.currentGuiSize / ScreenManager.width;
+                    float maxX = StatusBarManager.cropedRect.max.x * UIManager.currentGuiSize / ScreenManager.width;
+                    float minY = StatusBarManager.cropedRect.min.y * UIManager.currentGuiSize / ScreenManager.height;
+                    float maxY = StatusBarManager.cropedRect.max.y * UIManager.currentGuiSize / ScreenManager.height;
 
-                    if (!StatusBarManager.SaveData.bottomMode)
-                        camera.rect = new Rect(normalizedViewPortRect.x, normalizedViewPortRect.y, normalizedViewPortRect.width, normalizedViewPortRect.height - y);
-                    else
-                        camera.rect = new Rect(normalizedViewPortRect.x, normalizedViewPortRect.y + y, normalizedViewPortRect.width, normalizedViewPortRect.height - y);
+                    Rect rect = normalizedViewPortRect;
+                    rect.min = new Vector2(normalizedViewPortRect.min.x + minX, normalizedViewPortRect.min.y + minY);
+                    rect.max = new Vector2(normalizedViewPortRect.max.x + maxX, normalizedViewPortRect.max.y + maxY);
+
+                    camera.rect = rect;
                 }
                 else
                     camera.rect = normalizedViewPortRect;
