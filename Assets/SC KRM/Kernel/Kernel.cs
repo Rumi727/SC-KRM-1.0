@@ -428,6 +428,8 @@ Build: const true"
                 }
             }
 
+            ResourceManager.AllDestroy();
+
             AsyncTaskManager.AllAsyncTaskCancel(false);
             ThreadManager.AllThreadRemove();
 
