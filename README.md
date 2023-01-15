@@ -12,7 +12,7 @@ UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
 - Standalone (테스트 되지 않았음, 이론상 대부분은 작동)
 - Linux (오디오를 불러오지 못함)
 - Android
-- iOS (``)
+- iOS (테스트 되지 않았음, 이론상 대부분은 작동)
 
 ## 사용된 패키지와 DLL, 오픈 소스
 - **Unity UI**
