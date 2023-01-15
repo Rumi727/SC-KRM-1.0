@@ -128,13 +128,13 @@ namespace SCKRM.Rhythm
 
                         _time += timePlusValue;
                     }
-                    else if (sync.Abs() >= 0.015625f)
+                    else if (sync.Abs() >= 0.015625)
                     {
                         if (sync >= 0)
                         {
                             _time = soundPlayer.time;
 
-                            if (sync.Abs() >= 0.03125)
+                            if (sync.Abs() >= 1)
                                 FixBPM();
                         }
                     }
