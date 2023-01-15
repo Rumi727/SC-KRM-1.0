@@ -25,7 +25,9 @@ namespace SCKRM.Editor
             if (!editor.customSetting)
             {
                 UseProperty("_normalizedViewPortRect");
-                editor.camera.rect = (editor.normalizedViewPortRect = editor.normalizedViewPortRect);
+
+                if (!Kernel.isPlaying)
+                    editor.camera.rect = editor.normalizedViewPortRect = editor.normalizedViewPortRect;
             }
         }
     }
