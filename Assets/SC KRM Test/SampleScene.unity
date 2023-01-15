@@ -202,11 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 0}
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 542794889}
-  _rectTransformTool: {fileID: 0}
-  _graphic: {fileID: 0}
+  _alwaysVisible: 0
   _customSetting: 1
   _customGuiSize: 0
   _worldRenderMode: 0
@@ -940,11 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 913368624}
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 913368625}
-  _rectTransformTool: {fileID: 0}
-  _graphic: {fileID: 0}
+  _alwaysVisible: 0
   _customSetting: 0
   _customGuiSize: 0
   _worldRenderMode: 1
@@ -1150,6 +1142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de58531b6cbedc4ba328615bf0c88f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _normalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   _customSetting: 0
 --- !u!114 &963194234
 MonoBehaviour:
@@ -2009,11 +2007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 0}
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 1800996217}
-  _rectTransformTool: {fileID: 0}
-  _graphic: {fileID: 0}
+  _alwaysVisible: 0
   _customSetting: 0
   _customGuiSize: 0
   _worldRenderMode: 0
