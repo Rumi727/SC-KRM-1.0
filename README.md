@@ -2,7 +2,8 @@
 Simsimhan Chobo Kernel Manager   
 ~~School Live! Kurumi (Gakkou Gurashi)~~
 
-UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다
+UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다  
+그리고 1인 개발이며 심지어 유니티, C#을 다루는 실력 또한 허접하기 때문에 디자인과 최적화 등등 여러 요소 또한 ~~개~~허접 할 수 있습니다
 
 ## 라이선스
 [MIT License](https://opensource.org/licenses/MIT)
