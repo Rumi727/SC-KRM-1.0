@@ -28,6 +28,7 @@ namespace SCKRM.Editor
             PlayerSettings.allowFullscreenSwitch = false;
             AudioListener.volume = 0.5f;
 
+            //EditorSceneManager.playModeStartScene = 
             EditorBuildSettings.sceneListChanged += () => { SceneListChanged(true); };
             EditorApplication.hierarchyChanged += () => { HierarchyChanged(true); };
 
@@ -119,9 +120,6 @@ namespace SCKRM.Editor
                     buildScenes.Insert(1, new EditorBuildSettingsScene() { path = sceneLoadingScenePath, enabled = true });
 
                     EditorBuildSettings.scenes = buildScenes.ToArray();
-                    EditorSceneManager.OpenScene(activeScenePath);
-
-                    sceneListChangedEnable = true;
                 }
             }
             catch (ArgumentException e)
