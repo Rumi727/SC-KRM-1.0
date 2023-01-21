@@ -47,11 +47,11 @@ namespace SCKRM.Editor
         {
             EditorGUILayout.Space();
 
-            string path = SplashScreen.Data.splashScreenPath;
-            string name = SplashScreen.Data.splashScreenName;
+            string path = SplashScreen.Data.splashScenePath;
+            string name = SplashScreen.Data.splashSceneName;
             CustomInspectorEditor.FileObjectField<SceneAsset>("재생 할 스플래시 씬", ".unity", ref path, ref name, out bool isChanged);
-            SplashScreen.Data.splashScreenPath = path;
-            SplashScreen.Data.splashScreenName = name;
+            SplashScreen.Data.splashScenePath = path;
+            SplashScreen.Data.splashSceneName = name;
 
             path = SplashScreen.Data.sceneLoadingScenePath;
             name = SplashScreen.Data.sceneLoadingSceneName;

@@ -20,6 +20,9 @@ namespace SCKRM.Editor
     [InitializeOnLoad]
     public static class SCKRMSetting
     {
+        public static string splashScenePath => $"{PathTool.Combine(SplashScreen.Data.splashScenePath, SplashScreen.Data.splashSceneName)}.unity";
+        public static string sceneLoadingScenePath => $"{PathTool.Combine(SplashScreen.Data.sceneLoadingScenePath, SplashScreen.Data.sceneLoadingSceneName)}.unity";
+
         static SCKRMSetting()
         {
             PlayerSettings.allowFullscreenSwitch = false;
@@ -94,18 +97,18 @@ namespace SCKRM.Editor
 
                     sceneListChangedEnable = false;
 
-                    EditorSceneManager.OpenScene($"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity");
+                    string splashScenePath = SCKRMSetting.splashScenePath;
+                    string sceneLoadingScenePath = SCKRMSetting.sceneLoadingScenePath;
+
+                    EditorSceneManager.OpenScene(splashScenePath);
                     HierarchyChanged(false);
                     EditorSceneManager.SaveOpenScenes();
 
-                    string splashScenePath = SceneManager.GetActiveScene().path;
-                    string loadingScenePath = $"{PathTool.Combine(SplashScreen.Data.sceneLoadingScenePath, SplashScreen.Data.sceneLoadingSceneName)}.unity";
                     List<EditorBuildSettingsScene> buildScenes = EditorBuildSettings.scenes.ToList();
-
                     for (int i = 0; i < buildScenes.Count; i++)
                     {
                         EditorBuildSettingsScene scene = buildScenes[i];
-                        if (splashScenePath == scene.path || loadingScenePath == scene.path)
+                        if (splashScenePath == scene.path || sceneLoadingScenePath == scene.path)
                         {
                             buildScenes.RemoveAt(i);
                             i--;
@@ -113,7 +116,7 @@ namespace SCKRM.Editor
                     }
 
                     buildScenes.Insert(0, new EditorBuildSettingsScene() { path = splashScenePath, enabled = true });
-                    buildScenes.Insert(1, new EditorBuildSettingsScene() { path = loadingScenePath, enabled = true });
+                    buildScenes.Insert(1, new EditorBuildSettingsScene() { path = sceneLoadingScenePath, enabled = true });
 
                     EditorBuildSettings.scenes = buildScenes.ToArray();
                     EditorSceneManager.OpenScene(activeScenePath);
@@ -124,7 +127,7 @@ namespace SCKRM.Editor
             catch (ArgumentException e)
             {
                 Debug.LogException(e);
-                Debug.LogWarning($"{SplashScreen.Data.splashScreenName} 씬이 없는것같습니다 씬을 추가해주세요");
+                Debug.LogWarning($"{SplashScreen.Data.splashSceneName} 씬이 없는것같습니다 씬을 추가해주세요");
             }
             finally
             {
@@ -157,7 +160,7 @@ namespace SCKRM.Editor
                     hierarchyChangedEnable = false;
 
                     #region Kernel
-                    if (activeScene.path == $"{PathTool.Combine(SplashScreen.Data.splashScreenPath, SplashScreen.Data.splashScreenName)}.unity")
+                    if (activeScene.path == $"{PathTool.Combine(SplashScreen.Data.splashScenePath, SplashScreen.Data.splashSceneName)}.unity")
                     {
                         Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
                         string kernelPrefabPath = PathTool.Combine(SplashScreen.Data.kernelObjectPath, SplashScreen.Data.kernelObjectName) + ".prefab";
