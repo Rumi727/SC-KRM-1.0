@@ -696,6 +696,7 @@ namespace SCKRM
             return t;
         }
 
+        [WikiIgnore]
         public static byte RepeatWhile(this byte t, byte length)
         {
             while (t > length)
