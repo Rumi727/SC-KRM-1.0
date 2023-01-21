@@ -10,14 +10,10 @@ namespace SCKRM.Splash
         [ProjectSettingSaveLoad]
         public sealed class Data
         {
-            [JsonProperty] public static string splashScenePath { get; set; } = "Assets/SC KRM/Splash Screen";
-            [JsonProperty] public static string splashSceneName { get; set; } = "Splash Screen";
+            [JsonProperty] public static string splashScenePath { get; set; } = "Assets/SC KRM/Splash Screen/Splash Screen.unity";
+            [JsonProperty] public static string sceneLoadingScenePath { get; set; } = "Assets/SC KRM/Scene/Scene Load Scene.unity";
 
-            [JsonProperty] public static string sceneLoadingScenePath { get; set; } = "Assets/SC KRM/Scene";
-            [JsonProperty] public static string sceneLoadingSceneName { get; set; } = "Scene Load Scene";
-
-            [JsonProperty] public static string kernelObjectPath { get; set; } = "Assets/SC KRM";
-            [JsonProperty] public static string kernelObjectName { get; set; } = "Kernel";
+            [JsonProperty] public static string kernelPrefabPath { get; set; } = "Assets/SC KRM/Kernel.prefab";
         }
 
         [GeneralSaveLoad]

@@ -20,17 +20,21 @@ namespace SCKRM.Editor
     [InitializeOnLoad]
     public static class SCKRMSetting
     {
-        public static string splashScenePath => $"{PathTool.Combine(SplashScreen.Data.splashScenePath, SplashScreen.Data.splashSceneName)}.unity";
-        public static string sceneLoadingScenePath => $"{PathTool.Combine(SplashScreen.Data.sceneLoadingScenePath, SplashScreen.Data.sceneLoadingSceneName)}.unity";
+        public static string splashScenePath => SplashScreen.Data.splashScenePath;
+        public static string sceneLoadingScenePath => SplashScreen.Data.sceneLoadingScenePath;
+        public static string kernelPrefabPath => SplashScreen.Data.kernelPrefabPath;
 
         static SCKRMSetting()
         {
             PlayerSettings.allowFullscreenSwitch = false;
             AudioListener.volume = 0.5f;
 
-            //EditorSceneManager.playModeStartScene = 
-            EditorBuildSettings.sceneListChanged += () => { SceneListChanged(true); };
-            EditorApplication.hierarchyChanged += () => { HierarchyChanged(true); };
+            EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(splashScenePath);
+
+            EditorBuildSettings.sceneListChanged += () => SceneListChanged(true);
+            EditorApplication.hierarchyChanged += () => HierarchyChanged(true);
+            EditorSceneManager.activeSceneChangedInEditMode += (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1) =>
+                ActiveSceneChangedInEditMode(true, arg0);
 
             EditorApplication.update += Update;
 
@@ -82,55 +86,56 @@ namespace SCKRM.Editor
         {
             if (Kernel.isPlaying)
                 return;
+            else if (!sceneListChangedEnable)
+                return;
 
             string activeScenePath = SceneManager.GetActiveScene().path;
             try
             {
-                if (sceneListChangedEnable)
+                if (autoLoad)
                 {
-                    if (autoLoad)
-                    {
-                        if (splashProjectSetting == null)
-                            SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
+                    if (splashProjectSetting == null)
+                        SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
 
-                        SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
-                    }
-
-                    sceneListChangedEnable = false;
-
-                    string splashScenePath = SCKRMSetting.splashScenePath;
-                    string sceneLoadingScenePath = SCKRMSetting.sceneLoadingScenePath;
-
-                    EditorSceneManager.OpenScene(splashScenePath);
-                    HierarchyChanged(false);
-                    EditorSceneManager.SaveOpenScenes();
-
-                    List<EditorBuildSettingsScene> buildScenes = EditorBuildSettings.scenes.ToList();
-                    for (int i = 0; i < buildScenes.Count; i++)
-                    {
-                        EditorBuildSettingsScene scene = buildScenes[i];
-                        if (splashScenePath == scene.path || sceneLoadingScenePath == scene.path)
-                        {
-                            buildScenes.RemoveAt(i);
-                            i--;
-                        }
-                    }
-
-                    buildScenes.Insert(0, new EditorBuildSettingsScene() { path = splashScenePath, enabled = true });
-                    buildScenes.Insert(1, new EditorBuildSettingsScene() { path = sceneLoadingScenePath, enabled = true });
-
-                    EditorBuildSettings.scenes = buildScenes.ToArray();
+                    SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
                 }
+
+                sceneListChangedEnable = false;
+                activeSceneChangedInEditModeEnable = false;
+
+                string splashScenePath = SCKRMSetting.splashScenePath;
+                string sceneLoadingScenePath = SCKRMSetting.sceneLoadingScenePath;
+
+                EditorSceneManager.OpenScene(splashScenePath);
+                HierarchyChanged(false);
+                EditorSceneManager.SaveOpenScenes();
+
+                List<EditorBuildSettingsScene> buildScenes = EditorBuildSettings.scenes.ToList();
+                for (int i = 0; i < buildScenes.Count; i++)
+                {
+                    EditorBuildSettingsScene scene = buildScenes[i];
+                    if (splashScenePath == scene.path || sceneLoadingScenePath == scene.path)
+                    {
+                        buildScenes.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+                buildScenes.Insert(0, new EditorBuildSettingsScene() { path = splashScenePath, enabled = true });
+                buildScenes.Insert(1, new EditorBuildSettingsScene() { path = sceneLoadingScenePath, enabled = true });
+
+                EditorBuildSettings.scenes = buildScenes.ToArray();
             }
             catch (ArgumentException e)
             {
                 Debug.LogException(e);
-                Debug.LogWarning($"{SplashScreen.Data.splashSceneName} 씬이 없는것같습니다 씬을 추가해주세요");
+                Debug.LogWarning($"{Path.GetFileNameWithoutExtension(splashScenePath)} 씬이 없는것같습니다 씬을 추가해주세요");
             }
             finally
             {
                 EditorSceneManager.OpenScene(activeScenePath);
                 sceneListChangedEnable = true;
+                activeSceneChangedInEditModeEnable = true;
             }
         }
 
@@ -139,145 +144,173 @@ namespace SCKRM.Editor
         {
             if (Kernel.isPlaying)
                 return;
+            else if (!hierarchyChangedEnable)
+                return;
 
             try
             {
-                if (hierarchyChangedEnable)
+                bool sceneDirty = false;
+                if (autoLoad)
                 {
-                    bool sceneDirty = false;
-                    if (autoLoad)
-                    {
-                        if (splashProjectSetting == null)
-                            SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
+                    if (splashProjectSetting == null)
+                        SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
 
-                        SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
+                    SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
+                }
+
+                hierarchyChangedEnable = false;
+
+                UnityEngine.SceneManagement.Scene activeScene = SceneManager.GetActiveScene();
+                PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+
+                string splashScenePath = SCKRMSetting.splashScenePath;
+                string kernelPrefabPath = SCKRMSetting.kernelPrefabPath;
+
+                #region Kernel
+                if (activeScene.path == splashScenePath)
+                {
+                    Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
+                    Kernel kernelPrefab = AssetDatabase.LoadAssetAtPath<Kernel>(kernelPrefabPath);
+                    if (kernelPrefab == null)
+                        throw new NullFolderObjectException(kernelPrefabPath);
+
+                    if (kernel == null)
+                    {
+                        PrefabUtility.InstantiatePrefab(kernelPrefab);
+                        sceneDirty = true;
+                    }
+                    else if (PrefabUtility.GetPrefabAssetType(kernel) == PrefabAssetType.NotAPrefab || PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(kernel) != kernelPrefabPath)
+                    {
+                        UnityEngine.Object.DestroyImmediate(kernel.gameObject);
+                        PrefabUtility.InstantiatePrefab(kernelPrefab);
+
+                        sceneDirty = true;
+                    }
+                    else if (!kernel.enabled || !kernel.gameObject.activeSelf)
+                    {
+                        UnityEngine.Object.DestroyImmediate(kernel.gameObject);
+                        sceneDirty = true;
+                    }
+                }
+                else
+                {
+                    Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
+                    if (kernel != null)
+                    {
+                        UnityEngine.Object.DestroyImmediate(kernel.gameObject);
+                        sceneDirty = true;
+                    }
+                }
+                #endregion
+
+                #region Camera Setting
+                UnityEngine.Camera[] cameras;
+                if (prefabStage != null)
+                    cameras = prefabStage.FindComponentsOfType<UnityEngine.Camera>();
+                else
+                    cameras = UnityEngine.Object.FindObjectsOfType<UnityEngine.Camera>(true);
+
+                for (int i = 0; i < cameras.Length; i++)
+                {
+                    UnityEngine.Camera camera = cameras[i];
+                    CameraSetting cameraSetting = camera.GetComponent<CameraSetting>();
+                    if (camera.GetComponent<CameraSetting>() == null)
+                        AddComponentCompatibleWithPrefab<CameraSetting>(camera.gameObject, ref sceneDirty);
+                    else if (!cameraSetting.enabled)
+                        DestroyComponentCompatibleWithPrefab(cameraSetting, ref sceneDirty);
+                }
+                #endregion
+
+                #region Canvas Setting
+                Canvas[] canvases;
+                if (prefabStage != null)
+                    canvases = prefabStage.FindComponentsOfType<Canvas>();
+                else
+                    canvases = UnityEngine.Object.FindObjectsOfType<Canvas>(true);
+
+                for (int i = 0; i < canvases.Length; i++)
+                {
+                    Canvas canvas = canvases[i];
+                    CanvasSetting canvasSetting = canvas.GetComponent<CanvasSetting>();
+
+                    if (canvas.GetComponent<UIManager>() == null)
+                    {
+                        if (canvasSetting == null)
+                            AddComponentCompatibleWithPrefab<CanvasSetting>(canvas.gameObject, ref sceneDirty);
+                        else if (!canvasSetting.enabled)
+                            DestroyComponentCompatibleWithPrefab(canvasSetting, ref sceneDirty);
                     }
 
-                    UnityEngine.SceneManagement.Scene activeScene = SceneManager.GetActiveScene();
-                    PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
-                    hierarchyChangedEnable = false;
-
-                    #region Kernel
-                    if (activeScene.path == $"{PathTool.Combine(SplashScreen.Data.splashScenePath, SplashScreen.Data.splashSceneName)}.unity")
+                    if (canvasSetting != null && !canvasSetting.customSetting && !canvasSetting.customGuiSize)
                     {
-                        Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
-                        string kernelPrefabPath = PathTool.Combine(SplashScreen.Data.kernelObjectPath, SplashScreen.Data.kernelObjectName) + ".prefab";
-                        Kernel kernelPrefab = AssetDatabase.LoadAssetAtPath<Kernel>(kernelPrefabPath);
-                        if (kernelPrefab == null)
-                            throw new NullFolderObjectException(SplashScreen.Data.kernelObjectPath, SplashScreen.Data.kernelObjectName);
-
-                        if (kernel == null)
+                        CanvasScaler[] canvasScalers = canvas.GetComponents<CanvasScaler>();
+                        for (int j = 0; j < canvasScalers.Length; j++)
                         {
-                            PrefabUtility.InstantiatePrefab(kernelPrefab);
-                            sceneDirty = true;
-                        }
-                        else if (PrefabUtility.GetPrefabAssetType(kernel) == PrefabAssetType.NotAPrefab || PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(kernel) != kernelPrefabPath)
-                        {
-                            UnityEngine.Object.DestroyImmediate(kernel.gameObject);
-                            PrefabUtility.InstantiatePrefab(kernelPrefab);
-
-                            sceneDirty = true;
-                        }
-                        else if (!kernel.enabled || !kernel.gameObject.activeSelf)
-                        {
-                            UnityEngine.Object.DestroyImmediate(kernel.gameObject);
-                            sceneDirty = true;
+                            CanvasScaler canvasScaler = canvasScalers[j];
+                            if (canvasScaler != null)
+                                DestroyComponentCompatibleWithPrefab(canvasScaler, ref sceneDirty);
                         }
                     }
-                    else
+                }
+                #endregion
+
+                #region Rect Transform Tool
+                Transform[] transforms;
+                if (prefabStage != null)
+                    transforms = prefabStage.FindComponentsOfType<Transform>();
+                else
+                    transforms = UnityEngine.Object.FindObjectsOfType<Transform>(true);
+
+                for (int i = 0; i < transforms.Length; i++)
+                {
+                    Transform transform = transforms[i];
+                    RectTransform rectTransform = transform.gameObject.GetComponent<RectTransform>();
+                    RectTransformTool rectTransformTool = transform.GetComponent<RectTransformTool>();
+
+                    if (rectTransform != null)
                     {
-                        Kernel kernel = UnityEngine.Object.FindObjectOfType<Kernel>(true);
-                        if (kernel != null)
-                        {
-                            UnityEngine.Object.DestroyImmediate(kernel.gameObject);
-                            sceneDirty = true;
-                        }
-                    }
-                    #endregion
-
-                    #region Camera Setting
-                    UnityEngine.Camera[] cameras;
-                    if (prefabStage != null)
-                        cameras = prefabStage.FindComponentsOfType<UnityEngine.Camera>();
-                    else
-                        cameras = UnityEngine.Object.FindObjectsOfType<UnityEngine.Camera>(true);
-
-                    for (int i = 0; i < cameras.Length; i++)
-                    {
-                        UnityEngine.Camera camera = cameras[i];
-                        CameraSetting cameraSetting = camera.GetComponent<CameraSetting>();
-                        if (camera.GetComponent<CameraSetting>() == null)
-                            AddComponentCompatibleWithPrefab<CameraSetting>(camera.gameObject, ref sceneDirty);
-                        else if (!cameraSetting.enabled)
-                            DestroyComponentCompatibleWithPrefab(cameraSetting, ref sceneDirty);
-                    }
-                    #endregion
-
-                    #region Canvas Setting
-                    Canvas[] canvases;
-                    if (prefabStage != null)
-                        canvases = prefabStage.FindComponentsOfType<Canvas>();
-                    else
-                        canvases = UnityEngine.Object.FindObjectsOfType<Canvas>(true);
-
-                    for (int i = 0; i < canvases.Length; i++)
-                    {
-                        Canvas canvas = canvases[i];
-                        CanvasSetting canvasSetting = canvas.GetComponent<CanvasSetting>();
-
-                        if (canvas.GetComponent<UIManager>() == null)
-                        {
-                            if (canvasSetting == null)
-                                AddComponentCompatibleWithPrefab<CanvasSetting>(canvas.gameObject, ref sceneDirty);
-                            else if (!canvasSetting.enabled)
-                                DestroyComponentCompatibleWithPrefab(canvasSetting, ref sceneDirty);
-                        }
-
-                        if (canvasSetting != null && !canvasSetting.customSetting && !canvasSetting.customGuiSize)
-                        {
-                            CanvasScaler[] canvasScalers = canvas.GetComponents<CanvasScaler>();
-                            for (int j = 0; j < canvasScalers.Length; j++)
-                            {
-                                CanvasScaler canvasScaler = canvasScalers[j];
-                                if (canvasScaler != null)
-                                    DestroyComponentCompatibleWithPrefab(canvasScaler, ref sceneDirty);
-                            }
-                        }
-                    }
-                    #endregion
-
-                    #region Rect Transform Tool
-                    Transform[] transforms;
-                    if (prefabStage != null)
-                        transforms = prefabStage.FindComponentsOfType<Transform>();
-                    else
-                        transforms = UnityEngine.Object.FindObjectsOfType<Transform>(true);
-
-                    for (int i = 0; i < transforms.Length; i++)
-                    {
-                        Transform transform = transforms[i];
-                        RectTransform rectTransform = transform.gameObject.GetComponent<RectTransform>();
-                        RectTransformTool rectTransformTool = transform.GetComponent<RectTransformTool>();
-
-                        if (rectTransform != null)
-                        {
-                            if (rectTransformTool == null)
-                                AddComponentCompatibleWithPrefab<RectTransformTool>(rectTransform.gameObject, ref sceneDirty, true);
-                            else if (!rectTransformTool.enabled)
-                                DestroyComponentCompatibleWithPrefab(rectTransformTool, ref sceneDirty);
-                        }
-                        else if (rectTransformTool != null)
+                        if (rectTransformTool == null)
+                            AddComponentCompatibleWithPrefab<RectTransformTool>(rectTransform.gameObject, ref sceneDirty, true);
+                        else if (!rectTransformTool.enabled)
                             DestroyComponentCompatibleWithPrefab(rectTransformTool, ref sceneDirty);
                     }
-                    #endregion
-
-                    if (sceneDirty)
-                        EditorSceneManager.MarkSceneDirty(activeScene);
+                    else if (rectTransformTool != null)
+                        DestroyComponentCompatibleWithPrefab(rectTransformTool, ref sceneDirty);
                 }
+                #endregion
+
+                if (sceneDirty)
+                    EditorSceneManager.MarkSceneDirty(activeScene);
             }
             finally
             {
                 hierarchyChangedEnable = true;
+            }
+        }
+
+        static bool activeSceneChangedInEditModeEnable = true;
+        public static void ActiveSceneChangedInEditMode(bool autoLoad, UnityEngine.SceneManagement.Scene currentScene)
+        {
+            if (Kernel.isPlaying)
+                return;
+            else if (!activeSceneChangedInEditModeEnable)
+                return;
+
+            try
+            {
+                if (autoLoad)
+                {
+                    if (splashProjectSetting == null)
+                        SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
+
+                    SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
+                }
+
+                InitialLoadManager.startedSceneIndex = currentScene.buildIndex;
+            }
+            finally
+            {
+                activeSceneChangedInEditModeEnable = true;
             }
         }
 

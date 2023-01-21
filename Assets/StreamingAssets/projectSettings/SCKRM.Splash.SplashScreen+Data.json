@@ -1,6 +1,5 @@
 {
-  "splashScreenPath": "Assets/SC KRM/Splash Screen",
-  "splashScreenName": "Splash Screen",
-  "kernelObjectPath": "Assets/SC KRM",
-  "kernelObjectName": "Kernel"
+  "splashScenePath": "Assets/SC KRM/Splash Screen/Splash Screen.unity",
+  "sceneLoadingScenePath": "Assets/SC KRM/Scene/Scene Load Scene.unity",
+  "kernelPrefabPath": "Assets/SC KRM/Kernel.prefab"
 }

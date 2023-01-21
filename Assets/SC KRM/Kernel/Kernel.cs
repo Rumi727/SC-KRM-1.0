@@ -517,7 +517,7 @@ Build: const true"
         /// Object {objectName} does not exist in {objectPath} folder
         /// {objectPath} 폴더에 {objectName} 오브젝트가 없습니다
         /// </summary>
-        public NullFolderObjectException(string objectPath, string objectName) : base($"Object {objectName} does not exist in {objectPath} folder\n{objectPath} 폴더에 {objectName} 오브젝트가 없습니다") { }
+        public NullFolderObjectException(string objectPath) : base($"Object {Path.GetFileNameWithoutExtension(objectPath)} does not exist in {objectPath} folder\n{objectPath} 폴더에 {Path.GetFileNameWithoutExtension(objectPath)} 오브젝트가 없습니다") { }
     }
 
     [WikiDescription("No object in resource folder\n리소스 폴더에 오브젝트가 없습니다")]

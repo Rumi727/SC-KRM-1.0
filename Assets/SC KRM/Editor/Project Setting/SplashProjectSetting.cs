@@ -48,24 +48,18 @@ namespace SCKRM.Editor
             EditorGUILayout.Space();
 
             string path = SplashScreen.Data.splashScenePath;
-            string name = SplashScreen.Data.splashSceneName;
-            CustomInspectorEditor.FileObjectField<SceneAsset>("재생 할 스플래시 씬", ".unity", ref path, ref name, out bool isChanged);
+            CustomInspectorEditor.FileObjectField<SceneAsset>("재생 할 스플래시 씬", ref path, out bool isChanged);
             SplashScreen.Data.splashScenePath = path;
-            SplashScreen.Data.splashSceneName = name;
 
             path = SplashScreen.Data.sceneLoadingScenePath;
-            name = SplashScreen.Data.sceneLoadingSceneName;
-            CustomInspectorEditor.FileObjectField<SceneAsset>("씬을 불러올때 사용할 씬", ".unity", ref path, ref name, out bool isChanged2);
+            CustomInspectorEditor.FileObjectField<SceneAsset>("씬을 불러올때 사용할 씬", ref path, out bool isChanged2);
             SplashScreen.Data.sceneLoadingScenePath = path;
-            SplashScreen.Data.sceneLoadingSceneName = name;
 
             EditorGUILayout.Space();
 
-            path = SplashScreen.Data.kernelObjectPath;
-            name = SplashScreen.Data.kernelObjectName;
-            CustomInspectorEditor.FileObjectField<Kernel>("사용 될 커널 프리팹", ".prefab", ref path, ref name, out bool isChanged3);
-            SplashScreen.Data.kernelObjectPath = path;
-            SplashScreen.Data.kernelObjectName = name;
+            path = SplashScreen.Data.kernelPrefabPath;
+            CustomInspectorEditor.FileObjectField<Kernel>("사용 될 커널 프리팹", ref path, out bool isChanged3);
+            SplashScreen.Data.kernelPrefabPath = path;
 
             if (isChanged || isChanged2 || isChanged3)
                 SCKRMSetting.SceneListChanged(false);
