@@ -62,7 +62,7 @@ namespace SCKRM.Editor
             CustomRendererBase[] customAllRenderers;
 
             if (prefabStage == null)
-                customAllRenderers = UnityEngine.Object.FindObjectsOfType<CustomRendererBase>();
+                customAllRenderers = UnityEngine.Object.FindObjectsOfType<CustomRendererBase>(true);
             else
                 customAllRenderers = prefabStage.FindComponentsOfType<CustomRendererBase>();
 
