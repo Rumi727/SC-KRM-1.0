@@ -306,7 +306,7 @@ namespace SCKRM.Editor
                     SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
                 }
 
-                InitialLoadManager.startedSceneIndex = currentScene.buildIndex;
+                InitialLoadManager.lastActivatedSceneIndex = currentScene.buildIndex;
             }
             finally
             {

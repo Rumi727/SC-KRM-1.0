@@ -41,7 +41,7 @@ namespace SCKRM
         /// SCKRMSeeting 에디터 클래스가 관리합니다
         /// </summary>
         [WikiDescription("에디터에서 시작하기 전에 어떤 씬에 있었는지 기록하는 프로퍼티 입니다\nSCKRMSeeting 에디터 클래스가 관리합니다")]
-        public static int startedSceneIndex { get; set; } = 0;
+        public static int lastActivatedSceneIndex { get; set; } = 0;
 
         public static event Action initialLoadEnd;
         public static event Action initialLoadEndSceneMove;
@@ -235,7 +235,7 @@ namespace SCKRM
                 if (!isForceQuit)
                 {
 #if UNITY_EDITOR
-                    if (startedSceneIndex != 0)
+                    if (lastActivatedSceneIndex != 0)
                         SplashScreen.isAniPlaying = false;
 #endif
                     //씬 애니메이션이 끝날때까지 기다립니다
@@ -252,8 +252,8 @@ namespace SCKRM
                     GC.Collect();
 #if UNITY_EDITOR
                     //씬을 이동합니다
-                    if (startedSceneIndex != 0)
-                        SceneManager.LoadScene(startedSceneIndex);
+                    if (lastActivatedSceneIndex != 0)
+                        SceneManager.LoadScene(lastActivatedSceneIndex);
                     else
                         SceneManager.LoadScene(2);
 #else
