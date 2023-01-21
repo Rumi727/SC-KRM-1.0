@@ -36,13 +36,6 @@ namespace SCKRM
         public static bool isInitialLoadEnd { get; private set; } = false;
         public static bool isSceneMoveEnd { get; private set; } = false;
 
-        /// <summary>
-        /// 에디터에서 시작하기 전에 어떤 씬에 있었는지 기록하는 프로퍼티 입니다
-        /// SCKRMSeeting 에디터 클래스가 관리합니다
-        /// </summary>
-        [WikiDescription("에디터에서 시작하기 전에 어떤 씬에 있었는지 기록하는 프로퍼티 입니다\nSCKRMSeeting 에디터 클래스가 관리합니다")]
-        public static int lastActivatedSceneIndex { get; set; } = 0;
-
         public static event Action initialLoadEnd;
         public static event Action initialLoadEndSceneMove;
 
@@ -234,6 +227,10 @@ namespace SCKRM
                 //강제종료 된 상태면, 씬을 이동하지 않습니다
                 if (!isForceQuit)
                 {
+                    int lastActivatedSceneIndex = 0;
+                    if (SplashScreen.Data.startSceneIndex >= 0)
+                        lastActivatedSceneIndex = SplashScreen.Data.startSceneIndex.Clamp(2);
+
 #if UNITY_EDITOR
                     if (lastActivatedSceneIndex != 0)
                         SplashScreen.isAniPlaying = false;

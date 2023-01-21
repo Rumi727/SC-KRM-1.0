@@ -14,6 +14,8 @@ namespace SCKRM.Splash
             [JsonProperty] public static string sceneLoadingScenePath { get; set; } = "Assets/SC KRM/Scene/Scene Load Scene.unity";
 
             [JsonProperty] public static string kernelPrefabPath { get; set; } = "Assets/SC KRM/Kernel.prefab";
+
+            [JsonProperty] public static int startSceneIndex { get; set; } = -1;
         }
 
         [GeneralSaveLoad]

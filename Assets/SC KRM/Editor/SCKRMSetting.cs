@@ -33,8 +33,6 @@ namespace SCKRM.Editor
 
             EditorBuildSettings.sceneListChanged += () => SceneListChanged(true);
             EditorApplication.hierarchyChanged += () => HierarchyChanged(true);
-            EditorSceneManager.activeSceneChangedInEditMode += (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1) =>
-                ActiveSceneChangedInEditMode(true, arg0);
 
             EditorApplication.update += Update;
 
@@ -101,7 +99,6 @@ namespace SCKRM.Editor
                 }
 
                 sceneListChangedEnable = false;
-                activeSceneChangedInEditModeEnable = false;
 
                 string splashScenePath = SCKRMSetting.splashScenePath;
                 string sceneLoadingScenePath = SCKRMSetting.sceneLoadingScenePath;
@@ -135,7 +132,6 @@ namespace SCKRM.Editor
             {
                 EditorSceneManager.OpenScene(activeScenePath);
                 sceneListChangedEnable = true;
-                activeSceneChangedInEditModeEnable = true;
             }
         }
 
@@ -285,32 +281,6 @@ namespace SCKRM.Editor
             finally
             {
                 hierarchyChangedEnable = true;
-            }
-        }
-
-        static bool activeSceneChangedInEditModeEnable = true;
-        public static void ActiveSceneChangedInEditMode(bool autoLoad, UnityEngine.SceneManagement.Scene currentScene)
-        {
-            if (Kernel.isPlaying)
-                return;
-            else if (!activeSceneChangedInEditModeEnable)
-                return;
-
-            try
-            {
-                if (autoLoad)
-                {
-                    if (splashProjectSetting == null)
-                        SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
-
-                    SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
-                }
-
-                InitialLoadManager.lastActivatedSceneIndex = currentScene.buildIndex;
-            }
-            finally
-            {
-                activeSceneChangedInEditModeEnable = true;
             }
         }
 

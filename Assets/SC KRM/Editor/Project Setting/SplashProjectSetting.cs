@@ -61,6 +61,19 @@ namespace SCKRM.Editor
             CustomInspectorEditor.FileObjectField<Kernel>("사용 될 커널 프리팹", ref path, out bool isChanged3);
             SplashScreen.Data.kernelPrefabPath = path;
 
+            EditorGUILayout.Space();
+
+            int startSceneIndex = SplashScreen.Data.startSceneIndex;
+            if (EditorGUILayout.Toggle("시작할 씬 선택 기능 활성화", startSceneIndex >= 0))
+                startSceneIndex = startSceneIndex.Clamp(0);
+            else
+                startSceneIndex = -1;
+
+            if (startSceneIndex >= 0)
+                startSceneIndex = EditorGUILayout.IntSlider("시작할 씬 인덱스", startSceneIndex, 2, EditorBuildSettings.scenes.Length - 1);
+
+            SplashScreen.Data.startSceneIndex = startSceneIndex;
+
             if (isChanged || isChanged2 || isChanged3)
                 SCKRMSetting.SceneListChanged(false);
 
