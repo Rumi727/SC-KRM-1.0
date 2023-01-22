@@ -26,6 +26,9 @@ namespace SCKRM.Flee
             expressionContext.Imports.AddType(typeof(MathUtility));
         }
 
+        public static T Calculate<T>(string expression) => expressionContext.CompileGeneric<T>(expression).Evaluate();
+        public static object Calculate(string expression) => expressionContext.CompileDynamic(expression).Evaluate();
+
         public static T Calculate<T>(this ExpressionContext expressionContext, string expression) => expressionContext.CompileGeneric<T>(expression).Evaluate();
         public static object Calculate(this ExpressionContext expressionContext, string expression) => expressionContext.CompileDynamic(expression).Evaluate();
     }
