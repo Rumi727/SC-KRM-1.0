@@ -726,6 +726,7 @@ namespace SCKRM
         #endregion
 
         public static int ClosestPowerOfTwo(this int value) => Mathf.ClosestPowerOfTwo(value);
+
         public static Color CorrelatedColorTemperatureToRGB(this float value) => Mathf.CorrelatedColorTemperatureToRGB(value);
 
         #region Cos
