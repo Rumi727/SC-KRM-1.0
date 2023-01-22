@@ -386,7 +386,8 @@ namespace SCKRM.UI.Setting
                 switch (variableType)
                 {
                     case VariableType.Char:
-                        throw new ArgumentException();
+                        propertyInfo.SetValue(null, value.ToString()[0]);
+                        break;
                     case VariableType.String:
                         propertyInfo.SetValue(null, value.ToString());
                         break;
@@ -430,7 +431,8 @@ namespace SCKRM.UI.Setting
                 switch (variableType)
                 {
                     case VariableType.Char:
-                        throw new ArgumentException();
+                        fieldInfo.SetValue(null, value.ToString()[0]);
+                        break;
                     case VariableType.String:
                         fieldInfo.SetValue(null, value.ToString());
                         break;
