@@ -11,6 +11,16 @@ namespace SCKRM
 {
     public static class MathUtility
     {
+        public const float pi = (float)Math.PI;
+        public const float e = (float)Math.E;
+        public const float deg2Rad = pi / 180;
+        public const float rad2Deg = 180 / pi;
+
+        public const double piDouble = Math.PI;
+        public const double eDouble = Math.E;
+        public const double deg2RadDouble = piDouble / 180;
+        public const double rad2DegDouble = 180 / piDouble;
+
         public const float epsilonFloatWithAccuracy = 0.0001f;
 
         /*public static void FunctionList()
