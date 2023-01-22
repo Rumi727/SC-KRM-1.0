@@ -17,31 +17,59 @@ namespace SCKRM
     {
         public const float epsilonFloatWithAccuracy = 0.0001f;
 
-        #region Trigonometric functions
-        public static float Sin(this float value) => (float)Math.Sin(value);
-        [WikiIgnore] public static double Sin(this double value) => Math.Sin(value);
-        [WikiIgnore] public static decimal Sin(this decimal value) => (decimal)Math.Sin((double)value);
-
-        public static float Asin(this float value) => (float)Math.Asin(value);
-        [WikiIgnore] public static double Asin(this double value) => Math.Asin(value);
-        [WikiIgnore] public static decimal Asin(this decimal value) => (decimal)Math.Asin((double)value);
-
-        public static float Cos(this float value) => (float)Math.Cos(value);
-        [WikiIgnore] public static double Cos(this double value) => Math.Cos(value);
-        [WikiIgnore] public static decimal Cos(this decimal value) => (decimal)Math.Cos((double)value);
-
-        public static float Acos(this float value) => (float)Math.Acos(value);
-        [WikiIgnore] public static double Acos(this double value) => Math.Acos(value);
-        [WikiIgnore] public static decimal Acos(this decimal value) => (decimal)Math.Acos((double)value);
-
-        public static float Tan(this float value) => (float)Math.Tan(value);
-        [WikiIgnore] public static double Tan(this double value) => Math.Tan(value);
-        [WikiIgnore] public static decimal Tan(this decimal value) => (decimal)Math.Tan((double)value);
-
-        public static float Atan(this float value) => (float)Math.Atan(value);
-        [WikiIgnore] public static double Atan(this double value) => Math.Atan(value);
-        [WikiIgnore] public static decimal Atan(this decimal value) => (decimal)Math.Atan((double)value);
-        #endregion
+        /*public static void FunctionList()
+        {
+            Abs();
+            Acos();
+            Acosh();
+            Approximately(); //Mathf
+            Asin();
+            Asinh();
+            Atan();
+            Atan2();
+            Atanh();
+            Cbrt();
+            Ceiling(); //Ceil
+            Clamp();
+            Clamp01(); //Mathf
+            ClosestPowerOfTwo(); //Mathf
+            CorrelatedColorTemperatureToRGB(); //Mathf
+            Cos();
+            Cosh();
+            DeltaAngle(); //Mathf
+            Exp();
+            Floor();
+            Gamma(); //Mathf
+            GammaToLinearSpace(); //Mathf
+            IEEERemainder();
+            InverseLerp(); //Mathf
+            IsPowerOfTwo(); //Mathf
+            Lerp(); //Mathf
+            LerpAngle(); //Mathf
+            LinearToGammaSpace(); //Mathf
+            Log();
+            Log10();
+            Max();
+            Min();
+            MoveTowards(); //Mathf
+            MoveTowardsAngle(); //Mathf
+            NextPowerOfTwo(); //Mathf
+            PerlinNoise(); //Mathf
+            PingPong(); //Mathf
+            Pow();
+            Repeat(); //Mathf
+            Round();
+            Sign();
+            Sin();
+            Sinh();
+            SmoothDamp(); //Mathf
+            SmoothDampAngle(); //Mathf
+            SmoothStep(); //Mathf
+            Sqrt();
+            Tan();
+            Tanh();
+            Truncate();
+        }*/
 
         #region Abs
         public static sbyte Abs(this sbyte value)
@@ -134,95 +162,79 @@ namespace SCKRM
         }
         #endregion Abs
 
-        #region Sign
-        public static int Sign(this sbyte value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Acos
+        public static float Acos(this float value) => (float)Math.Acos(value);
+        [WikiIgnore] public static double Acos(this double value) => Math.Acos(value);
+        #endregion
 
-        [WikiIgnore]
-        public static short Sign(this short value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Acosh
+        public static float Acosh(this float value) => (float)Math.Acosh(value);
+        [WikiIgnore] public static double Acosh(this double value) => Math.Acosh(value);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this int value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Arithmetic Sequence Sum
+        public static sbyte ArithmeticSequenceSum(this sbyte start, sbyte end) => (sbyte)((start.Distance(end) + 1) * (start + end) / 2);
+        [WikiIgnore] public static byte ArithmeticSequenceSum(this byte start, byte end) => (byte)((start.Distance(end) + 1) * (start + end) / 2);
+        [WikiIgnore] public static short ArithmeticSequenceSum(this short start, short end) => (short)((start.Distance(end) + 1) * (start + end) / 2);
+        [WikiIgnore] public static ushort ArithmeticSequenceSum(this ushort start, ushort end) => (ushort)((start.Distance(end) + 1) * (start + end) / 2);
+        [WikiIgnore] public static int ArithmeticSequenceSum(this int start, int end) => (start.Distance(end) + 1) * (start + end) / 2;
+        [WikiIgnore] public static uint ArithmeticSequenceSum(this uint start, uint end) => (start.Distance(end) + 1) * (start + end) / 2;
+        [WikiIgnore] public static long ArithmeticSequenceSum(this long start, long end) => (start.Distance(end) + 1) * (start + end) / 2;
+        [WikiIgnore] public static ulong ArithmeticSequenceSum(this ulong start, ulong end) => (start.Distance(end) + 1) * (start + end) / 2;
+        [WikiIgnore] public static float ArithmeticSequenceSum(this float start, float end) => (start.Distance(end) + 1) * (start + end) * 0.5f;
+        [WikiIgnore] public static double ArithmeticSequenceSum(this double start, double end) => (start.Distance(end) + 1) * (start + end) * 0.5;
+        [WikiIgnore] public static decimal ArithmeticSequenceSum(this decimal start, decimal end) => (start.Distance(end) + 1) * (start + end) * 0.5m;
+        [WikiIgnore] public static BigInteger ArithmeticSequenceSum(this BigInteger start, BigInteger end) => (start.Distance(end) + 1) * (start + end) / 2;
+        [WikiIgnore] public static BigDecimal ArithmeticSequenceSum(this BigDecimal start, BigDecimal end) => (start.Distance(end) + 1) * (start + end) * 0.5;
+        [WikiIgnore] public static nint ArithmeticSequenceSum(this nint start, nint end) => (start.Distance(end) + 1) * (start + end) / 2;
+        [WikiIgnore] public static nuint ArithmeticSequenceSum(this nuint start, nuint end) => (start.Distance(end) + 1) * (start + end) / 2;
+        #endregion
 
-        [WikiIgnore]
-        public static long Sign(this long value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Approximately
+        public static bool Approximately(this float a, float b) => (b - a).Abs() < Max(1E-06f * Max(a.Abs(), b.Abs()), float.Epsilon * 8f);
+        [WikiIgnore] public static bool Approximately(this double a, double b) => (b - a).Abs() < Max(1E-06d * Max(a.Abs(), b.Abs()), double.Epsilon * 8f);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this float value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Asin
+        public static float Asin(this float value) => (float)Math.Asin(value);
+        [WikiIgnore] public static double Asin(this double value) => Math.Asin(value);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this double value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Asinh
+        public static float Asinh(this float value) => (float)Math.Asinh(value);
+        [WikiIgnore] public static double Asinh(this double value) => Math.Asinh(value);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this decimal value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Atan
+        public static float Atan(this float value) => (float)Math.Atan(value);
+        [WikiIgnore] public static double Atan(this double value) => Math.Atan(value);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this BigInteger value)
-        {
-            if (value < BigInteger.Zero)
-                return -1;
-            else
-                return 1;
-        }
+        #region Atan2
+        public static float Atan2(this float y, float x) => (float)Math.Atan2(y, x);
+        [WikiIgnore] public static double Atan2(this double y, double x) => Math.Atan2(y, x);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this BigDecimal value)
-        {
-            if (value < BigDecimal.Zero)
-                return -1;
-            else
-                return 1;
-        }
+        #region Atanh
+        public static float Atanh(this float value) => (float)Math.Atanh(value);
+        [WikiIgnore] public static double Atanh(this double value) => Math.Atanh(value);
+        #endregion
 
-        [WikiIgnore]
-        public static int Sign(this nint value)
-        {
-            if (value < 0)
-                return -1;
-            else
-                return 1;
-        }
+        #region Cbrt
+        public static float Cbrt(this float value) => (float)Math.Cbrt(value);
+        [WikiIgnore] public static double Cbrt(this double value) => Math.Cbrt(value);
+        #endregion
+
+        #region Ceil
+        public static float Ceil(this float value) => (float)Math.Ceiling(value);
+        [WikiIgnore] public static double Ceil(this double value) => Math.Ceiling(value);
+        [WikiIgnore] public static decimal Ceil(this decimal value) => Math.Ceiling(value);
+        [WikiIgnore] public static BigDecimal Ceil(this BigDecimal value) => BigDecimal.Ceiling(value);
+
+        public static int CeilToInt(this float value) => (int)Math.Ceiling(value);
+        [WikiIgnore] public static int CeilToInt(this double value) => (int)Math.Ceiling(value);
+        [WikiIgnore] public static int CeilToInt(this decimal value) => (int)Math.Ceiling(value);
+        [WikiIgnore] public static BigInteger CeilToInt(this BigDecimal value) => (BigInteger)BigDecimal.Ceiling(value);
         #endregion
 
         #region Clamp
@@ -608,6 +620,150 @@ namespace SCKRM
         [WikiIgnore] public static Color Clamp01(this Color value) => new Color(value.r.Clamp01(), value.g.Clamp01(), value.b.Clamp01(), value.a.Clamp01());
         #endregion
 
+        public static int ClosestPowerOfTwo(this int value) => Mathf.ClosestPowerOfTwo(value);
+        public static Color CorrelatedColorTemperatureToRGB(this float value) => Mathf.CorrelatedColorTemperatureToRGB(value);
+
+        #region Cos
+        public static float Cos(this float value) => (float)Math.Cos(value);
+        [WikiIgnore] public static double Cos(this double value) => Math.Cos(value);
+        #endregion
+
+        #region Cosh
+        public static float Cosh(this float value) => (float)Math.Cosh(value);
+        [WikiIgnore] public static double Cosh(this double value) => Math.Cosh(value);
+        #endregion
+
+        #region Delta Angle
+        public static short DeltaAngle(this short value, short target)
+        {
+            short result = (short)(target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static ushort DeltaAngle(this ushort value, ushort target)
+        {
+            ushort result = (ushort)(target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static int DeltaAngle(this int value, int target)
+        {
+            int result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static uint DeltaAngle(this uint value, uint target)
+        {
+            uint result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static long DeltaAngle(this long value, long target)
+        {
+            long result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static ulong DeltaAngle(this ulong value, ulong target)
+        {
+            ulong result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static float DeltaAngle(this float value, float target)
+        {
+            float result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static double DeltaAngle(this double value, double target)
+        {
+            double result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static decimal DeltaAngle(this decimal value, decimal target)
+        {
+            decimal result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static BigInteger DeltaAngle(this BigInteger value, BigInteger target)
+        {
+            BigInteger result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal DeltaAngle(this BigDecimal value, BigDecimal target)
+        {
+            BigDecimal result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static nint DeltaAngle(this nint value, nint target)
+        {
+            nint result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+
+        [WikiIgnore]
+        public static nuint DeltaAngle(this nuint value, nuint target)
+        {
+            nuint result = (target - value).Repeat(360);
+            if (result > 180)
+                result -= 360;
+
+            return result;
+        }
+        #endregion
+
         #region Distance
         public static sbyte Distance(this sbyte a, sbyte b) => (sbyte)(a - b).Abs();
 
@@ -661,253 +817,200 @@ namespace SCKRM
         }
         #endregion
 
-        #region Repeat
-        public static sbyte Repeat(this sbyte t, sbyte length) => (sbyte)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static byte Repeat(this byte t, byte length) => (byte)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static short Repeat(this short t, short length) => (short)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static ushort Repeat(this ushort t, ushort length) => (ushort)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static int Repeat(this int t, int length) => (t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static uint Repeat(this uint t, uint length) => (t - ((uint)((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static long Repeat(this long t, long length) => (t - ((long)((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static ulong Repeat(this ulong t, ulong length) => (t - ((ulong)((float)t / length).FloorToInt() * length)).Clamp(0, length);
-        [WikiIgnore] public static float Repeat(this float t, float length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
-        [WikiIgnore] public static double Repeat(this double t, double length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
-        [WikiIgnore] public static decimal Repeat(this decimal t, decimal length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
-        [WikiIgnore] public static BigInteger Repeat(this BigInteger t, BigInteger length) => (t - ((BigInteger)((BigDecimal)t / (BigDecimal)length).Floor() * length)).Clamp(0, length);
-        [WikiIgnore] public static BigDecimal Repeat(this BigDecimal t, BigDecimal length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
-        [WikiIgnore] public static nint Repeat(this nint t, nint length) => (t - ((t / length) * length)).Clamp(0, length);
-        [WikiIgnore] public static nuint Repeat(this nuint t, nuint length) => (t - ((t / length) * length)).Clamp(0, length);
+        #region Exp
+        public static float Exp(this float value) => (float)Math.Exp(value);
+        [WikiIgnore] public static double Exp(this double value) => Math.Exp(value);
+        [WikiIgnore] public static BigDecimal Exp(this BigInteger value) => BigDecimal.Exp(value);
         #endregion
 
-        #region Repeat While
-        public static sbyte RepeatWhile(this sbyte t, sbyte length)
+        #region Floor
+        public static float Floor(this float value) => (float)Math.Floor(value);
+        [WikiIgnore] public static double Floor(this double value) => Math.Floor(value);
+        [WikiIgnore] public static decimal Floor(this decimal value) => Math.Floor(value);
+        [WikiIgnore] public static BigDecimal Floor(this BigDecimal value) => BigDecimal.Floor(value);
+
+        public static int FloorToInt(this float value) => (int)Math.Floor(value);
+        [WikiIgnore] public static int FloorToInt(this double value) => (int)Math.Floor(value);
+        [WikiIgnore] public static int FloorToInt(this decimal value) => (int)Math.Floor(value);
+        [WikiIgnore] public static BigInteger FloorToInt(this BigDecimal value) => (BigInteger)BigDecimal.Floor(value);
+        #endregion
+
+        #region Gamma
+        public static float Gamma(this float value, float absMax, float gamma)
         {
-            if (t >= 0)
+            bool flag = value < 0;
+            float temp = value.Abs();
+
+            if (temp > absMax)
             {
-                while (t > length)
-                    t -= length;
+                if (flag)
+                    return -temp;
+                else
+                    return temp;
             }
+
+            float result = temp / absMax.Pow(gamma) * absMax;
+            if (flag)
+                return -result;
             else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
+                return result;
         }
 
         [WikiIgnore]
-        public static byte RepeatWhile(this byte t, byte length)
+        public static double Gamma(this double value, double absMax, double gamma)
         {
-            while (t > length)
-                t -= length;
+            bool flag = value < 0;
+            double temp = value.Abs();
 
-            return t;
-        }
-
-        [WikiIgnore]
-        public static short RepeatWhile(this short t, short length)
-        {
-            if (t >= 0)
+            if (temp > absMax)
             {
-                while (t > length)
-                    t -= length;
+                if (flag)
+                    return -temp;
+                else
+                    return temp;
             }
+
+            double result = temp / absMax.Pow(gamma) * absMax;
+            if (flag)
+                return -result;
             else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static ushort RepeatWhile(this ushort t, ushort length)
-        {
-            while (t > length)
-                t -= length;
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static int RepeatWhile(this int t, int length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static uint RepeatWhile(this uint t, uint length)
-        {
-            while (t > length)
-                t -= length;
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static long RepeatWhile(this long t, long length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static ulong RepeatWhile(this ulong t, ulong length)
-        {
-            while (t > length)
-                t -= length;
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static float RepeatWhile(this float t, float length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static double RepeatWhile(this double t, double length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static decimal RepeatWhile(this decimal t, decimal length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static BigInteger RepeatWhile(this BigInteger t, BigInteger length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static BigDecimal RepeatWhile(this BigDecimal t, BigDecimal length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static nint RepeatWhile(this nint t, nint length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
-        }
-
-        [WikiIgnore]
-        public static nuint RepeatWhile(this nuint t, nuint length)
-        {
-            if (t >= 0)
-            {
-                while (t > length)
-                    t -= length;
-            }
-            else
-            {
-                while (t < 0)
-                    t += length;
-            }
-
-            return t;
+                return result;
         }
         #endregion
+
+        public static float GammaToLinearSpace(this float value) => Mathf.GammaToLinearSpace(value);
+
+        #region IEEE Remainder
+        public static float IEEERemainder(this float x, float y) => (float)Math.IEEERemainder(x, y);
+        [WikiIgnore] public static double IEEERemainder(this double x, double y) => Math.IEEERemainder(x, y);
+        #endregion
+
+        #region Inverse Lerp
+        public static sbyte InverseLerp(this sbyte a, sbyte b, sbyte t)
+        {
+            if (a != b)
+                return (sbyte)((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static byte InverseLerp(this byte a, byte b, byte t)
+        {
+            if (a != b)
+                return (byte)((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static short InverseLerp(this short a, short b, short t)
+        {
+            if (a != b)
+                return (short)((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static ushort InverseLerp(this ushort a, ushort b, ushort t)
+        {
+            if (a != b)
+                return (ushort)((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static int InverseLerp(this int a, int b, int t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static uint InverseLerp(this uint a, uint b, uint t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static long InverseLerp(this long a, long b, long t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static ulong InverseLerp(this ulong a, ulong b, ulong t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static float InverseLerp(this float a, float b, float t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static double InverseLerp(this double a, double b, double t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static decimal InverseLerp(this decimal a, decimal b, decimal t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static BigInteger InverseLerp(this BigInteger a, BigInteger b, BigInteger t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal InverseLerp(this BigDecimal a, BigDecimal b, BigDecimal t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a)).Clamp01();
+
+            return 0;
+        }
+        #endregion
+
+        public static bool IsPowerOfTwo(this int value) => Mathf.IsPowerOfTwo(value);
 
         #region Lerp
         public static sbyte Lerp(this sbyte current, sbyte target, sbyte t, bool unclamped = false)
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
@@ -916,6 +1019,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
@@ -924,6 +1028,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
@@ -932,6 +1037,16 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
+            return (sbyte)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static sbyte Lerp(this sbyte current, sbyte target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
             return (sbyte)(((1 - t) * current) + (target * t));
         }
 
@@ -940,6 +1055,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (byte)(((1 - t) * current) + (target * t));
         }
 
@@ -948,6 +1064,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (byte)(((1 - t) * current) + (target * t));
         }
 
@@ -956,6 +1073,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (byte)(((1 - t) * current) + (target * t));
         }
 
@@ -964,7 +1082,17 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (byte)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static byte Lerp(this byte current, byte target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
+            return (byte)(decimal)(((1 - t) * current) + (target * t));
         }
 
         [WikiIgnore]
@@ -972,6 +1100,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (short)(((1 - t) * current) + (target * t));
         }
 
@@ -980,6 +1109,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (short)(((1 - t) * current) + (target * t));
         }
 
@@ -988,6 +1118,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (short)(((1 - t) * current) + (target * t));
         }
 
@@ -996,6 +1127,16 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
+            return (short)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static short Lerp(this short current, short target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
             return (short)(((1 - t) * current) + (target * t));
         }
 
@@ -1004,6 +1145,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
@@ -1012,6 +1154,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
@@ -1020,6 +1163,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (ushort)(((1 - t) * current) + (target * t));
         }
 
@@ -1028,7 +1172,17 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (ushort)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static ushort Lerp(this ushort current, ushort target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
+            return (ushort)(decimal)(((1 - t) * current) + (target * t));
         }
 
         [WikiIgnore]
@@ -1036,7 +1190,8 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
-            return (int)(((1 - t) * current) + (target * t));
+
+            return ((1 - t) * current) + (target * t);
         }
 
         [WikiIgnore]
@@ -1044,6 +1199,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (int)(((1 - t) * current) + (target * t));
         }
 
@@ -1052,6 +1208,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (int)(((1 - t) * current) + (target * t));
         }
 
@@ -1060,6 +1217,16 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
+            return (int)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static int Lerp(this int current, int target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
             return (int)(((1 - t) * current) + (target * t));
         }
 
@@ -1068,7 +1235,8 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
-            return (uint)(((1 - t) * current) + (target * t));
+
+            return ((1 - t) * current) + (target * t);
         }
 
         [WikiIgnore]
@@ -1076,6 +1244,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (uint)(((1 - t) * current) + (target * t));
         }
 
@@ -1084,6 +1253,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (uint)(((1 - t) * current) + (target * t));
         }
 
@@ -1092,6 +1262,16 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
+            return (uint)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static uint Lerp(this uint current, uint target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
             return (uint)(((1 - t) * current) + (target * t));
         }
 
@@ -1100,7 +1280,8 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
-            return (long)(((1 - t) * current) + (target * t));
+
+            return ((1 - t) * current) + (target * t);
         }
 
         [WikiIgnore]
@@ -1108,6 +1289,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (long)(((1 - t) * current) + (target * t));
         }
 
@@ -1116,6 +1298,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (long)(((1 - t) * current) + (target * t));
         }
 
@@ -1124,7 +1307,17 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (long)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static long Lerp(this long current, long target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
+            return (long)(decimal)(((1 - t) * current) + (target * t));
         }
 
         [WikiIgnore]
@@ -1132,7 +1325,8 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
-            return (ulong)(((1 - t) * current) + (target * t));
+
+            return ((1 - t) * current) + (target * t);
         }
 
         [WikiIgnore]
@@ -1140,6 +1334,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
@@ -1148,6 +1343,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
@@ -1156,6 +1352,16 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
+            return (ulong)(((1 - t) * current) + (target * t));
+        }
+
+        [WikiIgnore]
+        public static ulong Lerp(this ulong current, ulong target, BigDecimal t, bool unclamped = false)
+        {
+            if (!unclamped)
+                t = t.Clamp01();
+
             return (ulong)(((1 - t) * current) + (target * t));
         }
 
@@ -1164,6 +1370,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return ((1 - t) * current) + (target * t);
         }
 
@@ -1172,6 +1379,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return ((1 - t) * current) + (target * t);
         }
 
@@ -1180,6 +1388,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return ((1 - t) * current) + (target * t);
         }
 
@@ -1188,6 +1397,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return ((1 - t) * current) + (target * t);
         }
 
@@ -1196,6 +1406,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return ((1 - t) * current) + (target * t);
         }
 
@@ -1204,6 +1415,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (nint)(((1 - t) * current) + (target * t));
         }
 
@@ -1212,6 +1424,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (nint)(((1 - t) * current) + (target * t));
         }
 
@@ -1220,6 +1433,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (nint)(((1 - t) * current) + (target * t));
         }
 
@@ -1228,6 +1442,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (nuint)(((1 - t) * current) + (target * t));
         }
 
@@ -1236,6 +1451,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (nuint)(((1 - t) * current) + (target * t));
         }
 
@@ -1244,6 +1460,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return (nuint)(((1 - t) * current) + (target * t));
         }
 
@@ -1252,6 +1469,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return new Vector2(current.x + ((target.x - current.x) * t), current.y + ((target.y - current.y) * t));
         }
 
@@ -1260,6 +1478,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return new Vector3(current.x + ((target.x - current.x) * t), current.y + ((target.y - current.y) * t), current.z + ((target.z - current.z) * t));
         }
 
@@ -1268,6 +1487,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return new Vector4(current.x + ((target.x - current.x) * t), current.y + ((target.y - current.y) * t), current.z + ((target.z - current.z) * t), current.w + ((target.w - current.w) * t));
         }
 
@@ -1276,6 +1496,7 @@ namespace SCKRM
         {
             if (!unclamped)
                 t = t.Clamp01();
+
             return new Rect(current.x + ((target.x - current.x) * t), current.y + ((target.y - current.y) * t), current.width + ((target.width - current.width) * t), current.height + ((target.height - current.height) * t));
         }
 
@@ -1292,698 +1513,57 @@ namespace SCKRM
         }
         #endregion
 
-        #region MoveTowards
-        public static sbyte MoveTowards(this sbyte current, sbyte target, sbyte maxDelta)
+        #region Lerp Angle
+        public static float LerpAngle(this float current, float target, float t)
         {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
+            float num = (target - current).Repeat(360);
+            if (num > 180)
+                num -= 360;
 
-            return (sbyte)(current + ((target - current).Sign() * maxDelta));
+            return current + num * t.Clamp01();
         }
 
         [WikiIgnore]
-        public static byte MoveTowards(this byte current, byte target, byte maxDelta)
+        public static double LerpAngle(this double current, double target, double t)
         {
-            if ((target - current) <= maxDelta)
-                return target;
+            double num = (target - current).Repeat(360);
+            if (num > 180)
+                num -= 360;
 
-            return (byte)(current + maxDelta);
+            return current + num * t.Clamp01();
         }
 
         [WikiIgnore]
-        public static short MoveTowards(this short current, short target, short maxDelta)
+        public static decimal LerpAngle(this decimal current, decimal target, decimal t)
         {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
+            decimal num = (target - current).Repeat(360);
+            if (num > 180)
+                num -= 360;
 
-            return (short)(current + ((target - current).Sign() * maxDelta));
+            return current + num * t.Clamp01();
         }
 
         [WikiIgnore]
-        public static ushort MoveTowards(this ushort current, ushort target, ushort maxDelta)
+        public static BigDecimal LerpAngle(this BigDecimal current, BigDecimal target, BigDecimal t)
         {
-            if ((target - current) <= maxDelta)
-                return target;
+            BigDecimal num = (target - current).Repeat(360);
+            if (num > 180)
+                num -= 360;
 
-            return (ushort)(current + maxDelta);
-        }
-
-        [WikiIgnore]
-        public static int MoveTowards(this int current, int target, int maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static uint MoveTowards(this uint current, uint target, uint maxDelta)
-        {
-            if ((target - current) <= maxDelta)
-                return target;
-
-            return current + maxDelta;
-        }
-
-        [WikiIgnore]
-        public static long MoveTowards(this long current, long target, long maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static ulong MoveTowards(this ulong current, ulong target, ulong maxDelta)
-        {
-            if ((target - current) <= maxDelta)
-                return target;
-
-            return current + maxDelta;
-        }
-
-        [WikiIgnore]
-        public static float MoveTowards(this float current, float target, float maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static double MoveTowards(this double current, double target, double maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static decimal MoveTowards(this decimal current, decimal target, decimal maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static BigInteger MoveTowards(this BigInteger current, BigInteger target, BigInteger maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static BigDecimal MoveTowards(this BigDecimal current, BigDecimal target, BigDecimal maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static nint MoveTowards(this nint current, nint target, nint maxDelta)
-        {
-            if ((target - current).Abs() <= maxDelta)
-                return target;
-
-            return current + ((target - current).Sign() * maxDelta);
-        }
-
-        [WikiIgnore]
-        public static nuint MoveTowards(this nuint current, nuint target, nuint maxDelta)
-        {
-            if ((target - current) <= maxDelta)
-                return target;
-
-            return current + maxDelta;
-        }
-
-        [WikiIgnore]
-        public static Vector2 MoveTowards(this Vector2 current, Vector2 target, float maxDistanceDelta)
-        {
-            float num = target.x - current.x;
-            float num2 = target.y - current.y;
-            float num3 = (num * num) + (num2 * num2);
-            if (num3 == 0f || (maxDistanceDelta >= 0f && num3 <= maxDistanceDelta * maxDistanceDelta))
-                return target;
-
-            float num4 = (float)Math.Sqrt(num3);
-            return new Vector2(current.x + (num / num4 * maxDistanceDelta), current.y + (num2 / num4 * maxDistanceDelta));
-        }
-        [WikiIgnore]
-        public static Vector3 MoveTowards(this Vector3 current, Vector3 target, float maxDistanceDelta)
-        {
-            float num = target.x - current.x;
-            float num2 = target.y - current.y;
-            float num3 = target.z - current.z;
-            float num4 = (num * num) + (num2 * num2) + (num3 * num3);
-            if (num4 == 0f || (maxDistanceDelta >= 0f && num4 <= maxDistanceDelta * maxDistanceDelta))
-                return target;
-
-            float num5 = (float)Math.Sqrt(num4);
-            return new Vector3(current.x + (num / num5 * maxDistanceDelta), current.y + (num2 / num5 * maxDistanceDelta), current.z + (num3 / num5 * maxDistanceDelta));
-        }
-        [WikiIgnore]
-        public static Vector4 MoveTowards(this Vector4 current, Vector4 target, float maxDistanceDelta)
-        {
-            float num = target.x - current.x;
-            float num2 = target.y - current.y;
-            float num3 = target.z - current.z;
-            float num4 = target.w - current.w;
-            float num5 = (num * num) + (num2 * num2) + (num3 * num3) + (num4 * num4);
-            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
-                return target;
-
-            float num6 = (float)Math.Sqrt(num5);
-            return new Vector4(current.x + (num / num6 * maxDistanceDelta), current.y + (num2 / num6 * maxDistanceDelta), current.z + (num3 / num6 * maxDistanceDelta), current.w + (num4 / num6 * maxDistanceDelta));
-        }
-        [WikiIgnore]
-        public static Rect MoveTowards(this Rect current, Rect target, float maxDistanceDelta)
-        {
-            float num = target.x - current.x;
-            float num2 = target.y - current.y;
-            float num3 = target.width - current.width;
-            float num4 = target.height - current.height;
-            float num5 = (num * num) + (num2 * num2) + (num3 * num3) + (num4 * num4);
-            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
-                return target;
-
-            float num6 = (float)Math.Sqrt(num5);
-            return new Rect(current.x + (num / num6 * maxDistanceDelta), current.y + (num2 / num6 * maxDistanceDelta), current.width + (num3 / num6 * maxDistanceDelta), current.height + (num4 / num6 * maxDistanceDelta));
-        }
-        [WikiIgnore]
-        public static Color MoveTowards(this Color current, Color target, float maxDistanceDelta)
-        {
-            float num = target.r - current.r;
-            float num2 = target.g - current.g;
-            float num3 = target.b - current.b;
-            float num4 = target.a - current.a;
-            float num5 = (num * num) + (num2 * num2) + (num3 * num3) + (num4 * num4);
-            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
-                return target;
-
-            float num6 = (float)Math.Sqrt(num5);
-            return new Color(current.r + (num / num6 * maxDistanceDelta), current.g + (num2 / num6 * maxDistanceDelta), current.b + (num3 / num6 * maxDistanceDelta), current.a + (num4 / num6 * maxDistanceDelta));
+            return current + num * t.Clamp01();
         }
         #endregion
 
-        #region Ceil
-        public static float Ceil(this float value) => (float)Math.Ceiling(value);
-        [WikiIgnore] public static double Ceil(this double value) => Math.Ceiling(value);
-        [WikiIgnore] public static decimal Ceil(this decimal value) => Math.Ceiling(value);
-        [WikiIgnore] public static BigDecimal Ceil(this BigDecimal value) => BigDecimal.Ceiling(value);
+        public static float LinearToGammaSpace(this float value) => Mathf.LinearToGammaSpace(value);
 
-        public static int CeilToInt(this float value) => (int)Math.Ceiling(value);
-        [WikiIgnore] public static int CeilToInt(this double value) => (int)Math.Ceiling(value);
-        [WikiIgnore] public static int CeilToInt(this decimal value) => (int)Math.Ceiling(value);
-        [WikiIgnore] public static BigInteger CeilToInt(this BigDecimal value) => (BigInteger)BigDecimal.Ceiling(value);
+        #region Log
+        public static float Log(this float value) => (float)Math.Log(value);
+        [WikiIgnore] public static double Log(this double value) => Math.Log(value);
         #endregion
 
-        #region Floor
-        public static float Floor(this float value) => (float)Math.Floor(value);
-        [WikiIgnore] public static double Floor(this double value) => Math.Floor(value);
-        [WikiIgnore] public static decimal Floor(this decimal value) => Math.Floor(value);
-        [WikiIgnore] public static BigDecimal Floor(this BigDecimal value) => BigDecimal.Floor(value);
-
-        public static int FloorToInt(this float value) => (int)Math.Floor(value);
-        [WikiIgnore] public static int FloorToInt(this double value) => (int)Math.Floor(value);
-        [WikiIgnore] public static int FloorToInt(this decimal value) => (int)Math.Floor(value);
-        [WikiIgnore] public static BigInteger FloorToInt(this BigDecimal value) => (BigInteger)BigDecimal.Floor(value);
-        #endregion
-
-        #region Round
-        public static float Round(this float value) => (float)Math.Round(value);
-        [WikiIgnore] public static double Round(this double value) => Math.Round(value);
-        [WikiIgnore] public static decimal Round(this decimal value) => Math.Round(value);
-        [WikiIgnore] public static BigDecimal Round(this BigDecimal value) => BigDecimal.Round(value);
-
-        public static int RoundToInt(this float value) => (int)Math.Round(value);
-        [WikiIgnore] public static int RoundToInt(this double value) => (int)Math.Round(value);
-        [WikiIgnore] public static int RoundToInt(this decimal value) => (int)Math.Round(value);
-        [WikiIgnore] public static BigInteger RoundToInt(this BigDecimal value) => BigDecimal.Round(value);
-
-        public static float Round(this float value, int digits) => (float)Math.Round(value, digits);
-        [WikiIgnore] public static double Round(this double value, int digits) => Math.Round(value, digits);
-        [WikiIgnore] public static decimal Round(this decimal value, int digits) => Math.Round(value, digits);
-        #endregion
-
-        #region Pow
-        public static float Pow(this float x, float y) => (float)Math.Pow(x, y);
-        public static double Pow(this double x, double y) => Math.Pow(x, y);
-        public static decimal Pow(this decimal x, decimal y) => (decimal)Math.Pow((double)x, (double)y);
-        #endregion
-
-        #region Sqrt
-        public static float Sqrt(this float value) => (float)Math.Sqrt(value);
-        [WikiIgnore] public static double Sqrt(this double value) => Math.Sqrt(value);
-        [WikiIgnore] public static decimal Sqrt(this decimal value) => (decimal)Math.Sqrt((double)value);
-        #endregion
-
-        #region Min
-        public static sbyte Min(this sbyte a, sbyte b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static byte Min(this byte a, byte b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static short Min(this short a, short b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static ushort Min(this ushort a, ushort b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static int Min(this int a, int b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static uint Min(this uint a, uint b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static long Min(this long a, long b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static ulong Min(this ulong a, ulong b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static float Min(this float a, float b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static double Min(this double a, double b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static decimal Min(this decimal a, decimal b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static BigInteger Min(this BigInteger a, BigInteger b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static BigDecimal Min(this BigDecimal a, BigDecimal b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static nint Min(this nint a, nint b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-
-        [WikiIgnore]
-        public static nuint Min(this nuint a, nuint b)
-        {
-            if (a < b)
-                return a;
-            else
-                return b;
-        }
-        #endregion
-
-        #region Min Array
-        [WikiIgnore]
-        public static sbyte Min(this sbyte value, params sbyte[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            sbyte num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static byte Min(this byte value, params byte[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            byte num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static short Min(this short value, params short[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            short num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static ushort Min(this ushort value, params ushort[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            ushort num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static int Min(this int value, params int[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            int num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static uint Min(this uint value, params uint[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            uint num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static long Min(this long value, params long[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            long num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static ulong Min(this ulong value, params ulong[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            ulong num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static float Min(this float value, params float[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            float num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static double Min(this double value, params double[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            double num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static decimal Min(this decimal value, params decimal[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            decimal num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static BigInteger Min(this BigInteger value, params BigInteger[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            BigInteger num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static BigDecimal Min(this BigDecimal value, params BigDecimal[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            BigDecimal num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static nint Min(this nint value, params nint[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            nint num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
-
-        [WikiIgnore]
-        public static nuint Min(this nuint value, params nuint[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException();
-
-            int length = values.Length;
-            if (length == 0)
-                return 0;
-
-            nuint num2 = value;
-            for (int i = 0; i < length; i++)
-            {
-                if (values[i] < num2)
-                    num2 = values[i];
-            }
-
-            return num2;
-        }
+        #region Log 10
+        public static float Log10(this float value) => (float)Math.Log10(value);
+        [WikiIgnore] public static double Log10(this double value) => Math.Log10(value);
         #endregion
 
         #region Max
@@ -2424,22 +2004,1214 @@ namespace SCKRM
         }
         #endregion
 
-        #region Arithmetic Sequence Sum
-        public static sbyte ArithmeticSequenceSum(this sbyte start, sbyte end) => (sbyte)((start.Distance(end) + 1) * (start + end) / 2);
-        [WikiIgnore] public static byte ArithmeticSequenceSum(this byte start, byte end) => (byte)((start.Distance(end) + 1) * (start + end) / 2);
-        [WikiIgnore] public static short ArithmeticSequenceSum(this short start, short end) => (short)((start.Distance(end) + 1) * (start + end) / 2);
-        [WikiIgnore] public static ushort ArithmeticSequenceSum(this ushort start, ushort end) => (ushort)((start.Distance(end) + 1) * (start + end) / 2);
-        [WikiIgnore] public static int ArithmeticSequenceSum(this int start, int end) => (start.Distance(end) + 1) * (start + end) / 2;
-        [WikiIgnore] public static uint ArithmeticSequenceSum(this uint start, uint end) => (start.Distance(end) + 1) * (start + end) / 2;
-        [WikiIgnore] public static long ArithmeticSequenceSum(this long start, long end) => (start.Distance(end) + 1) * (start + end) / 2;
-        [WikiIgnore] public static ulong ArithmeticSequenceSum(this ulong start, ulong end) => (start.Distance(end) + 1) * (start + end) / 2;
-        [WikiIgnore] public static float ArithmeticSequenceSum(this float start, float end) => (start.Distance(end) + 1) * (start + end) * 0.5f;
-        [WikiIgnore] public static double ArithmeticSequenceSum(this double start, double end) => (start.Distance(end) + 1) * (start + end) * 0.5;
-        [WikiIgnore] public static decimal ArithmeticSequenceSum(this decimal start, decimal end) => (start.Distance(end) + 1) * (start + end) * 0.5m;
-        [WikiIgnore] public static BigInteger ArithmeticSequenceSum(this BigInteger start, BigInteger end) => (start.Distance(end) + 1) * (start + end) / 2;
-        [WikiIgnore] public static BigDecimal ArithmeticSequenceSum(this BigDecimal start, BigDecimal end) => (start.Distance(end) + 1) * (start + end) * 0.5;
-        [WikiIgnore] public static nint ArithmeticSequenceSum(this nint start, nint end) => (start.Distance(end) + 1) * (start + end) / 2;
-        [WikiIgnore] public static nuint ArithmeticSequenceSum(this nuint start, nuint end) => (start.Distance(end) + 1) * (start + end) / 2;
+        #region Min
+        public static sbyte Min(this sbyte a, sbyte b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static byte Min(this byte a, byte b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static short Min(this short a, short b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static ushort Min(this ushort a, ushort b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static int Min(this int a, int b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static uint Min(this uint a, uint b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static long Min(this long a, long b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static ulong Min(this ulong a, ulong b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static float Min(this float a, float b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static double Min(this double a, double b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static decimal Min(this decimal a, decimal b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static BigInteger Min(this BigInteger a, BigInteger b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal Min(this BigDecimal a, BigDecimal b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static nint Min(this nint a, nint b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+
+        [WikiIgnore]
+        public static nuint Min(this nuint a, nuint b)
+        {
+            if (a < b)
+                return a;
+            else
+                return b;
+        }
+        #endregion
+
+        #region Min Array
+        [WikiIgnore]
+        public static sbyte Min(this sbyte value, params sbyte[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            sbyte num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static byte Min(this byte value, params byte[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            byte num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static short Min(this short value, params short[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            short num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static ushort Min(this ushort value, params ushort[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            ushort num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static int Min(this int value, params int[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            int num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static uint Min(this uint value, params uint[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            uint num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static long Min(this long value, params long[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            long num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static ulong Min(this ulong value, params ulong[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            ulong num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static float Min(this float value, params float[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            float num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static double Min(this double value, params double[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            double num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static decimal Min(this decimal value, params decimal[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            decimal num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static BigInteger Min(this BigInteger value, params BigInteger[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            BigInteger num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal Min(this BigDecimal value, params BigDecimal[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            BigDecimal num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static nint Min(this nint value, params nint[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            nint num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+
+        [WikiIgnore]
+        public static nuint Min(this nuint value, params nuint[] values)
+        {
+            if (values == null)
+                throw new ArgumentNullException();
+
+            int length = values.Length;
+            if (length == 0)
+                return 0;
+
+            nuint num2 = value;
+            for (int i = 0; i < length; i++)
+            {
+                if (values[i] < num2)
+                    num2 = values[i];
+            }
+
+            return num2;
+        }
+        #endregion
+
+        #region Move Towards
+        public static sbyte MoveTowards(this sbyte current, sbyte target, sbyte maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return (sbyte)(current + ((target - current).Sign() * maxDelta));
+        }
+
+        [WikiIgnore]
+        public static byte MoveTowards(this byte current, byte target, byte maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return (byte)(current + maxDelta);
+        }
+
+        [WikiIgnore]
+        public static short MoveTowards(this short current, short target, short maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return (short)(current + ((target - current).Sign() * maxDelta));
+        }
+
+        [WikiIgnore]
+        public static ushort MoveTowards(this ushort current, ushort target, ushort maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return (ushort)(current + maxDelta);
+        }
+
+        [WikiIgnore]
+        public static int MoveTowards(this int current, int target, int maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static uint MoveTowards(this uint current, uint target, uint maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return current + maxDelta;
+        }
+
+        [WikiIgnore]
+        public static long MoveTowards(this long current, long target, long maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static ulong MoveTowards(this ulong current, ulong target, ulong maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return current + maxDelta;
+        }
+
+        [WikiIgnore]
+        public static float MoveTowards(this float current, float target, float maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static double MoveTowards(this double current, double target, double maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static decimal MoveTowards(this decimal current, decimal target, decimal maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static BigInteger MoveTowards(this BigInteger current, BigInteger target, BigInteger maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static BigDecimal MoveTowards(this BigDecimal current, BigDecimal target, BigDecimal maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static nint MoveTowards(this nint current, nint target, nint maxDelta)
+        {
+            if ((target - current).Abs() <= maxDelta)
+                return target;
+
+            return current + ((target - current).Sign() * maxDelta);
+        }
+
+        [WikiIgnore]
+        public static nuint MoveTowards(this nuint current, nuint target, nuint maxDelta)
+        {
+            if ((target - current) <= maxDelta)
+                return target;
+
+            return current + maxDelta;
+        }
+
+        [WikiIgnore]
+        public static Vector2 MoveTowards(this Vector2 current, Vector2 target, float maxDistanceDelta)
+        {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = (num * num) + (num2 * num2);
+            if (num3 == 0f || (maxDistanceDelta >= 0f && num3 <= maxDistanceDelta * maxDistanceDelta))
+                return target;
+
+            float num4 = (float)Math.Sqrt(num3);
+            return new Vector2(current.x + (num / num4 * maxDistanceDelta), current.y + (num2 / num4 * maxDistanceDelta));
+        }
+        [WikiIgnore]
+        public static Vector3 MoveTowards(this Vector3 current, Vector3 target, float maxDistanceDelta)
+        {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.z - current.z;
+            float num4 = (num * num) + (num2 * num2) + (num3 * num3);
+            if (num4 == 0f || (maxDistanceDelta >= 0f && num4 <= maxDistanceDelta * maxDistanceDelta))
+                return target;
+
+            float num5 = (float)Math.Sqrt(num4);
+            return new Vector3(current.x + (num / num5 * maxDistanceDelta), current.y + (num2 / num5 * maxDistanceDelta), current.z + (num3 / num5 * maxDistanceDelta));
+        }
+        [WikiIgnore]
+        public static Vector4 MoveTowards(this Vector4 current, Vector4 target, float maxDistanceDelta)
+        {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.z - current.z;
+            float num4 = target.w - current.w;
+            float num5 = (num * num) + (num2 * num2) + (num3 * num3) + (num4 * num4);
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
+                return target;
+
+            float num6 = (float)Math.Sqrt(num5);
+            return new Vector4(current.x + (num / num6 * maxDistanceDelta), current.y + (num2 / num6 * maxDistanceDelta), current.z + (num3 / num6 * maxDistanceDelta), current.w + (num4 / num6 * maxDistanceDelta));
+        }
+        [WikiIgnore]
+        public static Rect MoveTowards(this Rect current, Rect target, float maxDistanceDelta)
+        {
+            float num = target.x - current.x;
+            float num2 = target.y - current.y;
+            float num3 = target.width - current.width;
+            float num4 = target.height - current.height;
+            float num5 = (num * num) + (num2 * num2) + (num3 * num3) + (num4 * num4);
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
+                return target;
+
+            float num6 = (float)Math.Sqrt(num5);
+            return new Rect(current.x + (num / num6 * maxDistanceDelta), current.y + (num2 / num6 * maxDistanceDelta), current.width + (num3 / num6 * maxDistanceDelta), current.height + (num4 / num6 * maxDistanceDelta));
+        }
+        [WikiIgnore]
+        public static Color MoveTowards(this Color current, Color target, float maxDistanceDelta)
+        {
+            float num = target.r - current.r;
+            float num2 = target.g - current.g;
+            float num3 = target.b - current.b;
+            float num4 = target.a - current.a;
+            float num5 = (num * num) + (num2 * num2) + (num3 * num3) + (num4 * num4);
+            if (num5 == 0f || (maxDistanceDelta >= 0f && num5 <= maxDistanceDelta * maxDistanceDelta))
+                return target;
+
+            float num6 = (float)Math.Sqrt(num5);
+            return new Color(current.r + (num / num6 * maxDistanceDelta), current.g + (num2 / num6 * maxDistanceDelta), current.b + (num3 / num6 * maxDistanceDelta), current.a + (num4 / num6 * maxDistanceDelta));
+        }
+        #endregion
+
+        #region Move Towards Angle
+        public static short MoveTowardsAngle(this short current, short target, short maxDelta)
+        {
+            short temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = (short)(current + temp);
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static ushort MoveTowardsAngle(this ushort current, ushort target, ushort maxDelta)
+        {
+            ushort temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = (ushort)(current + temp);
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static int MoveTowardsAngle(this int current, int target, int maxDelta)
+        {
+            int temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static uint MoveTowardsAngle(this uint current, uint target, uint maxDelta)
+        {
+            uint temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static long MoveTowardsAngle(this long current, long target, long maxDelta)
+        {
+            long temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static ulong MoveTowardsAngle(this ulong current, ulong target, ulong maxDelta)
+        {
+            ulong temp = current.DeltaAngle(target);
+            if (0 - maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static float MoveTowardsAngle(this float current, float target, float maxDelta)
+        {
+            float temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static double MoveTowardsAngle(this double current, double target, double maxDelta)
+        {
+            double temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static decimal MoveTowardsAngle(this decimal current, decimal target, decimal maxDelta)
+        {
+            decimal temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static BigInteger MoveTowardsAngle(this BigInteger current, BigInteger target, BigInteger maxDelta)
+        {
+            BigInteger temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static BigDecimal MoveTowardsAngle(this BigDecimal current, BigDecimal target, BigDecimal maxDelta)
+        {
+            BigDecimal temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static nint MoveTowardsAngle(this nint current, nint target, nint maxDelta)
+        {
+            nint temp = current.DeltaAngle(target);
+            if (-maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+
+        [WikiIgnore]
+        public static nuint MoveTowardsAngle(this nuint current, nuint target, nuint maxDelta)
+        {
+            nuint temp = current.DeltaAngle(target);
+            if (0 - maxDelta < temp && temp < maxDelta)
+                return target;
+
+            target = current + temp;
+            return MoveTowards(current, target, maxDelta);
+        }
+        #endregion
+
+        public static int NextPowerOfTwo(this int value) => Mathf.NextPowerOfTwo(value);
+
+        public static float PerlinNoise(this float x, float y) => Mathf.PerlinNoise(x, y);
+
+        #region Ping Pong
+        public static sbyte PingPong(this sbyte value, sbyte length) => (sbyte)(length - (value.Repeat((sbyte)(length * 2)) - length).Abs());
+        public static byte PingPong(this byte value, byte length) => (byte)(length - (value.Repeat((byte)(length * 2)) - length));
+        public static short PingPong(this short value, short length) => (short)(length - (value.Repeat((short)(length * 2)) - length).Abs());
+        public static ushort PingPong(this ushort value, ushort length) => (ushort)(length - (value.Repeat((ushort)(length * 2)) - length));
+        public static int PingPong(this int value, int length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static uint PingPong(this uint value, uint length) => length - (value.Repeat(length * 2) - length);
+        public static long PingPong(this long value, long length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static ulong PingPong(this ulong value, ulong length) => length - (value.Repeat(length * 2) - length);
+        public static float PingPong(this float value, float length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static double PingPong(this double value, double length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static decimal PingPong(this decimal value, decimal length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static BigInteger PingPong(this BigInteger value, BigInteger length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static BigDecimal PingPong(this BigDecimal value, BigDecimal length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static nint PingPong(this nint value, nint length) => length - (value.Repeat(length * 2) - length).Abs();
+        public static nuint PingPong(this nuint value, nuint length) => length - (value.Repeat(length * 2) - length);
+        #endregion
+
+        #region Pow
+        public static float Pow(this float x, float y) => (float)Math.Pow(x, y);
+        public static double Pow(this double x, double y) => Math.Pow(x, y);
+        public static BigInteger Pow(this BigInteger x, int y) => BigInteger.Pow(x, y);
+        public static BigDecimal Pow(this BigDecimal x, BigInteger y) => BigDecimal.Pow(x, y);
+        #endregion
+
+        #region Repeat
+        public static sbyte Repeat(this sbyte t, sbyte length) => (sbyte)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static byte Repeat(this byte t, byte length) => (byte)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static short Repeat(this short t, short length) => (short)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static ushort Repeat(this ushort t, ushort length) => (ushort)(t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static int Repeat(this int t, int length) => (t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static uint Repeat(this uint t, uint length) => (t - ((uint)((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static long Repeat(this long t, long length) => (t - (((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static ulong Repeat(this ulong t, ulong length) => (t - ((ulong)((float)t / length).FloorToInt() * length)).Clamp(0, length);
+        [WikiIgnore] public static float Repeat(this float t, float length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
+        [WikiIgnore] public static double Repeat(this double t, double length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
+        [WikiIgnore] public static decimal Repeat(this decimal t, decimal length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
+        [WikiIgnore] public static BigInteger Repeat(this BigInteger t, BigInteger length) => (t - ((BigInteger)((BigDecimal)t / (BigDecimal)length).Floor() * length)).Clamp(0, length);
+        [WikiIgnore] public static BigDecimal Repeat(this BigDecimal t, BigDecimal length) => (t - ((t / length).Floor() * length)).Clamp(0, length);
+        [WikiIgnore] public static nint Repeat(this nint t, nint length) => (t - ((t / length) * length)).Clamp(0, length);
+        [WikiIgnore] public static nuint Repeat(this nuint t, nuint length) => (t - ((t / length) * length)).Clamp(0, length);
+        #endregion
+
+        #region Repeat While
+        public static sbyte RepeatWhile(this sbyte t, sbyte length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static byte RepeatWhile(this byte t, byte length)
+        {
+            while (t > length)
+                t -= length;
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static short RepeatWhile(this short t, short length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static ushort RepeatWhile(this ushort t, ushort length)
+        {
+            while (t > length)
+                t -= length;
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static int RepeatWhile(this int t, int length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static uint RepeatWhile(this uint t, uint length)
+        {
+            while (t > length)
+                t -= length;
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static long RepeatWhile(this long t, long length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static ulong RepeatWhile(this ulong t, ulong length)
+        {
+            while (t > length)
+                t -= length;
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static float RepeatWhile(this float t, float length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static double RepeatWhile(this double t, double length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static decimal RepeatWhile(this decimal t, decimal length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static BigInteger RepeatWhile(this BigInteger t, BigInteger length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal RepeatWhile(this BigDecimal t, BigDecimal length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static nint RepeatWhile(this nint t, nint length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static nuint RepeatWhile(this nuint t, nuint length)
+        {
+            if (t >= 0)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < 0)
+                    t += length;
+            }
+
+            return t;
+        }
+        #endregion
+
+        #region Round
+        public static float Round(this float value) => (float)Math.Round(value);
+        [WikiIgnore] public static double Round(this double value) => Math.Round(value);
+        [WikiIgnore] public static decimal Round(this decimal value) => Math.Round(value);
+        [WikiIgnore] public static BigDecimal Round(this BigDecimal value) => BigDecimal.Round(value);
+
+        public static int RoundToInt(this float value) => (int)Math.Round(value);
+        [WikiIgnore] public static int RoundToInt(this double value) => (int)Math.Round(value);
+        [WikiIgnore] public static int RoundToInt(this decimal value) => (int)Math.Round(value);
+        [WikiIgnore] public static BigInteger RoundToInt(this BigDecimal value) => BigDecimal.Round(value);
+
+        public static float Round(this float value, int digits) => (float)Math.Round(value, digits);
+        [WikiIgnore] public static double Round(this double value, int digits) => Math.Round(value, digits);
+        [WikiIgnore] public static decimal Round(this decimal value, int digits) => Math.Round(value, digits);
+        [WikiIgnore] public static BigDecimal Round(this BigDecimal value, int digits) => BigDecimal.Round(value, digits);
+        #endregion
+
+        #region Sign
+        public static int Sign(this sbyte value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static short Sign(this short value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this int value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static long Sign(this long value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this float value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this double value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this decimal value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this BigInteger value)
+        {
+            if (value < BigInteger.Zero)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this BigDecimal value)
+        {
+            if (value < BigDecimal.Zero)
+                return -1;
+            else
+                return 1;
+        }
+
+        [WikiIgnore]
+        public static int Sign(this nint value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
+        }
+        #endregion
+
+        #region Sin
+        public static float Sin(this float value) => (float)Math.Sin(value);
+        [WikiIgnore] public static double Sin(this double value) => Math.Sin(value);
+        #endregion
+
+        #region Sinh
+        public static float Sinh(this float value) => (float)Math.Sinh(value);
+        [WikiIgnore] public static double Sinh(this double value) => Math.Sinh(value);
+        #endregion
+
+        #region Smooth Damp
+        public static float SmoothDamp(this float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed = float.PositiveInfinity) => Mathf.SmoothDamp(current, target, ref currentVelocity, smoothTime, maxSpeed, Kernel.deltaTime);
+        [WikiIgnore] public static float SmoothDamp(this float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime) => Mathf.SmoothDamp(current, target, ref currentVelocity, smoothTime, maxSpeed, deltaTime);
+        #endregion
+
+        #region Smooth Damp Angle
+        public static float SmoothDampAngle(this float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed = float.PositiveInfinity) => Mathf.SmoothDampAngle(current, target, ref currentVelocity, smoothTime, maxSpeed, Kernel.deltaTime);
+        [WikiIgnore] public static float SmoothDampAngle(this float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime) => Mathf.SmoothDampAngle(current, target, ref currentVelocity, smoothTime, maxSpeed, deltaTime);
+        #endregion
+
+        public static float SmoothStep(this float from, float to, float t) => Mathf.SmoothStep(from, to, t);
+
+        #region Sqrt
+        public static float Sqrt(this float value) => (float)Math.Sqrt(value);
+        [WikiIgnore] public static double Sqrt(this double value) => Math.Sqrt(value);
+        [WikiIgnore] public static decimal Sqrt(this decimal value) => (decimal)Math.Sqrt((double)value);
+        #endregion
+
+        #region Tan
+        public static float Tan(this float value) => (float)Math.Tan(value);
+        [WikiIgnore] public static double Tan(this double value) => Math.Tan(value);
+        #endregion
+
+        #region Tanh
+        public static float Tanh(this float value) => (float)Math.Tanh(value);
+        [WikiIgnore] public static double Tanh(this double value) => Math.Tanh(value);
+        #endregion
+
+        #region Truncate
+        public static float Truncate(this float value) => (float)Math.Truncate(value);
+        public static double Truncate(this double value) => Math.Truncate(value);
+        public static decimal Truncate(this decimal value) => Math.Truncate(value);
+        public static BigDecimal Truncate(this BigDecimal value) => BigDecimal.Truncate(value);
         #endregion
     }
 
