@@ -2909,6 +2909,260 @@ namespace SCKRM
         #endregion
 
         #region Repeat While
+        public static sbyte RepeatWhile(this sbyte t, sbyte start, sbyte length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static byte RepeatWhile(this byte t, byte start, byte length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static short RepeatWhile(this short t, short start, short length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static ushort RepeatWhile(this ushort t, ushort start, ushort length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static int RepeatWhile(this int t, int start, int length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static uint RepeatWhile(this uint t, uint start, uint length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static long RepeatWhile(this long t, long start, long length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static ulong RepeatWhile(this ulong t, ulong start, ulong length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static float RepeatWhile(this float t, float start, float length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static double RepeatWhile(this double t, double start, double length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static decimal RepeatWhile(this decimal t, decimal start, decimal length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static BigInteger RepeatWhile(this BigInteger t, BigInteger start, BigInteger length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal RepeatWhile(this BigDecimal t, BigDecimal start, BigDecimal length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static nint RepeatWhile(this nint t, nint start, nint length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
+        [WikiIgnore]
+        public static nuint RepeatWhile(this nuint t, nuint start, nuint length)
+        {
+            if (t >= start)
+            {
+                while (t > length)
+                    t -= length;
+            }
+            else
+            {
+                while (t < start)
+                    t += length;
+            }
+
+            return t;
+        }
+
         public static sbyte RepeatWhile(this sbyte t, sbyte length)
         {
             if (t >= 0)
