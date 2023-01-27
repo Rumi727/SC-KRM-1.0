@@ -49,8 +49,7 @@ namespace SCKRM.Renderer
 
             for (int i = 0; i < refreshableObjects.Length; i++)
             {
-                Interlocked.Decrement(ref stopLoop);
-                if (Interlocked.Increment(ref stopLoop) > 0)
+                if (Interlocked.Add(ref stopLoop, 0) > 0)
                     return;
 
                 refreshableObjects[i].Refresh();

@@ -260,8 +260,7 @@ namespace SCKRM.NTP
                 {
                     Thread.Sleep(1);
 
-                    Interlocked.Decrement(ref stopLoop);
-                    if (Interlocked.Increment(ref stopLoop) > 0)
+                    if (Interlocked.Add(ref stopLoop, 0) > 0)
                         return;
                 }
             }
