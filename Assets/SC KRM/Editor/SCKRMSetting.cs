@@ -76,6 +76,21 @@ namespace SCKRM.Editor
             }
         }
 
+        [MenuItem("SC KRM/Selected Object Navigation Disable In Children")]
+        public static void SelectedObjectNavigationDisableInChildren()
+        {
+            if (!EditorUtility.DisplayDialog("Navigaion Disable", "Do you want to disable navigation to all child objects of the selected object?", "Yes", "No"))
+                return;
+
+            GameObject gameObject = Selection.activeGameObject;
+            if (gameObject == null)
+                return;
+
+            Selectable[] selectables = gameObject.GetComponentsInChildren<Selectable>(true);
+            for (int i = 0; i < selectables.Length; i++)
+                selectables[i].navigation = new Navigation() { mode = Navigation.Mode.None };
+        }
+
 
 
         static bool sceneListChangedEnable = true;
