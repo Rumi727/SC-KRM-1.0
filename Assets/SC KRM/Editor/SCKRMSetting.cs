@@ -88,7 +88,12 @@ namespace SCKRM.Editor
 
             Selectable[] selectables = gameObject.GetComponentsInChildren<Selectable>(true);
             for (int i = 0; i < selectables.Length; i++)
-                selectables[i].navigation = new Navigation() { mode = Navigation.Mode.None };
+            {
+                Selectable selectable = selectables[i];
+                selectable.navigation = new Navigation() { mode = Navigation.Mode.None };
+
+                EditorUtility.SetDirty(selectable);
+            }
         }
 
 
