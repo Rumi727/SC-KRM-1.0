@@ -386,6 +386,8 @@ namespace SCKRM.FileDialog
             isFileDialogShow = true;
             UIOverlayManager.showedOverlays.Add(instance);
 
+            instance.Update();
+
             instance.fileDialogTitle.nameSpacePathReplacePair = title;
             isSingle = single;
 
