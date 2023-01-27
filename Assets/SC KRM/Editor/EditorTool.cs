@@ -29,7 +29,7 @@ namespace SCKRM.Editor
             get
             {
                 if (_gameView == null)
-                    _gameView = EditorWindow.GetWindow(_gameViewType, false, null);
+                    _gameView = EditorWindow.GetWindow(gameViewType, false, null);
 
                 return _gameView;
             }
