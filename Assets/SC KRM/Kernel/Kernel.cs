@@ -464,7 +464,7 @@ Build: const true"
             allRefreshEnd?.Invoke();
         }
 
-        [WikiDescription("파일 탐색기로 열기")] public static void RevealInFinder(string path) => Application.OpenURL("file:///" + path);
+        [WikiDescription("파일 탐색기로 열기")] public static void RevealInFinder(string path) => Application.OpenURL(PathUtility.urlPathPrefix + path);
     }
 
 
