@@ -126,7 +126,7 @@ namespace SCKRM.DragAndDrop
             UnityDragAndDropHook.InstallHook();
             UnityDragAndDropHook.OnDroppedFiles += OnFiles;
 
-            void OnFiles(List<string> aFiles, POINT aPos) => DragAndDropEventInvoke(aFiles.ToArray(), new Vector2(aPos.x, ScreenManager.height - aPos.y));
+            void OnFiles(List<string> aFiles, POINT aPos) => DragAndDropEventInvoke(aFiles.ToArray());
         }
 
         void OnDisable() => UnityDragAndDropHook.UninstallHook();

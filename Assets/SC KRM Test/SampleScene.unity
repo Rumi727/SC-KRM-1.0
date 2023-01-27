@@ -207,6 +207,8 @@ MonoBehaviour:
   _customGuiSize: 0
   _worldRenderMode: 0
   _planeDistance: 0
+  _forceSafeScreenEnable: 0
+  _safeScreenMultiple: {x: 1, y: 1}
   safeScreen: {fileID: 1609481224}
 --- !u!114 &542794887
 MonoBehaviour:
@@ -941,6 +943,8 @@ MonoBehaviour:
   _customGuiSize: 0
   _worldRenderMode: 1
   _planeDistance: 8
+  _forceSafeScreenEnable: 0
+  _safeScreenMultiple: {x: 1, y: 1}
   safeScreen: {fileID: 0}
 --- !u!114 &913368623
 MonoBehaviour:
@@ -2012,6 +2016,8 @@ MonoBehaviour:
   _customGuiSize: 0
   _worldRenderMode: 0
   _planeDistance: 0
+  _forceSafeScreenEnable: 0
+  _safeScreenMultiple: {x: 1, y: 1}
   safeScreen: {fileID: 2081374924}
 --- !u!114 &1800996215
 MonoBehaviour:
