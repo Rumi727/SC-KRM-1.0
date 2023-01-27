@@ -51,9 +51,13 @@ namespace SCKRM.DragAndDrop
         /// 메소드가 파일 감지에 성공했을 경우 true를 반환해야 하며, 감지에 실패했으면 false를 반환해야 합니다
         /// The method should return true if the file was detected successfully, and false if the detection was unsuccessful.
         /// </returns>
-        public delegate bool DragAndDropFunc(string path, bool isFolder, Vector2 mousePos, ThreadMetaData threadMetaData);
+        public delegate bool DragAndDropFunc(string path, bool isFolder, ThreadMetaData threadMetaData);
 
-        [WikiDescription("사용자가 파일을 드래그 앤 드랍할때 발생하는 이벤트 입니다")]
+        /// <summary>
+        /// 사용자가 파일을 드래그 앤 드랍할때 발생하는 이벤트 입니다.
+        /// 유니티 API를 사용하면 안됩니다
+        /// </summary>
+        [WikiDescription("사용자가 파일을 드래그 앤 드랍할때 발생하는 이벤트 입니다\n유니티 API를 사용하면 안됩니다")]
         public static event DragAndDropFunc dragAndDropEvent;
 
 
@@ -64,7 +68,7 @@ namespace SCKRM.DragAndDrop
                 dragAndDropEvent += ResourcePackDragAndDrop;
         }
 
-        static bool ResourcePackDragAndDrop(string path, bool isFolder, Vector2 mousePos, ThreadMetaData threadMetaData)
+        static bool ResourcePackDragAndDrop(string path, bool isFolder, ThreadMetaData threadMetaData)
         {
             if (!isFolder)
                 return false;
@@ -141,7 +145,7 @@ namespace SCKRM.DragAndDrop
                     if (drag)
                     {
                         drag = false;
-                        DragAndDropEventInvoke(tempDragAndDropPath, UnityEngine.Input.mousePosition);
+                        DragAndDropEventInvoke(tempDragAndDropPath);
                     }
                     else
                         drag = true;
@@ -154,7 +158,7 @@ namespace SCKRM.DragAndDrop
         }
 #endif
 
-        static void DragAndDropEventInvoke(string[] paths, Vector2 mousePos)
+        static void DragAndDropEventInvoke(string[] paths)
         {
             Delegate[] delegates = dragAndDropEvent?.GetInvocationList();
             if (delegates == null || delegates.Length <= 0)
@@ -202,7 +206,7 @@ namespace SCKRM.DragAndDrop
                         {
                             try
                             {
-                                if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, mousePos, threadMetaData))
+                                if (((DragAndDropFunc)delegates[j]).Invoke(path, isFolder, threadMetaData))
                                     break;
                             }
                             catch (Exception e)
