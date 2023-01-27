@@ -2,11 +2,39 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEditor;
 using UnityEngine;
+using System;
+using System.Reflection;
 
 namespace SCKRM.Editor
 {
     public static class EditorTool
     {
+        public static Assembly assembly = typeof(UnityEditor.Editor).Assembly;
+
+        static Type _gameViewType;
+        public static Type gameViewType
+        {
+            get
+            {
+                if (_gameViewType == null)
+                    _gameViewType = assembly.GetType("UnityEditor.GameView");
+
+                return _gameViewType;
+            }
+        }
+
+        static EditorWindow _gameView;
+        public static EditorWindow gameView
+        {
+            get
+            {
+                if (_gameView == null)
+                    _gameView = EditorWindow.GetWindow(_gameViewType, false, null);
+
+                return _gameView;
+            }
+        }
+
         public static void AddComponentCompatibleWithPrefab<T>(GameObject gameObject, ref bool isModified, bool backToTop = false) where T : Component
         {
             //오브젝트의 프리팹 타입을 가져옵니다
