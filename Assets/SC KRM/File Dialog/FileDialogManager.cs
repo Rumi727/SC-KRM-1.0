@@ -613,12 +613,12 @@ namespace SCKRM.FileDialog
         public bool isSuccess;
         public string[] paths;
 
-        public OpenFileResult(string[] selectedPaths)
+        public OpenFileResult(string[] paths)
         {
-            if (selectedPaths != null || selectedPaths.Length > 0)
+            if (paths != null && paths.Length > 0)
             {
                 isSuccess = true;
-                this.paths = selectedPaths;
+                this.paths = paths;
             }
             else
             {

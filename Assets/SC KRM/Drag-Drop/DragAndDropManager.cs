@@ -69,7 +69,7 @@ namespace SCKRM.DragAndDrop
                 DragAndDropEventInvoke(result.paths);
         }
 
-        public static async UniTask ReadFile()
+        public static async void ReadFile()
         {
             OpenFileResult result = await FileDialogManager.ShowFileOpen("sc-krm:gui.drag_and_drop", false, ExtensionFilter.allFileFilter, ExtensionFilter.compressFileFilter);
             if (result.isSuccess)
