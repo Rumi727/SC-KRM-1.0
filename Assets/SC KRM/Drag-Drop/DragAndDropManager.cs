@@ -6,8 +6,9 @@ using System;
 using SCKRM.UI.SideBar;
 using K4.Threading;
 using SCKRM.ProjectSetting;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
+using SCKRM.FileDialog;
+using Cysharp.Threading.Tasks;
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 using B83.Win32;
 using System.Collections.Generic;
@@ -61,6 +62,19 @@ namespace SCKRM.DragAndDrop
         public static event DragAndDropFunc dragAndDropEvent;
 
 
+        public static async void ReadFolder()
+        {
+            OpenFileResult result = await FileDialogManager.ShowFolderOpen("sc-krm:gui.drag_and_drop");
+            if (result.isSuccess)
+                DragAndDropEventInvoke(result.paths);
+        }
+
+        public static async UniTask ReadFile()
+        {
+            OpenFileResult result = await FileDialogManager.ShowFileOpen("sc-krm:gui.drag_and_drop", false, ExtensionFilter.allFileFilter, ExtensionFilter.compressFileFilter);
+            if (result.isSuccess)
+                DragAndDropEventInvoke(result.paths);
+        }
 
         void Awake()
         {
