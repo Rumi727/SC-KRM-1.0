@@ -9,7 +9,7 @@ namespace SCKRM.Editor
 {
     public static class EditorTool
     {
-        public static Assembly assembly = typeof(UnityEditor.Editor).Assembly;
+        public static Assembly assembly { get; } = typeof(UnityEditor.Editor).Assembly;
 
         static Type _gameViewType;
         public static Type gameViewType
