@@ -442,7 +442,7 @@ Build: const true"
         [WikiDescription("전체 새로고침 시작 이벤트")] public static event Action allRefreshStart;
         [WikiDescription("전체 새로고침 끝 이벤트")] public static event Action allRefreshEnd;
         [WikiDescription("전체 새로고침")]
-        public static async UniTaskVoid AllRefresh()
+        public static async UniTask AllRefresh()
         {
             if (!ThreadManager.isMainThread)
                 throw new NotMainThreadMethodException();
