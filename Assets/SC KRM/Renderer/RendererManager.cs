@@ -28,7 +28,7 @@ namespace SCKRM.Renderer
                 if (rerenderThread != null)
                     rerenderThread.Remove();
 
-                ThreadMetaData threadMetaData = ThreadManager.Create(Rerender, refreshableObjects, "notice.running_task.rerender.name");
+                ThreadMetaData threadMetaData = new ThreadMetaData((ThreadMetaData threadMetaData) => Rerender(refreshableObjects, threadMetaData), "notice.running_task.rerender.name");
                 rerenderThread = threadMetaData;
             }
             else
