@@ -360,33 +360,6 @@ Build: const true"
             }
         }
 
-        async UniTaskVoid Start()
-        {
-            if (isEditor)
-                return;
-
-            while (true)
-            {
-                if (InitialLoadManager.isInitialLoadEnd && InputManager.GetKey("kernel.full_screen", InputType.Down, InputManager.inputLockDenyAllForce))
-                {
-                    if (Screen.fullScreen)
-                        Screen.SetResolution((int)(ScreenManager.currentResolution.width / 1.5f), (int)(ScreenManager.currentResolution.height / 1.5f), false);
-                    else
-                    {
-                        Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, false);
-
-                        if (await UniTask.DelayFrame(4, PlayerLoopTiming.LastPostLateUpdate, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                            return;
-
-                        Screen.SetResolution(ScreenManager.currentResolution.width, ScreenManager.currentResolution.height, true);
-                    }
-                }
-
-                if (await UniTask.DelayFrame(1, PlayerLoopTiming.Update, AsyncTaskManager.cancelToken).SuppressCancellationThrow())
-                    return;
-            }
-        }
-
         void Update()
         {
             //게임 속도를 0에서 100 사이로 정하고, 타임 스케일을 게임 속도로 정합니다
