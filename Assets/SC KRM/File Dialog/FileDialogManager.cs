@@ -436,10 +436,10 @@ namespace SCKRM.FileDialog
 
 
             GameObject previousTabSelectGameObject = StatusBarManager.tabSelectGameObject;
-            StatusBarManager.tabSelectGameObject = instance.fileDialogSaveOpenButton.gameObject;
+            StatusBarManager.tabSelectGameObject = null;
 
             GameObject previouslySelectedGameObject = EventSystem.current.currentSelectedGameObject;
-            EventSystem.current.SetSelectedGameObject(instance.fileDialogSaveOpenButton.gameObject);
+            EventSystem.current.SetSelectedGameObject(null);
 
             bool previousForceInputLock = InputManager.forceInputLock;
             InputManager.forceInputLock = true;
