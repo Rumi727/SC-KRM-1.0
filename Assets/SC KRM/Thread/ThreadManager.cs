@@ -304,6 +304,8 @@ namespace SCKRM.Threads
 
             if (base.Remove(force))
             {
+                Debug.Log("Thread Remove! Beware the Join method");
+
                 ThreadManager.runningThreads.Remove(this);
 
                 ThreadManager.ThreadChangeEventInvoke();
@@ -311,11 +313,8 @@ namespace SCKRM.Threads
 
                 if (thread != null)
                 {
-                    Thread _thread = thread;
-#pragma warning disable CS0618 // 형식 또는 멤버는 사용되지 않습니다.
+                    thread.Join();
                     thread = null;
-#pragma warning restore CS0618 // 형식 또는 멤버는 사용되지 않습니다.
-                    _thread.Join();
                 }
 
                 return true;
