@@ -363,7 +363,7 @@ namespace SCKRM.Threads
 
             if (base.Remove(force))
             {
-                Debug.Log($"{ResourceManager.SearchLanguage(name)} Thread Remove! Beware the Join method");
+                Debug.Log("Thread Remove! Beware the Join method");
 
                 ThreadManager.runningThreads.Remove(this);
 
