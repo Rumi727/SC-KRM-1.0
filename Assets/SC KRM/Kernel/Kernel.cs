@@ -5,7 +5,6 @@ using SCKRM.SaveLoad;
 using SCKRM.Threads;
 using System;
 using UnityEngine;
-using SCKRM.Input;
 using System.IO;
 using System.Runtime.CompilerServices;
 
