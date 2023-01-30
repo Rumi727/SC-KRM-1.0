@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SCKRM.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -74,19 +75,15 @@ namespace SCKRM.SaveLoad
         public static void InitializeAll<T>(out SaveLoadClass[] result) where T : SaveLoadBaseAttribute
         {
             List<SaveLoadClass> saveLoadClassList = new List<SaveLoadClass>();
-            Assembly[] assemblys = AppDomain.CurrentDomain.GetAssemblies();
-            for (int assemblysIndex = 0; assemblysIndex < assemblys.Length; assemblysIndex++)
+            Type[] types = ReflectionManager.types;
+            for (int typesIndex = 0; typesIndex < types.Length; typesIndex++)
             {
-                Type[] types = assemblys[assemblysIndex].GetTypes();
-                for (int typesIndex = 0; typesIndex < types.Length; typesIndex++)
-                {
-                    Type type = types[typesIndex];
+                Type type = types[typesIndex];
 
-                    Initialize<T>(type, out SaveLoadClass result2);
+                Initialize<T>(type, out SaveLoadClass result2);
 
-                    if (result2 != null)
-                        saveLoadClassList.Add(result2);
-                }
+                if (result2 != null)
+                    saveLoadClassList.Add(result2);
             }
 
             result = saveLoadClassList.ToArray();
