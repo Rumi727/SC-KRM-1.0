@@ -134,7 +134,7 @@ namespace SCKRM.Editor
                 if (autoLoad)
                 {
                     if (splashProjectSetting == null)
-                        SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
+                        SaveLoadManager.Initialize<SplashScreen.Data, ProjectSettingSaveLoadAttribute>(out splashProjectSetting);
 
                     SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
                 }
@@ -190,7 +190,7 @@ namespace SCKRM.Editor
                 if (autoLoad)
                 {
                     if (splashProjectSetting == null)
-                        SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
+                        SaveLoadManager.Initialize<SplashScreen.Data, ProjectSettingSaveLoadAttribute>(out splashProjectSetting);
 
                     SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
                 }
@@ -330,7 +330,7 @@ namespace SCKRM.Editor
             if (autoLoad)
             {
                 if (splashProjectSetting == null)
-                    SaveLoadManager.Initialize<ProjectSettingSaveLoadAttribute>(typeof(SplashScreen.Data), out splashProjectSetting);
+                    SaveLoadManager.Initialize<SplashScreen.Data, ProjectSettingSaveLoadAttribute>(out splashProjectSetting);
 
                 SaveLoadManager.Load(splashProjectSetting, Kernel.projectSettingPath);
             }

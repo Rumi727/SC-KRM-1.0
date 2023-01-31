@@ -72,7 +72,10 @@ namespace SCKRM.SaveLoad
         public static SaveLoadClass[] generalSLCList { get; [Obsolete("It is managed by the InitialLoadManager class. Please do not touch it.", false)] internal set; } = new SaveLoadClass[0];
 
         [WikiDescription("전부 초기화")]
-        public static void InitializeAll<T>(out SaveLoadClass[] result) where T : SaveLoadBaseAttribute
+        public static void InitializeAll<TAttribute>(out SaveLoadClass[] result) where TAttribute : SaveLoadBaseAttribute
+            => InitializeAll(typeof(TAttribute), out result);
+
+        public static void InitializeAll(Type targetAttribute, out SaveLoadClass[] result)
         {
             List<SaveLoadClass> saveLoadClassList = new List<SaveLoadClass>();
             Type[] types = ReflectionManager.types;
@@ -80,7 +83,7 @@ namespace SCKRM.SaveLoad
             {
                 Type type = types[typesIndex];
 
-                Initialize<T>(type, out SaveLoadClass result2);
+                Initialize(type, targetAttribute, out SaveLoadClass result2);
 
                 if (result2 != null)
                     saveLoadClassList.Add(result2);
@@ -90,16 +93,20 @@ namespace SCKRM.SaveLoad
         }
 
         [WikiDescription("초기화")]
-        public static void Initialize<T>(Type type, out SaveLoadClass result) where T : SaveLoadBaseAttribute
+        public static void Initialize<TClass, TAttribute>(out SaveLoadClass result) where TAttribute : SaveLoadBaseAttribute
+            => Initialize(typeof(TClass), typeof(TAttribute), out result);
+
+        [WikiIgnore]
+        public static void Initialize(Type targetClass, Type targetAttribute, out SaveLoadClass result)
         {
-            if (Attribute.GetCustomAttributes(type, typeof(T)).Length <= 0)
+            if (targetAttribute != typeof(SaveLoadBaseAttribute) || Attribute.GetCustomAttributes(targetClass, targetAttribute).Length <= 0)
             {
                 result = null;
                 return;
             }
 
             #region 경고 및 기본값 저장
-            PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+            PropertyInfo[] propertyInfos = targetClass.GetProperties(BindingFlags.Public | BindingFlags.Static);
             List<SaveLoadClass.SaveLoadVariable<PropertyInfo>> propertyInfoList = new List<SaveLoadClass.SaveLoadVariable<PropertyInfo>>();
             List<SaveLoadClass.SaveLoadVariable<FieldInfo>> fieldInfoList = new List<SaveLoadClass.SaveLoadVariable<FieldInfo>>();
             for (int i = 0; i < propertyInfos.Length; i++)
@@ -110,23 +117,23 @@ namespace SCKRM.SaveLoad
 
                 bool ignore = Attribute.GetCustomAttributes(propertyInfo, typeof(JsonIgnoreAttribute)).Length > 0;
                 if (Attribute.GetCustomAttributes(propertyInfo, typeof(JsonPropertyAttribute)).Length <= 0 && !ignore)
-                    Debug.LogWarning(type.FullName + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                    Debug.LogWarning(targetClass.FullName + " " + propertyInfo.PropertyType + " " + propertyInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
                 else if (!ignore)
                     propertyInfoList.Add(new SaveLoadClass.SaveLoadVariable<PropertyInfo>(propertyInfo, propertyInfo.GetValue(null)));
             }
 
-            FieldInfo[] fieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+            FieldInfo[] fieldInfos = targetClass.GetFields(BindingFlags.Public | BindingFlags.Static);
             for (int i = 0; i < fieldInfos.Length; i++)
             {
                 FieldInfo fieldInfo = fieldInfos[i];
                 bool ignore = Attribute.GetCustomAttributes(fieldInfo, typeof(JsonIgnoreAttribute)).Length > 0;
                 if (Attribute.GetCustomAttributes(fieldInfo, typeof(JsonPropertyAttribute)).Length <= 0 && !ignore)
-                    Debug.LogWarning(type.FullName + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
+                    Debug.LogWarning(targetClass.FullName + " " + fieldInfo.FieldType + " " + fieldInfo.Name + " 에 [JsonProperty] 어트리뷰트가 추가되어있지 않습니다.\n이 변수는 로드되지 않을것입니다.\n무시를 원하신다면 [JsonIgnore] 어트리뷰트를 추가해주세요");
                 else if (!ignore)
                     fieldInfoList.Add(new SaveLoadClass.SaveLoadVariable<FieldInfo>(fieldInfo, fieldInfo.GetValue(null)));
             }
 
-            result = new SaveLoadClass(type.FullName, type, propertyInfoList.ToArray(), fieldInfoList.ToArray());
+            result = new SaveLoadClass(targetClass.FullName, targetClass, propertyInfoList.ToArray(), fieldInfoList.ToArray());
             #endregion
         }
 
