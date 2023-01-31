@@ -53,7 +53,7 @@ namespace SCKRM.Editor
         public static void SaveLoadUIButton(MenuCommand menuCommand) => PrefabInstantiate("Save Load UI Button", menuCommand, "Assets/SC KRM/Save Load/Save Load UI");
 
         [MenuItem("GameObject/Kernel/Save Load UI/Save Load UI")]
-        public static void SaveLoadUI(MenuCommand menuCommand) => PrefabInstantiate("Save Load UI", menuCommand, "Assets/SC KRM/Save Load/Save Load UI");
+        public static void SaveLoadUI(MenuCommand menuCommand) => PrefabInstantiate("Save Load UI", menuCommand, "Assets/SC KRM/Resources/Prefab/Save Load UI");
 
         [MenuItem("GameObject/Kernel/UI/Side Bar/Left")]
         public static void SideBarLeft(MenuCommand menuCommand) => PrefabInstantiate("Side Bar", menuCommand);
