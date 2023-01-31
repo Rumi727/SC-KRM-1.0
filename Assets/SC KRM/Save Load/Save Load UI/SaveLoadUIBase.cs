@@ -22,7 +22,7 @@ namespace SCKRM.SaveLoad.UI
         public static Dictionary<string, List<SaveLoadUIBase>> settingInstances { get; } = new Dictionary<string, List<SaveLoadUIBase>>();
 
 
-        [SerializeField] bool _autoRefresh = false; public bool autoRefresh { get => _autoRefresh; set => _autoRefresh = value; }
+        [SerializeField, Tooltip("SaveLoadManager.generalSLCList 리스트를 사용합니다")] bool _autoRefresh = false; public bool autoRefresh { get => _autoRefresh; set => _autoRefresh = value; }
 
         [SerializeField] string _saveLoadClassName = ""; public string saveLoadClassName { get => _saveLoadClassName; set => _saveLoadClassName = value; }
         [SerializeField] string _variableName = ""; public string variableName { get => _variableName; set => _variableName = value; }
@@ -30,9 +30,10 @@ namespace SCKRM.SaveLoad.UI
         [SerializeField] int _roundingDigits = 2; public int roundingDigits { get => _roundingDigits; set => _roundingDigits = value; }
         [SerializeField] string[] _hotkeyToDisplay = new string[0]; public string[] hotkeyToDisplays { get => _hotkeyToDisplay; set => _hotkeyToDisplay = value; }
 
-        [SerializeField] CanvasGroup _resetButton; public CanvasGroup resetButton { get => _resetButton; set => _resetButton = value; }
-        [SerializeField] RectTransform _nameText; public RectTransform nameText { get => _nameText; set => _nameText = value; }
-        [SerializeField] CustomTextRendererBase _nameTextRenderer; public CustomTextRendererBase nameTextRenderer { get => _nameTextRenderer; set => _nameTextRenderer = value; }
+        [SerializeField, NotNull] CanvasGroup _resetButton; public CanvasGroup resetButton => _resetButton;
+        [SerializeField, NotNull] RectTransform _nameText; public RectTransform nameText => _nameText;
+        [SerializeField, NotNull] CustomTextRendererBase _nameTextRenderer; public CustomTextRendererBase nameTextRenderer => _nameTextRenderer;
+        [SerializeField, NotNull] Tooltip.Tooltip _tooltip; public Tooltip.Tooltip tooltip => _tooltip;
 
 
 
@@ -46,6 +47,8 @@ namespace SCKRM.SaveLoad.UI
         public bool isDefault { get; protected set; } = true;
 
         public bool isLoad { get; private set; } = false;
+
+        public bool invokeLock { get; set; } = false;
 
 
 
@@ -74,15 +77,16 @@ namespace SCKRM.SaveLoad.UI
             isDefault = true;
         }
 
-        public virtual void Refresh()
+        public virtual void Refresh(params SaveLoadClass[] slcs)
         {
             VarReset();
 
-            foreach (var variableType in SaveLoadManager.generalSLCList)
+            for (int i = 0; i < slcs.Length; i++)
             {
-                if (variableType.name == saveLoadClassName)
+                SaveLoadClass slc = slcs[i];
+                if (slc.name == saveLoadClassName)
                 {
-                    foreach (var propertyInfo in variableType.propertyInfos)
+                    foreach (var propertyInfo in slc.propertyInfos)
                     {
                         if (propertyInfo.variableInfo.Name == variableName)
                         {
@@ -95,7 +99,7 @@ namespace SCKRM.SaveLoad.UI
                         }
                     }
 
-                    foreach (var fieldInfo in variableType.fieldInfos)
+                    foreach (var fieldInfo in slc.fieldInfos)
                     {
                         if (fieldInfo.variableInfo.Name == variableName)
                         {
@@ -169,7 +173,7 @@ namespace SCKRM.SaveLoad.UI
             else if (await UniTask.WaitUntil(() => InitialLoadManager.isInitialLoadEnd, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                 return true;
 
-            Refresh();
+            Refresh(SaveLoadManager.generalSLCList);
             return false;
         }
 
@@ -642,6 +646,7 @@ namespace SCKRM.SaveLoad.UI
         }
 
         public void SettingInfoInvoke(NameSpacePathPair value) => SettingInfoManager.Show(new NameSpacePathPair(nameTextRenderer.nameSpace, nameTextRenderer.path), value, hotkeyToDisplays);
+
         public abstract void ScriptOnValueChanged(bool settingInfoInvoke = true);
 
 

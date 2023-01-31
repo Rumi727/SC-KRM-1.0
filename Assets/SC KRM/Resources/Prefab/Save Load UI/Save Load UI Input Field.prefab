@@ -407,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff38414fb559714aad97e78f8ad1a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoRefresh: 0
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
@@ -414,6 +415,7 @@ MonoBehaviour:
   _resetButton: {fileID: 4951253607330256326}
   _nameText: {fileID: 6062586528617558011}
   _nameTextRenderer: {fileID: 8145220453371415631}
+  _tooltip: {fileID: 5131055646178718495}
   _mouseSensitivity: 1
   _textPlaceHolderNameSpace: sc-krm
   _numberPlaceHolderNameSpace: sc-krm
@@ -960,6 +962,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4317124404813730815}
     m_Modifications:
+    - target: {fileID: -801586317429820976, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
+      propertyPath: _rectTransform
+      value: 
+      objectReference: {fileID: 4134221434697138358}
+    - target: {fileID: 1129744387902648811, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
+      propertyPath: _rectTransform
+      value: 
+      objectReference: {fileID: 4134221434697138358}
+    - target: {fileID: 1321451559215967923, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
+      propertyPath: _rectTransform
+      value: 
+      objectReference: {fileID: 4134221434697138358}
     - target: {fileID: 4473912487602693689, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
       propertyPath: m_Name
       value: Setting Reset Button
@@ -976,6 +990,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SCKRM.UI.Setting.SettingInputField, SC KRM
       objectReference: {fileID: 0}
+    - target: {fileID: 7512068075698493304, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
+      propertyPath: _rectTransform
+      value: 
+      objectReference: {fileID: 4134221434697138358}
     - target: {fileID: 7798637701356805991, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1060,6 +1078,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8494765947721203523, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
+      propertyPath: _rectTransform
+      value: 
+      objectReference: {fileID: 4134221434697138358}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

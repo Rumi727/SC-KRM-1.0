@@ -8,7 +8,7 @@ namespace SCKRM.SaveLoad.UI
     [AddComponentMenu("SC KRM/Save Load/UI/Dropdown (Save file linkage)")]
     public class SaveLoadUIDropdown : SaveLoadUIBase
     {
-        [SerializeField] Dropdown _dropdown; public Dropdown dropdown { get => _dropdown; set => _dropdown = value; }
+        [SerializeField, NotNull] Dropdown _dropdown; public Dropdown dropdown { get => _dropdown; set => _dropdown = value; }
         [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
         public virtual void OnValueChanged()
@@ -69,7 +69,6 @@ namespace SCKRM.SaveLoad.UI
             onValueChanged.Invoke();
         }
 
-        [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
             base.Update();

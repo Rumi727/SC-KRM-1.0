@@ -1710,7 +1710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.725006, y: 0}
+  m_AnchoredPosition: {x: 3.7250023, y: 0}
   m_SizeDelta: {x: -65.09, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144388624651245907
@@ -24573,7 +24573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0249939, y: 0}
+  m_AnchoredPosition: {x: 1.0250006, y: 0}
   m_SizeDelta: {x: -59.690002, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6685516747554249455
@@ -51870,7 +51870,7 @@ PrefabInstance:
       objectReference: {fileID: 541854521888271857}
     - target: {fileID: 3740434180860354804, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: SCKRM.UI.Setting.Setting, SC-KRM
+      value: SCKRM.SaveLoad.UI.SaveLoadUIBase, SC-KRM
       objectReference: {fileID: 0}
     - target: {fileID: 4879827535997354942, guid: 78c84ac40d227374aa3d853d7be659b9, type: 3}
       propertyPath: m_Pivot.x

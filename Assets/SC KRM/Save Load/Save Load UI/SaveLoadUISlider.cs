@@ -8,7 +8,7 @@ namespace SCKRM.SaveLoad.UI
     [AddComponentMenu("SC KRM/Save Load/UI/Slider (Save file linkage)")]
     public class SaveLoadUISlider : SaveLoadUIInputField
     {
-        [SerializeField] Slider _slider; public Slider slider { get => _slider; set => _slider = value; }
+        [SerializeField, NotNull] Slider _slider; public Slider slider { get => _slider; set => _slider = value; }
         [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
         public void OnValueChanged()
@@ -38,7 +38,6 @@ namespace SCKRM.SaveLoad.UI
             onValueChanged.Invoke();
         }
 
-        [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
             base.Update();

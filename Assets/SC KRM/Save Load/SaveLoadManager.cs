@@ -75,6 +75,7 @@ namespace SCKRM.SaveLoad
         public static void InitializeAll<TAttribute>(out SaveLoadClass[] result) where TAttribute : SaveLoadBaseAttribute
             => InitializeAll(typeof(TAttribute), out result);
 
+        [WikiIgnore]
         public static void InitializeAll(Type targetAttribute, out SaveLoadClass[] result)
         {
             List<SaveLoadClass> saveLoadClassList = new List<SaveLoadClass>();
@@ -99,7 +100,7 @@ namespace SCKRM.SaveLoad
         [WikiIgnore]
         public static void Initialize(Type targetClass, Type targetAttribute, out SaveLoadClass result)
         {
-            if (targetAttribute != typeof(SaveLoadBaseAttribute) || Attribute.GetCustomAttributes(targetClass, targetAttribute).Length <= 0)
+            if (Attribute.GetCustomAttributes(targetClass, targetAttribute).Length <= 0)
             {
                 result = null;
                 return;

@@ -9,7 +9,7 @@ namespace SCKRM.SaveLoad.UI
     [AddComponentMenu("SC KRM/Save Load/UI/Color Picker (Save file linkage)")]
     public class SaveLoadUIColorPicker : SaveLoadUIBase
     {
-        [SerializeField] ColorPicker _colorPicker; public ColorPicker colorPicker { get => _colorPicker; set => _colorPicker = value; }
+        [SerializeField, NotNull] ColorPicker _colorPicker; public ColorPicker colorPicker { get => _colorPicker; set => _colorPicker = value; }
         [SerializeField] UnityEvent _onValueChanged = new UnityEvent(); public UnityEvent onValueChanged { get => _onValueChanged; set => _onValueChanged = value; }
 
         public virtual void OnValueChanged()
@@ -51,7 +51,6 @@ namespace SCKRM.SaveLoad.UI
             onValueChanged.Invoke();
         }
 
-        [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
             if (!InitialLoadManager.isInitialLoadEnd || !isLoad)

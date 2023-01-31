@@ -35,7 +35,7 @@ RectTransform:
   - {fileID: 8815262566469061515}
   - {fileID: 9060920465292397468}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 0}
+  _rectTransform: {fileID: 4879827535997354942}
   _graphic: {fileID: 0}
 --- !u!114 &3740434180860354804
 MonoBehaviour:
@@ -69,9 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e2b98b28ca87e4ea0bfcb61e3717fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 4879827535997354942}
-  _graphic: {fileID: 0}
+  _autoRefresh: 0
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
@@ -79,6 +77,7 @@ MonoBehaviour:
   _resetButton: {fileID: 8413268587559635618}
   _nameText: {fileID: 330070363612817596}
   _nameTextRenderer: {fileID: 8855952369967304975}
+  _tooltip: {fileID: 2908523562650576325}
   _toggle: {fileID: 5652662923118441648}
   _onValueChanged:
     m_PersistentCalls:
@@ -388,9 +387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 8815262566469061515}
-  _graphic: {fileID: 1983648433373221627}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6368022071948269525
 GameObject:
@@ -576,15 +572,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d92930f31b91fe418cd866a90ecc28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentRectTransform: {fileID: 0}
-  _rectTransform: {fileID: 9060920465292397468}
-  _graphic: {fileID: 6225788824045898819}
   _offset: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &7283000156646129845
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4879827535997354942}
     m_Modifications:
     - target: {fileID: 4473912487602693689, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
@@ -624,6 +618,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88083f8e735d779428ebae2267ce23e0, type: 3}
 --- !u!224 &659840728747646930 stripped
 RectTransform:

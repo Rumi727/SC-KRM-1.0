@@ -18,8 +18,8 @@ namespace SCKRM.SaveLoad.UI
 
 
 
-        [SerializeField] TMP_InputField _inputField; public TMP_InputField inputField { get => _inputField; set => _inputField = value; }
-        [SerializeField] CustomTextMeshProRenderer _placeholder; public CustomTextMeshProRenderer placeholder { get => _placeholder; set => _placeholder = value; }
+        [SerializeField, NotNull] TMP_InputField _inputField; public TMP_InputField inputField { get => _inputField; set => _inputField = value; }
+        [SerializeField, NotNull] CustomTextMeshProRenderer _placeholder; public CustomTextMeshProRenderer placeholder { get => _placeholder; set => _placeholder = value; }
 
 
         [SerializeField] UnityEvent _onEndEdit = new UnityEvent(); public UnityEvent onEndEdit { get => _onEndEdit; set => _onEndEdit = value; }
@@ -41,9 +41,9 @@ namespace SCKRM.SaveLoad.UI
             onEndEdit.RemoveAllListeners();
         }
 
-        public override void Refresh()
+        public override void Refresh(params SaveLoadClass[] slcs)
         {
-            base.Refresh();
+            base.Refresh(slcs);
 
             if (variableType == VariableType.Char || variableType == VariableType.String)
             {
@@ -86,7 +86,6 @@ namespace SCKRM.SaveLoad.UI
             onEndEdit.Invoke();
         }
 
-        [NonSerialized] bool invokeLock = false;
         protected override void Update()
         {
             base.Update();

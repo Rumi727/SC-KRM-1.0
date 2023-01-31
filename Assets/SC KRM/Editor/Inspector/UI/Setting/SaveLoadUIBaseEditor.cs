@@ -61,6 +61,7 @@ namespace SCKRM.Editor
             UseProperty("_resetButton", "리셋 버튼");
             UseProperty("_nameText", "이름 텍스트");
             UseProperty("_nameTextRenderer", "이름 텍스트 렌더러");
+            UseProperty("_tooltip", "툴팁");
 
             if (editor.propertyInfo != null)
                 EditorGUILayout.LabelField(editor.type + " " + editor.propertyInfo.Name + " = " + editor.propertyInfo.GetValue(editor.type));

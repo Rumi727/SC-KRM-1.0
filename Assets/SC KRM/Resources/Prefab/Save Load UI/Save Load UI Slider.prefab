@@ -1555,6 +1555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd531d430cd6bb47ab5353a0d2bb83d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoRefresh: 0
   _saveLoadClassName: 
   _variableName: 
   _roundingDigits: 2
@@ -1562,6 +1563,7 @@ MonoBehaviour:
   _resetButton: {fileID: 2695108675337098341}
   _nameText: {fileID: 7104122106398558262}
   _nameTextRenderer: {fileID: 1477358942574049235}
+  _tooltip: {fileID: 6694240591028230396}
   _mouseSensitivity: 1
   _textPlaceHolderNameSpace: sc-krm
   _numberPlaceHolderNameSpace: sc-krm

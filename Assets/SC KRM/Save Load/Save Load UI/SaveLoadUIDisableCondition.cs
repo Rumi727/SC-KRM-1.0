@@ -5,8 +5,8 @@ namespace SCKRM.SaveLoad.UI
     [AddComponentMenu("SC KRM/Save Load/UI/Disable Condition (Save file linkage)")]
     public sealed class SaveLoadUIDisableCondition : MonoBehaviour
     {
-        [SerializeField] SaveLoadUIBase _setting; public SaveLoadUIBase setting { get => _setting; set => _setting = value; }
-        [SerializeField] GameObject _disableGameObject; public GameObject disableGameObject { get => _disableGameObject; set => _disableGameObject = value; }
+        [SerializeField, NotNull] SaveLoadUIBase _setting; public SaveLoadUIBase setting { get => _setting; set => _setting = value; }
+        [SerializeField, NotNull] GameObject _disableGameObject; public GameObject disableGameObject { get => _disableGameObject; set => _disableGameObject = value; }
         [SerializeField] bool _reversal = false; public bool reversal { get => _reversal; set => _reversal = value; }
 
 
