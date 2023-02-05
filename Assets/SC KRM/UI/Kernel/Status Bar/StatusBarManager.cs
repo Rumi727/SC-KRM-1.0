@@ -127,7 +127,7 @@ namespace SCKRM.UI.StatusBar
                             background.raycastTarget = true;
                         }
 
-                        background.color = background.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        background.color = background.color.Lerp(new Color(0, 0, 0, 0.5f), 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
                     }
                     else
                     {
@@ -140,7 +140,7 @@ namespace SCKRM.UI.StatusBar
                                 background.raycastTarget = false;
                             }
                             else
-                                background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                                background.color = background.color.Lerp(Color.clear, 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
                         }
                     }
 
@@ -155,7 +155,7 @@ namespace SCKRM.UI.StatusBar
                 {
                     if (isStatusBarShow)
                     {
-                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsUnscaledDeltaTime);
+                        rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(Vector2.zero, 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
 
                         if (!layout.activeSelf)
                         {
@@ -167,7 +167,7 @@ namespace SCKRM.UI.StatusBar
                     {
                         if (!SaveData.bottomMode)
                         {
-                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.rect.size.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, rectTransform.rect.size.y), 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
 
                             if (rectTransform.anchoredPosition.y >= rectTransform.rect.size.y - 0.01f)
                             {
@@ -180,7 +180,7 @@ namespace SCKRM.UI.StatusBar
                         }
                         else
                         {
-                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.rect.size.y), 0.2f * Kernel.fpsUnscaledDeltaTime);
+                            rectTransform.anchoredPosition = rectTransform.anchoredPosition.Lerp(new Vector2(0, -rectTransform.rect.size.y), 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
 
                             if (rectTransform.anchoredPosition.y <= -rectTransform.rect.size.y + 0.01f)
                             {

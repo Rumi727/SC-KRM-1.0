@@ -32,7 +32,7 @@ namespace SCKRM
         [WikiDescription("현재 부드러운 델타타임")] public static float unscaledSmoothDeltaTime { get; private set; } = fps60second;
         [WikiDescription("현재 부드러운 FPS 델타타임")] public static float fpsUnscaledSmoothDeltaTime { get; private set; } = fps60second;
 
-        [WikiDescription("현재 고정 델타타임")] public static float fixedDeltaTime { get; private set; } = fps60second;
+        [WikiDescription("현재 고정 델타타임")] public static float fixedDeltaTime { get; set; } = fps60second;
 
         [WikiDescription("1 / 60")] public const float fps60second = 1f / 60f;
 

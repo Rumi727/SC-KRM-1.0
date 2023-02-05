@@ -25,7 +25,7 @@ namespace SCKRM
                 while (graphic.color.a > 0)
                 {
                     Color color = graphic.color;
-                    graphic.color = new Color(color.r, color.g, color.b, color.a.MoveTowards(0, 0.05f * Kernel.fpsUnscaledDeltaTime));
+                    graphic.color = new Color(color.r, color.g, color.b, color.a.MoveTowards(0, 0.05f * Kernel.fpsUnscaledSmoothDeltaTime));
 
                     if (await UniTask.DelayFrame(1, PlayerLoopTiming.Initialization, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow())
                         return;
