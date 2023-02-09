@@ -330,6 +330,8 @@ namespace SCKRM.Rhythm
 
             if (RhythmManager.soundPlayer != null)
             {
+                soundPlayer.time = time.Clamp(0, soundPlayer.length - 0.01f);
+
                 RhythmManager.soundPlayer.timeChanged += SoundPlayerTimeChange;
                 RhythmManager.soundPlayer.looped += SoundPlayerTimeChange;
             }
