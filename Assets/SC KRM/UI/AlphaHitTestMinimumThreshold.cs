@@ -17,7 +17,7 @@ namespace SCKRM.UI
                 image.alphaHitTestMinimumThreshold = value;
             }
         }
-        [SerializeField] float _alphaHitTestMinimumThreshold = 0;
+        [SerializeField, Range(0, 1)] float _alphaHitTestMinimumThreshold = 0;
 
         protected override void Awake() => image.alphaHitTestMinimumThreshold = alphaHitTestMinimumThreshold;
 
