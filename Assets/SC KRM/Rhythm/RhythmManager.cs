@@ -135,7 +135,8 @@ namespace SCKRM.Rhythm
                         soundPlayer.isPaused = true;
                         isStart = true;
 
-                        _time += timePlusValue;
+                        if (!isPaused)
+                            _time += timePlusValue;
                     }
                     else if (time > soundPlayer.length - MathUtility.epsilonFloatWithAccuracy)
                     {
@@ -147,7 +148,8 @@ namespace SCKRM.Rhythm
                             isEnd = true;
                         }
 
-                        _time += timePlusValue;
+                        if (!isPaused)
+                            _time += timePlusValue;
                     }
                     else if (sync.Abs() >= 0.015625)
                     {
@@ -297,6 +299,7 @@ namespace SCKRM.Rhythm
             }
 
             isPlaying = true;
+            isPaused = false;
             isStart = false;
             isEnd = false;
 
