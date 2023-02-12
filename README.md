@@ -81,3 +81,4 @@ SC KRM은 곧 APNG 포맷을 지원할 것 입니다
 
 ## 전처리기
 - `ENABLE_ANDROID_SUPPORT` (안드로이드 스트리밍 에셋 호환 코드 강제 활성화)
+- `RECT_TRANSFORM_TOOL_EVENT_ENABLE` (RectTransformTool 클래스에 있는 이벤트를 활성화)
