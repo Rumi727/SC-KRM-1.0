@@ -8,6 +8,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace SCKRM
 {
@@ -15,6 +16,13 @@ namespace SCKRM
     [AddComponentMenu("SC KRM/Kernel/Kernel")]
     public sealed class Kernel : ManagerBase<Kernel>
     {
+        [GeneralSaveLoad]
+        public sealed class SaveData
+        {
+            [JsonProperty] public static Version lastSckrmVersion { get; set; } = sckrmVersion;
+            [JsonProperty] public static string lastVersion { get; set; } = version;
+        }
+
         [WikiDescription("현재 SC KRM 버전")] public static Version sckrmVersion { get; } = new Version(0, 20, 3);
 
 
@@ -451,7 +459,12 @@ Build: const true"
             }
 
             if (InitialLoadManager.isInitialLoadEnd)
+            {
+                SaveData.lastSckrmVersion = sckrmVersion;
+                SaveData.lastVersion = version;
+
                 SaveLoadManager.SaveAll(SaveLoadManager.generalSLCList, saveDataPath);
+            }
 
             ResourceManager.AllDestroy();
 
