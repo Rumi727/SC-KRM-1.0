@@ -19,6 +19,7 @@ public class DiscordController : MonoBehaviour
         version = $"{Kernel.productName} {Kernel.version}";
 #endif
 
-        DiscordManager.UpdatePresence("Simsimhan Chobo Kernel Manager", "Rich Presence Test", startTime, DiscordManager.presence.endTimestamp, DiscordManager.presence.largeImageKey, version);
+        if (DiscordManager.presence != null)
+            DiscordManager.UpdatePresence("Simsimhan Chobo Kernel Manager", "Rich Presence Test", startTime, DiscordManager.presence.endTimestamp, DiscordManager.presence.largeImageKey, version);
     }
 }
