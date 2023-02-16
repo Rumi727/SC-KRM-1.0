@@ -1,5 +1,5 @@
 {
-    "name": "SC-KRM-Editor",
+    "name": "SCKRM.Editor",
     "rootNamespace": "SCKRM.Editor",
     "references": [
         "GUID:9c1f978837ad80d49ae31d1cd963a280",
