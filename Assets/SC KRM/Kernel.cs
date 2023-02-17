@@ -353,6 +353,18 @@ Build: const true"
         }
         static RectTransform _emptyRectTransform;
 
+        public static Material defaultMaterial
+        {
+            get
+            {
+                if (_defaultMaterial == null)
+                    _defaultMaterial = Resources.Load<Material>("Default Material");
+
+                return _defaultMaterial;
+            }
+        }
+        static Material _defaultMaterial;
+
 
 
         /// <summary>
