@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using SCKRM.Loading;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace SCKRM.Scene
 {
