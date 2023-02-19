@@ -9,7 +9,6 @@ namespace SCKRM.Scene
         public static bool isDone { get; private set; } = true;
         public static bool isLoading { get; private set; } = false;
 
-        public static async UniTask LoadScene(string sceneName) => await loadScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName).buildIndex);
         public static async UniTask LoadScene(int sceneBuildIndex) => await loadScene(sceneBuildIndex);
 
         static async UniTask loadScene(int sceneBuildIndex)
