@@ -2,7 +2,7 @@
 [TEAM Bucket 블랙리스트]: https://github.com/SimsimhanChobo/SDJK
 [SC KRM]: https://github.com/SimsimhanChobo/SC-KRM-1.0
 [SDJK]: https://github.com/SimsimhanChobo/SDJK
-[Simsimhan Chobo]: https://github.com/SimsimhanChobo/SimsimhanChobo
+[Simsimhan Chobo]: https://github.com/SimsimhanChobo
 [discord_check.dll]: Assets/SC%20KRM/Discord/Library/discord_check.dll
 [C++ Namu]: https://namu.wiki/w/C%2B%2B
 [C++]: https://ko.wikipedia.org/wiki/C%2B%2B
