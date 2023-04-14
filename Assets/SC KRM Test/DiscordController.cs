@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using DiscordPresence;
 using SCKRM;
 using SCKRM.Discord;
 
@@ -19,7 +18,6 @@ public class DiscordController : MonoBehaviour
         version = $"{Kernel.productName} {Kernel.version}";
 #endif
 
-        if (DiscordManager.presence != null)
-            DiscordManager.UpdatePresence("Simsimhan Chobo Kernel Manager", "Rich Presence Test", startTime, DiscordManager.presence.endTimestamp, DiscordManager.presence.largeImageKey, version);
+        DiscordManager.UpdateActivity("Simsimhan Chobo Kernel Manager", "Rich Presence Test", null, version, null, null, startTime);
     }
 }
