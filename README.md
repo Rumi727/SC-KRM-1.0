@@ -77,7 +77,7 @@ Unless affected by the above, [SC KRM] is under the [MIT License][MIT]
 
 ## SC KRM 적용 전 주의
 - 이 프로젝트는 처음 프로젝트를 만들때 사용해야 나중에 안 귀찮아집니다
-- **사용 중인 입력 처리를 '모두'로 바꿔주세요**
+- SC KRM을 처음 적용했을 때 무언가 제대로 작동하지 않는다면 유니티를 한번 정도 껏다 켜주세요
 - UniTask가 내장 되어있습니다 
   - 만약 오류가 발생한다면, 기존에 있는 UniTask를 지워주시거나 SC KRM/UniTask 폴더를 지워주세요
 - 기본적으로 스크립트는 SCKRM 네임스페이스를 가지고 있습니다
