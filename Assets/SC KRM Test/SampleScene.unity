@@ -203,14 +203,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alwaysVisible: 0
   _customSetting: 1
-  _customGuiSize: 0
-  _guiSize: 1
   _worldRenderMode: 0
   _planeDistance: 0
   _forceSafeScreenEnable: 0
   _safeScreenMultiple: {x: 1, y: 1}
+  _safeScreenOffset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  _customGuiSize: 0
+  _guiSize: 1
+  _alwaysVisible: 0
   _safeScreen: {fileID: 1609481224}
 --- !u!114 &542794887
 MonoBehaviour:
@@ -941,14 +947,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alwaysVisible: 0
   _customSetting: 0
-  _customGuiSize: 0
-  _guiSize: 1
   _worldRenderMode: 1
   _planeDistance: 8
   _forceSafeScreenEnable: 0
   _safeScreenMultiple: {x: 1, y: 1}
+  _safeScreenOffset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  _customGuiSize: 0
+  _guiSize: 1
+  _alwaysVisible: 0
   _safeScreen: {fileID: 0}
 --- !u!114 &913368623
 MonoBehaviour:
@@ -1165,6 +1177,7 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+  _safeScreenMultiple: {x: 1, y: 1}
   _customSetting: 0
 --- !u!114 &963194234
 MonoBehaviour:
@@ -1498,6 +1511,7 @@ MonoBehaviour:
   _nameSpace: sc-krm
   _path: rounded_rectangle
   _type: gui
+  _spriteTag: global
   _index: 0
   _image: {fileID: 1459556868}
 --- !u!114 &1459556868
@@ -2032,14 +2046,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80878873c0b26984e95c5338a1297994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alwaysVisible: 0
   _customSetting: 0
-  _customGuiSize: 0
-  _guiSize: 1
   _worldRenderMode: 0
   _planeDistance: 0
   _forceSafeScreenEnable: 0
   _safeScreenMultiple: {x: 1, y: 1}
+  _safeScreenOffset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  _customGuiSize: 0
+  _guiSize: 1
+  _alwaysVisible: 0
   _safeScreen: {fileID: 2081374924}
 --- !u!114 &1800996215
 MonoBehaviour:
