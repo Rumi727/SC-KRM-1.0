@@ -66,10 +66,10 @@ namespace SCKRM.Object
             if (!Kernel.isPlaying)
                 return false;
 
-            ObjectPoolingSystem.ObjectRemove(objectPooling.objectKey, ui, objectPooling);
-
             objectPooling.removed?.Invoke();
             objectPooling.removed = null;
+
+            ObjectPoolingSystem.ObjectRemove(objectPooling.objectKey, ui, objectPooling);
 
             ui.name = objectPooling.objectKey;
 
