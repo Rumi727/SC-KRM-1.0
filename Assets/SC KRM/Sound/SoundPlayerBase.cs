@@ -67,10 +67,6 @@ namespace SCKRM.Sound
 
 
 
-        [WikiDescription("자동 삭제")] bool autoRemove { get; set; }
-
-
-
         event OnAudioFilterReadAction onAudioFilterReadEvent;
     }
 
@@ -132,8 +128,6 @@ namespace SCKRM.Sound
 
         [WikiDescription("공간")] public virtual bool spatial { get; set; } = false;
         [WikiDescription("좌표")] public virtual Vector3 localPosition { get; set; } = Vector3.zero;
-
-        [WikiDescription("자동 삭제")] public virtual bool autoRemove { get; set; } = true;
 
 
 

@@ -270,7 +270,7 @@ But it's read-only so you can't insert DPS chains and it converts to mono."
                         _index = nbsFile.nbsNotes.Count - 2;
                     }
                 }
-                else if (autoRemove)
+                else
                     Remove();
             }
             else
@@ -401,7 +401,7 @@ But it's read-only so you can't insert DPS chains and it converts to mono."
                     isLooped = true;
                     _looped?.Invoke();
                 }
-                else if (autoRemove)
+                else
                     Remove();
             }
         }
