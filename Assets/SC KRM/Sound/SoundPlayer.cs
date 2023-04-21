@@ -33,6 +33,9 @@ namespace SCKRM.Sound
                     this.lastTime = time;
 
                     _timeChanged?.Invoke();
+
+                    if (!isPaused && !isSpeedZero && !audioSource.isPlaying && !ResourceManager.isAudioReset && !autoRemove)
+                        audioSource.Play();
                 }
             }
         }
@@ -280,7 +283,7 @@ namespace SCKRM.Sound
                 lastTime = time;
             }
 
-            if (!isPaused && !isSpeedZero && !audioSource.isPlaying && !ResourceManager.isAudioReset)
+            if (!isPaused && !isSpeedZero && !audioSource.isPlaying && !ResourceManager.isAudioReset && autoRemove)
                 Remove();
         }
 
