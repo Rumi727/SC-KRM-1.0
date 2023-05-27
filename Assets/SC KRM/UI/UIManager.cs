@@ -4,6 +4,7 @@ using SCKRM.Input;
 using SCKRM.Json;
 using SCKRM.Renderer;
 using SCKRM.SaveLoad;
+using SCKRM.UI.Overlay;
 using SCKRM.UI.SideBar;
 using SCKRM.UI.StatusBar;
 using System;
@@ -36,10 +37,10 @@ namespace SCKRM.UI
         [WikiDescription("현재 GUI 크기")] public static float currentGuiSize { get; private set; } = 1;
         public static float scaleAccordingToScreenSize { get; private set; } = 1;
 
-        [SerializeField, NotNull] Canvas _kernelCanvas; public Canvas kernelCanvas => _kernelCanvas;
-        [SerializeField, NotNull] Graphic _kernelCanvasBackground; public Graphic kernelCanvasBackground => _kernelCanvasBackground;
-        [SerializeField, NotNull] RectTransform _kernelSideBarRectTransform; public RectTransform kernelCanvasUI => _kernelSideBarRectTransform;
-        [SerializeField, NotNull] TMP_Text _exceptionText; public TMP_Text exceptionText => _exceptionText;
+        [SerializeField, FieldNotNull] Canvas _kernelCanvas; public Canvas kernelCanvas => _kernelCanvas;
+        [SerializeField, FieldNotNull] Graphic _kernelCanvasBackground; public Graphic kernelCanvasBackground => _kernelCanvasBackground;
+        [SerializeField, FieldNotNull] RectTransform _kernelSideBarRectTransform; public RectTransform kernelCanvasUI => _kernelSideBarRectTransform;
+        [SerializeField, FieldNotNull] TMP_Text _exceptionText; public TMP_Text exceptionText => _exceptionText;
 
 
 
@@ -67,7 +68,7 @@ namespace SCKRM.UI
             if (InitialLoadManager.isInitialLoadEnd)
             {
                 if (InputManager.GetKey("gui.back", InputType.Down, InputManager.inputLockDenyAllForceInput))
-                    BackEventInvoke(false);
+                    BackEventInvoke();
                 else if (InputManager.GetKey("gui.home", InputType.Down, InputManager.inputLockDenyAll))
                 {
                     EventSystem.current.SetSelectedGameObject(null);
@@ -82,12 +83,13 @@ namespace SCKRM.UI
         }
 
         [WikiDescription("뒤로가기 이벤트")]
-        public static void BackEventInvoke(bool selectedGameObjectIgnore)
+        public static void BackEventInvoke()
         {
             if (EventSystem.current.currentSelectedGameObject != null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
-                if (!selectedGameObjectIgnore)
+
+                if (StatusBarManager.selectedStatusBar && highPriorityBackEventList.Count <= 0)
                     return;
             }
 

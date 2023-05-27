@@ -48,6 +48,9 @@
 	"gui.restart": "Restart",
 	"gui.count": "Count",
 	"gui.random": "Random",
+	"gui.skip": "Skip",
+	"gui.coefficient": "Coefficient",
+	"gui.coefficient_per_second": "coefficient per second",
 	
 	"gui.ago.years": "%value%y ago",
 	"gui.ago.months": "%value%m ago",

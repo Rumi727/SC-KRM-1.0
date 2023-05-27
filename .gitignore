@@ -77,6 +77,7 @@ crashlytics-build.properties
 
 # Custom Ignore
 .vsconfig
+.idea/*
 [Aa]ssets/StreamingAssets/assets/school-live/sounds/*
 [Aa]ssets/StreamingAssets/assets/school-live/sounds.meta
 [Aa]ssets/StreamingAssets/assets/school-live/nbs/*
