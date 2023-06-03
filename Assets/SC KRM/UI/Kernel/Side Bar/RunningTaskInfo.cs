@@ -78,6 +78,9 @@ namespace SCKRM.UI.SideBar
                     removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(1, 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
                 else
                     removeButtonCanvasGroup.alpha = removeButtonCanvasGroup.alpha.MoveTowards(0, 0.2f * Kernel.fpsUnscaledSmoothDeltaTime);
+
+                removeButtonCanvasGroup.alpha = 1;
+                removeButtonCanvasGroup.interactable = true;
             }
             else
             {
@@ -101,10 +104,9 @@ namespace SCKRM.UI.SideBar
 
         public void Cancel() => asyncTask.Remove();
 
-        public override bool Remove()
+        public override void Remove()
         {
-            if (!base.Remove())
-                return false;
+            base.Remove();
 
             rectTransform.sizeDelta = new Vector2(430, 19);
             asyncTask = null;
@@ -120,10 +122,11 @@ namespace SCKRM.UI.SideBar
             progressBar.gameObject.SetActive(true);
             progressBar.enabled = true;
 
+            removeButtonCanvasGroup.alpha = 1;
+            removeButtonCanvasGroup.interactable = true;
+
             LanguageManager.currentLanguageChange -= InfoLoad;
             ThreadManager.threadChange -= InfoLoad;
-
-            return true;
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => pointer = true;
