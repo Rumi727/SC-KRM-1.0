@@ -3,15 +3,17 @@ using SCKRM.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SCKRM.Rhythm
 {
     #region Beat Value Pair List
     //리플랙션 용
-    public interface IBeatValuePairList : IList
+    public interface IBeatValuePairList : ITypeList
     {
         void Add();
         void Insert(int index);
+        void Sort();
     }
 
     public class BeatValuePairList<T> : BeatValuePairList<T, BeatValuePair<T>>
@@ -150,6 +152,18 @@ namespace SCKRM.Rhythm
         public virtual void Insert(int index, TValue value, bool disturbance = false) => Insert(index, new TPair() { beat = double.MinValue, value = value, disturbance = disturbance });
         public virtual void Insert(int index, double beat, TValue value, bool disturbance = false) => Insert(index, new TPair() { beat = beat, value = value, disturbance = disturbance });
 
+        public new virtual void Sort()
+        {
+            TPair[] list = this.OrderBy(x => x.beat).ToArray();
+            Clear();
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                TPair item = list[i];
+                Add(item);
+            }
+        }
+
         public virtual int GetValueIndexBinarySearch(double beat)
         {
             if (Count <= 0)
@@ -232,6 +246,18 @@ namespace SCKRM.Rhythm
 
         public virtual void Add(double beat = double.MinValue, double length = 0, bool disturbance = false) => Add(new TPair() { beat = beat, length = length, value = defaultValue, disturbance = disturbance });
         public virtual void Add(double beat, double length, TValue value, EasingFunction.Ease easingFunction = EasingFunction.Ease.Linear, bool disturbance = false) => Add(new TPair() { beat = beat, length = length, value = value, easingFunction = easingFunction, disturbance = disturbance });
+
+        public override void Sort()
+        {
+            TPair[] list = this.OrderBy(x => x.beat).ToArray();
+            Clear();
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                TPair item = list[i];
+                Add(item);
+            }
+        }
     }
     #endregion
 
@@ -355,6 +381,8 @@ namespace SCKRM.Rhythm
     #region Beat Value Pair
     public interface IBeatValuePair
     {
+        Type type { get; }
+
         double beat { get; set; }
         object value { get; set; }
 
@@ -376,6 +404,8 @@ namespace SCKRM.Rhythm
 
     public struct BeatValuePair<TValue> : IBeatValuePair<TValue>
     {
+        public Type type => typeof(TValue);
+
         public double beat { get; set; }
 
         public TValue value { get; set; }
@@ -394,6 +424,8 @@ namespace SCKRM.Rhythm
 
     public struct BeatValuePairAni<TValue> : IBeatValuePairAni<TValue>
     {
+        public Type type => typeof(TValue);
+
         public double beat { get; set; }
 
         public TValue value { get; set; }

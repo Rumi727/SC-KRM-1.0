@@ -1214,6 +1214,124 @@ namespace SCKRM
         }
         #endregion
 
+        #region Inverse Lerp Unclamped
+        public static sbyte InverseLerpUnclamped(this sbyte a, sbyte b, sbyte t)
+        {
+            if (a != b)
+                return (sbyte)((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static byte InverseLerpUnclamped(this byte a, byte b, byte t)
+        {
+            if (a != b)
+                return (byte)((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static short InverseLerpUnclamped(this short a, short b, short t)
+        {
+            if (a != b)
+                return (short)((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static ushort InverseLerpUnclamped(this ushort a, ushort b, ushort t)
+        {
+            if (a != b)
+                return (ushort)((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static int InverseLerpUnclamped(this int a, int b, int t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static uint InverseLerpUnclamped(this uint a, uint b, uint t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static long InverseLerpUnclamped(this long a, long b, long t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static ulong InverseLerpUnclamped(this ulong a, ulong b, ulong t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static float InverseLerpUnclamped(this float a, float b, float t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static double InverseLerpUnclamped(this double a, double b, double t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static decimal InverseLerpUnclamped(this decimal a, decimal b, decimal t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static BigInteger InverseLerpUnclamped(this BigInteger a, BigInteger b, BigInteger t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+
+        [WikiIgnore]
+        public static BigDecimal InverseLerpUnclamped(this BigDecimal a, BigDecimal b, BigDecimal t)
+        {
+            if (a != b)
+                return ((t - a) / (b - a));
+
+            return 0;
+        }
+        #endregion
+
         public static bool IsPowerOfTwo(this int value) => Mathf.IsPowerOfTwo(value);
 
         #region Lerp
@@ -2967,6 +3085,369 @@ namespace SCKRM
         #endregion
 
         public static int NextPowerOfTwo(this int value) => Mathf.NextPowerOfTwo(value);
+
+        #region Next Power Of
+        public static sbyte NextPowerOf(this sbyte value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            int tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return (sbyte)(tempValue * power);
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return (sbyte)tempValue;
+            }
+        }
+
+        public static byte NextPowerOf(this byte value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            int tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return (byte)(tempValue * power);
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return (byte)tempValue;
+            }
+        }
+
+        public static short NextPowerOf(this short value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            int tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return (short)(tempValue * power);
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return (short)tempValue;
+            }
+        }
+
+        public static ushort NextPowerOf(this ushort value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            int tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return (ushort)(tempValue * power);
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return (ushort)tempValue;
+            }
+        }
+
+        public static int NextPowerOf(this int value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            int tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static uint NextPowerOf(this uint value, uint power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            uint tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return (uint)tempValue;
+            }
+        }
+
+        public static long NextPowerOf(this long value, long power)
+        {
+            if (value <= 0)
+                return 0;
+
+
+            power = power.Clamp(1);
+
+            long tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static ulong NextPowerOf(this ulong value, ulong power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            ulong tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static float NextPowerOf(this float value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            float tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static double NextPowerOf(this double value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            double tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static decimal NextPowerOf(this decimal value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            decimal tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static BigInteger NextPowerOf(this BigInteger value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            BigInteger tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static BigDecimal NextPowerOf(this BigDecimal value, int power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            BigDecimal tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static nint NextPowerOf(this nint value, nint power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            nint tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+
+        public static nuint NextPowerOf(this nuint value, nuint power)
+        {
+            if (value <= 0)
+                return 0;
+
+            power = power.Clamp(1);
+
+            nuint tempValue = 1;
+            if (value < 1)
+            {
+                while (tempValue > value)
+                    tempValue /= power;
+
+                return tempValue * power;
+            }
+            else
+            {
+                while (tempValue < value)
+                    tempValue *= power;
+
+                return tempValue;
+            }
+        }
+        #endregion
 
         public static float PerlinNoise(this float x, float y) => Mathf.PerlinNoise(x, y);
 
