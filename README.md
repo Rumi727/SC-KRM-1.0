@@ -5,6 +5,10 @@ Simsimhan Chobo Kernel Manager
 UI는 [osu!lazer](https://github.com/ppy/osu)에서 영감을 받았습니다  
 그리고 1인 개발이며 심지어 유니티, C#을 다루는 실력 또한 허접하기 때문에 디자인과 최적화 등등 여러 요소 또한 ~~개~~허접 할 수 있습니다
 
+원래는 다 방면 게임을 개발하기 위해 만든 엔진이지만  
+현재 개발 엔진을 [Runi Engine](https://github.com/SimsimhanChobo/RuniEngine)으로 옮김에 따라  
+현재 이 엔진을 사용하여 개발 중인 [SDJK](https://github.com/SimsimhanChobo/SDJK) 프로젝트만을 위한 리듬게임 엔진이 되어버렸답니다...
+
 ## 라이선스
 [Blacklist]: https://docs.google.com/document/d/1A8kz4DJOdLEtf-kybrKnGR51XDNZVHmojCU86KaDgKg
 [SC KRM]: https://github.com/SimsimhanChobo/SC-KRM-1.0
