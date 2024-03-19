@@ -1,25 +1,21 @@
-## 라이선스
-[Blacklist]: https://docs.google.com/document/d/1A8kz4DJOdLEtf-kybrKnGR51XDNZVHmojCU86KaDgKg
-[SC KRM]: https://github.com/SimsimhanChobo/SC-KRM-1.0
-[SDJK]: https://github.com/SimsimhanChobo/SDJK
-[Simsimhan Chobo]: https://github.com/SimsimhanChobo
-[discord_check.dll]: Assets/SC%20KRM/Discord/Library/discord_check.dll
-[C++ Namu]: https://namu.wiki/w/C%2B%2B
-[C++]: https://ko.wikipedia.org/wiki/C%2B%2B
-[MIT]: https://opensource.org/licenses/mit
-[GPL]: https://opensource.org/license/gpl-3-0
+MIT License
 
-[TEAM Bucket 블랙리스트][Blacklist]에 등록된 사람은 [SC KRM] 및 [SC KRM]의 파생 저작물을 (예: [SDJK]) 이용할 수 없습니다.
+Copyright (c) 2024 Rumi
 
-또한 [discord_check.dll] 파일을 디컴파일하거나 (내용을 보거나) 수정할 수 없습니다.  
-[discord_check.dll] 파일은 [C++][C++ Namu] 프로그래밍 언어로 작성되었으며 저작권은 [Simsimhan Chobo] 에게 있습니다.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-위의 내용에 영향을 받지 않는다면 [SC KRM]은 [MIT 라이선스][MIT]를 따르게 됩니다.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## English Translation
-[SC KRM] and derivative works of [SC KRM] (e.g. [SDJK]) cannot be used by persons on the [TEAM Bucket Blacklist][Blacklist]
-
-Also, you cannot decompile (view contents) or modify the file [discord_check.dll]
-The [discord_check.dll] file is written in [C++] programming language and copyrighted by [Simsimhan Chobo].
-
-Unless affected by the above, [SC KRM] is under the [MIT License][MIT]
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
